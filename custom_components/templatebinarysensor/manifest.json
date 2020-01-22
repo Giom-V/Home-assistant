@@ -1,0 +1,12 @@
+{
+  "domain": "templatebinarysensor",
+  "name": "UI Template binary_sensor configuration",
+  "documentation": "https://github.com/dlashua/templatebinarysensor",
+  "dependencies": [],
+  "config_flow": true,
+  "codeowners": [
+    "@dlashua"
+  ],
+  "requirements": [],
+  "homeassistant": "0.96.0"
+}

@@ -1,0 +1,235 @@
+'1542490337256':
+  alias: Notif slack (test)
+  sequence:
+  - service: camera.snapshot
+    data:
+      entity_id: camera.raspberry_pi_camera
+      filename: '***REMOVED***/last_sunrise.jpg'
+  - service: shell_command.resize_sunrise_pic
+  - service: notify.slack
+    data:
+      data:
+        file:
+          path: ***REMOVED***/last_sunrise.jpg
+      message: Good morning!
+      target:
+      - '#hass'
+      title: Sunrise
+create_daily_gif:
+  alias: Create Daily Gif
+  sequence:
+#  - service: shell_command.set_date
+#  - service: shell_command.create_daily_gif
+  - service: notify.slack
+    data:
+      data:
+        file:
+          path: "***REMOVED***/{{ today }}.gif"
+      message: Daily Gif!
+      target:
+      - '#hass'
+      title: "{{ today }}"
+#TODO: add number of times
+vacuum_kitchen_and_diningroom:
+  alias: "Vacuum Kitchen and Diningroom"
+  sequence:
+    - service: vacuum.stop
+      data:
+        entity_id: vacuum.xiaomi_vacuum_cleaner
+    - service: vacuum.send_command
+      data:
+        entity_id: vacuum.xiaomi_vacuum_cleaner
+        command: app_zoned_clean
+        params: [[24306,22200,27656,24800,1]]
+    - delay:
+        minutes: 1
+    - wait_template: "{{ is_state('vacuum.xiaomi_vacuum_cleaner', 'Returning to dock') }}"
+    - service: vacuum.stop
+      data:
+        entity_id: vacuum.xiaomi_vacuum_cleaner
+    - service: vacuum.send_command
+      data:
+        entity_id: vacuum.xiaomi_vacuum_cleaner
+        command: app_zoned_clean
+        params: [[24964,25174,27714,28424,1]]
+vacuum_kitchen:
+  alias: "Vacuum Kitchen"
+  sequence:
+    - service: vacuum.stop
+      data:
+        entity_id: vacuum.xiaomi_vacuum_cleaner
+    - service: vacuum.send_command
+      data:
+        entity_id: vacuum.xiaomi_vacuum_cleaner
+        command: app_zoned_clean
+        params: [[24306,22200,27656,24800,1]]
+vacuum_diningroom:
+  alias: "Vacuum Dining Room"
+  sequence:
+    - service: vacuum.stop
+      data:
+        entity_id: vacuum.xiaomi_vacuum_cleaner
+    - service: vacuum.send_command
+      data:
+        entity_id: vacuum.xiaomi_vacuum_cleaner
+        command: app_zoned_clean
+        params: [[24964,25174,27714,28424,1]]
+vacuum_bathroom:
+  alias: "Vacuum Bathroom"
+  sequence:
+    - service: vacuum.stop
+      data:
+        entity_id: vacuum.xiaomi_vacuum_cleaner
+    - service: vacuum.send_command
+      data:
+        entity_id: vacuum.xiaomi_vacuum_cleaner
+        command: app_zoned_clean
+        params: [[23790,17237,28140,21137,2]]
+vacuum_bedroom:
+  alias: "Vacuum Bedroom"
+  sequence:
+    - service: vacuum.stop
+      data:
+        entity_id: vacuum.xiaomi_vacuum_cleaner
+    - service: vacuum.send_command
+      data:
+        entity_id: vacuum.xiaomi_vacuum_cleaner
+        command: app_zoned_clean
+        params: [[28091,17501,32541,21201,1]]
+vacuum_aurore_bedroom:
+  alias: "Vacuum Aurore's Bedroom"
+  sequence:
+    - service: vacuum.stop
+      data:
+        entity_id: vacuum.xiaomi_vacuum_cleaner
+    - service: vacuum.send_command
+      data:
+        entity_id: vacuum.xiaomi_vacuum_cleaner
+        command: app_zoned_clean
+        params: [[28098,21247,30898,23797,1]]
+vacuum_livingroom:
+  alias: "Vacuum Living Room"
+  sequence:
+    - service: vacuum.stop
+      data:
+        entity_id: vacuum.xiaomi_vacuum_cleaner
+    - service: vacuum.send_command
+      data:
+        entity_id: vacuum.xiaomi_vacuum_cleaner
+        command: app_zoned_clean
+        params: [[27794,23764,32644,28264,1]]
+vacuum_aurore_zone:
+  alias: "Vacuum Aurore's zone"
+  sequence:
+    - service: vacuum.stop
+      data:
+        entity_id: vacuum.xiaomi_vacuum_cleaner
+    - service: vacuum.send_command
+      data:
+        entity_id: vacuum.xiaomi_vacuum_cleaner
+        command: app_zoned_clean
+        params: [[30749,24974,32449,28274,2]]
+vacuum_dispatch:
+  alias: "Vacuum Dispatch"
+  sequence:
+    - service: script.turn_on
+      data_template:
+        #TODO: ajouter les STP/STP
+        entity_id: >-
+          {% if room|lower in ("cuisine", "la cuisine", "dans la cuisine", "kitchen", "the kitchen") %}
+            script.vacuum_kitchen
+          {% elif room|lower in ("salle de bain", "la salle de bain", "les toilettes", "toilettes", "bathroom", "the bathroom") %}
+            script.vacuum_bathroom
+          {% elif room|lower in ("chambre", "la chambre", "notre chambre", "la grande chambre", "la chambre des parents", "bedroom", "the bedroom") %}
+            script.vacuum_bedroom
+          {% elif room|lower in ("chambre d'aurore", "la chambre d'aurore", "la petite chambre", "la chambre des enfants", "aurore's bedroom") %}
+            script.vacuum_bedroom
+          {% elif room|lower in ("salle à manger", "la salle à manger", "dans la salle à manger", "la table", "autour de la table", "après le repas", "dining room") %}
+            script.vacuum_diningroom
+          {% elif room|lower in ("salon", "le salon", "living room") %}
+            script.vacuum_livingroom
+          {% elif room|lower in ("zone d'aurore", "la zone d'aurore", "coin d'aurore", "le coin d'aurore", "aurore's zone") %}
+            script.vacuum_aurore_zone
+          {% elif room|lower in ("la cuisine et la salle à manger", "la salle à manger et la cuisine", "le sejour") %}
+            script.vacuum_kitchen_and_diningroom
+          {% endif %}
+mop_bathroom:
+  alias: "Mop Bathroom"
+  sequence:
+    - service: vacuum.stop
+      data:
+        entity_id: vacuum.xiaomi_vacuum_cleaner
+    - service: vacuum.set_fan_speed
+      data:
+        fan_speed: Gentle
+        entity_id: vacuum.xiaomi_vacuum_cleaner
+    - service: script.turn_on
+      data:
+        entity_id: script.vacuum_bathroom
+    - delay:
+        minutes: 1
+    - wait_template: "{{ is_state('vacuum.xiaomi_vacuum_cleaner', 'docked') }}"
+    - service: vacuum.set_fan_speed
+      data:
+        fan_speed: Balanced
+        entity_id: vacuum.xiaomi_vacuum_cleaner
+mop_kitchen:
+  alias: "Mop Kitchen"
+  sequence:
+    - service: vacuum.stop
+      data:
+        entity_id: vacuum.xiaomi_vacuum_cleaner
+    - service: vacuum.set_fan_speed
+      data:
+        fan_speed: Gentle
+        entity_id: vacuum.xiaomi_vacuum_cleaner
+    - service: script.turn_on
+      data:
+        entity_id: script.vacuum_kitchen
+    - delay:
+        minutes: 1
+    - wait_template: "{{ is_state('vacuum.xiaomi_vacuum_cleaner', 'docked') }}"
+    - service: vacuum.set_fan_speed
+      data:
+        fan_speed: Balanced
+        entity_id: vacuum.xiaomi_vacuum_cleaner
+mop_diningroom:
+  alias: "Mop Diningroom"
+  sequence:
+    - service: vacuum.stop
+      data:
+        entity_id: vacuum.xiaomi_vacuum_cleaner
+    - service: vacuum.set_fan_speed
+      data:
+        fan_speed: Gentle
+        entity_id: vacuum.xiaomi_vacuum_cleaner
+    - service: script.turn_on
+      data:
+        entity_id: script.vacuum_diningroom
+    - delay:
+        minutes: 1
+    - wait_template: "{{ is_state('vacuum.xiaomi_vacuum_cleaner', 'docked') }}"
+    - service: vacuum.set_fan_speed
+      data:
+        fan_speed: Balanced
+        entity_id: vacuum.xiaomi_vacuum_cleaner
+mop_kitchen_and_dining_room:
+  alias: "Mop Kitchen and dining room"
+  sequence:
+    - service: vacuum.stop
+      data:
+        entity_id: vacuum.xiaomi_vacuum_cleaner
+    - service: vacuum.set_fan_speed
+      data:
+        fan_speed: Gentle
+        entity_id: vacuum.xiaomi_vacuum_cleaner
+    - service: script.turn_on
+      data:
+        entity_id: script.vacuum_kitchen_and_diningroom
+    - delay:
+        minutes: 1
+    - wait_template: "{{ is_state('vacuum.xiaomi_vacuum_cleaner', 'docked') }}"
+    - service: vacuum.set_fan_speed
+      data:
+        fan_speed: Balanced
+        entity_id: vacuum.xiaomi_vacuum_cleaner
