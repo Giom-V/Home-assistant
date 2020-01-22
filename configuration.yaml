@@ -392,7 +392,12 @@ sensor:
     type: time
     start: '{{ as_timestamp( now().replace(hour=0).replace(minute=0).replace(second=0) ) - now().weekday() * 86400 - 7 * 86400 }}'
     end: '{{ as_timestamp( now().replace(hour=0).replace(minute=0).replace(second=0) ) - now().weekday() * 86400 }}'
-
+  # https://github.com/custom-components/sensor.untappd
+  - platform: untappd
+    username: !secret untappedUsername
+    id: !secret untappedClientID
+    secret: !secret untappedSecret
+    
 binary_sensor:
   - platform: aurora
   - platform: workday
