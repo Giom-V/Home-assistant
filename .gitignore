@@ -1,0 +1,43 @@
+# Git Ignore File
+
+# Do not ignore
+!/.gitignore
+!/.travis.yml
+
+# Logs
+logs
+*.log
+
+# Ignore Folders
+.storage
+.cloud
+.vscode
+.Trash-*
+deps/
+Share/
+certificate/
+tts/
+
+# Ignored Files
+secrets.yaml
+ip_bans.yaml
+known_devices.yaml
+*.conf
+*.db
+*.uuid
+
+# Google temp files
+.google*
+*.token
+
+# Node-Red
+node-red
+
+# Operating System Trash Files
+.DS_Store
+
+# Alexa Media
+alexa_media.*.pickle
+
+# Ring
+.ring_cache.pickle

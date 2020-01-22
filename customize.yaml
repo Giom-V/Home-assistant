@@ -1,0 +1,14 @@
+sensor.travel_time_to_work_claire:
+  icon: mdi:bus
+sensor.sonarr_disk_space:
+  hidden: true
+sensor.sonarr_upcoming:
+  friendly_name: Upcoming this week
+sensor.dest_address:
+  hidden: true
+camera.raspberry_pi_camera:
+  hidden: true
+person.giom:
+    entity_picture: https://lh4.googleusercontent.com/-nfUNt6XLG4g/AAAAAAAAAAI/AAAAAAALe_k/oF1SKvELhRo/photo.jpg
+person.claire:
+    entity_picture: https://lh3.googleusercontent.com/a-/AAuE7mCElbdLmXXI7_NwM1x7xQvj8L3A532zVIwvRXQCoQ
