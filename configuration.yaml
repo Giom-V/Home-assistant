@@ -83,6 +83,8 @@ logger:
     homeassistant.components.binary_sensor.xiaomi: debug
 #    homeassistant.components.mqtt: debug
     homeassistant.custom_components.email: debug
+    #pydeconz: debug
+    #homeassistant.components.deconz: debug
 # Enables a map showing the location of tracked devices
 map:
 # Track the sun
