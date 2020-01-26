@@ -40,7 +40,7 @@ vacuum_kitchen_and_diningroom:
       data:
         entity_id: vacuum.xiaomi_vacuum_cleaner
         command: app_zoned_clean
-        params: [[24306,22200,27656,24800,1]]
+        params: [[24384,22183,27484,25133,1]]
     - delay:
         minutes: 1
     - wait_template: "{{ is_state('vacuum.xiaomi_vacuum_cleaner', 'Returning to dock') }}"
@@ -62,7 +62,7 @@ vacuum_kitchen:
       data:
         entity_id: vacuum.xiaomi_vacuum_cleaner
         command: app_zoned_clean
-        params: [[24306,22200,27656,24800,1]]
+        params: [[24384,22183,27484,25133,1]]
 vacuum_diningroom:
   alias: "Vacuum Dining Room"
   sequence:
