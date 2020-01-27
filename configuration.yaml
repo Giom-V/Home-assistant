@@ -526,15 +526,15 @@ shell_command:
   create_daily_gif: 'convert -delay 20 -limit area 0 -resize 25% -loop 0 {rpi_camera_{{ now().strftime("%Y%m%d") }}-*_night.jpg,rpi_camera_{{ now().strftime("%Y%m%d") }}-*_day.jpg} {{ now().strftime("%Y%m%d") }}.gif'
   
 #Xiaomi Aquara gateway and connected devices
-xiaomi_aqara:
-  discovery_retry: 10
-  gateways:
-#    - key: !secret xiaomiKey1
-#      host: ***REMOVED***
-#      mac: !secret xiaomiMac1
-    - key: !secret xiaomiKey2
-      host: ***REMOVED***
-      mac: !secret xiaomiMac2
+# xiaomi_aqara:
+#   discovery_retry: 10
+#   gateways:
+# #    - key: !secret xiaomiKey1 # First gateway bought, updated and thus less open to Hass
+# #      host: ***REMOVED***
+# #      mac: !secret xiaomiMac1
+#     - key: !secret xiaomiKey2 # Second gateway that we try not to update
+#       host: ***REMOVED***
+#       mac: !secret xiaomiMac2
     
 point:
   client_id: !secret point_clientID
