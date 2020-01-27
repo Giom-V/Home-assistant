@@ -746,6 +746,8 @@
   action:
   - service: scene.turn_on
     entity_id: scene.PinkAndPurpleLivingRoomDimmed
+  - delay:
+      minutes: 15
   - service: script.vacuum_diningroom
 - id: '1579612388601'
   alias: Switch off all lights when nobody's home for 30mn
@@ -756,7 +758,6 @@
     from: Home
     platform: state
     to: Away
-  condition: []
   action:
   - entity_id: scene.lightsoff
     service: scene.turn_on
