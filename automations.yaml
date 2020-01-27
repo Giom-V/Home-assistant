@@ -765,7 +765,12 @@
   alias: Télécommande ikea - toggle
   initial_state: 'on'
   trigger:
-    platform: event
+  - platform: event
+    event_type: deconz_event
+    event_data:
+      id: tradfri_remote_control
+      event: 1001
+  - platform: event
     event_type: deconz_event
     event_data:
       id: tradfri_remote_control
@@ -780,7 +785,12 @@
   alias: Télécommande ikea - increase brightness
   initial_state: 'on'
   trigger:
-    platform: event
+  - platform: event
+    event_type: deconz_event
+    event_data:
+      id: tradfri_remote_control
+      event: 2001
+  - platform: event
     event_type: deconz_event
     event_data:
       id: tradfri_remote_control
@@ -808,7 +818,12 @@
   alias: Télécommande ikea - decrease brightness
   initial_state: 'on'
   trigger:
-    platform: event
+  - platform: event
+    event_type: deconz_event
+    event_data:
+      id: tradfri_remote_control
+      event: 3001
+  - platform: event
     event_type: deconz_event
     event_data:
       id: tradfri_remote_control
@@ -839,7 +854,12 @@
   alias: Télécommande ikea - left button
   initial_state: 'on'
   trigger:
-    platform: event
+  - platform: event
+    event_type: deconz_event
+    event_data:
+      id: tradfri_remote_control
+      event: 4001
+  - platform: event
     event_type: deconz_event
     event_data:
       id: tradfri_remote_control
@@ -851,7 +871,12 @@
   alias: Télécommande ikea - right button
   initial_state: 'on'
   trigger:
-    platform: event
+  - platform: event
+    event_type: deconz_event
+    event_data:
+      id: tradfri_remote_control
+      event: 5001
+  - platform: event
     event_type: deconz_event
     event_data:
       id: tradfri_remote_control
