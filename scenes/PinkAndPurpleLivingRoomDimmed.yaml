@@ -1,0 +1,13 @@
+name: PinkAndPurpleLivingRoomDimmed
+id: PinkAndPurpleLivingRoomDimmed
+entities:
+  light.colorv2:
+    state: on
+    brightness: 1
+    rgb_color: [255,25,246]
+  light.color:
+    state: on
+    brightness: 1
+    rgb_color: [255,0,0]
+  light.white:
+    state: off

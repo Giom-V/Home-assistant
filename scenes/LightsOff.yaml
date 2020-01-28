@@ -1,0 +1,11 @@
+name: LightsOff
+id: LightsOff
+entities:
+  light.colorv2:
+    state: off
+  light.color:
+    state: off
+  light.white:
+    state: off
+  switch.cuisine:
+    state: off
