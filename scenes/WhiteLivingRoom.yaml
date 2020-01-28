@@ -3,12 +3,9 @@ id: WhiteLivingRoom
 entities:
   light.colorv2:
     state: on
-    brightness: 255
     color_temp: 200
   light.color:
     state: on
-    brightness: 255
     color_temp: 200
   light.white:
     state: on
-    brightness: 255

@@ -745,7 +745,9 @@
     platform: time
   action:
   - service: scene.turn_on
-    entity_id: scene.PinkAndPurpleLivingRoomDimmed
+    entity_id: scene.PinkAndPurpleLivingRoom
+  - service: scene.turn_on
+    entity_id: scene.MinBrightnessLivingRoom
   - delay:
       minutes: 15
   - service: script.vacuum_diningroom
