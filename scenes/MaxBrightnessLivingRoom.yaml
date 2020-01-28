@@ -1,0 +1,9 @@
+name: MaxBrightnessLivingRoom
+id: MaxBrightnessLivingRoom
+entities:
+  light.colorv2:
+    brightness: 255
+  light.color:
+    brightness: 255
+  light.white:
+    brightness: 255

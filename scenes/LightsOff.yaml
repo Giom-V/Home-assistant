@@ -9,3 +9,5 @@ entities:
     state: off
   switch.cuisine:
     state: off
+  light.salle_a_manger:
+    state: off

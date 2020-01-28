@@ -1,0 +1,9 @@
+name: MinBrightnessLivingRoom
+id: MinBrightnessLivingRoom
+entities:
+  light.colorv2:
+    brightness: 1
+  light.color:
+    brightness: 1
+  light.white:
+    brightness: 1
