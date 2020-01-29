@@ -603,7 +603,7 @@ light:
     name: Cuisine
     entity_id: switch.lumiere_cuisine
 
-scene: !include_dir_merge_named scenes/
+scene: !include_dir_merge_list scenes
 
 wake_on_lan:
 switch:

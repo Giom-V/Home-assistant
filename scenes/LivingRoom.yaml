@@ -1,0 +1,46 @@
+- id: MinBrightnessLivingRoom
+  name: MinBrightnessLivingRoom
+  entities:
+    light.colorv2:
+      state: on
+      brightness: 1
+    light.color:
+      state: on
+      brightness: 1
+    light.white:
+      state: on
+      brightness: 1
+- id: MaxBrightnessLivingRoom
+  name: MaxBrightnessLivingRoom
+  entities:
+    light.colorv2:
+      state: on
+      brightness: 255
+    light.color:
+      state: on
+      brightness: 255
+    light.white:
+      state: on
+      brightness: 255
+- id: WhiteLivingRoom
+  name: WhiteLivingRoom
+  entities:
+    light.colorv2:
+      state: on
+      color_temp: 200
+    light.color:
+      state: on
+      color_temp: 200
+    light.white:
+      state: on
+- name: PinkAndPurpleLivingRoom
+  id: PinkAndPurpleLivingRoom
+  entities:
+    light.colorv2:
+      state: on
+      rgb_color: [255,25,246]
+    light.color:
+      state: on
+      rgb_color: [255,0,0]
+    light.white:
+      state: off
