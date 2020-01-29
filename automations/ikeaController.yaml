@@ -46,6 +46,28 @@
     - light.white
     service: light.turn_on
   initial_state: 'on'
+- id: tradfri_remote_control_switch_on_hold
+  alias: Télécommande ikea - switch on hold
+  trigger:
+  - event_data:
+      event: 1003 # hold then release toggle button
+      id: tradfri_remote_control
+    event_type: deconz_event
+    platform: event
+  - platform: event
+    event_type: deconz_event
+    event_data:
+      id: tradfri_remote_control
+      event: 2003 # hold then release brightness increase button
+  - platform: event
+    event_type: deconz_event
+    event_data:
+      id: tradfri_remote_control
+      event: 4003 # hold then release left button
+  action:
+  - service: scene.turn_on
+    entity_id: scene.MaxBrightnessLivingRoom
+  initial_state: 'on'
 - id: tradfri_remote_control_increase_brightness
   alias: Télécommande ikea - increase brightness
   initial_state: 'on'
@@ -106,6 +128,23 @@
       entity_id: light.white
       brightness: '{% set bri = state_attr(''light.white'', ''brightness'') | float
         %} {% set half_bri = bri / 2 %} {{ half_bri | round(0, "ceil") | int }}'
+- id: tradfri_remote_control_decrease_brightness_hold
+  alias: Télécommande ikea - decrease brightness hold
+  initial_state: 'on'
+  trigger:
+  - platform: event
+    event_type: deconz_event
+    event_data:
+      id: tradfri_remote_control
+      event: 3003 # hold then release brightness decrease button
+  - platform: event
+    event_type: deconz_event
+    event_data:
+      id: tradfri_remote_control
+      event: 5003 # hold then release right button
+  action:
+  - service: scene.turn_on
+    entity_id: scene.MinBrightnessLivingRoom
 - id: tradfri_remote_control_left_arrow
   alias: Télécommande ikea - left button
   initial_state: 'on'
