@@ -1,0 +1,245 @@
+- id: TimeLapse
+  alias: TimeLapse
+  trigger:
+  - hours: /1
+    minutes: /30
+    platform: time_pattern
+    seconds: '0'
+  condition:
+  - condition: state
+    entity_id: sun.sun
+    state: above_horizon
+  action:
+  - data:
+      entity_id: camera.raspberry_pi_camera
+      filename: ***REMOVED***/rpi_camera_{{ now().strftime("%Y%m%d-%H%M%S")
+        }}_day.jpg
+    service: camera.snapshot
+- id: TimeLapseNight
+  alias: TimeLapse Night
+  trigger:
+    platform: time_pattern
+    hours: /1
+    minutes: 0
+    seconds: 0
+  condition:
+  - condition: state
+    entity_id: sun.sun
+    state: below_horizon
+  action:
+  - service: camera.snapshot
+    data:
+      entity_id: camera.raspberry_pi_camera
+      filename: ***REMOVED***/rpi_camera_{{ now().strftime("%Y%m%d-%H%M%S")
+        }}_night.jpg
+- id: TimeLapseNightIfSnowing
+  alias: TimeLapse Night if snowing
+  trigger:
+    platform: time_pattern
+    hours: /1
+    minutes: 0
+    seconds: 0
+  condition:
+    condition: and
+    conditions:
+    - condition: state
+      entity_id: sun.sun
+      state: below_horizon
+    - condition: or
+      conditions:
+      - condition: state
+        entity_id: sensor.dark_sky_precip_1d
+        state: snow
+      - condition: state
+        entity_id: sensor.dark_sky_precip_1d
+        state: sleet
+  action:
+  - service: camera.snapshot
+    data:
+      entity_id: camera.raspberry_pi_camera
+      filename: ***REMOVED***/rpi_camera_{{ now().strftime("%Y%m%d-%H%M%S")
+        }}_night.jpg
+- id: Sunrise-15
+  alias: 15mn before sunrise
+  trigger:
+  - platform: sun
+    event: sunrise
+    offset: -00:15:00
+  action:
+  - service: camera.snapshot
+    data:
+      entity_id: camera.raspberry_pi_camera
+      filename: ***REMOVED***/rpi_camera_{{ now().strftime("%Y%m%d-%H%M%S")
+        }}_sunrise_m15.jpg
+- id: Sunrise-10
+  alias: 10mn before sunrise
+  trigger:
+  - platform: sun
+    event: sunrise
+    offset: -00:10:00
+  action:
+  - service: camera.snapshot
+    data:
+      entity_id: camera.raspberry_pi_camera
+      filename: ***REMOVED***/rpi_camera_{{ now().strftime("%Y%m%d-%H%M%S")
+        }}_sunrise_m10.jpg
+- id: Sunrise-5
+  alias: 5mn before sunrise
+  trigger:
+  - platform: sun
+    event: sunrise
+    offset: -00:05:00
+  action:
+  - service: camera.snapshot
+    data:
+      entity_id: camera.raspberry_pi_camera
+      filename: ***REMOVED***/rpi_camera_{{ now().strftime("%Y%m%d-%H%M%S")
+        }}_sunrise_m05.jpg
+- id: Sunrise
+  alias: Sunrise
+  trigger:
+  - platform: sun
+    event: sunrise
+  action:
+  - service: camera.snapshot
+    data:
+      entity_id: camera.raspberry_pi_camera
+      filename: ***REMOVED***/rpi_camera_{{ now().strftime("%Y%m%d-%H%M%S")
+        }}_sunrise.jpg
+- id: Sunrise+05
+  alias: 5mn after sunrise
+  trigger:
+  - platform: sun
+    event: sunrise
+    offset: 00:05:00
+  action:
+  - service: camera.snapshot
+    data:
+      entity_id: camera.raspberry_pi_camera
+      filename: ***REMOVED***/rpi_camera_{{ now().strftime("%Y%m%d-%H%M%S")
+        }}_sunrise_p05.jpg
+- id: SunriseToPhone
+  alias: Send sunrise picture to slack
+  trigger:
+  - platform: sun
+    event: sunrise
+    offset: 00:02:00
+  action:
+    service: script.turn_on
+    entity_id: script.1542490337256
+- id: DailyGif
+  alias: Create the daily Gif
+  trigger:
+  - platform: time
+    at: '23:30:00'
+  action:
+    service: script.notify_pushover
+    data:
+      today: '{{ now().strftime("%Y%m%d") }}'
+- id: Sunrise+10
+  alias: 10mn after sunrise
+  trigger:
+  - platform: sun
+    event: sunrise
+    offset: 00:10:00
+  action:
+  - service: camera.snapshot
+    data:
+      entity_id: camera.raspberry_pi_camera
+      filename: ***REMOVED***/rpi_camera_{{ now().strftime("%Y%m%d-%H%M%S")
+        }}_sunrise_p10.jpg
+- id: Sunrise+15
+  alias: 15mn after sunrise
+  trigger:
+  - platform: sun
+    event: sunrise
+    offset: 00:15:00
+  action:
+  - service: camera.snapshot
+    data:
+      entity_id: camera.raspberry_pi_camera
+      filename: ***REMOVED***/rpi_camera_{{ now().strftime("%Y%m%d-%H%M%S")
+        }}_sunrise_p15.jpg
+- id: Sunset-15
+  alias: 15mn before sunset
+  trigger:
+  - platform: sun
+    event: sunset
+    offset: -00:15:00
+  action:
+  - service: camera.snapshot
+    data:
+      entity_id: camera.raspberry_pi_camera
+      filename: ***REMOVED***/rpi_camera_{{ now().strftime("%Y%m%d-%H%M%S")
+        }}_sunset_m15.jpg
+- id: Sunset-10
+  alias: 10mn before sunset
+  trigger:
+  - platform: sun
+    event: sunset
+    offset: -00:10:00
+  action:
+  - service: camera.snapshot
+    data:
+      entity_id: camera.raspberry_pi_camera
+      filename: ***REMOVED***/rpi_camera_{{ now().strftime("%Y%m%d-%H%M%S")
+        }}_sunset_m10.jpg
+- id: Sunset-5
+  alias: 5mn before sunset
+  trigger:
+  - platform: sun
+    event: sunset
+    offset: -00:05:00
+  action:
+  - service: camera.snapshot
+    data:
+      entity_id: camera.raspberry_pi_camera
+      filename: ***REMOVED***/rpi_camera_{{ now().strftime("%Y%m%d-%H%M%S")
+        }}_sunset_m05.jpg
+- id: Sunset
+  alias: Sunset
+  trigger:
+  - platform: sun
+    event: sunset
+  action:
+  - service: camera.snapshot
+    data:
+      entity_id: camera.raspberry_pi_camera
+      filename: ***REMOVED***/rpi_camera_{{ now().strftime("%Y%m%d-%H%M%S")
+        }}_sunset.jpg
+- id: Sunset+05
+  alias: 5mn after sunset
+  trigger:
+  - platform: sun
+    event: sunset
+    offset: 00:5:00
+  action:
+  - service: camera.snapshot
+    data:
+      entity_id: camera.raspberry_pi_camera
+      filename: ***REMOVED***/rpi_camera_{{ now().strftime("%Y%m%d-%H%M%S")
+        }}_sunset_p05.jpg
+- id: Sunset+10
+  alias: 10mn after sunset
+  trigger:
+  - platform: sun
+    event: sunset
+    offset: 00:10:00
+  action:
+  - service: camera.snapshot
+    data:
+      entity_id: camera.raspberry_pi_camera
+      filename: ***REMOVED***/rpi_camera_{{ now().strftime("%Y%m%d-%H%M%S")
+        }}_sunset_p10.jpg
+- id: Sunset+15
+  alias: 15mn after sunset
+  trigger:
+  - platform: sun
+    event: sunset
+    offset: 00:15:00
+  action:
+  - service: camera.snapshot
+    data:
+      entity_id: camera.raspberry_pi_camera
+      filename: ***REMOVED***/rpi_camera_{{ now().strftime("%Y%m%d-%H%M%S")
+        }}_sunset_p15.jpg

@@ -1,0 +1,142 @@
+- id: tradfri_remote_control_switch_off
+  alias: Télécommande ikea - switch off
+  trigger:
+  - event_data:
+      event: 1001
+      id: tradfri_remote_control
+    event_type: deconz_event
+    platform: event
+  - event_data:
+      event: 1002
+      id: tradfri_remote_control
+    event_type: deconz_event
+    platform: event
+  condition:
+  - condition: state
+    entity_id: light.colorv2
+    state: 'on'
+  action:
+  - entity_id:
+    - light.colorv2
+    - light.color
+    - light.white
+    service: light.turn_off
+  initial_state: 'on'
+- id: tradfri_remote_control_switch_on
+  alias: Télécommande ikea - switch on
+  trigger:
+  - event_data:
+      event: 1001
+      id: tradfri_remote_control
+    event_type: deconz_event
+    platform: event
+  - event_data:
+      event: 1002
+      id: tradfri_remote_control
+    event_type: deconz_event
+    platform: event
+  condition:
+  - condition: state
+    entity_id: light.colorv2
+    state: 'off'
+  action:
+  - entity_id:
+    - light.colorv2
+    - light.color
+    - light.white
+    service: light.turn_on
+  initial_state: 'on'
+- id: tradfri_remote_control_increase_brightness
+  alias: Télécommande ikea - increase brightness
+  initial_state: 'on'
+  trigger:
+  - platform: event
+    event_type: deconz_event
+    event_data:
+      id: tradfri_remote_control
+      event: 2001
+  - platform: event
+    event_type: deconz_event
+    event_data:
+      id: tradfri_remote_control
+      event: 2002
+  action:
+  - service: light.turn_on
+    data_template:
+      entity_id: light.colorv2
+      brightness: '{% set bri = state_attr(''light.colorv2'', ''brightness'') | int
+        %} {{ [bri * 2, 255] | min }}'
+  - service: light.turn_on
+    data_template:
+      entity_id: light.color
+      brightness: '{% set bri = state_attr(''light.color'', ''brightness'') | int
+        %} {{ [bri * 2, 255] | min }}'
+  - service: light.turn_on
+    data_template:
+      entity_id: light.white
+      brightness: '{% set bri = state_attr(''light.white'', ''brightness'') | int
+        %} {{ [bri * 2, 255] | min }}'
+- id: tradfri_remote_control_decrease_brightness
+  alias: Télécommande ikea - decrease brightness
+  initial_state: 'on'
+  trigger:
+  - platform: event
+    event_type: deconz_event
+    event_data:
+      id: tradfri_remote_control
+      event: 3001
+  - platform: event
+    event_type: deconz_event
+    event_data:
+      id: tradfri_remote_control
+      event: 3002
+  action:
+  - service: light.turn_on
+    data_template:
+      entity_id: light.colorv2
+      brightness: '{% set bri = state_attr(''light.colorv2'', ''brightness'') | float
+        %} {% set half_bri = bri / 2 %} {{ half_bri | round(0, "ceil") | int }}'
+  - service: light.turn_on
+    data_template:
+      entity_id: light.color
+      brightness: '{% set bri = state_attr(''light.color'', ''brightness'') | float
+        %} {% set half_bri = bri / 2 %} {{ half_bri | round(0, "ceil") | int }}'
+  - service: light.turn_on
+    data_template:
+      entity_id: light.white
+      brightness: '{% set bri = state_attr(''light.white'', ''brightness'') | float
+        %} {% set half_bri = bri / 2 %} {{ half_bri | round(0, "ceil") | int }}'
+- id: tradfri_remote_control_left_arrow
+  alias: Télécommande ikea - left button
+  initial_state: 'on'
+  trigger:
+  - platform: event
+    event_type: deconz_event
+    event_data:
+      id: tradfri_remote_control
+      event: 4001
+  - platform: event
+    event_type: deconz_event
+    event_data:
+      id: tradfri_remote_control
+      event: 4002
+  action:
+  - service: scene.turn_on
+    entity_id: scene.WhiteLivingRoom
+- id: tradfri_remote_control_right_arrow
+  alias: Télécommande ikea - right button
+  initial_state: 'on'
+  trigger:
+  - platform: event
+    event_type: deconz_event
+    event_data:
+      id: tradfri_remote_control
+      event: 5001
+  - platform: event
+    event_type: deconz_event
+    event_data:
+      id: tradfri_remote_control
+      event: 5002
+  action:
+  - service: scene.turn_on
+    entity_id: scene.PinkAndPurpleLivingRoom
