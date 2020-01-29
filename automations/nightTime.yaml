@@ -1,0 +1,13 @@
+- id: NightTime
+  alias: Night time
+  trigger:
+  - at: '19:15'
+    platform: time
+  action:
+  - service: scene.turn_on
+    entity_id: scene.PinkAndPurpleLivingRoom
+  - service: scene.turn_on
+    entity_id: scene.MinBrightnessLivingRoom
+  - delay:
+      minutes: 15
+  - service: script.vacuum_diningroom

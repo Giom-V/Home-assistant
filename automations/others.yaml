@@ -1,0 +1,33 @@
+- id: '1576116024811'
+  alias: Switch off lights 30mn after sunrise
+  description: ''
+  trigger:
+  - event: sunrise
+    offset: 00:30
+    platform: sun
+  condition: []
+  action:
+  - service: scene.turn_on
+    entity_id: scene.LightsOff
+- id: '1576760475010'
+  alias: Switch off all lights at 22:05
+  description: ''
+  trigger:
+  - at: '22:05'
+    platform: time
+  condition: []
+  action:
+  - service: scene.turn_on
+    entity_id: scene.LightsOff
+- id: '1579612388601'
+  alias: Switch off all lights when nobody's home for 30mn
+  description: Switch off all lights when nobody's home for 30mn
+  trigger:
+  - entity_id: binary_sensor.people_home
+    for: 30m
+    from: Home
+    platform: state
+    to: Away
+  action:
+  - entity_id: scene.lightsoff
+    service: scene.turn_on

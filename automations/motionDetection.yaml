@@ -1,0 +1,43 @@
+- id: MotionTest
+  alias: Motion detected
+  trigger:
+    payload: 'ON'
+    platform: mqtt
+    topic: Home/dafang_camera/motion
+  action:
+  - delay: 00:01:00
+  - service: hangouts.send_message
+    data:
+      target:
+      - id: Ugx0d-jMFj_SbB85EUZ4AaABAagB0ciABA
+      message:
+      - text: Motion detected
+      data:
+        image_file: /home/pi/FTP/dafang_camera/last_picture.jpg
+- id: '1576556026038'
+  alias: Turn motion detection on when nobody's at home
+  description: ''
+  trigger:
+  - entity_id: binary_sensor.people_home
+    for: 15m
+    from: Home
+    platform: state
+    to: Away
+  condition: []
+  action:
+    service: switch.turn_on
+    data:
+      entity_id: switch.dafang_camera_motion_detection
+- id: '1576556089963'
+  alias: Turn motion detection off when somebody's at home
+  description: ''
+  trigger:
+  - entity_id: binary_sensor.people_home
+    from: Away
+    platform: state
+    to: Home
+  condition: []
+  action:
+    service: switch.turn_off
+    data:
+      entity_id: switch.dafang_camera_motion_detection

@@ -1,0 +1,42 @@
+- id: LightOnSolarium30mnBeforSunset
+  alias: swith light on at sunset on weekdays
+  trigger:
+  - platform: sun
+    event: sunset
+    offset: -00:30:00
+  condition:
+  - condition: time
+    after: '16:30:00'
+    before: '18:30:00'
+  action:
+  - service: homeassistant.turn_on
+    entity_id: light.solarium
+  - service: notify.slack
+    data:
+      message: Lights on 30mn before sunset!
+- id: LightOnSolariumAt430pm
+  alias: swith light on at 4:30 on weekdays
+  trigger:
+  - platform: time
+    at: '16:30:00'
+  condition:
+  - condition: sun
+    after: sunset
+    after_offset: -00:30:00
+  action:
+  - service: homeassistant.turn_on
+    entity_id: light.solarium
+  - service: notify.slack
+    data:
+      message: Lights on at 4:30!
+- id: LightOffSolariumAt6:30pm
+  alias: swith light off at 6:30pm on weekdays
+  trigger:
+  - platform: time
+    at: '18:30:00'
+  action:
+  - service: homeassistant.turn_off
+    entity_id: light.solarium
+  - service: notify.slack
+    data:
+      message: Lights off!
