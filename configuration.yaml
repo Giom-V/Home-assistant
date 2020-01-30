@@ -141,6 +141,14 @@ input_select:
       - Living room
       - Aurore's zone
     initial: Select Input
+  living_room_color:
+    name: Which color do you want the livingroom to be in?
+    options:
+      - None
+      - White
+      - Purple
+      - Pink
+      - Blue
 # Tests
   destination:
     name: destination

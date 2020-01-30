@@ -119,7 +119,7 @@
   - service_template: "light.turn_{{ 'on' if is_state('light.white','on') or is_state('light.colorv2','off') else 'off' }}"
     entity_id: light.white
     data:
-      brightness: 1
+      brightness: 1 #TODO: change for a data template to remove an error
   - entity_id:
     - light.colorv2
     - light.color
@@ -158,8 +158,8 @@
       id: tradfri_remote_control
       event: 5002
   action:
-  - service: scene.turn_on
-    entity_id: scene.PinkAndPurpleLivingRoom
+  - service: script.turn_on
+    entity_id: script.switch_living_room_color
 - id: tradfri_remote_control_hold_for_max_bightness
   alias: Télécommande ikea - hold for max bightness
   trigger:
@@ -182,7 +182,7 @@
   - service_template: "light.turn_{{ 'on' if is_state('light.white','on') or is_state('light.colorv2','off') else 'off' }}"
     entity_id: light.white
     data:
-      brightness: 255
+      brightness: 255 #TODO: change for a data template to remove an error
   - entity_id:
     - light.colorv2
     - light.color
@@ -190,4 +190,10 @@
     data:
       brightness: 255
   initial_state: 'on'
-  
+- id: living_room_color
+  alias: Change Living room color
+  trigger:
+  - platform: state
+    entity_id: input_select.living_room_color
+  action:
+  - service: script.living_room_color
