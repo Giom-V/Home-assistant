@@ -197,3 +197,18 @@
     entity_id: input_select.living_room_color
   action:
   - service: script.living_room_color
+- id: livingroom_max_brightness_morning
+  alias: Switch back to max brightness in the morning
+  description: ''
+  trigger:
+  - entity_id: light.colorv2
+    from: 'off'
+    platform: state
+    to: 'on'
+  condition:
+  - after: '5:00'
+    before: '12:00'
+    condition: time
+  action:
+  - service: scene.turn_on
+    entity_id: scene.maxbrightnesslivingroom
