@@ -22,6 +22,15 @@
     light.white:
       state: on
       brightness: 255
+- name: LivingRoomOff
+  id: LivingRoomOff
+  entities:
+    light.colorv2:
+      state: off
+    light.color:
+      state: off
+    light.white:
+      state: off
 - id: WhiteLivingRoom
   name: WhiteLivingRoom
   entities:
@@ -42,5 +51,27 @@
     light.color:
       state: on
       rgb_color: [255,0,0]
+    light.white:
+      state: off
+- name: PinkLivingRoom
+  id: PinkLivingRoom
+  entities:
+    light.colorv2:
+      state: on
+      rgb_color: [255,104,179]
+    light.color:
+      state: on
+      rgb_color: [255,36,147]
+    light.white:
+      state: off
+- name: BlueLivingRoom
+  id: BlueLivingRoom
+  entities:
+    light.colorv2:
+      state: on
+      rgb_color: [72,255,236]
+    light.color:
+      state: on
+      rgb_color: [255,228,205]
     light.white:
       state: off
