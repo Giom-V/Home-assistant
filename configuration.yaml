@@ -33,6 +33,10 @@ homeassistant:
     - type: homeassistant
 #    - type: legacy_api_password
 #      api_password: !secret http_password
+  # https://www.home-assistant.io/docs/configuration/splitting_configuration/
+  # https://www.home-assistant.io/docs/configuration/packages/
+  # Splitted between integrations and entites as https://github.com/jonathanadams/Home-Assistant-Configuration
+  packages: !include_dir_named integrations
 
 
 ####################################################
