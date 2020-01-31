@@ -1,3 +1,6 @@
+###################################################
+#     Home Assistant Main Configuration File      #
+###################################################
 homeassistant:
   # Name of the location where Home Assistant is running
   name: Quebec
@@ -29,17 +32,24 @@ homeassistant:
       allow_bypass_login: true
     - type: homeassistant
 #    - type: legacy_api_password
-#      api_password: !secret http_password    
+#      api_password: !secret http_password
 
+
+####################################################
+#        Home Assistant Components Enabled         #
+####################################################
+# https://www.home-assistant.io/components/system_health/
 system_health:
 # Show links to resources in log and frontend introduction: Enables the 
 # frontend
 frontend:
   javascript_version: latest
+
+# https://www.home-assistant.io/components/config/
 # Enables configuration UI
 config:
-# Uncomment this if you are using SSL/TLS, running in Docker container, 
-# etc.
+
+# https://home-assistant.io/components/http/
 http:
   base_url: !secret base_url
   ip_ban_enabled: true
@@ -47,8 +57,11 @@ http:
  # ssl_certificate: /home/homeassistant/.homeassistant/certificate/ssl.crt
  # ssl_key: /home/homeassistant/.homeassistant/certificate/ssl.key
 api:
+  
+# https://www.home-assistant.io/integrations/mobile_app/
 #mobile_app:
 
+# https://www.home-assistant.io/components/updater/
 # Checks for available updates Note: This component will send some 
 # information about your system to the developers to assist with 
 # development of Home Assistant. For more information, please see: 
@@ -56,6 +69,11 @@ api:
 updater:
   # Optional, allows Home Assistant developers to focus on popular 
   # components. include_used_components: true
+
+####################################################
+#                     Discovery                    #
+####################################################
+# https://www.home-assistant.io/components/discovery/
 # Discover some devices automatically 
 discovery:
   ignore:
@@ -65,11 +83,16 @@ discovery:
 #conversation:
 # Enables support for tracking state changes over time
 history:
+
+# https://www.home-assistant.io/components/recorder/
 # Tracked history is kept for 368 days
 recorder:
   
+# https://www.home-assistant.io/components/logbook/
 # View all events in a logbook
 logbook:
+
+# https://www.home-assistant.io/components/logger/
 # verbose logs
 logger:
   default: error
@@ -85,6 +108,8 @@ logger:
     homeassistant.custom_components.email: debug
     #pydeconz: debug
     #homeassistant.components.deconz: debug
+
+# https://www.home-assistant.io/components/map/
 # Enables a map showing the location of tracked devices
 map:
 # Track the sun
@@ -484,7 +509,8 @@ device_tracker:
     new_device_defaults:
       track_new_devices: True
       hide_if_away: False
-    
+  
+# https://www.home-assistant.io/components/person/  
 person:
   - name: Giom
     id: giom
@@ -562,6 +588,10 @@ withings:
     - Aurore Vernade
     - Claire Mérot
 
+####################################################
+#                       Zones                      #
+####################################################
+# https://www.home-assistant.io/components/zone/
 zone:
   - name: Université
     latitude: 46.779144
