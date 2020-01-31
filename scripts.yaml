@@ -40,18 +40,9 @@ vacuum_kitchen_and_diningroom:
       data:
         entity_id: vacuum.xiaomi_vacuum_cleaner
         command: app_zoned_clean
-        params: [[24384,22183,27484,25133,1]]
-    - delay:
-        minutes: 1
-    - wait_template: "{{ is_state('vacuum.xiaomi_vacuum_cleaner', 'Returning to dock') }}"
-    - service: vacuum.stop
-      data:
-        entity_id: vacuum.xiaomi_vacuum_cleaner
-    - service: vacuum.send_command
-      data:
-        entity_id: vacuum.xiaomi_vacuum_cleaner
-        command: app_zoned_clean
-        params: [[24964,25174,27714,28424,1]]
+        params: 
+        - [24384,22183,27484,25133,1]
+        - [24964,25174,27714,28424,1]
 vacuum_kitchen:
   alias: "Vacuum Kitchen"
   sequence:
@@ -153,6 +144,16 @@ vacuum_dispatch:
           {% elif room|lower in ("la cuisine et la salle à manger", "la salle à manger et la cuisine", "le sejour") %}
             script.vacuum_kitchen_and_diningroom
           {% endif %}
+vaccum_reset_fan_speed_after_mopping:
+  alias: "Reset vaccum's fan speed after mopping"
+  sequence:
+    - delay:
+        minutes: 1
+    - wait_template: "{{ is_state('vacuum.xiaomi_vacuum_cleaner', 'docked') }}"
+    - service: vacuum.set_fan_speed
+      data:
+        fan_speed: Balanced
+        entity_id: vacuum.xiaomi_vacuum_cleaner
 mop_bathroom:
   alias: "Mop Bathroom"
   sequence:
@@ -166,13 +167,9 @@ mop_bathroom:
     - service: script.turn_on
       data:
         entity_id: script.vacuum_bathroom
-    - delay:
-        minutes: 1
-    - wait_template: "{{ is_state('vacuum.xiaomi_vacuum_cleaner', 'docked') }}"
-    - service: vacuum.set_fan_speed
+    - service: script.turm_on
       data:
-        fan_speed: Balanced
-        entity_id: vacuum.xiaomi_vacuum_cleaner
+        entity_id: script.vaccum_reset_fan_speed_after_mopping
 mop_kitchen:
   alias: "Mop Kitchen"
   sequence:
@@ -186,13 +183,9 @@ mop_kitchen:
     - service: script.turn_on
       data:
         entity_id: script.vacuum_kitchen
-    - delay:
-        minutes: 1
-    - wait_template: "{{ is_state('vacuum.xiaomi_vacuum_cleaner', 'docked') }}"
-    - service: vacuum.set_fan_speed
+    - service: script.turm_on
       data:
-        fan_speed: Balanced
-        entity_id: vacuum.xiaomi_vacuum_cleaner
+        entity_id: script.vaccum_reset_fan_speed_after_mopping
 mop_diningroom:
   alias: "Mop Diningroom"
   sequence:
@@ -206,13 +199,9 @@ mop_diningroom:
     - service: script.turn_on
       data:
         entity_id: script.vacuum_diningroom
-    - delay:
-        minutes: 1
-    - wait_template: "{{ is_state('vacuum.xiaomi_vacuum_cleaner', 'docked') }}"
-    - service: vacuum.set_fan_speed
+    - service: script.turm_on
       data:
-        fan_speed: Balanced
-        entity_id: vacuum.xiaomi_vacuum_cleaner
+        entity_id: script.vaccum_reset_fan_speed_after_mopping
 mop_kitchen_and_dining_room:
   alias: "Mop Kitchen and dining room"
   sequence:
@@ -226,13 +215,9 @@ mop_kitchen_and_dining_room:
     - service: script.turn_on
       data:
         entity_id: script.vacuum_kitchen_and_diningroom
-    - delay:
-        minutes: 1
-    - wait_template: "{{ is_state('vacuum.xiaomi_vacuum_cleaner', 'docked') }}"
-    - service: vacuum.set_fan_speed
+    - service: script.turm_on
       data:
-        fan_speed: Balanced
-        entity_id: vacuum.xiaomi_vacuum_cleaner
+        entity_id: script.vaccum_reset_fan_speed_after_mopping
 living_room_color:
   alias: "Change Living room color"
   sequence:
