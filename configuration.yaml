@@ -136,8 +136,8 @@ camera:
     username: root
     password: !secret dafangPassword
     authentication: basic
-    still_image_url: ***REMOVED***
-    stream_source: ***REMOVED***
+    still_image_url: !secret dafangImageUrl
+    stream_source: !secret dafangStreamSource
     verify_ssl: false
     scan_interval: 5
 #  - platform: xiaomi
