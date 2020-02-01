@@ -4,6 +4,11 @@ python:
 before_install:
   - mv travis_secrets.yaml secrets.yaml
   - sudo apt-get install -y libudev-dev 
+  - touch ./fake_id_rsa
+  - touch ./home-assistant_v2.db
+  - touch ./home-assistant.log
+  - touch ./fake_cert.pem
+  - touch ./known_devices.yaml
 install:
   - pip3 install homeassistant netdisco python-dateutil
 script:
