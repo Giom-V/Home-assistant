@@ -125,7 +125,7 @@ vacuum_dispatch:
   sequence:
     - service: script.turn_on
       data_template:
-        #TODO: ajouter les STP/STP
+        #TODO: ajouter les STP/STP et le "dans" avant (ou en fait les enlever ?). Ou alors utiliser "contains"?
         entity_id: >-
           {% if room|lower in ("cuisine", "la cuisine", "dans la cuisine", "kitchen", "the kitchen") %}
             script.vacuum_kitchen
@@ -141,7 +141,7 @@ vacuum_dispatch:
             script.vacuum_livingroom
           {% elif room|lower in ("zone d'aurore", "la zone d'aurore", "coin d'aurore", "le coin d'aurore", "aurore's zone") %}
             script.vacuum_aurore_zone
-          {% elif room|lower in ("la cuisine et la salle à manger", "la salle à manger et la cuisine", "le sejour") %}
+          {% elif room|lower in ("la cuisine et la salle à manger", "dans la cuisine et la salle à manger", "la salle à manger et la cuisine", "le sejour", "dans le sejour") %}
             script.vacuum_kitchen_and_diningroom
           {% endif %}
 vaccum_reset_fan_speed_after_mopping:
