@@ -17,9 +17,9 @@ homeassistant:
   # Customization file
   customize: !include customize.yaml
   whitelist_external_dirs:
-    - /home/homeassistant/.homeassistant/Share
-    - /tmp
-    - /home/pi/FTP/dafang_camera/
+    - !secret externalDirShare
+    - !secret externalDirTmp
+    - !secret externalDirDafang
   auth_providers:
     - type: trusted_networks
       trusted_networks:
