@@ -17,9 +17,9 @@ homeassistant:
   # Customization file
   customize: !include customize.yaml
   whitelist_external_dirs:
-    - ***REMOVED***
-    - ***REMOVED***
-    - ***REMOVED***
+    - !secret externalDirShare
+    - !secret externalDirTmp
+    - !secret externalDirDafang
   auth_providers:
     - type: trusted_networks
       trusted_networks:
