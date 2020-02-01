@@ -9,6 +9,7 @@ before_install:
   - touch ./home-assistant.log
   - touch ./fake_cert.pem
   - touch ./known_devices.yaml
+  - mkdir tmp/
 install:
   - pip3 install homeassistant netdisco python-dateutil
 script:
