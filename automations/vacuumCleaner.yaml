@@ -104,6 +104,7 @@
   trigger:
   - at: '14:00'
     platform: time
+  condition:
   - condition: state
     entity_id: binary_sensor.people_home
     state: 'off'
