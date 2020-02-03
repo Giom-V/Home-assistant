@@ -99,3 +99,15 @@
   - service: vacuum.return_to_base
     data:
       entity_id: vacuum.xiaomi_vacuum_cleaner
+- id: Vaccum_kitchen_and_dining_room_when_we_are_away
+  alias: Vaccum Kitchen and dining room when we are away
+  trigger:
+  - at: '14:00'
+    platform: time
+  - condition: state
+    entity_id: binary_sensor.people_home
+    state: 'off'
+  action:
+  - service: script.turn_on
+    data:
+      entity_id: script.vacuum_kitchen_and_diningroom
