@@ -1,0 +1,9 @@
+####################################################
+#                     Discovery                    #
+####################################################
+# https://www.home-assistant.io/components/discovery/
+# Discover some devices automatically 
+discovery:
+  ignore:
+   - yeelight
+  

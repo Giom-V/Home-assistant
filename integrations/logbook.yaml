@@ -1,0 +1,6 @@
+####################################################
+#                     Logs                         #
+####################################################
+# https://www.home-assistant.io/components/logbook/
+# View all events in a logbook
+logbook:
