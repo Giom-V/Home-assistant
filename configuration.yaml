@@ -53,49 +53,20 @@ frontend:
 # Enables configuration UI
 config:
 
-# https://home-assistant.io/components/http/
-http:
-  base_url: !secret base_url
-  ip_ban_enabled: true
-  login_attempts_threshold: 5
- # ssl_certificate: /home/homeassistant/.homeassistant/certificate/ssl.crt
- # ssl_key: /home/homeassistant/.homeassistant/certificate/ssl.key
+# https://home-assistant.io/components/api/
 api:
   
-# https://www.home-assistant.io/integrations/mobile_app/
-#mobile_app:
-
-# https://www.home-assistant.io/components/updater/
-# Checks for available updates Note: This component will send some 
-# information about your system to the developers to assist with 
-# development of Home Assistant. For more information, please see: 
-# https://home-assistant.io/blog/2016/10/25/explaining-the-updater/
-updater:
-  # Optional, allows Home Assistant developers to focus on popular 
-  # components. include_used_components: true
-
-####################################################
-#                     Discovery                    #
-####################################################
-# https://www.home-assistant.io/components/discovery/
-# Discover some devices automatically 
-discovery:
-  ignore:
-   - yeelight
-# Allows you to issue voice commands from the frontend in enabled 
-# browsers
-#conversation:
+# https://www.home-assistant.io/components/history/
 # Enables support for tracking state changes over time
 history:
 
 # https://www.home-assistant.io/components/recorder/
 # Tracked history is kept for 368 days
 recorder:
-  
-# https://www.home-assistant.io/components/logbook/
-# View all events in a logbook
-logbook:
 
+####################################################
+#                     Logs                         #
+####################################################
 # https://www.home-assistant.io/components/logger/
 # verbose logs
 logger:
@@ -113,11 +84,12 @@ logger:
     #pydeconz: debug
     #homeassistant.components.deconz: debug
 
-# https://www.home-assistant.io/components/map/
-# Enables a map showing the location of tracked devices
-map:
+####################################################
+#            Sensors and components                #
+####################################################
 # Track the sun
 sun:
+
 # IFTTT
 ifttt:
   key: !secret ifttt_APIKey
