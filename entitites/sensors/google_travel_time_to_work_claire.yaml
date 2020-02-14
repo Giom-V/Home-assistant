@@ -1,0 +1,11 @@
+# Google maps travel time (Claire)
+# https://www.home-assistant.io/integrations/google_travel_time/
+platform: google_travel_time
+name: Travel time to work (Claire)
+api_key: !secret gmap_APIKey
+origin: ***REMOVED***,***REMOVED*** #TODO: secret
+destination: ***REMOVED***
+options:
+  mode: transit
+  transit_routing_preference: less_walking
+scan_interval: 60

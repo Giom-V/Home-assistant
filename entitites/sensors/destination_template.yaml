@@ -1,0 +1,13 @@
+platform: template
+sensors:
+  dest_address: #Todo: secret coordinates
+    value_template: >-
+      {%- if is_state("input_select.destination", "Home") -%}
+        ***REMOVED***,***REMOVED***
+      {%- elif is_state("input_select.destination", "Work") -%}
+        ***REMOVED***
+      {%- elif is_state("input_select.destination", "Parents") -%}
+        ***REMOVED***
+      {%- else -%}
+        Unknown
+      {%- endif %}
