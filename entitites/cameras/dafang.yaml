@@ -1,0 +1,17 @@
+# Dafang camera <
+# Using the https://github.com/EliasKotlyar/Xiaomi-Dafang-Hacks firmware
+platform: generic
+name: Dafang camera
+username: root
+password: !secret dafangPassword
+authentication: basic
+still_image_url: !secret dafangImageUrl
+stream_source: !secret dafangStreamSource
+verify_ssl: false
+scan_interval: 5
+# Old integration
+#  - platform: xiaomi
+#    name: Dafang camera
+#    host: '192.168.86.165'
+#    model: 'yi'
+#    password: !secret dafangPassword
