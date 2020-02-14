@@ -65,59 +65,8 @@ history:
 recorder:
 
 ####################################################
-#                     Logs                         #
-####################################################
-# https://www.home-assistant.io/components/logger/
-# verbose logs
-logger:
-  default: error
-  logs:
-    homeassistant.components.camera: debug
-    homeassistant.components.sensor.google_travel_time: debug
-    homeassistant.components.device_tracker.google_maps: debug
-    homeassistant.components.notify.slack: debug
-    homeassistant.components.xiaomi_aqara: debug
-    homeassistant.components.xiaomi: debug
-    homeassistant.components.binary_sensor.xiaomi: debug
-#    homeassistant.components.mqtt: debug
-    homeassistant.custom_components.email: debug
-    #pydeconz: debug
-    #homeassistant.components.deconz: debug
-
-####################################################
 #            Sensors and components                #
 ####################################################
-# Track the sun
-sun:
-
-# IFTTT
-ifttt:
-  key: !secret ifttt_APIKey
-  
-# Raspberry Pi Camera
-camera:
-  - platform: rpi_camera
-    image_width: 3280
-    image_height: 2464
-    image_quality: 100 
-    image_rotation: 180
-    timelapse: 60000
-#    file_path: ***REMOVED***   # aucune idée de pourquoi ça ne fonctionne pas
-  - platform: generic
-    name: Dafang camera
-    username: root
-    password: !secret dafangPassword
-    authentication: basic
-    still_image_url: !secret dafangImageUrl
-    stream_source: !secret dafangStreamSource
-    verify_ssl: false
-    scan_interval: 5
-#  - platform: xiaomi
-#    name: Dafang camera
-#    host: '***REMOVED***'
-#    model: 'yi'
-#    password: !secret dafangPassword
-    
 # Meteo
 weather:
   - platform: darksky

@@ -1,0 +1,20 @@
+####################################################
+#                     Logs                         #
+####################################################
+# https://www.home-assistant.io/components/logger/
+# verbose logs
+logger:
+  default: error
+  logs:
+    homeassistant.components.camera: debug
+    homeassistant.components.sensor.google_travel_time: debug
+    homeassistant.components.device_tracker.google_maps: debug
+    homeassistant.components.notify.slack: debug
+    homeassistant.components.xiaomi_aqara: debug
+    homeassistant.components.xiaomi: debug
+    homeassistant.components.binary_sensor.xiaomi: debug
+#    homeassistant.components.mqtt: debug
+    homeassistant.custom_components.email: debug
+    #pydeconz: debug
+    #homeassistant.components.deconz: debug
+    
