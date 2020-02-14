@@ -1,4 +1,5 @@
 # Raspberry Pi Camera
+# https://www.home-assistant.io/integrations/rpi_camera/
 platform: rpi_camera
 image_width: 3280
 image_height: 2464

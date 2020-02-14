@@ -1,5 +1,6 @@
-# Dafang camera <
+# Dafang camera
 # Using the https://github.com/EliasKotlyar/Xiaomi-Dafang-Hacks firmware
+# Integration doc here: https://github.com/EliasKotlyar/Xiaomi-Dafang-Hacks/blob/master/integration/homeassistant/homeassistant.md
 platform: generic
 name: Dafang camera
 username: root
