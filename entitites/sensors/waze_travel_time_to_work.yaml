@@ -1,0 +1,7 @@
+# https://www.home-assistant.io/integrations/waze_travel_time/
+platform: waze_travel_time
+name: Travel time to work (Waze)
+origin: 46.7777219,-71.3269207 #TODO: secret
+destination: 46.814050,-71.221148
+region: 'US'
+scan_interval: 5

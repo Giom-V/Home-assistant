@@ -1,0 +1,6 @@
+# https://www.home-assistant.io/integrations/waze_travel_time/
+platform: waze_travel_time
+name: "Home to destination"
+origin: 46.7777219,-71.3269207 #Todo: secret coordinates
+destination: sensor.dest_address
+region: 'US'

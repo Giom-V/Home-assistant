@@ -1,0 +1,7 @@
+# https://www.home-assistant.io/integrations/google_travel_time/
+platform: google_travel_time
+name: Travel time to work (Gmap)
+api_key: !secret gmap_APIKey
+origin: 46.7777219,-71.3269207 #TODO: secret
+destination: 46.814050,-71.221148
+scan_interval: 60
