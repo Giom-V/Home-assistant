@@ -23,10 +23,10 @@
     from: Home
     platform: state
     to: Away
-  # condition:
-  # - condition: state
-  #   entity_id: input_boolean.visitors
-  #   state: 'off'
+  condition:
+  - condition: state
+    entity_id: input_boolean.visitors
+    state: 'off'
   action:
     service: switch.turn_on
     data:
