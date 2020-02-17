@@ -97,7 +97,7 @@ input_select:
       - Home
       - Work
       - Garderie
-  
+
 binary_sensor:
   - platform: aurora
   - platform: workday
@@ -258,19 +258,19 @@ withings:
 # https://www.home-assistant.io/components/zone/
 zone:
   - name: Université
-    latitude: 46.779144
+    latitude: 46.779144 #TODO: secret
     longitude: -71.2807537
     radius: 250
     icon: mdi:beaker
 
   - name: Ubisoft
-    latitude: 46.814050
+    latitude: 46.814050 #TODO: secret
     longitude: -71.221148
     radius: 100
     icon: mdi:gamepad-variant
     
   - name: Garderie
-    latitude: 46.776270
+    latitude: 46.776270 #TODO: secret
     longitude: -71.316373
     radius: 100
     icon: fas:baby
@@ -297,7 +297,7 @@ mqtt:
 
 vacuum:
   - platform: xiaomi_miio
-    host: 192.168.86.170
+    host: 192.168.86.170 #TODO: secret
     token: !secret roborockToken
 
 light:
@@ -311,9 +311,9 @@ wake_on_lan:
 switch:
   - platform: wake_on_lan
     name: Wake up PC
-    mac: "40:8D:5C:ED:3D:89"
-    host: 192.168.86.76
+    mac: "40:8D:5C:ED:3D:89" #TODO: secret
+    host: 192.168.86.76 #TODO: secret
   - platform: wake_on_lan
     name: Wake up NAS
-    mac: "10:bf:48:8b:77:e0"
-    host: 192.168.86.123
+    mac: "10:bf:48:8b:77:e0" #TODO: secret
+    host: 192.168.86.123 #TODO: secret
