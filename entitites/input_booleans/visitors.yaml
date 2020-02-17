@@ -1,0 +1,4 @@
+notify_home:
+  name: Do we have visitors?
+  initial: off
+  icon: mdi:wallet-travel
