@@ -1,4 +1,4 @@
-notify_home:
+visitors:
   name: Do we have visitors?
-  initial: off
+  initial: true #TODO: change default to off (this is on because the other automations are WIP)
   icon: mdi:wallet-travel
