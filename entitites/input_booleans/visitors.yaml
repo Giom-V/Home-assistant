@@ -1,4 +1,4 @@
-notify_home:
+visitors:
   name: Do we have visitors?
   initial: off
   icon: mdi:wallet-travel
