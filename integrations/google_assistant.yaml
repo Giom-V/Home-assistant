@@ -1,0 +1,13 @@
+# https://www.home-assistant.io/integrations/google_assistant/#configuration
+google_assistant:
+  project_id: !secret googleProject
+  service_account: !include ../secrets/home-assistant.json
+  report_state: true
+  expose_by_default: false
+  entity_config:
+    light.salle_a_manger:
+      expose: true
+      room: Salle à manger
+    light.salle_a_manger_deconz_group:
+      expose: true
+      room: Salle à manger

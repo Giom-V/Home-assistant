@@ -3,6 +3,7 @@
 # Do not ignore
 !/.gitignore
 !/.travis.yml
+!/secrets/*.fake.json
 
 # Logs
 logs
