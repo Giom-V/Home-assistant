@@ -61,7 +61,6 @@
       entity_id: light.Canape_gauche
       brightness: '{% set bri = state_attr(''light.Canape_gauche'', ''brightness'') | int
         %} {{ [bri * 2, 255] | min }}'
-  action:
   - service: light.turn_on
     data_template:
       entity_id: light.Canape_droite
@@ -92,7 +91,6 @@
       entity_id: light.Canape_gauche #TODO: passer direct de 1 à 16
       brightness: '{% set bri = state_attr(''light.Canape_gauche'', ''brightness'') | float
         %} {% set half_bri = bri / 2 %} {{ half_bri | round(0, "ceil") | int }}'
-  action:
   - service: light.turn_on
     data_template:
       entity_id: light.Canape_droite
