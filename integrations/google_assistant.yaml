@@ -5,9 +5,7 @@ google_assistant:
   report_state: true
   expose_by_default: false
   entity_config:
-    light.salle_a_manger:
+    light.basement:
       expose: true
-      room: Salle à manger
-    light.salle_a_manger_deconz_group:
+    light.basement_stairs:
       expose: true
-      room: Salle à manger
