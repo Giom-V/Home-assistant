@@ -1,9 +1,9 @@
 - id: MinBrightnessLivingRoom
   name: MinBrightnessLivingRoom
   entities:
-    # light.canape_gauche:
-    #   state: on
-    #   brightness: 1
+    light.canape_gauche:
+      state: on
+      brightness: 1
     light.canape_droite:
       state: on
       brightness: 1
@@ -13,9 +13,9 @@
 - id: MaxBrightnessLivingRoom
   name: MaxBrightnessLivingRoom
   entities:
-    # light.canape_gauche:
-    #   state: on
-    #   brightness: 255
+    light.canape_gauche:
+      state: on
+      brightness: 255
     light.canape_droite:
       state: on
       brightness: 255
@@ -25,8 +25,8 @@
 - name: LivingRoomOff
   id: LivingRoomOff
   entities:
-    # light.canape_gauche:
-    #   state: off
+    light.canape_gauche:
+      state: off
     light.canape_droite:
       state: off
     light.color:
@@ -34,9 +34,9 @@
 - id: WhiteLivingRoom
   name: WhiteLivingRoom
   entities:
-    # light.canape_gauche:
-    #   state: on
-    #   color_temp: 200
+    light.canape_gauche:
+      state: on
+      color_temp: 200
     light.canape_droite:
       state: on
       color_temp: 200
@@ -46,9 +46,9 @@
 - name: PinkAndPurpleLivingRoom
   id: PinkAndPurpleLivingRoom
   entities:
-    # light.canape_gauche:
-    #   state: on
-    #   rgb_color: [255,25,246]
+    light.canape_gauche:
+      state: on
+      rgb_color: [255,25,246]
     light.canape_droite:
       state: on
       rgb_color: [255,25,246]
@@ -58,9 +58,9 @@
 - name: PinkLivingRoom
   id: PinkLivingRoom
   entities:
-    # light.canape_gauche:
-    #   state: on
-    #   rgb_color: [255,104,179]
+    light.canape_gauche:
+      state: on
+      rgb_color: [255,104,179]
     light.canape_droite:
       state: on
       rgb_color: [255,104,179]
@@ -70,9 +70,9 @@
 - name: BlueLivingRoom
   id: BlueLivingRoom
   entities:
-    # light.canape_gauche:
-    #   state: on
-    #   rgb_color: [72,255,236]
+    light.canape_gauche:
+      state: on
+      rgb_color: [72,255,236]
     light.canape_droite:
       state: on
       rgb_color: [72,255,236]

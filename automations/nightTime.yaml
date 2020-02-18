@@ -16,7 +16,7 @@
   #   data:
   #     brightness: 1
   - entity_id:
-    # - light.canape_gauche
+    - light.canape_gauche
     - light.canape_droite
     - light.color
     service: light.turn_on

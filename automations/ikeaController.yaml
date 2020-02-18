@@ -17,7 +17,7 @@
     state: 'on'
   action:
   - entity_id:
-    # - light.canape_gauche
+    - light.canape_gauche
     - light.canape_droite
     - light.color
     service: light.turn_off
@@ -36,7 +36,7 @@
     state: 'off'
   action:
   - entity_id:
-    # - light.canape_gauche
+    - light.canape_gauche
     - light.canape_droite
     - light.color
     service: light.turn_on
@@ -56,11 +56,11 @@
       id: tradfri_remote_control
       event: 2002
   action:
-  # - service: light.turn_on
-  #   data_template:
-  #     entity_id: light.canape_gauche
-  #     brightness: '{% set bri = state_attr(''light.canape_gauche'', ''brightness'') | int
-  #       %} {{ [bri * 2, 255] | min }}'
+  - service: light.turn_on
+    data_template:
+      entity_id: light.canape_gauche
+      brightness: '{% set bri = state_attr(''light.canape_gauche'', ''brightness'') | int
+        %} {{ [bri * 2, 255] | min }}'
   - service: light.turn_on
     data_template:
       entity_id: light.canape_droite
@@ -86,11 +86,11 @@
       id: tradfri_remote_control
       event: 3002
   action:
-  # - service: light.turn_on
-  #   data_template:
-  #     entity_id: light.canape_gauche #TODO: passer direct de 1 à 16
-  #     brightness: '{% set bri = state_attr(''light.canape_gauche'', ''brightness'') | float
-  #       %} {% set half_bri = bri / 2 %} {{ half_bri | round(0, "ceil") | int }}'
+  - service: light.turn_on
+    data_template:
+      entity_id: light.canape_gauche #TODO: passer direct de 1 à 16
+      brightness: '{% set bri = state_attr(''light.canape_gauche'', ''brightness'') | float
+        %} {% set half_bri = bri / 2 %} {{ half_bri | round(0, "ceil") | int }}'
   - service: light.turn_on
     data_template:
       entity_id: light.canape_droite
@@ -122,7 +122,7 @@
   #   data:
   #     brightness: 1
   - entity_id:
-    # - light.canape_gauche
+    - light.canape_gauche
     - light.canape_droite
     - light.color
     service: light.turn_on
@@ -187,7 +187,7 @@
   #   data:
   #     brightness: 255
   - entity_id:
-    # - light.canape_gauche
+    - light.canape_gauche
     - light.canape_droite
     - light.color
     service: light.turn_on
