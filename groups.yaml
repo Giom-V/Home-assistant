@@ -107,8 +107,8 @@ living_room_lights:
    name: Salon
    entities:
     - light.Color
-    # - light.Canape_gauche
-    - light.Canape_droite
+    # - light.canape_gauche
+    - light.canape_droite
     
 Dafang3:
     - camera.dafang3

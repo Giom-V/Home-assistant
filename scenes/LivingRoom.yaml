@@ -1,10 +1,10 @@
 - id: MinBrightnessLivingRoom
   name: MinBrightnessLivingRoom
   entities:
-    # light.Canape_gauche:
+    # light.canape_gauche:
     #   state: on
     #   brightness: 1
-    light.Canape_droite:
+    light.canape_droite:
       state: on
       brightness: 1
     light.color:
@@ -13,10 +13,10 @@
 - id: MaxBrightnessLivingRoom
   name: MaxBrightnessLivingRoom
   entities:
-    # light.Canape_gauche:
+    # light.canape_gauche:
     #   state: on
     #   brightness: 255
-    light.Canape_droite:
+    light.canape_droite:
       state: on
       brightness: 255
     light.color:
@@ -25,19 +25,19 @@
 - name: LivingRoomOff
   id: LivingRoomOff
   entities:
-    # light.Canape_gauche:
+    # light.canape_gauche:
     #   state: off
-    light.Canape_droite:
+    light.canape_droite:
       state: off
     light.color:
       state: off
 - id: WhiteLivingRoom
   name: WhiteLivingRoom
   entities:
-    # light.Canape_gauche:
+    # light.canape_gauche:
     #   state: on
     #   color_temp: 200
-    light.Canape_droite:
+    light.canape_droite:
       state: on
       color_temp: 200
     light.color:
@@ -46,10 +46,10 @@
 - name: PinkAndPurpleLivingRoom
   id: PinkAndPurpleLivingRoom
   entities:
-    # light.Canape_gauche:
+    # light.canape_gauche:
     #   state: on
     #   rgb_color: [255,25,246]
-    light.Canape_droite:
+    light.canape_droite:
       state: on
       rgb_color: [255,25,246]
     light.color:
@@ -58,10 +58,10 @@
 - name: PinkLivingRoom
   id: PinkLivingRoom
   entities:
-    # light.Canape_gauche:
+    # light.canape_gauche:
     #   state: on
     #   rgb_color: [255,104,179]
-    light.Canape_droite:
+    light.canape_droite:
       state: on
       rgb_color: [255,104,179]
     light.color:
@@ -70,10 +70,10 @@
 - name: BlueLivingRoom
   id: BlueLivingRoom
   entities:
-    # light.Canape_gauche:
+    # light.canape_gauche:
     #   state: on
     #   rgb_color: [72,255,236]
-    light.Canape_droite:
+    light.canape_droite:
       state: on
       rgb_color: [72,255,236]
     light.color:

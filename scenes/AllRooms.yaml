@@ -1,9 +1,9 @@
 - id: LightsOff
   name: LightsOff
   entities:
-    # light.Canape_gauche:
+    # light.canape_gauche:
     #   state: off
-    light.Canape_droite:
+    light.canape_droite:
       state: off
     light.color:
       state: off

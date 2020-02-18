@@ -34,9 +34,9 @@
   - service: homeassistant.turn_on
     entity_id: light.color
   # - service: homeassistant.turn_on
-  #   entity_id: light.Canape_gauche
+  #   entity_id: light.canape_gauche
   - service: homeassistant.turn_on
-    entity_id: light.Canape_droite
+    entity_id: light.canape_droite
 - id: LightOffAfter10mnWhenSomeoneArrives
   alias: Turn off light 10 minutes after we arrived
   trigger:
