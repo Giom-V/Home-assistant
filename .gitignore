@@ -17,6 +17,7 @@ deps/
 Share/
 certificate/
 tts/
+secrets/
 
 # Ignored Files
 secrets.yaml
@@ -28,7 +29,6 @@ customize.yaml
 *.db-shm
 *.db-wal
 *.uuid
-HassHome-5367a2b91e78.json
 
 # Google temp files
 .google*
