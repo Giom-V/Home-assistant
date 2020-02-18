@@ -457,11 +457,11 @@ yeelight:
       use_music_mode: False #(defaults to False)
       save_on_change: False #(defaults to True)
     192.168.86.134:
-      name: Canapé Droite # TODO: rename to Canapé Droite (and in all automations and scenes as well)
+      name: Canapé Droite
       transition: 1000
       use_music_mode: False #(defaults to False)
       save_on_change: False #(defaults to True)
-    192.168.86.135: #TODO: add it to all scenes and automations
+    192.168.86.135:
       name: Canapé Gauche
       transition: 1000
       use_music_mode: False #(defaults to False)
