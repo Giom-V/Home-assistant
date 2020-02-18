@@ -17,6 +17,7 @@ deps/
 Share/
 certificate/
 tts/
+secrets/
 
 # Ignored Files
 secrets.yaml
