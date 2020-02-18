@@ -33,8 +33,8 @@
   action: # TODO: use scene or living_room color
   - service: homeassistant.turn_on
     entity_id: light.color
-  - service: homeassistant.turn_on
-    entity_id: light.Canape_gauche
+  # - service: homeassistant.turn_on
+  #   entity_id: light.Canape_gauche
   - service: homeassistant.turn_on
     entity_id: light.Canape_droite
 - id: LightOffAfter10mnWhenSomeoneArrives
