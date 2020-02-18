@@ -463,6 +463,7 @@ class HomeFeedCard extends HomeFeedCardHelpers.LitElement {
   getHistoryState(stateObj, item){
   	var newStateObj = {};
   	Object.assign(newStateObj, stateObj);
+  	newStateObj.attributes = item.attributes;
   	newStateObj.state = item.state;
   	newStateObj.last_changed = item.last_changed;
   	newStateObj.last_updated = item.last_updated;
@@ -672,7 +673,6 @@ class HomeFeedCard extends HomeFeedCardHelpers.LitElement {
     					
     					if(domain == "automation")
     					{
-    						//console.log("Item",item);
     						return item.attributes.last_triggered;
     					}
     					else{
@@ -752,19 +752,30 @@ class HomeFeedCard extends HomeFeedCardHelpers.LitElement {
     popup.appendChild(message);
     this.moreInfo(Object.keys(this._hass.states)[0]);
     let moreInfo = document.querySelector("home-assistant")._moreInfoEl;
+    
+    const oldContent = moreInfo.shadowRoot.querySelector("more-info-controls");
+    if(oldContent) oldContent.style['display'] = 'none';
+
     moreInfo._page = "none";
     moreInfo.shadowRoot.appendChild(popup);
     moreInfo.large = large;
     //document.querySelector("home-assistant").provideHass(message);
 
-    setTimeout(() => {
-      let interval = setInterval(() => {
-        if (moreInfo.getAttribute('aria-hidden')) {
-          popup.parentNode.removeChild(popup);
-          clearInterval(interval);
-        }
-      }, 100)
-    }, 1000);
+	moreInfo._dialogOpenChanged = function(newVal) {
+    if (!newVal) {
+      if(this.stateObj)
+        this.fire("hass-more-info", {entityId: null});
+
+      if (this.shadowRoot == popup.parentNode) {
+        this._page = null;
+        this.shadowRoot.removeChild(popup);
+
+        const oldContent = this.shadowRoot.querySelector("more-info-controls");
+        if(oldContent) oldContent.style['display'] = "";
+      }
+    }
+   }
+   
   history.onpushstate = this.closePopUp;
   return moreInfo;
   }
