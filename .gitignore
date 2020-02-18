@@ -17,10 +17,8 @@ deps/
 Share/
 certificate/
 tts/
-secrets/
 
 # Ignored Files
-secrets.yaml
 ip_bans.yaml
 known_devices.yaml
 customize.yaml
@@ -29,6 +27,11 @@ customize.yaml
 *.db-shm
 *.db-wal
 *.uuid
+
+# Secrets
+secrets.yaml
+secrets/*.json
+!/secrets/*.fake.json
 
 # Google temp files
 .google*
