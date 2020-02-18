@@ -1,9 +1,0 @@
-# https://www.home-assistant.io/integrations/google_assistant/#configuration
-google_assistant:
-  project_id: !secret googleProject
-  service_account: !include !secret googleServiceAccountJson
-  report_state: true
-  entity_config:
-    light.salle_a_manger:
-      expose: true
-      room: LIVING_ROOM
