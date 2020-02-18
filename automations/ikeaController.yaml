@@ -13,11 +13,11 @@
     platform: event
   condition:
   - condition: state
-    entity_id: light.colorv2
+    entity_id: light.Canape_droite
     state: 'on'
   action:
   - entity_id:
-    - light.colorv2
+    - light.Canape_droite
     - light.color
     - light.white
     service: light.turn_off
@@ -32,11 +32,11 @@
     platform: event
   condition:
   - condition: state
-    entity_id: light.colorv2
+    entity_id: light.Canape_droite
     state: 'off'
   action:
   - entity_id:
-    - light.colorv2
+    - light.Canape_droite
     - light.color
     - light.white
     service: light.turn_on
@@ -58,8 +58,8 @@
   action:
   - service: light.turn_on
     data_template:
-      entity_id: light.colorv2
-      brightness: '{% set bri = state_attr(''light.colorv2'', ''brightness'') | int
+      entity_id: light.Canape_droite
+      brightness: '{% set bri = state_attr(''light.Canape_droite'', ''brightness'') | int
         %} {{ [bri * 2, 255] | min }}'
   - service: light.turn_on
     data_template:
@@ -88,8 +88,8 @@
   action:
   - service: light.turn_on
     data_template:
-      entity_id: light.colorv2 #TODO: passer direct de 1 à 16
-      brightness: '{% set bri = state_attr(''light.colorv2'', ''brightness'') | float
+      entity_id: light.Canape_droite #TODO: passer direct de 1 à 16
+      brightness: '{% set bri = state_attr(''light.Canape_droite'', ''brightness'') | float
         %} {% set half_bri = bri / 2 %} {{ half_bri | round(0, "ceil") | int }}'
   - service: light.turn_on
     data_template:
@@ -116,12 +116,12 @@
       id: tradfri_remote_control
       event: 5003 # hold then release right button
   action:
-  - service_template: "light.turn_{{ 'on' if is_state('light.white','on') or is_state('light.colorv2','off') else 'off' }}"
+  - service_template: "light.turn_{{ 'on' if is_state('light.white','on') or is_state('light.Canape_droite','off') else 'off' }}"
     entity_id: light.white
     data:
       brightness: 1 #TODO: change for a data template to remove an error
   - entity_id:
-    - light.colorv2
+    - light.Canape_droite
     - light.color
     service: light.turn_on
     data:
@@ -179,12 +179,12 @@
       id: tradfri_remote_control
       event: 4003 # hold then release left button
   action:
-  - service_template: "light.turn_{{ 'on' if is_state('light.white','on') or is_state('light.colorv2','off') else 'off' }}"
+  - service_template: "light.turn_{{ 'on' if is_state('light.white','on') or is_state('light.Canape_droite','off') else 'off' }}"
     entity_id: light.white
     data:
       brightness: 255 #TODO: change for a data template to remove an error
   - entity_id:
-    - light.colorv2
+    - light.Canape_droite
     - light.color
     service: light.turn_on
     data:
@@ -201,7 +201,7 @@
   alias: Switch back to max brightness in the morning
   description: ''
   trigger:
-  - entity_id: light.colorv2
+  - entity_id: light.Canape_droite
     from: 'off'
     platform: state
     to: 'on'

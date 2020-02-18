@@ -10,12 +10,12 @@
     entity_id: input_select.living_room_color
     data:
       option: Purple
-  - service_template: "light.turn_{{ 'on' if is_state('light.white','on') or is_state('light.colorv2','off') else 'off' }}"
+  - service_template: "light.turn_{{ 'on' if is_state('light.white','on') or is_state('light.Canape_droite','off') else 'off' }}"
     entity_id: light.white
     data:
       brightness: 1
   - entity_id:
-    - light.colorv2
+    - light.Canape_droite
     - light.color
     service: light.turn_on
     data:
