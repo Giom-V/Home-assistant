@@ -438,8 +438,6 @@ tts:
   - platform: google_translate
     service_name: google_say
     language: 'fr'
-# Cloud
-#cloud: #TODO: home made server
 # Yeelights
 yeelight:
   devices:

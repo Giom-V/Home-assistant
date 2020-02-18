@@ -11,7 +11,9 @@ before_install:
   - touch ./known_devices.yaml
   - touch ./fake_ssl_cert
   - touch ./fake_ssl_key
+  - touch ./fake.json
   - mkdir tmp/
+  - mv secrets/home-assistant.fake.json secrets/home-assistant.json
 install:
   - pip3 install homeassistant netdisco python-dateutil
 script:
