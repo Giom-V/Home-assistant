@@ -14,7 +14,7 @@ before_install:
   - touch ./fake.json
   - mkdir tmp/
   - mkdir secrets/
-  - touche secrets/home-assistant.json
+  - touch secrets/home-assistant.json
 install:
   - pip3 install homeassistant netdisco python-dateutil
 script:
