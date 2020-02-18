@@ -482,12 +482,10 @@ device_tracker:
     max_gps_accuracy: 1000
     new_device_defaults:
       track_new_devices: True
-      hide_if_away: False
   - platform: nmap_tracker
     hosts: 192.168.86.100-109
     new_device_defaults:
       track_new_devices: True
-      hide_if_away: False
   
 # https://www.home-assistant.io/components/person/  
 person:
