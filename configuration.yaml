@@ -459,7 +459,12 @@ yeelight:
       use_music_mode: False #(defaults to False)
       save_on_change: False #(defaults to True)
     192.168.86.134:
-      name: ColorV2
+      name: ColorV2 # TODO: rename to Canapé Droite
+      transition: 1000
+      use_music_mode: False #(defaults to False)
+      save_on_change: False #(defaults to True)
+    192.168.86.135:
+      name: Canapé Gauche
       transition: 1000
       use_music_mode: False #(defaults to False)
       save_on_change: False #(defaults to True)
