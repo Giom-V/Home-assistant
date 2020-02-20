@@ -1,0 +1,3 @@
+# https://www.home-assistant.io/integrations/travisci/
+platform: travisci
+api_key: 97757f13959314fb9170f49af1971847e1ea68b4
