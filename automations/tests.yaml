@@ -83,3 +83,21 @@
   - data:
       message: TEST withings
     service: notify.slack
+
+- id: '1582074352047'
+  alias: Test freezer
+  description: ''
+  trigger:
+  - type: opened
+    platform: device
+    device_id: 85bc07f4124e490eb8ba0082a9abf76c
+    entity_id: binary_sensor.freezer_door
+    domain: binary_sensor
+  condition: []
+  action:
+  - entity_id: light.white
+    service: light.turn_on
+  - delay: 
+      minutes: 2
+  - entity_id: light.white #TODO: this should be managed elsewhere
+    service: light.turn_off
