@@ -18,6 +18,8 @@ deps/
 Share/
 certificate/
 tts/
+*/__pycache__/
+custom_components/*/__pycache__/*.pyc
 
 # Ignored Files
 ip_bans.yaml
@@ -28,6 +30,7 @@ customize.yaml
 *.db-shm
 *.db-wal
 *.uuid
+*.pyc
 
 # Secrets
 secrets.yaml
