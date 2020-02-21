@@ -3,6 +3,7 @@
 # Do not ignore
 !/.gitignore
 !/.travis.yml
+!/secrets/*.fake.json
 
 # Logs
 logs
@@ -17,9 +18,10 @@ deps/
 Share/
 certificate/
 tts/
+*/__pycache__/
+custom_components/*/__pycache__/*.pyc
 
 # Ignored Files
-secrets.yaml
 ip_bans.yaml
 known_devices.yaml
 customize.yaml
@@ -28,6 +30,12 @@ customize.yaml
 *.db-shm
 *.db-wal
 *.uuid
+*.pyc
+
+# Secrets
+secrets.yaml
+secrets/*.json
+!/secrets/*.fake.json
 
 # Google temp files
 .google*
