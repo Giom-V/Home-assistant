@@ -5,8 +5,8 @@ homeassistant:
   # Name of the location where Home Assistant is running
   name: Quebec
   # Location required to calculate the time the sun rises and sets
-  latitude: !secret latitude
-  longitude: !secret longitude
+  latitude: !secret homeLatitude
+  longitude: !secret homeLongitude
   # Impacts weather/sunrise data (altitude above sea level in meters)
   elevation: 47
   # metric for Metric, imperial for Imperial
@@ -205,7 +205,7 @@ sensor:
        dest_address:
          value_template: >-
             {%- if is_state("input_select.destination", "Home") -%}
-              46.7777219,-71.3269207
+              !secret homeGPSCoordinates
             {%- elif is_state("input_select.destination", "Work") -%}
               46.814050,-71.221148
             {%- elif is_state("input_select.destination", "Parents") -%}
@@ -264,7 +264,7 @@ sensor:
       - moon_phase
   - platform: waze_travel_time
     name: "Me to destination"
-    origin: 46.7777219,-71.3269207
+    origin: !secret homeGPSCoordinates
     destination: sensor.dest_address
     region: 'US'
     # Weather prediction
@@ -314,23 +314,23 @@ sensor:
     # Waze travel time
   - platform: waze_travel_time
     name: Travel time to work (Waze)
-    origin: 46.7777219,-71.3269207 #TODO: secret
-    destination: 46.814050,-71.221148
+    origin: !secret homeGPSCoordinates
+    destination: !secret giomWorkplaceGPSCoordinates
     region: 'US'
     scan_interval: 5
     # Google maps travel time (Giom)
   - platform: google_travel_time
     name: Travel time to work (Gmap)
     api_key: !secret gmap_APIKey
-    origin: 46.7777219,-71.3269207
-    destination: 46.814050,-71.221148
+    origin: !secret homeGPSCoordinates
+    destination: !secret giomWorkplaceGPSCoordinates
     scan_interval: 60
     # Google maps travel time (Claire)
   - platform: google_travel_time
     name: Travel time to work (Claire)
     api_key: !secret gmap_APIKey
-    origin: 46.7777219,-71.3269207
-    destination: 46.7800237,-71.2812227
+    origin: !secret homeGPSCoordinates
+    destination: !secret claireWorkplaceGPSCoordinates
     options:
       mode: transit
       transit_routing_preference: less_walking
@@ -366,13 +366,13 @@ sensor:
     client_secret: !secret googleDeveloperSecret
   # https://www.home-assistant.io/integrations/airvisual/
   - platform: airvisual
-    api_key: !secret airvisual_APIKey #TODO: secret
+    api_key: !secret airvisual_APIKey
     show_on_map: false
     monitored_conditions:
       - us
   # https://www.home-assistant.io/integrations/waqi/
   - platform: waqi
-    token: !secret waqi_APIKey #TODO: secret
+    token: !secret waqi_APIKey
     locations:
       - Beauce
   # https://www.home-assistant.io/integrations/history_stats
@@ -571,27 +571,27 @@ withings:
 # https://www.home-assistant.io/components/zone/
 zone:
   - name: Université
-    latitude: 46.779144
-    longitude: -71.2807537
+    latitude: !secret universityLatitude
+    longitude: !secret universityLongitude
     radius: 250
     icon: mdi:beaker
 
   - name: Ubisoft
-    latitude: 46.814050
-    longitude: -71.221148
+    latitude: !secret ubisoftLatitude
+    longitude: !secret ubisoftLongitude
     radius: 100
     icon: mdi:gamepad-variant
     
   - name: Garderie
-    latitude: 46.776270
-    longitude: -71.316373
+    latitude: !secret garderieLatitude
+    longitude: !secret garderieLongitude
     radius: 100
     icon: fas:baby
 
   # This will override the default home zone
   - name: Home
-    latitude: !secret latitude
-    longitude: !secret longitude
+    latitude: !secret homeLatitude
+    longitude: !secret homeLongitude
     radius: 100
     icon: mdi:home-circle
     
@@ -624,11 +624,11 @@ wake_on_lan:
 switch:
   - platform: wake_on_lan
     name: Wake up PC
-    mac: "40:8D:5C:ED:3D:89"
+    mac: "40:8D:5C:ED:3D:89" #TODO: secret
     host: 192.168.86.76
   - platform: wake_on_lan
     name: Wake up NAS
-    mac: "10:bf:48:8b:77:e0"
+    mac: "10:bf:48:8b:77:e0" #TODO: secret
     host: 192.168.86.123
 
 ####################################################
