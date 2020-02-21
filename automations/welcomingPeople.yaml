@@ -30,13 +30,13 @@
       after_offset: -00:30:00
     - condition: time
       before: '22:30:00'
-  action:
-  - service: homeassistant.turn_on
-    entity_id: light.white
+  action: # TODO: use scene or living_room color
   - service: homeassistant.turn_on
     entity_id: light.color
   - service: homeassistant.turn_on
-    entity_id: light.colorV2
+    entity_id: light.canape_gauche
+  - service: homeassistant.turn_on
+    entity_id: light.canape_droite
 - id: LightOffAfter10mnWhenSomeoneArrives
   alias: Turn off light 10 minutes after we arrived
   trigger:
