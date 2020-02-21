@@ -202,7 +202,7 @@ sensor:
         arg: convert
   - platform: template
     sensors:
-       dest_address:
+       dest_address: #TODO: secrets
          value_template: >-
             {%- if is_state("input_select.destination", "Home") -%}
               46.7777219,-71.3269207
@@ -264,7 +264,7 @@ sensor:
       - moon_phase
   - platform: waze_travel_time
     name: "Me to destination"
-    origin: 46.7777219,-71.3269207
+    origin: 46.7777219,-71.3269207 #TODO: secrets
     destination: sensor.dest_address
     region: 'US'
     # Weather prediction
@@ -561,7 +561,7 @@ withings:
   client_id: !secret withingsClientID
   client_secret: !secret withingsSecret
   profiles:
-    - Guillaume Vernade
+    - Guillaume Vernade #TODO: secrets or change name
     - Aurore Vernade
     - Claire Mérot
 
@@ -624,7 +624,7 @@ wake_on_lan:
 switch:
   - platform: wake_on_lan
     name: Wake up PC
-    mac: "40:8D:5C:ED:3D:89"
+    mac: "40:8D:5C:ED:3D:89" #TODO: secrets
     host: 192.168.86.76
   - platform: wake_on_lan
     name: Wake up NAS
