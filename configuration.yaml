@@ -126,8 +126,6 @@ tts:
   - platform: google_translate
     service_name: google_say
     language: 'fr'
-# Cloud
-#cloud: #TODO: home made server
 # Yeelights
 yeelight:
   devices:
@@ -147,7 +145,12 @@ yeelight:
       use_music_mode: False #(defaults to False)
       save_on_change: False #(defaults to True)
     192.168.86.134:
-      name: ColorV2
+      name: Canapé Droite
+      transition: 1000
+      use_music_mode: False #(defaults to False)
+      save_on_change: False #(defaults to True)
+    192.168.86.135:
+      name: Canapé Gauche
       transition: 1000
       use_music_mode: False #(defaults to False)
       save_on_change: False #(defaults to True)
@@ -167,12 +170,10 @@ device_tracker:
     max_gps_accuracy: 1000
     new_device_defaults:
       track_new_devices: True
-      hide_if_away: False
   - platform: nmap_tracker
     hosts: 192.168.86.100-109
     new_device_defaults:
       track_new_devices: True
-      hide_if_away: False
   
 # https://www.home-assistant.io/components/person/  
 person:
@@ -315,5 +316,14 @@ switch:
     host: ***REMOVED*** #TODO: secret
   - platform: wake_on_lan
     name: Wake up NAS
+<<<<<<< HEAD
     mac: "***REMOVED***" #TODO: secret
     host: ***REMOVED*** #TODO: secret
+=======
+    mac: "***REMOVED***"
+    host: ***REMOVED***
+
+####################################################
+#                 Work in progress                 #
+####################################################
+>>>>>>> 80ad1dad1e527ff3a0fdfab8bea796881f1bda10

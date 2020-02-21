@@ -103,14 +103,12 @@ xiaomi:
   entities:
     - binary_sensor.door_window_sensor_158d00030318fd
     - binary_sensor.cube_158d00029a9528
-lights:
-   name: Lights
+living_room_lights:
+   name: Salon
    entities:
-    - light.solarium
-    - light.White
     - light.Color
-    - light.ColorV2
-    - switch.lumiere_cuisine
+    - light.canape_gauche
+    - light.canape_droite
     
 Dafang3:
     - camera.dafang3
