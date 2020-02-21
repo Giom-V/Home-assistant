@@ -112,11 +112,6 @@ camera:
     stream_source: !secret dafangStreamSource
     verify_ssl: false
     scan_interval: 5
-#  - platform: xiaomi
-#    name: Dafang camera
-#    host: '192.168.86.165'
-#    model: 'yi'
-#    password: !secret dafangPassword
     
 # Meteo
 weather:
@@ -202,14 +197,14 @@ sensor:
         arg: convert
   - platform: template
     sensors:
-       dest_address: #TODO: secrets
+       dest_address:
          value_template: >-
             {%- if is_state("input_select.destination", "Home") -%}
-              46.7777219,-71.3269207
+              !secret homeGPSCoordinates
             {%- elif is_state("input_select.destination", "Work") -%}
-              46.814050,-71.221148
+              !secret giomWorkplaceGPSCoordinates
             {%- elif is_state("input_select.destination", "Parents") -%}
-              Garderie des amours de bout'chou, Quebec
+              !secret garderieName
             {%- else -%}
               Unknown
             {%- endif %}
@@ -264,7 +259,7 @@ sensor:
       - moon_phase
   - platform: waze_travel_time
     name: "Me to destination"
-    origin: 46.7777219,-71.3269207 #TODO: secrets
+    origin: !secret homeGPSCoordinates
     destination: sensor.dest_address
     region: 'US'
     # Weather prediction
@@ -314,23 +309,23 @@ sensor:
     # Waze travel time
   - platform: waze_travel_time
     name: Travel time to work (Waze)
-    origin: 46.7777219,-71.3269207 #TODO: secret
-    destination: 46.814050,-71.221148
+    origin: !secret homeGPSCoordinates
+    destination: !secret giomWorkplaceGPSCoordinates
     region: 'US'
     scan_interval: 5
     # Google maps travel time (Giom)
   - platform: google_travel_time
     name: Travel time to work (Gmap)
     api_key: !secret gmap_APIKey
-    origin: 46.7777219,-71.3269207
-    destination: 46.814050,-71.221148
+    origin: !secret homeGPSCoordinates
+    destination: !secret giomWorkplaceGPSCoordinates
     scan_interval: 60
     # Google maps travel time (Claire)
   - platform: google_travel_time
     name: Travel time to work (Claire)
     api_key: !secret gmap_APIKey
-    origin: 46.7777219,-71.3269207
-    destination: 46.7800237,-71.2812227
+    origin: !secret homeGPSCoordinates
+    destination: !secret claireWorkplaceGPSCoordinates
     options:
       mode: transit
       transit_routing_preference: less_walking
@@ -366,13 +361,13 @@ sensor:
     client_secret: !secret googleDeveloperSecret
   # https://www.home-assistant.io/integrations/airvisual/
   - platform: airvisual
-    api_key: !secret airvisual_APIKey #TODO: secret
+    api_key: !secret airvisual_APIKey
     show_on_map: false
     monitored_conditions:
       - us
   # https://www.home-assistant.io/integrations/waqi/
   - platform: waqi
-    token: !secret waqi_APIKey #TODO: secret
+    token: !secret waqi_APIKey
     locations:
       - Beauce
   # https://www.home-assistant.io/integrations/history_stats
@@ -441,7 +436,7 @@ tts:
 # Yeelights
 yeelight:
   devices:
-    192.168.86.130: #TODO: secret?
+    192.168.86.130:
       name: Solarium
       transition: 1000
       use_music_mode: False #(defaults to False)
@@ -491,7 +486,7 @@ device_tracker:
 person:
   - name: Giom
     id: giom
-    user_id: 6d6b7b9773144a66957cec1889954f68 #TODO: secret?
+    user_id: !secret giomUserId
     device_trackers:
       - device_tracker.cellGiom
       - device_tracker.op6
@@ -499,7 +494,7 @@ person:
       - device_tracker.google_maps_108886437999779306059
   - name: Claire
     id: claire
-    user_id: 882d5cbae4fb4da282c01c79cf4216ff
+    user_id: !secret claireUserId
     device_trackers:
       - device_tracker.cellClaire
       - device_tracker.google_maps_116551309970452496819
@@ -516,7 +511,7 @@ panel_iframe:
     url: 'https://gi-home.slack.com/unreads/'
   sonarr:
     title: 'Sonarr'
-    url: 'http://giom.myasustor.com:8989' #TODO: secrets
+    url: !secret sonarrUrl
   utorrent:
     title: 'uTorrent'
     url: 'https://remote.bittorrent.com/'
@@ -526,8 +521,7 @@ weblink:
     - name: Slack
       url: 'https://gi-home.slack.com/unreads/'
     - name: Sonarr
-      url: 'http://giom.myasustor.com:8989' #TODO: secrets
-      # Dafang conf: https://192.168.86.165/
+      url: !secret sonarrUrl
     
 group: !include groups.yaml
 automation: !include_dir_merge_list automations/ 
@@ -536,17 +530,6 @@ script: !include scripts.yaml
 shell_command:
   resize_sunrise_pic: mogrify -resize 1080x720 /home/homeassistant/.homeassistant/Share/last_sunrise.jpg
   create_daily_gif: 'convert -delay 20 -limit area 0 -resize 25% -loop 0 {rpi_camera_{{ now().strftime("%Y%m%d") }}-*_night.jpg,rpi_camera_{{ now().strftime("%Y%m%d") }}-*_day.jpg} {{ now().strftime("%Y%m%d") }}.gif'
-  
-#Xiaomi Aquara gateway and connected devices
-# xiaomi_aqara:
-#   discovery_retry: 10
-#   gateways:
-# #    - key: !secret xiaomiKey1 # First gateway bought, updated and thus less open to Hass
-# #      host: 192.168.86.133
-# #      mac: !secret xiaomiMac1
-#     - key: !secret xiaomiKey2 # Second gateway that we try not to update
-#       host: 192.168.86.137
-#       mac: !secret xiaomiMac2
     
 point:
   client_id: !secret point_clientID
@@ -561,9 +544,9 @@ withings:
   client_id: !secret withingsClientID
   client_secret: !secret withingsSecret
   profiles:
-    - Guillaume Vernade #TODO: secrets or change name
-    - Aurore Vernade
-    - Claire Mérot
+    - Giom
+    - Aurore
+    - Claire
 
 ####################################################
 #                       Zones                      #
@@ -610,7 +593,7 @@ mqtt:
 
 vacuum:
   - platform: xiaomi_miio
-    host: 192.168.86.170 #TODO: secret
+    host: !secret vaccumIP
     token: !secret roborockToken
 
 light:
@@ -624,12 +607,12 @@ wake_on_lan:
 switch:
   - platform: wake_on_lan
     name: Wake up PC
-    mac: "40:8D:5C:ED:3D:89" #TODO: secrets
-    host: 192.168.86.76 #TODO: secrets
+    mac: !secret pcMacAddress
+    host: !secret pcIP
   - platform: wake_on_lan
     name: Wake up NAS
-    mac: "10:bf:48:8b:77:e0"
-    host: 192.168.86.123
+    mac: !secret nasMacAddress
+    host: !secret NAS_IP
 
 ####################################################
 #                 Work in progress                 #
