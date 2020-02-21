@@ -24,7 +24,7 @@ homeassistant:
     - type: trusted_networks
       trusted_networks:
         - 127.0.0.1
-        - 192.168.0.0/24
+        - 192.168.0.0/24 #TODO: secret?
         - 192.168.1.0/24
         - 192.168.86.0/24
         - 192.168.86.100
@@ -441,7 +441,7 @@ tts:
 # Yeelights
 yeelight:
   devices:
-    192.168.86.130:
+    192.168.86.130: #TODO: secret?
       name: Solarium
       transition: 1000
       use_music_mode: False #(defaults to False)
@@ -491,7 +491,7 @@ device_tracker:
 person:
   - name: Giom
     id: giom
-    user_id: 6d6b7b9773144a66957cec1889954f68
+    user_id: 6d6b7b9773144a66957cec1889954f68 #TODO: secret?
     device_trackers:
       - device_tracker.cellGiom
       - device_tracker.op6
@@ -516,7 +516,7 @@ panel_iframe:
     url: 'https://gi-home.slack.com/unreads/'
   sonarr:
     title: 'Sonarr'
-    url: 'http://giom.myasustor.com:8989'
+    url: 'http://giom.myasustor.com:8989' #TODO: secrets
   utorrent:
     title: 'uTorrent'
     url: 'https://remote.bittorrent.com/'
@@ -526,7 +526,7 @@ weblink:
     - name: Slack
       url: 'https://gi-home.slack.com/unreads/'
     - name: Sonarr
-      url: 'http://giom.myasustor.com:8989'
+      url: 'http://giom.myasustor.com:8989' #TODO: secrets
       # Dafang conf: https://192.168.86.165/
     
 group: !include groups.yaml
@@ -610,7 +610,7 @@ mqtt:
 
 vacuum:
   - platform: xiaomi_miio
-    host: 192.168.86.170
+    host: 192.168.86.170 #TODO: secret
     token: !secret roborockToken
 
 light:
@@ -625,7 +625,7 @@ switch:
   - platform: wake_on_lan
     name: Wake up PC
     mac: "40:8D:5C:ED:3D:89" #TODO: secrets
-    host: 192.168.86.76
+    host: 192.168.86.76 #TODO: secrets
   - platform: wake_on_lan
     name: Wake up NAS
     mac: "10:bf:48:8b:77:e0"
