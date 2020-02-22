@@ -5,8 +5,8 @@ homeassistant:
   # Name of the location where Home Assistant is running
   name: Quebec
   # Location required to calculate the time the sun rises and sets
-  latitude: !secret latitude
-  longitude: !secret longitude
+  latitude: !secret homeLatitude
+  longitude: !secret homeLongitude
   # Impacts weather/sunrise data (altitude above sea level in meters)
   elevation: 47
   # metric for Metric, imperial for Imperial
@@ -24,7 +24,7 @@ homeassistant:
     - type: trusted_networks
       trusted_networks:
         - 127.0.0.1
-        - 192.168.0.0/24
+        - 192.168.0.0/24 #TODO: secret?
         - 192.168.1.0/24
         - 192.168.86.0/24
         - 192.168.86.100
@@ -79,8 +79,8 @@ logger:
     homeassistant.components.xiaomi_aqara: debug
     homeassistant.components.xiaomi: debug
     homeassistant.components.binary_sensor.xiaomi: debug
-#    homeassistant.components.mqtt: debug
-    homeassistant.custom_components.email: debug
+    #homeassistant.components.google_assistant: debug
+    #homeassistant.components.mqtt: debug
     #pydeconz: debug
     #homeassistant.components.deconz: debug
 
@@ -102,7 +102,7 @@ camera:
     image_quality: 100 
     image_rotation: 180
     timelapse: 60000
-#    file_path: ***REMOVED***   # aucune idée de pourquoi ça ne fonctionne pas
+#    file_path: /home/homeassistant/.homeassistant/Share   # aucune idée de pourquoi ça ne fonctionne pas
   - platform: generic
     name: Dafang camera
     username: root
@@ -112,11 +112,6 @@ camera:
     stream_source: !secret dafangStreamSource
     verify_ssl: false
     scan_interval: 5
-#  - platform: xiaomi
-#    name: Dafang camera
-#    host: '***REMOVED***'
-#    model: 'yi'
-#    password: !secret dafangPassword
     
 # Meteo
 weather:
@@ -205,11 +200,11 @@ sensor:
        dest_address:
          value_template: >-
             {%- if is_state("input_select.destination", "Home") -%}
-              ***REMOVED***,***REMOVED***
+              !secret homeGPSCoordinates
             {%- elif is_state("input_select.destination", "Work") -%}
-              ***REMOVED***
+              !secret giomWorkplaceGPSCoordinates
             {%- elif is_state("input_select.destination", "Parents") -%}
-              ***REMOVED***
+              !secret garderieName
             {%- else -%}
               Unknown
             {%- endif %}
@@ -264,7 +259,7 @@ sensor:
       - moon_phase
   - platform: waze_travel_time
     name: "Me to destination"
-    origin: ***REMOVED***,***REMOVED***
+    origin: !secret homeGPSCoordinates
     destination: sensor.dest_address
     region: 'US'
     # Weather prediction
@@ -314,23 +309,23 @@ sensor:
     # Waze travel time
   - platform: waze_travel_time
     name: Travel time to work (Waze)
-    origin: ***REMOVED***,***REMOVED*** #TODO: secret
-    destination: ***REMOVED***
+    origin: !secret homeGPSCoordinates
+    destination: !secret giomWorkplaceGPSCoordinates
     region: 'US'
     scan_interval: 5
     # Google maps travel time (Giom)
   - platform: google_travel_time
     name: Travel time to work (Gmap)
     api_key: !secret gmap_APIKey
-    origin: ***REMOVED***,***REMOVED***
-    destination: ***REMOVED***
+    origin: !secret homeGPSCoordinates
+    destination: !secret giomWorkplaceGPSCoordinates
     scan_interval: 60
     # Google maps travel time (Claire)
   - platform: google_travel_time
     name: Travel time to work (Claire)
     api_key: !secret gmap_APIKey
-    origin: ***REMOVED***,***REMOVED***
-    destination: ***REMOVED***
+    origin: !secret homeGPSCoordinates
+    destination: !secret claireWorkplaceGPSCoordinates
     options:
       mode: transit
       transit_routing_preference: less_walking
@@ -366,13 +361,13 @@ sensor:
     client_secret: !secret googleDeveloperSecret
   # https://www.home-assistant.io/integrations/airvisual/
   - platform: airvisual
-    api_key: !secret airvisual_APIKey #TODO: secret
+    api_key: !secret airvisual_APIKey
     show_on_map: false
     monitored_conditions:
       - us
   # https://www.home-assistant.io/integrations/waqi/
   - platform: waqi
-    token: !secret waqi_APIKey #TODO: secret
+    token: !secret waqi_APIKey
     locations:
       - Beauce
   # https://www.home-assistant.io/integrations/history_stats
@@ -438,8 +433,6 @@ tts:
   - platform: google_translate
     service_name: google_say
     language: 'fr'
-# Cloud
-#cloud: #TODO: home made server
 # Yeelights
 yeelight:
   devices:
@@ -459,7 +452,12 @@ yeelight:
       use_music_mode: False #(defaults to False)
       save_on_change: False #(defaults to True)
     192.168.86.134:
-      name: ColorV2
+      name: Canapé Droite
+      transition: 1000
+      use_music_mode: False #(defaults to False)
+      save_on_change: False #(defaults to True)
+    192.168.86.135:
+      name: Canapé Gauche
       transition: 1000
       use_music_mode: False #(defaults to False)
       save_on_change: False #(defaults to True)
@@ -479,18 +477,16 @@ device_tracker:
     max_gps_accuracy: 1000
     new_device_defaults:
       track_new_devices: True
-      hide_if_away: False
   - platform: nmap_tracker
     hosts: 192.168.86.100-109
     new_device_defaults:
       track_new_devices: True
-      hide_if_away: False
   
 # https://www.home-assistant.io/components/person/  
 person:
   - name: Giom
     id: giom
-    user_id: ***REMOVED***
+    user_id: !secret giomUserId
     device_trackers:
       - device_tracker.cellGiom
       - device_tracker.op6
@@ -498,7 +494,7 @@ person:
       - device_tracker.google_maps_108886437999779306059
   - name: Claire
     id: claire
-    user_id: ***REMOVED***
+    user_id: !secret claireUserId
     device_trackers:
       - device_tracker.cellClaire
       - device_tracker.google_maps_116551309970452496819
@@ -515,7 +511,7 @@ panel_iframe:
     url: 'https://gi-home.slack.com/unreads/'
   sonarr:
     title: 'Sonarr'
-    url: '***REMOVED***'
+    url: !secret sonarrUrl
   utorrent:
     title: 'uTorrent'
     url: 'https://remote.bittorrent.com/'
@@ -525,27 +521,15 @@ weblink:
     - name: Slack
       url: 'https://gi-home.slack.com/unreads/'
     - name: Sonarr
-      url: '***REMOVED***'
-      # Dafang conf: https://***REMOVED***/
+      url: !secret sonarrUrl
     
 group: !include groups.yaml
 automation: !include_dir_merge_list automations/ 
 script: !include scripts.yaml
 
 shell_command:
-  resize_sunrise_pic: mogrify -resize 1080x720 ***REMOVED***last_sunrise.jpg
+  resize_sunrise_pic: mogrify -resize 1080x720 /home/homeassistant/.homeassistant/Share/last_sunrise.jpg
   create_daily_gif: 'convert -delay 20 -limit area 0 -resize 25% -loop 0 {rpi_camera_{{ now().strftime("%Y%m%d") }}-*_night.jpg,rpi_camera_{{ now().strftime("%Y%m%d") }}-*_day.jpg} {{ now().strftime("%Y%m%d") }}.gif'
-  
-#Xiaomi Aquara gateway and connected devices
-# xiaomi_aqara:
-#   discovery_retry: 10
-#   gateways:
-# #    - key: !secret xiaomiKey1 # First gateway bought, updated and thus less open to Hass
-# #      host: ***REMOVED***
-# #      mac: !secret xiaomiMac1
-#     - key: !secret xiaomiKey2 # Second gateway that we try not to update
-#       host: ***REMOVED***
-#       mac: !secret xiaomiMac2
     
 point:
   client_id: !secret point_clientID
@@ -560,9 +544,9 @@ withings:
   client_id: !secret withingsClientID
   client_secret: !secret withingsSecret
   profiles:
-    - Guillaume ***REMOVED***
-    - Aurore ***REMOVED***
-    - Claire ***REMOVED***
+    - Giom
+    - Aurore
+    - Claire
 
 ####################################################
 #                       Zones                      #
@@ -570,27 +554,27 @@ withings:
 # https://www.home-assistant.io/components/zone/
 zone:
   - name: Université
-    latitude: ***REMOVED***
-    longitude: ***REMOVED***
+    latitude: !secret universityLatitude
+    longitude: !secret universityLongitude
     radius: 250
     icon: mdi:beaker
 
   - name: Ubisoft
-    latitude: ***REMOVED***
-    longitude: ***REMOVED***
+    latitude: !secret ubisoftLatitude
+    longitude: !secret ubisoftLongitude
     radius: 100
     icon: mdi:gamepad-variant
     
   - name: Garderie
-    latitude: ***REMOVED***
-    longitude: ***REMOVED***
+    latitude: !secret garderieLatitude
+    longitude: !secret garderieLongitude
     radius: 100
     icon: fas:baby
 
   # This will override the default home zone
   - name: Home
-    latitude: !secret latitude
-    longitude: !secret longitude
+    latitude: !secret homeLatitude
+    longitude: !secret homeLongitude
     radius: 100
     icon: mdi:home-circle
     
@@ -609,7 +593,7 @@ mqtt:
 
 vacuum:
   - platform: xiaomi_miio
-    host: 192.168.86.170
+    host: !secret vaccumIP
     token: !secret roborockToken
 
 light:
@@ -623,9 +607,13 @@ wake_on_lan:
 switch:
   - platform: wake_on_lan
     name: Wake up PC
-    mac: "***REMOVED***"
-    host: ***REMOVED***
+    mac: !secret pcMacAddress
+    host: !secret pcIP
   - platform: wake_on_lan
     name: Wake up NAS
-    mac: "***REMOVED***"
-    host: ***REMOVED***
+    mac: !secret nasMacAddress
+    host: !secret NAS_IP
+
+####################################################
+#                 Work in progress                 #
+####################################################

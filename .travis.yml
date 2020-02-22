@@ -2,18 +2,18 @@ language: python
 python:
   - "3.7"
 before_install:
-  - mv travis_secrets.yaml secrets.yaml
+  - mv secrets.fake.yaml secrets.yaml
   - sudo apt-get install -y libudev-dev 
-  - touch ./fake_id_rsa
+  - mkdir tmp/
   - touch ./home-assistant_v2.db
   - touch ./home-assistant.log
-  - touch ./fake_cert.pem
   - touch ./known_devices.yaml
-  - touch ./fake_ssl_cert
-  - touch ./fake_ssl_key
-  - mkdir tmp/
+  - touch ./secrets/fake_ssl_cert
+  - touch ./secrets/fake_ssl_key
+  - mv secrets/home-assistant.fake.json secrets/home-assistant.json
 install:
   - pip3 install homeassistant netdisco python-dateutil
+  - hass --version
 script:
   - hass -c . --script check_config
 after_failure:
