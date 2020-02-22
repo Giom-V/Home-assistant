@@ -18,8 +18,7 @@ deps/
 Share/
 certificate/
 tts/
-*/__pycache__/
-custom_components/*/__pycache__/*.pyc
+__pycache__
 
 # Ignored Files
 ip_bans.yaml
@@ -31,6 +30,7 @@ customize.yaml
 *.db-wal
 *.uuid
 *.pyc
+google_calendars.yaml
 *.old.yaml
 
 # Secrets
