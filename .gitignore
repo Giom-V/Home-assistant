@@ -31,6 +31,7 @@ customize.yaml
 *.db-wal
 *.uuid
 *.pyc
+*.old.yaml
 
 # Secrets
 secrets.yaml
