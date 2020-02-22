@@ -5,8 +5,8 @@ homeassistant:
   # Name of the location where Home Assistant is running
   name: Quebec
   # Location required to calculate the time the sun rises and sets
-  latitude: !secret latitude
-  longitude: !secret longitude
+  latitude: !secret homeLatitude
+  longitude: !secret homeLongitude
   # Impacts weather/sunrise data (altitude above sea level in meters)
   elevation: 47
   # metric for Metric, imperial for Imperial
@@ -24,7 +24,7 @@ homeassistant:
     - type: trusted_networks
       trusted_networks:
         - 127.0.0.1
-        - 192.168.0.0/24
+        - 192.168.0.0/24 #TODO: secret?
         - 192.168.1.0/24
         - 192.168.86.0/24
         - 192.168.86.100
@@ -68,7 +68,6 @@ recorder:
 #            Sensors and components                #
 ####################################################
  
-
 input_select:
   vacuum_room:
     name: Choose a room to clean
@@ -179,7 +178,7 @@ device_tracker:
 person:
   - name: Giom
     id: giom
-    user_id: ***REMOVED***
+    user_id: !secret giomUserId
     device_trackers:
       - device_tracker.cellGiom
       - device_tracker.op6
@@ -187,7 +186,7 @@ person:
       - device_tracker.google_maps_108886437999779306059
   - name: Claire
     id: claire
-    user_id: ***REMOVED***
+    user_id: !secret claireUserId
     device_trackers:
       - device_tracker.cellClaire
       - device_tracker.google_maps_116551309970452496819
@@ -204,7 +203,7 @@ panel_iframe:
     url: 'https://gi-home.slack.com/unreads/'
   sonarr:
     title: 'Sonarr'
-    url: '***REMOVED***'
+    url: !secret sonarrUrl
   utorrent:
     title: 'uTorrent'
     url: 'https://remote.bittorrent.com/'
@@ -214,27 +213,15 @@ weblink:
     - name: Slack
       url: 'https://gi-home.slack.com/unreads/'
     - name: Sonarr
-      url: '***REMOVED***'
-      # Dafang conf: https://***REMOVED***/
+      url: !secret sonarrUrl
     
 group: !include groups.yaml
 automation: !include_dir_merge_list automations/ 
 script: !include scripts.yaml
 
 shell_command:
-  resize_sunrise_pic: mogrify -resize 1080x720 ***REMOVED***last_sunrise.jpg
+  resize_sunrise_pic: mogrify -resize 1080x720 ***REMOVED***/last_sunrise.jpg
   create_daily_gif: 'convert -delay 20 -limit area 0 -resize 25% -loop 0 {rpi_camera_{{ now().strftime("%Y%m%d") }}-*_night.jpg,rpi_camera_{{ now().strftime("%Y%m%d") }}-*_day.jpg} {{ now().strftime("%Y%m%d") }}.gif'
-  
-#Xiaomi Aquara gateway and connected devices
-# xiaomi_aqara:
-#   discovery_retry: 10
-#   gateways:
-# #    - key: !secret xiaomiKey1 # First gateway bought, updated and thus less open to Hass
-# #      host: ***REMOVED***
-# #      mac: !secret xiaomiMac1
-#     - key: !secret xiaomiKey2 # Second gateway that we try not to update
-#       host: ***REMOVED***
-#       mac: !secret xiaomiMac2
     
 point:
   client_id: !secret point_clientID
@@ -249,9 +236,9 @@ withings:
   client_id: !secret withingsClientID
   client_secret: !secret withingsSecret
   profiles:
-    - Guillaume ***REMOVED***
-    - Aurore ***REMOVED***
-    - Claire ***REMOVED***
+    - Giom
+    - Aurore
+    - Claire
 
 ####################################################
 #                       Zones                      #
@@ -259,27 +246,27 @@ withings:
 # https://www.home-assistant.io/components/zone/
 zone:
   - name: Université
-    latitude: ***REMOVED*** #TODO: secret
-    longitude: ***REMOVED***
+    latitude: !secret universityLatitude
+    longitude: !secret universityLongitude
     radius: 250
     icon: mdi:beaker
 
   - name: Ubisoft
-    latitude: ***REMOVED*** #TODO: secret
-    longitude: ***REMOVED***
+    latitude: !secret ubisoftLatitude
+    longitude: !secret ubisoftLongitude
     radius: 100
     icon: mdi:gamepad-variant
     
   - name: Garderie
-    latitude: ***REMOVED*** #TODO: secret
-    longitude: ***REMOVED***
+    latitude: !secret garderieLatitude
+    longitude: !secret garderieLongitude
     radius: 100
     icon: fas:baby
 
   # This will override the default home zone
   - name: Home
-    latitude: !secret latitude
-    longitude: !secret longitude
+    latitude: !secret homeLatitude
+    longitude: !secret homeLongitude
     radius: 100
     icon: mdi:home-circle
     
@@ -298,7 +285,7 @@ mqtt:
 
 vacuum:
   - platform: xiaomi_miio
-    host: 192.168.86.170 #TODO: secret
+    host: !secret vaccumIP
     token: !secret roborockToken
 
 light:
@@ -312,18 +299,13 @@ wake_on_lan:
 switch:
   - platform: wake_on_lan
     name: Wake up PC
-    mac: "***REMOVED***" #TODO: secret
-    host: ***REMOVED*** #TODO: secret
+    mac: !secret pcMacAddress
+    host: !secret pcIP
   - platform: wake_on_lan
     name: Wake up NAS
-<<<<<<< HEAD
-    mac: "***REMOVED***" #TODO: secret
-    host: ***REMOVED*** #TODO: secret
-=======
-    mac: "***REMOVED***"
-    host: ***REMOVED***
+    mac: !secret nasMacAddress
+    host: !secret NAS_IP
 
 ####################################################
 #                 Work in progress                 #
 ####################################################
->>>>>>> 80ad1dad1e527ff3a0fdfab8bea796881f1bda10
