@@ -2,6 +2,6 @@
 platform: google_travel_time
 name: Travel time to work (Gmap)
 api_key: !secret gmap_APIKey
-origin: ***REMOVED***,***REMOVED*** #TODO: secret
-destination: ***REMOVED***
+origin: !secret homeGPSCoordinates
+destination: !secret giomWorkplaceGPSCoordinates
 scan_interval: 60
