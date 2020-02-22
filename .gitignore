@@ -32,6 +32,7 @@ customize.yaml
 *.uuid
 *.pyc
 google_calendars.yaml
+*.old.yaml
 
 # Secrets
 secrets.yaml
