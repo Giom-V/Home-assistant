@@ -5,8 +5,8 @@ homeassistant:
   # Name of the location where Home Assistant is running
   name: Quebec
   # Location required to calculate the time the sun rises and sets
-  latitude: !secret latitude
-  longitude: !secret longitude
+  latitude: !secret homeLatitude
+  longitude: !secret homeLongitude
   # Impacts weather/sunrise data (altitude above sea level in meters)
   elevation: 47
   # metric for Metric, imperial for Imperial
@@ -573,8 +573,8 @@ zone:
 
   # This will override the default home zone
   - name: Home
-    latitude: !secret latitude
-    longitude: !secret longitude
+    latitude: !secret homeLatitude
+    longitude: !secret homeLongitude
     radius: 100
     icon: mdi:home-circle
     
