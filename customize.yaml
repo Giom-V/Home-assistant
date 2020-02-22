@@ -9,6 +9,6 @@ sensor.dest_address:
 camera.raspberry_pi_camera:
   hidden: true
 person.giom:
-    entity_picture: https://lh4.googleusercontent.com/-nfUNt6XLG4g/AAAAAAAAAAI/AAAAAAALe_k/oF1SKvELhRo/photo.jpg
+    entity_picture: ***REMOVED***
 person.claire:
-    entity_picture: https://lh3.googleusercontent.com/a-/AAuE7mCElbdLmXXI7_NwM1x7xQvj8L3A532zVIwvRXQCoQ
+    entity_picture: ***REMOVED***

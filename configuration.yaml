@@ -102,7 +102,7 @@ camera:
     image_quality: 100 
     image_rotation: 180
     timelapse: 60000
-#    file_path: /home/homeassistant/.homeassistant/Share   # aucune idée de pourquoi ça ne fonctionne pas
+#    file_path: ***REMOVED***   # aucune idée de pourquoi ça ne fonctionne pas
   - platform: generic
     name: Dafang camera
     username: root
@@ -114,7 +114,7 @@ camera:
     scan_interval: 5
 #  - platform: xiaomi
 #    name: Dafang camera
-#    host: '192.168.86.165'
+#    host: '***REMOVED***'
 #    model: 'yi'
 #    password: !secret dafangPassword
     
@@ -205,11 +205,11 @@ sensor:
        dest_address:
          value_template: >-
             {%- if is_state("input_select.destination", "Home") -%}
-              46.7777219,-71.3269207
+              ***REMOVED***,***REMOVED***
             {%- elif is_state("input_select.destination", "Work") -%}
-              46.814050,-71.221148
+              ***REMOVED***
             {%- elif is_state("input_select.destination", "Parents") -%}
-              Garderie des amours de bout'chou, Quebec
+              ***REMOVED***
             {%- else -%}
               Unknown
             {%- endif %}
@@ -264,7 +264,7 @@ sensor:
       - moon_phase
   - platform: waze_travel_time
     name: "Me to destination"
-    origin: 46.7777219,-71.3269207
+    origin: ***REMOVED***,***REMOVED***
     destination: sensor.dest_address
     region: 'US'
     # Weather prediction
@@ -314,23 +314,23 @@ sensor:
     # Waze travel time
   - platform: waze_travel_time
     name: Travel time to work (Waze)
-    origin: 46.7777219,-71.3269207 #TODO: secret
-    destination: 46.814050,-71.221148
+    origin: ***REMOVED***,***REMOVED*** #TODO: secret
+    destination: ***REMOVED***
     region: 'US'
     scan_interval: 5
     # Google maps travel time (Giom)
   - platform: google_travel_time
     name: Travel time to work (Gmap)
     api_key: !secret gmap_APIKey
-    origin: 46.7777219,-71.3269207
-    destination: 46.814050,-71.221148
+    origin: ***REMOVED***,***REMOVED***
+    destination: ***REMOVED***
     scan_interval: 60
     # Google maps travel time (Claire)
   - platform: google_travel_time
     name: Travel time to work (Claire)
     api_key: !secret gmap_APIKey
-    origin: 46.7777219,-71.3269207
-    destination: 46.7800237,-71.2812227
+    origin: ***REMOVED***,***REMOVED***
+    destination: ***REMOVED***
     options:
       mode: transit
       transit_routing_preference: less_walking
@@ -491,7 +491,7 @@ device_tracker:
 person:
   - name: Giom
     id: giom
-    user_id: 6d6b7b9773144a66957cec1889954f68
+    user_id: ***REMOVED***
     device_trackers:
       - device_tracker.cellGiom
       - device_tracker.op6
@@ -499,7 +499,7 @@ person:
       - device_tracker.google_maps_108886437999779306059
   - name: Claire
     id: claire
-    user_id: 882d5cbae4fb4da282c01c79cf4216ff
+    user_id: ***REMOVED***
     device_trackers:
       - device_tracker.cellClaire
       - device_tracker.google_maps_116551309970452496819
@@ -516,7 +516,7 @@ panel_iframe:
     url: 'https://gi-home.slack.com/unreads/'
   sonarr:
     title: 'Sonarr'
-    url: 'http://giom.myasustor.com:8989'
+    url: '***REMOVED***'
   utorrent:
     title: 'uTorrent'
     url: 'https://remote.bittorrent.com/'
@@ -526,15 +526,15 @@ weblink:
     - name: Slack
       url: 'https://gi-home.slack.com/unreads/'
     - name: Sonarr
-      url: 'http://giom.myasustor.com:8989'
-      # Dafang conf: https://192.168.86.165/
+      url: '***REMOVED***'
+      # Dafang conf: https://***REMOVED***/
     
 group: !include groups.yaml
 automation: !include_dir_merge_list automations/ 
 script: !include scripts.yaml
 
 shell_command:
-  resize_sunrise_pic: mogrify -resize 1080x720 /home/homeassistant/.homeassistant/Share/last_sunrise.jpg
+  resize_sunrise_pic: mogrify -resize 1080x720 ***REMOVED***/last_sunrise.jpg
   create_daily_gif: 'convert -delay 20 -limit area 0 -resize 25% -loop 0 {rpi_camera_{{ now().strftime("%Y%m%d") }}-*_night.jpg,rpi_camera_{{ now().strftime("%Y%m%d") }}-*_day.jpg} {{ now().strftime("%Y%m%d") }}.gif'
   
 #Xiaomi Aquara gateway and connected devices
@@ -542,10 +542,10 @@ shell_command:
 #   discovery_retry: 10
 #   gateways:
 # #    - key: !secret xiaomiKey1 # First gateway bought, updated and thus less open to Hass
-# #      host: 192.168.86.133
+# #      host: ***REMOVED***
 # #      mac: !secret xiaomiMac1
 #     - key: !secret xiaomiKey2 # Second gateway that we try not to update
-#       host: 192.168.86.137
+#       host: ***REMOVED***
 #       mac: !secret xiaomiMac2
     
 point:
@@ -561,9 +561,9 @@ withings:
   client_id: !secret withingsClientID
   client_secret: !secret withingsSecret
   profiles:
-    - Guillaume Vernade
-    - Aurore Vernade
-    - Claire Mérot
+    - Guillaume ***REMOVED***
+    - Aurore ***REMOVED***
+    - Claire ***REMOVED***
 
 ####################################################
 #                       Zones                      #
@@ -571,20 +571,20 @@ withings:
 # https://www.home-assistant.io/components/zone/
 zone:
   - name: Université
-    latitude: 46.779144
-    longitude: -71.2807537
+    latitude: ***REMOVED***
+    longitude: ***REMOVED***
     radius: 250
     icon: mdi:beaker
 
   - name: Ubisoft
-    latitude: 46.814050
-    longitude: -71.221148
+    latitude: ***REMOVED***
+    longitude: ***REMOVED***
     radius: 100
     icon: mdi:gamepad-variant
     
   - name: Garderie
-    latitude: 46.776270
-    longitude: -71.316373
+    latitude: ***REMOVED***
+    longitude: ***REMOVED***
     radius: 100
     icon: fas:baby
 
@@ -624,12 +624,12 @@ wake_on_lan:
 switch:
   - platform: wake_on_lan
     name: Wake up PC
-    mac: "40:8D:5C:ED:3D:89"
-    host: 192.168.86.76
+    mac: "***REMOVED***"
+    host: ***REMOVED***
   - platform: wake_on_lan
     name: Wake up NAS
-    mac: "10:bf:48:8b:77:e0"
-    host: 192.168.86.123
+    mac: "***REMOVED***"
+    host: ***REMOVED***
 
 ####################################################
 #                 Work in progress                 #
