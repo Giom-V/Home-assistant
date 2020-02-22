@@ -15,7 +15,6 @@ install:
   - pip3 install homeassistant netdisco python-dateutil
 script:
   - hass --version
-  - hass -c . --script check_config | tee check.output
+  - hass -c . --script check_config
 after_failure:
-  - cat check.output | grep -q "Failed config"
   - cat home-assistant.log
