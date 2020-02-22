@@ -1,11 +1,11 @@
 - id: LightsOff
   name: LightsOff
   entities:
-    light.colorv2:
+    light.canape_gauche:
+      state: off
+    light.canape_droite:
       state: off
     light.color:
-      state: off
-    light.white:
       state: off
     switch.cuisine:
       state: off

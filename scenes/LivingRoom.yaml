@@ -1,77 +1,81 @@
 - id: MinBrightnessLivingRoom
   name: MinBrightnessLivingRoom
   entities:
-    light.colorv2:
+    light.canape_gauche:
+      state: on
+      brightness: 1
+    light.canape_droite:
       state: on
       brightness: 1
     light.color:
-      state: on
-      brightness: 1
-    light.white:
       state: on
       brightness: 1
 - id: MaxBrightnessLivingRoom
   name: MaxBrightnessLivingRoom
   entities:
-    light.colorv2:
+    light.canape_gauche:
+      state: on
+      brightness: 255
+    light.canape_droite:
       state: on
       brightness: 255
     light.color:
-      state: on
-      brightness: 255
-    light.white:
       state: on
       brightness: 255
 - name: LivingRoomOff
   id: LivingRoomOff
   entities:
-    light.colorv2:
+    light.canape_gauche:
+      state: off
+    light.canape_droite:
       state: off
     light.color:
-      state: off
-    light.white:
       state: off
 - id: WhiteLivingRoom
   name: WhiteLivingRoom
   entities:
-    light.colorv2:
+    light.canape_gauche:
+      state: on
+      color_temp: 200
+    light.canape_droite:
       state: on
       color_temp: 200
     light.color:
       state: on
       color_temp: 200
-    light.white:
-      state: on
 - name: PinkAndPurpleLivingRoom
   id: PinkAndPurpleLivingRoom
   entities:
-    light.colorv2:
+    light.canape_gauche:
+      state: on
+      rgb_color: [255,25,246]
+    light.canape_droite:
       state: on
       rgb_color: [255,25,246]
     light.color:
       state: on
       rgb_color: [255,0,0]
-    light.white:
-      state: off
 - name: PinkLivingRoom
   id: PinkLivingRoom
   entities:
-    light.colorv2:
+    light.canape_gauche:
+      state: on
+      rgb_color: [255,104,179]
+    light.canape_droite:
       state: on
       rgb_color: [255,104,179]
     light.color:
       state: on
       rgb_color: [255,36,147]
-    light.white:
-      state: off
 - name: BlueLivingRoom
   id: BlueLivingRoom
   entities:
-    light.colorv2:
+    light.canape_gauche:
+      state: on
+      rgb_color: [72,255,236]
+    light.canape_droite:
       state: on
       rgb_color: [72,255,236]
     light.color:
       state: on
       rgb_color: [255,228,205]
-    light.white:
-      state: off

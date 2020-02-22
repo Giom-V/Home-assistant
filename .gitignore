@@ -30,6 +30,7 @@ customize.yaml
 *.db-wal
 *.uuid
 *.pyc
+google_calendars.yaml
 
 # Secrets
 secrets.yaml
