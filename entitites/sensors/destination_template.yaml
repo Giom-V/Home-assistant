@@ -3,11 +3,11 @@ sensors:
   dest_address: #Todo: secret coordinates
     value_template: >-
       {%- if is_state("input_select.destination", "Home") -%}
-        ***REMOVED***,***REMOVED***
+        !secret homeGPSCoordinates
       {%- elif is_state("input_select.destination", "Work") -%}
-        ***REMOVED***
+        !secret giomWorkplaceGPSCoordinates
       {%- elif is_state("input_select.destination", "Parents") -%}
-        ***REMOVED***
+        !secret garderieName
       {%- else -%}
         Unknown
       {%- endif %}
