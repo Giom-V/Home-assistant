@@ -554,20 +554,20 @@ withings:
 # https://www.home-assistant.io/components/zone/
 zone:
   - name: Université
-    latitude: 46.779144
-    longitude: -71.2807537
+    latitude: !secret universityLatitude
+    longitude: !secret universityLongitude
     radius: 250
     icon: mdi:beaker
 
   - name: Ubisoft
-    latitude: 46.814050
-    longitude: -71.221148
+    latitude: !secret ubisoftLatitude
+    longitude: !secret ubisoftLongitude
     radius: 100
     icon: mdi:gamepad-variant
     
   - name: Garderie
-    latitude: 46.776270
-    longitude: -71.316373
+    latitude: !secret garderieLatitude
+    longitude: !secret garderieLongitude
     radius: 100
     icon: fas:baby
 
