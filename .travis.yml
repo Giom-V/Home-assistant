@@ -10,7 +10,8 @@ before_install:
   - touch ./known_devices.yaml
   - touch ./secrets/fake_ssl_cert
   - touch ./secrets/fake_ssl_key
-  - touch customize.yaml
+  - touch ./customize.yaml
+  - touch ./google_calendar.yaml
   - mv secrets/home-assistant.fake.json secrets/home-assistant.json
 install:
   - pip3 install homeassistant netdisco python-dateutil
