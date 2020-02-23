@@ -1,6 +1,0 @@
-# https://www.home-assistant.io/integrations/waze_travel_time/
-platform: waze_travel_time
-name: "Home to destination"
-origin: !secret homeGPSCoordinatess
-destination: sensor.dest_address
-region: 'US'
