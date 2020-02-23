@@ -175,7 +175,7 @@ vacuum_dispatch:
               vacuum_aurore_bedroom
             {% else %}
               vacuum_bedroom
-            {% enfif %}
+            {% endif %}
           {% elif "bedroom" in room|lower %}
             {% if "aurore" in room|lower %}
               vacuum_aurore_bedroom
