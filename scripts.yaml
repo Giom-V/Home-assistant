@@ -1,3 +1,4 @@
+# TODO: split scripts
 '1542490337256':
   alias: Notif slack (test)
   sequence:
@@ -125,24 +126,76 @@ vacuum_dispatch:
   sequence:
     - service: script.turn_on
       data_template:
-        #TODO: ajouter les STP/STP et le "dans" avant (ou en fait les enlever ?). Ou alors utiliser "contains"?
         entity_id: >-
-          {% if room|lower in ("cuisine", "la cuisine", "dans la cuisine", "kitchen", "the kitchen") %}
-            script.vacuum_kitchen
-          {% elif room|lower in ("salle de bain", "la salle de bain", "les toilettes", "toilettes", "bathroom", "the bathroom") %}
-            script.vacuum_bathroom
-          {% elif room|lower in ("chambre", "la chambre", "notre chambre", "la grande chambre", "la chambre des parents", "bedroom", "the bedroom") %}
-            script.vacuum_bedroom
-          {% elif room|lower in ("chambre d'aurore", "la chambre d'aurore", "la petite chambre", "la chambre des enfants", "aurore's bedroom") %}
-            script.vacuum_bedroom
-          {% elif room|lower in ("salle à manger", "la salle à manger", "dans la salle à manger", "la table", "autour de la table", "après le repas", "dining room") %}
-            script.vacuum_diningroom
-          {% elif room|lower in ("salon", "le salon", "living room") %}
-            script.vacuum_livingroom
-          {% elif room|lower in ("zone d'aurore", "la zone d'aurore", "coin d'aurore", "le coin d'aurore", "aurore's zone") %}
-            script.vacuum_aurore_zone
-          {% elif room|lower in ("la cuisine et la salle à manger", "dans la cuisine et la salle à manger", "la salle à manger et la cuisine", "le sejour", "dans le sejour") %}
-            script.vacuum_kitchen_and_diningroom
+          {% if "cuisine" in room|lower %}
+            {% if "salle à manger" in room|lower %}
+              script.vacuum_kitchen_and_diningroom
+            {% elif "salle a manger" in room|lower %}
+              script.vacuum_kitchen_and_diningroom
+              script.vacuum_kitchen_and_diningroom
+            {% elif "table" in room|lower %}
+              script.vacuum_kitchen_and_diningroom
+            {% else %}
+              script.vacuum_kitchen
+            {% endif %}
+          {% elif "kitchen" in room|lower %}
+            {% if "diningroom" in room|lower %}
+              script.vacuum_kitchen_and_diningroom
+            {% elif "dining room" in room|lower %}
+              script.vacuum_kitchen_and_diningroom
+            {% elif "table" in room|lower %}
+              script.vacuum_kitchen_and_diningroom
+            {% else %}
+              script.vacuum_kitchen
+            {% endif %}
+          {% elif "salle à manger" in room|lower %}
+            vacuum_diningroom
+          {% elif "salle a manger" in room|lower %}
+            vacuum_diningroom
+          {% elif "repas" in room|lower %}
+            vacuum_diningroom
+          {% elif "dining room" in room|lower %}
+            vacuum_diningroom
+          {% elif "diningroom" in room|lower %}
+            vacuum_diningroom
+          {% elif "table" in room|lower %}
+            vacuum_diningroom
+          {% elif "bain" in room|lower %}
+            vacuum_bathroom
+          {% elif "toilet" in room|lower %}
+            vacuum_bathroom
+          {% elif "bath" in room|lower %}
+            vacuum_bathroom
+          {% elif "chambre" in room|lower %}
+            {% if "aurore" in room|lower %}
+              vacuum_aurore_bedroom
+            {% if "enfant" in room|lower %}
+              vacuum_aurore_bedroom
+            {% if "petite" in room|lower %}
+              vacuum_aurore_bedroom
+            {% else %}
+              vacuum_bedroom
+            {% enfif %}
+          {% elif "bedroom" in room|lower %}
+            {% if "aurore" in room|lower %}
+              vacuum_aurore_bedroom
+            {% if "kid" in room|lower %}
+              vacuum_aurore_bedroom
+            {% if "small" in room|lower %}
+              vacuum_aurore_bedroom
+            {% else %}
+              vacuum_bedroom
+            {% enfif %}
+          {% elif "salon" in room|lower %}
+            vacuum_livingroom
+          {% elif "canapé" in room|lower %}
+            vacuum_livingroom
+          {% elif "living room" in room|lower %}
+            vacuum_livingroom
+          {% elif "livingroom" in room|lower %}
+            vacuum_livingroom
+          {% elif "aurore" in room|lower %}
+            vacuum_aurore_zone
           {% endif %}
 vaccum_reset_fan_speed_after_mopping:
   alias: "Reset vaccum's fan speed after mopping"
