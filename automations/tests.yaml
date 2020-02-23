@@ -1,8 +1,8 @@
 - id: '1575775244195'
   alias: New Automation
-  description: sensor.withings_weight_kg_guillaume_vernade
+  description: sensor.withings_weight_kg_giom
   trigger:
-  - entity_id: sensor.withings_weight_kg_guillaume_vernade
+  - entity_id: sensor.withings_weight_kg_giom
     platform: state
   condition: []
   action:
