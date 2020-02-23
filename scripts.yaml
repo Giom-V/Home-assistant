@@ -169,9 +169,9 @@ vacuum_dispatch:
           {% elif "chambre" in room|lower %}
             {% if "aurore" in room|lower %}
               vacuum_aurore_bedroom
-            {% if "enfant" in room|lower %}
+            {% elif "enfant" in room|lower %}
               vacuum_aurore_bedroom
-            {% if "petite" in room|lower %}
+            {% elif "petite" in room|lower %}
               vacuum_aurore_bedroom
             {% else %}
               vacuum_bedroom
@@ -179,9 +179,9 @@ vacuum_dispatch:
           {% elif "bedroom" in room|lower %}
             {% if "aurore" in room|lower %}
               vacuum_aurore_bedroom
-            {% if "kid" in room|lower %}
+            {% elif "kid" in room|lower %}
               vacuum_aurore_bedroom
-            {% if "small" in room|lower %}
+            {% elif "small" in room|lower %}
               vacuum_aurore_bedroom
             {% else %}
               vacuum_bedroom
