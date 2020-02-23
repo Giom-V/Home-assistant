@@ -185,7 +185,7 @@ vacuum_dispatch:
               vacuum_aurore_bedroom
             {% else %}
               vacuum_bedroom
-            {% enfif %}
+            {% endif %}
           {% elif "salon" in room|lower %}
             vacuum_livingroom
           {% elif "canapé" in room|lower %}
