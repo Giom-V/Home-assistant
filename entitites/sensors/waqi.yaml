@@ -1,0 +1,5 @@
+# https://www.home-assistant.io/integrations/waqi/
+platform: waqi
+token: !secret waqi_APIKey #TODO: secret
+locations:
+  - Beauce
