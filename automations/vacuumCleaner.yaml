@@ -63,8 +63,8 @@
     data:
       fan_speed: Standard
       entity_id: vacuum.xiaomi_vacuum_cleaner
-- id: IFTTT_stop_vaccum_webhook
-  alias: Stop vaccum as asked through IFTTT
+- id: IFTTT_stop_vacuum_webhook
+  alias: Stop vacuum as asked through IFTTT
   trigger:
     platform: webhook
     webhook_id: vacuumStop
@@ -81,8 +81,8 @@
   - service: vacuum.stop
     data:
       entity_id: vacuum.xiaomi_vacuum_cleaner
-- id: IFTTT_recharge_vaccum_webhook
-  alias: Send vaccum to base as asked through IFTTT
+- id: IFTTT_recharge_vacuum_webhook
+  alias: Send vacuum to base as asked through IFTTT
   trigger:
     platform: webhook
     webhook_id: vacuumGoToBase
@@ -99,8 +99,8 @@
   - service: vacuum.return_to_base
     data:
       entity_id: vacuum.xiaomi_vacuum_cleaner
-- id: Vaccum_kitchen_and_dining_room_when_we_are_away
-  alias: Vaccum Kitchen and dining room when we are away
+- id: vacuum_kitchen_and_dining_room_when_we_are_away
+  alias: vacuum Kitchen and dining room when we are away
   trigger:
   - at: '14:00'
     platform: time

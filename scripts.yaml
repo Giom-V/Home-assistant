@@ -197,8 +197,8 @@ vacuum_dispatch:
           {% elif "aurore" in room|lower %}
             vacuum_aurore_zone
           {% endif %}
-vaccum_reset_fan_speed_after_mopping:
-  alias: "Reset vaccum's fan speed after mopping"
+vacuum_reset_fan_speed_after_mopping:
+  alias: "Reset vacuum's fan speed after mopping"
   sequence:
     - delay:
         minutes: 1
@@ -222,7 +222,7 @@ mop_bathroom:
         entity_id: script.vacuum_bathroom
     - service: script.turm_on
       data:
-        entity_id: script.vaccum_reset_fan_speed_after_mopping
+        entity_id: script.vacuum_reset_fan_speed_after_mopping
 mop_kitchen:
   alias: "Mop Kitchen"
   sequence:
@@ -238,7 +238,7 @@ mop_kitchen:
         entity_id: script.vacuum_kitchen
     - service: script.turm_on
       data:
-        entity_id: script.vaccum_reset_fan_speed_after_mopping
+        entity_id: script.vacuum_reset_fan_speed_after_mopping
 mop_diningroom:
   alias: "Mop Diningroom"
   sequence:
@@ -254,7 +254,7 @@ mop_diningroom:
         entity_id: script.vacuum_diningroom
     - service: script.turm_on
       data:
-        entity_id: script.vaccum_reset_fan_speed_after_mopping
+        entity_id: script.vacuum_reset_fan_speed_after_mopping
 mop_kitchen_and_dining_room:
   alias: "Mop Kitchen and dining room"
   sequence:
@@ -270,7 +270,7 @@ mop_kitchen_and_dining_room:
         entity_id: script.vacuum_kitchen_and_diningroom
     - service: script.turm_on
       data:
-        entity_id: script.vaccum_reset_fan_speed_after_mopping
+        entity_id: script.vacuum_reset_fan_speed_after_mopping
 living_room_color:
   alias: "Change Living room color"
   sequence:
