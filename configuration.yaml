@@ -270,10 +270,10 @@ zone:
     radius: 100
     icon: mdi:home-circle
     
-    
-google:
-  client_id: !secret googleDeveloperClientID
-  client_secret: !secret googleDeveloperSecret
+# temporarily disabling the google calendar integration to fix the rest    
+#google:
+#  client_id: !secret googleDeveloperClientID
+#  client_secret: !secret googleDeveloperSecret
   
 tplink:
 
