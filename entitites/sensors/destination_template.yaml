@@ -3,11 +3,11 @@ sensors:
   dest_address: #Todo: secret coordinates
     value_template: >-
       {%- if is_state("input_select.destination", "Home") -%}
-        46.7777219,-71.3269207
+        !secret homeGPSCoordinates
       {%- elif is_state("input_select.destination", "Work") -%}
-        46.814050,-71.221148
+        !secret giomWorkplaceGPSCoordinates
       {%- elif is_state("input_select.destination", "Parents") -%}
-        Garderie des amours de bout'chou, Quebec
+        !secret garderieName
       {%- else -%}
         Unknown
       {%- endif %}
