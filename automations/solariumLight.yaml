@@ -1,27 +1,35 @@
 - id: LightOnSolarium30mnBeforSunset
-  alias: swith light on at sunset on weekdays
+  alias: swith light on at sunset on weekdays (if we have visitors)
   trigger:
   - platform: sun
     event: sunset
     offset: -00:30:00
   condition:
-  - condition: time
-    after: '16:30:00'
-    before: '18:30:00'
+  - condition: template
+    value_template: >
+      {{ now().strftime("%H:%M:%S") > states.input_datetime.solarium_switch_on.state }}
+  - condition: template
+    value_template: >
+      {{ now().strftime("%H:%M:%S") < states.input_datetime.solarium_switch_off.state }}
   - condition: state
     entity_id: input_boolean.visitors
     state: 'on'
   action:
-  - service: homeassistant.turn_on
+  - service: light.turn_on
     entity_id: light.solarium
+  - service: light.turn_on
+    entity_id: light.white
+  - service: input_datetime.set_datetime
+    entity_id: input_datetime.solarium_timer_end
+    data_template: {{ states.input_datetime.solarium_switch_off.state }}
   - service: notify.slack
     data:
       message: Lights on 30mn before sunset!
-- id: LightOnSolariumAt430pm
-  alias: swith light on at 4:30 on weekdays
+- id: LightOnSolariumAtSelectedtime
+  alias: swith light on at selected time on weekdays (if we have visitors)
   trigger:
-  - platform: time
-    at: '16:30:00'
+    platform: template
+    value_template: "{{ states('sensor.time') == (state_attr('input_datetime.solarium_switch_on', 'timestamp') | int | timestamp_custom('%H:%M', True)) }}"
   condition:
   - condition: sun
     after: sunset
@@ -30,28 +38,34 @@
     entity_id: input_boolean.visitors
     state: 'on'
   action:
-  - service: homeassistant.turn_on
+  - service: light.turn_on
     entity_id: light.solarium
+  - service: light.turn_on
+    entity_id: light.white
+  - service: input_datetime.set_datetime
+    entity_id: input_datetime.solarium_timer_end
+    data_template: {{ states.input_datetime.solarium_switch_off.state }}
   - service: notify.slack
     data:
       message: Lights on at 4:30!
-- id: LightOffSolariumAt6:30pm #TODO: refactor to have a global solution
+- id: LightOffSolariumAtTheEndOfTheTimer
   alias: swith light off at 6:30pm on weekdays
   trigger:
-  - platform: time
-    at: '18:30:00'
-  condition:
-  - condition: state
-    entity_id: input_boolean.visitors
-    state: 'on'
+    platform: template
+    value_template: "{{ states('sensor.time') == (state_attr('input_datetime.solarium_timer_end', 'timestamp') | int | timestamp_custom('%H:%M', True)) }}"
   action:
-  - service: homeassistant.turn_off
+  - service: light.turn_off
     entity_id: light.solarium
+  - service: light.turn_off
+    entity_id: light.white
+  - service: input_datetime.set_datetime
+    entity_id: input_datetime.solarium_timer_end
+    data_template: {{ states.input_datetime.solarium_switch_off.state }}
   - service: notify.slack
     data:
-      message: Lights off!
+      message: Timer finished, lights off!
     
-- id: '1582074352047'
+- id: FreezerLight
   alias: Freezer light
   trigger:
   - type: opened
@@ -59,11 +73,9 @@
     device_id: 85bc07f4124e490eb8ba0082a9abf76c
     entity_id: binary_sensor.freezer_door
     domain: binary_sensor
-  condition: []
   action:
   - entity_id: light.white
     service: light.turn_on
-  - delay: 
-      minutes: 2
-  - entity_id: light.white #TODO: this should be managed elsewhere
-    service: light.turn_off
+  - service: input_datetime.set_datetime
+    entity_id: input_datetime.solarium_timer_end
+    data_template: {{ [state_attr(input_datetime.solarium_timer_end , 'timestamp'), (now().timestamp() + (5 * 60)) ] | max | timestamp_custom('%H:%M', false)}}
