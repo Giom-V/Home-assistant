@@ -2,4 +2,4 @@ exclude_paths:
   - 'appdaemon/**'
   - 'custom_components/**'
   - 'www/community/**'
-  - 'www/tiles-cards/**'
+  - 'www/tiles-card/**'
