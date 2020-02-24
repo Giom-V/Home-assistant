@@ -9,10 +9,10 @@ Personal home assistant configuration.
 
 ## Organization of this GitHub
 After staring like everybody with everything in my [configuration](configuration.yaml) file, I started to split it to better keep track of the changes using GitHub. I followed the example of [@jonathanadams](https://github.com/jonathanadams/Home-Assistant-Configuration) and split (or actually tried to since it's a work in progress) all the configuration this way:
-  - basic configuration will stay in [configuration.yaml](configuration.yaml)
-  - every integration has its own yaml file in the [integrations](integrations/) folder
-  - when an integration corresponds to multiple entities ([lights](entities/lights/) for ex.), then they each have their own YAML file in the corresponding folder located in the [entities](entities/) folder.
-  - [scripts](scripts/), [automations](automations/) and [scenes](scenes/) are grouped by "theme" (everything related to a room or a device for ex.) in their corresponding folder
+- basic configuration will stay in [configuration.yaml](configuration.yaml)
+- every integration has its own yaml file in the [integrations](integrations/) folder
+- when an integration corresponds to multiple entities ([lights](entities/lights/) for ex.), then they each have their own YAML file in the corresponding folder located in the [entities](entities/) folder.
+- [scripts](scripts/), [automations](automations/) and [scenes](scenes/) are grouped by "theme" (everything related to a room or a device for ex.) in their corresponding folder
 
 ## My devices
 | Name | Type | Brand | Picture | Link | Integration |
