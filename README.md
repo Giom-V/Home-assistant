@@ -1,4 +1,3 @@
-
 # Home Assistant
 
 ![GitHub commit activity](https://img.shields.io/github/commit-activity/m/Giom-V/Home-assistant)
