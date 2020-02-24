@@ -1,0 +1,5 @@
+# https://github.com/vmanuel/hacs-google-fit
+platform: google_fit
+name: Google Fit
+client_id: !secret googleDeveloperClientID
+client_secret: !secret googleDeveloperSecret
