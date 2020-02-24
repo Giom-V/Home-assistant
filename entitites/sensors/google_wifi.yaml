@@ -1,0 +1,3 @@
+# Google Wifi
+# https://www.home-assistant.io/integrations/google_wifi/
+platform: google_wifi
