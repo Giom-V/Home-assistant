@@ -220,7 +220,7 @@ automation: !include_dir_merge_list automations/
 script: !include scripts.yaml
 
 shell_command:
-  resize_sunrise_pic: mogrify -resize 1080x720 ***REMOVED***/last_sunrise.jpg
+  resize_sunrise_pic: mogrify -resize 1080x720 /home/homeassistant/.homeassistant/Share/last_sunrise.jpg
   create_daily_gif: 'convert -delay 20 -limit area 0 -resize 25% -loop 0 {rpi_camera_{{ now().strftime("%Y%m%d") }}-*_night.jpg,rpi_camera_{{ now().strftime("%Y%m%d") }}-*_day.jpg} {{ now().strftime("%Y%m%d") }}.gif'
     
 point:
