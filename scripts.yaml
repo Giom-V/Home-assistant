@@ -4,13 +4,13 @@
   - service: camera.snapshot
     data:
       entity_id: camera.raspberry_pi_camera
-      filename: '/home/homeassistant/.homeassistant/Share/last_sunrise.jpg'
+      filename: '***REMOVED***/last_sunrise.jpg'
   - service: shell_command.resize_sunrise_pic
   - service: notify.slack
     data:
       data:
         file:
-          path: /home/homeassistant/.homeassistant/Share/last_sunrise.jpg
+          path: ***REMOVED***/last_sunrise.jpg
       message: Good morning!
       target:
       - '#hass'
@@ -24,7 +24,7 @@ create_daily_gif:
     data:
       data:
         file:
-          path: "/home/homeassistant/.homeassistant/Share/{{ today }}.gif"
+          path: "***REMOVED***/{{ today }}.gif"
       message: Daily Gif!
       target:
       - '#hass'

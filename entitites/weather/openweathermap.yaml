@@ -1,0 +1,5 @@
+# https://www.home-assistant.io/integrations/openweathermap/
+platform: openweathermap
+api_key: !secret openweathermap_APIKey
+mode: freedaily
+# hourly also possible for 3 hours forecast, use freedaily for the daily with the free tier
