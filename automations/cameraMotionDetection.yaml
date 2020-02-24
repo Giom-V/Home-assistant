@@ -9,7 +9,7 @@
   - service: hangouts.send_message
     data:
       target:
-      - id: Ugx0d-jMFj_SbB85EUZ4AaABAagB0ciABA
+      - id: ***REMOVED***
       message:
       - text: Motion detected
       data:
