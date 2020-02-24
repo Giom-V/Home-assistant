@@ -78,4 +78,4 @@
     service: light.turn_on
   - service: input_datetime.set_datetime
     entity_id: input_datetime.solarium_timer_end
-    data_template: {{ [state_attr(input_datetime.solarium_timer_end , 'timestamp'), (now().timestamp() + (5 * 60)) ] | max | timestamp_custom('%H:%M', false)}} #TODO: to be verified
+    data_template: '{% set new_timer = [ state_attr(input_datetime.solarium_timer_end , 'timestamp'), (now().timestamp() + (5 * 60)) ] | max %} {{ new_timer | timestamp_custom('%H:%M', false) }}' #TODO: to be verified
