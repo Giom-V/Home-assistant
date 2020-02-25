@@ -12,4 +12,4 @@ Contains the scenes for all the inner house (not the ones in our solarium or bas
 
 ### [LivingRoom.yaml](LivingRoom.yaml)
 
-Contains the scenes for living room lights. There are a couple of colored scenes that we cycle using a [Tradfri controller](https://www2.ikea.com/fr/fr/p/tradfri-telecommande-30443124/), triggering [Automations](../automations/ikeaController.yaml), themselves triggering some [Scripts](../scripts/livingroom.yaml).
+Contains the scenes for living room lights. There are a couple of colored scenes that we cycle using a [ikea controller](https://www2.ikea.com/fr/fr/p/tradfri-telecommande-30443124/), triggering [Automations](../automations/ikeaController.yaml), themselves triggering some [Scripts](../scripts/livingroom.yaml).
