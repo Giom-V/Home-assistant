@@ -158,9 +158,9 @@ media_player:
   # Google Cast
   - platform: cast
   #Emby
-  - platform: emby
-    host: !secret NAS_IP
-    api_key: !secret emby_APIKey
+  #- platform: emby
+  #  host: !secret NAS_IP
+  #  api_key: !secret emby_APIKey
 
 device_tracker:
   # Google Map location sharing
