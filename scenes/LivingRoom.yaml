@@ -48,7 +48,7 @@
   entities:
     light.canape_gauche:
       state: on
-      rgb_color: [255,25,246]
+      rgb_color: [255,82,170]
     light.canape_droite:
       state: on
       rgb_color: [255,25,246]
@@ -60,7 +60,7 @@
   entities:
     light.canape_gauche:
       state: on
-      rgb_color: [255,104,179]
+      rgb_color: [255,82,170]
     light.canape_droite:
       state: on
       rgb_color: [255,104,179]
