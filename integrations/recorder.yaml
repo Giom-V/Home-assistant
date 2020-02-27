@@ -46,12 +46,8 @@ recorder:
       - binary_sensor.vpir_motion_control
       - binary_sensor.workday_sensor
       - camera.dafang_camera_motion_snapshot
-      - sensor.moon
-      - sensor.season
-      - sensor.uptime
-      - sensor.yr
-      - sensor.version
-      - sensor.dest_address
+    event_types:
+      - time_changed
   include:
     domains:
       - alarm_control_panel
@@ -94,7 +90,6 @@ recorder:
       - script.switch_living_room_color
       - script.vaccum_reset_fan_speed_after_mopping
       - script.vacuum_dispatch
-      
       - sensor.claire_s_time_at_work_last_week
       - sensor.claire_s_time_at_work_this_week
       - sensor.dark_sky_apparent_temperature
