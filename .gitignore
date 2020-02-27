@@ -17,8 +17,7 @@ deps/
 Share/
 certificate/
 tts/
-*/__pycache__/
-custom_components/*/__pycache__/*.pyc
+__pycache__
 
 # Ignored Files
 ip_bans.yaml
@@ -29,13 +28,16 @@ customize.yaml
 *.db-shm
 *.db-wal
 *.uuid
-*.pyc'
+*.pyc
+google_calendars.yaml
+*.old.yaml
+secrets/home-assistant.json
 
 # Secrets
 secrets.yaml
 secrets/*.json
 !/secrets/*.fake.json
-secrets/home-assistant.json'
+secrets/home-assistant.json
 
 # Google temp files
 .google*
