@@ -1,5 +1,0 @@
-# https://github.com/custom-components/sensor.untappd
-platform: untappd
-username: !secret untappedUsername
-id: !secret untappedClientID
-secret: !secret untappedSecret
