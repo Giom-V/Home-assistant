@@ -7,10 +7,10 @@
   condition:
   - condition: template
     value_template: >
-      {{ now().strftime("%H:%M:%S") > states.input_datetime.solarium_switch_on.state }}
+      {{ now().strftime("%H:%M:%S") > states('input_datetime.solarium_switch_on') }}
   - condition: template
     value_template: >
-      {{ now().strftime("%H:%M:%S") < states.input_datetime.solarium_switch_off.state }}
+      {{ now().strftime("%H:%M:%S") < states('input_datetime.solarium_switch_off') }}
   - condition: state
     entity_id: input_boolean.visitors
     state: 'on'
@@ -21,7 +21,8 @@
     entity_id: light.white
   - service: input_datetime.set_datetime
     entity_id: input_datetime.solarium_timer_end
-    data_template: {{ states.input_datetime.solarium_switch_off.state }}
+    data_template: 
+      time: "{{ states('input_datetime.solarium_switch_off') }}"
   - service: notify.slack
     data:
       message: Lights on 30mn before sunset!
@@ -44,7 +45,8 @@
     entity_id: light.white
   - service: input_datetime.set_datetime
     entity_id: input_datetime.solarium_timer_end
-    data_template: {{ states.input_datetime.solarium_switch_off.state }}
+    data_template: 
+      time: "{{ states('input_datetime.solarium_switch_off')  }}"
   - service: notify.slack
     data:
       message: Lights on at 4:30!
@@ -60,7 +62,8 @@
     entity_id: light.white
   - service: input_datetime.set_datetime
     entity_id: input_datetime.solarium_timer_end
-    data_template: {{ states.input_datetime.solarium_switch_off.state }}
+    data_template: 
+      time: "{{ states('input_datetime.solarium_switch_off') }}"
   - service: notify.slack
     data:
       message: Timer finished, lights off!
@@ -78,7 +81,8 @@
     service: light.turn_on
   - service: input_datetime.set_datetime
     entity_id: input_datetime.solarium_timer_end
-    data_template: '{% set new_timer = [ state_attr(input_datetime.solarium_timer_end , 'timestamp'), (now().timestamp() + (5 * 60)) ] | max %} {{ new_timer | timestamp_custom('%H:%M', false) }}' #TODO: to be verified
+    data_template: 
+      time: "{% set new_timer = [ state_attr('input_datetime.solarium_timer_end' , 'timestamp'), (now().timestamp() + (5 * 60)) ] | max %} {{ new_timer | timestamp_custom('%H:%M', True) }}" #TODO: to be verified
 
 - id: SolariumDoorOpened
   alias: Solarium door opened
@@ -93,3 +97,7 @@
     entity_id: light.solarium
   - service: light.turn_on
     entity_id: light.white
+  - service: input_datetime.set_datetime
+    entity_id: input_datetime.solarium_timer_end
+    data_template: 
+      time: "{% set new_timer = [ state_attr('input_datetime.solarium_timer_end' , 'timestamp'), (now().timestamp() + (5 * 60)) ] | max %} {{ new_timer | timestamp_custom('%H:%M', True) }}" #TODO: to be verified
