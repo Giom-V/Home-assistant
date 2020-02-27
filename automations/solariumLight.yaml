@@ -30,7 +30,7 @@
   alias: swith light on at selected time on weekdays (if we have visitors)
   trigger:
     platform: template
-    value_template: "{{ states('sensor.time') == (state_attr('input_datetime.solarium_switch_on', 'timestamp') | int | timestamp_custom('%H:%M', True)) }}"
+    value_template: "{{ states('sensor.time') == states('input_datetime.solarium_switch_on')[0:5] }}"
   condition:
   - condition: sun
     after: sunset
