@@ -31,7 +31,6 @@ customize.yaml
 *.pyc
 google_calendars.yaml
 *.old.yaml
-secrets/home-assistant.json
 
 # Secrets
 secrets.yaml
