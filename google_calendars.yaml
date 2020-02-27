@@ -69,11 +69,11 @@
     name: Appels
     track: true
 
-- cal_id: guillaume.vernade@gmail.com
+- cal_id: ***REMOVED***
   entities:
-  - device_id: guillaume_vernade
+  - device_id: guillaume_***REMOVED***
     ignore_availability: true
-    name: Guillaume Vernade
+    name: Guillaume ***REMOVED***
     track: true
 
 - cal_id: 6sfh2qaavk3nf29m3465q6r7uc@group.calendar.google.com
@@ -83,11 +83,11 @@
     name: AXA
     track: true
 
-- cal_id: claire.merot@gmail.com
+- cal_id: claire.***REMOVED***@gmail.com
   entities:
-  - device_id: claire_merot_gmail_com
+  - device_id: claire_***REMOVED***_gmail_com
     ignore_availability: true
-    name: claire.merot@gmail.com
+    name: claire.***REMOVED***@gmail.com
     track: true
 
 - cal_id: qg8ch6t17nui1si5qi57t8b4jg@group.calendar.google.com
@@ -134,9 +134,9 @@
 
 - cal_id: aqjua0rt7623tikd0hktsh2tae4vpv0u@import.calendar.google.com
   entities:
-  - device_id: evenements_facebook_de_guillaume_vernade
+  - device_id: evenements_facebook_de_guillaume_***REMOVED***
     ignore_availability: true
-    name: "\xC9v\xE8nements Facebook de Guillaume Vernade"
+    name: "\xC9v\xE8nements Facebook de Guillaume ***REMOVED***"
     track: true
 
 - cal_id: kcud6c7jrqobonvsvhirdkcmes@group.calendar.google.com

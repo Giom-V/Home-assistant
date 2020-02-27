@@ -5,8 +5,8 @@ homeassistant:
   # Name of the location where Home Assistant is running
   name: Quebec
   # Location required to calculate the time the sun rises and sets
-  latitude: !secret latitude
-  longitude: !secret longitude
+  latitude: !secret homeLatitude
+  longitude: !secret homeLongitude
   # Impacts weather/sunrise data (altitude above sea level in meters)
   elevation: 47
   # metric for Metric, imperial for Imperial
@@ -24,7 +24,7 @@ homeassistant:
     - type: trusted_networks
       trusted_networks:
         - 127.0.0.1
-        - 192.168.0.0/24
+        - 192.168.0.0/24 #TODO: secret?
         - 192.168.1.0/24
         - 192.168.86.0/24
         - 192.168.86.100
@@ -60,75 +60,10 @@ api:
 # Enables support for tracking state changes over time
 history:
 
-# https://www.home-assistant.io/components/recorder/
-# Tracked history is kept for 368 days
-recorder:
-
-####################################################
-#                     Logs                         #
-####################################################
-# https://www.home-assistant.io/components/logger/
-# verbose logs
-logger:
-  default: error
-  logs:
-    homeassistant.components.camera: debug
-    homeassistant.components.sensor.google_travel_time: debug
-    homeassistant.components.device_tracker.google_maps: debug
-    homeassistant.components.notify.slack: debug
-    homeassistant.components.xiaomi_aqara: debug
-    homeassistant.components.xiaomi: debug
-    homeassistant.components.binary_sensor.xiaomi: debug
-    #homeassistant.components.google_assistant: debug
-    #homeassistant.components.mqtt: debug
-    #pydeconz: debug
-    #homeassistant.components.deconz: debug
-
 ####################################################
 #            Sensors and components                #
 ####################################################
-# Track the sun
-sun:
-
-# IFTTT
-ifttt:
-  key: !secret ifttt_APIKey
-  
-# Raspberry Pi Camera
-camera:
-  - platform: rpi_camera
-    image_width: 3280
-    image_height: 2464
-    image_quality: 100 
-    image_rotation: 180
-    timelapse: 60000
-#    file_path: /home/homeassistant/.homeassistant/Share   # aucune idée de pourquoi ça ne fonctionne pas
-  - platform: generic
-    name: Dafang camera
-    username: root
-    password: !secret dafangPassword
-    authentication: basic
-    still_image_url: !secret dafangImageUrl
-    stream_source: !secret dafangStreamSource
-    verify_ssl: false
-    scan_interval: 5
-#  - platform: xiaomi
-#    name: Dafang camera
-#    host: '192.168.86.165'
-#    model: 'yi'
-#    password: !secret dafangPassword
-    
-# Meteo
-weather:
-  - platform: darksky
-    api_key: !secret darksky_APIKey
-    mode: daily
-  - platform: openweathermap
-    api_key: !secret openweathermap_APIKey
-    mode: freedaily
-    # hourly also possible for 3 hours forecast, use freedaily for the daily with the free tier
  
-
 input_select:
   vacuum_room:
     name: Choose a room to clean
@@ -157,259 +92,6 @@ input_select:
       - Home
       - Work
       - Garderie
-  
-sensor:
-  - platform: version
-#  - platform: command_line
-#    name: Version
-#    command: "/home/homeassistant/bin/hass --version"
-  - platform: systemmonitor
-    resources:
-      - type: disk_use_percent
-        arg: /
-      - type: disk_use
-        arg: /
-      - type: disk_free
-        arg: /
-      - type: memory_use_percent
-      - type: memory_use
-      - type: memory_free
-      - type: ipv4_address
-      - type: ipv6_address
-      - type: processor_use
-      - type: last_boot
-      - type: swap_use_percent
-      - type: swap_use
-      - type: swap_free
-      - type: load_1m
-      - type: load_5m
-      - type: load_15m
-      - type: network_in
-        arg: wlan0
-      - type: network_out
-        arg: wlan0
-      - type: throughput_network_in
-        arg: wlan0
-      - type: throughput_network_out
-        arg: wlan0
-      - type: packets_in
-        arg: wlan0
-      - type: packets_out
-        arg: wlan0
-      - type: process
-        arg: hass
-      - type: process
-        arg: convert
-  - platform: template
-    sensors:
-       dest_address:
-         value_template: >-
-            {%- if is_state("input_select.destination", "Home") -%}
-              46.7777219,-71.3269207
-            {%- elif is_state("input_select.destination", "Work") -%}
-              46.814050,-71.221148
-            {%- elif is_state("input_select.destination", "Parents") -%}
-              Garderie des amours de bout'chou, Quebec
-            {%- else -%}
-              Unknown
-            {%- endif %}
-       nas_free_space:
-         friendly_name: NAS free space
-         value_template: "{{ states('sensor.sonarr_disk_space')|float/14 | round(2) }}"
-         unit_of_measurement: 'TB'
-       living_room_temparature_with_icon:
-         friendly_name: "Salon"
-         unit_of_measurement: '°C'
-         device_class: 'temperature'
-         value_template: "{{ states('sensor.living_room_temperature') }}"
-         entity_picture_template: >-
-           {% if states('sensor.living_room_temperature')|float > 30 %}
-             mdi:fire
-           {% elif states('sensor.living_room_temperature')|float < 15 %}
-             mdi:snowflake-alert
-           {% else %}
-             mdi:thermometer
-           {% endif %}
-    # Dark sky
-  - platform: darksky
-    api_key: !secret darksky_APIKey
-    language: en
-    forecast: 1
-    scan_interval: '00:15'
-    monitored_conditions:
-      - summary
-      - precip_type
-      - precip_intensity
-      - precip_probability
-      - precip_accumulation
-      - temperature
-      - apparent_temperature
-      - dew_point
-      - wind_speed
-      - wind_bearing
-      - cloud_cover
-      - humidity
-      - pressure
-      - visibility
-      - ozone
-      - minutely_summary
-      - hourly_summary
-      - daily_summary
-      - temperature_high
-      - temperature_low
-      - apparent_temperature_high
-      - apparent_temperature_low
-      - precip_intensity_max
-      - uv_index
-      - moon_phase
-  - platform: waze_travel_time
-    name: "Me to destination"
-    origin: 46.7777219,-71.3269207
-    destination: sensor.dest_address
-    region: 'US'
-    # Weather prediction
-  - platform: yr
-  - platform: openweathermap
-    api_key: !secret openweathermap_APIKey
-    monitored_conditions:
-      - weather
-      - temperature
-      - wind_speed
-      - wind_bearing
-      - humidity
-      - pressure
-      - clouds
-      - rain
-      - snow
-      - weather_code
-    # Sonarr
-  - platform: sonarr
-    host: !secret NAS_IP
-    api_key: !secret sonarr_APIKey
-    unit: TB
-    monitored_conditions:
-      - series
-      - upcoming
-      - wanted
-      - queue
-      - diskspace
-    days: 7
-  - platform: sonarr_upcoming_media
-    api_key: !secret sonarr_APIKey
-    host: !secret NAS_IP
-    days: 7
-    max: 10
-    # Radarr
-  - platform: radarr
-    host: !secret NAS_IP
-    api_key: !secret radarr_APIKey
-    port: 17878
-    monitored_conditions:
-      - movies
-      - upcoming
-      - status
-    days: 30
-    #Google Wifi
-  - platform: google_wifi
-    # Waze travel time
-  - platform: waze_travel_time
-    name: Travel time to work (Waze)
-    origin: 46.7777219,-71.3269207 #TODO: secret
-    destination: 46.814050,-71.221148
-    region: 'US'
-    scan_interval: 5
-    # Google maps travel time (Giom)
-  - platform: google_travel_time
-    name: Travel time to work (Gmap)
-    api_key: !secret gmap_APIKey
-    origin: 46.7777219,-71.3269207
-    destination: 46.814050,-71.221148
-    scan_interval: 60
-    # Google maps travel time (Claire)
-  - platform: google_travel_time
-    name: Travel time to work (Claire)
-    api_key: !secret gmap_APIKey
-    origin: 46.7777219,-71.3269207
-    destination: 46.7800237,-71.2812227
-    options:
-      mode: transit
-      transit_routing_preference: less_walking
-    scan_interval: 60
-  - platform: ebox
-    username: vg66
-    password: !secret ebox_password
-    monitored_variables:
-     - before_offpeak_download
-     - before_offpeak_upload
-     - before_offpeak_total
-     - offpeak_download
-     - offpeak_upload
-     - offpeak_total
-     - download
-     - upload
-     - total
-     - balance
-     #- limit
-     - usage
-    scan_interval: 60
-  - platform: moon
-  - platform: uptime
-  - platform: season
-    type: astronomical
-#  - platform: email
-#    email: !secret gmailEmail
-#    password: !secret gmailPassword
-  # https://github.com/vmanuel/hacs-google-fit
-  - platform: google_fit
-    name: Google Fit
-    client_id: !secret googleDeveloperClientID
-    client_secret: !secret googleDeveloperSecret
-  # https://www.home-assistant.io/integrations/airvisual/
-  - platform: airvisual
-    api_key: !secret airvisual_APIKey #TODO: secret
-    show_on_map: false
-    monitored_conditions:
-      - us
-  # https://www.home-assistant.io/integrations/waqi/
-  - platform: waqi
-    token: !secret waqi_APIKey #TODO: secret
-    locations:
-      - Beauce
-  # https://www.home-assistant.io/integrations/history_stats
-  - platform: history_stats
-    name: Giom's time at work this week
-    entity_id: person.Giom_2
-    state: 'Ubisoft'
-    type: time
-    start: '{{ as_timestamp( now().replace(hour=0).replace(minute=0).replace(second=0) ) - now().weekday() * 86400 }}'
-    end: '{{ now() }}'
-  - platform: history_stats
-    name: Giom's time at work last week
-    entity_id: person.Giom_2
-    state: 'Ubisoft'
-    type: time
-    start: '{{ as_timestamp( now().replace(hour=0).replace(minute=0).replace(second=0) ) - now().weekday() * 86400 - 7 * 86400 }}'
-    end: '{{ as_timestamp( now().replace(hour=0).replace(minute=0).replace(second=0) ) - now().weekday() * 86400 }}'
-  - platform: history_stats
-    name: Claire's time at work this week
-    entity_id: person.Claire_2
-    state: 'Université'
-    type: time
-    start: '{{ as_timestamp( now().replace(hour=0).replace(minute=0).replace(second=0) ) - now().weekday() * 86400 }}'
-    end: '{{ now() }}'
-  - platform: history_stats
-    name: Claire's time at work last week
-    entity_id: person.Claire_2
-    state: 'Université'
-    type: time
-    start: '{{ as_timestamp( now().replace(hour=0).replace(minute=0).replace(second=0) ) - now().weekday() * 86400 - 7 * 86400 }}'
-    end: '{{ as_timestamp( now().replace(hour=0).replace(minute=0).replace(second=0) ) - now().weekday() * 86400 }}'
-  # https://github.com/custom-components/sensor.untappd
-  - platform: untappd
-    username: !secret untappedUsername
-    id: !secret untappedClientID
-    secret: !secret untappedSecret
-    
 binary_sensor:
   - platform: aurora
   - platform: workday
@@ -452,7 +134,7 @@ yeelight:
       use_music_mode: True #(defaults to False)
       save_on_change: False #(defaults to True)
     192.168.86.132:
-      name: White
+      name: Freezer
       transition: 1000
       use_music_mode: False #(defaults to False)
       save_on_change: False #(defaults to True)
@@ -471,9 +153,9 @@ media_player:
   # Google Cast
   - platform: cast
   #Emby
-  - platform: emby
-    host: !secret NAS_IP
-    api_key: !secret emby_APIKey
+  #- platform: emby
+  #  host: !secret NAS_IP
+  #  api_key: !secret emby_APIKey
 
 device_tracker:
   # Google Map location sharing
@@ -491,7 +173,7 @@ device_tracker:
 person:
   - name: Giom
     id: giom
-    user_id: 6d6b7b9773144a66957cec1889954f68
+    user_id: !secret giomUserId
     device_trackers:
       - device_tracker.cellGiom
       - device_tracker.op6
@@ -499,7 +181,7 @@ person:
       - device_tracker.google_maps_108886437999779306059
   - name: Claire
     id: claire
-    user_id: 882d5cbae4fb4da282c01c79cf4216ff
+    user_id: !secret claireUserId
     device_trackers:
       - device_tracker.cellClaire
       - device_tracker.google_maps_116551309970452496819
@@ -516,7 +198,7 @@ panel_iframe:
     url: 'https://gi-home.slack.com/unreads/'
   sonarr:
     title: 'Sonarr'
-    url: 'http://giom.myasustor.com:8989'
+    url: !secret sonarrUrl
   utorrent:
     title: 'uTorrent'
     url: 'https://remote.bittorrent.com/'
@@ -526,8 +208,7 @@ weblink:
     - name: Slack
       url: 'https://gi-home.slack.com/unreads/'
     - name: Sonarr
-      url: 'http://giom.myasustor.com:8989'
-      # Dafang conf: https://192.168.86.165/
+      url: !secret sonarrUrl
     
 group: !include groups.yaml
 automation: !include_dir_merge_list automations/ 
@@ -536,17 +217,6 @@ script: !include scripts.yaml
 shell_command:
   resize_sunrise_pic: mogrify -resize 1080x720 /home/homeassistant/.homeassistant/Share/last_sunrise.jpg
   create_daily_gif: 'convert -delay 20 -limit area 0 -resize 25% -loop 0 {rpi_camera_{{ now().strftime("%Y%m%d") }}-*_night.jpg,rpi_camera_{{ now().strftime("%Y%m%d") }}-*_day.jpg} {{ now().strftime("%Y%m%d") }}.gif'
-  
-#Xiaomi Aquara gateway and connected devices
-# xiaomi_aqara:
-#   discovery_retry: 10
-#   gateways:
-# #    - key: !secret xiaomiKey1 # First gateway bought, updated and thus less open to Hass
-# #      host: 192.168.86.133
-# #      mac: !secret xiaomiMac1
-#     - key: !secret xiaomiKey2 # Second gateway that we try not to update
-#       host: 192.168.86.137
-#       mac: !secret xiaomiMac2
     
 point:
   client_id: !secret point_clientID
@@ -561,9 +231,9 @@ withings:
   client_id: !secret withingsClientID
   client_secret: !secret withingsSecret
   profiles:
-    - Guillaume Vernade
-    - Aurore Vernade
-    - Claire Mérot
+    - Giom
+    - Aurore
+    - Claire
 
 ####################################################
 #                       Zones                      #
@@ -571,34 +241,34 @@ withings:
 # https://www.home-assistant.io/components/zone/
 zone:
   - name: Université
-    latitude: 46.779144
-    longitude: -71.2807537
+    latitude: !secret universityLatitude
+    longitude: !secret universityLongitude
     radius: 250
     icon: mdi:beaker
 
   - name: Ubisoft
-    latitude: 46.814050
-    longitude: -71.221148
+    latitude: !secret ubisoftLatitude
+    longitude: !secret ubisoftLongitude
     radius: 100
     icon: mdi:gamepad-variant
     
   - name: Garderie
-    latitude: 46.776270
-    longitude: -71.316373
+    latitude: !secret garderieLatitude
+    longitude: !secret garderieLongitude
     radius: 100
     icon: fas:baby
 
   # This will override the default home zone
   - name: Home
-    latitude: !secret latitude
-    longitude: !secret longitude
+    latitude: !secret homeLatitude
+    longitude: !secret homeLongitude
     radius: 100
     icon: mdi:home-circle
     
-    
-google:
-  client_id: !secret googleDeveloperClientID
-  client_secret: !secret googleDeveloperSecret
+# temporarily disabling the google calendar integration to fix the rest    
+#google:
+#  client_id: !secret googleDeveloperClientID
+#  client_secret: !secret googleDeveloperSecret
   
 tplink:
 
@@ -610,7 +280,7 @@ mqtt:
 
 vacuum:
   - platform: xiaomi_miio
-    host: 192.168.86.170
+    host: !secret vaccumIP
     token: !secret roborockToken
 
 light:
@@ -624,12 +294,12 @@ wake_on_lan:
 switch:
   - platform: wake_on_lan
     name: Wake up PC
-    mac: "40:8D:5C:ED:3D:89"
-    host: 192.168.86.76
+    mac: !secret pcMacAddress
+    host: !secret pcIP
   - platform: wake_on_lan
     name: Wake up NAS
-    mac: "10:bf:48:8b:77:e0"
-    host: 192.168.86.123
+    mac: !secret nasMacAddress
+    host: !secret NAS_IP
 
 ####################################################
 #                 Work in progress                 #
