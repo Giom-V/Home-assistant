@@ -1,5 +1,5 @@
 - id: '1575775244195'
-  alias: New Automation
+  alias: Test withings
   description: sensor.withings_weight_kg_giom
   trigger:
   - entity_id: sensor.withings_weight_kg_giom

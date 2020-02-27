@@ -7,10 +7,10 @@
   condition:
   - condition: template
     value_template: >
-      {{ now().strftime("%H:%M:%S") > states.input_datetime.solarium_switch_on.state }}
+      {{ now().strftime("%H:%M:%S") > states('input_datetime.solarium_switch_on') }}
   - condition: template
     value_template: >
-      {{ now().strftime("%H:%M:%S") < states.input_datetime.solarium_switch_off.state }}
+      {{ now().strftime("%H:%M:%S") < states('input_datetime.solarium_switch_off') }}
   - condition: state
     entity_id: input_boolean.visitors
     state: 'on'
@@ -18,10 +18,11 @@
   - service: light.turn_on
     entity_id: light.solarium
   - service: light.turn_on
-    entity_id: light.white
+    entity_id: light.freezer
   - service: input_datetime.set_datetime
     entity_id: input_datetime.solarium_timer_end
-    data_template: {{ states.input_datetime.solarium_switch_off.state }}
+    data_template: 
+      time: "{{ states('input_datetime.solarium_switch_off') }}"
   - service: notify.slack
     data:
       message: Lights on 30mn before sunset!
@@ -29,7 +30,7 @@
   alias: swith light on at selected time on weekdays (if we have visitors)
   trigger:
     platform: template
-    value_template: "{{ states('sensor.time') == (state_attr('input_datetime.solarium_switch_on', 'timestamp') | int | timestamp_custom('%H:%M', True)) }}"
+    value_template: "{{ states('sensor.time') == states('input_datetime.solarium_switch_on')[0:5] }}"
   condition:
   - condition: sun
     after: sunset
@@ -41,10 +42,11 @@
   - service: light.turn_on
     entity_id: light.solarium
   - service: light.turn_on
-    entity_id: light.white
+    entity_id: light.freezer
   - service: input_datetime.set_datetime
     entity_id: input_datetime.solarium_timer_end
-    data_template: {{ states.input_datetime.solarium_switch_off.state }}
+    data_template: 
+      time: "{{ states('input_datetime.solarium_switch_off')  }}"
   - service: notify.slack
     data:
       message: Lights on at 4:30!
@@ -52,21 +54,22 @@
   alias: swith light off at 6:30pm on weekdays
   trigger:
     platform: template
-    value_template: "{{ states('sensor.time') == (state_attr('input_datetime.solarium_timer_end', 'timestamp') | int | timestamp_custom('%H:%M', True)) }}" #TODO: to be verified
+    value_template: "{{ states('sensor.time') == states('input_datetime.solarium_timer_end')[0:5] }}"
   action:
   - service: light.turn_off
     entity_id: light.solarium
   - service: light.turn_off
-    entity_id: light.white
+    entity_id: light.freezer
   - service: input_datetime.set_datetime
     entity_id: input_datetime.solarium_timer_end
-    data_template: {{ states.input_datetime.solarium_switch_off.state }}
+    data_template: 
+      time: "{{ states('input_datetime.solarium_switch_off') }}"
   - service: notify.slack
     data:
       message: Timer finished, lights off!
     
-- id: FreezerLight
-  alias: Freezer light
+- id: FreezerOpened
+  alias: Freezer opened
   trigger:
   - type: opened
     platform: device
@@ -74,8 +77,50 @@
     entity_id: binary_sensor.freezer_door
     domain: binary_sensor
   action:
-  - entity_id: light.white
+  - entity_id: light.freezer
     service: light.turn_on
+    
+- id: FreezerClosed
+  alias: Freezer closed
+  trigger:
+  - type: not_opened
+    platform: device
+    device_id: 85bc07f4124e490eb8ba0082a9abf76c
+    entity_id: binary_sensor.freezer_door
+    domain: binary_sensor
+  action:
   - service: input_datetime.set_datetime
     entity_id: input_datetime.solarium_timer_end
-    data_template: '{% set new_timer = [ state_attr(input_datetime.solarium_timer_end , 'timestamp'), (now().timestamp() + (5 * 60)) ] | max %} {{ new_timer | timestamp_custom('%H:%M', false) }}' #TODO: to be verified
+    data_template: 
+      time: "{% set new_timer = [ state_attr('input_datetime.solarium_timer_end' , 'timestamp'), (now().timestamp() + (2 * 60)) ] | max %} {{ new_timer | timestamp_custom('%H:%M', True) }}" #TODO: to be verified
+
+- id: SolariumDoorOpened
+  alias: Solarium door opened
+  trigger:
+  - type: opened
+    platform: device
+    device_id: eb097d5c6fd44da5b5fcd7ccd54b4674
+    entity_id: binary_sensor.solarium_door
+    domain: binary_sensor
+  action:
+  - service: light.turn_on
+    entity_id: light.solarium # TODO: use a group
+  - service: light.turn_on
+    entity_id: light.freezer
+  - service: input_datetime.set_datetime
+    entity_id: input_datetime.solarium_timer_end
+    data_template: 
+      time: "{% set new_timer = [ state_attr('input_datetime.solarium_timer_end' , 'timestamp'), (now().timestamp() + (10 * 60)) ] | max %} {{ new_timer | timestamp_custom('%H:%M', True) }}" #TODO: to be verified
+
+- id: FreezerLeftOpen
+  alias: Freezer left open for more than 10mn
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.freezer_door
+    to: 'on'
+    for: '0:10:00'
+  action:
+    service: light.turn_on
+    data:
+      effect: "Police2"
+    entity_id: light.freezer
