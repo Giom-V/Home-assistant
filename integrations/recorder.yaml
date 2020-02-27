@@ -1,0 +1,29 @@
+# https://www.home-assistant.io/components/recorder/
+# Tracked history is kept for 368 days
+recorder:
+  exclude:
+    domains:
+      - group
+      - media_player
+      - zone
+      - sun
+      - panel_iframe
+      - weblink
+      - sonarr_upcoming_media
+      - input_select
+      - script
+      - wake_on_lan
+      - discovery
+      - http
+      - map
+      - mobile_app
+      - updater
+      - weather.openweathermap
+    entities:
+      - binary_sensor.workday
+      - sensor.moon
+      - sensor.season
+      - sensor.uptime
+      - sensor.yr
+      - sensor.version
+      - sensor.dest_address

@@ -60,10 +60,6 @@ api:
 # Enables support for tracking state changes over time
 history:
 
-# https://www.home-assistant.io/components/recorder/
-# Tracked history is kept for 368 days
-recorder:
-
 ####################################################
 #            Sensors and components                #
 ####################################################
