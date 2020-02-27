@@ -18,7 +18,7 @@
   - service: light.turn_on
     entity_id: light.solarium
   - service: light.turn_on
-    entity_id: light.white
+    entity_id: light.freezer
   - service: input_datetime.set_datetime
     entity_id: input_datetime.solarium_timer_end
     data_template: 
@@ -42,7 +42,7 @@
   - service: light.turn_on
     entity_id: light.solarium
   - service: light.turn_on
-    entity_id: light.white
+    entity_id: light.freezer
   - service: input_datetime.set_datetime
     entity_id: input_datetime.solarium_timer_end
     data_template: 
@@ -59,7 +59,7 @@
   - service: light.turn_off
     entity_id: light.solarium
   - service: light.turn_off
-    entity_id: light.white
+    entity_id: light.freezer
   - service: input_datetime.set_datetime
     entity_id: input_datetime.solarium_timer_end
     data_template: 
@@ -68,8 +68,8 @@
     data:
       message: Timer finished, lights off!
     
-- id: FreezerLight
-  alias: Freezer light
+- id: FreezerOpened
+  alias: Freezer opened
   trigger:
   - type: opened
     platform: device
@@ -77,12 +77,22 @@
     entity_id: binary_sensor.freezer_door
     domain: binary_sensor
   action:
-  - entity_id: light.white
+  - entity_id: light.freezer
     service: light.turn_on
+    
+- id: FreezerClosed
+  alias: Freezer closed
+  trigger:
+  - type: closed
+    platform: device
+    device_id: 85bc07f4124e490eb8ba0082a9abf76c
+    entity_id: binary_sensor.freezer_door
+    domain: binary_sensor
+  action:
   - service: input_datetime.set_datetime
     entity_id: input_datetime.solarium_timer_end
     data_template: 
-      time: "{% set new_timer = [ state_attr('input_datetime.solarium_timer_end' , 'timestamp'), (now().timestamp() + (5 * 60)) ] | max %} {{ new_timer | timestamp_custom('%H:%M', True) }}" #TODO: to be verified
+      time: "{% set new_timer = [ state_attr('input_datetime.solarium_timer_end' , 'timestamp'), (now().timestamp() + (2 * 60)) ] | max %} {{ new_timer | timestamp_custom('%H:%M', True) }}" #TODO: to be verified
 
 - id: SolariumDoorOpened
   alias: Solarium door opened
@@ -93,11 +103,11 @@
     entity_id: binary_sensor.solarium_door
     domain: binary_sensor
   action:
-  - service: homeassistant.turn_on
-    entity_id: light.solarium
   - service: light.turn_on
-    entity_id: light.white
+    entity_id: light.solarium # TODO: use a group
+  - service: light.turn_on
+    entity_id: light.freezer
   - service: input_datetime.set_datetime
     entity_id: input_datetime.solarium_timer_end
     data_template: 
-      time: "{% set new_timer = [ state_attr('input_datetime.solarium_timer_end' , 'timestamp'), (now().timestamp() + (5 * 60)) ] | max %} {{ new_timer | timestamp_custom('%H:%M', True) }}" #TODO: to be verified
+      time: "{% set new_timer = [ state_attr('input_datetime.solarium_timer_end' , 'timestamp'), (now().timestamp() + (10 * 60)) ] | max %} {{ new_timer | timestamp_custom('%H:%M', True) }}" #TODO: to be verified
