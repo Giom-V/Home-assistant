@@ -2,11 +2,14 @@ solarium_switch_on:
   name: Switch on solarium lights (when there are visitors) at
   has_date: false
   has_time: true
+  initial: '16:00'
 solarium_switch_off:
   name: Switch off solarium lights (when there are visitors) at
   has_date: false
   has_time: true
+  initial: '18:30'
 solarium_timer_end:
   name: Timer to switch off solarium lights ends at
   has_date: false
   has_time: true
+  initial: '18:30'

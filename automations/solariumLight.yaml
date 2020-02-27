@@ -54,7 +54,7 @@
   alias: swith light off at 6:30pm on weekdays
   trigger:
     platform: template
-    value_template: "{{ states('sensor.time') == (state_attr('input_datetime.solarium_timer_end', 'timestamp') | int | timestamp_custom('%H:%M', True)) }}" #TODO: to be verified
+    value_template: "{{ states('sensor.time') == states('input_datetime.solarium_timer_end')[0:5] }}"
   action:
   - service: light.turn_off
     entity_id: light.solarium
