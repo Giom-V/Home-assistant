@@ -129,10 +129,7 @@ vacuum_dispatch:
         entity_id: >-
           {% set room_lower = room|lower %}
           {% if "cuisine" in room_lower %}
-            {% if "salle à manger" in room_lower %}
-              script.vacuum_kitchen_and_diningroom
-            {% elif "salle a manger" in room_lower %}
-              script.vacuum_kitchen_and_diningroom
+            {% if "manger" in room_lower %}
               script.vacuum_kitchen_and_diningroom
             {% elif "table" in room_lower %}
               script.vacuum_kitchen_and_diningroom
@@ -140,24 +137,18 @@ vacuum_dispatch:
               script.vacuum_kitchen
             {% endif %}
           {% elif "kitchen" in room_lower %}
-            {% if "diningroom" in room_lower %}
-              script.vacuum_kitchen_and_diningroom
-            {% elif "dining room" in room_lower %}
+            {% if "dining" in room_lower %}
               script.vacuum_kitchen_and_diningroom
             {% elif "table" in room_lower %}
               script.vacuum_kitchen_and_diningroom
             {% else %}
               script.vacuum_kitchen
             {% endif %}
-          {% elif "salle à manger" in room_lower %}
-            vacuum_diningroom
-          {% elif "salle a manger" in room_lower %}
+          {% elif "manger" in room_lower %}
             vacuum_diningroom
           {% elif "repas" in room_lower %}
             vacuum_diningroom
-          {% elif "dining room" in room_lower %}
-            vacuum_diningroom
-          {% elif "diningroom" in room_lower %}
+          {% elif "dining" in room_lower %}
             vacuum_diningroom
           {% elif "table" in room_lower %}
             vacuum_diningroom
@@ -187,16 +178,14 @@ vacuum_dispatch:
             {% else %}
               vacuum_bedroom
             {% endif %}
+          {% elif "aurore" in room_lower %}
+            vacuum_aurore_zone
           {% elif "salon" in room_lower %}
             vacuum_livingroom
           {% elif "canapé" in room_lower %}
             vacuum_livingroom
-          {% elif "living room" in room_lower %}
+          {% elif "living" in room_lower %}
             vacuum_livingroom
-          {% elif "livingroom" in room_lower %}
-            vacuum_livingroom
-          {% elif "aurore" in room_lower %}
-            vacuum_aurore_zone
           {% endif %}
 vacuum_reset_fan_speed_after_mopping:
   alias: "Reset vacuum's fan speed after mopping"
