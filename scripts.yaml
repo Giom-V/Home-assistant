@@ -244,12 +244,12 @@ switch_living_room_color:
     entity_id: input_select.living_room_color
     data_template:
       option: >-
-          {% if is_state('input_select.living_room_color.state', 'Pink') %}
-            Purple
-          {% elif is_state('input_select.living_room_color.state', 'Purple') %}
-            Blue
-          {% elif is_state('input_select.living_room_color.state', '"Blue') %}
-            Pink
+          {% set options = state_attr('input_select.living_room_color','options') %}
+          {% set selection = options.index(states('input_select.living_room_color')) -%}
+          {% if (selection + 1) >= options | length -%}
+          {{ options[2] }}
+          {% elif (selection == 0) -%}
+          {{ options[2] }}
           {% else %}
-            Purple
+          {{ options[selection + 1] }}
           {% endif %}
