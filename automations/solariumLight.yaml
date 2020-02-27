@@ -111,3 +111,16 @@
     entity_id: input_datetime.solarium_timer_end
     data_template: 
       time: "{% set new_timer = [ state_attr('input_datetime.solarium_timer_end' , 'timestamp'), (now().timestamp() + (10 * 60)) ] | max %} {{ new_timer | timestamp_custom('%H:%M', True) }}" #TODO: to be verified
+
+- id: FreezerLeftOpen
+  alias: Freezer left open for more than 10mn
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.freezer_door
+    to: 'on'
+    for: '0:10:00'
+  action:
+    service: light.turn_on
+    data:
+      effect: Police2
+    entity_id: light.freezer
