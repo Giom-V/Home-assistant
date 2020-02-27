@@ -187,7 +187,7 @@ vacuum_dispatch:
           {% elif "living" in room_lower %}
             vacuum_livingroom
           {% endif %}
-vacuum_reset_fan_speed_after_mopping:
+vacuum_reset_fan_speed_after_mopping: # This might be automatically managed by the vacuum (TODO: verify)
   alias: "Reset vacuum's fan speed after mopping"
   sequence:
     - delay:
