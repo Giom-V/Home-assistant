@@ -224,16 +224,12 @@ living_room_color:
     - service: scene.turn_on
       data_template:
         entity_id: >- 
-          {% if is_state('input_select.living_room_color.state', 'None') %} 
+          {% if is_state('input_select.living_room_color', 'None') %} 
             scene.LivingRoomOff
-          {% elif is_state('input_select.living_room_color.state', 'White') %}
-            scene.WhiteLivingRoom
-          {% elif is_state('input_select.living_room_color.state', 'Pink') %}
-            scene.PinkLivingRoom
-          {% elif is_state('input_select.living_room_color.state', 'Purple') %}
+          {% elif is_state('input_select.living_room_color', 'Purple') %}
             scene.PinkAndPurpleLivingRoom
-          {% elif is_state('input_select.living_room_color.state', 'Blue') %}
-            scene.BlueLivingRoom
+          {% elif is_state('scene.'+states('input_select.living_room_color')+'LivingRoom', 'scening') %}
+            {{ 'scene.'+states('input_select.living_room_color')+'LivingRoom' }}
           {% else %}
             scene.WhiteLivingRoom
           {% endif %}
