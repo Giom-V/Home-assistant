@@ -67,9 +67,9 @@
   - service: notify.slack
     data:
       message: Timer finished, lights off!
-    
-- id: FreezerOpened
-  alias: Freezer opened
+      
+- id: FreezerLight
+  alias: Freezer light
   trigger:
   - type: opened
     platform: device
@@ -79,20 +79,10 @@
   action:
   - entity_id: light.freezer
     service: light.turn_on
-    
-- id: FreezerClosed
-  alias: Freezer closed
-  trigger:
-  - type: closed
-    platform: device
-    device_id: 85bc07f4124e490eb8ba0082a9abf76c
-    entity_id: binary_sensor.freezer_door
-    domain: binary_sensor
-  action:
   - service: input_datetime.set_datetime
     entity_id: input_datetime.solarium_timer_end
     data_template: 
-      time: "{% set new_timer = [ state_attr('input_datetime.solarium_timer_end' , 'timestamp'), (now().timestamp() + (2 * 60)) ] | max %} {{ new_timer | timestamp_custom('%H:%M', True) }}" #TODO: to be verified
+      time: "{% set new_timer = [ state_attr('input_datetime.solarium_timer_end' , 'timestamp'), (now().timestamp() + (5 * 60)) ] | max %} {{ new_timer | timestamp_custom('%H:%M', True) }}" #TODO: to be verified
 
 - id: SolariumDoorOpened
   alias: Solarium door opened
