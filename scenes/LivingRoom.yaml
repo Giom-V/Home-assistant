@@ -36,25 +36,25 @@
   entities:
     light.canape_gauche:
       state: on
-      color_temp: 200
+      rgb_color: [147,0,255]
     light.canape_droite:
       state: on
-      color_temp: 200
+      rgb_color: [147,0,255]
     light.color:
       state: on
-      color_temp: 200
-- name: PinkAndPurpleLivingRoom
-  id: PinkAndPurpleLivingRoom
+      rgb_color: [147,0,255]
+- name: PurpleLivingRoom
+  id: PurpleLivingRoom
   entities:
     light.canape_gauche:
       state: on
-      rgb_color: [255,82,170]
+      rgb_color: [255,166,87]
     light.canape_droite:
       state: on
-      rgb_color: [255,25,246]
+      rgb_color: [255,166,87]
     light.color:
       state: on
-      rgb_color: [255,0,0]
+      rgb_color: [255,166,87]
 - name: PinkLivingRoom
   id: PinkLivingRoom
   entities:
@@ -91,8 +91,8 @@
     light.color:
       state: on
       rgb_color: [127,255,212]
-- name: RedLivingRoom
-  id: RedLivingRoom
+- name: OrangeLivingRoom
+  id: OrangeLivingRoom
   entities:
     light.canape_gauche:
       state: on
@@ -103,3 +103,28 @@
     light.color:
       state: on
       rgb_color: [255,117,24]
+- name: RedLivingRoom
+  id: RedLivingRoom
+  entities:
+    light.canape_gauche:
+      state: on
+      rgb_color: [255,98,70]
+    light.canape_droite:
+      state: on
+      rgb_color: [255,98,70]
+    light.color:
+      state: on
+      rgb_color: [255,23,69]
+- name: CandleLivingRoom
+  id: CandleLivingRoom
+  entities:
+    light.canape_gauche:
+      state: on
+      rgb_color: [255,136,13]
+    light.canape_droite:
+      state: on
+      rgb_color: [255,136,13]
+    light.color:
+      state: on
+      rgb_color: [255,166,87]
+      #daylight
