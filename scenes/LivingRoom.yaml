@@ -127,4 +127,3 @@
     light.color:
       state: on
       rgb_color: [255,166,87]
-      #daylight
