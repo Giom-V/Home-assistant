@@ -269,8 +269,6 @@ living_room_color:
         entity_id: >- 
           {% if is_state('input_select.living_room_color', 'None') %} 
             scene.LivingRoomOff
-          {% elif is_state('input_select.living_room_color', 'Purple') %}
-            scene.PinkAndPurpleLivingRoom
           {% elif is_state('scene.'+states('input_select.living_room_color')+'LivingRoom', 'scening') %}
             {{ 'scene.'+states('input_select.living_room_color')+'LivingRoom' }}
           {% else %}

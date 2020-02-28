@@ -82,11 +82,13 @@ input_select:
     options:
       - None
       - White
+      - Candle
       - Pink
       - Purple
       - Blue
       - Turquoise
       - Red
+      - Orange
 # Tests
   destination:
     name: destination
