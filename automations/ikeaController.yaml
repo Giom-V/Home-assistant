@@ -146,7 +146,7 @@
   - service: input_select.select_option
     entity_id: input_select.living_room_color
     data: 
-      option: scene.WhiteLivingRoom
+      option: White
 - id: tradfri_remote_control_right_arrow
   alias: Télécommande ikea - right button
   initial_state: 'on'
