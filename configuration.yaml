@@ -203,19 +203,6 @@ light:
     name: Cuisine
     entity_id: switch.lumiere_cuisine
 
-scene: !include_dir_merge_list scenes
-
-wake_on_lan:
-switch:
-  - platform: wake_on_lan
-    name: Wake up PC
-    mac: !secret pcMacAddress
-    host: !secret pcIP
-  - platform: wake_on_lan
-    name: Wake up NAS
-    mac: !secret nasMacAddress
-    host: !secret NAS_IP
-
 ####################################################
 #                 Work in progress                 #
 ####################################################
