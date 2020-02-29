@@ -1,6 +1,6 @@
 #TODO: add number of times
 
-- id: vacuum_dispatch
+vacuum_dispatch:
   alias: "Vacuum Dispatch"
   sequence:
     - service: script.turn_on
@@ -66,7 +66,7 @@
           {% elif "living" in room_lower %}
             vacuum_livingroom
           {% endif %}
-- id: vacuum_kitchen_and_diningroom
+vacuum_kitchen_and_diningroom:
   alias: "Vacuum Kitchen and Diningroom"
   sequence:
     - service: vacuum.stop
@@ -79,7 +79,7 @@
         params: 
         - [24384,22183,27484,25133,1]
         - [24964,25174,27714,28424,1]
-- id: vacuum_kitchen
+vacuum_kitchen:
   alias: "Vacuum Kitchen"
   sequence:
     - service: vacuum.stop
@@ -90,7 +90,7 @@
         entity_id: vacuum.xiaomi_vacuum_cleaner
         command: app_zoned_clean
         params: [[24384,22183,27484,25133,1]]
-- id: vacuum_diningroom
+vacuum_diningroom:
   alias: "Vacuum Dining Room"
   sequence:
     - service: vacuum.stop
@@ -101,7 +101,7 @@
         entity_id: vacuum.xiaomi_vacuum_cleaner
         command: app_zoned_clean
         params: [[24964,25174,27714,28424,1]]
-- id: vacuum_bathroom
+vacuum_bathroom:
   alias: "Vacuum Bathroom"
   sequence:
     - service: vacuum.stop
@@ -112,7 +112,7 @@
         entity_id: vacuum.xiaomi_vacuum_cleaner
         command: app_zoned_clean
         params: [[23790,17237,28140,21137,2]]
-- id: vacuum_bedroom
+vacuum_bedroom:
   alias: "Vacuum Bedroom"
   sequence:
     - service: vacuum.stop
@@ -123,7 +123,7 @@
         entity_id: vacuum.xiaomi_vacuum_cleaner
         command: app_zoned_clean
         params: [[28091,17501,32541,21201,1]]
-- id: vacuum_aurore_bedroom
+vacuum_aurore_bedroom:
   alias: "Vacuum Aurore's Bedroom"
   sequence:
     - service: vacuum.stop
@@ -134,7 +134,7 @@
         entity_id: vacuum.xiaomi_vacuum_cleaner
         command: app_zoned_clean
         params: [[28098,21247,30898,23797,1]]
-- id: vacuum_livingroom
+vacuum_livingroom:
   alias: "Vacuum Living Room"
   sequence:
     - service: vacuum.stop
@@ -145,7 +145,7 @@
         entity_id: vacuum.xiaomi_vacuum_cleaner
         command: app_zoned_clean
         params: [[27794,23764,32644,28264,1]]
-- id: vacuum_aurore_zone
+vacuum_aurore_zone:
   alias: "Vacuum Aurore's zone"
   sequence:
     - service: vacuum.stop
@@ -156,7 +156,7 @@
         entity_id: vacuum.xiaomi_vacuum_cleaner
         command: app_zoned_clean
         params: [[30749,24974,32449,28274,2]]
-- id: vacuum_reset_fan_speed_after_mopping # This might be automatically managed by the vacuum (TODO: verify)
+vacuum_reset_fan_speed_after_mopping: # This might be automatically managed by the vacuum (TODO: verify)
   alias: "Reset vacuum's fan speed after mopping"
   sequence:
     - delay:
@@ -166,7 +166,7 @@
       data:
         fan_speed: Standard
         entity_id: vacuum.xiaomi_vacuum_cleaner
-- id: mop_bathroom
+mop_bathroom:
   alias: "Mop Bathroom"
   sequence:
     - service: vacuum.stop
@@ -182,7 +182,7 @@
     - service: script.turm_on
       data:
         entity_id: script.vacuum_reset_fan_speed_after_mopping
-- id: mop_kitchen
+mop_kitchen:
   alias: "Mop Kitchen"
   sequence:
     - service: vacuum.stop
@@ -198,7 +198,7 @@
     - service: script.turm_on
       data:
         entity_id: script.vacuum_reset_fan_speed_after_mopping
-- id: mop_diningroom
+mop_diningroom:
   alias: "Mop Diningroom"
   sequence:
     - service: vacuum.stop
@@ -214,7 +214,7 @@
     - service: script.turm_on
       data:
         entity_id: script.vacuum_reset_fan_speed_after_mopping
-- id: mop_kitchen_and_dining_room
+mop_kitchen_and_dining_room:
   alias: "Mop Kitchen and dining room"
   sequence:
     - service: vacuum.stop

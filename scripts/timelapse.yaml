@@ -1,4 +1,4 @@
-- id: '1542490337256'
+'1542490337256':
   alias: Notif slack (test)
   sequence:
   - service: camera.snapshot
@@ -15,7 +15,7 @@
       target:
       - '#hass'
       title: Sunrise
-- id: create_daily_gif
+create_daily_gif:
   alias: Create Daily Gif
   sequence:
 #  - service: shell_command.set_date
