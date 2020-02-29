@@ -1,4 +1,5 @@
 # https://home-assistant.io/components/http/
+
 http:
   base_url: !secret base_url
   ip_ban_enabled: true

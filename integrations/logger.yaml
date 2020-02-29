@@ -3,6 +3,7 @@
 ####################################################
 # https://www.home-assistant.io/components/logger/
 # verbose logs
+
 logger:
   default: error
   logs:
