@@ -56,15 +56,6 @@ binary_sensor:
            {{ is_state('person.giom_2', 'home') or
               is_state('person.claire_2', 'home') }}
 
-speedtestdotnet:
-  server_id: 1993
-  scan_interval:
-    minutes: 15
-  monitored_conditions:
-    - ping
-    - download
-    - upload
-
 # Yeelights
 yeelight:
   devices:
@@ -154,10 +145,6 @@ weblink:
       url: 'https://gi-home.slack.com/unreads/'
     - name: Sonarr
       url: !secret sonarrUrl
-    
-group: !include groups.yaml
-automation: !include_dir_merge_list automations/ 
-script: !include_dir_merge_list scripts/
 
 shell_command:
   resize_sunrise_pic: mogrify -resize 1080x720 /home/homeassistant/.homeassistant/Share/last_sunrise.jpg
