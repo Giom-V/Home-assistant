@@ -1,4 +1,4 @@
-living_room_color:
+- id: living_room_color
   alias: "Change Living room color"
   sequence:
     - service: scene.turn_on
@@ -11,7 +11,7 @@ living_room_color:
           {% else %}
             scene.WhiteLivingRoom
           {% endif %}
-switch_living_room_color:
+- id: switch_living_room_color
   alias: "Switch between colors in the living room"
   sequence:
   - service: input_select.select_option
