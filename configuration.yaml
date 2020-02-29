@@ -148,24 +148,7 @@ weblink:
 
 shell_command:
   resize_sunrise_pic: mogrify -resize 1080x720 /home/homeassistant/.homeassistant/Share/last_sunrise.jpg
-  create_daily_gif: 'convert -delay 20 -limit area 0 -resize 25% -loop 0 {rpi_camera_{{ now().strftime("%Y%m%d") }}-*_night.jpg,rpi_camera_{{ now().strftime("%Y%m%d") }}-*_day.jpg} {{ now().strftime("%Y%m%d") }}.gif'
-    
-point:
-  client_id: !secret point_clientID
-  client_secret: !secret point_APItoken
-  
-habitica:
-  - api_user: !secret habitica_userID
-    api_key: !secret habitica_APItoken
-    
-
-withings:
-  client_id: !secret withingsClientID
-  client_secret: !secret withingsSecret
-  profiles:
-    - Giom
-    - Aurore
-    - Claire
+  create_daily_gif: 'convert -delay 20 -limit area 0 -resize 25% -loop 0 {rpi_camera_{{ now().strftime("%Y%m%d") }}-*_night.jpg,rpi_camera_{{ now().strftime("%Y%m%d") }}-*_day.jpg} {{ now().strftime("%Y%m%d") }}.gif'    
 
 ####################################################
 #                       Zones                      #
