@@ -1,0 +1,12 @@
+vacuum_room:
+  name: Choose a room to clean
+  options:
+    - Select Input
+    - Kitchen
+    - Bathroom
+    - Bedroom
+    - Aurore's bedroom
+    - Dining room
+    - Living room
+    - Aurore's zone
+  initial: Select Input

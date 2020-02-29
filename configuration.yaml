@@ -41,40 +41,7 @@ homeassistant:
 ####################################################
 #            Sensors and components                #
 ####################################################
- 
-input_select:
-  vacuum_room:
-    name: Choose a room to clean
-    options:
-      - Select Input
-      - Kitchen
-      - Bathroom
-      - Bedroom
-      - Aurore's bedroom
-      - Dining room
-      - Living room
-      - Aurore's zone
-    initial: Select Input
-  living_room_color:
-    name: Which color do you want the livingroom to be in?
-    options:
-      - None
-      - White
-      - Candle
-      - Pink
-      - Purple
-      - Blue
-      - Turquoise
-      - Red
-      - Orange
-# Tests
-  destination:
-    name: destination
-    options:
-      - Home
-      - Work
-      - Garderie
-      
+  
 binary_sensor:
   - platform: aurora
   - platform: workday
