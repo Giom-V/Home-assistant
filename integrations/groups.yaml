@@ -1,3 +1,3 @@
 # https://www.home-assistant.io/integrations/group/
 
-# group: !include ../groups.yaml # TODO: split
+group: !include ../groups.yaml # TODO: split
