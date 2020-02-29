@@ -65,11 +65,6 @@ speedtestdotnet:
     - download
     - upload
 
-# Text to speech
-tts:
-  - platform: google_translate
-    service_name: google_say
-    language: 'fr'
 # Yeelights
 yeelight:
   devices:

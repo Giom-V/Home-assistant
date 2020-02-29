@@ -1,0 +1,7 @@
+# Text to speech
+# https://www.home-assistant.io/integrations/#text-to-speech
+tts:
+  # https://www.home-assistant.io/integrations/google_translate/
+  - platform: google_translate
+    service_name: google_say
+    language: 'fr'
