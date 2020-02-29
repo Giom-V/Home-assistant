@@ -3,17 +3,11 @@ living_room_color:
   sequence:
     - service: scene.turn_on
       data_template:
-        entity_id: >-
-          {% if states.input_select.living_room_color.state == "None" %}
+        entity_id: >- 
+          {% if is_state('input_select.living_room_color', 'None') %} 
             scene.LivingRoomOff
-          {% elif states.input_select.living_room_color.state == "White" %}
-            scene.WhiteLivingRoom
-          {% elif states.input_select.living_room_color.state == "Pink" %}
-            scene.PinkLivingRoom
-          {% elif states.input_select.living_room_color.state == "Purple" %}
-            scene.PinkAndPurpleLivingRoom
-          {% elif states.input_select.living_room_color.state == "Blue" %}
-            scene.BlueLivingRoom
+          {% elif is_state('scene.'+states('input_select.living_room_color')+'LivingRoom', 'scening') %}
+            {{ 'scene.'+states('input_select.living_room_color')+'LivingRoom' }}
           {% else %}
             scene.WhiteLivingRoom
           {% endif %}
@@ -24,12 +18,12 @@ switch_living_room_color:
     entity_id: input_select.living_room_color
     data_template:
       option: >-
-          {% if states.input_select.living_room_color.state == "Pink" %}
-            Purple
-          {% elif states.input_select.living_room_color.state == "Purple" %}
-            Blue
-          {% elif states.input_select.living_room_color.state == "Blue" %}
-            Pink
+          {% set options = state_attr('input_select.living_room_color','options') %}
+          {% set selection = options.index(states('input_select.living_room_color')) -%}
+          {% if (selection + 1) >= options | length -%}
+          {{ options[2] }}
+          {% elif (selection == 0) -%}
+          {{ options[2] }}
           {% else %}
-            Purple
+          {{ options[selection + 1] }}
           {% endif %}

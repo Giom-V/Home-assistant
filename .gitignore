@@ -3,7 +3,6 @@
 # Do not ignore
 !/.gitignore
 !/.travis.yml
-!/secrets/*.fake.json
 
 # Logs
 logs
@@ -37,6 +36,7 @@ google_calendars.yaml
 secrets.yaml
 secrets/*.json
 !/secrets/*.fake.json
+secrets/home-assistant.json
 
 # Google temp files
 .google*
