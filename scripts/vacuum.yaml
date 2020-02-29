@@ -1,36 +1,71 @@
-# TODO: split scripts
-'1542490337256':
-  alias: Notif slack (test)
-  sequence:
-  - service: camera.snapshot
-    data:
-      entity_id: camera.raspberry_pi_camera
-      filename: '/home/homeassistant/.homeassistant/Share/last_sunrise.jpg'
-  - service: shell_command.resize_sunrise_pic
-  - service: notify.slack
-    data:
-      data:
-        file:
-          path: /home/homeassistant/.homeassistant/Share/last_sunrise.jpg
-      message: Good morning!
-      target:
-      - '#hass'
-      title: Sunrise
-create_daily_gif:
-  alias: Create Daily Gif
-  sequence:
-#  - service: shell_command.set_date
-#  - service: shell_command.create_daily_gif
-  - service: notify.slack
-    data:
-      data:
-        file:
-          path: "/home/homeassistant/.homeassistant/Share/{{ today }}.gif"
-      message: Daily Gif!
-      target:
-      - '#hass'
-      title: "{{ today }}"
 #TODO: add number of times
+
+vacuum_dispatch:
+  alias: "Vacuum Dispatch"
+  sequence:
+    - service: script.turn_on
+      data_template:
+        entity_id: >-
+          {% set room_lower = room|lower %}
+          {% if "cuisine" in room_lower %}
+            {% if "manger" in room_lower %}
+              script.vacuum_kitchen_and_diningroom
+            {% elif "table" in room_lower %}
+              script.vacuum_kitchen_and_diningroom
+            {% else %}
+              script.vacuum_kitchen
+            {% endif %}
+          {% elif "kitchen" in room_lower %}
+            {% if "dining" in room_lower %}
+              script.vacuum_kitchen_and_diningroom
+            {% elif "table" in room_lower %}
+              script.vacuum_kitchen_and_diningroom
+            {% else %}
+              script.vacuum_kitchen
+            {% endif %}
+          {% elif "manger" in room_lower %}
+            vacuum_diningroom
+          {% elif "repas" in room_lower %}
+            vacuum_diningroom
+          {% elif "dining" in room_lower %}
+            vacuum_diningroom
+          {% elif "table" in room_lower %}
+            vacuum_diningroom
+          {% elif "bain" in room_lower %}
+            vacuum_bathroom
+          {% elif "toilet" in room_lower %}
+            vacuum_bathroom
+          {% elif "bath" in room_lower %}
+            vacuum_bathroom
+          {% elif "chambre" in room_lower %}
+            {% if "aurore" in room_lower %}
+              vacuum_aurore_bedroom
+            {% elif "enfant" in room_lower %}
+              vacuum_aurore_bedroom
+            {% elif "petite" in room_lower %}
+              vacuum_aurore_bedroom
+            {% else %}
+              vacuum_bedroom
+            {% endif %}
+          {% elif "bedroom" in room_lower %}
+            {% if "aurore" in room_lower %}
+              vacuum_aurore_bedroom
+            {% elif "kid" in room_lower %}
+              vacuum_aurore_bedroom
+            {% elif "small" in room_lower %}
+              vacuum_aurore_bedroom
+            {% else %}
+              vacuum_bedroom
+            {% endif %}
+          {% elif "aurore" in room_lower %}
+            vacuum_aurore_zone
+          {% elif "salon" in room_lower %}
+            vacuum_livingroom
+          {% elif "canapé" in room_lower %}
+            vacuum_livingroom
+          {% elif "living" in room_lower %}
+            vacuum_livingroom
+          {% endif %}
 vacuum_kitchen_and_diningroom:
   alias: "Vacuum Kitchen and Diningroom"
   sequence:
@@ -121,72 +156,6 @@ vacuum_aurore_zone:
         entity_id: vacuum.xiaomi_vacuum_cleaner
         command: app_zoned_clean
         params: [[30749,24974,32449,28274,2]]
-vacuum_dispatch:
-  alias: "Vacuum Dispatch"
-  sequence:
-    - service: script.turn_on
-      data_template:
-        entity_id: >-
-          {% set room_lower = room|lower %}
-          {% if "cuisine" in room_lower %}
-            {% if "manger" in room_lower %}
-              script.vacuum_kitchen_and_diningroom
-            {% elif "table" in room_lower %}
-              script.vacuum_kitchen_and_diningroom
-            {% else %}
-              script.vacuum_kitchen
-            {% endif %}
-          {% elif "kitchen" in room_lower %}
-            {% if "dining" in room_lower %}
-              script.vacuum_kitchen_and_diningroom
-            {% elif "table" in room_lower %}
-              script.vacuum_kitchen_and_diningroom
-            {% else %}
-              script.vacuum_kitchen
-            {% endif %}
-          {% elif "manger" in room_lower %}
-            vacuum_diningroom
-          {% elif "repas" in room_lower %}
-            vacuum_diningroom
-          {% elif "dining" in room_lower %}
-            vacuum_diningroom
-          {% elif "table" in room_lower %}
-            vacuum_diningroom
-          {% elif "bain" in room_lower %}
-            vacuum_bathroom
-          {% elif "toilet" in room_lower %}
-            vacuum_bathroom
-          {% elif "bath" in room_lower %}
-            vacuum_bathroom
-          {% elif "chambre" in room_lower %}
-            {% if "aurore" in room_lower %}
-              vacuum_aurore_bedroom
-            {% elif "enfant" in room_lower %}
-              vacuum_aurore_bedroom
-            {% elif "petite" in room_lower %}
-              vacuum_aurore_bedroom
-            {% else %}
-              vacuum_bedroom
-            {% endif %}
-          {% elif "bedroom" in room_lower %}
-            {% if "aurore" in room_lower %}
-              vacuum_aurore_bedroom
-            {% elif "kid" in room_lower %}
-              vacuum_aurore_bedroom
-            {% elif "small" in room_lower %}
-              vacuum_aurore_bedroom
-            {% else %}
-              vacuum_bedroom
-            {% endif %}
-          {% elif "aurore" in room_lower %}
-            vacuum_aurore_zone
-          {% elif "salon" in room_lower %}
-            vacuum_livingroom
-          {% elif "canapé" in room_lower %}
-            vacuum_livingroom
-          {% elif "living" in room_lower %}
-            vacuum_livingroom
-          {% endif %}
 vacuum_reset_fan_speed_after_mopping: # This might be automatically managed by the vacuum (TODO: verify)
   alias: "Reset vacuum's fan speed after mopping"
   sequence:
@@ -261,32 +230,3 @@ mop_kitchen_and_dining_room:
     - service: script.turm_on
       data:
         entity_id: script.vacuum_reset_fan_speed_after_mopping
-living_room_color:
-  alias: "Change Living room color"
-  sequence:
-    - service: scene.turn_on
-      data_template:
-        entity_id: >- 
-          {% if is_state('input_select.living_room_color', 'None') %} 
-            scene.LivingRoomOff
-          {% elif is_state('scene.'+states('input_select.living_room_color')+'LivingRoom', 'scening') %}
-            {{ 'scene.'+states('input_select.living_room_color')+'LivingRoom' }}
-          {% else %}
-            scene.WhiteLivingRoom
-          {% endif %}
-switch_living_room_color:
-  alias: "Switch between colors in the living room"
-  sequence:
-  - service: input_select.select_option
-    entity_id: input_select.living_room_color
-    data_template:
-      option: >-
-          {% set options = state_attr('input_select.living_room_color','options') %}
-          {% set selection = options.index(states('input_select.living_room_color')) -%}
-          {% if (selection + 1) >= options | length -%}
-          {{ options[2] }}
-          {% elif (selection == 0) -%}
-          {{ options[2] }}
-          {% else %}
-          {{ options[selection + 1] }}
-          {% endif %}

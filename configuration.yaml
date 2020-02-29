@@ -96,6 +96,7 @@ input_select:
       - Home
       - Work
       - Garderie
+      
 binary_sensor:
   - platform: aurora
   - platform: workday
@@ -216,7 +217,7 @@ weblink:
     
 group: !include groups.yaml
 automation: !include_dir_merge_list automations/ 
-script: !include scripts.yaml
+script: !include_dir_merge_list scripts/
 
 shell_command:
   resize_sunrise_pic: mogrify -resize 1080x720 /home/homeassistant/.homeassistant/Share/last_sunrise.jpg
