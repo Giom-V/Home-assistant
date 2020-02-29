@@ -1,0 +1,3 @@
+# https://www.home-assistant.io/integrations/frontend/
+frontend:
+  javascript_version: latest
