@@ -41,7 +41,6 @@ homeassistant:
 ####################################################
 #            Sensors and components                #
 ####################################################
-  
 binary_sensor:
   - platform: aurora
   - platform: workday
