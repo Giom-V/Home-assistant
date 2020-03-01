@@ -60,6 +60,10 @@ api:
 # Enables support for tracking state changes over time
 history:
 
+# https://www.home-assistant.io/components/recorder/
+# Tracked history is kept for 368 days
+recorder:
+
 ####################################################
 #            Sensors and components                #
 ####################################################
@@ -82,13 +86,9 @@ input_select:
     options:
       - None
       - White
-      - Candle
-      - Pink
       - Purple
+      - Pink
       - Blue
-      - Turquoise
-      - Red
-      - Orange
 # Tests
   destination:
     name: destination
@@ -96,7 +96,7 @@ input_select:
       - Home
       - Work
       - Garderie
-      
+
 binary_sensor:
   - platform: aurora
   - platform: workday
@@ -139,7 +139,7 @@ yeelight:
       use_music_mode: True #(defaults to False)
       save_on_change: False #(defaults to True)
     192.168.86.132:
-      name: Freezer
+      name: White
       transition: 1000
       use_music_mode: False #(defaults to False)
       save_on_change: False #(defaults to True)
@@ -158,9 +158,9 @@ media_player:
   # Google Cast
   - platform: cast
   #Emby
-  #- platform: emby
-  #  host: !secret NAS_IP
-  #  api_key: !secret emby_APIKey
+  - platform: emby
+    host: !secret NAS_IP
+    api_key: !secret emby_APIKey
 
 device_tracker:
   # Google Map location sharing
@@ -217,7 +217,7 @@ weblink:
     
 group: !include groups.yaml
 automation: !include_dir_merge_list automations/ 
-script: !include_dir_merge_list scripts/
+script: !include scripts.yaml
 
 shell_command:
   resize_sunrise_pic: mogrify -resize 1080x720 /home/homeassistant/.homeassistant/Share/last_sunrise.jpg

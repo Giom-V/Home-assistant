@@ -4,6 +4,17 @@
   - at: '19:15'
     platform: time
   action:
+  - service: scene.turn_on
+    entity_id: scene.PinkAndPurpleLivingRoom
+  - service: input_select.select_option
+    entity_id: input_select.living_room_color
+    data:
+      option: Purple
+  # Keeping this one is case I need to remember how I was managing a white light in a group of colored ones
+  # - service_template: "light.turn_{{ 'on' if is_state('light.white','on') or is_state('light.canape_droite','off') else 'off' }}"
+  #   entity_id: light.white
+  #   data:
+  #     brightness: 1
   - entity_id:
     - light.canape_gauche
     - light.canape_droite
@@ -11,12 +22,6 @@
     service: light.turn_on
     data:
       brightness: 1
-  - service: input_select.select_option
-    entity_id: input_select.living_room_color
-    data:
-      option: Pink
-  # Keeping this one is case I need to remember how I was managing a white light in a group of colored ones
-  # - service_template: "light.turn_{{ 'on' if is_state('light.white','on') or is_state('light.canape_droite','off') else 'off' }}"
-  #   entity_id: light.white
-  #   data:
-  #     brightness: 1
+  # - delay:
+  #     minutes: 15
+  # - service: script.vacuum_diningroom

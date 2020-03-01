@@ -1,0 +1,33 @@
+# https://www.home-assistant.io/integrations/darksky
+# Dark sky
+platform: darksky
+api_key: !secret darksky_APIKey
+language: en
+forecast: 1
+scan_interval: '00:15'
+monitored_conditions:
+  - summary
+  - precip_type
+  - precip_intensity
+  - precip_probability
+  - precip_accumulation
+  - temperature
+  - apparent_temperature
+  - dew_point
+  - wind_speed
+  - wind_bearing
+  - cloud_cover
+  - humidity
+  - pressure
+  - visibility
+  - ozone
+  - minutely_summary
+  - hourly_summary
+  - daily_summary
+  - temperature_high
+  - temperature_low
+  - apparent_temperature_high
+  - apparent_temperature_low
+  - precip_intensity_max
+  - uv_index
+  - moon_phase
