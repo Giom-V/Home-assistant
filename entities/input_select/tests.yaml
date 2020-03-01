@@ -1,0 +1,6 @@
+destination:
+  name: destination
+  options:
+    - Home
+    - Work
+    - Garderie

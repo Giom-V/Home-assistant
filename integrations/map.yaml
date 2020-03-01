@@ -3,4 +3,5 @@
 ####################################################
 # https://www.home-assistant.io/components/map/
 # Enables a map showing the location of tracked devices
+
 map:

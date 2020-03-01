@@ -1,7 +1,11 @@
 # https://home-assistant.io/components/http/
+
 http:
   base_url: !secret base_url
   ip_ban_enabled: true
+  trusted_proxies:
+    - 192.168.86.0/24 #TODO: secret?
+  use_x_forwarded_for: true
   login_attempts_threshold: 5
-  ssl_certificate: !secret SSLCertificate #TODO: move to secret folder
+  ssl_certificate: !secret SSLCertificate
   ssl_key: !secret SSLKey

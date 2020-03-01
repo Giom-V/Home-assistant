@@ -3,6 +3,7 @@
 # information about your system to the developers to assist with 
 # development of Home Assistant. For more information, please see: 
 # https://home-assistant.io/blog/2016/10/25/explaining-the-updater/
+
 updater:
   # Optional, allows Home Assistant developers to focus on popular 
   # components.

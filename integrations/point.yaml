@@ -1,0 +1,5 @@
+# https://www.home-assistant.io/integrations/point/
+
+point:
+  client_id: !secret point_clientID
+  client_secret: !secret point_APItoken
