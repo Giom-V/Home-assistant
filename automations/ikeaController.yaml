@@ -11,6 +11,11 @@
       id: tradfri_remote_control
     event_type: deconz_event
     platform: event
+  - platform: event
+    event_type: deconz_event
+    event_data:
+      id: mi_magic_cube
+      event: 7007
   condition:
   - condition: state
     entity_id: light.canape_droite
@@ -30,6 +35,11 @@
       id: tradfri_remote_control
     event_type: deconz_event
     platform: event
+  - platform: event
+    event_type: deconz_event
+    event_data:
+      id: mi_magic_cube
+      event: 7007
   condition:
   - condition: state
     entity_id: light.canape_droite
@@ -55,6 +65,11 @@
     event_data:
       id: tradfri_remote_control
       event: 2002
+  - platform: event
+    event_type: deconz_event
+    event_data:
+      id: mi_magic_cube
+      gesture: 7
   action:
   - service: light.turn_on
     data_template:
@@ -85,6 +100,11 @@
     event_data:
       id: tradfri_remote_control
       event: 3002
+  - platform: event
+    event_type: deconz_event
+    event_data:
+      id: mi_magic_cube
+      gesture: 8
   action:
   - service: light.turn_on
     data_template:
@@ -143,8 +163,10 @@
       id: tradfri_remote_control
       event: 4002
   action:
-  - service: scene.turn_on
-    entity_id: scene.WhiteLivingRoom
+  - service: input_select.select_option
+    entity_id: input_select.living_room_color
+    data: 
+      option: White
 - id: tradfri_remote_control_right_arrow
   alias: Télécommande ikea - right button
   initial_state: 'on'
@@ -159,6 +181,11 @@
     event_data:
       id: tradfri_remote_control
       event: 5002
+  - platform: event
+    event_type: deconz_event
+    event_data:
+      id: mi_magic_cube
+      gesture: 6
   action:
   - service: script.turn_on
     entity_id: script.switch_living_room_color

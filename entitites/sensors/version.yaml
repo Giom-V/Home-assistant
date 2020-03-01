@@ -1,6 +1,0 @@
-# https://www.home-assistant.io/integrations/version/
-platform: version
-# Old integration
-#  - platform: command_line
-#    name: Version
-#    command: "/home/homeassistant/bin/hass --version"

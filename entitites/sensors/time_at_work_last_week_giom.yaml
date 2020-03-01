@@ -1,8 +1,0 @@
-# https://www.home-assistant.io/integrations/history_stats
-platform: history_stats
-name: Giom's time at work last week
-entity_id: person.Giom_2
-state: 'Ubisoft'
-type: time
-start: '{{ as_timestamp( now().replace(hour=0).replace(minute=0).replace(second=0) ) - now().weekday() * 86400 - 7 * 86400 }}'
-end: '{{ as_timestamp( now().replace(hour=0).replace(minute=0).replace(second=0) ) - now().weekday() * 86400 }}'
