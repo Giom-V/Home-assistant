@@ -1,0 +1,12 @@
+# https://www.home-assistant.io/integrations/wake_on_lan/
+
+wake_on_lan:
+switch:
+  - platform: wake_on_lan
+    name: Wake up PC
+    mac: !secret pcMacAddress
+    host: !secret pcIP
+  - platform: wake_on_lan
+    name: Wake up NAS
+    mac: !secret nasMacAddress
+    host: !secret NAS_IP

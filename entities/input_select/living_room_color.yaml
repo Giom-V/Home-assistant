@@ -1,0 +1,12 @@
+living_room_color:
+  name: Which color do you want the livingroom to be in?
+  options:
+    - None
+    - White
+    - Candle
+    - Pink
+    - Purple
+    - Blue
+    - Turquoise
+    - Red
+    - Orange

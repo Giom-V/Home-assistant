@@ -1,4 +1,5 @@
 # https://www.home-assistant.io/integrations/google_assistant/#configuration
+
 google_assistant:
   project_id: !secret googleProject
   service_account: !include ../secrets/home-assistant.json
