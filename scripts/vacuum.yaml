@@ -3,6 +3,11 @@
 vacuum_dispatch:
   alias: "Vacuum Dispatch"
   sequence:
+    - service: system_log.write
+      data_template:
+        message: "Text received to dispatch Robbie: {{ room|lower }}"
+        level: info
+        logger: script.vacuum_dispatch
     - service: script.turn_on
       data_template:
         entity_id: >-

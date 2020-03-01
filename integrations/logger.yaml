@@ -14,6 +14,7 @@ logger:
     homeassistant.components.xiaomi_aqara: debug
     homeassistant.components.xiaomi: debug
     homeassistant.components.binary_sensor.xiaomi: debug
+    homeassistant.components.script.vacuum_dispatch: info
     #homeassistant.components.google_assistant: debug
     #homeassistant.components.mqtt: debug
     #pydeconz: debug
