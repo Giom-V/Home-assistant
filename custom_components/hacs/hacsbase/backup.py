@@ -20,7 +20,7 @@ class Backup:
         self.backup_path_full = f"{self.backup_path}{self.local_path.split('/')[-1]}"
 
     def create(self):
-        """Create a backup in tmp/"""
+        """Create a backup in /tmp"""
         if not os.path.exists(self.local_path):
             return
         if os.path.exists(self.backup_path):
