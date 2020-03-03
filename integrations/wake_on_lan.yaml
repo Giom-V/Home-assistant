@@ -3,10 +3,14 @@
 wake_on_lan:
 switch:
   - platform: wake_on_lan
-    name: Wake up PC
-    mac: !secret pcMacAddress
-    host: !secret pcIP
+    name: Wake up old PC
+    mac: !secret oldPcMacAddress
+    host: !secret oldPcIP
   - platform: wake_on_lan
     name: Wake up NAS
     mac: !secret nasMacAddress
     host: !secret NAS_IP
+  - platform: wake_on_lan
+    name: Wake up PC
+    mac: !secret pcMacAddress
+    host: !secret pcIP
