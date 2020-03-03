@@ -3,7 +3,7 @@
 ![GitHub commit activity](https://img.shields.io/github/commit-activity/w/Giom-V/Home-assistant)
 ![GitHub last commit](https://img.shields.io/github/last-commit/Giom-V/Home-assistant)
 [![Build Status](https://travis-ci.com/Giom-V/Home-assistant.svg?token=c6vDr93ZdPMNjFeVzhDo&branch=master)](https://travis-ci.com/Giom-V/Home-assistant)
-[![Black Duck Security Risk](https://copilot.blackducksoftware.com/github/repos/Giom-V/Home-assistant/branches/vacuum-automations-refactor/badge-risk.svg)](https://copilot.blackducksoftware.com/github/repos/Giom-V/Home-assistant/branches/vacuum-automations-refactor)
+[![Black Duck Security Risk](https://copilot.blackducksoftware.com/github/repos/Giom-V/Home-assistant/branches/master/badge-risk.svg)](https://copilot.blackducksoftware.com/github/repos/Giom-V/Home-assistant/branches/master)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/a5c5e4fe3edd434aad827e52ba9c69bc)](https://www.codacy.com/manual/Giom-V/Home-assistant?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Giom-V/Home-assistant&amp;utm_campaign=Badge_Grade)
 
 Personal home assistant configuration.
