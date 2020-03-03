@@ -1,18 +1,18 @@
 # https://www.home-assistant.io/integrations/ebox/
-platform: ebox
-username: vg66
-password: !secret ebox_password
-monitored_variables:
-  - before_offpeak_download
-  - before_offpeak_upload
-  - before_offpeak_total
-  - offpeak_download
-  - offpeak_upload
-  - offpeak_total
-  - download
-  - upload
-  - total
-  - balance
-  #- limit
-  - usage
-scan_interval: 60
+# platform: ebox
+# username: vg66
+# password: !secret ebox_password
+# monitored_variables:
+#   - before_offpeak_download
+#   - before_offpeak_upload
+#   - before_offpeak_total
+#   - offpeak_download
+#   - offpeak_upload
+#   - offpeak_total
+#   - download
+#   - upload
+#   - total
+#   - balance
+#   #- limit
+#   - usage
+# scan_interval: 60
