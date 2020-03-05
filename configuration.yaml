@@ -38,65 +38,9 @@ homeassistant:
   # Splitted between integrations and entites as https://github.com/jonathanadams/Home-Assistant-Configuration
   packages: !include_dir_named integrations
 
-
-####################################################
-#        Home Assistant Components Enabled         #
-####################################################
-# https://www.home-assistant.io/components/system_health/
-system_health:
-# Show links to resources in log and frontend introduction: Enables the 
-# frontend
-frontend:
-  javascript_version: latest
-
-# https://www.home-assistant.io/components/config/
-# Enables configuration UI
-config:
-
-# https://home-assistant.io/components/api/
-api:
-  
-# https://www.home-assistant.io/components/history/
-# Enables support for tracking state changes over time
-history:
-
-# https://www.home-assistant.io/components/recorder/
-# Tracked history is kept for 368 days
-recorder:
-
 ####################################################
 #            Sensors and components                #
 ####################################################
- 
-input_select:
-  vacuum_room:
-    name: Choose a room to clean
-    options:
-      - Select Input
-      - Kitchen
-      - Bathroom
-      - Bedroom
-      - Aurore's bedroom
-      - Dining room
-      - Living room
-      - Aurore's zone
-    initial: Select Input
-  living_room_color:
-    name: Which color do you want the livingroom to be in?
-    options:
-      - None
-      - White
-      - Purple
-      - Pink
-      - Blue
-# Tests
-  destination:
-    name: destination
-    options:
-      - Home
-      - Work
-      - Garderie
-
 binary_sensor:
   - platform: aurora
   - platform: workday
@@ -111,20 +55,6 @@ binary_sensor:
            {{ is_state('person.giom_2', 'home') or
               is_state('person.claire_2', 'home') }}
 
-speedtestdotnet:
-  server_id: 1993
-  scan_interval:
-    minutes: 15
-  monitored_conditions:
-    - ping
-    - download
-    - upload
-
-# Text to speech
-tts:
-  - platform: google_translate
-    service_name: google_say
-    language: 'fr'
 # Yeelights
 yeelight:
   devices:
@@ -139,7 +69,7 @@ yeelight:
       use_music_mode: True #(defaults to False)
       save_on_change: False #(defaults to True)
     192.168.86.132:
-      name: White
+      name: Freezer
       transition: 1000
       use_music_mode: False #(defaults to False)
       save_on_change: False #(defaults to True)
@@ -158,9 +88,9 @@ media_player:
   # Google Cast
   - platform: cast
   #Emby
-  - platform: emby
-    host: !secret NAS_IP
-    api_key: !secret emby_APIKey
+  #- platform: emby
+  #  host: !secret NAS_IP
+  #  api_key: !secret emby_APIKey
 
 device_tracker:
   # Google Map location sharing
@@ -214,31 +144,10 @@ weblink:
       url: 'https://gi-home.slack.com/unreads/'
     - name: Sonarr
       url: !secret sonarrUrl
-    
-group: !include groups.yaml
-automation: !include_dir_merge_list automations/ 
-script: !include scripts.yaml
 
 shell_command:
   resize_sunrise_pic: mogrify -resize 1080x720 /home/homeassistant/.homeassistant/Share/last_sunrise.jpg
-  create_daily_gif: 'convert -delay 20 -limit area 0 -resize 25% -loop 0 {rpi_camera_{{ now().strftime("%Y%m%d") }}-*_night.jpg,rpi_camera_{{ now().strftime("%Y%m%d") }}-*_day.jpg} {{ now().strftime("%Y%m%d") }}.gif'
-    
-point:
-  client_id: !secret point_clientID
-  client_secret: !secret point_APItoken
-  
-habitica:
-  - api_user: !secret habitica_userID
-    api_key: !secret habitica_APItoken
-    
-
-withings:
-  client_id: !secret withingsClientID
-  client_secret: !secret withingsSecret
-  profiles:
-    - Giom
-    - Aurore
-    - Claire
+  create_daily_gif: 'convert -delay 20 -limit area 0 -resize 25% -loop 0 {rpi_camera_{{ now().strftime("%Y%m%d") }}-*_night.jpg,rpi_camera_{{ now().strftime("%Y%m%d") }}-*_day.jpg} {{ now().strftime("%Y%m%d") }}.gif'    
 
 ####################################################
 #                       Zones                      #
@@ -292,19 +201,6 @@ light:
   - platform: switch
     name: Cuisine
     entity_id: switch.lumiere_cuisine
-
-scene: !include_dir_merge_list scenes
-
-wake_on_lan:
-switch:
-  - platform: wake_on_lan
-    name: Wake up PC
-    mac: !secret pcMacAddress
-    host: !secret pcIP
-  - platform: wake_on_lan
-    name: Wake up NAS
-    mac: !secret nasMacAddress
-    host: !secret NAS_IP
 
 ####################################################
 #                 Work in progress                 #

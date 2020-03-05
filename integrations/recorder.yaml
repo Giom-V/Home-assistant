@@ -1,0 +1,157 @@
+# https://www.home-assistant.io/components/recorder/
+# Tracked history is kept for 368 days
+
+recorder:
+  purge_keep_days: 15
+  purge_interval: 1
+  exclude:
+    domains:
+      # All domains can be optained by running this template:
+      # {%- for d in states | groupby('domain') %}
+      # {{ d[0] }}
+      # {%- endfor %}
+      - automation
+      - cover
+      - group
+      - hangouts
+      - input_boolean
+      - input_select
+      - scene
+      - script
+      - sensor
+      - sun
+      - switch
+      - weblink
+      - zone
+    entities:
+      # All entities, grouped by domain can be optained like this:
+      # {%- for d in states | groupby('domain') %}
+      # {{ d[0] }}
+      # {% for e in d[1] %}
+      # {{ '- ' + e.entity_id }}
+      # {%- endfor %}
+      # {{ '' }}
+      # {%- endfor %}
+      - binary_sensor.freezer_door
+      - binary_sensor.solarium_battery
+      - binary_sensor.solarium_button_press
+      - binary_sensor.solarium_connectivity
+      - binary_sensor.living_room_battery
+      - binary_sensor.living_room_battery_2
+      - binary_sensor.living_room_button_press
+      - binary_sensor.living_room_button_press_2
+      - binary_sensor.living_room_connectivity
+      - binary_sensor.living_room_connectivity_2
+      - binary_sensor.tradfri_motion_sensor
+      - binary_sensor.updater
+      - binary_sensor.vpir_motion_control
+      - binary_sensor.workday_sensor
+      - camera.dafang_camera_motion_snapshot
+    event_types:
+      - time_changed
+  include:
+    domains:
+      - alarm_control_panel
+      - device_tracker
+      - light
+      - media_player
+      - persistent_notification
+      - person
+      - vacuum
+      - weather
+    entities:
+      - sensor.linky_yesterday
+      - automation.clean_room_as_asked_through_ifttt
+      - automation.create_the_daily_gif
+      - automation.mop_room_as_asked_through_ifttt
+      - automation.motion_detected
+      - automation.test_withings
+      - automation.send_sunrise_picture_to_slack
+      - automation.solarium_door_opened
+      - automation.switch_off_all_lights_when_nobody_s_home_for_30mn
+      - automation.switch_off_lights_30mn_after_sunrise
+      - automation.swith_light_off_at_6_30pm_on_weekdays
+      - automation.swith_light_on_at_4_30_on_weekdays
+      - automation.swith_light_on_at_sunset_on_weekdays
+      - automation.swith_light_on_when_we_arrive
+      - automation.swith_living_room_lights_on_when_we_arrive
+      - automation.test_freezer
+      - automation.timelapse_night_if_snowing
+      - automation.turn_motion_detection_off_when_somebody_s_at_home
+      - automation.turn_motion_detection_on_when_nobody_s_at_home
+      - automation.turn_off_light_10_minutes_after_we_arrived
+      - automation.turn_off_solarium_light_10_minutes_after_we_arrived_if_after_6_30pm
+      - automation.vaccum_kitchen_and_dining_room_when_we_are_away
+      - input_boolean.visitors
+      - input_select.living_room_color
+      - input_select.vacuum_room
+      - script.1542490337256
+      - script.create_daily_gif
+      - script.living_room_color
+      - script.switch_living_room_color
+      - script.vaccum_reset_fan_speed_after_mopping
+      - script.vacuum_dispatch
+      - sensor.claire_s_time_at_work_last_week
+      - sensor.claire_s_time_at_work_this_week
+      - sensor.dark_sky_apparent_temperature
+      - sensor.dark_sky_humidity
+      - sensor.dark_sky_ozone
+      - sensor.dark_sky_pressure
+      - sensor.dark_sky_temperature
+      - sensor.dark_sky_uv_index
+      - sensor.disk_free
+      - sensor.disk_use
+      - sensor.disk_use_percent
+      - sensor.giom_s_time_at_work_last_week
+      - sensor.giom_s_time_at_work_this_week
+      - sensor.google_fit_distance
+      - sensor.google_fit_steps
+      - sensor.linky_yesterday
+      - sensor.living_room_humidity
+      - sensor.living_room_humidity_2
+      - sensor.living_room_pressure
+      - sensor.living_room_pressure_2
+      - sensor.living_room_sound_level
+      - sensor.living_room_sound_level_2
+      - sensor.living_room_temperature
+      - sensor.living_room_temperature_2
+      - sensor.load_15m
+      - sensor.load_1m
+      - sensor.load_5m
+      - sensor.memory_free
+      - sensor.memory_use
+      - sensor.memory_use_percent
+      - sensor.network_in_wlan0
+      - sensor.network_out_wlan0
+      - sensor.network_throughput_in_wlan0
+      - sensor.network_throughput_out_wlan0
+      - sensor.owm_humidity
+      - sensor.owm_pressure
+      - sensor.owm_rain
+      - sensor.owm_snow
+      - sensor.owm_temperature
+      - sensor.packets_in_wlan0
+      - sensor.packets_out_wlan0
+      - sensor.process_hass
+      - sensor.processor_use
+      - sensor.solarium_humidity
+      - sensor.solarium_pressure
+      - sensor.solarium_sound_level
+      - sensor.solarium_temperature
+      - sensor.speedtest_download
+      - sensor.speedtest_ping
+      - sensor.speedtest_upload
+      - sensor.swap_free
+      - sensor.swap_use
+      - sensor.swap_use_percent
+      - sensor.travel_time_to_work_claire
+      - sensor.travel_time_to_work_gmap
+      - sensor.travel_time_to_work_waze
+      - sensor.u_s_air_pollution_level
+      - sensor.u_s_air_quality_index
+      - sensor.waqi_beauce_quebec_canada
+      - sensor.withings_weight_kg_aurore_vernade
+      - sensor.withings_weight_kg_claire_merot
+      - sensor.withings_weight_kg_guillaume_vernade
+      - switch.lumiere_cuisine
+      - switch.dafang_camera_motion_detection

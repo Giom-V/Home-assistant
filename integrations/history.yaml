@@ -1,0 +1,4 @@
+# https://www.home-assistant.io/components/history/
+# Enables support for tracking state changes over time
+
+history:

@@ -1,3 +1,4 @@
 # IFTTT
+
 ifttt:
   key: !secret ifttt_APIKey
