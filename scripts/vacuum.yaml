@@ -241,9 +241,9 @@ mop_bathroom:
       data:
         fan_speed: Gentle
         entity_id: vacuum.xiaomi_vacuum_cleaner
-    - service: script.turn_on
-      data:
-        entity_id: script.vacuum_bathroom
+    - service: script.vacuum_bathroom
+      data_template:
+        times: {{ times }}
     - service: script.turm_on
       data:
         entity_id: script.vacuum_reset_fan_speed_after_mopping
@@ -257,9 +257,9 @@ mop_kitchen:
       data:
         fan_speed: Gentle
         entity_id: vacuum.xiaomi_vacuum_cleaner
-    - service: script.turn_on
-      data:
-        entity_id: script.vacuum_kitchen
+    - service: script.vacuum_kitchen
+      data_template:
+        times: {{ times }}
     - service: script.turm_on
       data:
         entity_id: script.vacuum_reset_fan_speed_after_mopping
@@ -273,9 +273,9 @@ mop_diningroom:
       data:
         fan_speed: Gentle
         entity_id: vacuum.xiaomi_vacuum_cleaner
-    - service: script.turn_on
-      data:
-        entity_id: script.vacuum_diningroom
+    - service: script.vacuum_diningroom
+      data_template:
+        times: {{ times }}
     - service: script.turm_on
       data:
         entity_id: script.vacuum_reset_fan_speed_after_mopping
@@ -289,9 +289,9 @@ mop_kitchen_and_dining_room:
       data:
         fan_speed: Gentle
         entity_id: vacuum.xiaomi_vacuum_cleaner
-    - service: script.turn_on
-      data:
-        entity_id: script.vacuum_kitchen_and_diningroom
+    - service: script.vacuum_kitchen_and_diningroom
+      data_template:
+        times: {{ times }}
     - service: script.turm_on
       data:
         entity_id: script.vacuum_reset_fan_speed_after_mopping
