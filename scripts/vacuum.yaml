@@ -101,10 +101,10 @@ vacuum_kitchen:
       data_template:
         entity_id: vacuum.xiaomi_vacuum_cleaner
         command: app_zoned_clean
-        params: {% set vacuum_times = 1 %}
+        params: '{% set vacuum_times = 1 %}
           {% if times is defined %}
             {% vacuum_times = times %}
-          {% endif %}
+          {% endif %}'
           [[24384,22183,27484,25133,{{vacuum_times}}]]
 vacuum_kitchen_and_diningroom:
   alias: "Vacuum Kitchen and Diningroom"
