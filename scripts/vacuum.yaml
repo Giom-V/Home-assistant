@@ -70,6 +70,42 @@ vacuum_dispatch:
           {% elif "living" in room_lower %}
             script.vacuum_livingroom
           {% endif %}'
+        times: '{% set times = 1 %}
+          {% if "2 fois" in room_lower %}
+            {% times = 2 %}
+          {% elif "deux fois" in room_lower %}
+            {% times = 2 %}
+          {% elif "2 times" in room_lower %}
+            {% times = 2 %}
+          {% elif "two times" in room_lower %}
+            {% times = 2 %}
+          {% elif "twice" in room_lower %}
+            {% times = 2 %}
+          {% elif "3 fois" in room_lower %}
+            {% times = 3 %}
+          {% elif "trois fois" in room_lower %}
+            {% times = 3 %}
+          {% elif "3 times" in room_lower %}
+            {% times = 3 %}
+          {% elif "three times" in room_lower %}
+            {% times = 3 %}
+          {% endif %}
+          {{ times }}'
+vacuum_kitchen:
+  alias: "Vacuum Kitchen"
+  sequence:
+    - service: vacuum.stop
+      data:
+        entity_id: vacuum.xiaomi_vacuum_cleaner
+    - service: vacuum.send_command
+      data_template:
+        entity_id: vacuum.xiaomi_vacuum_cleaner
+        command: app_zoned_clean
+        params: {% set vacuum_times = 1 %}
+          {% if times is defined %}
+            {% vacuum_times = times %}
+          {% endif %}
+          [[24384,22183,27484,25133,{{vacuum_times}}]]
 vacuum_kitchen_and_diningroom:
   alias: "Vacuum Kitchen and Diningroom"
   sequence:
@@ -83,17 +119,6 @@ vacuum_kitchen_and_diningroom:
         params: 
         - [24384,22183,27484,25133,1]
         - [24964,25174,27714,28424,1]
-vacuum_kitchen:
-  alias: "Vacuum Kitchen"
-  sequence:
-    - service: vacuum.stop
-      data:
-        entity_id: vacuum.xiaomi_vacuum_cleaner
-    - service: vacuum.send_command
-      data:
-        entity_id: vacuum.xiaomi_vacuum_cleaner
-        command: app_zoned_clean
-        params: [[24384,22183,27484,25133,1]]
 vacuum_diningroom:
   alias: "Vacuum Dining Room"
   sequence:
