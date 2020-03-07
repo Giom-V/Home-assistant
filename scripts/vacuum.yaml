@@ -8,68 +8,68 @@ vacuum_dispatch:
         message: "Text received to dispatch Robbie: {{ room|lower }}"
         level: info
         logger: script.vacuum_dispatch
-    - service: script.turn_on
-      data_template:
-        entity_id: '{% set room_lower = room|lower %}
-          {% if "cuisine" in room_lower %}
-            {% if "manger" in room_lower %}
-              script.vacuum_kitchen_and_diningroom
-            {% elif "table" in room_lower %}
-              script.vacuum_kitchen_and_diningroom
-            {% else %}
-              script.vacuum_kitchen
-            {% endif %}
-          {% elif "kitchen" in room_lower %}
-            {% if "dining" in room_lower %}
-              script.vacuum_kitchen_and_diningroom
-            {% elif "table" in room_lower %}
-              script.vacuum_kitchen_and_diningroom
-            {% else %}
-              script.vacuum_kitchen
-            {% endif %}
-          {% elif "manger" in room_lower %}
-            script.vacuum_diningroom
-          {% elif "repas" in room_lower %}
-            script.vacuum_diningroom
-          {% elif "dining" in room_lower %}
-            script.vacuum_diningroom
+    - service_template: >
+        {% set room_lower = room|lower %}
+        {% if "cuisine" in room_lower %}
+          {% if "manger" in room_lower %}
+            script.vacuum_kitchen_and_diningroom
           {% elif "table" in room_lower %}
-            script.vacuum_diningroom
-          {% elif "bain" in room_lower %}
-            script.vacuum_bathroom
-          {% elif "toilet" in room_lower %}
-            script.vacuum_bathroom
-          {% elif "bath" in room_lower %}
-            vacuum_bathroom
-          {% elif "chambre" in room_lower %}
-            {% if "aurore" in room_lower %}
-              script.vacuum_aurore_bedroom
-            {% elif "enfant" in room_lower %}
-              script.vacuum_aurore_bedroom
-            {% elif "petite" in room_lower %}
-              script.vacuum_aurore_bedroom
-            {% else %}
-              script.vacuum_bedroom
-            {% endif %}
-          {% elif "bedroom" in room_lower %}
-            {% if "aurore" in room_lower %}
-              script.vacuum_aurore_bedroom
-            {% elif "kid" in room_lower %}
-              script.vacuum_aurore_bedroom
-            {% elif "small" in room_lower %}
-              script.vacuum_aurore_bedroom
-            {% else %}
-              script.vacuum_bedroom
-            {% endif %}
-          {% elif "aurore" in room_lower %}
-            script.vacuum_aurore_zone
-          {% elif "salon" in room_lower %}
-            script.vacuum_livingroom
-          {% elif "canapé" in room_lower %}
-            script.vacuum_livingroom
-          {% elif "living" in room_lower %}
-            script.vacuum_livingroom
-          {% endif %}'
+            script.vacuum_kitchen_and_diningroom
+          {% else %}
+            script.vacuum_kitchen
+          {% endif %}
+        {% elif "kitchen" in room_lower %}
+          {% if "dining" in room_lower %}
+            script.vacuum_kitchen_and_diningroom
+          {% elif "table" in room_lower %}
+            script.vacuum_kitchen_and_diningroom
+          {% else %}
+            script.vacuum_kitchen
+          {% endif %}
+        {% elif "manger" in room_lower %}
+          script.vacuum_diningroom
+        {% elif "repas" in room_lower %}
+          script.vacuum_diningroom
+        {% elif "dining" in room_lower %}
+          script.vacuum_diningroom
+        {% elif "table" in room_lower %}
+          script.vacuum_diningroom
+        {% elif "bain" in room_lower %}
+          script.vacuum_bathroom
+        {% elif "toilet" in room_lower %}
+          script.vacuum_bathroom
+        {% elif "bath" in room_lower %}
+          vacuum_bathroom
+        {% elif "chambre" in room_lower %}
+          {% if "aurore" in room_lower %}
+            script.vacuum_aurore_bedroom
+          {% elif "enfant" in room_lower %}
+            script.vacuum_aurore_bedroom
+          {% elif "petite" in room_lower %}
+            script.vacuum_aurore_bedroom
+          {% else %}
+            script.vacuum_bedroom
+          {% endif %}
+        {% elif "bedroom" in room_lower %}
+          {% if "aurore" in room_lower %}
+            script.vacuum_aurore_bedroom
+          {% elif "kid" in room_lower %}
+            script.vacuum_aurore_bedroom
+          {% elif "small" in room_lower %}
+            script.vacuum_aurore_bedroom
+          {% else %}
+            script.vacuum_bedroom
+          {% endif %}
+        {% elif "aurore" in room_lower %}
+          script.vacuum_aurore_zone
+        {% elif "salon" in room_lower %}
+          script.vacuum_livingroom
+        {% elif "canapé" in room_lower %}
+          script.vacuum_livingroom
+        {% elif "living" in room_lower %}
+          script.vacuum_livingroom
+        {% endif %}
+      data_template:
         times: '{% set times = 1 %}
           {% if "2 fois" in room_lower %}
             {% set times = 2 %}
