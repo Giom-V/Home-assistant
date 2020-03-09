@@ -91,7 +91,7 @@ vacuum_dispatch:
           {% elif "three times" in room_lower %}
             {% set times = 3 %}
           {% endif %}
-          {{ times }}
+          '{{ times }}'
 vacuum_kitchen:
   alias: "Vacuum Kitchen"
   sequence:
@@ -243,7 +243,7 @@ mop_bathroom:
         entity_id: vacuum.xiaomi_vacuum_cleaner
     - service: script.vacuum_bathroom
       data_template:
-        times: {{ times }}
+        times: '{{ times }}'
     - service: script.turm_on
       data:
         entity_id: script.vacuum_reset_fan_speed_after_mopping
@@ -259,7 +259,7 @@ mop_kitchen:
         entity_id: vacuum.xiaomi_vacuum_cleaner
     - service: script.vacuum_kitchen
       data_template:
-        times: {{ times }}
+        times: '{{ times }}'
     - service: script.turm_on
       data:
         entity_id: script.vacuum_reset_fan_speed_after_mopping
@@ -275,7 +275,7 @@ mop_diningroom:
         entity_id: vacuum.xiaomi_vacuum_cleaner
     - service: script.vacuum_diningroom
       data_template:
-        times: {{ times }}
+        times: '{{ times }}'
     - service: script.turm_on
       data:
         entity_id: script.vacuum_reset_fan_speed_after_mopping
@@ -291,7 +291,7 @@ mop_kitchen_and_dining_room:
         entity_id: vacuum.xiaomi_vacuum_cleaner
     - service: script.vacuum_kitchen_and_diningroom
       data_template:
-        times: {{ times }}
+        times: '{{ times }}'
     - service: script.turm_on
       data:
         entity_id: script.vacuum_reset_fan_speed_after_mopping
