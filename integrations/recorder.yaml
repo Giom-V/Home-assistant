@@ -91,6 +91,9 @@ recorder:
       - script.switch_living_room_color
       - script.vaccum_reset_fan_speed_after_mopping
       - script.vacuum_dispatch
+      - sensor.bathroom_pressure
+      - sensor.bathroom_temperature
+      - sensor.bathroom_humidity
       - sensor.claire_s_time_at_work_last_week
       - sensor.claire_s_time_at_work_this_week
       - sensor.dark_sky_apparent_temperature
