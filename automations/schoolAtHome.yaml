@@ -1,0 +1,213 @@
+- id: SchoolAtHome830
+  alias: School at home, 8h30 activité dirigée
+  initial_state: false
+  trigger:
+  - at: '8:30'
+    platform: time
+  condition:
+    condition: time
+    weekday:
+    - mon
+    - tue
+    - wed
+    - thu
+    - fri
+  action:
+  - service: tts.google_say
+    entity_id: media_player.gogol_home
+    data:
+      message: Ding dong, c'est l'heure de commencer la journée avec les activités dirigées.
+- id: SchoolAtHome930
+  alias: School at home, 9h30 collation du matin
+  initial_state: false
+  trigger:
+  - at: '9:30'
+    platform: time
+  condition:
+    condition: time
+    weekday:
+    - mon
+    - tue
+    - wed
+    - thu
+    - fri
+  action:
+  - service: tts.google_say
+    entity_id: media_player.gogol_home
+    data:
+      message: J'ai une petite faim, est-ce que ça ne serait pas l'heure de la collation ?
+- id: SchoolAtHome10
+  alias: School at home, 10h motricité
+  initial_state: false
+  trigger:
+  - at: '10:00'
+    platform: time
+  condition:
+    condition: time
+    weekday:
+    - mon
+    - tue
+    - wed
+    - thu
+    - fri
+  action:
+  - service: tts.google_say
+    entity_id: media_player.gogol_home
+    data:
+      message: C'est l'heure de bouger !!
+- id: SchoolAtHome11
+  alias: School at home, 11h jeu libre
+  initial_state: false
+  trigger:
+  - at: '11:00'
+    platform: time
+  condition:
+    condition: time
+    weekday:
+    - mon
+    - tue
+    - wed
+    - thu
+    - fri
+  action:
+  - service: tts.google_say
+    entity_id: media_player.gogol_home
+    data:
+      message: Educateur ou educatrice, c'est le moment de préparer le diner. Pendant ce temps, jeu libre pour Aurore, sauf si elle veut aider dans la cuisine ou à mettre la table.
+- id: SchoolAtHome12
+  alias: School at home, midi
+  initial_state: false
+  trigger:
+  - at: '12:00'
+    platform: time
+  condition:
+    condition: time
+    weekday:
+    - mon
+    - tue
+    - wed
+    - thu
+    - fri
+  action:
+  - service: tts.google_say
+    entity_id: 
+      - media_player.gogol_home
+      - media_player.gogol_mini
+    data:
+      message: Gling gling gling, à table !
+- id: SchoolAtHome13
+  alias: School at home, 13h temps calme
+  initial_state: false
+  trigger:
+  - at: '13:00'
+    platform: time
+  condition:
+    condition: time
+    weekday:
+    - mon
+    - tue
+    - wed
+    - thu
+    - fri
+  action:
+  - service: tts.google_say
+    entity_id: 
+      - media_player.gogol_home
+      - media_player.gogol_mini
+    data:
+      message: C'est le moment du temps calme. On se brosse les dents et on va se reposer dans sa chambre.
+- id: SchoolAtHome14
+  alias: School at home, 14h activité manuelle
+  initial_state: false
+  trigger:
+  - at: '14:00'
+    platform: time
+  condition:
+    condition: time
+    weekday:
+    - mon
+    - tue
+    - wed
+    - thu
+    - fri
+  action:
+  - service: tts.google_say
+    entity_id: media_player.gogol_home
+    data:
+      message: Dring dring, fin de la sièste. C'est l'heure de l'activité manuelle !
+- id: SchoolAtHome15
+  alias: School at home, 15h collation
+  initial_state: false
+  trigger:
+  - at: '15:00'
+    platform: time
+  condition:
+    condition: time
+    weekday:
+    - mon
+    - tue
+    - wed
+    - thu
+    - fri
+  action:
+  - service: tts.google_say
+    entity_id: media_player.gogol_home
+    data:
+      message: J'ai cru entendre un vendre gargouiller, est-ce que ça ne serait pas l'heure de la collation ? Qu'est-ce qu'on pourrait bien manger ?
+- id: SchoolAtHome1530
+  alias: School at home, 15h30 sortie
+  initial_state: false
+  trigger:
+  - at: '15:30'
+    platform: time
+  condition:
+    condition: time
+    weekday:
+    - mon
+    - tue
+    - wed
+    - thu
+    - fri
+  action:
+  - service: tts.google_say
+    entity_id: media_player.gogol_home
+    data:
+      message: Et si on sortait jouer un peu dehors ?
+- id: SchoolAtHome1630
+  alias: School at home, 16h30 amélioration maison
+  initial_state: false
+  trigger:
+  - at: '16:30'
+    platform: time
+  condition:
+    condition: time
+    weekday:
+    - mon
+    - tue
+    - wed
+    - thu
+    - fri
+  action:
+  - service: tts.google_say
+    entity_id: media_player.gogol_home
+    data:
+      message: C'est le meilleur moment de la journée, et si on rangeait la maison ?
+- id: SchoolAtHome1730
+  alias: School at home, 17h30 fin
+  initial_state: false
+  trigger:
+  - at: '17:30'
+    platform: time
+  condition:
+    condition: time
+    weekday:
+    - mon
+    - tue
+    - wed
+    - thu
+    - fri
+  action:
+  - service: tts.google_say
+    entity_id: media_player.gogol_home
+    data:
+      message: La journée d'école est finie, c'est le moment de retrouver les parents. J'ai pas de message !
