@@ -36,13 +36,13 @@
   entities:
     light.canape_gauche:
       state: on
-      rgb_color: [255,228,205]
+      color_temp: 200
     light.canape_droite:
       state: on
-      rgb_color: [255,228,205]
+      color_temp: 200
     light.color:
       state: on
-      rgb_color: [255,228,205]
+      color_temp: 200
 - name: PurpleLivingRoom
   entities:
     light.canape_gauche:
