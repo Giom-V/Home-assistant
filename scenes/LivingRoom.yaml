@@ -102,18 +102,18 @@
     light.color:
       state: on
       rgb_color: [255,117,24]
-- name: RedLivingRoom #TODO: change colors
+- name: RedLivingRoom
   id: RedLivingRoom
   entities:
     light.canape_gauche:
       state: on
-      rgb_color: [255,68,0]
+      rgb_color: [255,0,0]
     light.canape_droite:
       state: on
-      rgb_color: [255,68,0]
+      rgb_color: [255,0,0]
     light.color:
       state: on
-      rgb_color: [255,68,0]
+      rgb_color: [255,0,0]
 - name: CandleLivingRoom
   id: CandleLivingRoom
   entities:
