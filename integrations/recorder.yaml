@@ -44,6 +44,8 @@ recorder:
       - binary_sensor.updater
       - binary_sensor.workday_sensor
       - camera.dafang_camera_motion_snapshot
+      - light.escalier # because of deconz those 2 spam the database
+      - light.basement_stairs
     event_types:
       - time_changed
   include:
