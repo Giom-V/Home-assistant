@@ -3,3 +3,4 @@ exclude_paths:
   - 'custom_components/**'
   - 'www/community/**'
   - 'www/tiles-card/**'
+  - '.github/**'
