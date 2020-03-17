@@ -104,13 +104,15 @@ xiaomi:
     - binary_sensor.door_window_sensor_158d00030318fd
     - binary_sensor.cube_158d00029a9528
 living_room_lights:
-   name: Salon
-   entities:
+  name: Lumière Salon
+  entities:
     - light.Color
     - light.canape_gauche
     - light.canape_droite
     
 Dafang3:
+  name: Dafang Camera
+  entities:
     - camera.dafang3
     - switch.dafang3_h264_rtsp_server
     - switch.dafang3_mjpeg_rtsp_server
@@ -129,3 +131,18 @@ Dafang3:
     - binary_sensor.dafang3_motion_sensor
     - cover.dafang3_move_left_right
     - cover.dafang3_move_up_down  
+
+SchoolAtHome:
+  name: School at home time keeper
+  entities:
+    - script.SchoolAtHome830
+    - script.SchoolAtHome930
+    - script.SchoolAtHome10
+    - script.SchoolAtHome11
+    - script.SchoolAtHome12
+    - script.SchoolAtHome13    
+    - script.SchoolAtHome14    
+    - script.SchoolAtHome15    
+    - script.SchoolAtHome1530    
+    - script.SchoolAtHome1630    
+    - script.SchoolAtHome1730
