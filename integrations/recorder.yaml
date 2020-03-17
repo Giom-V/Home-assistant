@@ -143,3 +143,15 @@ recorder:
       - sensor.withings_weight_kg_guillaume_vernade
       - switch.lumiere_cuisine
       - switch.dafang_camera_motion_detection
+      - sensor.worldwide_confirmed
+      - sensor.worldwide_current
+      - sensor.worldwide_recovered
+      - sensor.worldwide_deaths
+      - sensor.france_confirmed
+      - sensor.france_current
+      - sensor.france_recovered
+      - sensor.france_deaths
+      - sensor.canada_confirmed
+      - sensor.canada_current
+      - sensor.canada_recovered
+      - sensor.canada_deaths
