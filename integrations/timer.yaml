@@ -1,0 +1,4 @@
+# https://www.home-assistant.io/integrations/timer/
+timer:
+  nightLight:
+    duration: '00:30:00'
