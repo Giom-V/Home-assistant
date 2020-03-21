@@ -138,12 +138,12 @@ panel_iframe:
     title: 'uTorrent'
     url: 'https://remote.bittorrent.com/'
     
-weblink:
-  entities:
-    - name: Slack
-      url: 'https://gi-home.slack.com/unreads/'
-    - name: Sonarr
-      url: !secret sonarrUrl
+# weblink:
+#   entities:
+#     - name: Slack
+#       url: 'https://gi-home.slack.com/unreads/'
+#     - name: Sonarr
+#       url: !secret sonarrUrl
 
 shell_command:
   resize_sunrise_pic: mogrify -resize 1080x720 /home/homeassistant/.homeassistant/Share/last_sunrise.jpg
