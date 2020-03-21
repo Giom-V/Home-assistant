@@ -1,4 +1,4 @@
 # https://www.home-assistant.io/integrations/timer/
 timer:
-  nightLight:
+  night_light:
     duration: '00:30:00'

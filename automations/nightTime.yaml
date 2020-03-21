@@ -44,12 +44,12 @@
         before: '18:45:00'
   action:
   - service: timer.start
-    entity_id: timer.nightlight
+    entity_id: timer.night_light
 - id: SwitchNightLightOffWhenTimerEnds
   alias: Night light off when timer ends
   trigger:
   - platform: event
-    event_type: timer.nightlight
+    event_type: timer.night_light
     event_data:
       entity_id: timer.test
   action:
