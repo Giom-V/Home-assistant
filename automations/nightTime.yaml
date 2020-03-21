@@ -33,8 +33,10 @@
 - id: SwitchNightLightOnStartsTimer
   alias: Night light on, start timer
   trigger:
-  - service: switch.turn_on
+  - platform: device
+    type: turned_on
     entity_id: switch.veilleuse
+    domain: switch
   condition:
     condition: or
     conditions:
