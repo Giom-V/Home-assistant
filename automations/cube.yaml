@@ -1,6 +1,5 @@
 - id: cube1
   alias: Cube - face 1
-  initial_state: 'on'
   trigger:
   - platform: event
     event_type: deconz_event
@@ -32,7 +31,6 @@
     entity_id: scene.WhiteLivingRoom
 - id: cube2
   alias: Cube - face 2
-  initial_state: 'on'
   trigger:
   - platform: event
     event_type: deconz_event
@@ -64,7 +62,6 @@
     entity_id: scene.PinkLivingRoom
 - id: cube3
   alias: Cube - face 3
-  initial_state: 'on'
   trigger:
   - platform: event
     event_type: deconz_event
@@ -96,7 +93,6 @@
     entity_id: scene.PurpleLivingRoom
 - id: cube4
   alias: Cube - face 4
-  initial_state: 'on'
   trigger:
   - platform: event
     event_type: deconz_event
@@ -128,7 +124,6 @@
     entity_id: scene.BlueLivingRoom
 - id: cube5
   alias: Cube - face 5
-  initial_state: 'on'
   trigger:
   - platform: event
     event_type: deconz_event
@@ -160,7 +155,6 @@
     entity_id: scene.TurquoiseLivingRoom
 - id: cube6
   alias: Cube - face 6
-  initial_state: 'on'
   trigger:
   - platform: event
     event_type: deconz_event
