@@ -28,13 +28,12 @@
   - at: '22:15'
     platform: time
   action:
-  - type: switch.turn_off
+  - service: switch.turn_off
     entity_id: switch.veilleuse
 - id: SwitchNightLightOnStartsTimer
   alias: Night light on, start timer
   trigger:
-  - platform: device
-    type: switch.turn_on
+  - service: switch.turn_on
     entity_id: switch.veilleuse
   condition:
     condition: or
@@ -54,5 +53,5 @@
     event_data:
       entity_id: timer.test
   action:
-  - type: switch.turn_off
+  - service: switch.turn_off
     entity_id: switch.veilleuse
