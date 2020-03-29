@@ -152,6 +152,7 @@ recorder:
       - sensor.canada_current
       - sensor.canada_recovered
       - sensor.canada_deaths
+      - switch.veilleuse
       - binary_sensor.solarium_door
       - binary_sensor.aurora_visibility
       - binary_sensor.dafang_camera_motion_sensor

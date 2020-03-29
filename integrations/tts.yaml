@@ -1,8 +1,15 @@
 # Text to speech
 # https://www.home-assistant.io/integrations/#text-to-speech
 
-tts:
+tts: #TODO: Split
   # https://www.home-assistant.io/integrations/google_translate/
   - platform: google_translate
     service_name: google_say
     language: 'fr'
+  - platform: watson_tts
+    watson_apikey: !secret IBM_APIKey
+    voice: fr-FR_ReneeV3Voice
+  - platform: microsoft
+    api_key: !secret azure_APIKey
+    language: fr-fr
+    region: canadacentral
