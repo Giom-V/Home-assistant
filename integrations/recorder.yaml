@@ -60,7 +60,6 @@ recorder:
       - weather
       - binary_sensor
     entities:
-      - sensor.linky_yesterday
       - automation.clean_room_as_asked_through_ifttt
       - automation.create_the_daily_gif
       - automation.mop_room_as_asked_through_ifttt
