@@ -1,0 +1,78 @@
+{
+    "data": {
+        "items": [
+            {
+                "id": "57548ac9a95e46ea826dd17628065a1f",
+                "type": "js",
+                "url": "/community_plugin/upcoming-media-card/upcoming-media-card.js"
+            },
+            {
+                "id": "1829de7e0d184f0e88d4914e6233c836",
+                "type": "module",
+                "url": "/community_plugin/lovelace-auto-entities/auto-entities.js"
+            },
+            {
+                "id": "8e6f715232ce49f7beb5b7580496b462",
+                "type": "js",
+                "url": "/community_plugin/lovelace-home-feed-card/lovelace-home-feed-card.js"
+            },
+            {
+                "id": "c9bcda2a37e541d48aed060c0154363d",
+                "type": "module",
+                "url": "/community_plugin/config-template-card/config-template-card.js"
+            },
+            {
+                "id": "ddf8f88208bf46478f59d907738b8a35",
+                "type": "js",
+                "url": "https://raw.githubusercontent.com/rodrigofragadf/lovelace-cards/master/tiles-card/tiles-card.js "
+            },
+            {
+                "id": "9801dc82ef3d4e778fee43f6a26b9502",
+                "type": "js",
+                "url": "/community_plugin/calendar-card/calendar-card.js"
+            },
+            {
+                "id": "d3ab6852d1204081acba94c990cd0861",
+                "type": "js",
+                "url": "/local/tiles-card/tiles-card.js"
+            },
+            {
+                "id": "a18b8e229e234841bad774e2ca1b374e",
+                "type": "module",
+                "url": "/local/aftership-card.js"
+            },
+            {
+                "id": "fb992f36db3b4980a7633deea1fb54ff",
+                "type": "module",
+                "url": "/community_plugin/lovelace-xiaomi-vacuum-map-card/xiaomi-vacuum-map-card.js"
+            },
+            {
+                "id": "cb1f8b968ce14467ac339bf23804851f",
+                "type": "module",
+                "url": "/community_plugin/lovelace-animated-background/animated-background.js"
+            },
+            {
+                "id": "e776e37e51e44b20b7af4b3c43cb79c1",
+                "type": "module",
+                "url": "/community_plugin/weather-card/weather-card.js"
+            },
+            {
+                "id": "1da14e874d6643d7996095dd419ede11",
+                "type": "module",
+                "url": "/community_plugin/lovelace-xiaomi-vacuum-card/xiaomi-vacuum-card.js"
+            },
+            {
+                "id": "5630af2238aa4c75a0a30322b499b0dc",
+                "type": "module",
+                "url": "/community_plugin/banner-card/banner-card.js"
+            },
+            {
+                "id": "36d93ed25e7440d683d37fc342776549",
+                "type": "module",
+                "url": "/community_plugin/mini-graph-card/mini-graph-card-bundle.js"
+            }
+        ]
+    },
+    "key": "lovelace_resources",
+    "version": 1
+}
