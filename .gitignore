@@ -31,6 +31,7 @@ customize.yaml
 *.pyc
 google_calendars.yaml
 *.old.yaml
+*.code-workspace
 
 # Secrets
 secrets.yaml
