@@ -135,9 +135,9 @@ recorder:
       - sensor.u_s_air_pollution_level
       - sensor.u_s_air_quality_index
       - sensor.waqi_beauce_quebec_canada
-      - sensor.withings_weight_kg_aurore_vernade
-      - sensor.withings_weight_kg_claire_merot
-      - sensor.withings_weight_kg_guillaume_vernade
+      - sensor.withings_weight_kg_aurore
+      - sensor.withings_weight_kg_claire
+      - sensor.withings_weight_kg_giom
       - switch.lumiere_cuisine
       - switch.dafang_camera_motion_detection
       - sensor.worldwide_confirmed
