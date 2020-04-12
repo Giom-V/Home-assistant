@@ -9,7 +9,6 @@ logs
 *.log
 
 # Ignore Folders
-.storage
 .cloud
 .vscode
 .Trash-*
@@ -50,6 +49,7 @@ node-red
 .DS_Store
 
 # Do not ignore Lovelace Files
+.storage/*
 !/.storage/lovelace
 !/.storage/lovelace_resources
 !/.storage/core.area_registry
