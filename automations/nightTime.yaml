@@ -53,7 +53,7 @@
   - platform: event
     event_type: timer.night_light
     event_data:
-      entity_id: timer.test
+      entity_id: timer.night_light
   action:
   - service: switch.turn_off
     entity_id: switch.veilleuse
