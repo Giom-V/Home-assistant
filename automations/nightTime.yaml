@@ -25,7 +25,7 @@
 - id: SwitchNightLightOff
   alias: Night light off
   trigger:
-  - at: '22:15'
+  - at: '5:00'
     platform: time
   action:
   - service: switch.turn_off
