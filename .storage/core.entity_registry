@@ -5879,7 +5879,7 @@
                 "icon": null,
                 "name": null,
                 "original_icon": null,
-                "original_name": "Bathroom Battery Level",
+                "original_name": "Basement Battery Level",
                 "platform": "deconz",
                 "supported_features": 0,
                 "unique_id": "00:15:8d:00:04:60:52:fc-battery",
