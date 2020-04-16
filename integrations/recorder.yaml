@@ -60,7 +60,6 @@ recorder:
       - weather
       - binary_sensor
     entities:
-      - sensor.linky_yesterday
       - automation.clean_room_as_asked_through_ifttt
       - automation.create_the_daily_gif
       - automation.mop_room_as_asked_through_ifttt
@@ -91,9 +90,9 @@ recorder:
       - script.switch_living_room_color
       - script.vaccum_reset_fan_speed_after_mopping
       - script.vacuum_dispatch
-      - sensor.bathroom_pressure
-      - sensor.bathroom_temperature
-      - sensor.bathroom_humidity
+      - sensor.basement_pressure
+      - sensor.basement_temperature
+      - sensor.basement_humidity
       - sensor.claire_s_time_at_work_last_week
       - sensor.claire_s_time_at_work_this_week
       - sensor.dark_sky_apparent_temperature
@@ -135,9 +134,9 @@ recorder:
       - sensor.u_s_air_pollution_level
       - sensor.u_s_air_quality_index
       - sensor.waqi_beauce_quebec_canada
-      - sensor.withings_weight_kg_aurore_vernade
-      - sensor.withings_weight_kg_claire_merot
-      - sensor.withings_weight_kg_guillaume_vernade
+      - sensor.withings_weight_kg_aurore
+      - sensor.withings_weight_kg_claire
+      - sensor.withings_weight_kg_giom
       - switch.lumiere_cuisine
       - switch.dafang_camera_motion_detection
       - sensor.worldwide_confirmed
@@ -152,6 +151,7 @@ recorder:
       - sensor.canada_current
       - sensor.canada_recovered
       - sensor.canada_deaths
+      - switch.veilleuse
       - binary_sensor.solarium_door
       - binary_sensor.aurora_visibility
       - binary_sensor.dafang_camera_motion_sensor
