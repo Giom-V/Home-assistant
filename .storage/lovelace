@@ -1756,7 +1756,7 @@
                     ],
                     "cards": [
                         {
-                            "dark_mode": false,
+                            "dark_mode": true,
                             "entities": [
                                 {
                                     "entity": "device_tracker.cellgiom"
@@ -1765,10 +1765,12 @@
                                     "entity": "person.giom_2"
                                 }
                             ],
+                            "hours_to_show": 24,
                             "title": "Giom",
                             "type": "map"
                         },
                         {
+                            "dark_mode": false,
                             "entities": [
                                 {
                                     "entity": "device_tracker.cellclaire"
@@ -1777,6 +1779,7 @@
                                     "entity": "person.claire_2"
                                 }
                             ],
+                            "hours_to_show": 24,
                             "title": "Claire",
                             "type": "map"
                         },
