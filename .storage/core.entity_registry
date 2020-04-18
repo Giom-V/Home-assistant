@@ -6070,7 +6070,7 @@
                 "config_entry_id": "ddf5aa391cde40b3ba8fb9ea51393ee1",
                 "device_class": "sound_level",
                 "device_id": "de822e2851014a37bb8a39773fa0d0fe",
-                "disabled_by": null,
+                "disabled_by": "user",
                 "entity_id": "sensor.cannes_sound_level_2",
                 "icon": null,
                 "name": "Cannes Sound_level",
