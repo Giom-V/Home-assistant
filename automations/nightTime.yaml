@@ -1,8 +1,8 @@
 - id: NightTime
   alias: Night time
   trigger:
-  - at: '19:15'
-    platform: time
+    platform: template
+    value_template: "{{ states('sensor.time') == states('input_datetime.nighttime_start')[0:5] }}"
   action:
   - entity_id:
     - light.canape_gauche
@@ -25,8 +25,32 @@
 - id: SwitchNightLightOff
   alias: Night light off
   trigger:
-  - at: '6:30'
-    platform: time
+  - platform: template
+    value_template: "{{ states('sensor.time') == states('input_datetime.morning_week')[0:5] }}"
+  - platform: template
+    value_template: "{{ states('sensor.time') == states('input_datetime.morning_weekend')[0:5] }}"
+  condition:
+    condition: or
+    conditions:
+      - condition: and
+        conditions:
+          - condition: template
+            value_template: "{{ states('sensor.time') == states('input_datetime.morning_week')[0:5] }}"
+          - condition: time
+            weekday:
+            - mon
+            - tue
+            - wed
+            - thu
+            - fri
+            - sat # TODO: after Covid, saturday will be a weed-end day once again
+      - condition: and
+        conditions:
+          - condition: template
+            value_template: "{{ states('sensor.time') == states('input_datetime.morning_weekend')[0:5] }}"
+          - condition: time
+            weekday:
+            - sun
   action:
   - service: switch.turn_off
     entity_id: switch.veilleuse
