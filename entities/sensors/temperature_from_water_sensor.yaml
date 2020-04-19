@@ -1,0 +1,6 @@
+platform: template
+sensors:
+  temperature_water_sensor:
+    friendly_name: "Tempo temperature"
+    unit_of_measurement: "°C"
+    value_template: "{{ state_attr('binary_sensor.water_16', 'temperature') }}"
