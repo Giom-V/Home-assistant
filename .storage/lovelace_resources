@@ -70,6 +70,11 @@
                 "id": "36d93ed25e7440d683d37fc342776549",
                 "type": "module",
                 "url": "/community_plugin/mini-graph-card/mini-graph-card-bundle.js"
+            },
+            {
+                "id": "4656b9b6d85a455b81b097efa13222c6",
+                "type": "module",
+                "url": "/hacsfiles/entity-attributes-card/entity-attributes-card.js"
             }
         ]
     },
