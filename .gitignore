@@ -51,6 +51,7 @@ node-red
 # Do not ignore Lovelace Files
 .storage/*
 !/.storage/lovelace
+!/.storage/lovelace.lovelace_*
 !/.storage/lovelace_resources
 !/.storage/core.area_registry
 !/.storage/core.entity_registry
