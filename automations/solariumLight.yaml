@@ -13,7 +13,7 @@
       {{ now().strftime("%H:%M:%S") < states('input_datetime.solarium_switch_off') }}
   - condition: state
     entity_id: input_boolean.visitors
-    state: 'on'
+    state: 'on' #TODO: and if we do not have visitors?
   action:
   - service: light.turn_on
     entity_id: light.solarium
@@ -37,7 +37,7 @@
     after_offset: -00:30:00
   - condition: state
     entity_id: input_boolean.visitors
-    state: 'on'
+    state: 'on' #TODO: and if we do not have visitors?
   action:
   - service: light.turn_on
     entity_id: light.solarium
@@ -102,6 +102,20 @@
     device_id: eb097d5c6fd44da5b5fcd7ccd54b4674
     entity_id: binary_sensor.solarium_door
     domain: binary_sensor
+  condition:
+    condition: or
+    conditions:
+      - condition: template
+        value_template: >
+          {% set month = now().strftime('%m') %}
+          {{  month >= '10' or month <= '03'}}
+      - condition: sun
+        after: sunset
+        after_offset: -00:30:00
+      - condition: sun
+        before: sunrise
+        before_offset: 00:30:00
+  # TODO: only during winter or night
   action:
   - service: light.turn_on
     entity_id: light.solarium # TODO: use a group
