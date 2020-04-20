@@ -20,21 +20,21 @@ travel_time:
     - sensor.travel_time_to_work_gmap
     - sensor.travel_time_to_work_waze
     - sensor.travel_time_to_work_claire
-# ebox:
-#   name: Ebox
-#   entities:
-#     - sensor.ebox_balance
-#     - sensor.ebox_data_limit
-#     - sensor.ebox_download
-#     - sensor.ebox_download_before_offpeak
-#     - sensor.ebox_offpeak_download
-#     - sensor.ebox_offpeak_total
-#     - sensor.ebox_offpeak_upload
-#     - sensor.ebox_total
-#     - sensor.ebox_total_before_offpeak
-#     - sensor.ebox_upload
-#     - sensor.ebox_upload_before_offpeak
-#     - sensor.ebox_usage
+ebox:
+  name: Ebox
+  entities:
+    - sensor.ebox_balance
+    - sensor.ebox_data_limit
+    - sensor.ebox_download
+    - sensor.ebox_download_before_offpeak
+    - sensor.ebox_offpeak_download
+    - sensor.ebox_offpeak_total
+    - sensor.ebox_offpeak_upload
+    - sensor.ebox_total
+    - sensor.ebox_total_before_offpeak
+    - sensor.ebox_upload
+    - sensor.ebox_upload_before_offpeak
+    - sensor.ebox_usage
 bus:
   name: Bus de Claire
   entities:
