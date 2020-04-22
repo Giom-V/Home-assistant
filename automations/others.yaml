@@ -10,11 +10,11 @@
   - service: scene.turn_on
     entity_id: scene.LightsOff
 - id: '1576760475010'
-  alias: Switch off all lights at 22:05
+  alias: Switch off all lights when we go to bed
   description: ''
   trigger:
-  - at: '22:05'
-    platform: time
+    platform: template
+    value_template: "{{ states('sensor.time') == states('input_datetime.nighttime_end')[0:5] }}"
   condition: []
   action:
   - service: scene.turn_on

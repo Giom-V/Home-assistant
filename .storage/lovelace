@@ -125,9 +125,16 @@
                                         {
                                             "entity": "sensor.dark_sky_apparent_temperature",
                                             "name": "Resentie"
+                                        },
+                                        {
+                                            "entity": "binary_sensor.water_16",
+                                            "icon": "mdi:water-outline",
+                                            "name": "water",
+                                            "when": "on"
                                         }
                                     ],
                                     "heading": "\ud83c\udfde Ext\u00e9rieur",
+                                    "row_size": 3,
                                     "type": "custom:banner-card"
                                 },
                                 {
@@ -1749,7 +1756,7 @@
                     ],
                     "cards": [
                         {
-                            "dark_mode": false,
+                            "dark_mode": true,
                             "entities": [
                                 {
                                     "entity": "device_tracker.cellgiom"
@@ -1758,10 +1765,12 @@
                                     "entity": "person.giom_2"
                                 }
                             ],
+                            "hours_to_show": 24,
                             "title": "Giom",
                             "type": "map"
                         },
                         {
+                            "dark_mode": false,
                             "entities": [
                                 {
                                     "entity": "device_tracker.cellclaire"
@@ -1770,6 +1779,7 @@
                                     "entity": "person.claire_2"
                                 }
                             ],
+                            "hours_to_show": 24,
                             "title": "Claire",
                             "type": "map"
                         },
