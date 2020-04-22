@@ -96,7 +96,7 @@
             conditions: # after wake up during the week-en
               - condition: template 
                 value_template: >
-                  {{ states('sensor.time') >= states('input_datetime.morning_weekend')[0:5] }}
+                  {{ states('sensor.time') > states('input_datetime.morning_weekend')[0:5] }}
               - condition: time
                 weekday:
                 - sun
