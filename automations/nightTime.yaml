@@ -76,14 +76,14 @@
     conditions: 
       - condition: template # Before night time
         value_template: >
-          {{ states('sensor.time') <= states('input_datetime.nighttime_start')[0:5] }}
+          {{ states('sensor.time') < states('input_datetime.nighttime_start')[0:5] }}
       - condition: or
         conditions: 
           - condition: and
             conditions: # after wake up during the week
               - condition: template 
                 value_template: >
-                  {{ states('sensor.time') >= states('input_datetime.morning_week')[0:5] }}
+                  {{ states('sensor.time') > states('input_datetime.morning_week')[0:5] }}
               - condition: time
                 weekday:
                 - mon
