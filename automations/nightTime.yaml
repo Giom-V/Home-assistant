@@ -61,13 +61,6 @@
     from: 'off'
     platform: state
     to: 'on'
-  condition:
-    condition: and
-    conditions:
-      - condition: time
-        after: '06:00:00'
-      - condition: time
-        before: '18:45:00'
   action:
   - service: timer.start
     entity_id: timer.night_light
@@ -78,6 +71,35 @@
     event_type: timer.finished
     event_data:
       entity_id: timer.night_light
+  condition:
+    condition: and
+    conditions: 
+      - condition: template # Before night time
+        value_template: >
+          {{ states('sensor.time') < states('input_datetime.nighttime_start')[0:5] }}
+      - condition: or
+        conditions: 
+          - condition: and
+            conditions: # after wake up during the week
+              - condition: template 
+                value_template: >
+                  {{ states('sensor.time') > states('input_datetime.morning_week')[0:5] }}
+              - condition: time
+                weekday:
+                - mon
+                - tue
+                - wed
+                - thu
+                - fri
+                - sat # TODO: after Covid, saturday will be a weed-end day once again
+          - condition: and
+            conditions: # after wake up during the week-en
+              - condition: template 
+                value_template: >
+                  {{ states('sensor.time') > states('input_datetime.morning_weekend')[0:5] }}
+              - condition: time
+                weekday:
+                - sun
   action:
   - service: switch.turn_off
     entity_id: switch.veilleuse
