@@ -737,7 +737,7 @@
                 "model": "",
                 "name": "HACS",
                 "name_by_user": null,
-                "sw_version": "0.24.0",
+                "sw_version": "0.24.1",
                 "via_device_id": null
             },
             {
