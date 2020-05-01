@@ -98,7 +98,7 @@ vacuum_kitchen:
     - service: vacuum.stop
       data:
         entity_id: vacuum.xiaomi_vacuum_cleaner
-    - service: vacuum.send_command
+    - service: xiaomi_miio.vacuum_clean_zone
       data_template:
         entity_id: vacuum.xiaomi_vacuum_cleaner
         command: app_zoned_clean
@@ -108,14 +108,18 @@ vacuum_kitchen:
             {% set vacuum_times = times %}
           {% endif %}
           {{vacuum_times}}
-        params: [[24384,22183,27484,25133]]
+        zone: [[24384,22183,27484,25133]]
+    # - service: vacuum.send_command # Alternative
+    #     entity_id: vacuum.xiaomi_vacuum_cleaner
+    #     command: app_segment_clean
+    #     params: [16]
 vacuum_kitchen_and_diningroom:
   alias: "Vacuum Kitchen and Diningroom"
   sequence:
     - service: vacuum.stop
       data:
         entity_id: vacuum.xiaomi_vacuum_cleaner
-    - service: vacuum.send_command
+    - service: xiaomi_miio.vacuum_clean_zone
       data_template:
         entity_id: vacuum.xiaomi_vacuum_cleaner
         command: app_zoned_clean
@@ -125,16 +129,20 @@ vacuum_kitchen_and_diningroom:
             {% set vacuum_times = times %}
           {% endif %}
           {{vacuum_times}}
-        params: 
+        zone: 
           - [24384,22183,27484,25133]
           - [24964,25174,27714,28424]
+    # - service: vacuum.send_command # Alternative
+    #     entity_id: vacuum.xiaomi_vacuum_cleaner
+    #     command: app_segment_clean
+    #     params: [16,17]
 vacuum_diningroom:
   alias: "Vacuum Dining Room"
   sequence:
     - service: vacuum.stop
       data:
         entity_id: vacuum.xiaomi_vacuum_cleaner
-    - service: vacuum.send_command
+    - service: xiaomi_miio.vacuum_clean_zone
       data_template:
         entity_id: vacuum.xiaomi_vacuum_cleaner
         command: app_zoned_clean
@@ -144,14 +152,18 @@ vacuum_diningroom:
             {% set vacuum_times = times %}
           {% endif %}
           {{vacuum_times}}
-        params: [[24964,25174,27714,28424]]
+        zone: [[24964,25174,27714,28424]]
+    # - service: vacuum.send_command # Alternative
+    #     entity_id: vacuum.xiaomi_vacuum_cleaner
+    #     command: app_segment_clean
+    #     params: [17]
 vacuum_bathroom:
   alias: "Vacuum Bathroom"
   sequence:
     - service: vacuum.stop
       data:
         entity_id: vacuum.xiaomi_vacuum_cleaner
-    - service: vacuum.send_command
+    - service: xiaomi_miio.vacuum_clean_zone
       data_template:
         entity_id: vacuum.xiaomi_vacuum_cleaner
         command: app_zoned_clean
@@ -161,14 +173,18 @@ vacuum_bathroom:
             {% set vacuum_times = times %}
           {% endif %}
           {{vacuum_times}}
-        params: [[23790,17237,28140,21137]]
+        zone: [[23790,17237,28140,21137]]
+    # - service: vacuum.send_command # Alternative
+    #     entity_id: vacuum.xiaomi_vacuum_cleaner
+    #     command: app_segment_clean
+    #     params: [22]
 vacuum_bedroom:
   alias: "Vacuum Bedroom"
   sequence:
     - service: vacuum.stop
       data:
         entity_id: vacuum.xiaomi_vacuum_cleaner
-    - service: vacuum.send_command
+    - service: xiaomi_miio.vacuum_clean_zone
       data_template:
         entity_id: vacuum.xiaomi_vacuum_cleaner
         command: app_zoned_clean
@@ -178,14 +194,18 @@ vacuum_bedroom:
             {% set vacuum_times = times %}
           {% endif %}
           {{vacuum_times}}
-        params: [[28091,17501,32541,21201]]
+        zone: [[28091,17501,32541,21201]]
+    # - service: vacuum.send_command # Alternative
+    #     entity_id: vacuum.xiaomi_vacuum_cleaner
+    #     command: app_segment_clean
+    #     params: [24]
 vacuum_aurore_bedroom:
   alias: "Vacuum Aurore's Bedroom"
   sequence:
     - service: vacuum.stop
       data:
         entity_id: vacuum.xiaomi_vacuum_cleaner
-    - service: vacuum.send_command
+    - service: xiaomi_miio.vacuum_clean_zone
       data_template:
         entity_id: vacuum.xiaomi_vacuum_cleaner
         command: app_zoned_clean
@@ -195,14 +215,18 @@ vacuum_aurore_bedroom:
             {% set vacuum_times = times %}
           {% endif %}
           {{vacuum_times}}
-        params: [[28098,21247,30898,23797]]
+        zone: [[28098,21247,30898,23797]]
+    # - service: vacuum.send_command # Alternative
+    #     entity_id: vacuum.xiaomi_vacuum_cleaner
+    #     command: app_segment_clean
+    #     params: [23]
 vacuum_livingroom:
   alias: "Vacuum Living Room"
   sequence:
     - service: vacuum.stop
       data:
         entity_id: vacuum.xiaomi_vacuum_cleaner
-    - service: vacuum.send_command
+    - service: xiaomi_miio.vacuum_clean_zone
       data_template:
         entity_id: vacuum.xiaomi_vacuum_cleaner
         command: app_zoned_clean
@@ -212,14 +236,18 @@ vacuum_livingroom:
             {% set vacuum_times = times %}
           {% endif %}
           {{vacuum_times}}
-        params: [[27794,23764,32644,28264]]
+        zone: [[27794,23764,32644,28264]]
+    # - service: vacuum.send_command # Alternative
+    #     entity_id: vacuum.xiaomi_vacuum_cleaner
+    #     command: app_segment_clean
+    #     params: [18]
 vacuum_aurore_zone:
   alias: "Vacuum Aurore's zone"
   sequence:
     - service: vacuum.stop
       data:
         entity_id: vacuum.xiaomi_vacuum_cleaner
-    - service: vacuum.send_command
+    - service: xiaomi_miio.vacuum_clean_zone
       data_template:
         entity_id: vacuum.xiaomi_vacuum_cleaner
         command: app_zoned_clean
@@ -229,7 +257,11 @@ vacuum_aurore_zone:
             {% set vacuum_times = times %}
           {% endif %}
           {{vacuum_times}}
-        params: [[30749,24974,32449,28274]]
+        zone: [[30749,24974,32449,28274]]
+    # - service: vacuum.send_command # Alternative
+    #     entity_id: vacuum.xiaomi_vacuum_cleaner
+    #     command: app_segment_clean
+    #     params: [19]
 vacuum_reset_fan_speed_after_mopping: # This might be automatically managed by the vacuum (TODO: verify)
   alias: "Reset vacuum's fan speed after mopping"
   sequence:
