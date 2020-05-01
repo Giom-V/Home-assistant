@@ -446,11 +446,11 @@
                 "identifiers": [
                     [
                         "deconz",
-                        "00212EFFFF04F2B1"
+                        "00212E04F2B1"
                     ],
                     [
                         "deconz",
-                        "00212E04F2B1"
+                        "00212EFFFF04F2B1"
                     ]
                 ],
                 "manufacturer": "Dresden Elektronik",
@@ -737,7 +737,7 @@
                 "model": "",
                 "name": "HACS",
                 "name_by_user": null,
-                "sw_version": "0.24.1",
+                "sw_version": "0.24.3",
                 "via_device_id": null
             },
             {
