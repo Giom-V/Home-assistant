@@ -254,6 +254,11 @@
                             "type": "conditional"
                         },
                         {
+                            "entity": "weather.macot_la_plagne",
+                            "name": "Macot",
+                            "type": "custom:weather-card"
+                        },
+                        {
                             "columns": 3,
                             "entities": [
                                 {
@@ -282,11 +287,6 @@
                             "show_state": true,
                             "title": "Linky",
                             "type": "glance"
-                        },
-                        {
-                            "entity": "weather.macot_la_plagne",
-                            "name": "Macot",
-                            "type": "custom:weather-card"
                         },
                         {
                             "aspect_ratio": "50%",
