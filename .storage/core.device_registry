@@ -1,0 +1,1042 @@
+{
+    "data": {
+        "devices": [
+            {
+                "area_id": "119eeda6dd6a4370a63ee6b8242ad21b",
+                "config_entries": [
+                    "ddf5aa391cde40b3ba8fb9ea51393ee1"
+                ],
+                "connections": [],
+                "id": "27bfd97e20d04000b34133f9e9ed729d",
+                "identifiers": [
+                    [
+                        "point",
+                        "5d11d89501250100013845d4"
+                    ]
+                ],
+                "manufacturer": "Minut",
+                "model": null,
+                "name": "Cannes",
+                "name_by_user": null,
+                "sw_version": null,
+                "via_device_id": null
+            },
+            {
+                "area_id": null,
+                "config_entries": [
+                    "ddf5aa391cde40b3ba8fb9ea51393ee1"
+                ],
+                "connections": [],
+                "id": "11f11385557e4967a884d69c5ffa629a",
+                "identifiers": [
+                    [
+                        "point",
+                        "56fe671d0dacfdc73fd6d9f0"
+                    ]
+                ],
+                "manufacturer": "Minut",
+                "model": null,
+                "name": "Home",
+                "name_by_user": null,
+                "sw_version": null,
+                "via_device_id": null
+            },
+            {
+                "area_id": "9c4968fca04144d0a45b4cb3e581afe3",
+                "config_entries": [
+                    "ddf5aa391cde40b3ba8fb9ea51393ee1"
+                ],
+                "connections": [
+                    [
+                        "mac",
+                        "b0:f1:ec:1c:e9:a4"
+                    ]
+                ],
+                "id": "d917893b62c541be94c84de58df84819",
+                "identifiers": [],
+                "manufacturer": "Minut",
+                "model": "Point v106",
+                "name": "Living room",
+                "name_by_user": null,
+                "sw_version": 13134,
+                "via_device_id": "11f11385557e4967a884d69c5ffa629a"
+            },
+            {
+                "area_id": "119eeda6dd6a4370a63ee6b8242ad21b",
+                "config_entries": [
+                    "ddf5aa391cde40b3ba8fb9ea51393ee1"
+                ],
+                "connections": [
+                    [
+                        "mac",
+                        "b0:38:29:1c:e1:39"
+                    ]
+                ],
+                "id": "de822e2851014a37bb8a39773fa0d0fe",
+                "identifiers": [],
+                "manufacturer": "Minut",
+                "model": "Point v7",
+                "name": "Living room",
+                "name_by_user": "Cannes",
+                "sw_version": 2513,
+                "via_device_id": "27bfd97e20d04000b34133f9e9ed729d"
+            },
+            {
+                "area_id": "fb771b4ed1124d9cb0f93fd1b2b5bd0c",
+                "config_entries": [
+                    "ddf5aa391cde40b3ba8fb9ea51393ee1"
+                ],
+                "connections": [
+                    [
+                        "mac",
+                        "b0:38:29:42:bc:8a"
+                    ]
+                ],
+                "id": "f6b3e9395a5b4feca7e388dcd904f8ed",
+                "identifiers": [],
+                "manufacturer": "Minut",
+                "model": "Point v8",
+                "name": "Solarium",
+                "name_by_user": null,
+                "sw_version": 2513,
+                "via_device_id": "11f11385557e4967a884d69c5ffa629a"
+            },
+            {
+                "area_id": null,
+                "config_entries": [
+                    "d44e80f5d4a446b6a08d6de68c7a7bba"
+                ],
+                "connections": [
+                    [
+                        "upnp",
+                        "uuid:59aafe2a-5fc2-4f04-96da-e85cff0cc59d"
+                    ]
+                ],
+                "id": "dd727716ce3d44cd94c8ed2943a3346c",
+                "identifiers": [
+                    [
+                        "upnp",
+                        "uuid:59aafe2a-5fc2-4f04-96da-e85cff0cc59d"
+                    ]
+                ],
+                "manufacturer": "Google",
+                "model": null,
+                "name": "OnHub",
+                "name_by_user": null,
+                "sw_version": null,
+                "via_device_id": null
+            },
+            {
+                "area_id": null,
+                "config_entries": [
+                    "d44e80f5d4a446b6a08d6de68c7a7bba"
+                ],
+                "connections": [],
+                "id": "7eb32c294dd74945b217e029d10b58ce",
+                "identifiers": [
+                    [
+                        "upnp",
+                        "uuid:59aafe2a-5fc2-4f04-96da-e85cff0cc59d_kbyte/sec_sent"
+                    ]
+                ],
+                "manufacturer": "Google",
+                "model": null,
+                "name": "OnHub kbyte/sec sent",
+                "name_by_user": null,
+                "sw_version": null,
+                "via_device_id": null
+            },
+            {
+                "area_id": null,
+                "config_entries": [
+                    "d44e80f5d4a446b6a08d6de68c7a7bba"
+                ],
+                "connections": [],
+                "id": "c7df6f079a21477baf0bb82c90aeb5ae",
+                "identifiers": [
+                    [
+                        "upnp",
+                        "uuid:59aafe2a-5fc2-4f04-96da-e85cff0cc59d_kbyte/sec_received"
+                    ]
+                ],
+                "manufacturer": "Google",
+                "model": null,
+                "name": "OnHub kbyte/sec received",
+                "name_by_user": null,
+                "sw_version": null,
+                "via_device_id": null
+            },
+            {
+                "area_id": null,
+                "config_entries": [
+                    "d44e80f5d4a446b6a08d6de68c7a7bba"
+                ],
+                "connections": [],
+                "id": "69b06e89165642d7822959d763ad23ea",
+                "identifiers": [
+                    [
+                        "upnp",
+                        "uuid:59aafe2a-5fc2-4f04-96da-e85cff0cc59d_packets/sec_received"
+                    ]
+                ],
+                "manufacturer": "Google",
+                "model": null,
+                "name": "OnHub packets/sec received",
+                "name_by_user": null,
+                "sw_version": null,
+                "via_device_id": null
+            },
+            {
+                "area_id": null,
+                "config_entries": [
+                    "d44e80f5d4a446b6a08d6de68c7a7bba"
+                ],
+                "connections": [],
+                "id": "f9d174f42be4497b988f240ecebd84e4",
+                "identifiers": [
+                    [
+                        "upnp",
+                        "uuid:59aafe2a-5fc2-4f04-96da-e85cff0cc59d_bytes_received"
+                    ]
+                ],
+                "manufacturer": "Google",
+                "model": null,
+                "name": "OnHub bytes received",
+                "name_by_user": null,
+                "sw_version": null,
+                "via_device_id": null
+            },
+            {
+                "area_id": null,
+                "config_entries": [
+                    "d44e80f5d4a446b6a08d6de68c7a7bba"
+                ],
+                "connections": [],
+                "id": "ac1380e2f6214a4eb2ac292a09f4ee5a",
+                "identifiers": [
+                    [
+                        "upnp",
+                        "uuid:59aafe2a-5fc2-4f04-96da-e85cff0cc59d_packets_sent"
+                    ]
+                ],
+                "manufacturer": "Google",
+                "model": null,
+                "name": "OnHub packets sent",
+                "name_by_user": null,
+                "sw_version": null,
+                "via_device_id": null
+            },
+            {
+                "area_id": null,
+                "config_entries": [
+                    "d44e80f5d4a446b6a08d6de68c7a7bba"
+                ],
+                "connections": [],
+                "id": "08c45cd2e254455e800f19ff78a2eb96",
+                "identifiers": [
+                    [
+                        "upnp",
+                        "uuid:59aafe2a-5fc2-4f04-96da-e85cff0cc59d_packets/sec_sent"
+                    ]
+                ],
+                "manufacturer": "Google",
+                "model": null,
+                "name": "OnHub packets/sec sent",
+                "name_by_user": null,
+                "sw_version": null,
+                "via_device_id": null
+            },
+            {
+                "area_id": null,
+                "config_entries": [
+                    "d44e80f5d4a446b6a08d6de68c7a7bba"
+                ],
+                "connections": [],
+                "id": "5d8211ab106044cca7d4ed211f4168e3",
+                "identifiers": [
+                    [
+                        "upnp",
+                        "uuid:59aafe2a-5fc2-4f04-96da-e85cff0cc59d_packets_received"
+                    ]
+                ],
+                "manufacturer": "Google",
+                "model": null,
+                "name": "OnHub packets received",
+                "name_by_user": null,
+                "sw_version": null,
+                "via_device_id": null
+            },
+            {
+                "area_id": null,
+                "config_entries": [
+                    "d44e80f5d4a446b6a08d6de68c7a7bba"
+                ],
+                "connections": [],
+                "id": "a22221befc6e446b93f3cf09d65a6d2e",
+                "identifiers": [
+                    [
+                        "upnp",
+                        "uuid:59aafe2a-5fc2-4f04-96da-e85cff0cc59d_bytes_sent"
+                    ]
+                ],
+                "manufacturer": "Google",
+                "model": null,
+                "name": "OnHub bytes sent",
+                "name_by_user": null,
+                "sw_version": null,
+                "via_device_id": null
+            },
+            {
+                "area_id": "26811538eded4148a4760d2e63b5ac91",
+                "config_entries": [
+                    "7380dc809b5e456a9af1bb205d6e7f7a"
+                ],
+                "connections": [],
+                "id": "dbcef9f2cc1b4b7ead474f0efc8c39d4",
+                "identifiers": [
+                    [
+                        "cast",
+                        "6cbdda3bb07d76e68b5987d529259a2a"
+                    ]
+                ],
+                "manufacturer": "Unknown manufacturer",
+                "model": "Google Home Mini",
+                "name": "Gogol Mini",
+                "name_by_user": null,
+                "sw_version": null,
+                "via_device_id": null
+            },
+            {
+                "area_id": "868685c723f94f14befa9024a62f5745",
+                "config_entries": [
+                    "899b3273e07b4183882fabe1cd3cbebc"
+                ],
+                "connections": [
+                    [
+                        "mac",
+                        "0c:80:63:fd:6b:a0"
+                    ]
+                ],
+                "id": "1e7c552df1744b6dbe96c61dc9ab2a56",
+                "identifiers": [],
+                "manufacturer": "TP-Link",
+                "model": "HS200(US)",
+                "name": "Lumi\u00e8re Cuisine",
+                "name_by_user": null,
+                "sw_version": "1.5.5 Build 181204 Rel.081041",
+                "via_device_id": null
+            },
+            {
+                "area_id": "9c4968fca04144d0a45b4cb3e581afe3",
+                "config_entries": [
+                    "7380dc809b5e456a9af1bb205d6e7f7a"
+                ],
+                "connections": [],
+                "id": "0fc9c53ad19e4f3797d24c3237ca0a22",
+                "identifiers": [
+                    [
+                        "cast",
+                        "c66e26cea1639c8633526ed2cdd0dfbc"
+                    ]
+                ],
+                "manufacturer": "Unknown manufacturer",
+                "model": "Chromecast Ultra",
+                "name": "Salon",
+                "name_by_user": null,
+                "sw_version": null,
+                "via_device_id": null
+            },
+            {
+                "area_id": "fb771b4ed1124d9cb0f93fd1b2b5bd0c",
+                "config_entries": [
+                    "34f7428a493b4e5f8aba7b844f7fb0c4"
+                ],
+                "connections": [
+                    [
+                        "mac",
+                        "78:11:dc:79:60:af"
+                    ]
+                ],
+                "id": "a04de5197445406ba6338cb0210f4c56",
+                "identifiers": [
+                    [
+                        "mqtt",
+                        "7811dc7960af"
+                    ]
+                ],
+                "manufacturer": "Xiaomi",
+                "model": "Dafang",
+                "name": "Xiaomi Dafang",
+                "name_by_user": null,
+                "sw_version": "Dafang Hacks",
+                "via_device_id": null
+            },
+            {
+                "area_id": "d2ba0908dc0e4f86b555872c232d8a18",
+                "config_entries": [
+                    "7380dc809b5e456a9af1bb205d6e7f7a"
+                ],
+                "connections": [],
+                "id": "592d0ea9e5e040ab99af88c62901aa05",
+                "identifiers": [
+                    [
+                        "cast",
+                        "27ecc5daf648652a5f3d6f01ca971e71"
+                    ]
+                ],
+                "manufacturer": "Unknown manufacturer",
+                "model": "Google Home",
+                "name": "Gogol Home",
+                "name_by_user": null,
+                "sw_version": null,
+                "via_device_id": null
+            },
+            {
+                "area_id": "257440c1b16b432b9fbf948a1815526d",
+                "config_entries": [
+                    "7380dc809b5e456a9af1bb205d6e7f7a"
+                ],
+                "connections": [],
+                "id": "7025d4f65958413cbb02f2c2199dd1f5",
+                "identifiers": [
+                    [
+                        "cast",
+                        "9d889fe9c5b3fb2f342b19a574623a43"
+                    ]
+                ],
+                "manufacturer": "Unknown manufacturer",
+                "model": "Lenovo Smart Clock",
+                "name": "R\u00e9veil",
+                "name_by_user": null,
+                "sw_version": null,
+                "via_device_id": null
+            },
+            {
+                "area_id": null,
+                "config_entries": [
+                    "3fc4717c8fe84acabb78f0c3a7a9efb5"
+                ],
+                "connections": [],
+                "id": "97a74c30147c48d2b3a066dfdfd5d045",
+                "identifiers": [
+                    [
+                        "mobile_app",
+                        "0b1ccc0a1d34463e8f0a86f045305026"
+                    ]
+                ],
+                "manufacturer": "OnePlus",
+                "model": "OnePlus6",
+                "name": "OnePlus_6",
+                "name_by_user": null,
+                "sw_version": "10",
+                "via_device_id": null
+            },
+            {
+                "area_id": "868685c723f94f14befa9024a62f5745",
+                "config_entries": [
+                    "8a1216e7396440f6aad6f16233eb45af"
+                ],
+                "connections": [
+                    [
+                        "mac",
+                        "b8:27:eb:ed:89:c0"
+                    ]
+                ],
+                "id": "27667204355b45869bc0748a80d5901e",
+                "identifiers": [
+                    [
+                        "deconz",
+                        "00212EFFFF04F2B1"
+                    ],
+                    [
+                        "deconz",
+                        "00212E04F2B1"
+                    ]
+                ],
+                "manufacturer": "Dresden Elektronik",
+                "model": "deCONZ",
+                "name": "Zigpii",
+                "name_by_user": null,
+                "sw_version": "2.5.74",
+                "via_device_id": null
+            },
+            {
+                "area_id": "9c4968fca04144d0a45b4cb3e581afe3",
+                "config_entries": [
+                    "8a1216e7396440f6aad6f16233eb45af"
+                ],
+                "connections": [
+                    [
+                        "zigbee",
+                        "00:15:8d:00:02:9a:95:28"
+                    ]
+                ],
+                "id": "55d67754eee24268809cabe2a0c2f0b0",
+                "identifiers": [
+                    [
+                        "deconz",
+                        "00:15:8d:00:02:9a:95:28"
+                    ]
+                ],
+                "manufacturer": "LUMI",
+                "model": "lumi.sensor_cube.aqgl01",
+                "name": "Mi Magic Cube",
+                "name_by_user": "Magic Cube",
+                "sw_version": "20160704",
+                "via_device_id": "27667204355b45869bc0748a80d5901e"
+            },
+            {
+                "area_id": "9c4968fca04144d0a45b4cb3e581afe3",
+                "config_entries": [
+                    "8a1216e7396440f6aad6f16233eb45af"
+                ],
+                "connections": [
+                    [
+                        "zigbee",
+                        "00:21:2e:ff:ff:04:f2:b1"
+                    ]
+                ],
+                "id": "457c99d174f34312a56e8c3dc345d8ad",
+                "identifiers": [
+                    [
+                        "deconz",
+                        "00:21:2e:ff:ff:04:f2:b1"
+                    ]
+                ],
+                "manufacturer": "Philips",
+                "model": "PHDL00",
+                "name": "Daylight",
+                "name_by_user": null,
+                "sw_version": "1.0",
+                "via_device_id": "27667204355b45869bc0748a80d5901e"
+            },
+            {
+                "area_id": "9c4968fca04144d0a45b4cb3e581afe3",
+                "config_entries": [
+                    "8a1216e7396440f6aad6f16233eb45af"
+                ],
+                "connections": [
+                    [
+                        "zigbee",
+                        "00:0d:6f:ff:fe:09:ba:d7"
+                    ]
+                ],
+                "id": "b898c2e796694df1a568bab393658478",
+                "identifiers": [
+                    [
+                        "deconz",
+                        "00:0d:6f:ff:fe:09:ba:d7"
+                    ]
+                ],
+                "manufacturer": "IKEA of Sweden",
+                "model": "TRADFRI remote control",
+                "name": "TR\u00c5DFRI remote control",
+                "name_by_user": null,
+                "sw_version": "1.2.223",
+                "via_device_id": "27667204355b45869bc0748a80d5901e"
+            },
+            {
+                "area_id": "fb771b4ed1124d9cb0f93fd1b2b5bd0c",
+                "config_entries": [
+                    "8a1216e7396440f6aad6f16233eb45af"
+                ],
+                "connections": [
+                    [
+                        "zigbee",
+                        "00:15:8d:00:03:03:18:fd"
+                    ]
+                ],
+                "id": "eb097d5c6fd44da5b5fcd7ccd54b4674",
+                "identifiers": [
+                    [
+                        "deconz",
+                        "00:15:8d:00:03:03:18:fd"
+                    ]
+                ],
+                "manufacturer": "LUMI",
+                "model": "lumi.sensor_magnet",
+                "name": "Solarium door",
+                "name_by_user": null,
+                "sw_version": null,
+                "via_device_id": "27667204355b45869bc0748a80d5901e"
+            },
+            {
+                "area_id": "fb771b4ed1124d9cb0f93fd1b2b5bd0c",
+                "config_entries": [
+                    "8a1216e7396440f6aad6f16233eb45af"
+                ],
+                "connections": [
+                    [
+                        "zigbee",
+                        "00:15:8d:00:04:01:6b:a8"
+                    ]
+                ],
+                "id": "85bc07f4124e490eb8ba0082a9abf76c",
+                "identifiers": [
+                    [
+                        "deconz",
+                        "00:15:8d:00:04:01:6b:a8"
+                    ]
+                ],
+                "manufacturer": "LUMI",
+                "model": "lumi.sensor_magnet.aq2",
+                "name": "Freezer door",
+                "name_by_user": null,
+                "sw_version": "20161128",
+                "via_device_id": "27667204355b45869bc0748a80d5901e"
+            },
+            {
+                "area_id": "09a9199f5c064306b70b13d9d4c1e9bd",
+                "config_entries": [
+                    "8a1216e7396440f6aad6f16233eb45af"
+                ],
+                "connections": [
+                    [
+                        "zigbee",
+                        "00:0b:57:ff:fe:33:d8:47"
+                    ]
+                ],
+                "id": "c64aef351e9144688b955e2d69375c79",
+                "identifiers": [
+                    [
+                        "deconz",
+                        "00:0b:57:ff:fe:33:d8:47"
+                    ]
+                ],
+                "manufacturer": "IKEA of Sweden",
+                "model": "TRADFRI bulb E26 opal 1000lm",
+                "name": "Basement",
+                "name_by_user": null,
+                "sw_version": "1.1.1.0-5.7.2.0",
+                "via_device_id": "27667204355b45869bc0748a80d5901e"
+            },
+            {
+                "area_id": "fb771b4ed1124d9cb0f93fd1b2b5bd0c",
+                "config_entries": [
+                    "8a1216e7396440f6aad6f16233eb45af"
+                ],
+                "connections": [
+                    [
+                        "zigbee",
+                        "00:0d:6f:ff:fe:30:60:53"
+                    ]
+                ],
+                "id": "d1d8a87a1d41469ba6cea2a7f682d6c9",
+                "identifiers": [
+                    [
+                        "deconz",
+                        "00:0d:6f:ff:fe:30:60:53"
+                    ]
+                ],
+                "manufacturer": "IKEA of Sweden",
+                "model": "TRADFRI signal repeater",
+                "name": "Range extender 2",
+                "name_by_user": null,
+                "sw_version": "2.0.019",
+                "via_device_id": "27667204355b45869bc0748a80d5901e"
+            },
+            {
+                "area_id": "d2ba0908dc0e4f86b555872c232d8a18",
+                "config_entries": [
+                    "8a1216e7396440f6aad6f16233eb45af"
+                ],
+                "connections": [],
+                "id": "a67234a6066b45d6a721234f1c4b5dee",
+                "identifiers": [
+                    [
+                        "deconz",
+                        "00212EFFFF04F2B1-/groups/2"
+                    ]
+                ],
+                "manufacturer": "Dresden Elektronik",
+                "model": "deCONZ group",
+                "name": "Salle \u00e0 manger",
+                "name_by_user": "Dining room Deconz group",
+                "sw_version": null,
+                "via_device_id": "27667204355b45869bc0748a80d5901e"
+            },
+            {
+                "area_id": "253b2690b92441f386a7436bbb51deec",
+                "config_entries": [
+                    "8cded4befa474c1e89dcd59cc6c9cf9b"
+                ],
+                "connections": [],
+                "id": "a0a0a6664cae4c1c92df254c0c7e5b84",
+                "identifiers": [
+                    [
+                        "linky",
+                        "appart.vernade@gmail.com"
+                    ]
+                ],
+                "manufacturer": "Enedis",
+                "model": null,
+                "name": "Linky meter",
+                "name_by_user": "Linky La Plagne",
+                "sw_version": null,
+                "via_device_id": null
+            },
+            {
+                "area_id": "fb771b4ed1124d9cb0f93fd1b2b5bd0c",
+                "config_entries": [
+                    "8a1216e7396440f6aad6f16233eb45af"
+                ],
+                "connections": [],
+                "id": "6b7ac1fc4d5647e3a1cfa500548c3e4c",
+                "identifiers": [
+                    [
+                        "deconz",
+                        "00212EFFFF04F2B1-/groups/3"
+                    ]
+                ],
+                "manufacturer": "Dresden Elektronik",
+                "model": "deCONZ group",
+                "name": "Solarium",
+                "name_by_user": "Solarium Deconz group",
+                "sw_version": null,
+                "via_device_id": "27667204355b45869bc0748a80d5901e"
+            },
+            {
+                "area_id": null,
+                "config_entries": [
+                    "8a1216e7396440f6aad6f16233eb45af"
+                ],
+                "connections": [
+                    [
+                        "zigbee",
+                        "00:0b:57:ff:fe:13:16:2c"
+                    ]
+                ],
+                "id": "4d5b258248e74d3ea6152acd20e30d83",
+                "identifiers": [
+                    [
+                        "deconz",
+                        "00:0b:57:ff:fe:13:16:2c"
+                    ]
+                ],
+                "manufacturer": "IKEA of Sweden",
+                "model": "TRADFRI wireless dimmer",
+                "name": "TR\u00c5DFRI wireless dimmer",
+                "name_by_user": null,
+                "sw_version": "1.1.1.1-5.7.2.0",
+                "via_device_id": "27667204355b45869bc0748a80d5901e"
+            },
+            {
+                "area_id": null,
+                "config_entries": [
+                    "b85d4302d6bf4827b199eea066b58679"
+                ],
+                "connections": [],
+                "id": "1e2cfe217b5a4272828945a3364baddf",
+                "identifiers": [
+                    [
+                        "hacs",
+                        "0717a0cd-745c-48fd-9b16-c8534c9704f9-bc944b0f-fd42-4a58-a072-ade38d1444cd"
+                    ]
+                ],
+                "manufacturer": "hacs.xyz",
+                "model": "",
+                "name": "HACS",
+                "name_by_user": null,
+                "sw_version": "0.24.1",
+                "via_device_id": null
+            },
+            {
+                "area_id": "09a9199f5c064306b70b13d9d4c1e9bd",
+                "config_entries": [
+                    "8a1216e7396440f6aad6f16233eb45af"
+                ],
+                "connections": [
+                    [
+                        "zigbee",
+                        "14:b4:57:ff:fe:7e:f0:c6"
+                    ]
+                ],
+                "id": "a4237566af9e4c448de6431678306512",
+                "identifiers": [
+                    [
+                        "deconz",
+                        "14:b4:57:ff:fe:7e:f0:c6"
+                    ]
+                ],
+                "manufacturer": "IKEA of Sweden",
+                "model": "TRADFRI on/off switch",
+                "name": "TRADFRI on/off switch ",
+                "name_by_user": null,
+                "sw_version": "2.2.008",
+                "via_device_id": "27667204355b45869bc0748a80d5901e"
+            },
+            {
+                "area_id": "09a9199f5c064306b70b13d9d4c1e9bd",
+                "config_entries": [
+                    "8a1216e7396440f6aad6f16233eb45af"
+                ],
+                "connections": [
+                    [
+                        "zigbee",
+                        "cc:cc:cc:ff:fe:cf:8f:87"
+                    ]
+                ],
+                "id": "84333b35a5904ee296eb917a7e2419e1",
+                "identifiers": [
+                    [
+                        "deconz",
+                        "cc:cc:cc:ff:fe:cf:8f:87"
+                    ]
+                ],
+                "manufacturer": "IKEA of Sweden",
+                "model": "TRADFRI motion sensor",
+                "name": "TR\u00c5DFRI Motion sensor",
+                "name_by_user": null,
+                "sw_version": "2.0.022",
+                "via_device_id": "27667204355b45869bc0748a80d5901e"
+            },
+            {
+                "area_id": "09a9199f5c064306b70b13d9d4c1e9bd",
+                "config_entries": [
+                    "8a1216e7396440f6aad6f16233eb45af"
+                ],
+                "connections": [
+                    [
+                        "zigbee",
+                        "cc:cc:cc:ff:fe:4e:86:12"
+                    ]
+                ],
+                "id": "340d0ad76a2b43c09239e158eff59926",
+                "identifiers": [
+                    [
+                        "deconz",
+                        "cc:cc:cc:ff:fe:4e:86:12"
+                    ]
+                ],
+                "manufacturer": "IKEA of Sweden",
+                "model": "TRADFRI bulb E26 WW 806lm",
+                "name": "Basement stairs",
+                "name_by_user": null,
+                "sw_version": "2.1.022",
+                "via_device_id": "27667204355b45869bc0748a80d5901e"
+            },
+            {
+                "area_id": "09a9199f5c064306b70b13d9d4c1e9bd",
+                "config_entries": [
+                    "8a1216e7396440f6aad6f16233eb45af"
+                ],
+                "connections": [],
+                "id": "76dddcc1c98c46288e0ae456f8f71955",
+                "identifiers": [
+                    [
+                        "deconz",
+                        "00212EFFFF04F2B1-/groups/7"
+                    ]
+                ],
+                "manufacturer": "Dresden Elektronik",
+                "model": "deCONZ group",
+                "name": "Sous-sol",
+                "name_by_user": "Basement Deconz group",
+                "sw_version": null,
+                "via_device_id": "27667204355b45869bc0748a80d5901e"
+            },
+            {
+                "area_id": "09a9199f5c064306b70b13d9d4c1e9bd",
+                "config_entries": [
+                    "8a1216e7396440f6aad6f16233eb45af"
+                ],
+                "connections": [],
+                "id": "0d9d093063bb43278d340de711eb7f3f",
+                "identifiers": [
+                    [
+                        "deconz",
+                        "00212EFFFF04F2B1-/groups/8"
+                    ]
+                ],
+                "manufacturer": "Dresden Elektronik",
+                "model": "deCONZ group",
+                "name": "Escalier",
+                "name_by_user": "Basement stairs Deconz group",
+                "sw_version": null,
+                "via_device_id": "27667204355b45869bc0748a80d5901e"
+            },
+            {
+                "area_id": null,
+                "config_entries": [
+                    "03cbb575f5d54b0f88f73d87992fe319"
+                ],
+                "connections": [],
+                "id": "52338fc4049f4ffd97e90e9e9ea59a8a",
+                "identifiers": [
+                    [
+                        "mobile_app",
+                        "66d2384b5589463a9bae9c670b5714ab"
+                    ]
+                ],
+                "manufacturer": "OnePlus",
+                "model": "ONEPLUS A6000",
+                "name": "hasskit_oneplus_a6000_5923",
+                "name_by_user": null,
+                "sw_version": "10",
+                "via_device_id": null
+            },
+            {
+                "area_id": null,
+                "config_entries": [
+                    "11a14ad9102043a7a94c00e41f90b6b7"
+                ],
+                "connections": [],
+                "id": "58eea261ffb349a4b87502293bb75ee9",
+                "identifiers": [
+                    [
+                        "mobile_app",
+                        "7404d9922589443bb0325cb69ff1eea3"
+                    ]
+                ],
+                "manufacturer": "LGE",
+                "model": "LG-H873",
+                "name": "hasskit_lg_h873_9312",
+                "name_by_user": null,
+                "sw_version": "9",
+                "via_device_id": null
+            },
+            {
+                "area_id": "09a9199f5c064306b70b13d9d4c1e9bd",
+                "config_entries": [
+                    "8a1216e7396440f6aad6f16233eb45af"
+                ],
+                "connections": [
+                    [
+                        "zigbee",
+                        "00:15:8d:00:04:60:52:fc"
+                    ]
+                ],
+                "id": "8a17a82b7ed945cc881af79e96b63b3e",
+                "identifiers": [
+                    [
+                        "deconz",
+                        "00:15:8d:00:04:60:52:fc"
+                    ]
+                ],
+                "manufacturer": "LUMI",
+                "model": "lumi.weather",
+                "name": "Basement",
+                "name_by_user": "Basement",
+                "sw_version": "20161129",
+                "via_device_id": "27667204355b45869bc0748a80d5901e"
+            },
+            {
+                "area_id": "f345537ab65b46c5b78cdf82bf41ea9d",
+                "config_entries": [
+                    "899b3273e07b4183882fabe1cd3cbebc"
+                ],
+                "connections": [
+                    [
+                        "mac",
+                        "74:da:88:2a:8f:75"
+                    ]
+                ],
+                "id": "690ae810ccfa4919ad691f290658bcfb",
+                "identifiers": [],
+                "manufacturer": "TP-Link",
+                "model": "HS103(US)",
+                "name": "Veilleuse",
+                "name_by_user": null,
+                "sw_version": "1.1.2 Build 191113 Rel.095623",
+                "via_device_id": null
+            },
+            {
+                "area_id": "d3c51cf238dd4ace8e6ad836e89b1bdc",
+                "config_entries": [
+                    "8a1216e7396440f6aad6f16233eb45af"
+                ],
+                "connections": [
+                    [
+                        "zigbee",
+                        "00:15:8d:00:04:a0:71:4f"
+                    ]
+                ],
+                "id": "1296d76997d44479a9aef04abded5a7c",
+                "identifiers": [
+                    [
+                        "deconz",
+                        "00:15:8d:00:04:a0:71:4f"
+                    ]
+                ],
+                "manufacturer": "LUMI",
+                "model": "lumi.sensor_wleak.aq1",
+                "name": "Water Sensor",
+                "name_by_user": null,
+                "sw_version": "20170721",
+                "via_device_id": "27667204355b45869bc0748a80d5901e"
+            },
+            {
+                "area_id": null,
+                "config_entries": [
+                    "40b53b6a80164e0b8c783b68fff3bbcf"
+                ],
+                "connections": [],
+                "id": "72e5f5f071cd40e38af818d2488dd04b",
+                "identifiers": [
+                    [
+                        "mobile_app",
+                        "eb1bd6a375f24f7cb8469fb79b7bf514"
+                    ]
+                ],
+                "manufacturer": "OnePlus",
+                "model": "ONEPLUS A6000",
+                "name": "hasskit_oneplus_a6000_4386",
+                "name_by_user": null,
+                "sw_version": "10",
+                "via_device_id": null
+            },
+            {
+                "area_id": "26811538eded4148a4760d2e63b5ac91",
+                "config_entries": [
+                    "8a1216e7396440f6aad6f16233eb45af"
+                ],
+                "connections": [
+                    [
+                        "zigbee",
+                        "00:15:8d:00:04:0e:76:b8"
+                    ]
+                ],
+                "id": "9a669c6c24b24c34ba11b28d28a08029",
+                "identifiers": [
+                    [
+                        "deconz",
+                        "00:15:8d:00:04:0e:76:b8"
+                    ]
+                ],
+                "manufacturer": "LUMI",
+                "model": "lumi.sensor_ht",
+                "name": "Bathroom",
+                "name_by_user": "Bathroom",
+                "sw_version": "20160516",
+                "via_device_id": "27667204355b45869bc0748a80d5901e"
+            },
+            {
+                "area_id": "257440c1b16b432b9fbf948a1815526d",
+                "config_entries": [
+                    "8a1216e7396440f6aad6f16233eb45af"
+                ],
+                "connections": [
+                    [
+                        "zigbee",
+                        "00:15:8d:00:04:0e:72:e0"
+                    ]
+                ],
+                "id": "6fa2f2dc6c814d6183971b8993b07c03",
+                "identifiers": [
+                    [
+                        "deconz",
+                        "00:15:8d:00:04:0e:72:e0"
+                    ]
+                ],
+                "manufacturer": "LUMI",
+                "model": "lumi.sensor_ht",
+                "name": "Bedroom",
+                "name_by_user": "Bedroom",
+                "sw_version": "20160516",
+                "via_device_id": "27667204355b45869bc0748a80d5901e"
+            }
+        ]
+    },
+    "key": "core.device_registry",
+    "version": 1
+}

@@ -1,0 +1,2292 @@
+{
+    "data": {
+        "config": {
+            "views": [
+                {
+                    "badges": [],
+                    "cards": [
+                        {
+                            "background": "#0B1CAB",
+                            "entities": [
+                                {
+                                    "entity": "person.giom_2",
+                                    "map_state": {
+                                        "Ubisoft": "mdi:gamepad-variant",
+                                        "Universit\u00e9": "mdi:beaker",
+                                        "agrderie": "fas:baby",
+                                        "home": "mdi:home",
+                                        "not_home": "mdi:map-marker-path"
+                                    },
+                                    "name": "Position"
+                                },
+                                {
+                                    "entity": "sensor.giom_s_time_at_work_this_week",
+                                    "name": "Tps de travail"
+                                },
+                                {
+                                    "entity": "sensor.withings_weight_kg_giom",
+                                    "name": "Poids"
+                                },
+                                {
+                                    "entity": "sensor.google_fit_steps",
+                                    "name": "Pas",
+                                    "unit": "pas"
+                                },
+                                {
+                                    "entity": "sensor.google_fit_distance",
+                                    "name": "Distance"
+                                },
+                                {
+                                    "entity": "sensor.google_fit_move_time",
+                                    "name": "Tps d'activit\u00e9"
+                                }
+                            ],
+                            "heading": "\ud83e\udd35 Giom",
+                            "link": "/lovelace/people",
+                            "type": "custom:banner-card"
+                        },
+                        {
+                            "background": "#AF0092",
+                            "entities": [
+                                {
+                                    "entity": "person.claire_2",
+                                    "map_state": {
+                                        "Garderie": "fas:baby",
+                                        "Ubisoft": "mdi:gamepad-variant",
+                                        "Universit\u00e9": "mdi:beaker",
+                                        "home": "mdi:home",
+                                        "not_home": "mdi:map-marker-path"
+                                    },
+                                    "name": "Position"
+                                },
+                                {
+                                    "entity": "sensor.claire_s_time_at_work_this_week",
+                                    "name": "Tps de travail"
+                                },
+                                {
+                                    "entity": "sensor.withings_weight_kg_claire",
+                                    "name": "Poids"
+                                }
+                            ],
+                            "heading": "\ud83d\udc69 Claire",
+                            "link": "/lovelace/people",
+                            "type": "custom:banner-card"
+                        },
+                        {
+                            "background": "#F10F6D",
+                            "entities": [
+                                {
+                                    "entity": "sensor.withings_weight_kg_aurore",
+                                    "name": "Poids"
+                                },
+                                {
+                                    "entity": "sensor.withings_height_m_aurore",
+                                    "name": "Taille"
+                                }
+                            ],
+                            "heading": "\ud83d\udc7c Aurore",
+                            "link": "/lovelace/people",
+                            "row_size": 2,
+                            "type": "custom:banner-card"
+                        },
+                        {
+                            "cards": [
+                                {
+                                    "background": "url(\"https://media.9news.com/assets/KUSA/images/e9d40353-f0a1-4fd6-86a9-cf5b19d6d206/e9d40353-f0a1-4fd6-86a9-cf5b19d6d206_750x422.jpg\")",
+                                    "background-color-notused": "#00DEB2",
+                                    "entities": [
+                                        {
+                                            "entity": "binary_sensor.aurora_visibility",
+                                            "name": "Aurore bor\u00e9ales visibles !!",
+                                            "size": 2,
+                                            "value": "",
+                                            "when": "on"
+                                        },
+                                        {
+                                            "entity": "binary_sensor.water_16",
+                                            "icon": "mdi:water-outline",
+                                            "name": "Water detected in the tempo",
+                                            "size": 2,
+                                            "when": "on"
+                                        },
+                                        {
+                                            "entity": "weather.dark_sky",
+                                            "map_state": {
+                                                "clear-day": "mdi:weather-sunny",
+                                                "clear-night": "mdi:weather-night",
+                                                "partly-cloudy-day": "mdi:weather-partly-cloudy",
+                                                "partly-cloudy-night": "mdi:weather-night-partly-cloudy",
+                                                "partlycloudy": "mdi:weather-partly-cloudy",
+                                                "rain": "mdi:weather-pouring",
+                                                "sleet": "mdi:weather-sleet",
+                                                "snow": "mdi:weather-snowy",
+                                                "sunny": "mdi:weather-sunny",
+                                                "wind": "mdi:weather-windy"
+                                            },
+                                            "name": ""
+                                        },
+                                        {
+                                            "entity": "sensor.temperature_water_sensor",
+                                            "name": "Tempo"
+                                        },
+                                        {
+                                            "entity": "sensor.dark_sky_temperature",
+                                            "name": "Temperature"
+                                        },
+                                        {
+                                            "entity": "sensor.dark_sky_apparent_temperature",
+                                            "name": "Resentie"
+                                        }
+                                    ],
+                                    "heading": "\ud83c\udfde Ext\u00e9rieur",
+                                    "row_size": 2,
+                                    "type": "custom:banner-card"
+                                },
+                                {
+                                    "aspect_ratio": "0%",
+                                    "camera_image": "camera.raspberry_pi_camera",
+                                    "entities": [],
+                                    "image": "https://www.home-assistant.io/images/merchandise/shirt-frontpage.png",
+                                    "type": "picture-glance"
+                                }
+                            ],
+                            "type": "vertical-stack"
+                        },
+                        {
+                            "cards": [
+                                {
+                                    "background": "#F9F871",
+                                    "entities": [
+                                        {
+                                            "entity": "binary_sensor.solarium_cold",
+                                            "name": "ALERTE GEL !",
+                                            "size": 3,
+                                            "value": "mdi:snowflake-alert",
+                                            "when": "on"
+                                        },
+                                        {
+                                            "action": {
+                                                "service": "light.toggle"
+                                            },
+                                            "entity": "light.solarium",
+                                            "map_state": {
+                                                "off": "mdi:lightbulb-off-outline",
+                                                "on": "mdi:lightbulb-on"
+                                            },
+                                            "name": ""
+                                        },
+                                        {
+                                            "entity": "binary_sensor.solarium_door",
+                                            "map_state": {
+                                                "Closed": "mdi:door-closed-lock",
+                                                "Open": "mdi:door-open",
+                                                "off": "mdi:door-closed-lock",
+                                                "on": "mdi:door-open"
+                                            },
+                                            "name": "Door"
+                                        },
+                                        {
+                                            "entity": "camera.dafang_camera",
+                                            "name": "Camera",
+                                            "value": "mdi:cctv"
+                                        },
+                                        {
+                                            "entity": "sensor.solarium_temperature",
+                                            "name": "Temperature"
+                                        },
+                                        {
+                                            "entity": "sensor.solarium_humidity",
+                                            "name": "Humidit\u00e9"
+                                        },
+                                        {
+                                            "entity": "sensor.solarium_sound_level",
+                                            "name": "Bruit"
+                                        }
+                                    ],
+                                    "heading": "\ud83c\udf4e Solarium",
+                                    "row_size": 3,
+                                    "type": "custom:banner-card"
+                                },
+                                {
+                                    "aspect_ratio": "0%",
+                                    "camera_image": "camera.dafang_camera",
+                                    "entities": [
+                                        {
+                                            "entity": "camera.dafang_camera"
+                                        },
+                                        {
+                                            "entity": "switch.dafang_camera_motion_detection"
+                                        },
+                                        {
+                                            "entity": "switch.dafang_camera_ir_led"
+                                        },
+                                        {
+                                            "entity": "switch.dafang_camera_ir_filter"
+                                        }
+                                    ],
+                                    "tap_action": {
+                                        "action": "navigate"
+                                    },
+                                    "title": "Camera",
+                                    "type": "picture-glance"
+                                }
+                            ],
+                            "type": "vertical-stack"
+                        },
+                        {
+                            "background": "#E8D5B5",
+                            "entities": [
+                                {
+                                    "action": {
+                                        "service": "light.toggle"
+                                    },
+                                    "entity": "light.cuisine",
+                                    "map_state": {
+                                        "off": "mdi:lightbulb-off-outline",
+                                        "on": "mdi:lightbulb-on"
+                                    },
+                                    "name": ""
+                                },
+                                {
+                                    "action": {
+                                        "service": "script.turn_on"
+                                    },
+                                    "entity": "script.vacuum_kitchen",
+                                    "icon": "mdi:robot-vacuum",
+                                    "name": "Aspi"
+                                },
+                                {
+                                    "action": {
+                                        "service": "script.turn_on"
+                                    },
+                                    "entity": "script.mop_kitchen",
+                                    "icon": "mdi:waves",
+                                    "name": "Serpill\u00e8re"
+                                }
+                            ],
+                            "heading": "\ud83c\udf73 Cuisine",
+                            "type": "custom:banner-card"
+                        },
+                        {
+                            "background": "#FF6F4D",
+                            "entities": [
+                                {
+                                    "action": {
+                                        "service": "script.turn_on"
+                                    },
+                                    "entity": "script.vacuum_diningroom",
+                                    "icon": "mdi:robot-vacuum",
+                                    "name": "Aspi"
+                                },
+                                {
+                                    "action": {
+                                        "data": {
+                                            "entity_id": "script.mop_diningroom"
+                                        },
+                                        "service": "script.turn_on"
+                                    },
+                                    "entity": "script.mop_diningroom",
+                                    "icon": "mdi:waves",
+                                    "name": "Serpill\u00e8re"
+                                }
+                            ],
+                            "heading": "\ud83c\udf7d Salle \u00e0 manger",
+                            "row_size": 2,
+                            "type": "custom:banner-card"
+                        },
+                        {
+                            "background": "#FFB745",
+                            "entities": [
+                                {
+                                    "entity": "binary_sensor.living_room_heat",
+                                    "name": "ALERTE CHALEUR !",
+                                    "size": 3,
+                                    "when": {
+                                        "state": [
+                                            "!=",
+                                            "off"
+                                        ]
+                                    }
+                                },
+                                {
+                                    "entity": "binary_sensor.living_room_moisture",
+                                    "name": "ALERTE RISQUE MOISISSURE !",
+                                    "size": 3,
+                                    "when": {
+                                        "state": [
+                                            "!=",
+                                            "off"
+                                        ]
+                                    }
+                                },
+                                {
+                                    "entity": "binary_sensor.living_room_sound",
+                                    "name": "ALERTE BRUIT !",
+                                    "size": 3,
+                                    "when": {
+                                        "state": [
+                                            "!=",
+                                            "off"
+                                        ]
+                                    }
+                                },
+                                {
+                                    "action": {
+                                        "service": "scene.turn_on"
+                                    },
+                                    "entity": "scene.whitelivingroom",
+                                    "name": "Blanc",
+                                    "value": "mdi:lightbulb-group-outline"
+                                },
+                                {
+                                    "action": {
+                                        "service": "scene.turn_on"
+                                    },
+                                    "entity": "input_select.living_room_color",
+                                    "name": "Color\u00e9",
+                                    "value": "mdi:lightbulb-group"
+                                },
+                                {
+                                    "action": {
+                                        "service": "scene.turn_on"
+                                    },
+                                    "entity": "scene.lightsoff",
+                                    "name": "Off",
+                                    "value": "mdi:lightbulb-group-off-outline"
+                                },
+                                {
+                                    "entity": "sensor.living_room_temperature",
+                                    "name": "Temp\u00e9rature"
+                                },
+                                {
+                                    "entity": "sensor.living_room_humidity",
+                                    "name": "Humidit\u00e9"
+                                },
+                                {
+                                    "entity": "sensor.living_room_sound_level",
+                                    "name": "Bruit"
+                                },
+                                {
+                                    "action": {
+                                        "service": "script.turn_on"
+                                    },
+                                    "entity": "script.vacuum_livingroom",
+                                    "icon": "mdi:robot-vacuum",
+                                    "name": "Aspi"
+                                },
+                                {
+                                    "entity": "media_player.gogol_home",
+                                    "when": {
+                                        "state": [
+                                            "!=",
+                                            "off"
+                                        ]
+                                    }
+                                },
+                                {
+                                    "entity": "media_player.chromecastultra8108",
+                                    "when": {
+                                        "state": [
+                                            "!=",
+                                            "off"
+                                        ]
+                                    }
+                                }
+                            ],
+                            "heading": "\ud83d\udecb Salon",
+                            "type": "custom:banner-card"
+                        },
+                        {
+                            "background": "#7AB4C2",
+                            "entities": [
+                                {
+                                    "action": {
+                                        "service": "switch.toggle"
+                                    },
+                                    "entity": "switch.veilleuse",
+                                    "map_state": {
+                                        "off": "mdi:lightbulb-off-outline",
+                                        "on": "mdi:lightbulb-on"
+                                    },
+                                    "name": "Veilleuse"
+                                },
+                                {
+                                    "action": {
+                                        "service": "script.turn_on"
+                                    },
+                                    "entity": "script.vacuum_aurore_bedroom",
+                                    "icon": "mdi:robot-vacuum",
+                                    "name": "Aurore"
+                                },
+                                {
+                                    "entity": "sensor.bedroom_temperature",
+                                    "name": "Temperature"
+                                },
+                                {
+                                    "action": {
+                                        "service": "script.turn_on"
+                                    },
+                                    "entity": "script.vacuum_bedroom",
+                                    "icon": "mdi:robot-vacuum",
+                                    "name": "Parents"
+                                },
+                                {
+                                    "entity": "media_player.lenovosmartclock3394",
+                                    "when": {
+                                        "state": [
+                                            "!=",
+                                            "off"
+                                        ]
+                                    }
+                                }
+                            ],
+                            "heading": "\ud83d\udecf Chambres",
+                            "row_size": 2,
+                            "type": "custom:banner-card"
+                        },
+                        {
+                            "background": "#C6FCED",
+                            "entities": [
+                                {
+                                    "entity": "sensor.bathroom_temperature",
+                                    "name": "Temperature"
+                                },
+                                {
+                                    "action": {
+                                        "service": "script.turn_on"
+                                    },
+                                    "entity": "script.vacuum_bathroom",
+                                    "icon": "mdi:robot-vacuum",
+                                    "name": "Aspi"
+                                },
+                                {
+                                    "action": {
+                                        "service": "script.turn_on"
+                                    },
+                                    "entity": "script.mop_bathroom",
+                                    "icon": "mdi:waves",
+                                    "name": "Serpill\u00e8re"
+                                },
+                                {
+                                    "entity": "media_player.gogol_mini",
+                                    "when": {
+                                        "state": [
+                                            "!=",
+                                            "off"
+                                        ]
+                                    }
+                                }
+                            ],
+                            "heading": "\ud83d\udec1 Salle de bain",
+                            "row_size": 3,
+                            "type": "custom:banner-card"
+                        },
+                        {
+                            "background": "#784200",
+                            "entities": [
+                                {
+                                    "entity": "sensor.basement_temperature",
+                                    "name": "Temperature"
+                                },
+                                {
+                                    "action": {
+                                        "service": "light.toggle"
+                                    },
+                                    "entity": "light.basement",
+                                    "map_state": {
+                                        "off": "mdi:lightbulb-off-outline",
+                                        "on": "mdi:lightbulb-on"
+                                    },
+                                    "name": ""
+                                },
+                                {
+                                    "entity": "binary_sensor.tradfri_motion_sensor",
+                                    "map_state": {
+                                        "off": "mdi:stairs",
+                                        "on": "mdi:motion-sensor"
+                                    },
+                                    "name": "Stairs"
+                                }
+                            ],
+                            "heading": "\ud83d\udda5 Sous-sol",
+                            "row_size": 3,
+                            "type": "custom:banner-card"
+                        }
+                    ],
+                    "icon": "mdi:home-modern",
+                    "path": "rooms",
+                    "title": ""
+                },
+                {
+                    "badges": [
+                        {
+                            "entity": "binary_sensor.aurora_visibility"
+                        },
+                        {
+                            "entity": "sensor.uptime"
+                        },
+                        {
+                            "entity": "sensor.nas_free_space"
+                        },
+                        {
+                            "entity": "sensor.dark_sky_precip_probability_1d"
+                        },
+                        {
+                            "entity": "sensor.dark_sky_precip_accumulation_1d"
+                        },
+                        {
+                            "entity": "sensor.dark_sky_daytime_high_apparent_temperature_1d"
+                        },
+                        {
+                            "entity": "sensor.dark_sky_overnight_low_apparent_temperature_1d"
+                        },
+                        {
+                            "entity": "sensor.dark_sky_daily_max_precip_intensity_1d"
+                        },
+                        {
+                            "entity": "sensor.dark_sky_precip_1d"
+                        },
+                        {
+                            "entity": "person.claire_2"
+                        },
+                        {
+                            "entity": "person.giom_2"
+                        },
+                        {
+                            "entity": "sensor.sonarr_upcoming"
+                        },
+                        {
+                            "entity": "sensor.radarr_upcoming"
+                        },
+                        {
+                            "entity": "camera.raspberry_pi_camera"
+                        },
+                        {
+                            "entity": "sensor.google_wifi_uptime"
+                        },
+                        {
+                            "entity": "binary_sensor.people_home"
+                        }
+                    ],
+                    "cards": [
+                        {
+                            "card": {
+                                "show_header_toggle": false,
+                                "title": "Versions and updates",
+                                "type": "entities"
+                            },
+                            "entities": [
+                                {
+                                    "entity": "binary_sensor.updater"
+                                },
+                                {
+                                    "entity": "sensor.hacs"
+                                }
+                            ],
+                            "filter": {
+                                "include": [
+                                    {
+                                        "domain": "updater"
+                                    },
+                                    {
+                                        "entity_id": "sensor.current_version"
+                                    }
+                                ]
+                            },
+                            "type": "custom:auto-entities"
+                        },
+                        {
+                            "camera_image": "camera.raspberry_pi_camera",
+                            "entities": [
+                                {
+                                    "entity": "automation.timelapse",
+                                    "icon": "mdi:white-balance-sunny"
+                                },
+                                {
+                                    "entity": "automation.timelapse_night",
+                                    "icon": "mdi:weather-night"
+                                },
+                                {
+                                    "entity": "automation.timelapse_night_if_snowing",
+                                    "icon": "mdi:weather-snowy-heavy"
+                                }
+                            ],
+                            "title": "Timelapse",
+                            "type": "picture-glance"
+                        },
+                        {
+                            "entities": [
+                                {
+                                    "entity": "sensor.living_room_temperature",
+                                    "name": "Salon"
+                                },
+                                {
+                                    "entity": "sensor.bathroom_temperature"
+                                },
+                                {
+                                    "entity": "sensor.solarium_temperature",
+                                    "name": "Solarium"
+                                },
+                                {
+                                    "entity": "sensor.dark_sky_temperature",
+                                    "name": "Ext\u00e9rieur"
+                                },
+                                {
+                                    "entity": "sensor.dark_sky_apparent_temperature",
+                                    "name": "Resenti"
+                                }
+                            ],
+                            "show_icon": true,
+                            "show_state": true,
+                            "type": "glance"
+                        },
+                        {
+                            "animate": true,
+                            "entities": [
+                                {
+                                    "entity": "sensor.living_room_temperature",
+                                    "index": 0,
+                                    "name": "T\u00b0 Salon"
+                                },
+                                {
+                                    "entity": "sensor.solarium_temperature",
+                                    "index": 1,
+                                    "name": "T\u00b0 Solarium"
+                                },
+                                {
+                                    "entity": "sensor.bathroom_temperature",
+                                    "index": 2,
+                                    "name": "T\u00b0 SDB"
+                                },
+                                {
+                                    "entity": "sensor.dark_sky_temperature",
+                                    "index": 3,
+                                    "name": "T\u00b0 ext\u00e9rieure"
+                                },
+                                {
+                                    "entity": "sensor.dark_sky_apparent_temperature",
+                                    "index": 4,
+                                    "name": "T\u00b0 apparente"
+                                }
+                            ],
+                            "hour24": true,
+                            "hours_to_show": 168,
+                            "name": "Temp\u00e9ratures",
+                            "type": "custom:mini-graph-card"
+                        },
+                        {
+                            "cards": [
+                                {
+                                    "entity": "sensor.living_room_temperature",
+                                    "max": 30,
+                                    "min": 0,
+                                    "name": "Salon",
+                                    "severity": {
+                                        "green": 19,
+                                        "red": 11,
+                                        "yellow": 15
+                                    },
+                                    "theme": "default",
+                                    "type": "gauge"
+                                },
+                                {
+                                    "entity": "sensor.solarium_temperature",
+                                    "max": 30,
+                                    "min": 0,
+                                    "name": "Solarium",
+                                    "severity": {
+                                        "green": 5,
+                                        "red": 1,
+                                        "yellow": 3
+                                    },
+                                    "theme": "default",
+                                    "type": "gauge"
+                                }
+                            ],
+                            "title": "Indoor temperatures",
+                            "type": "horizontal-stack"
+                        },
+                        {
+                            "cards": [
+                                {
+                                    "columns": 4,
+                                    "entities": [
+                                        {
+                                            "entity": "sensor.worldwide_confirmed",
+                                            "icon": "mdi:account-group-outline"
+                                        },
+                                        {
+                                            "entity": "sensor.worldwide_current",
+                                            "icon": "mdi:biohazard"
+                                        },
+                                        {
+                                            "entity": "sensor.worldwide_recovered",
+                                            "icon": "mdi:calendar-check-outline"
+                                        },
+                                        {
+                                            "entity": "sensor.worldwide_deaths",
+                                            "icon": "mdi:grave-stone"
+                                        }
+                                    ],
+                                    "title": "Worldwide",
+                                    "type": "glance"
+                                },
+                                {
+                                    "columns": 4,
+                                    "entities": [
+                                        {
+                                            "entity": "sensor.france_confirmed",
+                                            "icon": "mdi:account-group-outline"
+                                        },
+                                        {
+                                            "entity": "sensor.france_current",
+                                            "icon": "mdi:biohazard"
+                                        },
+                                        {
+                                            "entity": "sensor.france_recovered",
+                                            "icon": "mdi:calendar-check-outline"
+                                        },
+                                        {
+                                            "entity": "sensor.france_deaths",
+                                            "icon": "mdi:grave-stone"
+                                        }
+                                    ],
+                                    "title": "France",
+                                    "type": "glance"
+                                },
+                                {
+                                    "columns": 4,
+                                    "entities": [
+                                        {
+                                            "entity": "sensor.canada_confirmed",
+                                            "icon": "mdi:account-group-outline"
+                                        },
+                                        {
+                                            "entity": "sensor.canada_current",
+                                            "icon": "mdi:biohazard"
+                                        },
+                                        {
+                                            "entity": "sensor.canada_recovered",
+                                            "icon": "mdi:calendar-check-outline"
+                                        },
+                                        {
+                                            "entity": "sensor.canada_deaths",
+                                            "icon": "mdi:grave-stone"
+                                        }
+                                    ],
+                                    "title": "Canada",
+                                    "type": "glance"
+                                }
+                            ],
+                            "title": "Coronavirus",
+                            "type": "vertical-stack"
+                        },
+                        {
+                            "cards": [
+                                {
+                                    "detail": 0,
+                                    "entity": "sensor.sonarr_upcoming",
+                                    "hours_to_show": 24,
+                                    "name": "Upcoming episodes this week",
+                                    "type": "sensor"
+                                },
+                                {
+                                    "entity": "sensor.sonarr_upcoming_media",
+                                    "type": "custom:upcoming-media-card"
+                                }
+                            ],
+                            "title": "Series",
+                            "type": "vertical-stack"
+                        },
+                        {
+                            "card": {
+                                "title": "Low Battery Devices",
+                                "type": "glance"
+                            },
+                            "filter": {
+                                "include": [
+                                    {
+                                        "entity_id": "*battery_level*",
+                                        "state": "< 25"
+                                    },
+                                    {
+                                        "attributes": {
+                                            "battery": "< 25"
+                                        }
+                                    },
+                                    {
+                                        "attributes": {
+                                            "battery_level": "< 25"
+                                        }
+                                    }
+                                ]
+                            },
+                            "show_empty": false,
+                            "type": "custom:auto-entities"
+                        },
+                        {
+                            "entity": "light.colorv2",
+                            "type": "light"
+                        },
+                        {
+                            "calendars": [
+                                "calendar.home_calendar",
+                                "calendar.work_calendar"
+                            ],
+                            "entities": [
+                                "light.colorv2",
+                                {
+                                    "entity": "light.colorv2",
+                                    "exclude_states": [
+                                        "unknown"
+                                    ]
+                                },
+                                {
+                                    "entity": "sensor.bin_collection",
+                                    "exclude_states": [
+                                        "unknown"
+                                    ],
+                                    "more_info_on_tap": false,
+                                    "name": "Next Bin Collection"
+                                },
+                                {
+                                    "content_template": "[{{title}}]({{url}})",
+                                    "entity": "sensor.reddit_help",
+                                    "exclude_states": [
+                                        "unknown"
+                                    ],
+                                    "list_attribute": "posts",
+                                    "max_items": 5,
+                                    "multiple_items": true,
+                                    "timestamp_property": "created_"
+                                }
+                            ],
+                            "id_filter": "^home_feed_.*",
+                            "more_info_on_tap": true,
+                            "show_empty": false,
+                            "title": "Home Feed",
+                            "type": "custom:home-feed-card"
+                        },
+                        {
+                            "entity": "light.color",
+                            "type": "light"
+                        },
+                        {
+                            "entity": "light.solarium",
+                            "type": "light"
+                        },
+                        {
+                            "entity": "light.white",
+                            "type": "light"
+                        },
+                        {
+                            "cards": [
+                                {
+                                    "entity": "light.color",
+                                    "type": "light"
+                                },
+                                {
+                                    "entity": "light.canape_gauche",
+                                    "type": "light"
+                                },
+                                {
+                                    "entity": "light.canape_droite",
+                                    "type": "light"
+                                },
+                                {
+                                    "entity": "light.white",
+                                    "type": "light"
+                                },
+                                {
+                                    "entity": "light.solarium",
+                                    "type": "light"
+                                }
+                            ],
+                            "title": "Lights",
+                            "type": "horizontal-stack"
+                        },
+                        {
+                            "entity": "switch.lumiere_cuisine",
+                            "hold_action": {
+                                "action": "more-info"
+                            },
+                            "show_icon": true,
+                            "show_name": true,
+                            "tap_action": {
+                                "action": "toggle"
+                            },
+                            "type": "entity-button"
+                        },
+                        {
+                            "aspect_ratio": "0%",
+                            "camera_image": "camera.dafang_camera",
+                            "entities": [
+                                {
+                                    "entity": "camera.dafang_camera"
+                                },
+                                {
+                                    "entity": "switch.dafang_camera_motion_detection"
+                                },
+                                {
+                                    "entity": "switch.dafang_camera_ir_led"
+                                },
+                                {
+                                    "entity": "switch.dafang_camera_ir_filter"
+                                }
+                            ],
+                            "tap_action": {
+                                "action": "navigate"
+                            },
+                            "title": "Camera",
+                            "type": "picture-glance"
+                        },
+                        {
+                            "dateBottomFormat": "ddd",
+                            "dateTopFormat": "DD MMM",
+                            "endText": "Ends",
+                            "entities": [
+                                {
+                                    "entity": "calendar.guillaume_vernade",
+                                    "name": "Guillaume Vernade"
+                                },
+                                {
+                                    "entity": "calendar.vacances",
+                                    "name": "Vacances"
+                                },
+                                {
+                                    "entity": "calendar.bebebounette",
+                                    "name": "B\u00e9b\u00e9bounette"
+                                },
+                                {
+                                    "entity": "calendar.airbnb",
+                                    "name": "AirBNB"
+                                },
+                                {
+                                    "entity": "calendar.voyages_transports",
+                                    "name": "Voyages/Transports"
+                                }
+                            ],
+                            "eventsLimit": "99",
+                            "fullDayEventText": "All day",
+                            "hideHeader": false,
+                            "hidePastEvents": true,
+                            "hideTime": false,
+                            "highlightToday": true,
+                            "ignoreEventsByLocationExpression": "",
+                            "ignoreEventsExpression": "",
+                            "maxHeight": false,
+                            "numberOfDays": "7",
+                            "progressBar": true,
+                            "showEventOrigin": false,
+                            "showLocation": true,
+                            "showLocationIcon": true,
+                            "showMultiDay": false,
+                            "startText": "Starts",
+                            "timeFormat": "HH:mm",
+                            "title": "My Calendars",
+                            "type": "custom:calendar-card"
+                        },
+                        {
+                            "background": "return 'url(/local/icons/mobile-television.png)'",
+                            "card_settings": {
+                                "align": "center",
+                                "background": "gray",
+                                "column_width": "calc(90%/4)",
+                                "columns": 4,
+                                "display": "show",
+                                "gap": "10px",
+                                "padding": "10px",
+                                "row_height": "35px",
+                                "templates": null,
+                                "theme": "night",
+                                "title": "Card Title",
+                                "title_align": "center",
+                                "title_color": "white"
+                            },
+                            "display": "return 'show'",
+                            "entities": [
+                                {
+                                    "className": "on",
+                                    "domain": "light",
+                                    "entity": "light.color",
+                                    "icon": "",
+                                    "id": "component_0",
+                                    "label": "",
+                                    "label_sec": "",
+                                    "unavailable": false
+                                }
+                            ],
+                            "style": "return 'background: black;'",
+                            "theme": "return 'day'",
+                            "type": "custom:tiles-card"
+                        },
+                        {
+                            "hold_action": {
+                                "action": "none"
+                            },
+                            "image": "/home/pi/FTP/dafang_camera/last_picture.jpg",
+                            "tap_action": {
+                                "action": "none"
+                            },
+                            "type": "picture"
+                        },
+                        {
+                            "entities": [
+                                {
+                                    "entity": "vacuum.xiaomi_vacuum_cleaner"
+                                },
+                                {
+                                    "entity": "input_select.vacuum_room"
+                                }
+                            ],
+                            "title": "Xiaomi Roborock",
+                            "type": "entities"
+                        }
+                    ],
+                    "icon": "mdi:home",
+                    "path": "default_view",
+                    "title": "Home"
+                },
+                {
+                    "badges": [
+                        "sensor.season",
+                        "sun.sun",
+                        "sensor.moon",
+                        "binary_sensor.workday_sensor",
+                        "binary_sensor.aurora_visibility",
+                        "sensor.dark_sky_apparent_temperature",
+                        "sensor.dark_sky_cloud_coverage",
+                        "sensor.dark_sky_cloud_coverage_1d",
+                        "sensor.dark_sky_daily_max_precip_intensity_1d"
+                    ],
+                    "cards": [
+                        {
+                            "entity": "weather.dark_sky",
+                            "name": "Dark sky",
+                            "type": "custom:weather-card"
+                        },
+                        {
+                            "entity": "weather.openweathermap",
+                            "name": "OWM",
+                            "type": "custom:weather-card"
+                        },
+                        {
+                            "entities": [
+                                "sensor.owm_cloud_coverage",
+                                "sensor.owm_condition",
+                                "sensor.owm_humidity",
+                                "sensor.owm_pressure",
+                                "sensor.owm_rain",
+                                "sensor.owm_snow",
+                                "sensor.owm_temperature",
+                                "sensor.owm_weather_code",
+                                "sensor.owm_wind_bearing",
+                                "sensor.owm_wind_speed"
+                            ],
+                            "show_header_toggle": true,
+                            "title": "Open Weather Map",
+                            "type": "entities"
+                        },
+                        {
+                            "entities": [
+                                {
+                                    "entity": "sensor.dark_sky_summary"
+                                },
+                                {
+                                    "entity": "sensor.dark_sky_daily_summary"
+                                },
+                                {
+                                    "entity": "sensor.dark_sky_hourly_summary"
+                                },
+                                {
+                                    "entity": "sensor.dark_sky_minutely_summary"
+                                },
+                                {
+                                    "entity": "sensor.dark_sky_apparent_temperature"
+                                },
+                                {
+                                    "entity": "sensor.dark_sky_cloud_coverage"
+                                },
+                                {
+                                    "entity": "sensor.dark_sky_dew_point"
+                                },
+                                {
+                                    "entity": "sensor.dark_sky_humidity"
+                                },
+                                {
+                                    "entity": "sensor.dark_sky_ozone"
+                                },
+                                {
+                                    "entity": "sensor.dark_sky_precip"
+                                },
+                                {
+                                    "entity": "sensor.dark_sky_precip_intensity"
+                                },
+                                {
+                                    "entity": "sensor.dark_sky_precip_probability"
+                                },
+                                {
+                                    "entity": "sensor.dark_sky_pressure"
+                                },
+                                {
+                                    "entity": "sensor.dark_sky_temperature"
+                                },
+                                {
+                                    "entity": "sensor.dark_sky_uv_index"
+                                },
+                                {
+                                    "entity": "sensor.dark_sky_visibility"
+                                },
+                                {
+                                    "entity": "sensor.dark_sky_wind_bearing"
+                                },
+                                {
+                                    "entity": "sensor.dark_sky_wind_speed"
+                                }
+                            ],
+                            "show_header_toggle": true,
+                            "title": "Dark Sky",
+                            "type": "entities"
+                        },
+                        {
+                            "entities": [
+                                {
+                                    "entity": "sensor.dark_sky_summary_1d"
+                                },
+                                {
+                                    "entity": "sensor.dark_sky_daytime_high_temperature_1d"
+                                },
+                                {
+                                    "entity": "sensor.dark_sky_dew_point_1d"
+                                },
+                                {
+                                    "entity": "sensor.dark_sky_humidity_1d"
+                                },
+                                {
+                                    "entity": "sensor.dark_sky_moon_phase_1d"
+                                },
+                                {
+                                    "entity": "sensor.dark_sky_overnight_low_temperature_1d"
+                                },
+                                {
+                                    "entity": "sensor.dark_sky_ozone_1d"
+                                },
+                                {
+                                    "entity": "sensor.dark_sky_precip_1d"
+                                },
+                                {
+                                    "entity": "sensor.dark_sky_pressure_1d"
+                                },
+                                {
+                                    "entity": "sensor.dark_sky_uv_index_1d"
+                                },
+                                {
+                                    "entity": "sensor.dark_sky_visibility_1d"
+                                },
+                                {
+                                    "entity": "sensor.dark_sky_wind_bearing_1d"
+                                },
+                                {
+                                    "entity": "sensor.dark_sky_wind_speed_1d"
+                                },
+                                {
+                                    "entity": "sensor.dark_sky_precip_intensity_1d"
+                                }
+                            ],
+                            "show_header_toggle": true,
+                            "title": "Dark Sky 1D",
+                            "type": "entities"
+                        },
+                        {
+                            "entity": "weather.openweathermap",
+                            "type": "weather-forecast"
+                        },
+                        {
+                            "entity": "weather.dark_sky",
+                            "type": "weather-forecast"
+                        },
+                        {
+                            "entities": [
+                                {
+                                    "entity": "sensor.waqi_beauce_quebec_canada"
+                                },
+                                {
+                                    "entity": "sensor.chinese_air_pollution_level"
+                                },
+                                {
+                                    "entity": "sensor.chinese_air_quality_index"
+                                },
+                                {
+                                    "entity": "sensor.chinese_main_pollutant"
+                                },
+                                {
+                                    "entity": "sensor.u_s_air_pollution_level"
+                                },
+                                {
+                                    "entity": "sensor.u_s_air_quality_index"
+                                },
+                                {
+                                    "entity": "sensor.u_s_main_pollutant"
+                                }
+                            ],
+                            "title": "Air quality",
+                            "type": "entities"
+                        }
+                    ],
+                    "icon": "mdi:weather-sunny",
+                    "panel": false,
+                    "path": "meteo",
+                    "title": "Meteo"
+                },
+                {
+                    "badges": [],
+                    "cards": [
+                        {
+                            "entity": "media_player.gogol_mini",
+                            "type": "media-control"
+                        },
+                        {
+                            "entity": "media_player.partout",
+                            "type": "media-control"
+                        },
+                        {
+                            "entity": "media_player.kodi",
+                            "type": "media-control"
+                        },
+                        {
+                            "entity": "media_player.gogol_home",
+                            "type": "media-control"
+                        },
+                        {
+                            "entity": "media_player.emby_emby_for_android_mobile_oneplus_a6000",
+                            "type": "media-control"
+                        },
+                        {
+                            "entity": "media_player.emby_sonarr_astor_qc",
+                            "type": "media-control"
+                        },
+                        {
+                            "entity": "media_player.chromecastultra8108",
+                            "type": "media-control"
+                        },
+                        {
+                            "entities": [
+                                {
+                                    "entity": "sensor.sonarr_queue"
+                                },
+                                {
+                                    "entity": "sensor.sonarr_series"
+                                },
+                                {
+                                    "entity": "sensor.sonarr_upcoming"
+                                },
+                                {
+                                    "entity": "sensor.sonarr_wanted"
+                                }
+                            ],
+                            "show_header_toggle": true,
+                            "title": "Sonar",
+                            "type": "entities"
+                        },
+                        {
+                            "entities": [
+                                {
+                                    "entity": "sensor.radarr_status"
+                                },
+                                {
+                                    "entity": "sensor.radarr_movies"
+                                },
+                                {
+                                    "entity": "sensor.radarr_upcoming"
+                                }
+                            ],
+                            "title": "Radarr",
+                            "type": "entities"
+                        },
+                        {
+                            "entity": "media_player.lenovosmartclock3394",
+                            "type": "media-control"
+                        }
+                    ],
+                    "icon": "mdi:play-network",
+                    "path": "media",
+                    "title": "Media"
+                },
+                {
+                    "badges": [],
+                    "cards": [
+                        {
+                            "entity": "alarm_control_panel.home",
+                            "name": "Point alarm",
+                            "states": [
+                                "arm_home",
+                                "arm_away"
+                            ],
+                            "type": "alarm-panel"
+                        },
+                        {
+                            "entities": [
+                                {
+                                    "entity": "binary_sensor.living_room_battery"
+                                },
+                                {
+                                    "entity": "binary_sensor.living_room_button_press"
+                                },
+                                {
+                                    "entity": "binary_sensor.living_room_cold"
+                                },
+                                {
+                                    "entity": "binary_sensor.living_room_connectivity"
+                                },
+                                {
+                                    "entity": "binary_sensor.living_room_dry"
+                                },
+                                {
+                                    "entity": "binary_sensor.living_room_heat"
+                                },
+                                {
+                                    "entity": "binary_sensor.living_room_moisture"
+                                },
+                                {
+                                    "entity": "binary_sensor.living_room_sound"
+                                },
+                                {
+                                    "entity": "binary_sensor.living_room_tamper"
+                                },
+                                {
+                                    "entity": "sensor.living_room_humidity"
+                                },
+                                {
+                                    "entity": "sensor.living_room_pressure"
+                                },
+                                {
+                                    "entity": "sensor.living_room_sound_level"
+                                },
+                                {
+                                    "entity": "binary_sensor.living_room_tamper"
+                                },
+                                {
+                                    "entity": "sensor.living_room_humidity"
+                                },
+                                {
+                                    "entity": "sensor.living_room_pressure"
+                                },
+                                {
+                                    "entity": "sensor.living_room_sound_level"
+                                },
+                                {
+                                    "entity": "sensor.living_room_temperature"
+                                }
+                            ],
+                            "title": "Salon",
+                            "type": "entities"
+                        },
+                        {
+                            "entities": [
+                                {
+                                    "entity": "binary_sensor.solarium_battery"
+                                },
+                                {
+                                    "entity": "binary_sensor.solarium_button_press"
+                                },
+                                {
+                                    "entity": "binary_sensor.solarium_cold"
+                                },
+                                {
+                                    "entity": "binary_sensor.solarium_connectivity"
+                                },
+                                {
+                                    "entity": "binary_sensor.solarium_dry"
+                                },
+                                {
+                                    "entity": "binary_sensor.solarium_heat"
+                                },
+                                {
+                                    "entity": "binary_sensor.solarium_moisture"
+                                },
+                                {
+                                    "entity": "binary_sensor.solarium_sound"
+                                },
+                                {
+                                    "entity": "binary_sensor.solarium_tamper"
+                                },
+                                {
+                                    "entity": "sensor.solarium_humidity"
+                                },
+                                {
+                                    "entity": "sensor.solarium_pressure"
+                                },
+                                {
+                                    "entity": "sensor.solarium_sound_level"
+                                },
+                                {
+                                    "entity": "sensor.solarium_temperature"
+                                }
+                            ],
+                            "title": "Solarium",
+                            "type": "entities"
+                        }
+                    ],
+                    "icon": "mdi:security",
+                    "path": "security",
+                    "title": "Security"
+                },
+                {
+                    "badges": [],
+                    "cards": [
+                        {
+                            "card": {
+                                "show_header_toggle": false,
+                                "title": "Guillaume",
+                                "type": "entities"
+                            },
+                            "entities": [
+                                "sensor.withings_heart_pulse_bpm_guillaume_vernade"
+                            ],
+                            "filter": {
+                                "exclude": [
+                                    {
+                                        "state": "unknown"
+                                    }
+                                ],
+                                "include": [
+                                    {
+                                        "entity_id": "sensor.withings*guillaume_vernade"
+                                    }
+                                ]
+                            },
+                            "type": "custom:auto-entities",
+                            "unique": true
+                        },
+                        {
+                            "card": {
+                                "show_header_toggle": false,
+                                "title": "Aurore",
+                                "type": "entities"
+                            },
+                            "filter": {
+                                "exclude": [
+                                    {
+                                        "state": "unknown"
+                                    }
+                                ],
+                                "include": [
+                                    {
+                                        "entity_id": "sensor.withings*aurore_vernade"
+                                    }
+                                ]
+                            },
+                            "type": "custom:auto-entities"
+                        },
+                        {
+                            "card": {
+                                "show_header_toggle": false,
+                                "title": "Claire",
+                                "type": "entities"
+                            },
+                            "filter": {
+                                "exclude": [
+                                    {
+                                        "state": "unknown"
+                                    }
+                                ],
+                                "include": [
+                                    {
+                                        "entity_id": "sensor.withings*claire_merot"
+                                    }
+                                ]
+                            },
+                            "type": "custom:auto-entities"
+                        },
+                        {
+                            "animate": true,
+                            "entities": [
+                                {
+                                    "entity": "sensor.withings_weight_kg_guillaume_vernade",
+                                    "name": "Giom"
+                                },
+                                {
+                                    "entity": "sensor.withings_weight_kg_claire_merot",
+                                    "name": "Claire"
+                                }
+                            ],
+                            "group_by": "date",
+                            "hour24": true,
+                            "hours_to_show": 336,
+                            "name": "Poids",
+                            "type": "custom:mini-graph-card"
+                        }
+                    ],
+                    "icon": "mdi:heart-circle-outline",
+                    "path": "health",
+                    "title": "Health"
+                },
+                {
+                    "badges": [
+                        {
+                            "entity": "sensor.nas_free_space"
+                        },
+                        {
+                            "entity": "group.ebox"
+                        },
+                        {
+                            "entity": "sensor.ebox_balance"
+                        },
+                        {
+                            "entity": "sensor.ebox_total"
+                        },
+                        {
+                            "entity": "sensor.speedtest_download"
+                        },
+                        {
+                            "entity": "sensor.speedtest_upload"
+                        },
+                        {
+                            "entity": "sensor.speedtest_ping"
+                        },
+                        {
+                            "entity": "sensor.processor_use"
+                        },
+                        {
+                            "entity": "sensor.memory_use_percent"
+                        },
+                        {
+                            "entity": "sensor.disk_use_percent"
+                        }
+                    ],
+                    "cards": [
+                        {
+                            "entities": [
+                                {
+                                    "entity": "sensor.ebox_balance"
+                                },
+                                {
+                                    "entity": "sensor.ebox_download"
+                                },
+                                {
+                                    "entity": "sensor.ebox_download_before_offpeak"
+                                },
+                                {
+                                    "entity": "sensor.ebox_offpeak_download"
+                                },
+                                {
+                                    "entity": "sensor.ebox_offpeak_total"
+                                },
+                                {
+                                    "entity": "sensor.ebox_offpeak_upload"
+                                },
+                                {
+                                    "entity": "sensor.ebox_total"
+                                },
+                                {
+                                    "entity": "sensor.ebox_total_before_offpeak"
+                                },
+                                {
+                                    "entity": "sensor.ebox_upload"
+                                },
+                                {
+                                    "entity": "sensor.ebox_upload_before_offpeak"
+                                },
+                                {
+                                    "entity": "sensor.ebox_usage"
+                                }
+                            ],
+                            "show_header_toggle": true,
+                            "title": "Ebox",
+                            "type": "entities"
+                        },
+                        {
+                            "entities": [
+                                {
+                                    "entity": "sensor.speedtest_download",
+                                    "name": "Download"
+                                },
+                                {
+                                    "entity": "sensor.speedtest_upload",
+                                    "name": "Upload"
+                                },
+                                {
+                                    "entity": "sensor.speedtest_ping",
+                                    "name": "Ping"
+                                }
+                            ],
+                            "title": "Speedtest",
+                            "type": "history-graph"
+                        },
+                        {
+                            "entities": [
+                                "sensor.google_wifi_current_version",
+                                "sensor.google_wifi_last_restart",
+                                "sensor.google_wifi_local_ip",
+                                "sensor.google_wifi_new_version",
+                                "sensor.google_wifi_status",
+                                "sensor.google_wifi_uptime"
+                            ],
+                            "show_header_toggle": true,
+                            "title": "Google Wifi",
+                            "type": "entities"
+                        },
+                        {
+                            "entities": [
+                                {
+                                    "entity": "sensor.memory_use_percent",
+                                    "name": "Memory"
+                                },
+                                {
+                                    "entity": "sensor.processor_use",
+                                    "name": "CPU"
+                                },
+                                {
+                                    "entity": "sensor.disk_use_percent",
+                                    "name": "Storage"
+                                }
+                            ],
+                            "title": "Raspberry Pi",
+                            "type": "history-graph"
+                        },
+                        {
+                            "entities": [
+                                {
+                                    "entity": "sensor.last_boot"
+                                },
+                                {
+                                    "entity": "sensor.ipv4_address"
+                                },
+                                {
+                                    "entity": "sensor.ipv6_address"
+                                },
+                                {
+                                    "entity": "sensor.memory_use"
+                                },
+                                {
+                                    "entity": "sensor.memory_free"
+                                },
+                                {
+                                    "entity": "sensor.disk_use"
+                                },
+                                {
+                                    "entity": "sensor.disk_free"
+                                },
+                                {
+                                    "entity": "sensor.network_in_wlan0"
+                                },
+                                {
+                                    "entity": "sensor.network_out_wlan0"
+                                },
+                                {
+                                    "entity": "sensor.network_throughput_in_wlan0"
+                                },
+                                {
+                                    "entity": "sensor.network_throughput_out_wlan0"
+                                },
+                                {
+                                    "entity": "sensor.packets_in_wlan0"
+                                },
+                                {
+                                    "entity": "sensor.packets_out_wlan0"
+                                },
+                                {
+                                    "entity": "sensor.swap_free"
+                                },
+                                {
+                                    "entity": "sensor.swap_use"
+                                },
+                                {
+                                    "entity": "sensor.swap_use_percent"
+                                },
+                                {
+                                    "entity": "sensor.load_15m"
+                                },
+                                {
+                                    "entity": "sensor.load_5m"
+                                },
+                                {
+                                    "entity": "sensor.load_1m"
+                                }
+                            ],
+                            "title": "Raspberry Pi",
+                            "type": "entities"
+                        },
+                        {
+                            "entity": "sensor.memory_use",
+                            "max": {
+                                "[object Object]": null
+                            },
+                            "min": 0,
+                            "severity": {
+                                "green": 0,
+                                "red": 0,
+                                "yellow": 0
+                            },
+                            "theme": "default",
+                            "type": "gauge"
+                        },
+                        {
+                            "card": {
+                                "show_header_toggle": false,
+                                "title": "Things that are probably broken",
+                                "type": "entities"
+                            },
+                            "filter": {
+                                "exclude": [
+                                    {
+                                        "entity_id": "group.*"
+                                    },
+                                    {
+                                        "entity_id": "sensor.withings_*"
+                                    }
+                                ],
+                                "include": [
+                                    {
+                                        "state": "unknown"
+                                    }
+                                ]
+                            },
+                            "type": "custom:auto-entities"
+                        },
+                        {
+                            "aspect_ratio": "50%",
+                            "title": "Todo",
+                            "type": "iframe",
+                            "url": "https://trello.com/b/sxOjhqyu/home-assistant-nas"
+                        }
+                    ],
+                    "icon": "mdi:nas",
+                    "path": "admin",
+                    "title": "Admin"
+                },
+                {
+                    "badges": [
+                        {
+                            "entity": "person.giom_2"
+                        },
+                        {
+                            "entity": "person.claire_2"
+                        },
+                        {
+                            "entity": "binary_sensor.people_home"
+                        }
+                    ],
+                    "cards": [
+                        {
+                            "dark_mode": true,
+                            "entities": [
+                                {
+                                    "entity": "device_tracker.cellgiom"
+                                },
+                                {
+                                    "entity": "person.giom_2"
+                                }
+                            ],
+                            "hours_to_show": 24,
+                            "title": "Giom",
+                            "type": "map"
+                        },
+                        {
+                            "dark_mode": false,
+                            "entities": [
+                                {
+                                    "entity": "device_tracker.cellclaire"
+                                },
+                                {
+                                    "entity": "person.claire_2"
+                                }
+                            ],
+                            "hours_to_show": 24,
+                            "title": "Claire",
+                            "type": "map"
+                        },
+                        {
+                            "entities": [
+                                {
+                                    "entity": "device_tracker.op6"
+                                },
+                                {
+                                    "entity": "device_tracker.cellclaire"
+                                },
+                                {
+                                    "entity": "device_tracker.google_maps_108886437999779306059"
+                                },
+                                {
+                                    "entity": "device_tracker.google_maps_116551309970452496819"
+                                }
+                            ],
+                            "type": "entities"
+                        },
+                        {
+                            "animate": true,
+                            "entities": [
+                                {
+                                    "entity": "sensor.giom_s_time_at_work_last_week",
+                                    "name": "Giom previous week"
+                                },
+                                {
+                                    "entity": "sensor.giom_s_time_at_work_this_week",
+                                    "name": "Giom current week"
+                                },
+                                {
+                                    "entity": "sensor.claire_s_time_at_work_last_week",
+                                    "name": "Claire previous week"
+                                },
+                                {
+                                    "entity": "sensor.claire_s_time_at_work_this_week",
+                                    "name": "Claire current week"
+                                }
+                            ],
+                            "hour24": true,
+                            "hours_to_show": 360,
+                            "name": "Work time",
+                            "type": "custom:mini-graph-card"
+                        }
+                    ],
+                    "icon": "mdi:account-multiple",
+                    "panel": false,
+                    "path": "people",
+                    "title": "People"
+                },
+                {
+                    "badges": [],
+                    "cards": [
+                        {
+                            "entities": [
+                                {
+                                    "entity": "automation.timelapse"
+                                },
+                                {
+                                    "entity": "automation.timelapse_night"
+                                },
+                                {
+                                    "entity": "automation.timelapse_night_if_snowing"
+                                },
+                                {
+                                    "entity": "automation.sunrise"
+                                },
+                                {
+                                    "entity": "automation.sunset"
+                                },
+                                {
+                                    "entity": "automation.send_sunrise_picture_to_slack"
+                                },
+                                {
+                                    "entity": "automation.create_the_daily_gif"
+                                },
+                                {
+                                    "entity": "automation.15mn_before_sunrise"
+                                },
+                                {
+                                    "entity": "automation.10mn_before_sunrise"
+                                },
+                                {
+                                    "entity": "automation.5mn_before_sunrise"
+                                },
+                                {
+                                    "entity": "automation.5mn_after_sunrise"
+                                },
+                                {
+                                    "entity": "automation.10mn_after_sunrise"
+                                },
+                                {
+                                    "entity": "automation.15mn_after_sunrise"
+                                },
+                                {
+                                    "entity": "automation.15mn_before_sunset"
+                                },
+                                {
+                                    "entity": "automation.10mn_before_sunset"
+                                },
+                                {
+                                    "entity": "automation.5mn_before_sunset"
+                                },
+                                {
+                                    "entity": "automation.5mn_after_sunset"
+                                },
+                                {
+                                    "entity": "automation.10mn_after_sunset"
+                                },
+                                {
+                                    "entity": "automation.15mn_after_sunset"
+                                }
+                            ],
+                            "show_header_toggle": true,
+                            "title": "Timelapse",
+                            "type": "entities"
+                        },
+                        {
+                            "entities": [
+                                "automation.bus_de_7h26",
+                                "automation.bus_de_7h50_10mn",
+                                "automation.bus_de_7h50_2mn",
+                                "automation.bus_de_7h50_5mn"
+                            ],
+                            "show_header_toggle": true,
+                            "title": "Bus de Claire",
+                            "type": "entities"
+                        },
+                        {
+                            "entities": [
+                                {
+                                    "entity": "automation.swith_light_on_at_sunset_on_weekdays"
+                                },
+                                {
+                                    "entity": "automation.swith_light_on_at_4_30_on_weekdays"
+                                },
+                                {
+                                    "entity": "automation.swith_light_off_at_6_30pm_on_weekdays"
+                                },
+                                {
+                                    "entity": "automation.swith_light_on_when_we_arrive"
+                                },
+                                {
+                                    "entity": "automation.turn_off_light_10_minutes_after_we_arrived"
+                                },
+                                {
+                                    "entity": "automation.turn_off_solarium_light_10_minutes_after_we_arrived_if_after_6_30pm"
+                                },
+                                {
+                                    "entity": "automation.swith_living_room_lights_on_when_we_arrive"
+                                }
+                            ],
+                            "title": "Solarium light",
+                            "type": "entities"
+                        }
+                    ],
+                    "icon": "mdi:robot",
+                    "panel": false,
+                    "title": "Automations"
+                },
+                {
+                    "badges": [],
+                    "cards": [
+                        {
+                            "card": {
+                                "content_template": "\"states('sensor.time') {{ states('sensor.time') }}\"\n\"now() {{ now()}}\" \n\"now().timestamp() + (10 * 60) {{ now().timestamp() | int + (10 * 60)  | timestamp_local }}\"\n\"states('input_datetime.nighttime_start')[0:5] {{ states('input_datetime.nighttime_start')[0:5] }}\"\n\"states('sensor.time') >= states('input_datetime.nighttime_start')[0:5] {{ states('sensor.time') >= states('input_datetime.nighttime_start')[0:5] }}\"\n",
+                                "title": "Test template",
+                                "type": "markdown"
+                            },
+                            "entities": [
+                                {
+                                    "entity": "sensor.time"
+                                }
+                            ],
+                            "type": "custom:card-templater"
+                        },
+                        {
+                            "entities": [
+                                "input_select.destination"
+                            ],
+                            "title": "Input select",
+                            "type": "entities"
+                        },
+                        {
+                            "entities": [
+                                "script.create_daily_gif",
+                                "script.1542490337256"
+                            ],
+                            "title": "Script",
+                            "type": "entities"
+                        },
+                        {
+                            "entities": [
+                                {
+                                    "entity": "hangouts.conversations"
+                                }
+                            ],
+                            "title": "Hangout",
+                            "type": "entities"
+                        },
+                        {
+                            "entities": [
+                                {
+                                    "entity": "switch.lumiere_cuisine"
+                                }
+                            ],
+                            "title": "TESTS",
+                            "type": "entities"
+                        },
+                        {
+                            "entities": [
+                                {
+                                    "entity": "camera.dafang_camera"
+                                },
+                                {
+                                    "entity": "switch.dafang_camera_h264_rtsp_server"
+                                },
+                                {
+                                    "entity": "switch.dafang_camera_mjpeg_rtsp_server"
+                                },
+                                {
+                                    "entity": "sensor.dafang_camera"
+                                },
+                                {
+                                    "entity": "device_tracker.dafang_camera"
+                                },
+                                {
+                                    "entity": "sensor.dafang_camera_light_sensor"
+                                },
+                                {
+                                    "entity": "switch.dafang_camera_ir_filter"
+                                },
+                                {
+                                    "entity": "switch.dafang_camera_ir_led"
+                                },
+                                {
+                                    "entity": "switch.dafang_camera_night_mode"
+                                },
+                                {
+                                    "entity": "switch.dafang_camera_night_mode_auto"
+                                },
+                                {
+                                    "entity": "switch.dafang_camera_blue_led"
+                                },
+                                {
+                                    "entity": "switch.dafang_camera_yellow_led"
+                                },
+                                {
+                                    "entity": "switch.dafang_camera_motion_detection"
+                                },
+                                {
+                                    "entity": "switch.dafang_camera_motion_tracking"
+                                },
+                                {
+                                    "entity": "camera.dafang_camera_motion_snapshot"
+                                },
+                                {
+                                    "entity": "binary_sensor.dafang_camera_motion_sensor"
+                                },
+                                {
+                                    "entity": "cover.dafang_camera_move_left_right"
+                                },
+                                {
+                                    "entity": "cover.dafang_camera_move_up_down"
+                                },
+                                {
+                                    "entity": "group.dafang3"
+                                },
+                                {
+                                    "entity": "binary_sensor.dafang_camera_motion_sensor"
+                                },
+                                {
+                                    "entity": "camera.dafang_camera"
+                                },
+                                {
+                                    "entity": "camera.dafang_camera_motion_snapshot"
+                                },
+                                {
+                                    "entity": "cover.dafang_camera_move_left_right"
+                                },
+                                {
+                                    "entity": "cover.dafang_camera_move_up_down"
+                                },
+                                {
+                                    "entity": "switch.dafang_camera_blue_led"
+                                },
+                                {
+                                    "entity": "switch.dafang_camera_h264_rtsp_server"
+                                },
+                                {
+                                    "entity": "switch.dafang_camera_ir_filter"
+                                },
+                                {
+                                    "entity": "switch.dafang_camera_ir_led"
+                                },
+                                {
+                                    "entity": "switch.dafang_camera_mjpeg_rtsp_server"
+                                },
+                                {
+                                    "entity": "switch.dafang_camera_motion_detection"
+                                },
+                                {
+                                    "entity": "switch.dafang_camera_motion_send_mail"
+                                },
+                                {
+                                    "entity": "switch.dafang_camera_motion_send_telegram"
+                                },
+                                {
+                                    "entity": "switch.dafang_camera_motion_tracking"
+                                },
+                                {
+                                    "entity": "switch.dafang_camera_night_mode"
+                                },
+                                {
+                                    "entity": "switch.dafang_camera_night_mode_auto"
+                                },
+                                {
+                                    "entity": "switch.dafang_camera_yellow_led"
+                                }
+                            ],
+                            "type": "entities"
+                        },
+                        {
+                            "entities": [
+                                {
+                                    "entity": "switch.wake_up_pc"
+                                },
+                                {
+                                    "entity": "switch.wake_up_nas"
+                                }
+                            ],
+                            "title": "wake-on-lan",
+                            "type": "entities"
+                        },
+                        {
+                            "entity": "vacuum.xiaomi_vacuum_cleaner",
+                            "image": "https://specials-images.forbesimg.com/imageserve/5d850e8122254b0008e0fc58/960x0.jpg",
+                            "labels": {
+                                "battery": "Battery",
+                                "filter": "Filter",
+                                "main_brush": "Main brush",
+                                "mode": "Mode",
+                                "sensor": "Sensor",
+                                "side_brush": "Side brush",
+                                "status": "Status"
+                            },
+                            "name": "Robby",
+                            "type": "custom:xiaomi-vacuum-card"
+                        },
+                        {
+                            "entities": [
+                                {
+                                    "entity": "sensor.untappd_last_badge_giomv"
+                                },
+                                {
+                                    "entity": "sensor.untappd_last_check_in_giomv"
+                                },
+                                {
+                                    "entity": "sensor.untappd_wishlist_giomv"
+                                }
+                            ],
+                            "title": "Untapped",
+                            "type": "entities"
+                        },
+                        {
+                            "entities": [
+                                {
+                                    "entity": "input_select.living_room_color"
+                                },
+                                {
+                                    "entity": "automation.change_living_room_color"
+                                },
+                                {
+                                    "entity": "script.living_room_color"
+                                },
+                                {
+                                    "entity": "script.switch_living_room_color"
+                                },
+                                {
+                                    "entity": "scene.livingroomoff"
+                                },
+                                {
+                                    "entity": "scene.whitelivingroom"
+                                },
+                                {
+                                    "entity": "scene.pinkandpurplelivingroom"
+                                },
+                                {
+                                    "entity": "scene.pinklivingroom"
+                                },
+                                {
+                                    "entity": "scene.bluelivingroom"
+                                }
+                            ],
+                            "title": "Livining room colors",
+                            "type": "entities"
+                        },
+                        {
+                            "entities": [
+                                {
+                                    "entity": "input_datetime.solarium_switch_off"
+                                },
+                                {
+                                    "entity": "input_datetime.solarium_switch_on"
+                                },
+                                {
+                                    "entity": "input_datetime.solarium_timer_end"
+                                }
+                            ],
+                            "title": "Datetime imputs (solarium)",
+                            "type": "entities"
+                        }
+                    ],
+                    "icon": "mdi:test-tube",
+                    "panel": false,
+                    "title": "Tests"
+                },
+                {
+                    "badges": [
+                        "alarm_control_panel.cannes"
+                    ],
+                    "cards": [
+                        {
+                            "entity": "alarm_control_panel.cannes",
+                            "name": "Cannes",
+                            "states": [
+                                "arm_home",
+                                "arm_away"
+                            ],
+                            "type": "alarm-panel"
+                        },
+                        {
+                            "entities": [
+                                {
+                                    "entity": "binary_sensor.living_room_battery_2"
+                                },
+                                {
+                                    "entity": "binary_sensor.living_room_button_press_2"
+                                },
+                                {
+                                    "entity": "binary_sensor.living_room_cold_2"
+                                },
+                                {
+                                    "entity": "binary_sensor.living_room_connectivity_2"
+                                },
+                                {
+                                    "entity": "binary_sensor.living_room_dry_2"
+                                },
+                                {
+                                    "entity": "binary_sensor.living_room_heat_2"
+                                },
+                                {
+                                    "entity": "binary_sensor.living_room_moisture_2"
+                                },
+                                {
+                                    "entity": "binary_sensor.living_room_tamper_2"
+                                },
+                                {
+                                    "entity": "sensor.living_room_humidity_2"
+                                },
+                                {
+                                    "entity": "sensor.living_room_pressure_2"
+                                },
+                                {
+                                    "entity": "sensor.living_room_temperature_2"
+                                }
+                            ],
+                            "title": "Point",
+                            "type": "entities"
+                        }
+                    ],
+                    "icon": "mdi:beach",
+                    "path": "cannes",
+                    "title": "Cannes"
+                },
+                {
+                    "badges": [],
+                    "cards": [
+                        {
+                            "aspect_ratio": "50%",
+                            "title": "uTorrent",
+                            "type": "iframe",
+                            "url": "https://remote.bittorrent.com/"
+                        }
+                    ],
+                    "icon": "mdi:cloud-download",
+                    "panel": true,
+                    "path": "utorrent",
+                    "title": "uTorrent"
+                }
+            ]
+        }
+    },
+    "key": "lovelace",
+    "version": 1
+}

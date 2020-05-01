@@ -1,0 +1,390 @@
+{
+    "data": {
+        "config": {
+            "views": [
+                {
+                    "badges": [],
+                    "cards": [
+                        {
+                            "card": {
+                                "cards": [
+                                    {
+                                        "entity": "sensor.coublevie_weather_alert",
+                                        "name": "Alerte m\u00e9t\u00e9o",
+                                        "type": "entity"
+                                    },
+                                    {
+                                        "filter": {
+                                            "include": [
+                                                {
+                                                    "key": "sensor.coublevie_weather_alert.Canicule"
+                                                },
+                                                {
+                                                    "key": "sensor.coublevie_weather_alert.Grand-froid"
+                                                },
+                                                {
+                                                    "key": "sensor.coublevie_weather_alert.Inondation"
+                                                },
+                                                {
+                                                    "key": "sensor.coublevie_weather_alert.Neige-verglas"
+                                                },
+                                                {
+                                                    "key": "sensor.coublevie_weather_alert.Orages"
+                                                },
+                                                {
+                                                    "key": "sensor.coublevie_weather_alert.Pluie-innodation"
+                                                },
+                                                {
+                                                    "key": "sensor.coublevie_weather_alert.Vagues-submersion"
+                                                },
+                                                {
+                                                    "key": "sensor.coublevie_weather_alert.Vent violent"
+                                                }
+                                            ]
+                                        },
+                                        "heading_name": "Type d'alerte",
+                                        "heading_state": "Status",
+                                        "type": "custom:entity-attributes-card"
+                                    }
+                                ],
+                                "type": "vertical-stack"
+                            },
+                            "conditions": [
+                                {
+                                    "entity": "sensor.coublevie_weather_alert",
+                                    "state_not": "Vert"
+                                }
+                            ],
+                            "type": "conditional"
+                        },
+                        {
+                            "entity": "weather.coublevie",
+                            "name": "Coublevie",
+                            "type": "custom:weather-card"
+                        },
+                        {
+                            "aspect_ratio": "100%",
+                            "title": "Pluie",
+                            "type": "iframe",
+                            "url": "https://embed.windy.com/embed2.html?lat=45.333&lon=5.589&zoom=10&level=surface&overlay=rain&menu=&message=&marker=&calendar=&pressure=&type=map&location=coordinates&detail=true&detailLat=45.355&detailLon=5.609&metricWind=km%2Fh&metricTemp=%C2%B0C&radarRange=-1"
+                        }
+                    ],
+                    "icon": "mdi:home-modern",
+                    "path": "coublevie",
+                    "title": "Coublevie"
+                },
+                {
+                    "badges": [],
+                    "cards": [
+                        {
+                            "cards": [
+                                {
+                                    "aspect_ratio": "0%",
+                                    "entities": [],
+                                    "image": "https://static2.seechamonix.com/image_uploader/webcam/large/cannes-panoramic-webcam.jpg",
+                                    "tap_action": {
+                                        "action": "navigate",
+                                        "navigation_path": "https://www.seecannes.com/webcams/croisette"
+                                    },
+                                    "title": "Marina",
+                                    "type": "picture-glance"
+                                },
+                                {
+                                    "cards": [
+                                        {
+                                            "cards": [
+                                                {
+                                                    "card": {
+                                                        "cards": [
+                                                            {
+                                                                "entity": "sensor.cannes_weather_alert",
+                                                                "name": "Alerte m\u00e9t\u00e9o",
+                                                                "type": "entity"
+                                                            },
+                                                            {
+                                                                "filter": {
+                                                                    "include": [
+                                                                        {
+                                                                            "key": "sensor.cannes_weather_alert.Canicule"
+                                                                        },
+                                                                        {
+                                                                            "key": "sensor.cannes_weather_alert.Grand-froid"
+                                                                        },
+                                                                        {
+                                                                            "key": "sensor.cannes_weather_alert.Inondation"
+                                                                        },
+                                                                        {
+                                                                            "key": "sensor.cannes_weather_alert.Neige-verglas"
+                                                                        },
+                                                                        {
+                                                                            "key": "sensor.cannes_weather_alert.Orages"
+                                                                        },
+                                                                        {
+                                                                            "key": "sensor.cannes_weather_alert.Pluie-innodation"
+                                                                        },
+                                                                        {
+                                                                            "key": "sensor.cannes_weather_alert.Vagues-submersion"
+                                                                        },
+                                                                        {
+                                                                            "key": "sensor.cannes_weather_alert.Vent violent"
+                                                                        }
+                                                                    ]
+                                                                },
+                                                                "heading_name": "Type d'alerte",
+                                                                "heading_state": "Status",
+                                                                "type": "custom:entity-attributes-card"
+                                                            }
+                                                        ],
+                                                        "type": "vertical-stack"
+                                                    },
+                                                    "conditions": [
+                                                        {
+                                                            "entity": "sensor.cannes_weather_alert",
+                                                            "state_not": "Vert"
+                                                        }
+                                                    ],
+                                                    "type": "conditional"
+                                                },
+                                                {
+                                                    "entity": "weather.cannes",
+                                                    "name": "Cannes",
+                                                    "type": "custom:weather-card"
+                                                }
+                                            ],
+                                            "type": "vertical-stack"
+                                        },
+                                        {
+                                            "cards": [
+                                                {
+                                                    "aspect_ratio": "50%",
+                                                    "title": "Vent",
+                                                    "type": "iframe",
+                                                    "url": "https://embed.windy.com/embed2.html?lat=43.535&lon=7.061&zoom=11&level=surface&overlay=wind&menu=&message=&marker=&calendar=&pressure=&type=map&location=coordinates&detail=&detailLat=43.491&detailLon=6.995&metricWind=km%2Fh&metricTemp=%C2%B0C&radarRange=-1"
+                                                }
+                                            ],
+                                            "type": "vertical-stack"
+                                        },
+                                        {
+                                            "entities": [
+                                                {
+                                                    "entity": "sensor.cannes_temperature_2",
+                                                    "name": "Temp\u00e9rature"
+                                                },
+                                                {
+                                                    "entity": "sensor.cannes_humidity_2",
+                                                    "name": "Humidit\u00e9"
+                                                },
+                                                {
+                                                    "entity": "sensor.cannes_pressure_2",
+                                                    "name": "Pression"
+                                                },
+                                                {
+                                                    "entity": "binary_sensor.cannes_battery_2",
+                                                    "name": "Batterie"
+                                                }
+                                            ],
+                                            "title": "Appartement",
+                                            "type": "entities"
+                                        }
+                                    ],
+                                    "type": "horizontal-stack"
+                                }
+                            ],
+                            "type": "vertical-stack"
+                        }
+                    ],
+                    "icon": "mdi:beach",
+                    "panel": true,
+                    "path": "cannes",
+                    "title": "Cannes"
+                },
+                {
+                    "badges": [],
+                    "cards": [
+                        {
+                            "card": {
+                                "cards": [
+                                    {
+                                        "entity": "sensor.macot_la_plagne_weather_alert",
+                                        "name": "Alerte m\u00e9t\u00e9o",
+                                        "type": "entity"
+                                    },
+                                    {
+                                        "filter": {
+                                            "include": [
+                                                {
+                                                    "key": "sensor.macot_la_plagne_weather_alert.Canicule"
+                                                },
+                                                {
+                                                    "key": "sensor.macot_la_plagne_weather_alert.Grand-froid"
+                                                },
+                                                {
+                                                    "key": "sensor.macot_la_plagne_weather_alert.Inondation"
+                                                },
+                                                {
+                                                    "key": "sensor.macot_la_plagne_weather_alert.Neige-verglas"
+                                                },
+                                                {
+                                                    "key": "sensor.macot_la_plagne_weather_alert.Orages"
+                                                },
+                                                {
+                                                    "key": "sensor.macot_la_plagne_weather_alert.Pluie-innodation"
+                                                },
+                                                {
+                                                    "key": "sensor.macot_la_plagne_weather_alert.Vagues-submersion"
+                                                },
+                                                {
+                                                    "key": "sensor.macot_la_plagne_weather_alert.Vent violent"
+                                                }
+                                            ]
+                                        },
+                                        "heading_name": "Type d'alerte",
+                                        "heading_state": "Status",
+                                        "type": "custom:entity-attributes-card"
+                                    }
+                                ],
+                                "type": "vertical-stack"
+                            },
+                            "conditions": [
+                                {
+                                    "entity": "sensor.macot_la_plagne_weather_alert",
+                                    "state_not": "Vert"
+                                }
+                            ],
+                            "type": "conditional"
+                        },
+                        {
+                            "entity": "weather.macot_la_plagne",
+                            "name": "Macot",
+                            "type": "custom:weather-card"
+                        },
+                        {
+                            "columns": 3,
+                            "entities": [
+                                {
+                                    "entity": "sensor.linky_current_year",
+                                    "name": "Ann\u00e9e en cours"
+                                },
+                                {
+                                    "entity": "sensor.linky_current_month",
+                                    "name": "Mois en cours"
+                                },
+                                {
+                                    "entity": "sensor.linky_yesterday",
+                                    "name": "Hier"
+                                },
+                                {
+                                    "entity": "sensor.linky_last_year",
+                                    "name": "Ann\u00e9e derni\u00e8re"
+                                },
+                                {
+                                    "entity": "sensor.linky_last_month",
+                                    "name": "Mois dernier"
+                                }
+                            ],
+                            "show_icon": true,
+                            "show_name": true,
+                            "show_state": true,
+                            "title": "Linky",
+                            "type": "glance"
+                        },
+                        {
+                            "aspect_ratio": "50%",
+                            "title": "Roche de Mio",
+                            "type": "iframe",
+                            "url": "https://m.webcam-hd.com/webcam-station-la-plagne/roche-de-mio"
+                        },
+                        {
+                            "aspect_ratio": "50%",
+                            "title": "Glacier",
+                            "type": "iframe",
+                            "url": "https://m.webcam-hd.com/webcam-station-la-plagne/le-glacier"
+                        },
+                        {
+                            "aspect_ratio": "50%",
+                            "title": "Bellecote",
+                            "type": "iframe",
+                            "url": "https://m.webcam-hd.com/webcam-station-la-plagne/snowpark"
+                        },
+                        {
+                            "aspect_ratio": "75%",
+                            "title": "Neige",
+                            "type": "iframe",
+                            "url": "https://embed.windy.com/embed2.html?lat=45.504&lon=6.693&zoom=10&level=surface&overlay=snowAccu&menu=&message=true&marker=true&calendar=&pressure=&type=map&location=coordinates&detail=&detailLat=45.491&detailLon=6.500&metricWind=km%2Fh&metricTemp=default&radarRange=-1"
+                        }
+                    ],
+                    "icon": "mdi:summit",
+                    "path": "la-plagne",
+                    "title": "La plagne"
+                },
+                {
+                    "badges": [],
+                    "cards": [
+                        {
+                            "card": {
+                                "cards": [
+                                    {
+                                        "entity": "sensor.saint_martinien_weather_alert",
+                                        "name": "Alerte m\u00e9t\u00e9o",
+                                        "type": "entity"
+                                    },
+                                    {
+                                        "filter": {
+                                            "include": [
+                                                {
+                                                    "key": "sensor.saint_martinien_weather_alert.Canicule"
+                                                },
+                                                {
+                                                    "key": "sensor.saint_martinien_weather_alert.Grand-froid"
+                                                },
+                                                {
+                                                    "key": "sensor.saint_martinien_weather_alert.Inondation"
+                                                },
+                                                {
+                                                    "key": "sensor.saint_martinien_weather_alert.Neige-verglas"
+                                                },
+                                                {
+                                                    "key": "sensor.saint_martinien_weather_alert.Orages"
+                                                },
+                                                {
+                                                    "key": "sensor.saint_martinien_weather_alert.Pluie-innodation"
+                                                },
+                                                {
+                                                    "key": "sensor.saint_martinien_weather_alert.Vagues-submersion"
+                                                },
+                                                {
+                                                    "key": "sensor.saint_martinien_weather_alert.Vent violent"
+                                                }
+                                            ]
+                                        },
+                                        "heading_name": "Type d'alerte",
+                                        "heading_state": "Status",
+                                        "type": "custom:entity-attributes-card"
+                                    }
+                                ],
+                                "type": "vertical-stack"
+                            },
+                            "conditions": [
+                                {
+                                    "entity": "sensor.saint_martinien_weather_alert",
+                                    "state_not": "Vert"
+                                }
+                            ],
+                            "type": "conditional"
+                        },
+                        {
+                            "entity": "weather.saint_martinien",
+                            "name": "\u00c9tang",
+                            "type": "custom:weather-card"
+                        }
+                    ],
+                    "icon": "mdi:fish",
+                    "path": "domerat",
+                    "title": "Dom\u00e9rat"
+                }
+            ]
+        }
+    },
+    "key": "lovelace.lovelace_france",
+    "version": 1
+}
