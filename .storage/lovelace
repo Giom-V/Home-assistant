@@ -98,8 +98,15 @@
                                         {
                                             "entity": "binary_sensor.aurora_visibility",
                                             "name": "Aurore bor\u00e9ales visibles !!",
-                                            "size": 3,
+                                            "size": 2,
                                             "value": "",
+                                            "when": "on"
+                                        },
+                                        {
+                                            "entity": "binary_sensor.water_16",
+                                            "icon": "mdi:water-outline",
+                                            "name": "Water detected in the tempo",
+                                            "size": 2,
                                             "when": "on"
                                         },
                                         {
@@ -119,22 +126,20 @@
                                             "name": ""
                                         },
                                         {
+                                            "entity": "sensor.temperature_water_sensor",
+                                            "name": "Tempo"
+                                        },
+                                        {
                                             "entity": "sensor.dark_sky_temperature",
                                             "name": "Temperature"
                                         },
                                         {
                                             "entity": "sensor.dark_sky_apparent_temperature",
                                             "name": "Resentie"
-                                        },
-                                        {
-                                            "entity": "binary_sensor.water_16",
-                                            "icon": "mdi:water-outline",
-                                            "name": "water",
-                                            "when": "on"
                                         }
                                     ],
                                     "heading": "\ud83c\udfde Ext\u00e9rieur",
-                                    "row_size": 3,
+                                    "row_size": 2,
                                     "type": "custom:banner-card"
                                 },
                                 {
