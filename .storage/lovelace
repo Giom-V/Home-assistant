@@ -1958,6 +1958,19 @@
                     "badges": [],
                     "cards": [
                         {
+                            "card": {
+                                "content_template": "\"states('sensor.time') {{ states('sensor.time') }}\"\n\"now() {{ now()}}\" \n\"now().timestamp() + (10 * 60) {{ now().timestamp() | int + (10 * 60)  | timestamp_local }}\"\n\"states('input_datetime.nighttime_start')[0:5] {{ states('input_datetime.nighttime_start')[0:5] }}\"\n\"states('sensor.time') >= states('input_datetime.nighttime_start')[0:5] {{ states('sensor.time') >= states('input_datetime.nighttime_start')[0:5] }}\"\n",
+                                "title": "Test template",
+                                "type": "markdown"
+                            },
+                            "entities": [
+                                {
+                                    "entity": "sensor.time"
+                                }
+                            ],
+                            "type": "custom:card-templater"
+                        },
+                        {
                             "entities": [
                                 "input_select.destination"
                             ],
@@ -1975,104 +1988,10 @@
                         {
                             "entities": [
                                 {
-                                    "entity": "sensor.travel_time_to_work_gmap"
-                                },
-                                {
-                                    "entity": "sensor.travel_time_to_work_waze"
-                                },
-                                {
-                                    "entity": "sensor.travel_time_to_work_claire"
-                                },
-                                {
-                                    "entity": "sensor.me_to_destination"
-                                },
-                                {
-                                    "entity": "sensor.dest_address"
-                                }
-                            ],
-                            "show_header_toggle": true,
-                            "title": "Travel times",
-                            "type": "entities"
-                        },
-                        {
-                            "entities": [
-                                {
-                                    "entity": "binary_sensor.cube_158d00029a9528"
-                                },
-                                {
-                                    "entity": "light.solarium"
-                                },
-                                {
-                                    "entity": "light.gateway_light_04cf8cb0b053"
-                                },
-                                {
-                                    "entity": "binary_sensor.door_window_sensor_158d00030318fd"
-                                },
-                                {
-                                    "entity": "sensor.illumination_04cf8cb0b053"
-                                },
-                                {
-                                    "entity": "automation.cube_tests_flip180"
-                                },
-                                {
-                                    "entity": "automation.cube_tests_flip90"
-                                },
-                                {
-                                    "entity": "automation.cube_tests_rotate"
-                                },
-                                {
-                                    "entity": "automation.door_tests"
-                                },
-                                {
-                                    "entity": "automation.cube_tests"
-                                }
-                            ],
-                            "title": "Xiaomi",
-                            "type": "entities"
-                        },
-                        {
-                            "entities": [
-                                {
                                     "entity": "hangouts.conversations"
                                 }
                             ],
                             "title": "Hangout",
-                            "type": "entities"
-                        },
-                        {
-                            "entities": [
-                                {
-                                    "entity": "sensor.habitica_giom_name"
-                                },
-                                {
-                                    "entity": "sensor.habitica_giom_class"
-                                },
-                                {
-                                    "entity": "sensor.habitica_giom_lvl"
-                                },
-                                {
-                                    "entity": "sensor.habitica_giom_exp"
-                                },
-                                {
-                                    "entity": "sensor.habitica_giom_tonextlevel"
-                                },
-                                {
-                                    "entity": "sensor.habitica_giom_gp"
-                                },
-                                {
-                                    "entity": "sensor.habitica_giom_hp"
-                                },
-                                {
-                                    "entity": "sensor.habitica_giom_maxhealth"
-                                },
-                                {
-                                    "entity": "sensor.habitica_giom_mp"
-                                },
-                                {
-                                    "entity": "sensor.habitica_giom_maxmp"
-                                }
-                            ],
-                            "title": "Habitica",
                             "type": "entities"
                         },
                         {
@@ -2289,6 +2208,7 @@
                         }
                     ],
                     "icon": "mdi:test-tube",
+                    "panel": false,
                     "title": "Tests"
                 },
                 {
