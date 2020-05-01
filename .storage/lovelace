@@ -403,7 +403,7 @@
                                         "off": "mdi:lightbulb-off-outline",
                                         "on": "mdi:lightbulb-on"
                                     },
-                                    "name": ""
+                                    "name": "Veilleuse"
                                 },
                                 {
                                     "action": {
@@ -412,6 +412,10 @@
                                     "entity": "script.vacuum_aurore_bedroom",
                                     "icon": "mdi:robot-vacuum",
                                     "name": "Aurore"
+                                },
+                                {
+                                    "entity": "sensor.bedroom_temperature",
+                                    "name": "Temperature"
                                 },
                                 {
                                     "action": {
@@ -432,12 +436,16 @@
                                 }
                             ],
                             "heading": "\ud83d\udecf Chambres",
-                            "row_size": 3,
+                            "row_size": 2,
                             "type": "custom:banner-card"
                         },
                         {
                             "background": "#C6FCED",
                             "entities": [
+                                {
+                                    "entity": "sensor.bathroom_temperature",
+                                    "name": "Temperature"
+                                },
                                 {
                                     "action": {
                                         "service": "script.turn_on"
@@ -465,7 +473,7 @@
                                 }
                             ],
                             "heading": "\ud83d\udec1 Salle de bain",
-                            "row_size": 2,
+                            "row_size": 3,
                             "type": "custom:banner-card"
                         },
                         {

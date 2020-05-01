@@ -984,6 +984,56 @@
                 "name_by_user": null,
                 "sw_version": "10",
                 "via_device_id": null
+            },
+            {
+                "area_id": "26811538eded4148a4760d2e63b5ac91",
+                "config_entries": [
+                    "8a1216e7396440f6aad6f16233eb45af"
+                ],
+                "connections": [
+                    [
+                        "zigbee",
+                        "00:15:8d:00:04:0e:76:b8"
+                    ]
+                ],
+                "id": "9a669c6c24b24c34ba11b28d28a08029",
+                "identifiers": [
+                    [
+                        "deconz",
+                        "00:15:8d:00:04:0e:76:b8"
+                    ]
+                ],
+                "manufacturer": "LUMI",
+                "model": "lumi.sensor_ht",
+                "name": "Bathroom",
+                "name_by_user": "Bathroom",
+                "sw_version": "20160516",
+                "via_device_id": "27667204355b45869bc0748a80d5901e"
+            },
+            {
+                "area_id": "257440c1b16b432b9fbf948a1815526d",
+                "config_entries": [
+                    "8a1216e7396440f6aad6f16233eb45af"
+                ],
+                "connections": [
+                    [
+                        "zigbee",
+                        "00:15:8d:00:04:0e:72:e0"
+                    ]
+                ],
+                "id": "6fa2f2dc6c814d6183971b8993b07c03",
+                "identifiers": [
+                    [
+                        "deconz",
+                        "00:15:8d:00:04:0e:72:e0"
+                    ]
+                ],
+                "manufacturer": "LUMI",
+                "model": "lumi.sensor_ht",
+                "name": "Bedroom",
+                "name_by_user": "Bedroom",
+                "sw_version": "20160516",
+                "via_device_id": "27667204355b45869bc0748a80d5901e"
             }
         ]
     },
