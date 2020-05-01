@@ -106,6 +106,23 @@ recorder:
       - sensor.dark_sky_temperature
       - sensor.dark_sky_uv_index
       - sensor.disk_free
+      - sensor.environment_canada_avis
+      - sensor.environment_canada_basse_temperature
+      - sensor.environment_canada_bulletins
+      - sensor.environment_canada_code_icone
+      - sensor.environment_canada_condition
+      - sensor.environment_canada_direction_de_vent
+      - sensor.environment_canada_haute_temperature
+      - sensor.environment_canada_humidex
+      - sensor.environment_canada_humidite
+      - sensor.environment_canada_indice_uv
+      - sensor.environment_canada_palier_de_vent
+      - sensor.environment_canada_point_de_rosee
+      - sensor.environment_canada_pression
+      - sensor.environment_canada_probabilite_d_averses
+      - sensor.environment_canada_precipitation_d_hier
+      - sensor.environment_canada_prevision
+      - sensor.environment_canada_rafale_de_vent
       - sensor.giom_s_time_at_work_last_week
       - sensor.giom_s_time_at_work_this_week
       - sensor.google_fit_distance
