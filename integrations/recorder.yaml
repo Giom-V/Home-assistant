@@ -32,21 +32,20 @@ recorder:
       # {%- endfor %}
       # {{ '' }}
       # {%- endfor %}
-      - binary_sensor.freezer_door
-      - binary_sensor.solarium_battery
-      - binary_sensor.solarium_button_press
-      - binary_sensor.solarium_connectivity
       - binary_sensor.living_room_battery
       - binary_sensor.living_room_battery_2
       - binary_sensor.living_room_button_press
       - binary_sensor.living_room_button_press_2
       - binary_sensor.living_room_connectivity
       - binary_sensor.living_room_connectivity_2
-      - binary_sensor.tradfri_motion_sensor
+      - binary_sensor.solarium_battery
+      - binary_sensor.solarium_button_press
+      - binary_sensor.solarium_connectivity
       - binary_sensor.updater
-      - binary_sensor.vpir_motion_control
       - binary_sensor.workday_sensor
       - camera.dafang_camera_motion_snapshot
+      - light.escalier # because of deconz those 2 spam the database
+      - light.basement_stairs
     event_types:
       - time_changed
   include:
@@ -59,8 +58,8 @@ recorder:
       - person
       - vacuum
       - weather
+      - binary_sensor
     entities:
-      - sensor.linky_yesterday
       - automation.clean_room_as_asked_through_ifttt
       - automation.create_the_daily_gif
       - automation.mop_room_as_asked_through_ifttt
@@ -91,6 +90,13 @@ recorder:
       - script.switch_living_room_color
       - script.vaccum_reset_fan_speed_after_mopping
       - script.vacuum_dispatch
+      - sensor.bathroom_humidity
+      - sensor.bathroom_temperature
+      - sensor.bedroom_humidity
+      - sensor.bedroom_temperature
+      - sensor.basement_pressure
+      - sensor.basement_temperature
+      - sensor.basement_humidity
       - sensor.claire_s_time_at_work_last_week
       - sensor.claire_s_time_at_work_this_week
       - sensor.dark_sky_apparent_temperature
@@ -100,8 +106,6 @@ recorder:
       - sensor.dark_sky_temperature
       - sensor.dark_sky_uv_index
       - sensor.disk_free
-      - sensor.disk_use
-      - sensor.disk_use_percent
       - sensor.giom_s_time_at_work_last_week
       - sensor.giom_s_time_at_work_this_week
       - sensor.google_fit_distance
@@ -115,24 +119,12 @@ recorder:
       - sensor.living_room_sound_level_2
       - sensor.living_room_temperature
       - sensor.living_room_temperature_2
-      - sensor.load_15m
-      - sensor.load_1m
-      - sensor.load_5m
-      - sensor.memory_free
-      - sensor.memory_use
       - sensor.memory_use_percent
-      - sensor.network_in_wlan0
-      - sensor.network_out_wlan0
-      - sensor.network_throughput_in_wlan0
-      - sensor.network_throughput_out_wlan0
       - sensor.owm_humidity
       - sensor.owm_pressure
       - sensor.owm_rain
       - sensor.owm_snow
       - sensor.owm_temperature
-      - sensor.packets_in_wlan0
-      - sensor.packets_out_wlan0
-      - sensor.process_hass
       - sensor.processor_use
       - sensor.solarium_humidity
       - sensor.solarium_pressure
@@ -141,17 +133,35 @@ recorder:
       - sensor.speedtest_download
       - sensor.speedtest_ping
       - sensor.speedtest_upload
-      - sensor.swap_free
-      - sensor.swap_use
-      - sensor.swap_use_percent
+      - sensor.temperature_water_sensor
       - sensor.travel_time_to_work_claire
       - sensor.travel_time_to_work_gmap
-      - sensor.travel_time_to_work_waze
       - sensor.u_s_air_pollution_level
       - sensor.u_s_air_quality_index
       - sensor.waqi_beauce_quebec_canada
-      - sensor.withings_weight_kg_aurore_vernade
-      - sensor.withings_weight_kg_claire_merot
-      - sensor.withings_weight_kg_guillaume_vernade
+      - sensor.withings_weight_kg_aurore
+      - sensor.withings_weight_kg_claire
+      - sensor.withings_weight_kg_giom
       - switch.lumiere_cuisine
       - switch.dafang_camera_motion_detection
+      - sensor.worldwide_confirmed
+      - sensor.worldwide_current
+      - sensor.worldwide_recovered
+      - sensor.worldwide_deaths
+      - sensor.france_confirmed
+      - sensor.france_current
+      - sensor.france_recovered
+      - sensor.france_deaths
+      - sensor.canada_confirmed
+      - sensor.canada_current
+      - sensor.canada_recovered
+      - sensor.canada_deaths
+      - switch.veilleuse
+      - binary_sensor.solarium_door
+      - binary_sensor.aurora_visibility
+      - binary_sensor.dafang_camera_motion_sensor
+      - binary_sensor.people_home
+      - binary_sensor.tradfri_motion_sensor
+      - binary_sensor.water_16
+      - camera.dafang_camera
+      - camera.raspberry_pi_camera

@@ -26,7 +26,6 @@
     - light.canape_droite
     - light.color
     service: light.turn_off
-  initial_state: 'on'
 - id: tradfri_remote_control_switch_on
   alias: Télécommande ikea - switch on
   trigger:
@@ -50,10 +49,8 @@
     - light.canape_droite
     - light.color
     service: light.turn_on
-  initial_state: 'on'
 - id: tradfri_remote_control_increase_brightness
   alias: Télécommande ikea - increase brightness
-  initial_state: 'on'
   trigger:
   - platform: event
     event_type: deconz_event
@@ -88,7 +85,6 @@
         %} {{ [bri * 2, 255] | min }}'
 - id: tradfri_remote_control_decrease_brightness
   alias: Télécommande ikea - decrease brightness
-  initial_state: 'on'
   trigger:
   - platform: event
     event_type: deconz_event
@@ -123,7 +119,6 @@
         %} {% set half_bri = bri / 2 %} {{ half_bri | round(0, "ceil") | int }}'
 - id: tradfri_remote_control_decrease_brightness_hold
   alias: Télécommande ikea - decrease brightness hold
-  initial_state: 'on'
   trigger:
   - platform: event
     event_type: deconz_event
@@ -150,7 +145,6 @@
       brightness: 1 #TODO: change for a data template to remove an error
 - id: tradfri_remote_control_left_arrow
   alias: Télécommande ikea - left button
-  initial_state: 'on'
   trigger:
   - platform: event
     event_type: deconz_event
@@ -169,7 +163,6 @@
       option: White
 - id: tradfri_remote_control_right_arrow
   alias: Télécommande ikea - right button
-  initial_state: 'on'
   trigger:
   - platform: event
     event_type: deconz_event
@@ -220,7 +213,6 @@
     service: light.turn_on
     data:
       brightness: 255 #TODO: change for a data template to remove an error
-  initial_state: 'on'
 - id: living_room_color
   alias: Change Living room color
   trigger:

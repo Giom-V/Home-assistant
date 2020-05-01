@@ -9,7 +9,6 @@ logs
 *.log
 
 # Ignore Folders
-.storage
 .cloud
 .vscode
 .Trash-*
@@ -31,6 +30,7 @@ customize.yaml
 *.pyc
 google_calendars.yaml
 *.old.yaml
+*.code-workspace
 
 # Secrets
 secrets.yaml
@@ -47,3 +47,12 @@ node-red
 
 # Operating System Trash Files
 .DS_Store
+
+# Do not ignore Lovelace Files
+.storage/*
+!/.storage/lovelace
+!/.storage/lovelace.lovelace_*
+!/.storage/lovelace_resources
+!/.storage/core.area_registry
+!/.storage/core.entity_registry
+!/.storage/core.device_registry

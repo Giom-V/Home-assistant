@@ -1,7 +1,7 @@
 # https://www.home-assistant.io/integrations/waze_travel_time/
-platform: waze_travel_time
-name: Travel time to work (Waze)
-origin: !secret homeGPSCoordinates
-destination: !secret giomWorkplaceGPSCoordinates
-region: 'US'
-scan_interval: 5
+# platform: waze_travel_time
+# name: Travel time to work (Waze)
+# origin: !secret homeGPSCoordinates
+# destination: !secret giomWorkplaceGPSCoordinates
+# region: 'US'
+# scan_interval: 30
