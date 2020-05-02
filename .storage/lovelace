@@ -118,6 +118,7 @@
                                                 "partly-cloudy-night": "mdi:weather-night-partly-cloudy",
                                                 "partlycloudy": "mdi:weather-partly-cloudy",
                                                 "rain": "mdi:weather-pouring",
+                                                "rainy": "mdi:weather-pouring",
                                                 "sleet": "mdi:weather-sleet",
                                                 "snow": "mdi:weather-snowy",
                                                 "sunny": "mdi:weather-sunny",
