@@ -620,7 +620,7 @@
                             "type": "picture-glance"
                         },
                         {
-                            "columns": 4,
+                            "columns": 5,
                             "entities": [
                                 {
                                     "entity": "sensor.living_room_temperature",
@@ -630,7 +630,11 @@
                                     "entity": "sensor.bathroom_temperature"
                                 },
                                 {
-                                    "entity": "sensor.bedroom_temperature"
+                                    "entity": "sensor.button_temperature",
+                                    "name": "Chambre"
+                                },
+                                {
+                                    "entity": "sensor.basement_bedroom_temperature"
                                 },
                                 {
                                     "entity": "sensor.basement_temperature"
@@ -704,38 +708,6 @@
                             "hours_to_show": 168,
                             "name": "Temp\u00e9ratures",
                             "type": "custom:mini-graph-card"
-                        },
-                        {
-                            "cards": [
-                                {
-                                    "entity": "sensor.living_room_temperature",
-                                    "max": 30,
-                                    "min": 0,
-                                    "name": "Salon",
-                                    "severity": {
-                                        "green": 19,
-                                        "red": 11,
-                                        "yellow": 15
-                                    },
-                                    "theme": "default",
-                                    "type": "gauge"
-                                },
-                                {
-                                    "entity": "sensor.solarium_temperature",
-                                    "max": 30,
-                                    "min": 0,
-                                    "name": "Solarium",
-                                    "severity": {
-                                        "green": 5,
-                                        "red": 1,
-                                        "yellow": 3
-                                    },
-                                    "theme": "default",
-                                    "type": "gauge"
-                                }
-                            ],
-                            "title": "Indoor temperatures",
-                            "type": "horizontal-stack"
                         },
                         {
                             "cards": [
@@ -1149,7 +1121,7 @@
                                             "type": "gauge"
                                         },
                                         {
-                                            "entity": "sensor.bedroom_temperature",
+                                            "entity": "sensor.button_temperature",
                                             "max": 30,
                                             "min": 0,
                                             "name": "Chambre",
@@ -1181,10 +1153,10 @@
                                             "type": "gauge"
                                         },
                                         {
-                                            "entity": "sensor.basement_temperature",
+                                            "entity": "sensor.solarium_temperature",
                                             "max": 30,
                                             "min": 0,
-                                            "name": "Sous-sol",
+                                            "name": "Solarium",
                                             "severity": {
                                                 "green": 18,
                                                 "red": 10,
@@ -1199,10 +1171,10 @@
                                 {
                                     "cards": [
                                         {
-                                            "entity": "sensor.solarium_temperature",
+                                            "entity": "sensor.basement_temperature",
                                             "max": 30,
                                             "min": 0,
-                                            "name": "Solarium",
+                                            "name": "Sous-sol",
                                             "severity": {
                                                 "green": 5,
                                                 "red": 1,
@@ -1212,10 +1184,10 @@
                                             "type": "gauge"
                                         },
                                         {
-                                            "entity": "sensor.temperature_water_sensor",
+                                            "entity": "sensor.basement_bedroom_temperature",
                                             "max": 30,
                                             "min": 0,
-                                            "name": "Tempo",
+                                            "name": "Chambre sous-sol",
                                             "severity": {
                                                 "green": 5,
                                                 "red": -20,
@@ -2392,6 +2364,11 @@
                                 }
                             ],
                             "title": "Datetime imputs (solarium)",
+                            "type": "entities"
+                        },
+                        {
+                            "entities": [],
+                            "title": "School @ Home",
                             "type": "entities"
                         }
                     ],
