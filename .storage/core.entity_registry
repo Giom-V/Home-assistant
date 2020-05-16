@@ -2246,26 +2246,6 @@
                 "unit_of_measurement": null
             },
             {
-                "capabilities": {
-                    "effect_list": [
-                        "colorloop"
-                    ]
-                },
-                "config_entry_id": "8a1216e7396440f6aad6f16233eb45af",
-                "device_class": null,
-                "device_id": "76dddcc1c98c46288e0ae456f8f71955",
-                "disabled_by": null,
-                "entity_id": "light.sous_sol",
-                "icon": null,
-                "name": "Basement Deconz group",
-                "original_icon": null,
-                "original_name": "Sous-sol",
-                "platform": "deconz",
-                "supported_features": 45,
-                "unique_id": "00212EFFFF04F2B1-/groups/7",
-                "unit_of_measurement": null
-            },
-            {
                 "capabilities": {},
                 "config_entry_id": "8a1216e7396440f6aad6f16233eb45af",
                 "device_class": null,
@@ -4252,26 +4232,6 @@
                 "supported_features": 0,
                 "unique_id": "00:15:8d:00:04:60:52:fc-battery",
                 "unit_of_measurement": "%"
-            },
-            {
-                "capabilities": {
-                    "effect_list": [
-                        "colorloop"
-                    ]
-                },
-                "config_entry_id": "8a1216e7396440f6aad6f16233eb45af",
-                "device_class": null,
-                "device_id": "0d9d093063bb43278d340de711eb7f3f",
-                "disabled_by": null,
-                "entity_id": "light.basement_stairs_deconz_group",
-                "icon": null,
-                "name": "Basement stairs Deconz group",
-                "original_icon": null,
-                "original_name": "Escalier",
-                "platform": "deconz",
-                "supported_features": 45,
-                "unique_id": "00212EFFFF04F2B1-/groups/8",
-                "unit_of_measurement": null
             },
             {
                 "capabilities": {},
