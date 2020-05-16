@@ -420,7 +420,7 @@
                                     "name": "Aurore"
                                 },
                                 {
-                                    "entity": "sensor.bedroom_temperature",
+                                    "entity": "sensor.button_temperature",
                                     "name": "Temperature"
                                 },
                                 {
@@ -490,6 +490,10 @@
                                     "name": "Temperature"
                                 },
                                 {
+                                    "entity": "sensor.basement_bedroom_temperature",
+                                    "name": "Chambre"
+                                },
+                                {
                                     "action": {
                                         "service": "light.toggle"
                                     },
@@ -510,7 +514,7 @@
                                 }
                             ],
                             "heading": "\ud83d\udda5 Sous-sol",
-                            "row_size": 3,
+                            "row_size": 2,
                             "type": "custom:banner-card"
                         }
                     ],
@@ -616,6 +620,7 @@
                             "type": "picture-glance"
                         },
                         {
+                            "columns": 4,
                             "entities": [
                                 {
                                     "entity": "sensor.living_room_temperature",
@@ -625,8 +630,18 @@
                                     "entity": "sensor.bathroom_temperature"
                                 },
                                 {
+                                    "entity": "sensor.bedroom_temperature"
+                                },
+                                {
+                                    "entity": "sensor.basement_temperature"
+                                },
+                                {
                                     "entity": "sensor.solarium_temperature",
                                     "name": "Solarium"
+                                },
+                                {
+                                    "entity": "sensor.temperature_water_sensor",
+                                    "name": "Tempo"
                                 },
                                 {
                                     "entity": "sensor.dark_sky_temperature",
@@ -650,23 +665,38 @@
                                     "name": "T\u00b0 Salon"
                                 },
                                 {
-                                    "entity": "sensor.solarium_temperature",
-                                    "index": 1,
-                                    "name": "T\u00b0 Solarium"
-                                },
-                                {
                                     "entity": "sensor.bathroom_temperature",
-                                    "index": 2,
+                                    "index": 1,
                                     "name": "T\u00b0 SDB"
                                 },
                                 {
-                                    "entity": "sensor.dark_sky_temperature",
+                                    "entity": "sensor.bedroom_temperature",
+                                    "index": 2,
+                                    "name": "T\u00b0 Chambre"
+                                },
+                                {
+                                    "entity": "sensor.basement_temperature",
                                     "index": 3,
+                                    "name": "T\u00b0 Sous-sol"
+                                },
+                                {
+                                    "entity": "sensor.solarium_temperature",
+                                    "index": 4,
+                                    "name": "T\u00b0 Solarium"
+                                },
+                                {
+                                    "entity": "sensor.temperature_water_sensor",
+                                    "index": 5,
+                                    "name": "T\u00b0 Tempo"
+                                },
+                                {
+                                    "entity": "sensor.dark_sky_temperature",
+                                    "index": 6,
                                     "name": "T\u00b0 ext\u00e9rieure"
                                 },
                                 {
                                     "entity": "sensor.dark_sky_apparent_temperature",
-                                    "index": 4,
+                                    "index": 7,
                                     "name": "T\u00b0 apparente"
                                 }
                             ],
@@ -1042,6 +1072,163 @@
                             ],
                             "title": "Xiaomi Roborock",
                             "type": "entities"
+                        },
+                        {
+                            "animate": true,
+                            "entities": [
+                                {
+                                    "entity": "sensor.solarium_temperature",
+                                    "index": 4,
+                                    "name": "T\u00b0 Solarium"
+                                },
+                                {
+                                    "entity": "sensor.temperature_water_sensor",
+                                    "index": 5,
+                                    "name": "T\u00b0 Tempo"
+                                },
+                                {
+                                    "entity": "sensor.dark_sky_temperature",
+                                    "index": 6,
+                                    "name": "T\u00b0 ext\u00e9rieure"
+                                },
+                                {
+                                    "entity": "sensor.dark_sky_apparent_temperature",
+                                    "index": 7,
+                                    "name": "T\u00b0 apparente"
+                                }
+                            ],
+                            "hour24": true,
+                            "hours_to_show": 168,
+                            "name": "Temp\u00e9ratures ext\u00e9rieures",
+                            "type": "custom:mini-graph-card"
+                        },
+                        {
+                            "animate": true,
+                            "entities": [
+                                {
+                                    "entity": "sensor.living_room_temperature",
+                                    "index": 0,
+                                    "name": "T\u00b0 Salon"
+                                },
+                                {
+                                    "entity": "sensor.bathroom_temperature",
+                                    "index": 1,
+                                    "name": "T\u00b0 SDB"
+                                },
+                                {
+                                    "entity": "sensor.bedroom_temperature",
+                                    "index": 2,
+                                    "name": "T\u00b0 Chambre"
+                                },
+                                {
+                                    "entity": "sensor.basement_temperature",
+                                    "index": 3,
+                                    "name": "T\u00b0 Sous-sol"
+                                }
+                            ],
+                            "hour24": true,
+                            "hours_to_show": 168,
+                            "name": "Temp\u00e9ratures int\u00e9rieures",
+                            "type": "custom:mini-graph-card"
+                        },
+                        {
+                            "cards": [
+                                {
+                                    "cards": [
+                                        {
+                                            "entity": "sensor.living_room_temperature",
+                                            "max": 30,
+                                            "min": 0,
+                                            "name": "Salon",
+                                            "severity": {
+                                                "green": 18,
+                                                "red": 10,
+                                                "yellow": 15
+                                            },
+                                            "theme": "default",
+                                            "type": "gauge"
+                                        },
+                                        {
+                                            "entity": "sensor.bedroom_temperature",
+                                            "max": 30,
+                                            "min": 0,
+                                            "name": "Chambre",
+                                            "severity": {
+                                                "green": 18,
+                                                "red": 10,
+                                                "yellow": 15
+                                            },
+                                            "theme": "default",
+                                            "type": "gauge"
+                                        }
+                                    ],
+                                    "title": "Indoor temperatures",
+                                    "type": "horizontal-stack"
+                                },
+                                {
+                                    "cards": [
+                                        {
+                                            "entity": "sensor.bathroom_temperature",
+                                            "max": 30,
+                                            "min": 0,
+                                            "name": "Salle de bain",
+                                            "severity": {
+                                                "green": 18,
+                                                "red": 10,
+                                                "yellow": 15
+                                            },
+                                            "theme": "default",
+                                            "type": "gauge"
+                                        },
+                                        {
+                                            "entity": "sensor.basement_temperature",
+                                            "max": 30,
+                                            "min": 0,
+                                            "name": "Sous-sol",
+                                            "severity": {
+                                                "green": 18,
+                                                "red": 10,
+                                                "yellow": 15
+                                            },
+                                            "theme": "default",
+                                            "type": "gauge"
+                                        }
+                                    ],
+                                    "type": "horizontal-stack"
+                                },
+                                {
+                                    "cards": [
+                                        {
+                                            "entity": "sensor.solarium_temperature",
+                                            "max": 30,
+                                            "min": 0,
+                                            "name": "Solarium",
+                                            "severity": {
+                                                "green": 5,
+                                                "red": 1,
+                                                "yellow": 3
+                                            },
+                                            "theme": "default",
+                                            "type": "gauge"
+                                        },
+                                        {
+                                            "entity": "sensor.temperature_water_sensor",
+                                            "max": 30,
+                                            "min": 0,
+                                            "name": "Tempo",
+                                            "severity": {
+                                                "green": 5,
+                                                "red": -20,
+                                                "yellow": 0
+                                            },
+                                            "theme": "default",
+                                            "type": "gauge"
+                                        }
+                                    ],
+                                    "type": "horizontal-stack"
+                                }
+                            ],
+                            "type": "vertical-stack"
                         }
                     ],
                     "icon": "mdi:home",

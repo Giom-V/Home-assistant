@@ -92,8 +92,9 @@ recorder:
       - script.vacuum_dispatch
       - sensor.bathroom_humidity
       - sensor.bathroom_temperature
-      - sensor.bedroom_humidity
-      - sensor.bedroom_temperature
+      - sensor.basement_bedroom_humidity
+      - sensor.basement_bedroom_temperature
+      - sensor.button_temperature
       - sensor.basement_pressure
       - sensor.basement_temperature
       - sensor.basement_humidity

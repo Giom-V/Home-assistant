@@ -446,11 +446,11 @@
                 "identifiers": [
                     [
                         "deconz",
-                        "00212EFFFF04F2B1"
+                        "00212E04F2B1"
                     ],
                     [
                         "deconz",
-                        "00212E04F2B1"
+                        "00212EFFFF04F2B1"
                     ]
                 ],
                 "manufacturer": "Dresden Elektronik",
@@ -1011,7 +1011,7 @@
                 "via_device_id": "27667204355b45869bc0748a80d5901e"
             },
             {
-                "area_id": "257440c1b16b432b9fbf948a1815526d",
+                "area_id": "09a9199f5c064306b70b13d9d4c1e9bd",
                 "config_entries": [
                     "8a1216e7396440f6aad6f16233eb45af"
                 ],
@@ -1030,8 +1030,8 @@
                 ],
                 "manufacturer": "LUMI",
                 "model": "lumi.sensor_ht",
-                "name": "Bedroom",
-                "name_by_user": "Bedroom",
+                "name": "Basement Bedroom",
+                "name_by_user": "Basement Bedroom",
                 "sw_version": "20160516",
                 "via_device_id": "27667204355b45869bc0748a80d5901e"
             }
