@@ -1034,6 +1034,51 @@
                 "name_by_user": "Basement Bedroom",
                 "sw_version": "20160516",
                 "via_device_id": "27667204355b45869bc0748a80d5901e"
+            },
+            {
+                "area_id": null,
+                "config_entries": [
+                    "ffee49c1f1d34b4db31196d560c88114"
+                ],
+                "connections": [],
+                "id": "a5ce42880adc43bca5d8bb8137556830",
+                "identifiers": [
+                    [
+                        "mobile_app",
+                        "39cf0f6b86c4402890d105e43dc07291"
+                    ]
+                ],
+                "manufacturer": "LGE",
+                "model": "LG-H873",
+                "name": "hasskit_lg_h873_0546",
+                "name_by_user": null,
+                "sw_version": "9",
+                "via_device_id": null
+            },
+            {
+                "area_id": "257440c1b16b432b9fbf948a1815526d",
+                "config_entries": [
+                    "8a1216e7396440f6aad6f16233eb45af"
+                ],
+                "connections": [
+                    [
+                        "zigbee",
+                        "28:6d:97:00:01:10:cd:26"
+                    ]
+                ],
+                "id": "1cf70f18680448ccbab9bc08ed4f9251",
+                "identifiers": [
+                    [
+                        "deconz",
+                        "28:6d:97:00:01:10:cd:26"
+                    ]
+                ],
+                "manufacturer": "Samjin",
+                "model": "button",
+                "name": "Button",
+                "name_by_user": "Button",
+                "sw_version": null,
+                "via_device_id": "27667204355b45869bc0748a80d5901e"
             }
         ]
     },
