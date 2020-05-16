@@ -743,19 +743,19 @@
                                     "columns": 4,
                                     "entities": [
                                         {
-                                            "entity": "sensor.worldwide_confirmed",
+                                            "entity": "sensor.worldwide_coronavirus_confirmed",
                                             "icon": "mdi:account-group-outline"
                                         },
                                         {
-                                            "entity": "sensor.worldwide_current",
+                                            "entity": "sensor.worldwide_coronavirus_current",
                                             "icon": "mdi:biohazard"
                                         },
                                         {
-                                            "entity": "sensor.worldwide_recovered",
+                                            "entity": "sensor.worldwide_coronavirus_recovered",
                                             "icon": "mdi:calendar-check-outline"
                                         },
                                         {
-                                            "entity": "sensor.worldwide_deaths",
+                                            "entity": "sensor.worldwide_coronavirus_deaths",
                                             "icon": "mdi:grave-stone"
                                         }
                                     ],
@@ -766,19 +766,19 @@
                                     "columns": 4,
                                     "entities": [
                                         {
-                                            "entity": "sensor.france_confirmed",
+                                            "entity": "sensor.france_coronavirus_confirmed",
                                             "icon": "mdi:account-group-outline"
                                         },
                                         {
-                                            "entity": "sensor.france_current",
+                                            "entity": "sensor.france_coronavirus_current",
                                             "icon": "mdi:biohazard"
                                         },
                                         {
-                                            "entity": "sensor.france_recovered",
+                                            "entity": "sensor.france_coronavirus_recovered",
                                             "icon": "mdi:calendar-check-outline"
                                         },
                                         {
-                                            "entity": "sensor.france_deaths",
+                                            "entity": "sensor.france_coronavirus_deaths",
                                             "icon": "mdi:grave-stone"
                                         }
                                     ],
@@ -789,19 +789,19 @@
                                     "columns": 4,
                                     "entities": [
                                         {
-                                            "entity": "sensor.canada_confirmed",
+                                            "entity": "sensor.canada_coronavirus_confirmed",
                                             "icon": "mdi:account-group-outline"
                                         },
                                         {
-                                            "entity": "sensor.canada_current",
+                                            "entity": "sensor.canada_coronavirus_current",
                                             "icon": "mdi:biohazard"
                                         },
                                         {
-                                            "entity": "sensor.canada_recovered",
+                                            "entity": "sensor.canada_coronavirus_recovered",
                                             "icon": "mdi:calendar-check-outline"
                                         },
                                         {
-                                            "entity": "sensor.canada_deaths",
+                                            "entity": "sensor.canada_coronavirus_deaths",
                                             "icon": "mdi:grave-stone"
                                         }
                                     ],
