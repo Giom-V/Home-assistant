@@ -2,16 +2,16 @@ platform: template
 sensors:
   meteomedia_mosquitos:
     friendly_name: 'Mosquitos'
-    value_template: '{{ states.sensor.meteomedia_time.attributes["bug"]["bug_mosquito"] }}'
+    value_template: '{{ states.sensor.meteomedia_json.attributes["bug"]["bug_mosquito"] }}'
   meteomedia_flu_level:
     friendly_name: 'Flu Level'
-    value_template: '{{ states.sensor.meteomedia_time.attributes["reports"]["flu_level"] }}'
+    value_template: '{{ states.sensor.meteomedia_json.attributes["reports"]["flu_level"] }}'
   meteomedia_polen_level:
     friendly_name: 'Polen Level'
-    value_template: '{{ states.sensor.meteomedia_time.attributes["obs"]["pollen_adlevel"] }}'
+    value_template: '{{ states.sensor.meteomedia_json.attributes["obs"]["pollen_adlevel"] }}'
   meteomedia_polen_name:
     friendly_name: 'Polen Name'
-    value_template: '{{ states.sensor.meteomedia_time.attributes["obs"]["pollen_name"] }}'
+    value_template: '{{ states.sensor.meteomedia_json.attributes["obs"]["pollen_name"] }}'
   meteomedia_uv_level:
     friendly_name: 'UV Level'
-    value_template: '{{ states.sensor.meteomedia_time.attributes["obs"]["uv_label"] }}'
+    value_template: '{{ states.sensor.meteomedia_json.attributes["obs"]["uv_label"] }}'
