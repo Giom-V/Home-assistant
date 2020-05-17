@@ -1,0 +1,8 @@
+platform: template
+sensors:
+  meteomedia_mosquitos:
+    friendly_name: 'Mosquitos'
+    value_template: '{{ states.sensor.meteomedia_time.attributes["bug"]["bug_mosquito"] }}'
+  meteomedia_polen_level:
+    friendly_name: 'Polen Level'
+    value_template: '{{ states.sensor.meteomedia_time.attributes["obs"]["pollen_adlevel"] }}'
