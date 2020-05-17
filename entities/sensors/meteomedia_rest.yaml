@@ -4,3 +4,4 @@ name: meteomedia_json
 json_attributes:
   - obs
   - bug
+  - reports
