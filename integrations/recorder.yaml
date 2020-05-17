@@ -173,6 +173,11 @@ recorder:
       - sensor.canada_current
       - sensor.canada_recovered
       - sensor.canada_deaths
+      - sensor.meteomedia_mosquitos
+      - sensor.meteomedia_flu_level
+      - sensor.meteomedia_polen_level
+      - sensor.meteomedia_polen_name
+      - sensor.meteomedia_uv_level
       - switch.veilleuse
       - binary_sensor.solarium_door
       - binary_sensor.aurora_visibility
