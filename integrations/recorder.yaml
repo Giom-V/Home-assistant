@@ -177,7 +177,9 @@ recorder:
       - sensor.meteomedia_flu_level
       - sensor.meteomedia_polen_level
       - sensor.meteomedia_polen_name
+      - sensor.meteomedia_polen_details
       - sensor.meteomedia_uv_level
+      - sensor.meteomedia_uv_level_max
       - switch.veilleuse
       - binary_sensor.solarium_door
       - binary_sensor.aurora_visibility
