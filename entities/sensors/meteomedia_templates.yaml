@@ -16,3 +16,7 @@ sensors:
     friendly_name: 'UV Level'
     value_template: '{{ states.sensor.meteomedia_json.attributes["obs"]["uv_label"] }}'
     unit_of_measurement: 'UV Index'
+  meteomedia_uv_current_max:
+    friendly_name: 'UV Level Current/Max'
+    value_template: '{{ states.sensor.meteomedia_uv_level }}/{{ states.sensor.meteomedia_uv_max }}'
+    unit_of_measurement: 'UV Index'
