@@ -15,3 +15,4 @@ sensors:
   meteomedia_uv_level:
     friendly_name: 'UV Level'
     value_template: '{{ states.sensor.meteomedia_json.attributes["obs"]["uv_label"] }}'
+    unit_of_measurement: 'UV Index'
