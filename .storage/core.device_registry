@@ -1079,6 +1079,26 @@
                 "name_by_user": "Button",
                 "sw_version": null,
                 "via_device_id": "27667204355b45869bc0748a80d5901e"
+            },
+            {
+                "area_id": "09a9199f5c064306b70b13d9d4c1e9bd",
+                "config_entries": [
+                    "575f67ad36924e1b8319a977a7087828"
+                ],
+                "connections": [],
+                "id": "0f7a853d7bbe42b985e9e7c401dce734",
+                "identifiers": [
+                    [
+                        "brother",
+                        "U64967H9N111944"
+                    ]
+                ],
+                "manufacturer": "Brother",
+                "model": "HL-L2390DW",
+                "name": "HL-L2390DW",
+                "name_by_user": null,
+                "sw_version": "N1905241619",
+                "via_device_id": null
             }
         ]
     },
