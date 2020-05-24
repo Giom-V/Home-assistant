@@ -59,7 +59,7 @@
                 "icon": null,
                 "name": null,
                 "original_icon": null,
-                "original_name": "Cuisine",
+                "original_name": "Chambre",
                 "platform": "cast",
                 "supported_features": 21389,
                 "unique_id": "dbb352ef-9fd2-0784-d3ea-44d7ed478371",
@@ -4926,7 +4926,7 @@
                 "config_entry_id": "fed020b0e0204cf499c51c8128196640",
                 "device_class": null,
                 "device_id": null,
-                "disabled_by": null,
+                "disabled_by": "user",
                 "entity_id": "sensor.macot_la_plagne_next_rain",
                 "icon": null,
                 "name": null,
@@ -4942,7 +4942,7 @@
                 "config_entry_id": "efc2a0822aa8456cb36110e7e281de41",
                 "device_class": null,
                 "device_id": null,
-                "disabled_by": null,
+                "disabled_by": "user",
                 "entity_id": "sensor.cannes_next_rain",
                 "icon": null,
                 "name": null,
@@ -4958,7 +4958,7 @@
                 "config_entry_id": "adbd39c3830e49dfbcf1feed2f60caaa",
                 "device_class": null,
                 "device_id": null,
-                "disabled_by": null,
+                "disabled_by": "user",
                 "entity_id": "sensor.coublevie_next_rain",
                 "icon": null,
                 "name": null,
@@ -6746,7 +6746,7 @@
                 "unit_of_measurement": "%"
             },
             {
-                "capabilities": null,
+                "capabilities": {},
                 "config_entry_id": null,
                 "device_class": null,
                 "device_id": null,
@@ -6762,7 +6762,7 @@
                 "unit_of_measurement": "\u00b0C"
             },
             {
-                "capabilities": null,
+                "capabilities": {},
                 "config_entry_id": null,
                 "device_class": null,
                 "device_id": null,
@@ -6778,7 +6778,7 @@
                 "unit_of_measurement": null
             },
             {
-                "capabilities": null,
+                "capabilities": {},
                 "config_entry_id": null,
                 "device_class": null,
                 "device_id": null,
@@ -6794,7 +6794,7 @@
                 "unit_of_measurement": "km"
             },
             {
-                "capabilities": null,
+                "capabilities": {},
                 "config_entry_id": null,
                 "device_class": null,
                 "device_id": null,
@@ -6810,7 +6810,7 @@
                 "unit_of_measurement": "km/h"
             },
             {
-                "capabilities": null,
+                "capabilities": {},
                 "config_entry_id": null,
                 "device_class": null,
                 "device_id": null,
@@ -6826,7 +6826,7 @@
                 "unit_of_measurement": null
             },
             {
-                "capabilities": null,
+                "capabilities": {},
                 "config_entry_id": null,
                 "device_class": null,
                 "device_id": null,
@@ -6842,7 +6842,7 @@
                 "unit_of_measurement": null
             },
             {
-                "capabilities": null,
+                "capabilities": {},
                 "config_entry_id": null,
                 "device_class": null,
                 "device_id": null,
@@ -6858,7 +6858,7 @@
                 "unit_of_measurement": null
             },
             {
-                "capabilities": null,
+                "capabilities": {},
                 "config_entry_id": null,
                 "device_class": null,
                 "device_id": null,
@@ -6874,7 +6874,7 @@
                 "unit_of_measurement": null
             },
             {
-                "capabilities": null,
+                "capabilities": {},
                 "config_entry_id": null,
                 "device_class": null,
                 "device_id": null,
@@ -6890,7 +6890,7 @@
                 "unit_of_measurement": "\u00b0C"
             },
             {
-                "capabilities": null,
+                "capabilities": {},
                 "config_entry_id": null,
                 "device_class": null,
                 "device_id": null,
@@ -6906,7 +6906,7 @@
                 "unit_of_measurement": null
             },
             {
-                "capabilities": null,
+                "capabilities": {},
                 "config_entry_id": null,
                 "device_class": null,
                 "device_id": null,
@@ -6922,7 +6922,7 @@
                 "unit_of_measurement": null
             },
             {
-                "capabilities": null,
+                "capabilities": {},
                 "config_entry_id": null,
                 "device_class": null,
                 "device_id": null,
@@ -6938,7 +6938,7 @@
                 "unit_of_measurement": null
             },
             {
-                "capabilities": null,
+                "capabilities": {},
                 "config_entry_id": null,
                 "device_class": null,
                 "device_id": null,
@@ -6954,7 +6954,7 @@
                 "unit_of_measurement": null
             },
             {
-                "capabilities": null,
+                "capabilities": {},
                 "config_entry_id": null,
                 "device_class": null,
                 "device_id": null,
@@ -6970,7 +6970,7 @@
                 "unit_of_measurement": "\u00b0C"
             },
             {
-                "capabilities": null,
+                "capabilities": {},
                 "config_entry_id": null,
                 "device_class": null,
                 "device_id": null,
@@ -6986,7 +6986,7 @@
                 "unit_of_measurement": "\u00b0C"
             },
             {
-                "capabilities": null,
+                "capabilities": {},
                 "config_entry_id": null,
                 "device_class": null,
                 "device_id": null,
@@ -7002,7 +7002,7 @@
                 "unit_of_measurement": "%"
             },
             {
-                "capabilities": null,
+                "capabilities": {},
                 "config_entry_id": null,
                 "device_class": null,
                 "device_id": null,
@@ -7018,7 +7018,7 @@
                 "unit_of_measurement": null
             },
             {
-                "capabilities": null,
+                "capabilities": {},
                 "config_entry_id": null,
                 "device_class": null,
                 "device_id": null,
@@ -7034,7 +7034,7 @@
                 "unit_of_measurement": "degrees"
             },
             {
-                "capabilities": null,
+                "capabilities": {},
                 "config_entry_id": null,
                 "device_class": null,
                 "device_id": null,
@@ -7050,7 +7050,7 @@
                 "unit_of_measurement": "\u00b0C"
             },
             {
-                "capabilities": null,
+                "capabilities": {},
                 "config_entry_id": null,
                 "device_class": null,
                 "device_id": null,
@@ -7066,7 +7066,7 @@
                 "unit_of_measurement": "kPa"
             },
             {
-                "capabilities": null,
+                "capabilities": {},
                 "config_entry_id": null,
                 "device_class": null,
                 "device_id": null,
@@ -7082,7 +7082,7 @@
                 "unit_of_measurement": "%"
             },
             {
-                "capabilities": null,
+                "capabilities": {},
                 "config_entry_id": null,
                 "device_class": null,
                 "device_id": null,
@@ -7098,7 +7098,7 @@
                 "unit_of_measurement": "mm"
             },
             {
-                "capabilities": null,
+                "capabilities": {},
                 "config_entry_id": null,
                 "device_class": null,
                 "device_id": null,
@@ -7114,7 +7114,7 @@
                 "unit_of_measurement": null
             },
             {
-                "capabilities": null,
+                "capabilities": {},
                 "config_entry_id": null,
                 "device_class": null,
                 "device_id": null,
@@ -7130,7 +7130,7 @@
                 "unit_of_measurement": "km/h"
             },
             {
-                "capabilities": null,
+                "capabilities": {},
                 "config_entry_id": null,
                 "device_class": null,
                 "device_id": null,
@@ -7251,7 +7251,7 @@
                 "icon": null,
                 "name": null,
                 "original_icon": null,
-                "original_name": "School at home, Reactivate every night",
+                "original_name": "School at home, Reactivate every morning",
                 "platform": "automation",
                 "supported_features": 0,
                 "unique_id": "SchoolAtHomeReset",
@@ -7277,11 +7277,123 @@
                 "capabilities": {},
                 "config_entry_id": "8a1216e7396440f6aad6f16233eb45af",
                 "device_class": "temperature",
+                "device_id": "1cf70f18680448ccbab9bc08ed4f9251",
+                "disabled_by": null,
+                "entity_id": "sensor.button_temperature",
+                "icon": null,
+                "name": "Button temperature",
+                "original_icon": "mdi:thermometer",
+                "original_name": "Button",
+                "platform": "deconz",
+                "supported_features": 0,
+                "unique_id": "28:6d:97:00:01:10:cd:26-01-0402",
+                "unit_of_measurement": "\u00b0C"
+            },
+            {
+                "capabilities": {},
+                "config_entry_id": "575f67ad36924e1b8319a977a7087828",
+                "device_class": null,
+                "device_id": "0f7a853d7bbe42b985e9e7c401dce734",
+                "disabled_by": null,
+                "entity_id": "sensor.hl_l2390dw_status",
+                "icon": null,
+                "name": null,
+                "original_icon": "mdi:printer",
+                "original_name": "HL-L2390DW Status",
+                "platform": "brother",
+                "supported_features": 0,
+                "unique_id": "u64967h9n111944_status",
+                "unit_of_measurement": null
+            },
+            {
+                "capabilities": {},
+                "config_entry_id": "575f67ad36924e1b8319a977a7087828",
+                "device_class": null,
+                "device_id": "0f7a853d7bbe42b985e9e7c401dce734",
+                "disabled_by": null,
+                "entity_id": "sensor.hl_l2390dw_page_counter",
+                "icon": null,
+                "name": null,
+                "original_icon": "mdi:file-document-outline",
+                "original_name": "HL-L2390DW Page Counter",
+                "platform": "brother",
+                "supported_features": 0,
+                "unique_id": "u64967h9n111944_page_counter",
+                "unit_of_measurement": "p"
+            },
+            {
+                "capabilities": {},
+                "config_entry_id": "575f67ad36924e1b8319a977a7087828",
+                "device_class": null,
+                "device_id": "0f7a853d7bbe42b985e9e7c401dce734",
+                "disabled_by": null,
+                "entity_id": "sensor.hl_l2390dw_duplex_unit_pages_counter",
+                "icon": null,
+                "name": null,
+                "original_icon": "mdi:file-document-outline",
+                "original_name": "HL-L2390DW Duplex Unit Pages Counter",
+                "platform": "brother",
+                "supported_features": 0,
+                "unique_id": "u64967h9n111944_duplex_unit_pages_counter",
+                "unit_of_measurement": "p"
+            },
+            {
+                "capabilities": {},
+                "config_entry_id": "575f67ad36924e1b8319a977a7087828",
+                "device_class": null,
+                "device_id": "0f7a853d7bbe42b985e9e7c401dce734",
+                "disabled_by": null,
+                "entity_id": "sensor.hl_l2390dw_drum_remaining_life",
+                "icon": null,
+                "name": null,
+                "original_icon": "mdi:chart-donut",
+                "original_name": "HL-L2390DW Drum Remaining Life",
+                "platform": "brother",
+                "supported_features": 0,
+                "unique_id": "u64967h9n111944_drum_remaining_life",
+                "unit_of_measurement": "%"
+            },
+            {
+                "capabilities": {},
+                "config_entry_id": "575f67ad36924e1b8319a977a7087828",
+                "device_class": null,
+                "device_id": "0f7a853d7bbe42b985e9e7c401dce734",
+                "disabled_by": null,
+                "entity_id": "sensor.hl_l2390dw_black_toner_remaining",
+                "icon": null,
+                "name": null,
+                "original_icon": "mdi:printer-3d-nozzle",
+                "original_name": "HL-L2390DW Black Toner Remaining",
+                "platform": "brother",
+                "supported_features": 0,
+                "unique_id": "u64967h9n111944_black_toner_remaining",
+                "unit_of_measurement": "%"
+            },
+            {
+                "capabilities": {},
+                "config_entry_id": "575f67ad36924e1b8319a977a7087828",
+                "device_class": null,
+                "device_id": "0f7a853d7bbe42b985e9e7c401dce734",
+                "disabled_by": null,
+                "entity_id": "sensor.hl_l2390dw_uptime",
+                "icon": null,
+                "name": null,
+                "original_icon": "mdi:timer",
+                "original_name": "HL-L2390DW Uptime",
+                "platform": "brother",
+                "supported_features": 0,
+                "unique_id": "u64967h9n111944_uptime",
+                "unit_of_measurement": "d"
+            },
+            {
+                "capabilities": {},
+                "config_entry_id": "8a1216e7396440f6aad6f16233eb45af",
+                "device_class": "temperature",
                 "device_id": "6fa2f2dc6c814d6183971b8993b07c03",
                 "disabled_by": null,
-                "entity_id": "sensor.basement_bedroom_temperature",
+                "entity_id": "sensor.aurore_bedroom_temperature",
                 "icon": null,
-                "name": "Basement Bedroom",
+                "name": "Aurore Bedroom",
                 "original_icon": "mdi:thermometer",
                 "original_name": "Basement Bedroom",
                 "platform": "deconz",
@@ -7295,9 +7407,9 @@
                 "device_class": "humidity",
                 "device_id": "6fa2f2dc6c814d6183971b8993b07c03",
                 "disabled_by": null,
-                "entity_id": "sensor.basement_bedroom_humidity",
+                "entity_id": "sensor.aurore_bedroom_humidity",
                 "icon": null,
-                "name": "Basement Bedroom",
+                "name": "Aurore Bedroom",
                 "original_icon": null,
                 "original_name": "Basement Bedroom",
                 "platform": "deconz",
@@ -7311,31 +7423,15 @@
                 "device_class": "battery",
                 "device_id": "6fa2f2dc6c814d6183971b8993b07c03",
                 "disabled_by": null,
-                "entity_id": "sensor.basement_bedroom_battery_level",
+                "entity_id": "sensor.aurore_bedroom_battery_level",
                 "icon": null,
-                "name": "Basement Bedroom Battery Level",
+                "name": "Aurore Bedroom Battery Level",
                 "original_icon": null,
                 "original_name": "Basement Bedroom Battery Level",
                 "platform": "deconz",
                 "supported_features": 0,
                 "unique_id": "00:15:8d:00:04:0e:72:e0-battery",
                 "unit_of_measurement": "%"
-            },
-            {
-                "capabilities": {},
-                "config_entry_id": "8a1216e7396440f6aad6f16233eb45af",
-                "device_class": "temperature",
-                "device_id": "1cf70f18680448ccbab9bc08ed4f9251",
-                "disabled_by": null,
-                "entity_id": "sensor.button_temperature",
-                "icon": null,
-                "name": "Button temperature",
-                "original_icon": "mdi:thermometer",
-                "original_name": "Button",
-                "platform": "deconz",
-                "supported_features": 0,
-                "unique_id": "28:6d:97:00:01:10:cd:26-01-0402",
-                "unit_of_measurement": "\u00b0C"
             }
         ]
     },
