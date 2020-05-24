@@ -402,22 +402,14 @@
                             "entities": [
                                 {
                                     "action": {
-                                        "service": "switch.toggle"
+                                        "service": "light.toggle"
                                     },
-                                    "entity": "switch.veilleuse",
+                                    "entity": "light.bedroom",
                                     "map_state": {
                                         "off": "mdi:lightbulb-off-outline",
                                         "on": "mdi:lightbulb-on"
                                     },
-                                    "name": "Veilleuse"
-                                },
-                                {
-                                    "action": {
-                                        "service": "script.turn_on"
-                                    },
-                                    "entity": "script.vacuum_aurore_bedroom",
-                                    "icon": "mdi:robot-vacuum",
-                                    "name": "Aurore"
+                                    "name": null
                                 },
                                 {
                                     "entity": "sensor.button_temperature",
@@ -429,7 +421,7 @@
                                     },
                                     "entity": "script.vacuum_bedroom",
                                     "icon": "mdi:robot-vacuum",
-                                    "name": "Parents"
+                                    "name": "Aspi"
                                 },
                                 {
                                     "entity": "media_player.lenovosmartclock3394",
@@ -441,8 +433,8 @@
                                     }
                                 }
                             ],
-                            "heading": "\ud83d\udecf Chambres",
-                            "row_size": 2,
+                            "heading": "\ud83d\udecf Chambre",
+                            "row_size": 3,
                             "type": "custom:banner-card"
                         },
                         {
@@ -486,14 +478,6 @@
                             "background": "#784200",
                             "entities": [
                                 {
-                                    "entity": "sensor.basement_temperature",
-                                    "name": "Temperature"
-                                },
-                                {
-                                    "entity": "sensor.basement_bedroom_temperature",
-                                    "name": "Chambre"
-                                },
-                                {
                                     "action": {
                                         "service": "light.toggle"
                                     },
@@ -505,6 +489,10 @@
                                     "name": ""
                                 },
                                 {
+                                    "entity": "sensor.basement_temperature",
+                                    "name": "Temperature"
+                                },
+                                {
                                     "entity": "binary_sensor.tradfri_motion_sensor",
                                     "map_state": {
                                         "off": "mdi:stairs",
@@ -514,7 +502,38 @@
                                 }
                             ],
                             "heading": "\ud83d\udda5 Sous-sol",
-                            "row_size": 2,
+                            "row_size": 3,
+                            "type": "custom:banner-card"
+                        },
+                        {
+                            "background": "#F10F6D",
+                            "entities": [
+                                {
+                                    "action": {
+                                        "service": "switch.toggle"
+                                    },
+                                    "entity": "switch.veilleuse",
+                                    "map_state": {
+                                        "off": "mdi:lightbulb-off-outline",
+                                        "on": "mdi:lightbulb-on"
+                                    },
+                                    "name": "Veilleuse"
+                                },
+                                {
+                                    "entity": "sensor.aurore_bedroom_temperature",
+                                    "name": "Temperature"
+                                },
+                                {
+                                    "action": {
+                                        "service": "script.turn_on"
+                                    },
+                                    "entity": "script.vacuum_aurore_bedroom",
+                                    "icon": "mdi:robot-vacuum",
+                                    "name": "Aspi"
+                                }
+                            ],
+                            "heading": "\ud83d\udecf Chambre d'Aurore",
+                            "row_size": 3,
                             "type": "custom:banner-card"
                         }
                     ],
@@ -2119,7 +2138,7 @@
                     "cards": [
                         {
                             "card": {
-                                "content_template": "\"states('sensor.time') {{ states('sensor.time') }}\"\n\"now() {{ now()}}\" \n\"now().timestamp() + (10 * 60) {{ now().timestamp() | int + (10 * 60)  | timestamp_local }}\"\n\"states('input_datetime.nighttime_start')[0:5] {{ states('input_datetime.nighttime_start')[0:5] }}\"\n\"states('sensor.time') >= states('input_datetime.nighttime_start')[0:5] {{ states('sensor.time') >= states('input_datetime.nighttime_start')[0:5] }}\"\n",
+                                "content_template": "{{ sensor.meteomedia_uv_level }}",
                                 "title": "Test template",
                                 "type": "markdown"
                             },
@@ -2370,6 +2389,20 @@
                             "entities": [],
                             "title": "School @ Home",
                             "type": "entities"
+                        },
+                        {
+                            "card": {
+                                "title": "Meteomedia",
+                                "type": "entities"
+                            },
+                            "filter": {
+                                "include": [
+                                    {
+                                        "entity_id": "sensor.meteomedia_*"
+                                    }
+                                ]
+                            },
+                            "type": "custom:auto-entities"
                         }
                     ],
                     "icon": "mdi:test-tube",

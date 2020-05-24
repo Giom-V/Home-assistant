@@ -79,7 +79,7 @@ yeelight:
       use_music_mode: False #(defaults to False)
       save_on_change: False #(defaults to True)
     192.168.86.135:
-      name: Spare Color
+      name: Bedroom
       transition: 1000
       use_music_mode: False #(defaults to False)
       save_on_change: False #(defaults to True)
