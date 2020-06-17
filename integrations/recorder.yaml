@@ -94,8 +94,9 @@ recorder:
       - sensor.aurore_bedroom_humidity
       - sensor.bathroom_humidity
       - sensor.bathroom_temperature
-      - sensor.bedroom_humidity
-      - sensor.bedroom_temperature
+      - sensor.basement_bedroom_humidity
+      - sensor.basement_bedroom_temperature
+      - sensor.button_temperature
       - sensor.basement_pressure
       - sensor.basement_temperature
       - sensor.basement_humidity
@@ -176,6 +177,14 @@ recorder:
       - sensor.canada_current
       - sensor.canada_recovered
       - sensor.canada_deaths
+      - sensor.meteomedia_mosquitos
+      - sensor.meteomedia_flu_level
+      - sensor.meteomedia_polen_level
+      - sensor.meteomedia_polen_name
+      - sensor.meteomedia_polen_details
+      - sensor.meteomedia_uv_level
+      - sensor.meteomedia_uv_level_max
+      - sensor.meteomedia_uv_current_max
       - switch.veilleuse
       - binary_sensor.solarium_door
       - binary_sensor.aurora_visibility

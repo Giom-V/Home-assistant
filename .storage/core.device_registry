@@ -58,7 +58,7 @@
                 "model": "Point v106",
                 "name": "Living room",
                 "name_by_user": null,
-                "sw_version": 13134,
+                "sw_version": 13234,
                 "via_device_id": "11f11385557e4967a884d69c5ffa629a"
             },
             {
@@ -299,7 +299,7 @@
                         "6cbdda3bb07d76e68b5987d529259a2a"
                     ]
                 ],
-                "manufacturer": "Unknown manufacturer",
+                "manufacturer": "Google Inc.",
                 "model": "Google Home Mini",
                 "name": "Gogol Mini",
                 "name_by_user": null,
@@ -339,7 +339,7 @@
                         "c66e26cea1639c8633526ed2cdd0dfbc"
                     ]
                 ],
-                "manufacturer": "Unknown manufacturer",
+                "manufacturer": "Google Inc.",
                 "model": "Chromecast Ultra",
                 "name": "Salon",
                 "name_by_user": null,
@@ -384,7 +384,7 @@
                         "27ecc5daf648652a5f3d6f01ca971e71"
                     ]
                 ],
-                "manufacturer": "Unknown manufacturer",
+                "manufacturer": "Google Inc.",
                 "model": "Google Home",
                 "name": "Gogol Home",
                 "name_by_user": null,
@@ -404,7 +404,7 @@
                         "9d889fe9c5b3fb2f342b19a574623a43"
                     ]
                 ],
-                "manufacturer": "Unknown manufacturer",
+                "manufacturer": "Google Inc.",
                 "model": "Lenovo Smart Clock",
                 "name": "R\u00e9veil",
                 "name_by_user": null,
@@ -737,7 +737,7 @@
                 "model": "",
                 "name": "HACS",
                 "name_by_user": null,
-                "sw_version": "0.24.1",
+                "sw_version": "0.24.5",
                 "via_device_id": null
             },
             {
@@ -1011,7 +1011,7 @@
                 "via_device_id": "27667204355b45869bc0748a80d5901e"
             },
             {
-                "area_id": "257440c1b16b432b9fbf948a1815526d",
+                "area_id": "f345537ab65b46c5b78cdf82bf41ea9d",
                 "config_entries": [
                     "8a1216e7396440f6aad6f16233eb45af"
                 ],
@@ -1030,10 +1030,75 @@
                 ],
                 "manufacturer": "LUMI",
                 "model": "lumi.sensor_ht",
-                "name": "Bedroom",
-                "name_by_user": "Bedroom",
+                "name": "Basement Bedroom",
+                "name_by_user": "Aurore Bedroom",
                 "sw_version": "20160516",
                 "via_device_id": "27667204355b45869bc0748a80d5901e"
+            },
+            {
+                "area_id": null,
+                "config_entries": [
+                    "ffee49c1f1d34b4db31196d560c88114"
+                ],
+                "connections": [],
+                "id": "a5ce42880adc43bca5d8bb8137556830",
+                "identifiers": [
+                    [
+                        "mobile_app",
+                        "39cf0f6b86c4402890d105e43dc07291"
+                    ]
+                ],
+                "manufacturer": "LGE",
+                "model": "LG-H873",
+                "name": "hasskit_lg_h873_0546",
+                "name_by_user": null,
+                "sw_version": "9",
+                "via_device_id": null
+            },
+            {
+                "area_id": "257440c1b16b432b9fbf948a1815526d",
+                "config_entries": [
+                    "8a1216e7396440f6aad6f16233eb45af"
+                ],
+                "connections": [
+                    [
+                        "zigbee",
+                        "28:6d:97:00:01:10:cd:26"
+                    ]
+                ],
+                "id": "1cf70f18680448ccbab9bc08ed4f9251",
+                "identifiers": [
+                    [
+                        "deconz",
+                        "28:6d:97:00:01:10:cd:26"
+                    ]
+                ],
+                "manufacturer": "Samjin",
+                "model": "button",
+                "name": "Button",
+                "name_by_user": "Button",
+                "sw_version": null,
+                "via_device_id": "27667204355b45869bc0748a80d5901e"
+            },
+            {
+                "area_id": "09a9199f5c064306b70b13d9d4c1e9bd",
+                "config_entries": [
+                    "575f67ad36924e1b8319a977a7087828"
+                ],
+                "connections": [],
+                "id": "0f7a853d7bbe42b985e9e7c401dce734",
+                "identifiers": [
+                    [
+                        "brother",
+                        "U64967H9N111944"
+                    ]
+                ],
+                "manufacturer": "Brother",
+                "model": "HL-L2390DW",
+                "name": "HL-L2390DW",
+                "name_by_user": null,
+                "sw_version": "N1905241619",
+                "via_device_id": null
             }
         ]
     },

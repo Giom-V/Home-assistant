@@ -5,13 +5,16 @@
   - at: '8:30'
     platform: time
   condition:
-    condition: time
-    weekday:
-    - mon
-    - tue
-    - wed
-    - thu
-    - fri
+    - condition: time
+      weekday:
+      - mon
+      - tue
+      - wed
+      - thu
+      - fri
+    - condition: state
+      entity_id: media_player.gogol_home
+      state: 'off'
   action:
   - service: tts.google_say
     entity_id: media_player.gogol_home
@@ -24,13 +27,16 @@
   - at: '9:30'
     platform: time
   condition:
-    condition: time
-    weekday:
-    - mon
-    - tue
-    - wed
-    - thu
-    - fri
+    - condition: time
+      weekday:
+      - mon
+      - tue
+      - wed
+      - thu
+      - fri
+    - condition: state
+      entity_id: media_player.gogol_home
+      state: 'off'
   action:
   - service: tts.google_say
     entity_id: media_player.gogol_home
@@ -43,13 +49,16 @@
   - at: '10:00'
     platform: time
   condition:
-    condition: time
-    weekday:
-    - mon
-    - tue
-    - wed
-    - thu
-    - fri
+    - condition: time
+      weekday:
+      - mon
+      - tue
+      - wed
+      - thu
+      - fri
+    - condition: state
+      entity_id: media_player.gogol_home
+      state: 'off'
   action:
   - service: tts.google_say
     entity_id: media_player.gogol_home
@@ -62,13 +71,16 @@
   - at: '11:00'
     platform: time
   condition:
-    condition: time
-    weekday:
-    - mon
-    - tue
-    - wed
-    - thu
-    - fri
+    - condition: time
+      weekday:
+      - mon
+      - tue
+      - wed
+      - thu
+      - fri
+    - condition: state
+      entity_id: media_player.gogol_home
+      state: 'off'
   action:
   - service: tts.google_say
     entity_id: media_player.gogol_home
@@ -81,13 +93,16 @@
   - at: '12:00'
     platform: time
   condition:
-    condition: time
-    weekday:
-    - mon
-    - tue
-    - wed
-    - thu
-    - fri
+    - condition: time
+      weekday:
+      - mon
+      - tue
+      - wed
+      - thu
+      - fri
+    - condition: state
+      entity_id: media_player.gogol_home
+      state: 'off'
   action:
   - service: tts.google_say
     entity_id: 
@@ -102,13 +117,16 @@
   - at: '13:00'
     platform: time
   condition:
-    condition: time
-    weekday:
-    - mon
-    - tue
-    - wed
-    - thu
-    - fri
+    - condition: time
+      weekday:
+      - mon
+      - tue
+      - wed
+      - thu
+      - fri
+    - condition: state
+      entity_id: media_player.gogol_home
+      state: 'off'
   action:
   - service: tts.google_say
     entity_id: media_player.gogol_home
@@ -121,13 +139,16 @@
   - at: '14:00'
     platform: time
   condition:
-    condition: time
-    weekday:
-    - mon
-    - tue
-    - wed
-    - thu
-    - fri
+    - condition: time
+      weekday:
+      - mon
+      - tue
+      - wed
+      - thu
+      - fri
+    - condition: state
+      entity_id: media_player.gogol_home
+      state: 'off'
   action:
   - service: tts.google_say
     entity_id: media_player.gogol_home
@@ -140,13 +161,16 @@
   - at: '15:00'
     platform: time
   condition:
-    condition: time
-    weekday:
-    - mon
-    - tue
-    - wed
-    - thu
-    - fri
+    - condition: time
+      weekday:
+      - mon
+      - tue
+      - wed
+      - thu
+      - fri
+    - condition: state
+      entity_id: media_player.gogol_home
+      state: 'off'
   action:
   - service: tts.google_say
     entity_id: media_player.gogol_home
@@ -159,13 +183,16 @@
   - at: '15:30'
     platform: time
   condition:
-    condition: time
-    weekday:
-    - mon
-    - tue
-    - wed
-    - thu
-    - fri
+    - condition: time
+      weekday:
+      - mon
+      - tue
+      - wed
+      - thu
+      - fri
+    - condition: state
+      entity_id: media_player.gogol_home
+      state: 'off'
   action:
   - service: tts.google_say
     entity_id: media_player.gogol_home
@@ -178,13 +205,16 @@
   - at: '16:30'
     platform: time
   condition:
-    condition: time
-    weekday:
-    - mon
-    - tue
-    - wed
-    - thu
-    - fri
+    - condition: time
+      weekday:
+      - mon
+      - tue
+      - wed
+      - thu
+      - fri
+    - condition: state
+      entity_id: media_player.gogol_home
+      state: 'off'
   action:
   - service: tts.google_say
     entity_id: media_player.gogol_home
@@ -197,13 +227,16 @@
   - at: '17:30'
     platform: time
   condition:
-    condition: time
-    weekday:
-    - mon
-    - tue
-    - wed
-    - thu
-    - fri
+    - condition: time
+      weekday:
+      - mon
+      - tue
+      - wed
+      - thu
+      - fri
+    - condition: state
+      entity_id: media_player.gogol_home
+      state: 'off'
   action:
   - service: tts.google_say
     entity_id: media_player.gogol_home
