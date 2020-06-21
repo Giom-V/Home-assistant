@@ -122,9 +122,6 @@
       minutes: 5
   condition:
   - condition: state
-    entity_id: binary_sensor.people_home
-    state: 'on'
-  - condition: state
     entity_id: vacuum.xiaomi_vacuum_cleaner
     state: 'docked'
     for:
