@@ -14,7 +14,7 @@ before_install:
   - touch ./google_calendar.yaml
   - mv secrets/home-assistant.fake.json secrets/home-assistant.json
 install:
-  - pip3 install homeassistant netdisco python-dateutil geopy
+  - pip3 install homeassistant netdisco python-dateutil geopy ratelimit
   - hass --version
 script:
   - hass -c . --script check_config
