@@ -112,3 +112,21 @@
   - service: script.turn_on
     data:
       entity_id: script.vacuum_kitchen_and_diningroom
+- id: vacuum_kitchen_and_dining_room_when_we_are_away_covid_version
+  alias: vacuum Kitchen and dining room when we are away (Covid version)
+  trigger:
+  - platform: state
+    entity_id: person.giom_2, person.claire_2
+    to: not_home
+    for:
+      minutes: 5
+  condition:
+  - condition: state
+    entity_id: vacuum.xiaomi_vacuum_cleaner
+    state: 'docked'
+    for:
+      hours: 10
+  action:
+  - service: script.turn_on
+    data:
+      entity_id: script.vacuum_kitchen_and_diningroom
