@@ -18,8 +18,11 @@ sensors:
     attribute_templates:
       numeric_value: '{{ states.sensor.meteomedia_json.attributes["reports"]["uv_index"] }}'
   meteomedia_uv_level_max:
-    friendly_name: 'UV Level text'
+    friendly_name: 'UV Level max'
     value_template: '{{ states.sensor.meteomedia_json.attributes["obs"]["uv_label"] }}'
     unit_of_measurement: 'UV Index'
     attribute_templates:
       numeric_value: '{{ states.sensor.meteomedia_json.attributes["obs"]["uv_index"] }}'
+  meteomedia_uv_level_current_max:
+    friendly_name: 'UV Level current/max'
+    value_template: "{{ state_attr('meteomedia_uv_level','numeric value') }}/{{ state_attr('meteomedia_uv_level_max','numeric value') }}"
