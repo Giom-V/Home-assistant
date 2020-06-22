@@ -242,3 +242,32 @@
     entity_id: media_player.gogol_home
     data:
       message: La journée d'école est finie, c'est le moment de retrouver les parents. J'ai pas de message !
+- id: SchoolAtHomeReset
+  alias: School at home, Reactivate every morning
+  initial_state: false
+  trigger:
+  - at: '6:00'
+    platform: time
+  action:
+    - service: automation.turn_on
+      entity_id: script.SchoolAtHome830
+    - service: automation.turn_on
+      entity_id: script.SchoolAtHome930
+    - service: automation.turn_on
+      entity_id: script.SchoolAtHome10
+    - service: automation.turn_on
+      entity_id: script.SchoolAtHome11
+    - service: automation.turn_on
+      entity_id: script.SchoolAtHome12
+    - service: automation.turn_on
+      entity_id: script.SchoolAtHome13    
+    - service: automation.turn_on
+      entity_id: script.SchoolAtHome14    
+    - service: automation.turn_on
+      entity_id: script.SchoolAtHome15    
+    - service: automation.turn_on
+      entity_id: script.SchoolAtHome1530    
+    - service: automation.turn_on
+      entity_id: script.SchoolAtHome1630    
+    - service: automation.turn_on
+      entity_id: script.SchoolAtHome1730
