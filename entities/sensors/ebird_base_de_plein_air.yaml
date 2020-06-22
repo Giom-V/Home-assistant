@@ -1,0 +1,4 @@
+platform: scrape
+resource: https://ebird.org/qc/hotspot/L663110?yr=all&m=&rank=mrec
+name: eBirds Base de plein air
+select: '#sightingsTable tbody #has-det-0 .species-name'

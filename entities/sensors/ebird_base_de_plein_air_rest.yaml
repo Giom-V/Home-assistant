@@ -1,0 +1,25 @@
+# Sadly doesn't work as expected because of the 255 characters limit :(
+# platform: rest
+# resource: https://api.ebird.org/v2/data/obs/geo/recent?lat=46.7777219&lng=-71.3269207&maxResults=15&dist=2&back=8&sppLocale=fr
+# name: ebird_base_de_plein_air_json
+# headers:
+#   X-eBirdApiToken: bluvudkg3dkr
+# value_template: >
+#   {% set count = 0 %}
+#   {% for obs in value_json %}
+#     {% if count<3
+#       and not "colvert" in obs.comName
+#       and not "Bernache" in obs.comName
+#       and not "Goéland" in obs.comName
+#       and not "Merle" in obs.comName
+#       and not "Carouge à épaulettes" in obs.comName
+#       and not "Goéland" in obs.comName
+#       and not "Corneille" in obs.comName
+#       and not "Cormoran" in obs.comName
+#       and not "Corbeau" in obs.comName
+#       and not "Quiscale bronzé" in obs.comName
+#     %}
+#       - {{obs.comName}}
+#       {% set count = count +1 %}
+#     {% endif %}
+#   {% endfor %}
