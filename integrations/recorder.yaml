@@ -130,6 +130,7 @@ recorder:
       - sensor.giom_s_time_at_work_last_week
       - sensor.giom_s_time_at_work_this_week
       - sensor.google_fit_distance
+      - sensor.google_fit_move_time
       - sensor.google_fit_steps
       - sensor.linky_yesterday
       - sensor.living_room_humidity
