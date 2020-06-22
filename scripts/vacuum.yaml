@@ -6,7 +6,7 @@ vacuum_dispatch:
     - service: system_log.write
       data_template:
         message: "Text received to dispatch Robbie: {{ room|lower }}"
-        level: info
+        level: error
         logger: script.vacuum_dispatch
     - service_template: >
         {% set room_lower = room|lower %}
@@ -68,10 +68,11 @@ vacuum_dispatch:
           script.vacuum_livingroom
         {% elif "living" in room_lower %}
           script.vacuum_livingroom
+        {% else %}
+          script.vacuum_diningroom
         {% endif %}
       data_template:
-        times: >
-          {% set times = 1 %}
+        times: '{% set times = 1 %}
           {% if "2 fois" in room_lower %}
             {% set times = 2 %}
           {% elif "deux fois" in room_lower %}
@@ -91,7 +92,7 @@ vacuum_dispatch:
           {% elif "three times" in room_lower %}
             {% set times = 3 %}
           {% endif %}
-          '{{ times }}'
+          {{ times }}'
 vacuum_kitchen:
   alias: "Vacuum Kitchen"
   sequence:
@@ -101,11 +102,10 @@ vacuum_kitchen:
     - service: xiaomi_miio.vacuum_clean_zone
       data_template:
         entity_id: vacuum.xiaomi_vacuum_cleaner
-        command: app_zoned_clean
         repeats: >
           {% set vacuum_times = 1 %}
           {% if times is defined %}
-            {% set vacuum_times = times %}
+           {% set vacuum_times = times %}
           {% endif %}
           {{vacuum_times}}
         zone: [[24384,22183,27484,25133]]
@@ -122,11 +122,10 @@ vacuum_kitchen_and_diningroom:
     - service: xiaomi_miio.vacuum_clean_zone
       data_template:
         entity_id: vacuum.xiaomi_vacuum_cleaner
-        command: app_zoned_clean
         repeats: >
           {% set vacuum_times = 1 %}
           {% if times is defined %}
-            {% set vacuum_times = times %}
+           {% set vacuum_times = times %}
           {% endif %}
           {{vacuum_times}}
         zone: 
@@ -145,11 +144,10 @@ vacuum_diningroom:
     - service: xiaomi_miio.vacuum_clean_zone
       data_template:
         entity_id: vacuum.xiaomi_vacuum_cleaner
-        command: app_zoned_clean
         repeats: >
           {% set vacuum_times = 1 %}
           {% if times is defined %}
-            {% set vacuum_times = times %}
+           {% set vacuum_times = times %}
           {% endif %}
           {{vacuum_times}}
         zone: [[24964,25174,27714,28424]]
@@ -166,11 +164,10 @@ vacuum_bathroom:
     - service: xiaomi_miio.vacuum_clean_zone
       data_template:
         entity_id: vacuum.xiaomi_vacuum_cleaner
-        command: app_zoned_clean
         repeats: >
           {% set vacuum_times = 1 %}
           {% if times is defined %}
-            {% set vacuum_times = times %}
+           {% set vacuum_times = times %}
           {% endif %}
           {{vacuum_times}}
         zone: [[23790,17237,28140,21137]]
@@ -187,11 +184,10 @@ vacuum_bedroom:
     - service: xiaomi_miio.vacuum_clean_zone
       data_template:
         entity_id: vacuum.xiaomi_vacuum_cleaner
-        command: app_zoned_clean
         repeats: >
           {% set vacuum_times = 1 %}
           {% if times is defined %}
-            {% set vacuum_times = times %}
+           {% set vacuum_times = times %}
           {% endif %}
           {{vacuum_times}}
         zone: [[28091,17501,32541,21201]]
@@ -208,11 +204,10 @@ vacuum_aurore_bedroom:
     - service: xiaomi_miio.vacuum_clean_zone
       data_template:
         entity_id: vacuum.xiaomi_vacuum_cleaner
-        command: app_zoned_clean
         repeats: >
           {% set vacuum_times = 1 %}
           {% if times is defined %}
-            {% set vacuum_times = times %}
+           {% set vacuum_times = times %}
           {% endif %}
           {{vacuum_times}}
         zone: [[28098,21247,30898,23797]]
@@ -229,11 +224,10 @@ vacuum_livingroom:
     - service: xiaomi_miio.vacuum_clean_zone
       data_template:
         entity_id: vacuum.xiaomi_vacuum_cleaner
-        command: app_zoned_clean
         repeats: >
           {% set vacuum_times = 1 %}
           {% if times is defined %}
-            {% set vacuum_times = times %}
+           {% set vacuum_times = times %}
           {% endif %}
           {{vacuum_times}}
         zone: [[27794,23764,32644,28264]]
@@ -250,11 +244,10 @@ vacuum_aurore_zone:
     - service: xiaomi_miio.vacuum_clean_zone
       data_template:
         entity_id: vacuum.xiaomi_vacuum_cleaner
-        command: app_zoned_clean
         repeats: >
           {% set vacuum_times = 1 %}
           {% if times is defined %}
-            {% set vacuum_times = times %}
+           {% set vacuum_times = times %}
           {% endif %}
           {{vacuum_times}}
         zone: [[30749,24974,32449,28274]]

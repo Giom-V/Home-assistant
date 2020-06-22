@@ -14,7 +14,7 @@ from datetime import timedelta
 import async_timeout
 import homeassistant.util.dt as dt_util
 import trakt
-import voluptuous as vol
+from homeassistant import config_entries, core
 from homeassistant.const import (
     CONF_ACCESS_TOKEN,
     CONF_CLIENT_ID,
@@ -23,9 +23,7 @@ from homeassistant.const import (
     CONF_SCAN_INTERVAL,
 )
 from homeassistant.helpers import aiohttp_client, config_entry_oauth2_flow
-from homeassistant.helpers import config_validation as cv
-from homeassistant.helpers.dispatcher import async_dispatcher_send
-from homeassistant.helpers.event import async_track_time_interval
+from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 from trakt.calendar import MyShowCalendar
 from trakt.tv import TVShow
 
@@ -33,55 +31,19 @@ from . import config_flow
 from .const import (
     CARD_DEFAULT,
     CONF_DAYS,
-    DATA_TRAKT_CRED,
-    DATA_UPDATED,
     DEFAULT_DAYS,
     DEFAULT_SCAN_INTERVAL,
     DOMAIN,
     OAUTH2_AUTHORIZE,
     OAUTH2_TOKEN,
 )
+from homeassistant.exceptions import ConfigEntryNotReady
 
 _LOGGER = logging.getLogger(__name__)
 
-CONFIG_SCHEMA = vol.Schema(
-    {
-        DOMAIN: vol.Schema(
-            {
-                vol.Required(CONF_CLIENT_ID): cv.string,
-                vol.Required(CONF_CLIENT_SECRET): cv.string,
-            }
-        )
-    },
-    extra=vol.ALLOW_EXTRA,
-)
-
 
 async def async_setup(hass, config) -> bool:
-    """Set up Trakt integration."""
-    hass.data[DOMAIN] = {}
-
-    if DOMAIN not in config:
-        return True
-
-    config_flow.TraktOAuth2FlowHandler.async_register_implementation(
-        hass,
-        config_entry_oauth2_flow.LocalOAuth2Implementation(
-            hass,
-            DOMAIN,
-            config[DOMAIN][CONF_CLIENT_ID],
-            config[DOMAIN][CONF_CLIENT_SECRET],
-            OAUTH2_AUTHORIZE,
-            OAUTH2_TOKEN,
-        ),
-    )
-    hass.data.setdefault(
-        DATA_TRAKT_CRED,
-        {
-            CONF_CLIENT_ID: config[DOMAIN][CONF_CLIENT_ID],
-            CONF_CLIENT_SECRET: config[DOMAIN][CONF_CLIENT_SECRET],
-        },
-    )
+    """Trakt integration doesn't support configuration.yaml."""
 
     return True
 
@@ -89,59 +51,92 @@ async def async_setup(hass, config) -> bool:
 async def async_setup_entry(hass, entry) -> bool:
     """Set up Trakt from config entry."""
 
+    config_flow.TraktOAuth2FlowHandler.async_register_implementation(
+        hass,
+        config_entry_oauth2_flow.LocalOAuth2Implementation(
+            hass,
+            DOMAIN,
+            entry.data[CONF_CLIENT_ID],
+            entry.data[CONF_CLIENT_SECRET],
+            OAUTH2_AUTHORIZE,
+            OAUTH2_TOKEN,
+        ),
+    )
+
     implementation = await config_entry_oauth2_flow.async_get_config_entry_implementation(
         hass, entry
     )
 
     session = config_entry_oauth2_flow.OAuth2Session(hass, entry, implementation)
     await session.async_ensure_token_valid()
-    trakt_data = Trakt_Data(hass, entry, session)
 
-    if not await trakt_data.async_setup():
+    coordinator = Trakt_Data(hass, entry, session)
+    if not await coordinator.async_setup():
         return False
-    hass.data[DOMAIN] = trakt_data
+
+    hass.data.setdefault(DOMAIN, {})[entry.entry_id] = coordinator
 
     hass.async_create_task(
         hass.config_entries.async_forward_entry_setup(entry, "sensor")
     )
+
     return True
 
 
-async def async_unload_entry(hass, entry):
+async def async_unload_entry(hass, entry) -> bool:
     """Unload Trakt integration."""
-    if hass.data[DOMAIN].unsub_timer:
-        hass.data[DOMAIN].unsub_timer()
+    if hass.data[DOMAIN][entry.entry_id].unsub_timer:
+        hass.data[DOMAIN][entry.entry_id].unsub_timer()
 
     await hass.config_entries.async_forward_entry_unload(entry, "sensor")
 
-    hass.data.pop(DOMAIN)
+    hass.data[DOMAIN].pop(entry.entry_id)
 
     return True
 
 
-class Trakt_Data:
+class Trakt_Data(DataUpdateCoordinator):
     """Represent Trakt data."""
 
-    def __init__(self, hass, config_entry, implementation):
+    def __init__(
+        self,
+        hass: core.HomeAssistant,
+        config_entry: config_entries.ConfigEntry,
+        session: config_entry_oauth2_flow.OAuth2Session,
+    ):
         """Initialize trakt data."""
         self.hass = hass
         self.config_entry = config_entry
-        self.session = config_entry_oauth2_flow.OAuth2Session(
-            hass, config_entry, implementation
-        )
+        self.session = session
         self.unsub_timer = None
-        self.details = {}
-        self.calendar = None
+        self.calendar = {}
+
+        super().__init__(
+            self.hass,
+            _LOGGER,
+            name=DOMAIN,
+            update_method=self.async_update,
+            update_interval=timedelta(
+                minutes=self.config_entry.options.get(
+                    CONF_SCAN_INTERVAL, DEFAULT_SCAN_INTERVAL
+                )
+            ),
+        )
 
     @property
     def days(self):
         """Return number of days to look forward for movies/shows."""
-        return self.config_entry.options[CONF_DAYS]
+        return self.config_entry.options.get(CONF_DAYS, DEFAULT_DAYS)
 
     @property
     def exclude(self):
         """Return list of show titles to exclude."""
-        return self.config_entry.options[CONF_EXCLUDE] or []
+        return self.config_entry.options.get(CONF_EXCLUDE) or []
+
+    @property
+    def scan_interval(self):
+        """Return update interval."""
+        return self.config_entry.options.get(CONF_SCAN_INTERVAL, DEFAULT_SCAN_INTERVAL)
 
     async def async_update(self, *_):
         """Update Trakt data."""
@@ -149,17 +144,14 @@ class Trakt_Data:
 
         try:
             self.calendar = await self.hass.async_add_executor_job(
-                MyShowCalendar, {CONF_DAYS: self.days}
+                MyShowCalendar, None, self.days
             )
-        except trakt.errors.OAuthException:
-            _LOGGER.error(
-                "Trakt api is unauthrized. Please remove the entry and reconfigure."
-            )
-            return
+        except trakt.errors.TraktInternalException:
+            _LOGGER.error("Trakt api encountered an internal error.")
+            raise UpdateFailed
 
         if not self.calendar:
             _LOGGER.warning("Trakt upcoming calendar is empty")
-            return
 
         for show in self.calendar:
             if not show or show.show in self.exclude:
@@ -219,63 +211,34 @@ class Trakt_Data:
             }
             card_json.append(card_item)
 
-        self.details = json.dumps(card_json)
-        _LOGGER.debug("Trakt data updated")
-
-        async_dispatcher_send(self.hass, DATA_UPDATED)
+        return json.dumps(card_json)
 
     async def async_setup(self):
         """Set up Trakt Data."""
-        await self.async_add_options()
         trakt.core.OAUTH_TOKEN = self.session.token[CONF_ACCESS_TOKEN]
-        trakt.core.CLIENT_ID = self.hass.data[DATA_TRAKT_CRED][CONF_CLIENT_ID]
-        trakt.core.CLIENT_SECRET = self.hass.data[DATA_TRAKT_CRED][CONF_CLIENT_SECRET]
+        trakt.core.CLIENT_ID = self.config_entry.data[CONF_CLIENT_ID]
 
         try:
-            await self.async_update()
+            await self.async_refresh()
         except trakt.errors.OAuthException:
             _LOGGER.error(
                 "Trakt api is unauthrized. Please remove the entry and reconfigure."
             )
             return False
 
-        await self.async_set_scan_interval(
-            self.config_entry.options[CONF_SCAN_INTERVAL]
-        )
-        self.config_entry.add_update_listener(self.async_options_updated)
+        if not self.last_update_success:
+            raise ConfigEntryNotReady
+        self.config_entry.add_update_listener(async_options_updated)
 
         return True
 
-    async def async_add_options(self):
-        """Add options for entry."""
-        if not self.config_entry.options:
 
-            options = {
-                CONF_SCAN_INTERVAL: DEFAULT_SCAN_INTERVAL,
-                CONF_DAYS: DEFAULT_DAYS,
-                CONF_EXCLUDE: None,
-            }
-
-            self.hass.config_entries.async_update_entry(
-                self.config_entry, options=options
-            )
-
-    async def async_set_scan_interval(self, scan_interval):
-        """Update scan interval."""
-
-        if self.unsub_timer is not None:
-            self.unsub_timer()
-        self.unsub_timer = async_track_time_interval(
-            self.hass, self.async_update, timedelta(minutes=scan_interval)
-        )
-
-    @staticmethod
-    async def async_options_updated(hass, entry):
-        """Triggered by config entry options updates."""
-        await hass.data[DOMAIN].async_set_scan_interval(
-            entry.options[CONF_SCAN_INTERVAL]
-        )
-        await hass.data[DOMAIN].async_update()
+async def async_options_updated(hass, entry):
+    """Triggered by config entry options updates."""
+    hass.data[DOMAIN][entry.entry_id].update_interval = timedelta(
+        minutes=entry.options[CONF_SCAN_INTERVAL]
+    )
+    await hass.data[DOMAIN][entry.entry_id].async_request_refresh()
 
 
 def days_until(date):
