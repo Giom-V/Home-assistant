@@ -7,7 +7,6 @@
                     "ddf5aa391cde40b3ba8fb9ea51393ee1"
                 ],
                 "connections": [],
-                "entry_type": null,
                 "id": "27bfd97e20d04000b34133f9e9ed729d",
                 "identifiers": [
                     [
@@ -28,7 +27,6 @@
                     "ddf5aa391cde40b3ba8fb9ea51393ee1"
                 ],
                 "connections": [],
-                "entry_type": null,
                 "id": "11f11385557e4967a884d69c5ffa629a",
                 "identifiers": [
                     [
@@ -54,7 +52,6 @@
                         "b0:f1:ec:1c:e9:a4"
                     ]
                 ],
-                "entry_type": null,
                 "id": "d917893b62c541be94c84de58df84819",
                 "identifiers": [],
                 "manufacturer": "Minut",
@@ -75,7 +72,6 @@
                         "b0:38:29:1c:e1:39"
                     ]
                 ],
-                "entry_type": null,
                 "id": "de822e2851014a37bb8a39773fa0d0fe",
                 "identifiers": [],
                 "manufacturer": "Minut",
@@ -96,7 +92,6 @@
                         "b0:38:29:42:bc:8a"
                     ]
                 ],
-                "entry_type": null,
                 "id": "f6b3e9395a5b4feca7e388dcd904f8ed",
                 "identifiers": [],
                 "manufacturer": "Minut",
@@ -112,7 +107,6 @@
                     "d44e80f5d4a446b6a08d6de68c7a7bba"
                 ],
                 "connections": [],
-                "entry_type": null,
                 "id": "7eb32c294dd74945b217e029d10b58ce",
                 "identifiers": [
                     [
@@ -133,7 +127,6 @@
                     "d44e80f5d4a446b6a08d6de68c7a7bba"
                 ],
                 "connections": [],
-                "entry_type": null,
                 "id": "c7df6f079a21477baf0bb82c90aeb5ae",
                 "identifiers": [
                     [
@@ -154,7 +147,6 @@
                     "d44e80f5d4a446b6a08d6de68c7a7bba"
                 ],
                 "connections": [],
-                "entry_type": null,
                 "id": "69b06e89165642d7822959d763ad23ea",
                 "identifiers": [
                     [
@@ -175,7 +167,6 @@
                     "d44e80f5d4a446b6a08d6de68c7a7bba"
                 ],
                 "connections": [],
-                "entry_type": null,
                 "id": "f9d174f42be4497b988f240ecebd84e4",
                 "identifiers": [
                     [
@@ -196,7 +187,6 @@
                     "d44e80f5d4a446b6a08d6de68c7a7bba"
                 ],
                 "connections": [],
-                "entry_type": null,
                 "id": "ac1380e2f6214a4eb2ac292a09f4ee5a",
                 "identifiers": [
                     [
@@ -217,7 +207,6 @@
                     "d44e80f5d4a446b6a08d6de68c7a7bba"
                 ],
                 "connections": [],
-                "entry_type": null,
                 "id": "08c45cd2e254455e800f19ff78a2eb96",
                 "identifiers": [
                     [
@@ -238,7 +227,6 @@
                     "d44e80f5d4a446b6a08d6de68c7a7bba"
                 ],
                 "connections": [],
-                "entry_type": null,
                 "id": "5d8211ab106044cca7d4ed211f4168e3",
                 "identifiers": [
                     [
@@ -259,7 +247,6 @@
                     "d44e80f5d4a446b6a08d6de68c7a7bba"
                 ],
                 "connections": [],
-                "entry_type": null,
                 "id": "a22221befc6e446b93f3cf09d65a6d2e",
                 "identifiers": [
                     [
@@ -280,7 +267,6 @@
                     "7380dc809b5e456a9af1bb205d6e7f7a"
                 ],
                 "connections": [],
-                "entry_type": null,
                 "id": "dbcef9f2cc1b4b7ead474f0efc8c39d4",
                 "identifiers": [
                     [
@@ -306,7 +292,6 @@
                         "0c:80:63:fd:6b:a0"
                     ]
                 ],
-                "entry_type": null,
                 "id": "1e7c552df1744b6dbe96c61dc9ab2a56",
                 "identifiers": [],
                 "manufacturer": "TP-Link",
@@ -322,7 +307,6 @@
                     "7380dc809b5e456a9af1bb205d6e7f7a"
                 ],
                 "connections": [],
-                "entry_type": null,
                 "id": "0fc9c53ad19e4f3797d24c3237ca0a22",
                 "identifiers": [
                     [
@@ -348,7 +332,6 @@
                         "78:11:dc:79:60:af"
                     ]
                 ],
-                "entry_type": null,
                 "id": "a04de5197445406ba6338cb0210f4c56",
                 "identifiers": [
                     [
@@ -369,7 +352,6 @@
                     "7380dc809b5e456a9af1bb205d6e7f7a"
                 ],
                 "connections": [],
-                "entry_type": null,
                 "id": "592d0ea9e5e040ab99af88c62901aa05",
                 "identifiers": [
                     [
@@ -390,7 +372,6 @@
                     "7380dc809b5e456a9af1bb205d6e7f7a"
                 ],
                 "connections": [],
-                "entry_type": null,
                 "id": "7025d4f65958413cbb02f2c2199dd1f5",
                 "identifiers": [
                     [
@@ -411,7 +392,6 @@
                     "3fc4717c8fe84acabb78f0c3a7a9efb5"
                 ],
                 "connections": [],
-                "entry_type": null,
                 "id": "97a74c30147c48d2b3a066dfdfd5d045",
                 "identifiers": [
                     [
@@ -437,7 +417,6 @@
                         "00:15:8d:00:02:9a:95:28"
                     ]
                 ],
-                "entry_type": null,
                 "id": "55d67754eee24268809cabe2a0c2f0b0",
                 "identifiers": [
                     [
@@ -450,7 +429,7 @@
                 "name": "Mi Magic Cube",
                 "name_by_user": "Magic Cube",
                 "sw_version": "20160704",
-                "via_device_id": "27667204355b45869bc0748a80d5901e"
+                "via_device_id": "10a8a8a6db6e46ec941a1eef425faa2a"
             },
             {
                 "area_id": "9c4968fca04144d0a45b4cb3e581afe3",
@@ -463,7 +442,6 @@
                         "00:21:2e:ff:ff:04:f2:b1"
                     ]
                 ],
-                "entry_type": null,
                 "id": "457c99d174f34312a56e8c3dc345d8ad",
                 "identifiers": [
                     [
@@ -476,7 +454,7 @@
                 "name": "Daylight",
                 "name_by_user": null,
                 "sw_version": "1.0",
-                "via_device_id": "27667204355b45869bc0748a80d5901e"
+                "via_device_id": "10a8a8a6db6e46ec941a1eef425faa2a"
             },
             {
                 "area_id": "9c4968fca04144d0a45b4cb3e581afe3",
@@ -489,7 +467,6 @@
                         "00:0d:6f:ff:fe:09:ba:d7"
                     ]
                 ],
-                "entry_type": null,
                 "id": "b898c2e796694df1a568bab393658478",
                 "identifiers": [
                     [
@@ -502,7 +479,7 @@
                 "name": "TR\u00c5DFRI remote control",
                 "name_by_user": null,
                 "sw_version": "1.2.223",
-                "via_device_id": "27667204355b45869bc0748a80d5901e"
+                "via_device_id": "10a8a8a6db6e46ec941a1eef425faa2a"
             },
             {
                 "area_id": "fb771b4ed1124d9cb0f93fd1b2b5bd0c",
@@ -515,7 +492,6 @@
                         "00:15:8d:00:03:03:18:fd"
                     ]
                 ],
-                "entry_type": null,
                 "id": "eb097d5c6fd44da5b5fcd7ccd54b4674",
                 "identifiers": [
                     [
@@ -528,7 +504,7 @@
                 "name": "Solarium door",
                 "name_by_user": null,
                 "sw_version": null,
-                "via_device_id": "27667204355b45869bc0748a80d5901e"
+                "via_device_id": "10a8a8a6db6e46ec941a1eef425faa2a"
             },
             {
                 "area_id": "fb771b4ed1124d9cb0f93fd1b2b5bd0c",
@@ -541,7 +517,6 @@
                         "00:15:8d:00:04:01:6b:a8"
                     ]
                 ],
-                "entry_type": null,
                 "id": "85bc07f4124e490eb8ba0082a9abf76c",
                 "identifiers": [
                     [
@@ -554,7 +529,7 @@
                 "name": "Freezer door",
                 "name_by_user": null,
                 "sw_version": "20161128",
-                "via_device_id": "27667204355b45869bc0748a80d5901e"
+                "via_device_id": "10a8a8a6db6e46ec941a1eef425faa2a"
             },
             {
                 "area_id": "09a9199f5c064306b70b13d9d4c1e9bd",
@@ -567,7 +542,6 @@
                         "00:0b:57:ff:fe:33:d8:47"
                     ]
                 ],
-                "entry_type": null,
                 "id": "c64aef351e9144688b955e2d69375c79",
                 "identifiers": [
                     [
@@ -580,7 +554,7 @@
                 "name": "Basement",
                 "name_by_user": null,
                 "sw_version": "1.1.1.0-5.7.2.0",
-                "via_device_id": "27667204355b45869bc0748a80d5901e"
+                "via_device_id": "10a8a8a6db6e46ec941a1eef425faa2a"
             },
             {
                 "area_id": "fb771b4ed1124d9cb0f93fd1b2b5bd0c",
@@ -593,7 +567,6 @@
                         "00:0d:6f:ff:fe:30:60:53"
                     ]
                 ],
-                "entry_type": null,
                 "id": "d1d8a87a1d41469ba6cea2a7f682d6c9",
                 "identifiers": [
                     [
@@ -606,7 +579,7 @@
                 "name": "Range extender 2",
                 "name_by_user": null,
                 "sw_version": "2.0.019",
-                "via_device_id": "27667204355b45869bc0748a80d5901e"
+                "via_device_id": "10a8a8a6db6e46ec941a1eef425faa2a"
             },
             {
                 "area_id": "d2ba0908dc0e4f86b555872c232d8a18",
@@ -614,7 +587,6 @@
                     "8a1216e7396440f6aad6f16233eb45af"
                 ],
                 "connections": [],
-                "entry_type": null,
                 "id": "a67234a6066b45d6a721234f1c4b5dee",
                 "identifiers": [
                     [
@@ -635,7 +607,6 @@
                     "8cded4befa474c1e89dcd59cc6c9cf9b"
                 ],
                 "connections": [],
-                "entry_type": null,
                 "id": "a0a0a6664cae4c1c92df254c0c7e5b84",
                 "identifiers": [
                     [
@@ -656,7 +627,6 @@
                     "8a1216e7396440f6aad6f16233eb45af"
                 ],
                 "connections": [],
-                "entry_type": null,
                 "id": "6b7ac1fc4d5647e3a1cfa500548c3e4c",
                 "identifiers": [
                     [
@@ -682,7 +652,6 @@
                         "00:0b:57:ff:fe:13:16:2c"
                     ]
                 ],
-                "entry_type": null,
                 "id": "4d5b258248e74d3ea6152acd20e30d83",
                 "identifiers": [
                     [
@@ -695,7 +664,7 @@
                 "name": "TR\u00c5DFRI wireless dimmer",
                 "name_by_user": null,
                 "sw_version": "1.1.1.1-5.7.2.0",
-                "via_device_id": "27667204355b45869bc0748a80d5901e"
+                "via_device_id": "10a8a8a6db6e46ec941a1eef425faa2a"
             },
             {
                 "area_id": null,
@@ -703,7 +672,6 @@
                     "b85d4302d6bf4827b199eea066b58679"
                 ],
                 "connections": [],
-                "entry_type": null,
                 "id": "1e2cfe217b5a4272828945a3364baddf",
                 "identifiers": [
                     [
@@ -729,7 +697,6 @@
                         "14:b4:57:ff:fe:7e:f0:c6"
                     ]
                 ],
-                "entry_type": null,
                 "id": "a4237566af9e4c448de6431678306512",
                 "identifiers": [
                     [
@@ -742,7 +709,7 @@
                 "name": "TRADFRI on/off switch ",
                 "name_by_user": null,
                 "sw_version": "2.2.008",
-                "via_device_id": "27667204355b45869bc0748a80d5901e"
+                "via_device_id": "10a8a8a6db6e46ec941a1eef425faa2a"
             },
             {
                 "area_id": "09a9199f5c064306b70b13d9d4c1e9bd",
@@ -755,7 +722,6 @@
                         "cc:cc:cc:ff:fe:cf:8f:87"
                     ]
                 ],
-                "entry_type": null,
                 "id": "84333b35a5904ee296eb917a7e2419e1",
                 "identifiers": [
                     [
@@ -768,7 +734,7 @@
                 "name": "TR\u00c5DFRI Motion sensor",
                 "name_by_user": null,
                 "sw_version": "2.0.022",
-                "via_device_id": "27667204355b45869bc0748a80d5901e"
+                "via_device_id": "10a8a8a6db6e46ec941a1eef425faa2a"
             },
             {
                 "area_id": "09a9199f5c064306b70b13d9d4c1e9bd",
@@ -781,7 +747,6 @@
                         "cc:cc:cc:ff:fe:4e:86:12"
                     ]
                 ],
-                "entry_type": null,
                 "id": "340d0ad76a2b43c09239e158eff59926",
                 "identifiers": [
                     [
@@ -794,7 +759,7 @@
                 "name": "Basement stairs",
                 "name_by_user": null,
                 "sw_version": "2.1.022",
-                "via_device_id": "27667204355b45869bc0748a80d5901e"
+                "via_device_id": "10a8a8a6db6e46ec941a1eef425faa2a"
             },
             {
                 "area_id": null,
@@ -802,7 +767,6 @@
                     "03cbb575f5d54b0f88f73d87992fe319"
                 ],
                 "connections": [],
-                "entry_type": null,
                 "id": "52338fc4049f4ffd97e90e9e9ea59a8a",
                 "identifiers": [
                     [
@@ -823,7 +787,6 @@
                     "11a14ad9102043a7a94c00e41f90b6b7"
                 ],
                 "connections": [],
-                "entry_type": null,
                 "id": "58eea261ffb349a4b87502293bb75ee9",
                 "identifiers": [
                     [
@@ -849,7 +812,6 @@
                         "00:15:8d:00:04:60:52:fc"
                     ]
                 ],
-                "entry_type": null,
                 "id": "8a17a82b7ed945cc881af79e96b63b3e",
                 "identifiers": [
                     [
@@ -862,7 +824,7 @@
                 "name": "Basement",
                 "name_by_user": "Basement",
                 "sw_version": "20161129",
-                "via_device_id": "27667204355b45869bc0748a80d5901e"
+                "via_device_id": "10a8a8a6db6e46ec941a1eef425faa2a"
             },
             {
                 "area_id": "f345537ab65b46c5b78cdf82bf41ea9d",
@@ -875,7 +837,6 @@
                         "74:da:88:2a:8f:75"
                     ]
                 ],
-                "entry_type": null,
                 "id": "690ae810ccfa4919ad691f290658bcfb",
                 "identifiers": [],
                 "manufacturer": "TP-Link",
@@ -896,7 +857,6 @@
                         "00:15:8d:00:04:a0:71:4f"
                     ]
                 ],
-                "entry_type": null,
                 "id": "1296d76997d44479a9aef04abded5a7c",
                 "identifiers": [
                     [
@@ -909,7 +869,7 @@
                 "name": "Water Sensor",
                 "name_by_user": null,
                 "sw_version": "20170721",
-                "via_device_id": "27667204355b45869bc0748a80d5901e"
+                "via_device_id": "10a8a8a6db6e46ec941a1eef425faa2a"
             },
             {
                 "area_id": null,
@@ -917,7 +877,6 @@
                     "40b53b6a80164e0b8c783b68fff3bbcf"
                 ],
                 "connections": [],
-                "entry_type": null,
                 "id": "72e5f5f071cd40e38af818d2488dd04b",
                 "identifiers": [
                     [
@@ -943,7 +902,6 @@
                         "00:15:8d:00:04:0e:76:b8"
                     ]
                 ],
-                "entry_type": null,
                 "id": "9a669c6c24b24c34ba11b28d28a08029",
                 "identifiers": [
                     [
@@ -956,7 +914,7 @@
                 "name": "Bathroom",
                 "name_by_user": "Bathroom",
                 "sw_version": "20160516",
-                "via_device_id": "27667204355b45869bc0748a80d5901e"
+                "via_device_id": "10a8a8a6db6e46ec941a1eef425faa2a"
             },
             {
                 "area_id": "f345537ab65b46c5b78cdf82bf41ea9d",
@@ -969,7 +927,6 @@
                         "00:15:8d:00:04:0e:72:e0"
                     ]
                 ],
-                "entry_type": null,
                 "id": "6fa2f2dc6c814d6183971b8993b07c03",
                 "identifiers": [
                     [
@@ -982,7 +939,7 @@
                 "name": "Aurore Bedroom",
                 "name_by_user": "Aurore Bedroom",
                 "sw_version": "20160516",
-                "via_device_id": "27667204355b45869bc0748a80d5901e"
+                "via_device_id": "10a8a8a6db6e46ec941a1eef425faa2a"
             },
             {
                 "area_id": null,
@@ -990,7 +947,6 @@
                     "ffee49c1f1d34b4db31196d560c88114"
                 ],
                 "connections": [],
-                "entry_type": null,
                 "id": "a5ce42880adc43bca5d8bb8137556830",
                 "identifiers": [
                     [
@@ -1016,7 +972,6 @@
                         "28:6d:97:00:01:10:cd:26"
                     ]
                 ],
-                "entry_type": null,
                 "id": "1cf70f18680448ccbab9bc08ed4f9251",
                 "identifiers": [
                     [
@@ -1029,7 +984,7 @@
                 "name": "Button",
                 "name_by_user": "Button",
                 "sw_version": null,
-                "via_device_id": "27667204355b45869bc0748a80d5901e"
+                "via_device_id": "10a8a8a6db6e46ec941a1eef425faa2a"
             },
             {
                 "area_id": "09a9199f5c064306b70b13d9d4c1e9bd",
@@ -1037,7 +992,6 @@
                     "575f67ad36924e1b8319a977a7087828"
                 ],
                 "connections": [],
-                "entry_type": null,
                 "id": "0f7a853d7bbe42b985e9e7c401dce734",
                 "identifiers": [
                     [
@@ -1063,7 +1017,6 @@
                         "1c:3b:f3:8d:b0:84"
                     ]
                 ],
-                "entry_type": null,
                 "id": "02f883004a2742cf92e9e7427d69a3df",
                 "identifiers": [],
                 "manufacturer": "TP-Link",
@@ -1071,6 +1024,51 @@
                 "name": "Bureau",
                 "name_by_user": null,
                 "sw_version": "1.1.2 Build 191113 Rel.095623",
+                "via_device_id": null
+            },
+            {
+                "area_id": null,
+                "config_entries": [
+                    "7380dc809b5e456a9af1bb205d6e7f7a"
+                ],
+                "connections": [],
+                "id": "3462d96642654e2f87c5e308ad2ec01b",
+                "identifiers": [
+                    [
+                        "cast",
+                        "3c1c2cebd2ba4f7dd184c60dbf70841d"
+                    ]
+                ],
+                "manufacturer": "Google Inc.",
+                "model": "Google Nest Hub",
+                "name": "Bureau",
+                "name_by_user": null,
+                "sw_version": null,
+                "via_device_id": null
+            },
+            {
+                "area_id": null,
+                "config_entries": [
+                    "8a1216e7396440f6aad6f16233eb45af"
+                ],
+                "connections": [
+                    [
+                        "mac",
+                        "b8:27:eb:ed:89:c0"
+                    ]
+                ],
+                "id": "10a8a8a6db6e46ec941a1eef425faa2a",
+                "identifiers": [
+                    [
+                        "deconz",
+                        "00212E04F2B1"
+                    ]
+                ],
+                "manufacturer": "Dresden Elektronik",
+                "model": "deCONZ",
+                "name": "Zigpii",
+                "name_by_user": null,
+                "sw_version": "2.5.74",
                 "via_device_id": null
             }
         ]
