@@ -1,5 +1,5 @@
 platform: scrape
-resource: https://www.meteomedia.com/ca/previsions/uv/quebec/quebec
+resource: https://www.meteomedia.com/ca/plein-air/pollen/quebec/quebec
 name: Meteomedia polen details
-select: '#pollen-details .module .table .column '
+select: '#pollen-details .module .table .column .column-item'
 index: 1

@@ -1,6 +1,6 @@
 platform: scrape
 resource: https://www.meteomedia.com/ca/previsions/uv/quebec/quebec
-name: Meteomedia uv level max
+name: Meteomedia uv level max scrape
 select: '.uv-rating .uv-rating-digit'
-index: 2
+index: 1
 unit_of_measurement: 'UV Index'
