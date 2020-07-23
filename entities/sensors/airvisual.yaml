@@ -1,6 +1,8 @@
 # https://www.home-assistant.io/integrations/airvisual/
-platform: airvisual
-api_key: !secret airvisual_APIKey #TODO: secret
-show_on_map: false
-monitored_conditions:
-  - us
+# Integration now managed in the UI
+
+# platform: airvisual
+# api_key: !secret airvisual_APIKey #TODO: secret
+# show_on_map: false
+# monitored_conditions:
+#   - us

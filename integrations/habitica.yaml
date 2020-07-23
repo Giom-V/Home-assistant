@@ -1,5 +1,5 @@
 # https://www.home-assistant.io/integrations/habitica/
 
-habitica:
-  - api_user: !secret habitica_userID
-    api_key: !secret habitica_APItoken
+# habitica:
+#   - api_user: !secret habitica_userID
+#     api_key: !secret habitica_APItoken
