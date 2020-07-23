@@ -61,7 +61,7 @@
                 "model": "Point v106",
                 "name": "Living room",
                 "name_by_user": null,
-                "sw_version": 13234,
+                "sw_version": 13299,
                 "via_device_id": "11f11385557e4967a884d69c5ffa629a"
             },
             {
@@ -527,8 +527,8 @@
                 "model": "lumi.sensor_magnet",
                 "name": "Solarium door",
                 "name_by_user": null,
-                "sw_version": null,
-                "via_device_id": "27667204355b45869bc0748a80d5901e"
+                "sw_version": "20150424",
+                "via_device_id": "10a8a8a6db6e46ec941a1eef425faa2a"
             },
             {
                 "area_id": "fb771b4ed1124d9cb0f93fd1b2b5bd0c",
@@ -739,7 +739,7 @@
                 ],
                 "manufacturer": "IKEA of Sweden",
                 "model": "TRADFRI on/off switch",
-                "name": "TRADFRI on/off switch ",
+                "name": "Basement switch",
                 "name_by_user": null,
                 "sw_version": "2.2.008",
                 "via_device_id": "27667204355b45869bc0748a80d5901e"
@@ -1072,6 +1072,101 @@
                 "name_by_user": null,
                 "sw_version": "1.1.2 Build 191113 Rel.095623",
                 "via_device_id": null
+            },
+            {
+                "area_id": null,
+                "config_entries": [
+                    "7380dc809b5e456a9af1bb205d6e7f7a"
+                ],
+                "connections": [],
+                "id": "3462d96642654e2f87c5e308ad2ec01b",
+                "identifiers": [
+                    [
+                        "cast",
+                        "3c1c2cebd2ba4f7dd184c60dbf70841d"
+                    ]
+                ],
+                "manufacturer": "Google Inc.",
+                "model": "Google Nest Hub",
+                "name": "Bureau",
+                "name_by_user": null,
+                "sw_version": null,
+                "via_device_id": null
+            },
+            {
+                "area_id": null,
+                "config_entries": [
+                    "8a1216e7396440f6aad6f16233eb45af"
+                ],
+                "connections": [
+                    [
+                        "mac",
+                        "b8:27:eb:ed:89:c0"
+                    ]
+                ],
+                "id": "10a8a8a6db6e46ec941a1eef425faa2a",
+                "identifiers": [
+                    [
+                        "deconz",
+                        "00212E04F2B1"
+                    ]
+                ],
+                "manufacturer": "Dresden Elektronik",
+                "model": "deCONZ",
+                "name": "Zigpii",
+                "name_by_user": null,
+                "sw_version": "2.5.74",
+                "via_device_id": null
+            },
+            {
+                "area_id": "a429a49a25ad4e3caa67405bedf22636",
+                "config_entries": [
+                    "8a1216e7396440f6aad6f16233eb45af"
+                ],
+                "connections": [
+                    [
+                        "zigbee",
+                        "cc:cc:cc:ff:fe:99:28:eb"
+                    ]
+                ],
+                "id": "8583386eb58e4431a2de9b2038bab2d2",
+                "identifiers": [
+                    [
+                        "deconz",
+                        "cc:cc:cc:ff:fe:99:28:eb"
+                    ]
+                ],
+                "manufacturer": "IKEA of Sweden",
+                "model": "TRADFRI on/off switch",
+                "name": "Office switch",
+                "name_by_user": "Office switch",
+                "sw_version": "2.2.008",
+                "via_device_id": "10a8a8a6db6e46ec941a1eef425faa2a"
+            },
+            {
+                "area_id": null,
+                "config_entries": [
+                    "8a1216e7396440f6aad6f16233eb45af"
+                ],
+                "connections": [
+                    [
+                        "zigbee",
+                        "cc:cc:cc:ff:fe:97:67:e0"
+                    ]
+                ],
+                "id": "622b6c8500c748f2bf2dafd5bfea2acd",
+                "identifiers": [
+                    [
+                        "deconz",
+                        "cc:cc:cc:ff:fe:97:67:e0"
+                    ]
+                ],
+                "manufacturer": "IKEA of Sweden",
+                "model": "TRADFRI bulb E26 WW 806lm",
+                "name": "Office light",
+                "name_by_user": null,
+                "sw_version": "2.1.022",
+                "via_device_id": "10a8a8a6db6e46ec941a1eef425faa2a"
             }
         ]
     },
