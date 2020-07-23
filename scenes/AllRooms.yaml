@@ -11,3 +11,7 @@
       state: off
     light.salle_a_manger:
       state: off
+    switch.bureau:
+      state: off
+    light.office_light:
+      state: off
