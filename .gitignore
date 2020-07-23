@@ -27,6 +27,7 @@ customize.yaml
 *.db
 *.db-shm
 *.db-wal
+*.db-journal
 *.uuid
 *.pyc
 google_calendars.yaml
