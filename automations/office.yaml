@@ -1,0 +1,40 @@
+- id: office_remote_on
+  alias: Office remote - switch on
+  trigger:
+  - event_data:
+      event: 1001
+      id: office_switch
+    event_type: deconz_event
+    platform: event
+  - event_data:
+      event: 1002
+      id: office_switch
+    event_type: deconz_event
+    platform: event
+  action:
+  - entity_id:
+    - light.office_light
+    service: light.turn_on
+  - entity_id:
+    - switch.bureau
+    service: switch.turn_on
+- id: office_remote_off
+  alias: Office remote - switch off
+  trigger:
+  - event_data:
+      event: 2003
+      id: office_switch
+    event_type: deconz_event
+    platform: event
+  - event_data:
+      event: 2002
+      id: office_switch
+    event_type: deconz_event
+    platform: event
+  action:
+  - entity_id:
+    - light.office_light
+    service: light.turn_off
+  - entity_id:
+    - switch.bureau
+    service: switch.turn_off

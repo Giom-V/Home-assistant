@@ -1,6 +1,6 @@
 # Sonarr
 # https://www.home-assistant.io/integrations/sonarr/
-# Now managed throught the integration page in the UI
+# Now managed through the integration page in the UI
 # platform: sonarr
 # host: !secret NAS_IP
 # api_key: !secret sonarr_APIKey
