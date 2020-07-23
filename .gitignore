@@ -19,6 +19,7 @@ tts/
 __pycache__
 
 # Ignored Files
+.pip_progress
 ip_bans.yaml
 known_devices.yaml
 customize.yaml
