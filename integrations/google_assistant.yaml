@@ -12,3 +12,5 @@ google_assistant:
       expose: true
     light.basement_stairs:
       expose: true
+    light.office_light:
+      expose: true
