@@ -3,7 +3,4 @@
 withings:
   client_id: !secret withingsClientID
   client_secret: !secret withingsSecret
-  profiles:
-    - Giom
-    - Aurore
-    - Claire
+  use_webhook: true
