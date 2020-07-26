@@ -4,13 +4,27 @@ google_assistant:
   project_id: !secret googleProject
   service_account: !include ../secrets/home-assistant.json
   report_state: true
+  # exposed_domains:
+  #   - light
+  #   - sensor
+  #   - binary_sensor
+  #   - camera
+  #   - device_tracker
+  #   - person
+  #   - switch
   expose_by_default: false
-  exposed_domains:
-    - light
   entity_config:
     light.basement:
       expose: true
     light.basement_stairs:
       expose: true
     light.office_light:
+      expose: true
+    switch.wake_up_nas:
+      expose: true
+    switch.wake_up_pc:
+      expose: true
+    switch.wake_up_old_pc:
+      expose: true
+    input_boolean.visitors:
       expose: true
