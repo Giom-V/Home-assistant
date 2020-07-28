@@ -51,15 +51,15 @@
             },
             {
                 "capabilities": {},
-                "config_entry_id": null,
+                "config_entry_id": "7380dc809b5e456a9af1bb205d6e7f7a",
                 "device_class": null,
-                "device_id": null,
+                "device_id": "28c88c596f2b430391c8a39801ca8044",
                 "disabled_by": null,
                 "entity_id": "media_player.tv",
                 "icon": null,
                 "name": null,
                 "original_icon": null,
-                "original_name": "Chambre",
+                "original_name": "Cuisine",
                 "platform": "cast",
                 "supported_features": 21389,
                 "unique_id": "dbb352ef-9fd2-0784-d3ea-44d7ed478371",
@@ -4011,70 +4011,6 @@
             },
             {
                 "capabilities": {},
-                "config_entry_id": "8a1216e7396440f6aad6f16233eb45af",
-                "device_class": "humidity",
-                "device_id": "8a17a82b7ed945cc881af79e96b63b3e",
-                "disabled_by": null,
-                "entity_id": "sensor.basement_humidity",
-                "icon": null,
-                "name": "Basement",
-                "original_icon": null,
-                "original_name": "Basement",
-                "platform": "deconz",
-                "supported_features": 0,
-                "unique_id": "00:15:8d:00:04:60:52:fc-01-0405",
-                "unit_of_measurement": "%"
-            },
-            {
-                "capabilities": {},
-                "config_entry_id": "8a1216e7396440f6aad6f16233eb45af",
-                "device_class": "temperature",
-                "device_id": "8a17a82b7ed945cc881af79e96b63b3e",
-                "disabled_by": null,
-                "entity_id": "sensor.basement_temperature",
-                "icon": null,
-                "name": "Basement",
-                "original_icon": "mdi:thermometer",
-                "original_name": "Basement",
-                "platform": "deconz",
-                "supported_features": 0,
-                "unique_id": "00:15:8d:00:04:60:52:fc-01-0402",
-                "unit_of_measurement": "\u00b0C"
-            },
-            {
-                "capabilities": {},
-                "config_entry_id": "8a1216e7396440f6aad6f16233eb45af",
-                "device_class": "pressure",
-                "device_id": "8a17a82b7ed945cc881af79e96b63b3e",
-                "disabled_by": null,
-                "entity_id": "sensor.basement_pressure",
-                "icon": null,
-                "name": "Basement",
-                "original_icon": "mdi:gauge",
-                "original_name": "Basement",
-                "platform": "deconz",
-                "supported_features": 0,
-                "unique_id": "00:15:8d:00:04:60:52:fc-01-0403",
-                "unit_of_measurement": "hPa"
-            },
-            {
-                "capabilities": {},
-                "config_entry_id": "8a1216e7396440f6aad6f16233eb45af",
-                "device_class": "battery",
-                "device_id": "8a17a82b7ed945cc881af79e96b63b3e",
-                "disabled_by": null,
-                "entity_id": "sensor.basement_battery_level",
-                "icon": null,
-                "name": null,
-                "original_icon": null,
-                "original_name": "Basement Battery Level",
-                "platform": "deconz",
-                "supported_features": 0,
-                "unique_id": "00:15:8d:00:04:60:52:fc-battery",
-                "unit_of_measurement": "%"
-            },
-            {
-                "capabilities": {},
                 "config_entry_id": "ddf5aa391cde40b3ba8fb9ea51393ee1",
                 "device_class": "battery",
                 "device_id": "de822e2851014a37bb8a39773fa0d0fe",
@@ -5723,54 +5659,6 @@
             },
             {
                 "capabilities": {},
-                "config_entry_id": "8a1216e7396440f6aad6f16233eb45af",
-                "device_class": "temperature",
-                "device_id": "6fa2f2dc6c814d6183971b8993b07c03",
-                "disabled_by": null,
-                "entity_id": "sensor.aurore_bedroom_temperature",
-                "icon": null,
-                "name": "Aurore Bedroom",
-                "original_icon": "mdi:thermometer",
-                "original_name": "Aurore Bedroom",
-                "platform": "deconz",
-                "supported_features": 0,
-                "unique_id": "00:15:8d:00:04:0e:72:e0-01-0402",
-                "unit_of_measurement": "\u00b0C"
-            },
-            {
-                "capabilities": {},
-                "config_entry_id": "8a1216e7396440f6aad6f16233eb45af",
-                "device_class": "humidity",
-                "device_id": "6fa2f2dc6c814d6183971b8993b07c03",
-                "disabled_by": null,
-                "entity_id": "sensor.aurore_bedroom_humidity",
-                "icon": null,
-                "name": "Aurore Bedroom",
-                "original_icon": null,
-                "original_name": "Aurore Bedroom",
-                "platform": "deconz",
-                "supported_features": 0,
-                "unique_id": "00:15:8d:00:04:0e:72:e0-01-0405",
-                "unit_of_measurement": "%"
-            },
-            {
-                "capabilities": {},
-                "config_entry_id": "8a1216e7396440f6aad6f16233eb45af",
-                "device_class": "battery",
-                "device_id": "6fa2f2dc6c814d6183971b8993b07c03",
-                "disabled_by": null,
-                "entity_id": "sensor.aurore_bedroom_battery_level",
-                "icon": null,
-                "name": "Aurore Bedroom Battery Level",
-                "original_icon": null,
-                "original_name": "Aurore Bedroom Battery Level",
-                "platform": "deconz",
-                "supported_features": 0,
-                "unique_id": "00:15:8d:00:04:0e:72:e0-battery",
-                "unit_of_measurement": "%"
-            },
-            {
-                "capabilities": {},
                 "config_entry_id": "7380dc809b5e456a9af1bb205d6e7f7a",
                 "device_class": null,
                 "device_id": "3462d96642654e2f87c5e308ad2ec01b",
@@ -5963,15 +5851,15 @@
             },
             {
                 "capabilities": {},
-                "config_entry_id": null,
+                "config_entry_id": "7380dc809b5e456a9af1bb205d6e7f7a",
                 "device_class": null,
-                "device_id": null,
+                "device_id": "3c196f3d4743453f83a06c16f20a8bb9",
                 "disabled_by": null,
                 "entity_id": "media_player.chromecastultra1489",
                 "icon": null,
                 "name": null,
                 "original_icon": null,
-                "original_name": "ChromecastUltra1489",
+                "original_name": "Chambre",
                 "platform": "cast",
                 "supported_features": 21389,
                 "unique_id": "1a205e7a-79f2-64dd-2460-48b13c24700b",
@@ -6298,7 +6186,7 @@
                 "unit_of_measurement": "Mbit/s"
             },
             {
-                "capabilities": null,
+                "capabilities": {},
                 "config_entry_id": "7d4dbbf5836b44f68768498170f55007",
                 "device_class": "occupancy",
                 "device_id": null,
@@ -6314,7 +6202,7 @@
                 "unit_of_measurement": ""
             },
             {
-                "capabilities": null,
+                "capabilities": {},
                 "config_entry_id": "7d4dbbf5836b44f68768498170f55007",
                 "device_class": null,
                 "device_id": null,
@@ -6330,7 +6218,7 @@
                 "unit_of_measurement": "kg"
             },
             {
-                "capabilities": null,
+                "capabilities": {},
                 "config_entry_id": "7d4dbbf5836b44f68768498170f55007",
                 "device_class": null,
                 "device_id": null,
@@ -6346,7 +6234,7 @@
                 "unit_of_measurement": "kg"
             },
             {
-                "capabilities": null,
+                "capabilities": {},
                 "config_entry_id": "7d4dbbf5836b44f68768498170f55007",
                 "device_class": null,
                 "device_id": null,
@@ -6362,7 +6250,7 @@
                 "unit_of_measurement": "kg"
             },
             {
-                "capabilities": null,
+                "capabilities": {},
                 "config_entry_id": "7d4dbbf5836b44f68768498170f55007",
                 "device_class": null,
                 "device_id": null,
@@ -6378,7 +6266,7 @@
                 "unit_of_measurement": "kg"
             },
             {
-                "capabilities": null,
+                "capabilities": {},
                 "config_entry_id": "7d4dbbf5836b44f68768498170f55007",
                 "device_class": null,
                 "device_id": null,
@@ -6394,7 +6282,7 @@
                 "unit_of_measurement": "kg"
             },
             {
-                "capabilities": null,
+                "capabilities": {},
                 "config_entry_id": "7d4dbbf5836b44f68768498170f55007",
                 "device_class": null,
                 "device_id": null,
@@ -6410,7 +6298,7 @@
                 "unit_of_measurement": "m"
             },
             {
-                "capabilities": null,
+                "capabilities": {},
                 "config_entry_id": "7d4dbbf5836b44f68768498170f55007",
                 "device_class": null,
                 "device_id": null,
@@ -6426,7 +6314,7 @@
                 "unit_of_measurement": "\u00b0C"
             },
             {
-                "capabilities": null,
+                "capabilities": {},
                 "config_entry_id": "7d4dbbf5836b44f68768498170f55007",
                 "device_class": null,
                 "device_id": null,
@@ -6442,7 +6330,7 @@
                 "unit_of_measurement": "\u00b0C"
             },
             {
-                "capabilities": null,
+                "capabilities": {},
                 "config_entry_id": "7d4dbbf5836b44f68768498170f55007",
                 "device_class": null,
                 "device_id": null,
@@ -6458,7 +6346,7 @@
                 "unit_of_measurement": "\u00b0C"
             },
             {
-                "capabilities": null,
+                "capabilities": {},
                 "config_entry_id": "7d4dbbf5836b44f68768498170f55007",
                 "device_class": null,
                 "device_id": null,
@@ -6474,7 +6362,7 @@
                 "unit_of_measurement": "%"
             },
             {
-                "capabilities": null,
+                "capabilities": {},
                 "config_entry_id": "7d4dbbf5836b44f68768498170f55007",
                 "device_class": null,
                 "device_id": null,
@@ -6490,7 +6378,7 @@
                 "unit_of_measurement": "mmhg"
             },
             {
-                "capabilities": null,
+                "capabilities": {},
                 "config_entry_id": "7d4dbbf5836b44f68768498170f55007",
                 "device_class": null,
                 "device_id": null,
@@ -6506,7 +6394,7 @@
                 "unit_of_measurement": "mmhg"
             },
             {
-                "capabilities": null,
+                "capabilities": {},
                 "config_entry_id": "7d4dbbf5836b44f68768498170f55007",
                 "device_class": null,
                 "device_id": null,
@@ -6522,7 +6410,7 @@
                 "unit_of_measurement": "bpm"
             },
             {
-                "capabilities": null,
+                "capabilities": {},
                 "config_entry_id": "7d4dbbf5836b44f68768498170f55007",
                 "device_class": null,
                 "device_id": null,
@@ -6538,7 +6426,7 @@
                 "unit_of_measurement": "%"
             },
             {
-                "capabilities": null,
+                "capabilities": {},
                 "config_entry_id": "7d4dbbf5836b44f68768498170f55007",
                 "device_class": null,
                 "device_id": null,
@@ -6554,7 +6442,7 @@
                 "unit_of_measurement": "kg"
             },
             {
-                "capabilities": null,
+                "capabilities": {},
                 "config_entry_id": "7d4dbbf5836b44f68768498170f55007",
                 "device_class": null,
                 "device_id": null,
@@ -6570,7 +6458,7 @@
                 "unit_of_measurement": "m/s"
             },
             {
-                "capabilities": null,
+                "capabilities": {},
                 "config_entry_id": "7d4dbbf5836b44f68768498170f55007",
                 "device_class": null,
                 "device_id": null,
@@ -6586,7 +6474,7 @@
                 "unit_of_measurement": ""
             },
             {
-                "capabilities": null,
+                "capabilities": {},
                 "config_entry_id": "7d4dbbf5836b44f68768498170f55007",
                 "device_class": null,
                 "device_id": null,
@@ -6602,7 +6490,7 @@
                 "unit_of_measurement": "s"
             },
             {
-                "capabilities": null,
+                "capabilities": {},
                 "config_entry_id": "7d4dbbf5836b44f68768498170f55007",
                 "device_class": null,
                 "device_id": null,
@@ -6618,7 +6506,7 @@
                 "unit_of_measurement": "s"
             },
             {
-                "capabilities": null,
+                "capabilities": {},
                 "config_entry_id": "7d4dbbf5836b44f68768498170f55007",
                 "device_class": null,
                 "device_id": null,
@@ -6634,7 +6522,7 @@
                 "unit_of_measurement": "s"
             },
             {
-                "capabilities": null,
+                "capabilities": {},
                 "config_entry_id": "7d4dbbf5836b44f68768498170f55007",
                 "device_class": null,
                 "device_id": null,
@@ -6650,7 +6538,7 @@
                 "unit_of_measurement": "bpm"
             },
             {
-                "capabilities": null,
+                "capabilities": {},
                 "config_entry_id": "7d4dbbf5836b44f68768498170f55007",
                 "device_class": null,
                 "device_id": null,
@@ -6666,7 +6554,7 @@
                 "unit_of_measurement": "bpm"
             },
             {
-                "capabilities": null,
+                "capabilities": {},
                 "config_entry_id": "7d4dbbf5836b44f68768498170f55007",
                 "device_class": null,
                 "device_id": null,
@@ -6682,7 +6570,7 @@
                 "unit_of_measurement": "bpm"
             },
             {
-                "capabilities": null,
+                "capabilities": {},
                 "config_entry_id": "7d4dbbf5836b44f68768498170f55007",
                 "device_class": null,
                 "device_id": null,
@@ -6698,7 +6586,7 @@
                 "unit_of_measurement": "s"
             },
             {
-                "capabilities": null,
+                "capabilities": {},
                 "config_entry_id": "7d4dbbf5836b44f68768498170f55007",
                 "device_class": null,
                 "device_id": null,
@@ -6714,7 +6602,7 @@
                 "unit_of_measurement": "s"
             },
             {
-                "capabilities": null,
+                "capabilities": {},
                 "config_entry_id": "7d4dbbf5836b44f68768498170f55007",
                 "device_class": null,
                 "device_id": null,
@@ -6730,7 +6618,7 @@
                 "unit_of_measurement": "br/min"
             },
             {
-                "capabilities": null,
+                "capabilities": {},
                 "config_entry_id": "7d4dbbf5836b44f68768498170f55007",
                 "device_class": null,
                 "device_id": null,
@@ -6746,7 +6634,7 @@
                 "unit_of_measurement": "br/min"
             },
             {
-                "capabilities": null,
+                "capabilities": {},
                 "config_entry_id": "7d4dbbf5836b44f68768498170f55007",
                 "device_class": null,
                 "device_id": null,
@@ -6762,7 +6650,7 @@
                 "unit_of_measurement": "br/min"
             },
             {
-                "capabilities": null,
+                "capabilities": {},
                 "config_entry_id": "7d4dbbf5836b44f68768498170f55007",
                 "device_class": null,
                 "device_id": null,
@@ -6778,7 +6666,7 @@
                 "unit_of_measurement": ""
             },
             {
-                "capabilities": null,
+                "capabilities": {},
                 "config_entry_id": "7d4dbbf5836b44f68768498170f55007",
                 "device_class": null,
                 "device_id": null,
@@ -6794,7 +6682,7 @@
                 "unit_of_measurement": ""
             },
             {
-                "capabilities": null,
+                "capabilities": {},
                 "config_entry_id": "7d4dbbf5836b44f68768498170f55007",
                 "device_class": null,
                 "device_id": null,
@@ -6810,7 +6698,7 @@
                 "unit_of_measurement": ""
             },
             {
-                "capabilities": null,
+                "capabilities": {},
                 "config_entry_id": "7d4dbbf5836b44f68768498170f55007",
                 "device_class": null,
                 "device_id": null,
@@ -6826,7 +6714,7 @@
                 "unit_of_measurement": "times"
             },
             {
-                "capabilities": null,
+                "capabilities": {},
                 "config_entry_id": "7d4dbbf5836b44f68768498170f55007",
                 "device_class": null,
                 "device_id": null,
@@ -6842,7 +6730,7 @@
                 "unit_of_measurement": "s"
             },
             {
-                "capabilities": null,
+                "capabilities": {},
                 "config_entry_id": "db6f2b050bcc4c219b7df50ef44fc6e1",
                 "device_class": "occupancy",
                 "device_id": null,
@@ -6858,7 +6746,7 @@
                 "unit_of_measurement": ""
             },
             {
-                "capabilities": null,
+                "capabilities": {},
                 "config_entry_id": "db6f2b050bcc4c219b7df50ef44fc6e1",
                 "device_class": null,
                 "device_id": null,
@@ -6874,7 +6762,7 @@
                 "unit_of_measurement": "kg"
             },
             {
-                "capabilities": null,
+                "capabilities": {},
                 "config_entry_id": "db6f2b050bcc4c219b7df50ef44fc6e1",
                 "device_class": null,
                 "device_id": null,
@@ -6890,7 +6778,7 @@
                 "unit_of_measurement": "kg"
             },
             {
-                "capabilities": null,
+                "capabilities": {},
                 "config_entry_id": "db6f2b050bcc4c219b7df50ef44fc6e1",
                 "device_class": null,
                 "device_id": null,
@@ -6906,7 +6794,7 @@
                 "unit_of_measurement": "kg"
             },
             {
-                "capabilities": null,
+                "capabilities": {},
                 "config_entry_id": "db6f2b050bcc4c219b7df50ef44fc6e1",
                 "device_class": null,
                 "device_id": null,
@@ -6922,7 +6810,7 @@
                 "unit_of_measurement": "kg"
             },
             {
-                "capabilities": null,
+                "capabilities": {},
                 "config_entry_id": "db6f2b050bcc4c219b7df50ef44fc6e1",
                 "device_class": null,
                 "device_id": null,
@@ -6938,7 +6826,7 @@
                 "unit_of_measurement": "kg"
             },
             {
-                "capabilities": null,
+                "capabilities": {},
                 "config_entry_id": "db6f2b050bcc4c219b7df50ef44fc6e1",
                 "device_class": null,
                 "device_id": null,
@@ -6954,7 +6842,7 @@
                 "unit_of_measurement": "m"
             },
             {
-                "capabilities": null,
+                "capabilities": {},
                 "config_entry_id": "db6f2b050bcc4c219b7df50ef44fc6e1",
                 "device_class": null,
                 "device_id": null,
@@ -6970,7 +6858,7 @@
                 "unit_of_measurement": "\u00b0C"
             },
             {
-                "capabilities": null,
+                "capabilities": {},
                 "config_entry_id": "db6f2b050bcc4c219b7df50ef44fc6e1",
                 "device_class": null,
                 "device_id": null,
@@ -6986,7 +6874,7 @@
                 "unit_of_measurement": "\u00b0C"
             },
             {
-                "capabilities": null,
+                "capabilities": {},
                 "config_entry_id": "db6f2b050bcc4c219b7df50ef44fc6e1",
                 "device_class": null,
                 "device_id": null,
@@ -7002,7 +6890,7 @@
                 "unit_of_measurement": "\u00b0C"
             },
             {
-                "capabilities": null,
+                "capabilities": {},
                 "config_entry_id": "db6f2b050bcc4c219b7df50ef44fc6e1",
                 "device_class": null,
                 "device_id": null,
@@ -7018,7 +6906,7 @@
                 "unit_of_measurement": "%"
             },
             {
-                "capabilities": null,
+                "capabilities": {},
                 "config_entry_id": "db6f2b050bcc4c219b7df50ef44fc6e1",
                 "device_class": null,
                 "device_id": null,
@@ -7034,7 +6922,7 @@
                 "unit_of_measurement": "mmhg"
             },
             {
-                "capabilities": null,
+                "capabilities": {},
                 "config_entry_id": "db6f2b050bcc4c219b7df50ef44fc6e1",
                 "device_class": null,
                 "device_id": null,
@@ -7050,7 +6938,7 @@
                 "unit_of_measurement": "mmhg"
             },
             {
-                "capabilities": null,
+                "capabilities": {},
                 "config_entry_id": "db6f2b050bcc4c219b7df50ef44fc6e1",
                 "device_class": null,
                 "device_id": null,
@@ -7066,7 +6954,7 @@
                 "unit_of_measurement": "bpm"
             },
             {
-                "capabilities": null,
+                "capabilities": {},
                 "config_entry_id": "db6f2b050bcc4c219b7df50ef44fc6e1",
                 "device_class": null,
                 "device_id": null,
@@ -7082,7 +6970,7 @@
                 "unit_of_measurement": "%"
             },
             {
-                "capabilities": null,
+                "capabilities": {},
                 "config_entry_id": "db6f2b050bcc4c219b7df50ef44fc6e1",
                 "device_class": null,
                 "device_id": null,
@@ -7098,7 +6986,7 @@
                 "unit_of_measurement": "kg"
             },
             {
-                "capabilities": null,
+                "capabilities": {},
                 "config_entry_id": "db6f2b050bcc4c219b7df50ef44fc6e1",
                 "device_class": null,
                 "device_id": null,
@@ -7114,7 +7002,7 @@
                 "unit_of_measurement": "m/s"
             },
             {
-                "capabilities": null,
+                "capabilities": {},
                 "config_entry_id": "db6f2b050bcc4c219b7df50ef44fc6e1",
                 "device_class": null,
                 "device_id": null,
@@ -7130,7 +7018,7 @@
                 "unit_of_measurement": ""
             },
             {
-                "capabilities": null,
+                "capabilities": {},
                 "config_entry_id": "db6f2b050bcc4c219b7df50ef44fc6e1",
                 "device_class": null,
                 "device_id": null,
@@ -7146,7 +7034,7 @@
                 "unit_of_measurement": "s"
             },
             {
-                "capabilities": null,
+                "capabilities": {},
                 "config_entry_id": "db6f2b050bcc4c219b7df50ef44fc6e1",
                 "device_class": null,
                 "device_id": null,
@@ -7162,7 +7050,7 @@
                 "unit_of_measurement": "s"
             },
             {
-                "capabilities": null,
+                "capabilities": {},
                 "config_entry_id": "db6f2b050bcc4c219b7df50ef44fc6e1",
                 "device_class": null,
                 "device_id": null,
@@ -7178,7 +7066,7 @@
                 "unit_of_measurement": "s"
             },
             {
-                "capabilities": null,
+                "capabilities": {},
                 "config_entry_id": "db6f2b050bcc4c219b7df50ef44fc6e1",
                 "device_class": null,
                 "device_id": null,
@@ -7194,7 +7082,7 @@
                 "unit_of_measurement": "bpm"
             },
             {
-                "capabilities": null,
+                "capabilities": {},
                 "config_entry_id": "db6f2b050bcc4c219b7df50ef44fc6e1",
                 "device_class": null,
                 "device_id": null,
@@ -7210,7 +7098,7 @@
                 "unit_of_measurement": "bpm"
             },
             {
-                "capabilities": null,
+                "capabilities": {},
                 "config_entry_id": "db6f2b050bcc4c219b7df50ef44fc6e1",
                 "device_class": null,
                 "device_id": null,
@@ -7226,7 +7114,7 @@
                 "unit_of_measurement": "bpm"
             },
             {
-                "capabilities": null,
+                "capabilities": {},
                 "config_entry_id": "db6f2b050bcc4c219b7df50ef44fc6e1",
                 "device_class": null,
                 "device_id": null,
@@ -7242,7 +7130,7 @@
                 "unit_of_measurement": "s"
             },
             {
-                "capabilities": null,
+                "capabilities": {},
                 "config_entry_id": "db6f2b050bcc4c219b7df50ef44fc6e1",
                 "device_class": null,
                 "device_id": null,
@@ -7258,7 +7146,7 @@
                 "unit_of_measurement": "s"
             },
             {
-                "capabilities": null,
+                "capabilities": {},
                 "config_entry_id": "db6f2b050bcc4c219b7df50ef44fc6e1",
                 "device_class": null,
                 "device_id": null,
@@ -7274,7 +7162,7 @@
                 "unit_of_measurement": "br/min"
             },
             {
-                "capabilities": null,
+                "capabilities": {},
                 "config_entry_id": "db6f2b050bcc4c219b7df50ef44fc6e1",
                 "device_class": null,
                 "device_id": null,
@@ -7290,7 +7178,7 @@
                 "unit_of_measurement": "br/min"
             },
             {
-                "capabilities": null,
+                "capabilities": {},
                 "config_entry_id": "db6f2b050bcc4c219b7df50ef44fc6e1",
                 "device_class": null,
                 "device_id": null,
@@ -7306,7 +7194,7 @@
                 "unit_of_measurement": "br/min"
             },
             {
-                "capabilities": null,
+                "capabilities": {},
                 "config_entry_id": "db6f2b050bcc4c219b7df50ef44fc6e1",
                 "device_class": null,
                 "device_id": null,
@@ -7322,7 +7210,7 @@
                 "unit_of_measurement": ""
             },
             {
-                "capabilities": null,
+                "capabilities": {},
                 "config_entry_id": "db6f2b050bcc4c219b7df50ef44fc6e1",
                 "device_class": null,
                 "device_id": null,
@@ -7338,7 +7226,7 @@
                 "unit_of_measurement": ""
             },
             {
-                "capabilities": null,
+                "capabilities": {},
                 "config_entry_id": "db6f2b050bcc4c219b7df50ef44fc6e1",
                 "device_class": null,
                 "device_id": null,
@@ -7354,7 +7242,7 @@
                 "unit_of_measurement": ""
             },
             {
-                "capabilities": null,
+                "capabilities": {},
                 "config_entry_id": "db6f2b050bcc4c219b7df50ef44fc6e1",
                 "device_class": null,
                 "device_id": null,
@@ -7370,7 +7258,7 @@
                 "unit_of_measurement": "times"
             },
             {
-                "capabilities": null,
+                "capabilities": {},
                 "config_entry_id": "db6f2b050bcc4c219b7df50ef44fc6e1",
                 "device_class": null,
                 "device_id": null,
@@ -7384,6 +7272,182 @@
                 "supported_features": 0,
                 "unique_id": "withings_8589241_sleep_wakeup_duration_seconds",
                 "unit_of_measurement": "s"
+            },
+            {
+                "capabilities": {},
+                "config_entry_id": "8a1216e7396440f6aad6f16233eb45af",
+                "device_class": "battery",
+                "device_id": "f828d0a50fb44770b0076babd2f6ef9f",
+                "disabled_by": null,
+                "entity_id": "sensor.multi_sensor_battery_level",
+                "icon": null,
+                "name": "Aurore Bedroom Battery Level",
+                "original_icon": null,
+                "original_name": "Aurore Bedroom Battery Level",
+                "platform": "deconz",
+                "supported_features": 0,
+                "unique_id": "00:15:8d:00:04:64:b6:5e-battery",
+                "unit_of_measurement": "%"
+            },
+            {
+                "capabilities": {},
+                "config_entry_id": "8a1216e7396440f6aad6f16233eb45af",
+                "device_class": "humidity",
+                "device_id": "8a17a82b7ed945cc881af79e96b63b3e",
+                "disabled_by": null,
+                "entity_id": "sensor.office_humidity",
+                "icon": null,
+                "name": "Office",
+                "original_icon": null,
+                "original_name": "Office",
+                "platform": "deconz",
+                "supported_features": 0,
+                "unique_id": "00:15:8d:00:04:60:52:fc-01-0405",
+                "unit_of_measurement": "%"
+            },
+            {
+                "capabilities": {},
+                "config_entry_id": "8a1216e7396440f6aad6f16233eb45af",
+                "device_class": "temperature",
+                "device_id": "8a17a82b7ed945cc881af79e96b63b3e",
+                "disabled_by": null,
+                "entity_id": "sensor.office_temperature",
+                "icon": null,
+                "name": "Office",
+                "original_icon": "mdi:thermometer",
+                "original_name": "Office",
+                "platform": "deconz",
+                "supported_features": 0,
+                "unique_id": "00:15:8d:00:04:60:52:fc-01-0402",
+                "unit_of_measurement": "\u00b0C"
+            },
+            {
+                "capabilities": {},
+                "config_entry_id": "8a1216e7396440f6aad6f16233eb45af",
+                "device_class": "pressure",
+                "device_id": "8a17a82b7ed945cc881af79e96b63b3e",
+                "disabled_by": null,
+                "entity_id": "sensor.office_pressure",
+                "icon": null,
+                "name": "Office",
+                "original_icon": "mdi:gauge",
+                "original_name": "Office",
+                "platform": "deconz",
+                "supported_features": 0,
+                "unique_id": "00:15:8d:00:04:60:52:fc-01-0403",
+                "unit_of_measurement": "hPa"
+            },
+            {
+                "capabilities": {},
+                "config_entry_id": "8a1216e7396440f6aad6f16233eb45af",
+                "device_class": "battery",
+                "device_id": "8a17a82b7ed945cc881af79e96b63b3e",
+                "disabled_by": null,
+                "entity_id": "sensor.office_battery_level",
+                "icon": null,
+                "name": "Office Battery Level",
+                "original_icon": null,
+                "original_name": "Office Battery Level",
+                "platform": "deconz",
+                "supported_features": 0,
+                "unique_id": "00:15:8d:00:04:60:52:fc-battery",
+                "unit_of_measurement": "%"
+            },
+            {
+                "capabilities": {},
+                "config_entry_id": "8a1216e7396440f6aad6f16233eb45af",
+                "device_class": "temperature",
+                "device_id": "6fa2f2dc6c814d6183971b8993b07c03",
+                "disabled_by": null,
+                "entity_id": "sensor.basement_temperature",
+                "icon": null,
+                "name": "Basement",
+                "original_icon": "mdi:thermometer",
+                "original_name": "Basement",
+                "platform": "deconz",
+                "supported_features": 0,
+                "unique_id": "00:15:8d:00:04:0e:72:e0-01-0402",
+                "unit_of_measurement": "\u00b0C"
+            },
+            {
+                "capabilities": {},
+                "config_entry_id": "8a1216e7396440f6aad6f16233eb45af",
+                "device_class": "humidity",
+                "device_id": "6fa2f2dc6c814d6183971b8993b07c03",
+                "disabled_by": null,
+                "entity_id": "sensor.basement_humidity",
+                "icon": null,
+                "name": "Basement",
+                "original_icon": null,
+                "original_name": "Basement",
+                "platform": "deconz",
+                "supported_features": 0,
+                "unique_id": "00:15:8d:00:04:0e:72:e0-01-0405",
+                "unit_of_measurement": "%"
+            },
+            {
+                "capabilities": {},
+                "config_entry_id": "8a1216e7396440f6aad6f16233eb45af",
+                "device_class": "battery",
+                "device_id": "6fa2f2dc6c814d6183971b8993b07c03",
+                "disabled_by": null,
+                "entity_id": "sensor.basement_battery_level",
+                "icon": null,
+                "name": "Basement Battery Level",
+                "original_icon": null,
+                "original_name": "Basement Battery Level",
+                "platform": "deconz",
+                "supported_features": 0,
+                "unique_id": "00:15:8d:00:04:0e:72:e0-battery",
+                "unit_of_measurement": "%"
+            },
+            {
+                "capabilities": {},
+                "config_entry_id": "8a1216e7396440f6aad6f16233eb45af",
+                "device_class": "temperature",
+                "device_id": "f828d0a50fb44770b0076babd2f6ef9f",
+                "disabled_by": null,
+                "entity_id": "sensor.aurore_bedroom_temperature",
+                "icon": null,
+                "name": "Aurore Bedroom",
+                "original_icon": "mdi:thermometer",
+                "original_name": "Aurore Bedroom",
+                "platform": "deconz",
+                "supported_features": 0,
+                "unique_id": "00:15:8d:00:04:64:b6:5e-01-0402",
+                "unit_of_measurement": "\u00b0C"
+            },
+            {
+                "capabilities": {},
+                "config_entry_id": "8a1216e7396440f6aad6f16233eb45af",
+                "device_class": "humidity",
+                "device_id": "f828d0a50fb44770b0076babd2f6ef9f",
+                "disabled_by": null,
+                "entity_id": "sensor.aurore_bedroom_humidity",
+                "icon": null,
+                "name": "Aurore Bedroom",
+                "original_icon": null,
+                "original_name": "Aurore Bedroom",
+                "platform": "deconz",
+                "supported_features": 0,
+                "unique_id": "00:15:8d:00:04:64:b6:5e-01-0405",
+                "unit_of_measurement": "%"
+            },
+            {
+                "capabilities": {},
+                "config_entry_id": "8a1216e7396440f6aad6f16233eb45af",
+                "device_class": "pressure",
+                "device_id": "f828d0a50fb44770b0076babd2f6ef9f",
+                "disabled_by": null,
+                "entity_id": "sensor.aurore_bedroom_pressure",
+                "icon": null,
+                "name": "Aurore Bedroom",
+                "original_icon": "mdi:gauge",
+                "original_name": "Aurore Bedroom",
+                "platform": "deconz",
+                "supported_features": 0,
+                "unique_id": "00:15:8d:00:04:64:b6:5e-01-0403",
+                "unit_of_measurement": "hPa"
             }
         ]
     },

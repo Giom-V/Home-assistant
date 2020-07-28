@@ -840,7 +840,7 @@
                 "via_device_id": null
             },
             {
-                "area_id": "09a9199f5c064306b70b13d9d4c1e9bd",
+                "area_id": "a429a49a25ad4e3caa67405bedf22636",
                 "config_entries": [
                     "8a1216e7396440f6aad6f16233eb45af"
                 ],
@@ -860,8 +860,8 @@
                 ],
                 "manufacturer": "LUMI",
                 "model": "lumi.weather",
-                "name": "Basement",
-                "name_by_user": "Basement",
+                "name": "Office",
+                "name_by_user": "Office",
                 "sw_version": "20161129",
                 "via_device_id": "10a8a8a6db6e46ec941a1eef425faa2a"
             },
@@ -960,7 +960,7 @@
                 "via_device_id": "10a8a8a6db6e46ec941a1eef425faa2a"
             },
             {
-                "area_id": "f345537ab65b46c5b78cdf82bf41ea9d",
+                "area_id": "09a9199f5c064306b70b13d9d4c1e9bd",
                 "config_entries": [
                     "8a1216e7396440f6aad6f16233eb45af"
                 ],
@@ -980,8 +980,8 @@
                 ],
                 "manufacturer": "LUMI",
                 "model": "lumi.sensor_ht",
-                "name": "Aurore Bedroom",
-                "name_by_user": "Aurore Bedroom",
+                "name": "Basement",
+                "name_by_user": "Basement",
                 "sw_version": "20160516",
                 "via_device_id": "10a8a8a6db6e46ec941a1eef425faa2a"
             },
@@ -1075,7 +1075,7 @@
                 "via_device_id": null
             },
             {
-                "area_id": null,
+                "area_id": "a429a49a25ad4e3caa67405bedf22636",
                 "config_entries": [
                     "7380dc809b5e456a9af1bb205d6e7f7a"
                 ],
@@ -1148,7 +1148,7 @@
                 "via_device_id": "10a8a8a6db6e46ec941a1eef425faa2a"
             },
             {
-                "area_id": null,
+                "area_id": "a429a49a25ad4e3caa67405bedf22636",
                 "config_entries": [
                     "8a1216e7396440f6aad6f16233eb45af"
                 ],
@@ -1172,6 +1172,74 @@
                 "name_by_user": null,
                 "sw_version": "2.1.022",
                 "via_device_id": "10a8a8a6db6e46ec941a1eef425faa2a"
+            },
+            {
+                "area_id": "f345537ab65b46c5b78cdf82bf41ea9d",
+                "config_entries": [
+                    "8a1216e7396440f6aad6f16233eb45af"
+                ],
+                "connections": [
+                    [
+                        "zigbee",
+                        "00:15:8d:00:04:64:b6:5e"
+                    ]
+                ],
+                "entry_type": null,
+                "id": "f828d0a50fb44770b0076babd2f6ef9f",
+                "identifiers": [
+                    [
+                        "deconz",
+                        "00:15:8d:00:04:64:b6:5e"
+                    ]
+                ],
+                "manufacturer": "LUMI",
+                "model": "lumi.weather",
+                "name": "Aurore Bedroom",
+                "name_by_user": "Aurore Bedroom",
+                "sw_version": "20161129",
+                "via_device_id": "10a8a8a6db6e46ec941a1eef425faa2a"
+            },
+            {
+                "area_id": "257440c1b16b432b9fbf948a1815526d",
+                "config_entries": [
+                    "7380dc809b5e456a9af1bb205d6e7f7a"
+                ],
+                "connections": [],
+                "entry_type": null,
+                "id": "3c196f3d4743453f83a06c16f20a8bb9",
+                "identifiers": [
+                    [
+                        "cast",
+                        "1a205e7a79f264dd246048b13c24700b"
+                    ]
+                ],
+                "manufacturer": "Google Inc.",
+                "model": "Chromecast Ultra",
+                "name": "Chambre",
+                "name_by_user": null,
+                "sw_version": null,
+                "via_device_id": null
+            },
+            {
+                "area_id": "868685c723f94f14befa9024a62f5745",
+                "config_entries": [
+                    "7380dc809b5e456a9af1bb205d6e7f7a"
+                ],
+                "connections": [],
+                "entry_type": null,
+                "id": "28c88c596f2b430391c8a39801ca8044",
+                "identifiers": [
+                    [
+                        "cast",
+                        "dbb352ef9fd20784d3ea44d7ed478371"
+                    ]
+                ],
+                "manufacturer": "Google Inc.",
+                "model": "Chromecast",
+                "name": "Cuisine",
+                "name_by_user": null,
+                "sw_version": null,
+                "via_device_id": null
             }
         ]
     },
