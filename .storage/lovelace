@@ -263,6 +263,15 @@
                                     "entity": "script.mop_kitchen",
                                     "icon": "mdi:waves",
                                     "name": "Serpill\u00e8re"
+                                },
+                                {
+                                    "entity": "media_player.tv",
+                                    "when": {
+                                        "state": [
+                                            "!=",
+                                            "off"
+                                        ]
+                                    }
                                 }
                             ],
                             "heading": "\ud83c\udf73 Cuisine",
@@ -431,6 +440,15 @@
                                             "off"
                                         ]
                                     }
+                                },
+                                {
+                                    "entity": "media_player.chromecastultra1489",
+                                    "when": {
+                                        "state": [
+                                            "!=",
+                                            "off"
+                                        ]
+                                    }
                                 }
                             ],
                             "heading": "\ud83d\udecf Chambre",
@@ -475,7 +493,7 @@
                             "type": "custom:banner-card"
                         },
                         {
-                            "background": "#784200",
+                            "background": "#A02D00",
                             "entities": [
                                 {
                                     "action": {
@@ -533,6 +551,49 @@
                                 }
                             ],
                             "heading": "\ud83d\udecf Chambre d'Aurore",
+                            "row_size": 3,
+                            "type": "custom:banner-card"
+                        },
+                        {
+                            "background": "#7A4100",
+                            "entities": [
+                                {
+                                    "action": {
+                                        "service": "light.toggle"
+                                    },
+                                    "entity": "light.office_light",
+                                    "map_state": {
+                                        "off": "mdi:lightbulb-off-outline",
+                                        "on": "mdi:lightbulb-on"
+                                    },
+                                    "name": "Mur"
+                                },
+                                {
+                                    "action": {
+                                        "service": "switch.toggle"
+                                    },
+                                    "entity": "switch.bureau",
+                                    "map_state": {
+                                        "off": "mdi:lightbulb-off-outline",
+                                        "on": "mdi:lightbulb-on"
+                                    },
+                                    "name": "Lampe"
+                                },
+                                {
+                                    "entity": "sensor.office_temperature",
+                                    "name": "Temperature"
+                                },
+                                {
+                                    "entity": "media_player.bureau",
+                                    "when": {
+                                        "state": [
+                                            "!=",
+                                            "off"
+                                        ]
+                                    }
+                                }
+                            ],
+                            "heading": "\ud83d\udda5 Bureau",
                             "row_size": 3,
                             "type": "custom:banner-card"
                         }
