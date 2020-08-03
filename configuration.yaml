@@ -20,6 +20,8 @@ homeassistant:
     - !secret externalDirShare
     - !secret externalDirTmp
     - !secret externalDirDafang
+  external_url: !secret base_url
+  internal_url: !secret internal_url 
   auth_providers:
     - type: trusted_networks
       trusted_networks:
