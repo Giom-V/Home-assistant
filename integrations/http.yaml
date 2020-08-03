@@ -1,7 +1,6 @@
 # https://home-assistant.io/components/http/
 
 http:
-  base_url: !secret base_url
   ip_ban_enabled: true
   trusted_proxies:
     - 192.168.86.0/24 #TODO: secret?
