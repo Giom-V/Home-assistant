@@ -28,3 +28,7 @@ google_assistant:
       expose: true
     input_boolean.visitors:
       expose: true
+    scene.lightsoff:
+      expose: true
+    script.mop_kitchen_and_dining_room:
+      expose: true
