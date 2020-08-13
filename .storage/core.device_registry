@@ -1054,7 +1054,7 @@
                 "via_device_id": null
             },
             {
-                "area_id": null,
+                "area_id": "a429a49a25ad4e3caa67405bedf22636",
                 "config_entries": [
                     "899b3273e07b4183882fabe1cd3cbebc"
                 ],
@@ -1200,7 +1200,7 @@
                 "via_device_id": "10a8a8a6db6e46ec941a1eef425faa2a"
             },
             {
-                "area_id": "257440c1b16b432b9fbf948a1815526d",
+                "area_id": "a429a49a25ad4e3caa67405bedf22636",
                 "config_entries": [
                     "7380dc809b5e456a9af1bb205d6e7f7a"
                 ],
@@ -1221,7 +1221,7 @@
                 "via_device_id": null
             },
             {
-                "area_id": "868685c723f94f14befa9024a62f5745",
+                "area_id": "257440c1b16b432b9fbf948a1815526d",
                 "config_entries": [
                     "7380dc809b5e456a9af1bb205d6e7f7a"
                 ],
@@ -1237,7 +1237,7 @@
                 "manufacturer": "Google Inc.",
                 "model": "Chromecast",
                 "name": "Cuisine",
-                "name_by_user": null,
+                "name_by_user": "Chambre",
                 "sw_version": null,
                 "via_device_id": null
             },
