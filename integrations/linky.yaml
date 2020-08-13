@@ -1,6 +1,7 @@
 # https://www.home-assistant.io/integrations/linky/
 # The linky sensor platform is retrieving the consumption of your home from the Linky electric meter.
 
-linky:
-  - username: !secret linkyLaPlagneUsername
-    password: !secret linkyLaPlagnePassword
+# TODO: reactivate when https://github.com/home-assistant/core/issues/33634 will be fixed
+# linky:
+#   - username: !secret linkyLaPlagneUsername
+#     password: !secret linkyLaPlagnePassword
