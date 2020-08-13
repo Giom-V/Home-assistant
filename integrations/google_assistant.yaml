@@ -20,6 +20,8 @@ google_assistant:
       expose: true
     light.office_light:
       expose: true
+    light.office_light_2:
+      expose: true
     switch.wake_up_nas:
       expose: true
     switch.wake_up_pc:
