@@ -62,7 +62,7 @@
                 "model": "Point v106",
                 "name": "Living room",
                 "name_by_user": null,
-                "sw_version": 13299,
+                "sw_version": 13383,
                 "via_device_id": "11f11385557e4967a884d69c5ffa629a"
             },
             {
@@ -716,7 +716,7 @@
                 "model": "",
                 "name": "HACS",
                 "name_by_user": null,
-                "sw_version": "1.2.2",
+                "sw_version": "1.3.3",
                 "via_device_id": null
             },
             {
@@ -1215,7 +1215,7 @@
                 ],
                 "manufacturer": "Google Inc.",
                 "model": "Chromecast Ultra",
-                "name": "Chambre",
+                "name": "Ultra",
                 "name_by_user": null,
                 "sw_version": null,
                 "via_device_id": null
@@ -1240,6 +1240,32 @@
                 "name_by_user": null,
                 "sw_version": null,
                 "via_device_id": null
+            },
+            {
+                "area_id": "a429a49a25ad4e3caa67405bedf22636",
+                "config_entries": [
+                    "8a1216e7396440f6aad6f16233eb45af"
+                ],
+                "connections": [
+                    [
+                        "zigbee",
+                        "cc:cc:cc:ff:fe:b4:f7:dc"
+                    ]
+                ],
+                "entry_type": null,
+                "id": "00362d037be64a1b9d322e4f2d72b699",
+                "identifiers": [
+                    [
+                        "deconz",
+                        "cc:cc:cc:ff:fe:b4:f7:dc"
+                    ]
+                ],
+                "manufacturer": "IKEA of Sweden",
+                "model": "TRADFRI bulb E26 WW 806lm",
+                "name": "Office light 2",
+                "name_by_user": null,
+                "sw_version": "2.1.022",
+                "via_device_id": "10a8a8a6db6e46ec941a1eef425faa2a"
             }
         ]
     },
