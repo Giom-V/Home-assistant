@@ -5859,7 +5859,7 @@
                 "icon": null,
                 "name": null,
                 "original_icon": null,
-                "original_name": "Chambre",
+                "original_name": "Ultra",
                 "platform": "cast",
                 "supported_features": 21389,
                 "unique_id": "1a205e7a-79f2-64dd-2460-48b13c24700b",
@@ -7448,6 +7448,22 @@
                 "supported_features": 0,
                 "unique_id": "00:15:8d:00:04:64:b6:5e-01-0403",
                 "unit_of_measurement": "hPa"
+            },
+            {
+                "capabilities": {},
+                "config_entry_id": "8a1216e7396440f6aad6f16233eb45af",
+                "device_class": null,
+                "device_id": "db9d84cd66f1468d9a59f63f3aef7eb8",
+                "disabled_by": null,
+                "entity_id": "light.office_light_2",
+                "icon": null,
+                "name": null,
+                "original_icon": null,
+                "original_name": "Office light 2",
+                "platform": "deconz",
+                "supported_features": 41,
+                "unique_id": "cc:cc:cc:ff:fe:b4:f7:dc-01",
+                "unit_of_measurement": null
             }
         ]
     },

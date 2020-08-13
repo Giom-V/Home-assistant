@@ -1215,7 +1215,7 @@
                 ],
                 "manufacturer": "Google Inc.",
                 "model": "Chromecast Ultra",
-                "name": "Chambre",
+                "name": "Ultra",
                 "name_by_user": "Ultra",
                 "sw_version": null,
                 "via_device_id": null
@@ -1240,6 +1240,32 @@
                 "name_by_user": "Chambre",
                 "sw_version": null,
                 "via_device_id": null
+            },
+            {
+                "area_id": null,
+                "config_entries": [
+                    "8a1216e7396440f6aad6f16233eb45af"
+                ],
+                "connections": [
+                    [
+                        "zigbee",
+                        "cc:cc:cc:ff:fe:b4:f7:dc"
+                    ]
+                ],
+                "entry_type": null,
+                "id": "db9d84cd66f1468d9a59f63f3aef7eb8",
+                "identifiers": [
+                    [
+                        "deconz",
+                        "cc:cc:cc:ff:fe:b4:f7:dc"
+                    ]
+                ],
+                "manufacturer": "IKEA of Sweden",
+                "model": "TRADFRI bulb E26 WW 806lm",
+                "name": "Office light 2",
+                "name_by_user": null,
+                "sw_version": "2.1.022",
+                "via_device_id": "10a8a8a6db6e46ec941a1eef425faa2a"
             }
         ]
     },
