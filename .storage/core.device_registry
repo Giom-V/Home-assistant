@@ -1216,7 +1216,7 @@
                 "manufacturer": "Google Inc.",
                 "model": "Chromecast Ultra",
                 "name": "Ultra",
-                "name_by_user": null,
+                "name_by_user": "Ultra",
                 "sw_version": null,
                 "via_device_id": null
             },
@@ -1253,7 +1253,7 @@
                     ]
                 ],
                 "entry_type": null,
-                "id": "00362d037be64a1b9d322e4f2d72b699",
+                "id": "db9d84cd66f1468d9a59f63f3aef7eb8",
                 "identifiers": [
                     [
                         "deconz",

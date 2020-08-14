@@ -7453,7 +7453,7 @@
                 "capabilities": {},
                 "config_entry_id": "8a1216e7396440f6aad6f16233eb45af",
                 "device_class": null,
-                "device_id": "00362d037be64a1b9d322e4f2d72b699",
+                "device_id": "db9d84cd66f1468d9a59f63f3aef7eb8",
                 "disabled_by": null,
                 "entity_id": "light.office_light_2",
                 "icon": null,
