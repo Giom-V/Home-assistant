@@ -14,6 +14,7 @@
   action:
   - entity_id:
     - light.office_light
+    - light.office_light_2
     service: light.turn_on
   - delay:
       seconds: 1
@@ -36,6 +37,7 @@
   action:
   - entity_id:
     - light.office_light
+    - light.office_light_2
     service: light.turn_off
   - delay:
       seconds: 1

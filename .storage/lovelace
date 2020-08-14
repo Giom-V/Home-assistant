@@ -557,7 +557,18 @@
                                         "off": "mdi:lightbulb-off-outline",
                                         "on": "mdi:lightbulb-on"
                                     },
-                                    "name": "Mur"
+                                    "name": null
+                                },
+                                {
+                                    "action": {
+                                        "service": "light.toggle"
+                                    },
+                                    "entity": "light.office_light_2",
+                                    "map_state": {
+                                        "off": "mdi:lightbulb-off-outline",
+                                        "on": "mdi:lightbulb-on"
+                                    },
+                                    "name": null
                                 },
                                 {
                                     "action": {
@@ -594,7 +605,7 @@
                                 }
                             ],
                             "heading": "\ud83d\udda5 Bureau",
-                            "row_size": 3,
+                            "row_size": 2,
                             "type": "custom:banner-card"
                         }
                     ],

@@ -1242,7 +1242,7 @@
                 "via_device_id": null
             },
             {
-                "area_id": null,
+                "area_id": "a429a49a25ad4e3caa67405bedf22636",
                 "config_entries": [
                     "8a1216e7396440f6aad6f16233eb45af"
                 ],
