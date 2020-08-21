@@ -117,7 +117,7 @@ person:
     id: giom
     user_id: !secret giomUserId
     device_trackers:
-      - device_tracker.cellGiom
+      - device_tracker.Pixel4XL
       - device_tracker.op6
       - device_tracker.oneplus6_lan
       - device_tracker.google_maps_108886437999779306059

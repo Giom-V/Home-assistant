@@ -60,13 +60,13 @@
   alias: Turn off solarium light 10 minutes after we arrived if after 6:30pm
   trigger:
   - platform: state
-    entity_id: device_tracker.cellGiom
+    entity_id: person.giom_2
     from: not_home
     to: home
     for:
       minutes: 10
   - platform: state
-    entity_id: device_tracker.cellClaire
+    entity_id: person.claire_2
     from: not_home
     to: home
     for:
