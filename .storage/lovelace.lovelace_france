@@ -210,7 +210,7 @@
                             "card": {
                                 "cards": [
                                     {
-                                        "entity": "sensor.la_plagne_weather_alert",
+                                        "entity": "sensor.macot_la_plagne_weather_alert",
                                         "name": "Alerte m\u00e9t\u00e9o",
                                         "type": "entity"
                                     },
@@ -218,28 +218,28 @@
                                         "filter": {
                                             "include": [
                                                 {
-                                                    "key": "sensor.la_plagne_weather_alert.Canicule"
+                                                    "key": "sensor.macot_la_plagne_weather_alert.Canicule"
                                                 },
                                                 {
-                                                    "key": "sensor.la_plagne_weather_alert.Grand-froid"
+                                                    "key": "sensor.macot_la_plagne_weather_alert.Grand-froid"
                                                 },
                                                 {
-                                                    "key": "sensor.la_plagne_weather_alert.Inondation"
+                                                    "key": "sensor.macot_la_plagne_weather_alert.Inondation"
                                                 },
                                                 {
-                                                    "key": "sensor.la_plagne_weather_alert.Neige-verglas"
+                                                    "key": "sensor.macot_la_plagne_weather_alert.Neige-verglas"
                                                 },
                                                 {
-                                                    "key": "sensor.la_plagne_weather_alert.Orages"
+                                                    "key": "sensor.macot_la_plagne_weather_alert.Orages"
                                                 },
                                                 {
-                                                    "key": "sensor.la_plagne_weather_alert.Pluie-innodation"
+                                                    "key": "sensor.macot_la_plagne_weather_alert.Pluie-innodation"
                                                 },
                                                 {
-                                                    "key": "sensor.la_plagne_weather_alert.Vagues-submersion"
+                                                    "key": "sensor.macot_la_plagne_weather_alert.Vagues-submersion"
                                                 },
                                                 {
-                                                    "key": "sensor.la_plagne_weather_alert.Vent violent"
+                                                    "key": "sensor.macot_la_plagne_weather_alert.Vent violent"
                                                 }
                                             ]
                                         },
@@ -252,7 +252,7 @@
                             },
                             "conditions": [
                                 {
-                                    "entity": "sensor.la_plagne_weather_alert",
+                                    "entity": "sensor.macot_la_plagne_weather_alert",
                                     "state_not": "Vert"
                                 }
                             ],
