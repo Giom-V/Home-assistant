@@ -2050,18 +2050,19 @@
                         {
                             "entities": [
                                 {
-                                    "entity": "device_tracker.op6"
+                                    "entity": "device_tracker.pixel4xl"
                                 },
                                 {
-                                    "entity": "device_tracker.cellclaire"
+                                    "entity": "device_tracker.op6"
                                 },
                                 {
                                     "entity": "device_tracker.google_maps_108886437999779306059"
                                 },
                                 {
-                                    "entity": "device_tracker.google_maps_116551309970452496819"
+                                    "entity": "person.giom_2"
                                 }
                             ],
+                            "title": "Giom",
                             "type": "entities"
                         },
                         {
@@ -2088,6 +2089,21 @@
                             "hours_to_show": 360,
                             "name": "Work time",
                             "type": "custom:mini-graph-card"
+                        },
+                        {
+                            "entities": [
+                                {
+                                    "entity": "device_tracker.cellclaire"
+                                },
+                                {
+                                    "entity": "device_tracker.google_maps_116551309970452496819"
+                                },
+                                {
+                                    "entity": "person.claire_2"
+                                }
+                            ],
+                            "title": "Claire",
+                            "type": "entities"
                         }
                     ],
                     "icon": "mdi:account-multiple",
