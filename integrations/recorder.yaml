@@ -100,8 +100,25 @@ recorder:
       - sensor.basement_temperature
       - sensor.basement_humidity
       - sensor.button_temperature
+      - sensor.cannes_cloud_cover
+      - sensor.cannes_daily_precipitation
+      - sensor.cannes_freeze_chance
+      - sensor.cannes_humidity
+      - sensor.cannes_pressure
+      - sensor.cannes_rain_chance
+      - sensor.cannes_snow_chance
+      - sensor.cannes_temperature
+      - sensor.cannes_uv
+      - sensor.cannes_weather_alert
       - sensor.claire_s_time_at_work_last_week
       - sensor.claire_s_time_at_work_this_week
+      - sensor.coublevie_cloud_cover
+      - sensor.coublevie_daily_precipitation
+      - sensor.coublevie_freeze_chance
+      - sensor.coublevie_rain_chance
+      - sensor.coublevie_snow_chance
+      - sensor.coublevie_uv
+      - sensor.coublevie_weather_alert
       - sensor.dark_sky_apparent_temperature
       - sensor.dark_sky_humidity
       - sensor.dark_sky_ozone
@@ -140,6 +157,13 @@ recorder:
       - sensor.living_room_sound_level_2
       - sensor.living_room_temperature
       - sensor.living_room_temperature_2
+      - sensor.macot_la_plagne_cloud_cover
+      - sensor.macot_la_plagne_daily_precipitation
+      - sensor.macot_la_plagne_freeze_chance
+      - sensor.macot_la_plagne_rain_chance
+      - sensor.macot_la_plagne_snow_chance
+      - sensor.macot_la_plagne_uv
+      - sensor.macot_la_plagne_weather_alert
       - sensor.memory_use_percent
       - sensor.owm_humidity
       - sensor.owm_pressure
@@ -147,6 +171,14 @@ recorder:
       - sensor.owm_snow
       - sensor.owm_temperature
       - sensor.processor_use
+      - sensor.saint_martinien_cloud_cover
+      - sensor.saint_martinien_daily_precipitation
+      - sensor.saint_martinien_freeze_chance
+      - sensor.saint_martinien_next_rain
+      - sensor.saint_martinien_rain_chance
+      - sensor.saint_martinien_snow_chance
+      - sensor.saint_martinien_uv
+      - sensor.saint_martinien_weather_alert
       - sensor.solarium_humidity
       - sensor.solarium_pressure
       - sensor.solarium_sound_level
