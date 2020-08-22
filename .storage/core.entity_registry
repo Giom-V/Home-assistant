@@ -7295,22 +7295,6 @@
                 "device_class": null,
                 "device_id": null,
                 "disabled_by": null,
-                "entity_id": "sensor.la_plagne_weather_alert",
-                "icon": null,
-                "name": null,
-                "original_icon": "mdi:weather-cloudy-alert",
-                "original_name": "73 Weather alert",
-                "platform": "meteo_france",
-                "supported_features": 0,
-                "unique_id": "73 Weather alert",
-                "unit_of_measurement": null
-            },
-            {
-                "capabilities": {},
-                "config_entry_id": "9783b23e837a48a3a14c9d8c82192c30",
-                "device_class": null,
-                "device_id": null,
-                "disabled_by": null,
                 "entity_id": "weather.macot_la_plagne",
                 "icon": null,
                 "name": null,
@@ -7495,6 +7479,22 @@
                 "platform": "meteo_france",
                 "supported_features": 0,
                 "unique_id": "03 Weather alert",
+                "unit_of_measurement": null
+            },
+            {
+                "capabilities": {},
+                "config_entry_id": "9783b23e837a48a3a14c9d8c82192c30",
+                "device_class": null,
+                "device_id": null,
+                "disabled_by": null,
+                "entity_id": "sensor.macot_la_plagne_weather_alert",
+                "icon": null,
+                "name": null,
+                "original_icon": "mdi:weather-cloudy-alert",
+                "original_name": "73 Weather alert",
+                "platform": "meteo_france",
+                "supported_features": 0,
+                "unique_id": "73 Weather alert",
                 "unit_of_measurement": null
             }
         ]
