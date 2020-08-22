@@ -43,13 +43,14 @@ recorder:
       - binary_sensor.updater
       - binary_sensor.workday_sensor
       - camera.dafang_camera_motion_snapshot
-      - light.escalier # because of deconz those 2 spam the database
       - light.basement_stairs
+      - light.escalier # because of deconz those 2 spam the database
     event_types:
       - time_changed
   include:
     domains:
       - alarm_control_panel
+      - binary_sensor
       - device_tracker
       - light
       - media_player
@@ -57,13 +58,11 @@ recorder:
       - person
       - vacuum
       - weather
-      - binary_sensor
     entities:
       - automation.clean_room_as_asked_through_ifttt
       - automation.create_the_daily_gif
       - automation.mop_room_as_asked_through_ifttt
       - automation.motion_detected
-      - automation.test_withings
       - automation.send_sunrise_picture_to_slack
       - automation.solarium_door_opened
       - automation.switch_off_all_lights_when_nobody_s_home_for_30mn
@@ -74,12 +73,21 @@ recorder:
       - automation.swith_light_on_when_we_arrive
       - automation.swith_living_room_lights_on_when_we_arrive
       - automation.test_freezer
+      - automation.test_withings
       - automation.timelapse_night_if_snowing
       - automation.turn_motion_detection_off_when_somebody_s_at_home
       - automation.turn_motion_detection_on_when_nobody_s_at_home
       - automation.turn_off_light_10_minutes_after_we_arrived
       - automation.turn_off_solarium_light_10_minutes_after_we_arrived_if_after_6_30pm
       - automation.vaccum_kitchen_and_dining_room_when_we_are_away
+      - binary_sensor.aurora_visibility
+      - binary_sensor.dafang_camera_motion_sensor
+      - binary_sensor.people_home
+      - binary_sensor.solarium_door
+      - binary_sensor.tradfri_motion_sensor
+      - binary_sensor.water_16
+      - camera.dafang_camera
+      - camera.raspberry_pi_camera
       - input_boolean.visitors
       - input_select.living_room_color
       - input_select.vacuum_room
@@ -89,17 +97,21 @@ recorder:
       - script.switch_living_room_color
       - script.vaccum_reset_fan_speed_after_mopping
       - script.vacuum_dispatch
-      - sensor.aurore_bedroom_temperature
       - sensor.aurore_bedroom_humidity
-      - sensor.bathroom_humidity
-      - sensor.bathroom_temperature
+      - sensor.aurore_bedroom_temperature
       - sensor.basement_bedroom_humidity
       - sensor.basement_bedroom_temperature
-      - sensor.button_temperature
+      - sensor.basement_humidity
       - sensor.basement_pressure
       - sensor.basement_temperature
-      - sensor.basement_humidity
+      - sensor.bathroom_humidity
+      - sensor.bathroom_temperature
       - sensor.button_temperature
+      - sensor.button_temperature
+      - sensor.canada_confirmed
+      - sensor.canada_current
+      - sensor.canada_deaths
+      - sensor.canada_recovered
       - sensor.cannes_cloud_cover
       - sensor.cannes_daily_precipitation
       - sensor.cannes_freeze_chance
@@ -138,11 +150,15 @@ recorder:
       - sensor.environment_canada_indice_uv
       - sensor.environment_canada_palier_de_vent
       - sensor.environment_canada_point_de_rosee
-      - sensor.environment_canada_pression
-      - sensor.environment_canada_probabilite_d_averses
       - sensor.environment_canada_precipitation_d_hier
+      - sensor.environment_canada_pression
       - sensor.environment_canada_prevision
+      - sensor.environment_canada_probabilite_d_averses
       - sensor.environment_canada_rafale_de_vent
+      - sensor.france_confirmed
+      - sensor.france_current
+      - sensor.france_deaths
+      - sensor.france_recovered
       - sensor.giom_s_time_at_work_last_week
       - sensor.giom_s_time_at_work_this_week
       - sensor.google_fit_distance
@@ -165,6 +181,14 @@ recorder:
       - sensor.macot_la_plagne_uv
       - sensor.macot_la_plagne_weather_alert
       - sensor.memory_use_percent
+      - sensor.meteomedia_flu_level
+      - sensor.meteomedia_mosquitos
+      - sensor.meteomedia_polen_details
+      - sensor.meteomedia_polen_level
+      - sensor.meteomedia_uv_current_max
+      - sensor.meteomedia_uv_level
+      - sensor.meteomedia_uv_level_max
+      - sensor.meteomedia_uv_level_max_scrape
       - sensor.owm_humidity
       - sensor.owm_pressure
       - sensor.owm_rain
@@ -195,34 +219,10 @@ recorder:
       - sensor.withings_weight_kg_aurore
       - sensor.withings_weight_kg_claire
       - sensor.withings_weight_kg_giom
-      - switch.lumiere_cuisine
-      - switch.dafang_camera_motion_detection
       - sensor.worldwide_confirmed
       - sensor.worldwide_current
-      - sensor.worldwide_recovered
       - sensor.worldwide_deaths
-      - sensor.france_confirmed
-      - sensor.france_current
-      - sensor.france_recovered
-      - sensor.france_deaths
-      - sensor.canada_confirmed
-      - sensor.canada_current
-      - sensor.canada_recovered
-      - sensor.canada_deaths
-      - sensor.meteomedia_mosquitos
-      - sensor.meteomedia_flu_level
-      - sensor.meteomedia_polen_level
-      - sensor.meteomedia_polen_details
-      - sensor.meteomedia_uv_level
-      - sensor.meteomedia_uv_level_max
-      - sensor.meteomedia_uv_level_max_scrape
-      - sensor.meteomedia_uv_current_max
+      - sensor.worldwide_recovered
+      - switch.dafang_camera_motion_detection
+      - switch.lumiere_cuisine
       - switch.veilleuse
-      - binary_sensor.solarium_door
-      - binary_sensor.aurora_visibility
-      - binary_sensor.dafang_camera_motion_sensor
-      - binary_sensor.people_home
-      - binary_sensor.tradfri_motion_sensor
-      - binary_sensor.water_16
-      - camera.dafang_camera
-      - camera.raspberry_pi_camera
