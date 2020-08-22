@@ -1,6 +1,7 @@
 # https://www.home-assistant.io/integrations/meteo_france/
-meteo_france:
-  - city: 'Coublevie, 38500'
-  - city: 'Cannes, 06400'
-  - city: 'Saint-Martinien, 03380'
-  - city: 'La Plagne, 73210'
+# Now managed entirely in the frontend as described here: https://www.home-assistant.io/integrations/meteo_france/#weather-platform
+# meteo_france:
+#   - city: 'Coublevie, 38500'
+#   - city: 'Cannes, 06400'
+#   - city: 'Saint-Martinien, 03380'
+#   - city: 'La Plagne, 73210'
