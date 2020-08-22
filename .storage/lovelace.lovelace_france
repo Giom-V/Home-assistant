@@ -381,6 +381,12 @@
                             "entity": "weather.saint_martinien",
                             "name": "\u00c9tang",
                             "type": "custom:weather-card"
+                        },
+                        {
+                            "aspect_ratio": "100%",
+                            "title": "Pluie",
+                            "type": "iframe",
+                            "url": "https://embed.windy.com/embed2.html?lat=46.301&lon=2.521&detailLat=46.344&detailLon=2.496&width=650&height=650&zoom=11&level=surface&overlay=rain&product=ecmwf&menu=&message=true&marker=true&calendar=now&pressure=&type=map&location=coordinates&detail=true&metricWind=km%2Fh&metricTemp=%C2%B0C&radarRange=-1"
                         }
                     ],
                     "icon": "mdi:fish",
