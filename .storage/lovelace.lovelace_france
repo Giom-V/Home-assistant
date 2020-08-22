@@ -156,6 +156,11 @@
                                         {
                                             "cards": [
                                                 {
+                                                    "entity": "sensor.cannes_uv",
+                                                    "name": "Indice UV",
+                                                    "type": "entity"
+                                                },
+                                                {
                                                     "aspect_ratio": "50%",
                                                     "title": "Vent",
                                                     "type": "iframe",
