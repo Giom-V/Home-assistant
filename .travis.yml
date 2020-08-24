@@ -1,24 +1,32 @@
 language: python
 python:
-  - "3.7"
+- '3.7'
 before_install:
-  - mv secrets.fake.yaml secrets.yaml
-  - sudo apt-get install -y libudev-dev 
-  - mkdir tmp/
-  - touch ./home-assistant_v2.db
-  - touch ./home-assistant.log
-  - touch ./known_devices.yaml
-  - touch ./secrets/fake_ssl_cert
-  - touch ./secrets/fake_ssl_key
-  - touch ./customize.yaml
-  - touch ./google_calendar.yaml
-  - mv secrets/home-assistant.fake.json secrets/home-assistant.json
+- mv secrets.fake.yaml secrets.yaml
+- sudo apt-get install -y libudev-dev
+- mkdir tmp/
+- touch ./home-assistant_v2.db
+- touch ./home-assistant.log
+- touch ./known_devices.yaml
+- touch ./secrets/fake_ssl_cert
+- touch ./secrets/fake_ssl_key
+- touch ./customize.yaml
+- touch ./google_calendar.yaml
+- mv secrets/home-assistant.fake.json secrets/home-assistant.json
 install:
-  - pip3 install homeassistant netdisco python-dateutil geopy ratelimit
-  - hass --version
+- pip3 install homeassistant netdisco python-dateutil geopy ratelimit
+- hass --version
 script:
-  - hass -c . --script check_config
+- hass -c . --script check_config
 after_failure:
-  - cat home-assistant.log
+- cat home-assistant.log
 after_success:
-  - bash <(curl -s https://copilot.blackducksoftware.com/ci/travis/scripts/upload)
+- bash <(curl -s https://copilot.blackducksoftware.com/ci/travis/scripts/upload)
+notifications:
+  slack:
+    # Token generated using this CL (the --com is very important): 
+    # travis encrypt "[subdomain]:[api token]#[channel]" --add notifications.slack -r "Giom-V/Home-assistant" --com
+    secure: nUEVn1SU5twLSagku3916u9+chd1B5z9WBHmf0QPP2//O2B0/k0peo8+5e2Sg0Mq6ba1q6p05dEIcdm7H1+v0xrQH8qRuEHSpLGhAUbjGqH7HbFrxZ5f4qdtkpS/l1o6xenBtR+EzaaR56IiH99+dwEXIymNuxnJb5+9nE0IKGFTFwyxNKbS4AujsUtAPLdkYiMDVOwzJyv/QAgg81W2cwBzZ7a6bnucjsjoLldo+ohFunJ17rDkeLVeRo3NUua2a5CrwLGNUgtAdU0CsBq3zZygzO5FrAK9OIJKdT1u9djDQcHgUXV8wSaRckgqoPYL93BuBz+UaL7aIFHH23X85jlLQOA0QxdOjJSy52wZrAO3grdYO5gOVUlgj3GTrI3nV0THgIQ7U7g4ubcyvcfrhyyav3DPSa57NZd6tSOTaFo47+VXb2mb6RWJ1dmB4ec2y8PCLXiZVsCKsC/uMkZuCWyu+0Zd/rsUtsC7dOq3DOaGvsYrWEQ47dSJkCforgwCc0xVx6kM/nC5t3U3IUUeboS3D9mFfHDTJObfDUmn44puimdbAONCVfhwZxn44S6ZGqhgWedAFOqFYRGWNhuXv/ujRkecL+SKaNvBSLf7lAJpMdrAR6JxwobioG0f9YkVDqAKtq6kHSsPfQexhEcpgn77ZmmxkaCtBxX3iQAsQyU=
+    on_success: always # potential values: always (default), change, never 
+    on_failure: always # potential values: always (default), change, never 
+
