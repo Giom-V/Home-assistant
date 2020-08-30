@@ -16,7 +16,7 @@ homeassistant:
   time_zone: America/Toronto
   # Customization file
   customize: !include customize.yaml
-  whitelist_external_dirs:
+  allowlist_external_dirs:
     - !secret externalDirShare
     - !secret externalDirTmp
     - !secret externalDirDafang
