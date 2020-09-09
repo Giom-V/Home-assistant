@@ -15,13 +15,19 @@
     entity_id: input_select.living_room_color
     data:
       option: Pink
-  - service: switch.turn_on
-    entity_id: switch.veilleuse
   # Keeping this one is case I need to remember how I was managing a white light in a group of colored ones
   # - service_template: "light.turn_{{ 'on' if is_state('light.white','on') or is_state('light.canape_droite','off') else 'off' }}"
   #   entity_id: light.white
   #   data:
   #     brightness: 1
+- id: SleepingTime
+  alias: Sleeping time
+  trigger:
+    platform: template
+    value_template: "{{ states('sensor.time') == states('input_datetime.sleepingtime_start')[0:5] }}"
+  action:
+  - service: switch.turn_on
+    entity_id: switch.veilleuse
 - id: SwitchNightLightOff
   alias: Night light off
   trigger:
