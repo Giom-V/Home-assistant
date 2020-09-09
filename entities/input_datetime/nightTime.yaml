@@ -3,6 +3,11 @@ nighttime_start:
   has_date: false
   has_time: true
   initial: '19:15'
+sleepingtime_start:
+  name: Time to change Aurore's night light to show that it's time to go to sleep
+  has_date: false
+  has_time: true
+  initial: '20:00'
 nighttime_end:
   name: Switching off all lights 'cause we should be sleeping
   has_date: false
