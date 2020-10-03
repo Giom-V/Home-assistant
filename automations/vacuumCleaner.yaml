@@ -126,6 +126,34 @@
     state: 'docked'
     for:
       hours: 10
+  - condition: state
+    entity_id: input_boolean.visitors
+    state: 'off'
+  - condition: or
+    conditions:
+    - condition: time # This part is related to the WFH situation during the Covid pandemic
+      weekday:
+      - mon
+      - tue
+      - wed
+      - thu
+      - fri
+    - condition: and
+      conditions:
+      - condition: time
+        weekday:
+        - sat
+        - sun
+      - condition: state
+        entity_id: person.giom_2
+        state: not_home
+        for:
+          minutes: 5
+      - condition: state
+        entity_id: person.claire_2
+        state: not_home
+        for:
+          minutes: 5
   action:
   - service: script.turn_on
     data:
