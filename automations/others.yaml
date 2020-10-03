@@ -1,15 +1,36 @@
-- id: '1576116024811'
+- id: SwitchOffLightsInTheSummerMornings
   alias: Switch off lights 30mn after sunrise
   description: ''
   trigger:
   - event: sunrise
     offset: 00:30
     platform: sun
-  condition: []
+  condition: 
+    - condition: state
+      entity_id: season.season
+      state:
+        - summer
+        - spring
   action:
   - service: scene.turn_on
     entity_id: scene.LightsOff
-- id: '1576760475010'
+- id: SwitchOffLightsInTheWinterMornings
+  alias: Switch off lights 60mn after sunrise
+  description: ''
+  trigger:
+  - event: sunrise
+    offset: 01:00
+    platform: sun
+  condition: 
+    - condition: state
+      entity_id: season.season
+      state:
+        - winter
+        - autumn
+  action:
+  - service: scene.turn_on
+    entity_id: scene.LightsOff
+- id: SwitchOffLightsWhenWeGoToBed
   alias: Switch off all lights when we go to bed
   description: ''
   trigger:
@@ -19,7 +40,7 @@
   action:
   - service: scene.turn_on
     entity_id: scene.LightsOff
-- id: '1579612388601'
+- id: SwitchOffLightsWhenNobodysHome
   alias: Switch off all lights when nobody's home for 30mn
   description: Switch off all lights when nobody's home for 30mn
   trigger:
