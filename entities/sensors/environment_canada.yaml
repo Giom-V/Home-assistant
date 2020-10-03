@@ -1,3 +1,2 @@
-# Temporarily diabling
-# platform: environment_canada
-# language: french
+platform: environment_canada
+language: french
