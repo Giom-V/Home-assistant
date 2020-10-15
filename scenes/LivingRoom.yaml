@@ -126,3 +126,18 @@
     light.color:
       state: on
       rgb_color: [255,166,87]
+- name: WhiteAndPinkLivingRoom
+  id: WhiteAndPinkLivingRoom
+  entities:
+    light.canape_gauche:
+      state: on
+      rgb_color: [255,255,255]
+      brightness: 128
+    light.canape_droite:
+      state: on
+      rgb_color: [255,255,255]
+      brightness: 128
+    light.color:
+      state: on
+      rgb_color: [255,36,147]
+      brightness: 256
