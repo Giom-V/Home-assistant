@@ -126,8 +126,8 @@
     light.color:
       state: on
       rgb_color: [255,166,87]
-- name: WhiteAndPinkLivingRoom
-  id: WhiteAndPinkLivingRoom
+- name: NightTimeLivingRoom
+  id: NightTimeLivingRoom
   entities:
     light.canape_gauche:
       state: on

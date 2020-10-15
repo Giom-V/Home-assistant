@@ -4,25 +4,8 @@
     platform: template
     value_template: "{{ states('sensor.time') == states('input_datetime.nighttime_start')[0:5] }}"
   action:
-  # TODO: Remove totally or add again
-  # - entity_id:
-  #   - light.canape_gauche
-  #   - light.canape_droite
-  #   - light.color
-  #   service: light.turn_on
-  #   data:
-  #     brightness: 1
-  # - service: input_select.select_option
-  #   entity_id: input_select.living_room_color
-  #   data:
-  #     option: Pink
   - service: scene.turn_on
-    entity_id: scene.WhiteAndPinkLivingRoom
-  # Keeping this one is case I need to remember how I was managing a white light in a group of colored ones
-  # - service_template: "light.turn_{{ 'on' if is_state('light.white','on') or is_state('light.canape_droite','off') else 'off' }}"
-  #   entity_id: light.white
-  #   data:
-  #     brightness: 1
+    entity_id: scene.NightTimeLivingRoom
 - id: SleepingTime
   alias: Sleeping time
   trigger:
