@@ -1,4 +1,6 @@
 {
+    "version": 1,
+    "key": "lovelace.lovelace_france",
     "data": {
         "config": {
             "views": [
@@ -393,9 +395,8 @@
                     "path": "domerat",
                     "title": "Dom\u00e9rat"
                 }
-            ]
+            ],
+            "title": "France"
         }
-    },
-    "key": "lovelace.lovelace_france",
-    "version": 1
+    }
 }

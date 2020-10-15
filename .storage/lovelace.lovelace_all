@@ -1,0 +1,1441 @@
+{
+    "version": 1,
+    "key": "lovelace.lovelace_all",
+    "data": {
+        "config": {
+            "title": "Quebec",
+            "views": [
+                {
+                    "path": "default_view",
+                    "title": "Home",
+                    "visible": [
+                        {
+                            "user": "882d5cbae4fb4da282c01c79cf4216ff"
+                        },
+                        {
+                            "user": "6d6b7b9773144a66957cec1889954f68"
+                        },
+                        {
+                            "user": "32c4026d06a64efaacd2b41fbe2395cc"
+                        }
+                    ],
+                    "badges": [
+                        {
+                            "entity": "binary_sensor.people_home"
+                        },
+                        {
+                            "entity": "binary_sensor.workday_sensor"
+                        },
+                        {
+                            "entity": "binary_sensor.updater"
+                        },
+                        {
+                            "entity": "binary_sensor.aurora_visibility"
+                        },
+                        {
+                            "entity": "binary_sensor.withings_in_bed_aurore"
+                        },
+                        {
+                            "entity": "binary_sensor.withings_in_bed_giom"
+                        },
+                        {
+                            "entity": "binary_sensor.vpir_motion_control"
+                        },
+                        {
+                            "entity": "person.giom_2"
+                        },
+                        {
+                            "entity": "person.claire_2"
+                        },
+                        {
+                            "entity": "person.claire"
+                        },
+                        {
+                            "entity": "sensor.dest_address"
+                        },
+                        {
+                            "entity": "sensor.meteomedia_mosquitos"
+                        },
+                        {
+                            "entity": "sensor.meteomedia_flu_level"
+                        },
+                        {
+                            "entity": "sensor.meteomedia_polen_level"
+                        },
+                        {
+                            "entity": "sensor.meteomedia_uv_level"
+                        },
+                        {
+                            "entity": "sensor.meteomedia_uv_level_max"
+                        },
+                        {
+                            "entity": "sensor.meteomedia_uv_level_current_max"
+                        },
+                        {
+                            "entity": "sensor.moon"
+                        },
+                        {
+                            "entity": "sensor.nas_free_space"
+                        },
+                        {
+                            "entity": "sensor.temperature_water_sensor"
+                        },
+                        {
+                            "entity": "sensor.time"
+                        },
+                        {
+                            "entity": "sensor.date"
+                        },
+                        {
+                            "entity": "sensor.date_time"
+                        },
+                        {
+                            "entity": "sensor.date_time_utc"
+                        },
+                        {
+                            "entity": "sensor.uptime"
+                        },
+                        {
+                            "entity": "sensor.current_version"
+                        },
+                        {
+                            "entity": "sensor.season"
+                        },
+                        {
+                            "entity": "sensor.coublevie_rain_chance"
+                        },
+                        {
+                            "entity": "sensor.coublevie_snow_chance"
+                        },
+                        {
+                            "entity": "sensor.coublevie_freeze_chance"
+                        },
+                        {
+                            "entity": "sensor.coublevie_uv"
+                        },
+                        {
+                            "entity": "sensor.coublevie_weather_alert"
+                        },
+                        {
+                            "entity": "sensor.coublevie_daily_precipitation"
+                        },
+                        {
+                            "entity": "sensor.coublevie_cloud_cover"
+                        },
+                        {
+                            "entity": "sensor.macot_la_plagne_rain_chance"
+                        },
+                        {
+                            "entity": "sensor.macot_la_plagne_snow_chance"
+                        },
+                        {
+                            "entity": "sensor.macot_la_plagne_freeze_chance"
+                        },
+                        {
+                            "entity": "sensor.macot_la_plagne_uv"
+                        },
+                        {
+                            "entity": "sensor.macot_la_plagne_weather_alert"
+                        },
+                        {
+                            "entity": "sensor.macot_la_plagne_daily_precipitation"
+                        },
+                        {
+                            "entity": "sensor.macot_la_plagne_cloud_cover"
+                        },
+                        {
+                            "entity": "sensor.openweathermap_weather"
+                        },
+                        {
+                            "entity": "sensor.openweathermap_temperature"
+                        },
+                        {
+                            "entity": "sensor.openweathermap_wind_speed"
+                        },
+                        {
+                            "entity": "sensor.openweathermap_wind_bearing"
+                        },
+                        {
+                            "entity": "sensor.openweathermap_humidity"
+                        },
+                        {
+                            "entity": "sensor.openweathermap_pressure"
+                        },
+                        {
+                            "entity": "sensor.openweathermap_cloud_coverage"
+                        },
+                        {
+                            "entity": "sensor.openweathermap_rain"
+                        },
+                        {
+                            "entity": "sensor.openweathermap_snow"
+                        },
+                        {
+                            "entity": "sensor.openweathermap_condition"
+                        },
+                        {
+                            "entity": "sensor.openweathermap_weather_code"
+                        },
+                        {
+                            "entity": "sensor.openweathermap_forecast_condition"
+                        },
+                        {
+                            "entity": "sensor.openweathermap_forecast_precipitation"
+                        },
+                        {
+                            "entity": "sensor.openweathermap_forecast_temperature"
+                        },
+                        {
+                            "entity": "sensor.openweathermap_forecast_temperature_low"
+                        },
+                        {
+                            "entity": "sensor.openweathermap_forecast_time"
+                        },
+                        {
+                            "entity": "sensor.openweathermap_forecast_wind_bearing"
+                        },
+                        {
+                            "entity": "sensor.openweathermap_forecast_wind_speed"
+                        },
+                        {
+                            "entity": "sensor.cannes_rain_chance"
+                        },
+                        {
+                            "entity": "sensor.cannes_snow_chance"
+                        },
+                        {
+                            "entity": "sensor.cannes_freeze_chance"
+                        },
+                        {
+                            "entity": "sensor.cannes_uv"
+                        },
+                        {
+                            "entity": "sensor.cannes_weather_alert"
+                        },
+                        {
+                            "entity": "sensor.cannes_daily_precipitation"
+                        },
+                        {
+                            "entity": "sensor.cannes_cloud_cover"
+                        },
+                        {
+                            "entity": "sensor.saint_martinien_rain_chance"
+                        },
+                        {
+                            "entity": "sensor.saint_martinien_snow_chance"
+                        },
+                        {
+                            "entity": "sensor.saint_martinien_freeze_chance"
+                        },
+                        {
+                            "entity": "sensor.saint_martinien_next_rain"
+                        },
+                        {
+                            "entity": "sensor.saint_martinien_uv"
+                        },
+                        {
+                            "entity": "sensor.saint_martinien_weather_alert"
+                        },
+                        {
+                            "entity": "sensor.saint_martinien_daily_precipitation"
+                        },
+                        {
+                            "entity": "sensor.saint_martinien_cloud_cover"
+                        },
+                        {
+                            "entity": "sensor.withings_weight_kg_aurore"
+                        },
+                        {
+                            "entity": "sensor.withings_fat_mass_kg_aurore"
+                        },
+                        {
+                            "entity": "sensor.withings_fat_free_mass_kg_aurore"
+                        },
+                        {
+                            "entity": "sensor.withings_muscle_mass_kg_aurore"
+                        },
+                        {
+                            "entity": "sensor.withings_bone_mass_kg_aurore"
+                        },
+                        {
+                            "entity": "sensor.withings_temperature_c_aurore"
+                        },
+                        {
+                            "entity": "sensor.withings_body_temperature_c_aurore"
+                        },
+                        {
+                            "entity": "sensor.withings_skin_temperature_c_aurore"
+                        },
+                        {
+                            "entity": "sensor.withings_fat_ratio_pct_aurore"
+                        },
+                        {
+                            "entity": "sensor.withings_diastolic_blood_pressure_mmhg_aurore"
+                        },
+                        {
+                            "entity": "sensor.withings_systolic_blood_pressure_mmhg_aurore"
+                        },
+                        {
+                            "entity": "sensor.withings_heart_pulse_bpm_aurore"
+                        },
+                        {
+                            "entity": "sensor.withings_spo2_pct_aurore"
+                        },
+                        {
+                            "entity": "sensor.withings_pulse_wave_velocity_aurore"
+                        },
+                        {
+                            "entity": "sensor.withings_weight_kg_giom"
+                        },
+                        {
+                            "entity": "sensor.withings_fat_mass_kg_giom"
+                        },
+                        {
+                            "entity": "sensor.withings_fat_free_mass_kg_giom"
+                        },
+                        {
+                            "entity": "sensor.withings_muscle_mass_kg_giom"
+                        },
+                        {
+                            "entity": "sensor.withings_bone_mass_kg_giom"
+                        },
+                        {
+                            "entity": "sensor.withings_temperature_c_giom"
+                        },
+                        {
+                            "entity": "sensor.withings_body_temperature_c_giom"
+                        },
+                        {
+                            "entity": "sensor.withings_skin_temperature_c_giom"
+                        },
+                        {
+                            "entity": "sensor.withings_fat_ratio_pct_giom"
+                        },
+                        {
+                            "entity": "sensor.withings_diastolic_blood_pressure_mmhg_giom"
+                        },
+                        {
+                            "entity": "sensor.withings_systolic_blood_pressure_mmhg_giom"
+                        },
+                        {
+                            "entity": "sensor.withings_heart_pulse_bpm_giom"
+                        },
+                        {
+                            "entity": "sensor.withings_spo2_pct_giom"
+                        },
+                        {
+                            "entity": "sensor.withings_pulse_wave_velocity_giom"
+                        },
+                        {
+                            "entity": "sensor.tradfri_wireless_dimmer_battery_level"
+                        },
+                        {
+                            "entity": "sensor.fsm_state_motion_control"
+                        },
+                        {
+                            "entity": "sensor.chinese_air_quality_index_2"
+                        },
+                        {
+                            "entity": "sensor.chinese_main_pollutant_2"
+                        },
+                        {
+                            "entity": "sensor.u_s_air_pollution_level_2"
+                        },
+                        {
+                            "entity": "sensor.u_s_air_quality_index_2"
+                        },
+                        {
+                            "entity": "sensor.u_s_main_pollutant_2"
+                        },
+                        {
+                            "entity": "sensor.disk_use_percent"
+                        },
+                        {
+                            "entity": "sensor.sonarr_upcoming_media"
+                        },
+                        {
+                            "entity": "sensor.untappd_last_check_in_giomv"
+                        },
+                        {
+                            "entity": "sensor.radarr_movies"
+                        },
+                        {
+                            "entity": "sensor.claire_s_time_at_work_last_week"
+                        },
+                        {
+                            "entity": "sensor.claire_s_time_at_work_this_week"
+                        },
+                        {
+                            "entity": "sensor.giom_s_time_at_work_this_week"
+                        },
+                        {
+                            "entity": "sensor.giom_s_time_at_work_last_week"
+                        },
+                        {
+                            "entity": "sensor.untappd_wishlist_giomv"
+                        },
+                        {
+                            "entity": "sensor.disk_use"
+                        },
+                        {
+                            "entity": "sensor.untappd_last_badge_giomv"
+                        },
+                        {
+                            "entity": "sensor.dark_sky_summary_1d"
+                        },
+                        {
+                            "entity": "sensor.radarr_upcoming"
+                        },
+                        {
+                            "entity": "sensor.meteomedia_json"
+                        },
+                        {
+                            "entity": "sensor.disk_free"
+                        },
+                        {
+                            "entity": "sensor.radarr_status"
+                        },
+                        {
+                            "entity": "sensor.dark_sky_precip_1d"
+                        },
+                        {
+                            "entity": "sensor.memory_use_percent"
+                        },
+                        {
+                            "entity": "sensor.memory_use"
+                        },
+                        {
+                            "entity": "sensor.dark_sky_precip_intensity_1d"
+                        },
+                        {
+                            "entity": "sensor.memory_free"
+                        },
+                        {
+                            "entity": "sensor.google_fit_weight"
+                        },
+                        {
+                            "entity": "sensor.ipv4_address"
+                        },
+                        {
+                            "entity": "sensor.waqi_beauce_quebec_canada"
+                        },
+                        {
+                            "entity": "sensor.dark_sky_precip_probability_1d"
+                        },
+                        {
+                            "entity": "sensor.ipv6_address"
+                        },
+                        {
+                            "entity": "sensor.chinese_air_pollution_level_2"
+                        },
+                        {
+                            "entity": "sensor.google_fit_heart_rate"
+                        },
+                        {
+                            "entity": "sensor.dark_sky_precip_accumulation_1d"
+                        },
+                        {
+                            "entity": "sensor.processor_use"
+                        },
+                        {
+                            "entity": "sensor.last_boot"
+                        },
+                        {
+                            "entity": "sensor.swap_use_percent"
+                        },
+                        {
+                            "entity": "sensor.hacs"
+                        },
+                        {
+                            "entity": "sensor.swap_use"
+                        },
+                        {
+                            "entity": "sensor.dark_sky_dew_point_1d"
+                        },
+                        {
+                            "entity": "sensor.swap_free"
+                        },
+                        {
+                            "entity": "sensor.load_1m"
+                        },
+                        {
+                            "entity": "sensor.dark_sky_wind_speed_1d"
+                        },
+                        {
+                            "entity": "sensor.load_5m"
+                        },
+                        {
+                            "entity": "sensor.load_15m"
+                        },
+                        {
+                            "entity": "sensor.dark_sky_wind_bearing_1d"
+                        },
+                        {
+                            "entity": "sensor.network_in_wlan0"
+                        },
+                        {
+                            "entity": "sensor.network_out_wlan0"
+                        },
+                        {
+                            "entity": "sensor.dark_sky_cloud_coverage_1d"
+                        },
+                        {
+                            "entity": "sensor.network_throughput_in_wlan0"
+                        },
+                        {
+                            "entity": "sensor.network_throughput_out_wlan0"
+                        },
+                        {
+                            "entity": "sensor.dark_sky_humidity_1d"
+                        },
+                        {
+                            "entity": "sensor.packets_in_wlan0"
+                        },
+                        {
+                            "entity": "sensor.packets_out_wlan0"
+                        },
+                        {
+                            "entity": "sensor.dark_sky_pressure_1d"
+                        },
+                        {
+                            "entity": "sensor.dark_sky_visibility_1d"
+                        },
+                        {
+                            "entity": "sensor.dark_sky_ozone_1d"
+                        },
+                        {
+                            "entity": "sensor.process_hass"
+                        },
+                        {
+                            "entity": "sensor.dark_sky_daytime_high_temperature_1d"
+                        },
+                        {
+                            "entity": "sensor.dark_sky_overnight_low_temperature_1d"
+                        },
+                        {
+                            "entity": "sensor.dark_sky_daytime_high_apparent_temperature_1d"
+                        },
+                        {
+                            "entity": "sensor.dark_sky_overnight_low_apparent_temperature_1d"
+                        },
+                        {
+                            "entity": "sensor.dark_sky_daily_max_precip_intensity_1d"
+                        },
+                        {
+                            "entity": "sensor.dark_sky_uv_index_1d"
+                        },
+                        {
+                            "entity": "sensor.dark_sky_moon_phase_1d"
+                        },
+                        {
+                            "entity": "sensor.google_fit_height"
+                        },
+                        {
+                            "entity": "sensor.google_fit_steps"
+                        },
+                        {
+                            "entity": "sensor.google_fit_sleep"
+                        },
+                        {
+                            "entity": "sensor.google_fit_move_time"
+                        },
+                        {
+                            "entity": "sensor.google_fit_calories"
+                        },
+                        {
+                            "entity": "sensor.google_fit_distance"
+                        },
+                        {
+                            "entity": "sensor.illumination_04cf8cb0b053"
+                        },
+                        {
+                            "entity": "sensor.onhub_kbyte_sec_sent"
+                        },
+                        {
+                            "entity": "sensor.onhub_kbyte_sec_received"
+                        },
+                        {
+                            "entity": "sensor.onhub_packets_sec_received"
+                        },
+                        {
+                            "entity": "sensor.onhub_bytes_received"
+                        },
+                        {
+                            "entity": "sensor.onhub_packets_sent"
+                        },
+                        {
+                            "entity": "sensor.onhub_packets_sec_sent"
+                        },
+                        {
+                            "entity": "sensor.onhub_packets_received"
+                        },
+                        {
+                            "entity": "sensor.onhub_bytes_sent"
+                        },
+                        {
+                            "entity": "sensor.u_s_main_pollutant"
+                        },
+                        {
+                            "entity": "sensor.u_s_air_pollution_level"
+                        },
+                        {
+                            "entity": "sensor.u_s_air_quality_index"
+                        },
+                        {
+                            "entity": "sensor.chinese_main_pollutant"
+                        },
+                        {
+                            "entity": "sensor.chinese_air_quality_index"
+                        },
+                        {
+                            "entity": "sensor.chinese_air_pollution_level"
+                        },
+                        {
+                            "entity": "sensor.waqi_shawinigan_secteur_de_saint_marc_quebec_canada"
+                        },
+                        {
+                            "entity": "sensor.waqi_trois_rivieres_secteur_du_vieux_trois_rivieres_quebec_canada"
+                        },
+                        {
+                            "entity": "sensor.waqi_levis_secteur_du_parc_georges_maranda_quebec_canada"
+                        },
+                        {
+                            "entity": "sensor.waqi_quebec_secteur_de_champigny_quebec_canada"
+                        },
+                        {
+                            "entity": "sensor.waqi_sherbrooke_secteur_est_quebec_canada"
+                        },
+                        {
+                            "entity": "sensor.waqi_brossard_secteur_du_parc_sorbonne_quebec_canada"
+                        },
+                        {
+                            "entity": "sensor.waqi_quebec_secteur_du_vieux_limoilou_quebec_canada"
+                        },
+                        {
+                            "entity": "sensor.waqi_terrebonne_secteur_du_parc_vaillant_quebec_canada"
+                        },
+                        {
+                            "entity": "sensor.waqi_sorel_tracy_secteur_de_saint_joseph_de_sorel_quebec_canada"
+                        },
+                        {
+                            "entity": "sensor.waqi_ile_de_montreal_centre_quebec_canada"
+                        },
+                        {
+                            "entity": "sensor.waqi_shawinigan_secteur_de_l_assomption_quebec_canada"
+                        },
+                        {
+                            "entity": "sensor.waqi_sorel_tracy_secteur_du_centre_ville_quebec_canada"
+                        },
+                        {
+                            "entity": "sensor.waqi_rouyn_noranda_secteur_du_centre_ville_quebec_canada"
+                        },
+                        {
+                            "entity": "sensor.waqi_rouyn_noranda_secteur_de_la_montee_du_sourire_quebec_canada"
+                        },
+                        {
+                            "entity": "sensor.waqi_saguenay_secteur_de_l_universite_chicoutimi_quebec_canada"
+                        },
+                        {
+                            "entity": "sensor.waqi_trois_rivieres_secteur_du_sanctuaire_quebec_canada"
+                        },
+                        {
+                            "entity": "sensor.waqi_saguenay_secteur_de_sainte_therese_arvida_quebec_canada"
+                        },
+                        {
+                            "entity": "sensor.waqi_longueuil_secteur_du_parc_oceanie_brossard_quebec_canada"
+                        },
+                        {
+                            "entity": "sensor.waqi_becancour_secteur_de_l_hotel_de_ville_quebec_canada"
+                        },
+                        {
+                            "entity": "sensor.temperature"
+                        },
+                        {
+                            "entity": "sensor.tendance"
+                        },
+                        {
+                            "entity": "sensor.visibilite"
+                        },
+                        {
+                            "entity": "sensor.vitesse_de_vent"
+                        },
+                        {
+                            "entity": "sensor.veilles"
+                        },
+                        {
+                            "entity": "sensor.terminaisons"
+                        },
+                        {
+                            "entity": "sensor.environment_canada_alertes"
+                        },
+                        {
+                            "entity": "sensor.environment_canada_avis"
+                        },
+                        {
+                            "entity": "sensor.environment_canada_basse_temperature"
+                        },
+                        {
+                            "entity": "sensor.environment_canada_bulletins"
+                        },
+                        {
+                            "entity": "sensor.environment_canada_code_icone"
+                        },
+                        {
+                            "entity": "sensor.environment_canada_condition"
+                        },
+                        {
+                            "entity": "sensor.environment_canada_direction_de_vent"
+                        },
+                        {
+                            "entity": "sensor.environment_canada_haute_temperature"
+                        },
+                        {
+                            "entity": "sensor.environment_canada_humidex"
+                        },
+                        {
+                            "entity": "sensor.environment_canada_humidite"
+                        },
+                        {
+                            "entity": "sensor.environment_canada_indice_uv"
+                        },
+                        {
+                            "entity": "sensor.environment_canada_palier_de_vent"
+                        },
+                        {
+                            "entity": "sensor.environment_canada_point_de_rosee"
+                        },
+                        {
+                            "entity": "sensor.environment_canada_pression"
+                        },
+                        {
+                            "entity": "sensor.environment_canada_probabilite_d_averses"
+                        },
+                        {
+                            "entity": "sensor.environment_canada_precipitation_d_hier"
+                        },
+                        {
+                            "entity": "sensor.environment_canada_prevision"
+                        },
+                        {
+                            "entity": "sensor.environment_canada_rafale_de_vent"
+                        },
+                        {
+                            "entity": "sensor.environment_canada_refroidissement_eolien"
+                        },
+                        {
+                            "entity": "sun.sun"
+                        },
+                        {
+                            "entity": "timer.night_light"
+                        }
+                    ],
+                    "cards": [
+                        {
+                            "type": "entities",
+                            "entities": [
+                                "switch.bureau",
+                                "light.office_light",
+                                "sensor.office_humidity",
+                                "sensor.office_temperature",
+                                "sensor.office_pressure",
+                                "light.office_light_2"
+                            ],
+                            "title": "Bureau"
+                        },
+                        {
+                            "type": "media-control",
+                            "entity": "media_player.bureau"
+                        },
+                        {
+                            "type": "media-control",
+                            "entity": "media_player.chromecastultra1489"
+                        },
+                        {
+                            "type": "entities",
+                            "entities": [
+                                "sensor.living_room_temperature_2",
+                                "sensor.living_room_pressure_2",
+                                "sensor.living_room_humidity_2",
+                                "binary_sensor.living_room_battery_2",
+                                "binary_sensor.living_room_button_press_2",
+                                "binary_sensor.living_room_cold_2",
+                                "binary_sensor.living_room_connectivity_2",
+                                "binary_sensor.living_room_dry_2",
+                                "binary_sensor.living_room_heat_2",
+                                "binary_sensor.living_room_moisture_2",
+                                "binary_sensor.living_room_sound_2",
+                                "binary_sensor.living_room_tamper_2"
+                            ],
+                            "title": "Cannes"
+                        },
+                        {
+                            "type": "alarm-panel",
+                            "entity": "alarm_control_panel.cannes"
+                        },
+                        {
+                            "type": "entities",
+                            "entities": [
+                                "sensor.button_temperature"
+                            ],
+                            "title": "Chambre"
+                        },
+                        {
+                            "type": "media-control",
+                            "entity": "media_player.tv"
+                        },
+                        {
+                            "type": "media-control",
+                            "entity": "media_player.lenovosmartclock3394"
+                        },
+                        {
+                            "type": "entities",
+                            "entities": [
+                                "switch.veilleuse",
+                                "sensor.aurore_bedroom_temperature",
+                                "sensor.aurore_bedroom_humidity",
+                                "sensor.aurore_bedroom_pressure"
+                            ],
+                            "title": "Chambre d'Aurore"
+                        },
+                        {
+                            "type": "entities",
+                            "entities": [
+                                "switch.lumiere_cuisine"
+                            ],
+                            "title": "Cuisine"
+                        },
+                        {
+                            "type": "entities",
+                            "entities": [
+                                "sensor.bathroom_temperature",
+                                "sensor.bathroom_humidity"
+                            ],
+                            "title": "Salle de bain"
+                        },
+                        {
+                            "type": "media-control",
+                            "entity": "media_player.gogol_mini"
+                        },
+                        {
+                            "type": "media-control",
+                            "entity": "media_player.gogol_home"
+                        },
+                        {
+                            "type": "entities",
+                            "entities": [
+                                "sensor.daylight",
+                                "light.unknown_3",
+                                "sensor.living_room_temperature",
+                                "sensor.living_room_pressure",
+                                "sensor.living_room_humidity",
+                                "sensor.living_room_sound_level",
+                                "binary_sensor.living_room_battery",
+                                "binary_sensor.living_room_button_press",
+                                "binary_sensor.living_room_cold",
+                                "binary_sensor.living_room_connectivity",
+                                "binary_sensor.living_room_dry",
+                                "binary_sensor.living_room_heat",
+                                "binary_sensor.living_room_moisture",
+                                "binary_sensor.living_room_sound",
+                                "binary_sensor.living_room_tamper"
+                            ],
+                            "title": "Salon"
+                        },
+                        {
+                            "type": "media-control",
+                            "entity": "media_player.chromecastultra8108"
+                        },
+                        {
+                            "type": "entities",
+                            "entities": [
+                                "binary_sensor.dafang_camera_motion_sensor",
+                                "switch.dafang_camera_motion_detection",
+                                "switch.dafang_camera_motion_send_mail",
+                                "switch.dafang_camera_motion_send_telegram",
+                                "switch.dafang_camera_motion_tracking",
+                                "switch.dafang_camera_blue_led",
+                                "switch.dafang_camera_yellow_led",
+                                "switch.dafang_camera_ir_led",
+                                "switch.dafang_camera_ir_filter",
+                                "switch.dafang_camera_night_mode",
+                                "switch.dafang_camera_night_mode_auto",
+                                "switch.dafang_camera_h264_rtsp_server",
+                                "switch.dafang_camera_mjpeg_rtsp_server",
+                                "cover.dafang_camera_move_up_down",
+                                "cover.dafang_camera_move_left_right",
+                                {
+                                    "entity": "binary_sensor.solarium_door",
+                                    "name": "Door"
+                                },
+                                "binary_sensor.freezer_door",
+                                {
+                                    "entity": "sensor.solarium_temperature",
+                                    "name": "Temperature"
+                                },
+                                {
+                                    "entity": "sensor.solarium_pressure",
+                                    "name": "Pressure"
+                                },
+                                {
+                                    "entity": "sensor.solarium_humidity",
+                                    "name": "Humidity"
+                                },
+                                {
+                                    "entity": "sensor.solarium_sound_level",
+                                    "name": "Sound_level"
+                                },
+                                {
+                                    "entity": "binary_sensor.solarium_battery",
+                                    "name": "Battery"
+                                },
+                                {
+                                    "entity": "binary_sensor.solarium_button_press",
+                                    "name": "Button_press"
+                                },
+                                {
+                                    "entity": "binary_sensor.solarium_cold",
+                                    "name": "Cold"
+                                },
+                                {
+                                    "entity": "binary_sensor.solarium_connectivity",
+                                    "name": "Connectivity"
+                                },
+                                {
+                                    "entity": "binary_sensor.solarium_dry",
+                                    "name": "Dry"
+                                },
+                                {
+                                    "entity": "binary_sensor.solarium_heat",
+                                    "name": "Heat"
+                                },
+                                {
+                                    "entity": "binary_sensor.solarium_moisture",
+                                    "name": "Moisture"
+                                },
+                                {
+                                    "entity": "binary_sensor.solarium_sound",
+                                    "name": "Sound"
+                                },
+                                {
+                                    "entity": "binary_sensor.solarium_tamper",
+                                    "name": "Tamper"
+                                }
+                            ],
+                            "title": "Solarium"
+                        },
+                        {
+                            "type": "picture-entity",
+                            "entity": "camera.dafang_camera_motion_snapshot"
+                        },
+                        {
+                            "type": "entities",
+                            "entities": [
+                                "binary_sensor.tradfri_motion_sensor",
+                                "light.basement_stairs",
+                                "light.basement",
+                                "sensor.hl_l2390dw_status",
+                                "sensor.hl_l2390dw_page_counter",
+                                "sensor.hl_l2390dw_duplex_unit_pages_counter",
+                                "sensor.hl_l2390dw_drum_remaining_life",
+                                "sensor.hl_l2390dw_black_toner_remaining",
+                                "sensor.hl_l2390dw_uptime",
+                                "sensor.basement_temperature",
+                                "sensor.basement_humidity"
+                            ],
+                            "title": "Sous sol"
+                        },
+                        {
+                            "type": "entities",
+                            "entities": [
+                                "binary_sensor.water_16"
+                            ],
+                            "title": "Tempo"
+                        },
+                        {
+                            "type": "entities",
+                            "entities": [
+                                "sensor.google_wifi_current_version",
+                                "sensor.google_wifi_last_restart",
+                                "sensor.google_wifi_local_ip",
+                                "sensor.google_wifi_new_version",
+                                "sensor.google_wifi_status",
+                                "sensor.google_wifi_uptime"
+                            ],
+                            "title": "Google Wifi",
+                            "show_header_toggle": true
+                        },
+                        {
+                            "type": "media-control",
+                            "entity": "media_player.gogol_home"
+                        },
+                        {
+                            "type": "media-control",
+                            "entity": "media_player.gogol_mini"
+                        },
+                        {
+                            "type": "media-control",
+                            "entity": "media_player.partout"
+                        },
+                        {
+                            "type": "media-control",
+                            "entity": "media_player.kodi"
+                        },
+                        {
+                            "type": "entities",
+                            "entities": [
+                                "sensor.travel_time_to_work_gmap",
+                                "sensor.travel_time_to_work_waze",
+                                "sensor.travel_time_to_work_claire"
+                            ],
+                            "title": "Travel times",
+                            "show_header_toggle": true
+                        },
+                        {
+                            "type": "entities",
+                            "entities": [
+                                "sensor.ebox_balance",
+                                "sensor.ebox_data_limit",
+                                "sensor.ebox_download",
+                                "sensor.ebox_download_before_offpeak",
+                                "sensor.ebox_offpeak_download",
+                                "sensor.ebox_offpeak_total",
+                                "sensor.ebox_offpeak_upload",
+                                "sensor.ebox_total",
+                                "sensor.ebox_total_before_offpeak",
+                                "sensor.ebox_upload",
+                                "sensor.ebox_upload_before_offpeak",
+                                "sensor.ebox_usage"
+                            ],
+                            "title": "Ebox",
+                            "show_header_toggle": true
+                        },
+                        {
+                            "type": "entities",
+                            "entities": [
+                                "automation.bus_de_7h26",
+                                "automation.bus_de_7h50_10mn",
+                                "automation.bus_de_7h50_2mn",
+                                "automation.bus_de_7h50_5mn"
+                            ],
+                            "title": "Bus de Claire",
+                            "show_header_toggle": true
+                        },
+                        {
+                            "type": "entities",
+                            "entities": [
+                                "sensor.sonarr_commands",
+                                "sensor.sonarr_queue",
+                                "sensor.sonarr_series",
+                                "sensor.sonarr_upcoming",
+                                "sensor.sonarr_wanted"
+                            ],
+                            "title": "Sonar",
+                            "show_header_toggle": true
+                        },
+                        {
+                            "type": "entities",
+                            "entities": [
+                                "sensor.speedtest_download",
+                                "sensor.speedtest_ping",
+                                "sensor.speedtest_upload"
+                            ],
+                            "title": "Speed test",
+                            "show_header_toggle": true
+                        },
+                        {
+                            "type": "entities",
+                            "entities": [
+                                "sensor.owm_cloud_coverage",
+                                "sensor.owm_condition",
+                                "sensor.owm_humidity",
+                                "sensor.owm_pressure",
+                                "sensor.owm_rain",
+                                "sensor.owm_snow",
+                                "sensor.owm_temperature",
+                                "sensor.owm_weather_code",
+                                "sensor.owm_wind_bearing",
+                                "sensor.owm_wind_speed"
+                            ],
+                            "title": "Open Weather Map",
+                            "show_header_toggle": true
+                        },
+                        {
+                            "type": "entities",
+                            "entities": [
+                                {
+                                    "entity": "sensor.dark_sky_apparent_temperature",
+                                    "name": "Apparent Temperature"
+                                },
+                                {
+                                    "entity": "sensor.dark_sky_cloud_coverage",
+                                    "name": "Cloud Coverage"
+                                },
+                                "sensor.dark_sky_daily_max_precip_intensity",
+                                {
+                                    "entity": "sensor.dark_sky_daily_summary",
+                                    "name": "Daily Summary"
+                                },
+                                "sensor.dark_sky_daytime_high_apparent_temperature",
+                                "sensor.dark_sky_daytime_high_temperature",
+                                {
+                                    "entity": "sensor.dark_sky_dew_point",
+                                    "name": "Dew Point"
+                                },
+                                {
+                                    "entity": "sensor.dark_sky_hourly_summary",
+                                    "name": "Hourly Summary"
+                                },
+                                {
+                                    "entity": "sensor.dark_sky_humidity",
+                                    "name": "Humidity"
+                                },
+                                {
+                                    "entity": "sensor.dark_sky_minutely_summary",
+                                    "name": "Minutely Summary"
+                                },
+                                "sensor.dark_sky_moon_phase",
+                                "sensor.dark_sky_overnight_low_apparent_temperature",
+                                "sensor.dark_sky_overnight_low_temperature",
+                                {
+                                    "entity": "sensor.dark_sky_ozone",
+                                    "name": "Ozone"
+                                },
+                                {
+                                    "entity": "sensor.dark_sky_precip",
+                                    "name": "Precip"
+                                },
+                                "sensor.dark_sky_precip_accumulation",
+                                {
+                                    "entity": "sensor.dark_sky_precip_intensity",
+                                    "name": "Precip Intensity"
+                                },
+                                {
+                                    "entity": "sensor.dark_sky_precip_probability",
+                                    "name": "Precip Probability"
+                                },
+                                {
+                                    "entity": "sensor.dark_sky_pressure",
+                                    "name": "Pressure"
+                                },
+                                {
+                                    "entity": "sensor.dark_sky_summary",
+                                    "name": "Summary"
+                                },
+                                {
+                                    "entity": "sensor.dark_sky_temperature",
+                                    "name": "Temperature"
+                                },
+                                {
+                                    "entity": "sensor.dark_sky_uv_index",
+                                    "name": "UV Index"
+                                },
+                                {
+                                    "entity": "sensor.dark_sky_visibility",
+                                    "name": "Visibility"
+                                },
+                                {
+                                    "entity": "sensor.dark_sky_wind_bearing",
+                                    "name": "Wind Bearing"
+                                },
+                                {
+                                    "entity": "sensor.dark_sky_wind_speed",
+                                    "name": "Wind Speed"
+                                }
+                            ],
+                            "title": "Dark Sky",
+                            "show_header_toggle": true
+                        },
+                        {
+                            "type": "entities",
+                            "entities": [
+                                "binary_sensor.door_window_sensor_158d00030318fd",
+                                "binary_sensor.cube_158d00029a9528"
+                            ],
+                            "title": "Xiaomi",
+                            "show_header_toggle": true
+                        },
+                        {
+                            "type": "entities",
+                            "entities": [
+                                "light.color",
+                                "light.canape_gauche",
+                                "light.canape_droite"
+                            ],
+                            "title": "Lumi\u00e8re Salon",
+                            "show_header_toggle": true
+                        },
+                        {
+                            "type": "entities",
+                            "entities": [
+                                "switch.dafang3_h264_rtsp_server",
+                                "switch.dafang3_mjpeg_rtsp_server",
+                                "sensor.dafang3",
+                                "device_tracker.dafang3",
+                                "sensor.dafang3_light_sensor",
+                                "switch.dafang3_ir_filter",
+                                "switch.dafang3_ir_led",
+                                "switch.dafang3_night_mode",
+                                "switch.dafang3_night_mode_auto",
+                                "switch.dafang3_blue_led",
+                                "switch.dafang3_yellow_led",
+                                "switch.dafang3_motion_detection",
+                                "switch.dafang3_motion_tracking",
+                                "binary_sensor.dafang3_motion_sensor",
+                                "cover.dafang3_move_left_right",
+                                "cover.dafang3_move_up_down"
+                            ],
+                            "title": "Dafang Camera",
+                            "show_header_toggle": true
+                        },
+                        {
+                            "type": "picture-entity",
+                            "entity": "camera.dafang3"
+                        },
+                        {
+                            "type": "picture-entity",
+                            "entity": "camera.dafang3_motion_snapshot"
+                        },
+                        {
+                            "type": "entities",
+                            "entities": [
+                                "script.schoolathome830",
+                                "script.schoolathome930",
+                                "script.schoolathome10",
+                                "script.schoolathome11",
+                                "script.schoolathome12",
+                                "script.schoolathome13",
+                                "script.schoolathome14",
+                                "script.schoolathome15",
+                                "script.schoolathome1530",
+                                "script.schoolathome1630",
+                                "script.schoolathome1730"
+                            ],
+                            "title": "School at home time keeper",
+                            "show_header_toggle": true
+                        },
+                        {
+                            "type": "alarm-panel",
+                            "entity": "alarm_control_panel.home"
+                        },
+                        {
+                            "type": "picture-entity",
+                            "entity": "camera.dafang_camera"
+                        },
+                        {
+                            "type": "picture-entity",
+                            "entity": "camera.raspberry_pi_camera"
+                        },
+                        {
+                            "type": "entities",
+                            "entities": [
+                                "input_boolean.visitors"
+                            ],
+                            "title": "Input boolean"
+                        },
+                        {
+                            "type": "entities",
+                            "entities": [
+                                "input_datetime.solarium_switch_off",
+                                "input_datetime.solarium_switch_on",
+                                "input_datetime.nighttime_end",
+                                "input_datetime.morning_week",
+                                "input_datetime.morning_weekend",
+                                "input_datetime.sleepingtime_start",
+                                "input_datetime.nighttime_start",
+                                "input_datetime.solarium_timer_end"
+                            ],
+                            "title": "Input datetime"
+                        },
+                        {
+                            "type": "entities",
+                            "entities": [
+                                "input_select.vacuum_room",
+                                "input_select.living_room_color",
+                                "input_select.destination"
+                            ],
+                            "title": "Input select"
+                        },
+                        {
+                            "type": "entities",
+                            "entities": [
+                                "light.bedroom",
+                                "light.cuisine",
+                                "light.freezer",
+                                "light.solarium"
+                            ],
+                            "title": "Light"
+                        },
+                        {
+                            "type": "media-control",
+                            "entity": "media_player.reveil_1"
+                        },
+                        {
+                            "type": "media-control",
+                            "entity": "media_player.emby_dlna_giom"
+                        },
+                        {
+                            "type": "media-control",
+                            "entity": "media_player.emby_emby_for_android_mobile_lgh873"
+                        },
+                        {
+                            "type": "media-control",
+                            "entity": "media_player.emby_emby_for_android_mobile_mbox"
+                        },
+                        {
+                            "type": "media-control",
+                            "entity": "media_player.emby_emby_for_android_mobile_mi_5"
+                        },
+                        {
+                            "type": "media-control",
+                            "entity": "media_player.emby_emby_for_android_mobile_oneplus_a6000"
+                        },
+                        {
+                            "type": "media-control",
+                            "entity": "media_player.emby_emby_for_chromecast_salon"
+                        },
+                        {
+                            "type": "media-control",
+                            "entity": "media_player.emby_emby_for_chromecast_tv"
+                        },
+                        {
+                            "type": "media-control",
+                            "entity": "media_player.emby_emby_mobile_chrome"
+                        },
+                        {
+                            "type": "media-control",
+                            "entity": "media_player.emby_emby_mobile_chrome_2"
+                        },
+                        {
+                            "type": "media-control",
+                            "entity": "media_player.emby_emby_mobile_chrome_3"
+                        },
+                        {
+                            "type": "media-control",
+                            "entity": "media_player.emby_emby_mobile_chrome_4"
+                        },
+                        {
+                            "type": "media-control",
+                            "entity": "media_player.emby_emby_mobile_sony_ps4"
+                        },
+                        {
+                            "type": "media-control",
+                            "entity": "media_player.emby_emby_web_chrome"
+                        },
+                        {
+                            "type": "media-control",
+                            "entity": "media_player.emby_emby_web_chrome_2"
+                        },
+                        {
+                            "type": "media-control",
+                            "entity": "media_player.emby_emby_web_chrome_3"
+                        },
+                        {
+                            "type": "media-control",
+                            "entity": "media_player.emby_emby_web_sony_ps4"
+                        },
+                        {
+                            "type": "media-control",
+                            "entity": "media_player.emby_radarr_astor_qc"
+                        },
+                        {
+                            "type": "media-control",
+                            "entity": "media_player.emby_sonarr_astor_qc"
+                        },
+                        {
+                            "type": "media-control",
+                            "entity": "media_player.partout_2"
+                        },
+                        {
+                            "type": "media-control",
+                            "entity": "media_player.partout_3"
+                        },
+                        {
+                            "type": "entities",
+                            "entities": [
+                                "scene.bluelivingroom",
+                                "scene.candlelivingroom",
+                                "scene.lightsoff",
+                                "scene.livingroomoff",
+                                "scene.maxbrightnesslivingroom",
+                                "scene.minbrightnesslivingroom",
+                                "scene.orangelivingroom",
+                                "scene.pinkandpurplelivingroom",
+                                "scene.pinklivingroom",
+                                "scene.purplelivingroom_2",
+                                "scene.purplelivingroom",
+                                "scene.redlivingroom",
+                                "scene.turquoiselivingroom",
+                                "scene.whitelivingroom"
+                            ],
+                            "title": "Scene"
+                        },
+                        {
+                            "type": "entities",
+                            "entities": [
+                                "script.living_room_color",
+                                "script.create_daily_gif",
+                                "script.mop_bathroom",
+                                "script.mop_diningroom",
+                                "script.mop_kitchen",
+                                "script.mop_kitchen_and_dining_room",
+                                "script.1542490337256",
+                                "script.vacuum_reset_fan_speed_after_mopping",
+                                "script.switch_living_room_color",
+                                "script.vacuum_aurore_bedroom",
+                                "script.vacuum_aurore_zone",
+                                "script.vacuum_bathroom",
+                                "script.vacuum_bedroom",
+                                "script.vacuum_diningroom",
+                                "script.vacuum_dispatch",
+                                "script.vacuum_kitchen",
+                                "script.vacuum_kitchen_and_diningroom",
+                                "script.vacuum_livingroom"
+                            ],
+                            "title": "script"
+                        },
+                        {
+                            "type": "entities",
+                            "entities": [
+                                "switch.wake_up_nas",
+                                "switch.wake_up_pc",
+                                "switch.wake_up_old_pc"
+                            ],
+                            "title": "Switch"
+                        },
+                        {
+                            "type": "entities",
+                            "entities": [
+                                "vacuum.xiaomi_vacuum_cleaner"
+                            ],
+                            "title": "Vacuum"
+                        },
+                        {
+                            "type": "weather-forecast",
+                            "entity": "weather.cannes"
+                        },
+                        {
+                            "type": "weather-forecast",
+                            "entity": "weather.coublevie"
+                        },
+                        {
+                            "type": "weather-forecast",
+                            "entity": "weather.dark_sky"
+                        },
+                        {
+                            "type": "weather-forecast",
+                            "entity": "weather.macot_la_plagne"
+                        },
+                        {
+                            "type": "weather-forecast",
+                            "entity": "weather.openweathermap"
+                        },
+                        {
+                            "type": "weather-forecast",
+                            "entity": "weather.saint_martinien"
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

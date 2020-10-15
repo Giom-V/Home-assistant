@@ -1,8 +1,24 @@
 {
+    "version": 1,
+    "key": "lovelace",
     "data": {
         "config": {
             "views": [
                 {
+                    "icon": "mdi:home-modern",
+                    "path": "rooms",
+                    "title": "",
+                    "visible": [
+                        {
+                            "user": "882d5cbae4fb4da282c01c79cf4216ff"
+                        },
+                        {
+                            "user": "6d6b7b9773144a66957cec1889954f68"
+                        },
+                        {
+                            "user": "32c4026d06a64efaacd2b41fbe2395cc"
+                        }
+                    ],
                     "badges": [],
                     "cards": [
                         {
@@ -608,12 +624,23 @@
                             "row_size": 2,
                             "type": "custom:banner-card"
                         }
-                    ],
-                    "icon": "mdi:home-modern",
-                    "path": "rooms",
-                    "title": ""
+                    ]
                 },
                 {
+                    "icon": "mdi:home",
+                    "path": "default_view",
+                    "title": "Home",
+                    "visible": [
+                        {
+                            "user": "882d5cbae4fb4da282c01c79cf4216ff"
+                        },
+                        {
+                            "user": "6d6b7b9773144a66957cec1889954f68"
+                        },
+                        {
+                            "user": "32c4026d06a64efaacd2b41fbe2395cc"
+                        }
+                    ],
                     "badges": [
                         {
                             "entity": "binary_sensor.aurora_visibility"
@@ -1293,22 +1320,52 @@
                             ],
                             "type": "vertical-stack"
                         }
-                    ],
-                    "icon": "mdi:home",
-                    "path": "default_view",
-                    "title": "Home"
+                    ]
                 },
                 {
+                    "icon": "mdi:weather-sunny",
+                    "panel": false,
+                    "path": "meteo",
+                    "title": "Meteo",
+                    "visible": [
+                        {
+                            "user": "882d5cbae4fb4da282c01c79cf4216ff"
+                        },
+                        {
+                            "user": "6d6b7b9773144a66957cec1889954f68"
+                        },
+                        {
+                            "user": "32c4026d06a64efaacd2b41fbe2395cc"
+                        }
+                    ],
                     "badges": [
-                        "sensor.season",
-                        "sun.sun",
-                        "sensor.moon",
-                        "binary_sensor.workday_sensor",
-                        "binary_sensor.aurora_visibility",
-                        "sensor.dark_sky_apparent_temperature",
-                        "sensor.dark_sky_cloud_coverage",
-                        "sensor.dark_sky_cloud_coverage_1d",
-                        "sensor.dark_sky_daily_max_precip_intensity_1d"
+                        {
+                            "entity": "sensor.season"
+                        },
+                        {
+                            "entity": "sun.sun"
+                        },
+                        {
+                            "entity": "sensor.moon"
+                        },
+                        {
+                            "entity": "binary_sensor.workday_sensor"
+                        },
+                        {
+                            "entity": "binary_sensor.aurora_visibility"
+                        },
+                        {
+                            "entity": "sensor.dark_sky_apparent_temperature"
+                        },
+                        {
+                            "entity": "sensor.dark_sky_cloud_coverage"
+                        },
+                        {
+                            "entity": "sensor.dark_sky_cloud_coverage_1d"
+                        },
+                        {
+                            "entity": "sensor.dark_sky_daily_max_precip_intensity_1d"
+                        }
                     ],
                     "cards": [
                         {
@@ -1483,13 +1540,23 @@
                             "title": "Air quality",
                             "type": "entities"
                         }
-                    ],
-                    "icon": "mdi:weather-sunny",
-                    "panel": false,
-                    "path": "meteo",
-                    "title": "Meteo"
+                    ]
                 },
                 {
+                    "icon": "mdi:play-network",
+                    "path": "media",
+                    "title": "Media",
+                    "visible": [
+                        {
+                            "user": "882d5cbae4fb4da282c01c79cf4216ff"
+                        },
+                        {
+                            "user": "6d6b7b9773144a66957cec1889954f68"
+                        },
+                        {
+                            "user": "32c4026d06a64efaacd2b41fbe2395cc"
+                        }
+                    ],
                     "badges": [],
                     "cards": [
                         {
@@ -1558,12 +1625,23 @@
                             "entity": "media_player.lenovosmartclock3394",
                             "type": "media-control"
                         }
-                    ],
-                    "icon": "mdi:play-network",
-                    "path": "media",
-                    "title": "Media"
+                    ]
                 },
                 {
+                    "icon": "mdi:security",
+                    "path": "security",
+                    "title": "Security",
+                    "visible": [
+                        {
+                            "user": "882d5cbae4fb4da282c01c79cf4216ff"
+                        },
+                        {
+                            "user": "6d6b7b9773144a66957cec1889954f68"
+                        },
+                        {
+                            "user": "32c4026d06a64efaacd2b41fbe2395cc"
+                        }
+                    ],
                     "badges": [],
                     "cards": [
                         {
@@ -1677,12 +1755,23 @@
                             "title": "Solarium",
                             "type": "entities"
                         }
-                    ],
-                    "icon": "mdi:security",
-                    "path": "security",
-                    "title": "Security"
+                    ]
                 },
                 {
+                    "icon": "mdi:heart-circle-outline",
+                    "path": "health",
+                    "title": "Health",
+                    "visible": [
+                        {
+                            "user": "882d5cbae4fb4da282c01c79cf4216ff"
+                        },
+                        {
+                            "user": "6d6b7b9773144a66957cec1889954f68"
+                        },
+                        {
+                            "user": "32c4026d06a64efaacd2b41fbe2395cc"
+                        }
+                    ],
                     "badges": [],
                     "cards": [
                         {
@@ -1767,12 +1856,23 @@
                             "name": "Poids",
                             "type": "custom:mini-graph-card"
                         }
-                    ],
-                    "icon": "mdi:heart-circle-outline",
-                    "path": "health",
-                    "title": "Health"
+                    ]
                 },
                 {
+                    "icon": "mdi:nas",
+                    "path": "admin",
+                    "title": "Admin",
+                    "visible": [
+                        {
+                            "user": "882d5cbae4fb4da282c01c79cf4216ff"
+                        },
+                        {
+                            "user": "6d6b7b9773144a66957cec1889954f68"
+                        },
+                        {
+                            "user": "32c4026d06a64efaacd2b41fbe2395cc"
+                        }
+                    ],
                     "badges": [
                         {
                             "entity": "sensor.nas_free_space"
@@ -2001,12 +2101,24 @@
                             "type": "iframe",
                             "url": "https://trello.com/b/sxOjhqyu/home-assistant-nas"
                         }
-                    ],
-                    "icon": "mdi:nas",
-                    "path": "admin",
-                    "title": "Admin"
+                    ]
                 },
                 {
+                    "icon": "mdi:account-multiple",
+                    "panel": false,
+                    "path": "people",
+                    "title": "People",
+                    "visible": [
+                        {
+                            "user": "882d5cbae4fb4da282c01c79cf4216ff"
+                        },
+                        {
+                            "user": "6d6b7b9773144a66957cec1889954f68"
+                        },
+                        {
+                            "user": "32c4026d06a64efaacd2b41fbe2395cc"
+                        }
+                    ],
                     "badges": [
                         {
                             "entity": "person.giom_2"
@@ -2105,13 +2217,23 @@
                             "title": "Claire",
                             "type": "entities"
                         }
-                    ],
-                    "icon": "mdi:account-multiple",
-                    "panel": false,
-                    "path": "people",
-                    "title": "People"
+                    ]
                 },
                 {
+                    "icon": "mdi:robot",
+                    "panel": false,
+                    "title": "Automations",
+                    "visible": [
+                        {
+                            "user": "882d5cbae4fb4da282c01c79cf4216ff"
+                        },
+                        {
+                            "user": "6d6b7b9773144a66957cec1889954f68"
+                        },
+                        {
+                            "user": "32c4026d06a64efaacd2b41fbe2395cc"
+                        }
+                    ],
                     "badges": [],
                     "cards": [
                         {
@@ -2216,12 +2338,23 @@
                             "title": "Solarium light",
                             "type": "entities"
                         }
-                    ],
-                    "icon": "mdi:robot",
-                    "panel": false,
-                    "title": "Automations"
+                    ]
                 },
                 {
+                    "icon": "mdi:test-tube",
+                    "panel": false,
+                    "title": "Tests",
+                    "visible": [
+                        {
+                            "user": "882d5cbae4fb4da282c01c79cf4216ff"
+                        },
+                        {
+                            "user": "6d6b7b9773144a66957cec1889954f68"
+                        },
+                        {
+                            "user": "32c4026d06a64efaacd2b41fbe2395cc"
+                        }
+                    ],
                     "badges": [],
                     "cards": [
                         {
@@ -2492,14 +2625,27 @@
                             },
                             "type": "custom:auto-entities"
                         }
-                    ],
-                    "icon": "mdi:test-tube",
-                    "panel": false,
-                    "title": "Tests"
+                    ]
                 },
                 {
+                    "icon": "mdi:beach",
+                    "path": "cannes",
+                    "title": "Cannes",
+                    "visible": [
+                        {
+                            "user": "882d5cbae4fb4da282c01c79cf4216ff"
+                        },
+                        {
+                            "user": "6d6b7b9773144a66957cec1889954f68"
+                        },
+                        {
+                            "user": "32c4026d06a64efaacd2b41fbe2395cc"
+                        }
+                    ],
                     "badges": [
-                        "alarm_control_panel.cannes"
+                        {
+                            "entity": "alarm_control_panel.cannes"
+                        }
                     ],
                     "cards": [
                         {
@@ -2550,29 +2696,9 @@
                             "title": "Point",
                             "type": "entities"
                         }
-                    ],
-                    "icon": "mdi:beach",
-                    "path": "cannes",
-                    "title": "Cannes"
-                },
-                {
-                    "badges": [],
-                    "cards": [
-                        {
-                            "aspect_ratio": "50%",
-                            "title": "uTorrent",
-                            "type": "iframe",
-                            "url": "https://remote.bittorrent.com/"
-                        }
-                    ],
-                    "icon": "mdi:cloud-download",
-                    "panel": true,
-                    "path": "utorrent",
-                    "title": "uTorrent"
+                    ]
                 }
             ]
         }
-    },
-    "key": "lovelace",
-    "version": 1
+    }
 }
