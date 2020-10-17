@@ -8,6 +8,16 @@ sleepingtime_start:
   has_date: false
   has_time: true
   initial: '19:45'
+nighttime_start_weekend:
+  name: Time to change the lights to show that it's time to go to bed (during the week-end)
+  has_date: false
+  has_time: true
+  initial: '19:15'
+sleepingtime_start_weekend:
+  name: Time to change Aurore's night light to show that it's time to go to sleep (during the week-end)
+  has_date: false
+  has_time: true
+  initial: '20:00'
 nighttime_end:
   name: Switching off all lights 'cause we should be sleeping
   has_date: false

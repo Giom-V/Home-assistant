@@ -1,16 +1,64 @@
 - id: NightTime
   alias: Night time
   trigger:
-    platform: template
+  - platform: template
     value_template: "{{ states('sensor.time') == states('input_datetime.nighttime_start')[0:5] }}"
+  - platform: template
+    value_template: "{{ states('sensor.time') == states('input_datetime.nighttime_start_weekend')[0:5] }}"
+  condition:
+    condition: or
+    conditions:
+      - condition: and
+        conditions:
+          - condition: template
+            value_template: "{{ states('sensor.time') == states('input_datetime.nighttime_start')[0:5] }}"
+          - condition: time
+            weekday:
+            - mon
+            - tue
+            - wed
+            - thu
+      - condition: and
+        conditions:
+          - condition: template
+            value_template: "{{ states('sensor.time') == states('input_datetime.nighttime_start_weekend')[0:5] }}"
+          - condition: time
+            weekday:
+            - fri
+            - sat 
+            - sun
   action:
   - service: scene.turn_on
     entity_id: scene.NightTimeLivingRoom
 - id: SleepingTime
   alias: Sleeping time
   trigger:
-    platform: template
+  - platform: template
     value_template: "{{ states('sensor.time') == states('input_datetime.sleepingtime_start')[0:5] }}"
+  - platform: template
+    value_template: "{{ states('sensor.time') == states('input_datetime.sleepingtime_start_weekend')[0:5] }}"
+  condition:
+    condition: or
+    conditions:
+      - condition: and
+        conditions:
+          - condition: template
+            value_template: "{{ states('sensor.time') == states('input_datetime.sleepingtime_start')[0:5] }}"
+          - condition: time
+            weekday:
+            - mon
+            - tue
+            - wed
+            - thu
+      - condition: and
+        conditions:
+          - condition: template
+            value_template: "{{ states('sensor.time') == states('input_datetime.sleepingtime_start_weekend')[0:5] }}"
+          - condition: time
+            weekday:
+            - fri
+            - sat 
+            - sun
   action:
   - service: switch.turn_on
     entity_id: switch.veilleuse
@@ -39,13 +87,13 @@
             - wed
             - thu
             - fri
-            - sat # TODO: after Covid, saturday will be a weed-end day once again
       - condition: and
         conditions:
           - condition: template
             value_template: "{{ states('sensor.time') == states('input_datetime.morning_weekend')[0:5] }}"
           - condition: time
             weekday:
+            - sat 
             - sun
   action:
   - service: switch.turn_off
