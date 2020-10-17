@@ -1270,7 +1270,7 @@
             },
             {
                 "config_entries": [
-                    "28d186defb4111ea83fa3d20417299df"
+                    "7570d262064611ebaa2853990b662fd8"
                 ],
                 "connections": [],
                 "identifiers": [
@@ -1282,7 +1282,7 @@
                 "manufacturer": "Yeelight",
                 "model": "color4",
                 "name": "Bedroom",
-                "sw_version": "27",
+                "sw_version": "30",
                 "entry_type": null,
                 "id": "2dbe7b24fb4111eaaf43790524dacd05",
                 "via_device_id": null,
@@ -1348,6 +1348,27 @@
                 "sw_version": "56",
                 "entry_type": null,
                 "id": "2dc17e8cfb4111eaa9438361db2d9ff8",
+                "via_device_id": null,
+                "area_id": null,
+                "name_by_user": null
+            },
+            {
+                "config_entries": [
+                    "92a2bbeefccd11ea82c75bd49b644af3"
+                ],
+                "connections": [],
+                "identifiers": [
+                    [
+                        "yeelight",
+                        "0x000000000458e062"
+                    ]
+                ],
+                "manufacturer": "Yeelight",
+                "model": "color",
+                "name": "Color",
+                "sw_version": "76",
+                "entry_type": null,
+                "id": "af68bb0a0b2b11eb89019bc9e6745599",
                 "via_device_id": null,
                 "area_id": null,
                 "name_by_user": null
