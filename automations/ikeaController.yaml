@@ -237,7 +237,7 @@
     entity_id: light.canape_droite
     state:  'off'
     for: 
-      hours: '{{ ((now().strftime("%s") | int - 60 * 60 * 5) | timestamp_custom("%H")) }}'
+      hours: '{{ states('sensor.time')[0:1] }}'
   action:
   - service: scene.turn_on
     entity_id: scene.maxbrightnesslivingroom
