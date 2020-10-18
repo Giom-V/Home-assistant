@@ -230,8 +230,20 @@
     to: 'on'
   condition:
   - after: '5:00'
-    before: '12:00'
     condition: time
+  - condition: template
+    value_template: "{{ states('sensor.time') < states('input_datetime.nighttime_start')[0:5] }}"
+  - condition: template
+    value_template: >
+      {%- if states.light.canape_droite.last_changed -%}
+        {%- if as_timestamp(states.light.canape_droite.last_changed) < as_timestamp(now().replace(hour=0).replace(minute=0).replace(second=0)) -%}
+          true
+        {%- else -%}
+          {{ as_timestamp(states.light.canape_droite.last_changed) | timestamp_custom('%H') | int > 5 }}
+        {%- endif -%}
+      {%- else -%}
+        true
+      {%- endif -%}
   action:
   - service: scene.turn_on
     entity_id: scene.maxbrightnesslivingroom
