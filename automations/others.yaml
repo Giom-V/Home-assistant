@@ -18,9 +18,8 @@
   alias: Switch off lights 60mn after sunrise
   description: ''
   trigger:
-  - event: sunrise
-    offset: 01:00
-    platform: sun
+  - at: '08:00:00'
+    platform: time
   condition: 
     - condition: state
       entity_id: season.season
