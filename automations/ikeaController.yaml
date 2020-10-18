@@ -236,7 +236,7 @@
   - condition: template
     value_template: >
       {%- if states.input_select.abodestatus.last_changed -%}
-        {%- as_timestamp(states.input_select.abodestatus.last_changed) < as_timestamp(now().replace(hour=0).replace(minute=0).replace(second=0)) -%}
+        {%- if as_timestamp(states.input_select.abodestatus.last_changed) < as_timestamp(now().replace(hour=0).replace(minute=0).replace(second=0)) -%}
           true
         {%- else -%}
           {{ as_timestamp(states.input_select.abodestatus.last_changed) | timestamp_custom('%H') | int < 5 }}
