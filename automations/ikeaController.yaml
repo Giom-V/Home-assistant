@@ -247,3 +247,7 @@
   action:
   - service: scene.turn_on
     entity_id: scene.maxbrightnesslivingroom
+  - service: input_select.select_option
+    entity_id: input_select.living_room_color
+    data:
+      option: White
