@@ -3,6 +3,7 @@
 
 recorder:
   purge_keep_days: 15
+  commit_interval: 60
   exclude:
     domains:
       # All domains can be optained by running this template:
