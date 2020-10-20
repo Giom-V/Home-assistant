@@ -66,6 +66,8 @@
     entity_id: input_select.living_room_color
     data:
       option: Pink
+  - service: scene.turn_on
+    entity_id: scene.minbrightnesslivingroom
 - id: SwitchNightLightOff
   alias: Night light off
   trigger:
