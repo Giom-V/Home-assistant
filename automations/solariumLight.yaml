@@ -134,7 +134,11 @@
     to: 'on'
     for: '0:10:00'
   action:
-    service: light.turn_on
+  - service: light.turn_on
     data:
       effect: "Police2"
     entity_id: light.freezer
+  - service: tts.google_say
+    entity_id: "all"
+    data:
+      message: Attention, le congélateur est resté ouvert !
