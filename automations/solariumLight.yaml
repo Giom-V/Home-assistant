@@ -139,6 +139,6 @@
       effect: "Police2"
     entity_id: light.freezer
   - service: tts.google_say
-    entity_id: media_player.partout
+    entity_id: "all"
     data:
       message: Attention, le congélateur est resté ouvert !
