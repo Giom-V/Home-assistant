@@ -311,7 +311,7 @@
                 "manufacturer": "TP-Link",
                 "model": "HS200(US)",
                 "name": "Lumi\u00e8re Cuisine",
-                "sw_version": "1.5.5 Build 181204 Rel.081041",
+                "sw_version": "1.5.7 Build 191118 Rel.140152",
                 "entry_type": null,
                 "id": "1e7c552df1744b6dbe96c61dc9ab2a56",
                 "via_device_id": null,
@@ -692,8 +692,8 @@
                 "manufacturer": "hacs.xyz",
                 "model": "",
                 "name": "HACS",
-                "sw_version": "1.3.3",
-                "entry_type": null,
+                "sw_version": "1.6.2",
+                "entry_type": "service",
                 "id": "1e2cfe217b5a4272828945a3364baddf",
                 "via_device_id": null,
                 "area_id": null,
@@ -859,7 +859,7 @@
                 "manufacturer": "TP-Link",
                 "model": "HS103(US)",
                 "name": "Veilleuse",
-                "sw_version": "1.1.2 Build 191113 Rel.095623",
+                "sw_version": "1.1.3 Build 200804 Rel.095135",
                 "entry_type": null,
                 "id": "690ae810ccfa4919ad691f290658bcfb",
                 "via_device_id": null,
@@ -1047,7 +1047,7 @@
                 "manufacturer": "TP-Link",
                 "model": "HS103(US)",
                 "name": "Bureau",
-                "sw_version": "1.1.2 Build 191113 Rel.095623",
+                "sw_version": "1.1.3 Build 200804 Rel.095135",
                 "entry_type": null,
                 "id": "02f883004a2742cf92e9e7427d69a3df",
                 "via_device_id": null,
@@ -1094,7 +1094,7 @@
                 "manufacturer": "Dresden Elektronik",
                 "model": "deCONZ",
                 "name": "Zigpii",
-                "sw_version": "2.5.81",
+                "sw_version": "2.5.88",
                 "entry_type": null,
                 "id": "10a8a8a6db6e46ec941a1eef425faa2a",
                 "via_device_id": null,
@@ -1322,9 +1322,9 @@
                     ]
                 ],
                 "manufacturer": "Yeelight",
-                "model": "mono",
+                "model": null,
                 "name": "Solarium",
-                "sw_version": "56",
+                "sw_version": null,
                 "entry_type": null,
                 "id": "2dc08f7afb4111eaa10b7bfa80e99f40",
                 "via_device_id": null,
@@ -1364,11 +1364,53 @@
                     ]
                 ],
                 "manufacturer": "Yeelight",
-                "model": "color",
+                "model": null,
                 "name": "Color",
-                "sw_version": "76",
+                "sw_version": null,
                 "entry_type": null,
                 "id": "af68bb0a0b2b11eb89019bc9e6745599",
+                "via_device_id": null,
+                "area_id": null,
+                "name_by_user": null
+            },
+            {
+                "config_entries": [
+                    "7380dc809b5e456a9af1bb205d6e7f7a"
+                ],
+                "connections": [],
+                "identifiers": [
+                    [
+                        "cast",
+                        "b4f8daca5ac2659f14b9b4511a2e5bc8"
+                    ]
+                ],
+                "manufacturer": "Google Inc.",
+                "model": "Chromecast",
+                "name": "Chambre",
+                "sw_version": null,
+                "entry_type": null,
+                "id": "fdf922b619db11eba25fb92a458a41ce",
+                "via_device_id": null,
+                "area_id": null,
+                "name_by_user": null
+            },
+            {
+                "config_entries": [
+                    "1af9853d74b03d193588a28647a00606"
+                ],
+                "connections": [],
+                "identifiers": [
+                    [
+                        "mobile_app",
+                        "b401d22438a6fc23"
+                    ]
+                ],
+                "manufacturer": "Google",
+                "model": "Pixel 4 XL",
+                "name": "Pixel 4 XL",
+                "sw_version": "30",
+                "entry_type": null,
+                "id": "442b5838f7eee63aac6c92df77b49921",
                 "via_device_id": null,
                 "area_id": null,
                 "name_by_user": null
