@@ -7,6 +7,15 @@ const repeats = "repeats";
 const confirmation = "confirmation";
 
 const texts = {
+    "cz": {
+        mode: "Mód",
+        goToTarget: "Poslat na zvolený bod",
+        zonedCleanup: "Úklid zóny",
+        zones: "Zóny",
+        run: "Start",
+        repeats: "Opakovat:",
+        confirmation: "Příkaz odeslán!"
+    },
     "en": {
         mode: "Mode",
         goToTarget: "Go to target",
@@ -88,6 +97,15 @@ const texts = {
         repeats: "Razy:",
         confirmation: "Komenda wysłana!"
     },
+    "pt": {
+        mode: "Modo",
+        goToTarget: "Mover-se até um ponto",
+        zonedCleanup: "Limpeza por zona",
+        zones: "Zonas",
+        run: "Iniciar",
+        repeats: "Repetições:",
+        confirmation: "Comando enviado!"
+    },
     "ru": {
         mode: "Режим",
         goToTarget: "Движение к цели",
@@ -105,7 +123,16 @@ const texts = {
         run: "Start",
         repeats: "Repetitioner:",
         confirmation: "Kommando skickat!"
-    }
+    },
+    "uk": {
+        mode: "Режим",
+        goToTarget: "Рух до цілі",
+        zonedCleanup: "Зональне прибирання",
+        zones: "Зони",
+        run: "Старт",
+        repeats: "Разів:",
+        confirmation: "Команда надіслана"
+    },
 };
 
 export {
