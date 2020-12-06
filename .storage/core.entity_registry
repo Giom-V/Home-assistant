@@ -4943,7 +4943,17 @@
                 "icon": null,
                 "disabled_by": null,
                 "capabilities": {
+                    "min_mireds": 153,
+                    "max_mireds": 588,
                     "effect_list": [
+                        "Strobe color",
+                        "Police",
+                        "Christmas",
+                        "RGB",
+                        "Random Loop",
+                        "Fast Random Loop",
+                        "LSD",
+                        "Slowdown",
                         "Disco",
                         "Strobe epilepsy!",
                         "Alarm",
@@ -4955,7 +4965,7 @@
                         "Stop"
                     ]
                 },
-                "supported_features": 45,
+                "supported_features": 63,
                 "device_class": null,
                 "unit_of_measurement": null,
                 "original_name": "Color",
@@ -8818,7 +8828,7 @@
                 "device_class": "battery",
                 "unit_of_measurement": "%",
                 "original_name": "Pixel 4 XL Niveau de batterie",
-                "original_icon": "mdi:battery-20"
+                "original_icon": "mdi:battery-40"
             },
             {
                 "entity_id": "sensor.pixel_4_xl_etat_de_la_batterie",
