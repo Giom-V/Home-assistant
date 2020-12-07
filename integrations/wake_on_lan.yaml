@@ -14,3 +14,7 @@ switch:
     name: Wake up PC
     mac: !secret pcMacAddress
     host: !secret pcIP
+  - platform: wake_on_lan
+    name: Wake up PC Claire
+    mac: !secret pcClaireMacAddress
+    host: !secret pcClaireIP
