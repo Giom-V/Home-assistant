@@ -1,4 +1,5 @@
 """Backup."""
+from custom_components.hacs.helpers.functions.is_safe_to_remove import is_safe_to_remove
 import os
 import shutil
 import tempfile
@@ -8,13 +9,14 @@ from custom_components.hacs.helpers.functions.logger import getLogger
 
 BACKUP_PATH = tempfile.gettempdir() + "/hacs_backup/"
 
+_LOGGER = getLogger()
+
 
 class Backup:
     """Backup."""
 
     def __init__(self, local_path, backup_path=BACKUP_PATH):
         """initialize."""
-        self.logger = getLogger("backup")
         self.local_path = local_path
         self.backup_path = backup_path
         self.backup_path_full = f"{self.backup_path}{self.local_path.split('/')[-1]}"
@@ -22,6 +24,8 @@ class Backup:
     def create(self):
         """Create a backup in /tmp"""
         if not os.path.exists(self.local_path):
+            return
+        if not is_safe_to_remove(self.local_path):
             return
         if os.path.exists(self.backup_path):
             shutil.rmtree(self.backup_path)
@@ -38,8 +42,10 @@ class Backup:
                 shutil.rmtree(self.local_path)
                 while os.path.exists(self.local_path):
                     sleep(0.1)
-            self.logger.debug(
-                f"Backup for {self.local_path}, created in {self.backup_path_full}"
+            _LOGGER.debug(
+                "Backup for %s, created in %s",
+                self.local_path,
+                self.backup_path_full,
             )
         except (Exception, BaseException):  # pylint: disable=broad-except
             pass
@@ -59,8 +65,8 @@ class Backup:
                 while os.path.exists(self.local_path):
                     sleep(0.1)
             shutil.copytree(self.backup_path_full, self.local_path)
-        self.logger.debug(
-            f"Restored {self.local_path}, from backup {self.backup_path_full}"
+        _LOGGER.debug(
+            "Restored %s, from backup %s", self.local_path, self.backup_path_full
         )
 
     def cleanup(self):
@@ -69,7 +75,7 @@ class Backup:
             shutil.rmtree(self.backup_path)
             while os.path.exists(self.backup_path):
                 sleep(0.1)
-            self.logger.debug(f"Backup dir {self.backup_path} cleared")
+            _LOGGER.debug("Backup dir %s cleared", self.backup_path)
 
 
 class BackupNetDaemon:
@@ -78,13 +84,14 @@ class BackupNetDaemon:
     def __init__(self, repository):
         """Initialize."""
         self.repository = repository
-        self.logger = getLogger("backup")
         self.backup_path = (
             tempfile.gettempdir() + "/hacs_persistent_netdaemon/" + repository.data.name
         )
 
     def create(self):
         """Create a backup in /tmp"""
+        if not is_safe_to_remove(self.repository.content.path.local):
+            return
         if os.path.exists(self.backup_path):
             shutil.rmtree(self.backup_path)
             while os.path.exists(self.backup_path):
@@ -114,4 +121,4 @@ class BackupNetDaemon:
             shutil.rmtree(self.backup_path)
             while os.path.exists(self.backup_path):
                 sleep(0.1)
-            self.logger.debug(f"Backup dir {self.backup_path} cleared")
+            _LOGGER.debug("Backup dir %s cleared", self.backup_path)

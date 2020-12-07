@@ -1,4 +1,6 @@
 {
+    "version": 1,
+    "key": "lovelace_resources",
     "data": {
         "items": [
             {
@@ -25,11 +27,6 @@
                 "id": "ddf8f88208bf46478f59d907738b8a35",
                 "type": "js",
                 "url": "https://raw.githubusercontent.com/rodrigofragadf/lovelace-cards/master/tiles-card/tiles-card.js "
-            },
-            {
-                "id": "9801dc82ef3d4e778fee43f6a26b9502",
-                "type": "js",
-                "url": "/hacsfiles/calendar-card/calendar-card.js"
             },
             {
                 "id": "d3ab6852d1204081acba94c990cd0861",
@@ -77,7 +74,5 @@
                 "url": "/hacsfiles/lovelace-card-templater/lovelace-card-templater.js"
             }
         ]
-    },
-    "key": "lovelace_resources",
-    "version": 1
+    }
 }

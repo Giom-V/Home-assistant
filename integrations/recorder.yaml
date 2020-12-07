@@ -10,14 +10,12 @@ recorder:
       # {%- for d in states | groupby('domain') %}
       # {{ d[0] }}
       # {%- endfor %}
-      - automation
       - cover
       - group
       - hangouts
       - input_boolean
       - input_select
       - scene
-      - script
       - sensor
       - sun
       - switch
@@ -51,14 +49,27 @@ recorder:
   include:
     domains:
       - alarm_control_panel
+      - automation
       - binary_sensor
       - device_tracker
       - light
       - media_player
       - persistent_notification
       - person
+      - script
       - vacuum
       - weather
+    entity_globs:
+      - sensor.*_humidity
+      - sensor.*_humidity_*
+      - sensor.*_temperature
+      - sensor.*_temperature_*
+      - sensor.cannes_*
+      - sensor.coublevie_*
+      - sensor.environment_canada_*
+      - sensor.macot_la_plagne_*
+      - sensor.saint_martinien_*
+      - sensor.withings_*
     entities:
       - automation.clean_room_as_asked_through_ifttt
       - automation.create_the_daily_gif
@@ -107,7 +118,6 @@ recorder:
       - sensor.basement_temperature
       - sensor.bathroom_humidity
       - sensor.bathroom_temperature
-      - sensor.button_temperature
       - sensor.button_temperature
       - sensor.canada_confirmed
       - sensor.canada_current

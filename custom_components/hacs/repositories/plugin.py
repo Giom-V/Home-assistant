@@ -2,9 +2,9 @@
 import json
 
 from custom_components.hacs.helpers.classes.exceptions import HacsException
+from custom_components.hacs.helpers.classes.repository import HacsRepository
 from custom_components.hacs.helpers.functions.information import find_file_name
 from custom_components.hacs.helpers.functions.logger import getLogger
-from custom_components.hacs.helpers.classes.repository import HacsRepository
 
 
 class HacsPlugin(HacsRepository):
@@ -19,12 +19,11 @@ class HacsPlugin(HacsRepository):
         self.data.category = "plugin"
         self.information.javascript_type = None
         self.content.path.local = self.localpath
-        self.logger = getLogger(f"repository.{self.data.category}.{full_name}")
 
     @property
     def localpath(self):
         """Return localpath."""
-        return f"{self.hacs.system.config_path}/www/community/{self.data.full_name.split('/')[-1]}"
+        return f"{self.hacs.core.config_path}/www/community/{self.data.full_name.split('/')[-1]}"
 
     async def validate_repository(self):
         """Validate."""
@@ -45,8 +44,8 @@ class HacsPlugin(HacsRepository):
         # Handle potential errors
         if self.validate.errors:
             for error in self.validate.errors:
-                if not self.hacs.system.status.startup:
-                    self.logger.error(error)
+                if not self.hacs.status.startup:
+                    self.logger.error("%s %s", self, error)
         return self.validate.success
 
     async def update_repository(self, ignore_issues=False):

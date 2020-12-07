@@ -4,30 +4,36 @@ from custom_components.hacs.helpers.functions.logger import getLogger
 from custom_components.hacs.helpers.functions.path_exsist import async_path_exsist
 from custom_components.hacs.share import get_hacs
 
+_LOGGER = getLogger()
 
-async def async_serve_category_file(requested_file):
+
+async def async_serve_category_file(request, requested_file):
     hacs = get_hacs()
-    logger = getLogger("web.category")
     try:
         if requested_file.startswith("themes/"):
-            servefile = f"{hacs.system.config_path}/{requested_file}"
+            servefile = f"{hacs.core.config_path}/{requested_file}"
         else:
-            servefile = f"{hacs.system.config_path}/www/community/{requested_file}"
-
-        # Serve .gz if it exist
-        if await async_path_exsist(f"{servefile}.gz"):
-            servefile += ".gz"
+            servefile = f"{hacs.core.config_path}/www/community/{requested_file}"
 
         if await async_path_exsist(servefile):
-            logger.debug(f"Serving {requested_file} from {servefile}")
+            _LOGGER.debug("Serving %s from %s", requested_file, servefile)
             response = web.FileResponse(servefile)
-            response.headers["Cache-Control"] = "no-store, max-age=0"
-            response.headers["Pragma"] = "no-store"
+            if requested_file.startswith("themes/"):
+                response.headers["Cache-Control"] = "public, max-age=2678400"
+            else:
+                response.headers["Cache-Control"] = "no-store, max-age=0"
+                response.headers["Pragma"] = "no-store"
             return response
         else:
-            logger.error(f"Tried to serve up '{servefile}' but it does not exist")
+            _LOGGER.error(
+                "%s tried to request '%s' but the file does not exist",
+                request.remote,
+                servefile,
+            )
 
-    except (Exception, BaseException) as error:
-        logger.debug(f"there was an issue trying to serve {requested_file} - {error}")
+    except (Exception, BaseException) as exception:
+        _LOGGER.debug(
+            "there was an issue trying to serve %s - %s", requested_file, exception
+        )
 
     return web.Response(status=404)

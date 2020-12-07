@@ -1196,23 +1196,38 @@
                             "animate": true,
                             "entities": [
                                 {
-                                    "entity": "sensor.living_room_temperature",
-                                    "index": 0,
-                                    "name": "T\u00b0 Salon"
+                                    "entity": "sensor.aurore_bedroom_temperature",
+                                    "index": 4,
+                                    "name": "T\u00b0 Chambre d'Aurore"
                                 },
                                 {
                                     "entity": "sensor.bathroom_temperature",
-                                    "index": 1,
-                                    "name": "T\u00b0 SDB"
+                                    "index": 5,
+                                    "name": "T\u00b0 Salle de bain"
                                 },
                                 {
-                                    "entity": "sensor.bedroom_temperature",
-                                    "index": 2,
+                                    "entity": "sensor.button_temperature",
+                                    "index": 6,
                                     "name": "T\u00b0 Chambre"
                                 },
                                 {
+                                    "entity": "sensor.living_room_temperature",
+                                    "index": 1,
+                                    "name": "T\u00b0 Salon"
+                                },
+                                {
+                                    "entity": "sensor.solarium_temperature",
+                                    "index": 9,
+                                    "name": "T\u00b0 Solarium"
+                                },
+                                {
+                                    "entity": "sensor.office_temperature",
+                                    "index": 8,
+                                    "name": "T\u00b0 Bureau"
+                                },
+                                {
                                     "entity": "sensor.basement_temperature",
-                                    "index": 3,
+                                    "index": 7,
                                     "name": "T\u00b0 Sous-sol"
                                 }
                             ],
@@ -1302,7 +1317,7 @@
                                             "type": "gauge"
                                         },
                                         {
-                                            "entity": "sensor.basement_bedroom_temperature",
+                                            "entity": "sensor.office_temperature",
                                             "max": 30,
                                             "min": 0,
                                             "name": "Chambre sous-sol",
@@ -2695,6 +2710,58 @@
                             ],
                             "title": "Point",
                             "type": "entities"
+                        }
+                    ]
+                },
+                {
+                    "title": "Temp\u00e9rature int\u00e9rieures",
+                    "path": "temperature-interieures",
+                    "panel": true,
+                    "badges": [],
+                    "cards": [
+                        {
+                            "animate": true,
+                            "entities": [
+                                {
+                                    "entity": "sensor.aurore_bedroom_temperature",
+                                    "index": 4,
+                                    "name": "T\u00b0 Chambre d'Aurore"
+                                },
+                                {
+                                    "entity": "sensor.bathroom_temperature",
+                                    "index": 5,
+                                    "name": "T\u00b0 Salle de bain"
+                                },
+                                {
+                                    "entity": "sensor.button_temperature",
+                                    "index": 6,
+                                    "name": "T\u00b0 Chambre"
+                                },
+                                {
+                                    "entity": "sensor.living_room_temperature",
+                                    "index": 1,
+                                    "name": "T\u00b0 Salon"
+                                },
+                                {
+                                    "entity": "sensor.solarium_temperature",
+                                    "index": 9,
+                                    "name": "T\u00b0 Solarium"
+                                },
+                                {
+                                    "entity": "sensor.office_temperature",
+                                    "index": 8,
+                                    "name": "T\u00b0 Bureau"
+                                },
+                                {
+                                    "entity": "sensor.basement_temperature",
+                                    "index": 7,
+                                    "name": "T\u00b0 Sous-sol"
+                                }
+                            ],
+                            "hour24": true,
+                            "hours_to_show": 168,
+                            "name": "Temp\u00e9ratures int\u00e9rieures",
+                            "type": "custom:mini-graph-card"
                         }
                     ]
                 }
