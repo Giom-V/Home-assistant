@@ -1,0 +1,4 @@
+visitors:
+  name: Do we have visitors?
+  initial: false #TODO: change default to off (this is on because the other automations are WIP)
+  icon: mdi:wallet-travel
