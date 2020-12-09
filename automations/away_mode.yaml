@@ -66,7 +66,7 @@
       target:
       - id: !secret hangoutConversation
       message:
-      - text: Motion detected
+      - text: Mouvement detecté !
   - service: media_player.volume_set
     data:
       entity_id: "all"
@@ -87,7 +87,7 @@
       target:
       - id: !secret hangoutConversation
       message:
-      - text: Picture
+      - text: Photo d'il y a 2 minutes
       data:
         image_file: /home/pi/FTP/dafang_camera/last_picture.jpg
   - service: tts.google_say
