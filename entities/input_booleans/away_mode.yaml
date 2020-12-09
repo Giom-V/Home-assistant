@@ -1,0 +1,4 @@
+away_mode:
+  name: Are we away?
+  initial: true
+  icon: mdi:shield-home
