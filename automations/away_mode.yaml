@@ -1,0 +1,156 @@
+- id: auto_switch_away_mode_on
+  alias: Switch Away mode on when we are away for more than an hour
+  trigger:
+  - platform: state
+    entity_id: person.giom_2, person.claire_2
+    from: home
+    for:
+      minutes: 60
+  condition:
+  - condition: state
+    entity_id: input_boolean.visitors
+    state: 'off'
+  - condition: state
+    entity_id: person.giom_2
+    state: not_home
+    for:
+      minutes: 60
+  - condition: state
+    entity_id: person.claire_2
+    state: not_home
+    for:
+      minutes: 60
+  action:
+  - service: input_boolean.turn_on
+    data:
+      entity_id: input_boolean.away_mode
+- id: auto_switch_away_mode_off
+  alias: Switch Away mode off when we come back
+  trigger:
+  - platform: state
+    entity_id: person.giom_2, person.claire_2
+    to: home
+  action:
+  - service: input_boolean.turn_off
+    data:
+      entity_id: input_boolean.away_mode
+- id: activate_motion_detection
+  alias: Switch motion detection on when the away mode is on
+  trigger:
+  - platform: state
+    entity_id: input_boolean.away_mode
+    to: 'on'
+  action:
+  - service: switch.turn_on
+    data:
+      entity_id: switch.dafang_camera_motion_detection
+- id: dectivate_motion_detection
+  alias: Switch motion detection off when the away mode is off
+  trigger:
+  - platform: state
+    entity_id: input_boolean.away_mode
+    to: 'off'
+  action:
+  - service: switch.turn_off
+    data:
+      entity_id: switch.dafang_camera_motion_detection
+- id: motion_detected
+  alias: Motion detected
+  trigger:
+    payload: 'ON'
+    platform: mqtt
+    topic: Home/dafang_camera/motion
+  action:
+  - service: hangouts.send_message
+    data:
+      target:
+      - id: !secret hangoutConversation
+      message:
+      - text: Mouvement detecté !
+  - service: media_player.volume_set
+    data:
+      entity_id: "all"
+      volume_level: 1
+  - delay: 00:00:02
+  - service: tts.google_say
+    entity_id: "all"
+    data:
+      message: Présence détectée ! Vous n'avez rien à faire ici, merci de partir immédiatement !
+  - delay: 00:01:00
+  - service: tts.google_say
+    entity_id: "all"
+    data:
+      message: Propriétaire et voisins avisés, partez immédiatement !
+  - delay: 00:01:00
+  - service: hangouts.send_message
+    data:
+      target:
+      - id: !secret hangoutConversation
+      message:
+      - text: Photo d'il y a 2 minutes
+      data:
+        image_file: /home/pi/FTP/dafang_camera/last_picture.jpg
+  - service: tts.google_say
+    entity_id: "all"
+    data:
+      message: Vidéo transférée, c'est votre dernier avertissement !!!
+- id: door_opened_while_away
+  alias: Door openned while away
+  trigger:
+  - type: opened
+    platform: device
+    device_id: eb097d5c6fd44da5b5fcd7ccd54b4674
+    entity_id: binary_sensor.solarium_door
+    domain: binary_sensor
+  condition: 
+  - condition: state
+    entity_id: input_boolean.away_mode
+    state: 'on'
+  action:
+  - service: hangouts.send_message
+    data:
+      target:
+      - id: !secret hangoutConversation
+      message:
+      - text: Porte ouverte!
+  - service: media_player.volume_set
+    data:
+      entity_id: "all"
+      volume_level: 1
+  - delay: 00:00:02
+  - service: tts.google_say
+    entity_id: "all"
+    data:
+      message: Ouverture de porte détecté ! Vous n'avez rien à faire ici, merci de partir immédiatement !
+  - delay: 00:02:00
+  - service: tts.google_say
+    entity_id: "all"
+    data:
+      message: Ouverture de porte détecté ! Vous n'avez rien à faire ici, merci de partir immédiatement !
+- id: movement_while_away
+  alias: Mouvement detected while away
+  trigger:
+  - type: opened
+    platform: state
+    entity_id: binary_sensor.vpir_motion_control
+    from: clear
+  condition: 
+  - condition: state
+    entity_id: input_boolean.away_mode
+    state: 'on'
+  action:
+  - service: hangouts.send_message
+    data:
+      target:
+      - id: !secret hangoutConversation
+      message:
+      - text: Mouvement dans l'escalier!
+  - service: media_player.volume_set
+    data:
+      entity_id: "all"
+      volume_level: 1
+  - delay: 00:00:02
+  - service: tts.google_say
+    entity_id: "all"
+    data:
+      message: Mouvement detecté dans l'escalier ! Vous n'avez rien à faire ici, merci de partir immédiatement !
