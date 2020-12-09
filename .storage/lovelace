@@ -2759,7 +2759,8 @@
                                 }
                             ],
                             "hour24": true,
-                            "hours_to_show": 168,
+                            "hours_to_show": 24,
+                            "points_per_hour": 2,
                             "name": "Temp\u00e9ratures int\u00e9rieures",
                             "type": "custom:mini-graph-card"
                         }

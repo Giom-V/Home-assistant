@@ -117,7 +117,7 @@
   trigger:
   - platform: state
     entity_id: person.giom_2, person.claire_2
-    to: not_home
+    from: home
     for:
       minutes: 5
   condition:
