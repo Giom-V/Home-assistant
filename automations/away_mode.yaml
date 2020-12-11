@@ -3,7 +3,7 @@
   trigger:
   - platform: state
     entity_id: person.giom_2, person.claire_2
-    from: home
+    to: not_home
     for:
       minutes: 60
   condition:
@@ -11,13 +11,8 @@
     entity_id: input_boolean.visitors
     state: 'off'
   - condition: state
-    entity_id: person.giom_2
-    state: not_home
-    for:
-      minutes: 60
-  - condition: state
-    entity_id: person.claire_2
-    state: not_home
+    entity_id: binary_sensor.people_home
+    state: 'off'
     for:
       minutes: 60
   action:
@@ -35,7 +30,7 @@
     data:
       entity_id: input_boolean.away_mode
 - id: activate_motion_detection
-  alias: Switch motion detection on when the away mode is on
+  alias: Switch motion detection and alarms on when the away mode is on
   trigger:
   - platform: state
     entity_id: input_boolean.away_mode
@@ -44,6 +39,9 @@
   - service: switch.turn_on
     data:
       entity_id: switch.dafang_camera_motion_detection
+  - service: alarm_control_panel.alarm_arm_away
+    data:
+      entity_id: alarm_control_panel.home
 - id: dectivate_motion_detection
   alias: Switch motion detection off when the away mode is off
   trigger:
@@ -54,6 +52,9 @@
   - service: switch.turn_off
     data:
       entity_id: switch.dafang_camera_motion_detection
+  - service: alarm_control_panel.alarm_disarm
+    data:
+      entity_id: alarm_control_panel.home
 - id: motion_detected
   alias: Motion detected
   trigger:
@@ -67,6 +68,12 @@
       - id: !secret hangoutConversation
       message:
       - text: Mouvement detecté !
+  - service: scene.turn_on
+    entity_id: scene.maxbrightnesslivingroom
+  - service: input_select.select_option
+    entity_id: input_select.living_room_color
+    data:
+      option: White
   - service: media_player.volume_set
     data:
       entity_id: "all"
@@ -130,8 +137,7 @@
 - id: movement_while_away
   alias: Mouvement detected while away
   trigger:
-  - type: opened
-    platform: state
+  - platform: state
     entity_id: binary_sensor.vpir_motion_control
     from: clear
   condition: 
