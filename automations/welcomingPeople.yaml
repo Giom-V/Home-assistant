@@ -1,5 +1,5 @@
-- id: LightOnWhenSomeoneArrives
-  alias: swith light on when we arrive
+- id: LightSolariumOnWhenSomeoneArrives
+  alias: swith solarium light on when we arrive
   trigger:
   - platform: state
     entity_id: person.giom_2
@@ -12,9 +12,6 @@
   action:
   - service: homeassistant.turn_on
     entity_id: light.solarium
-  - service: notify.slack
-    data:
-      message: Giom arrived
 - id: LivingroomLightsOnWhenSomeoneArrives
   alias: swith living room lights on when we arrive
   trigger:
