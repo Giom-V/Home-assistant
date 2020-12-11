@@ -154,3 +154,50 @@
     entity_id: "all"
     data:
       message: Mouvement detecté dans l'escalier ! Vous n'avez rien à faire ici, merci de partir immédiatement !
+- id: lights_while_away
+  alias: Lights switched on while away
+  trigger:
+  - platform: state
+    entity_id: light.basement, light.office_light, light.office_light_2, switch.lumiere_cuisine
+  condition: 
+  - condition: state
+    entity_id: input_boolean.away_mode
+    state: 'on'
+  action:
+  - service: hangouts.send_message
+    data:
+      target:
+      - id: !secret hangoutConversation
+      message:
+      - text: Lumière allumée dans l'escalier!
+  - service: media_player.volume_set
+    data:
+      entity_id: "all"
+      volume_level: 1
+  - delay: 00:00:02
+  - service: tts.google_say
+    entity_id: "all"
+    data:
+      message: Qui êtes-vous ? Vous n'avez rien à faire ici, merci de partir immédiatement !
+- id: alert_sound
+  alias: Alert me if some sound is detected while away
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.living_room_sound, binary_sensor.solarium_sound
+    to: 'on'
+  action:
+  - service: hangouts.send_message
+    data:
+      target:
+      - id: !secret hangoutConversation
+      message:
+      - text: Bruit détecté!
+  - service: media_player.volume_set
+    data:
+      entity_id: "all"
+      volume_level: 1
+  - delay: 00:00:02
+  - service: tts.google_say
+    entity_id: "all"
+    data:
+      message: Je vous entend!
