@@ -1322,9 +1322,9 @@
                     ]
                 ],
                 "manufacturer": "Yeelight",
-                "model": null,
+                "model": "mono",
                 "name": "Solarium",
-                "sw_version": null,
+                "sw_version": "56",
                 "entry_type": null,
                 "id": "2dc08f7afb4111eaa10b7bfa80e99f40",
                 "via_device_id": null,
