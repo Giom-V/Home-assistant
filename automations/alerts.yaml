@@ -1,0 +1,62 @@
+- id: alert_temperature_low
+  alias: Alert me if the temperature is too low
+  trigger:
+  - platform: numeric_state
+    entity_id: sensor.aurore_bedroom_temperature, sensor.basement_temperature, sensor.bathroom_temperature, sensor.button_temperature, sensor.living_room_temperature, sensor.office_temperature
+    below: 10
+  - platform: numeric_state
+    entity_id: sensor.solarium_temperature
+    below: 3
+  - platform: state
+    entity_id: binary_sensor.solarium_cold, binary_sensor.living_room_cold
+    to: 'on'
+  action:
+  - service: hangouts.send_message
+    data:
+      target:
+      - id: !secret hangoutConversation
+      message:
+      - text: Température basse!
+  - service: tts.google_say
+    entity_id: "all"
+    data:
+      message: La température est trop basse
+- id: alert_noise
+  alias: Alert me if the minut detects noise
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.solarium_heat, binary_sensor.living_room_heat
+    to: 'on'
+  action:
+  - service: hangouts.send_message
+    data:
+      target:
+      - id: !secret hangoutConversation
+      message:
+      - text: Canicule detectée!
+- id: alert_moisture
+  alias: Alert me if the minut detects moisture
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.solarium_moisture, binary_sensor.living_room_moisture
+    to: 'on'
+  action:
+  - service: hangouts.send_message
+    data:
+      target:
+      - id: !secret hangoutConversation
+      message:
+      - text: Risque de moisisure detectée!
+- id: alert_button pressed
+  alias: Alert me if the minut is pressed
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.solarium_button_press, binary_sensor.living_room_button_press, binary_sensor.living_room_button_press_2
+    to: 'on'
+  action:
+  - service: hangouts.send_message
+    data:
+      target:
+      - id: !secret hangoutConversation
+      message:
+      - text: Bouton du minut pressé!
