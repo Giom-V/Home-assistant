@@ -178,6 +178,12 @@ zone:
     longitude: !secret garderieLongitude
     radius: 100
     icon: fas:baby
+    
+  - name: École
+    latitude: !secret schoolLatitude
+    longitude: !secret schoolLongitude
+    radius: 100
+    icon: mdi:school
 
   # This will override the default home zone
   - name: Home
