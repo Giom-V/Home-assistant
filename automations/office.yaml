@@ -20,6 +20,8 @@
       seconds: 1
   - entity_id:
     - switch.bureau
+    - switch.ecran_1440p
+    - switch.ecran_4k_hdr
     service: switch.turn_on
 - id: office_remote_off
   alias: Office remote - switch off
@@ -43,4 +45,6 @@
       seconds: 1
   - entity_id:
     - switch.bureau
+    - switch.ecran_1440p
+    - switch.ecran_4k_hdr
     service: switch.turn_off
