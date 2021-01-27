@@ -9,17 +9,3 @@
   - data:
       message: TEST withings
     service: notify.slack
-- id: test_deconz
-  alias: Test deconz triggers
-  trigger:
-  - device_id: b898c2e796694df1a568bab393658478
-    domain: deconz
-    platform: device
-    type: remote_button_short_press
-    subtype: turn_on
-  action:
-  - service: tts.google_say
-    entity_id: media_player.gogol_home
-    data:
-      message: button pressed
-  mode: single

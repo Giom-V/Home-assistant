@@ -17,6 +17,7 @@ Share/
 certificate/
 tts/
 __pycache__
+blueprints
 
 # Ignored Files
 .pip_progress
