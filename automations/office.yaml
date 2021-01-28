@@ -20,6 +20,8 @@
       seconds: 1
   - entity_id:
     - switch.bureau
+    - switch.ecran_1440p
+    - switch.ecran_4k_hdr
     service: switch.turn_on
 - id: office_remote_off
   alias: Office remote - switch off
@@ -43,4 +45,26 @@
       seconds: 1
   - entity_id:
     - switch.bureau
+    - switch.ecran_1440p
+    - switch.ecran_4k_hdr
     service: switch.turn_off
+- id: office_remote_off_night
+  alias: Office remote - switch off durinnng the night
+  trigger:
+  - event_data:
+      event: 2003
+      id: office_switch
+    event_type: deconz_event
+    platform: event
+  - event_data:
+      event: 2002
+      id: office_switch
+    event_type: deconz_event
+    platform: event
+  condition:
+  - condition: sun
+    after: sunset
+  action:
+  - entity_id:
+    - light.basement_stairs
+    service: light.turn_on
