@@ -47,6 +47,7 @@
     - switch.bureau
     - switch.ecran_1440p
     - switch.ecran_4k_hdr
+    - switch.free_plug
     service: switch.turn_off
 - id: office_remote_off_night
   alias: Office remote - switch off durinnng the night
@@ -65,6 +66,8 @@
   - condition: sun
     after: sunset
   action:
-  - entity_id:
-    - light.basement_stairs
     service: light.turn_on
+    data:
+      brightness: 0.75
+      entity_id:
+      - light.basement_stairs
