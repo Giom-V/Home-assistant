@@ -142,3 +142,9 @@
     entity_id: "all"
     data:
       message: Attention, le congélateur est resté ouvert !
+  - service: hangouts.send_message
+    data:
+      target:
+      - id: !secret hangoutConversation
+      message:
+      - text: Attention, le congélateur est resté ouvert !
