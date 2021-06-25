@@ -1,0 +1,4 @@
+last_vacuum:
+  name: Last time the vacuum cleaner did some cleaning
+  has_date: true
+  has_time: true
