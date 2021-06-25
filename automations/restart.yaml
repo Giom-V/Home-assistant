@@ -1,0 +1,14 @@
+# restart HA to keep it fresh
+- alias: Restart HA
+  trigger: 
+    platform: time
+    at: "03:33:00"  
+  condition:
+    - condition: template
+      value_template: "{{(as_timestamp(now()) - as_timestamp(states.sensor.uptime.state)) > 23*60*60 }}"
+    - condition: time
+      weekday:
+      - sat
+      - sun
+  action:
+    - service: homeassistant.restart
