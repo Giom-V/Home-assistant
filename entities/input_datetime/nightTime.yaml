@@ -27,7 +27,8 @@ morning_week:
   name: Switching off the night light during the week to indicate it's now ok to wake the parents up
   has_date: false
   has_time: true
-  initial: '6:30'
+  initial: '6:45'
+  #initial: '6:30'
 morning_weekend:
   name: Switching off the night light during the week-end to indicate it's now ok to wake the parents up
   has_date: false
