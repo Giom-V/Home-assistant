@@ -1,5 +1,4 @@
 # https://www.home-assistant.io/components/recorder/
-# Tracked history is kept for 368 days
 
 recorder:
   purge_keep_days: 15
