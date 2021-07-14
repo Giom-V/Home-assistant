@@ -6,5 +6,5 @@ http:
     - 192.168.86.0/24 #TODO: secret?
   use_x_forwarded_for: true
   login_attempts_threshold: 5
-  ssl_certificate: !secret SSLCertificate
-  ssl_key: !secret SSLKey
+  #ssl_certificate: !secret SSLCertificate #TODO: reactivate
+  #ssl_key: !secret SSLKey

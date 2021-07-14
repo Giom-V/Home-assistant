@@ -1,7 +1,7 @@
 # https://github.com/custom-components/sensor.sonarr_upcoming_media
 # used in lovelace with https://github.com/custom-cards/upcoming-media-card
-platform: sonarr_upcoming_media
-api_key: !secret sonarr_APIKey
-host: !secret NAS_IP
-days: 7
-max: 10
+#platform: sonarr_upcoming_media  #TODO: reactivate
+#api_key: !secret sonarr_APIKey
+#host: !secret NAS_IP
+#days: 7
+#max: 10

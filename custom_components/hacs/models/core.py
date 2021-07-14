@@ -1,5 +1,6 @@
 """HACS Core info."""
 from pathlib import Path
+
 import attr
 
 from ..enums import LovelaceMode
@@ -11,4 +12,4 @@ class HacsCore:
 
     config_path = attr.ib(Path)
     ha_version = attr.ib(str)
-    lovelace_mode = LovelaceMode("storage")
+    lovelace_mode = LovelaceMode("yaml")
