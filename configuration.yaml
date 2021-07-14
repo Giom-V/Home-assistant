@@ -16,10 +16,10 @@ homeassistant:
   time_zone: America/Toronto
   # Customization file
   customize: !include customize.yaml
-  allowlist_external_dirs:
-    - !secret externalDirShare
-    - !secret externalDirTmp
-    - !secret externalDirDafang
+#  allowlist_external_dirs: #TODO: reaad external dirs
+#    - !secret externalDirShare
+#    - !secret externalDirTmp
+#    - !secret externalDirDafang
   external_url: !secret base_url
   internal_url: !secret internal_url 
   auth_providers:

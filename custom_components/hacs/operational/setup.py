@@ -1,13 +1,20 @@
 """Setup HACS."""
-from custom_components.hacs.enums import HacsStage
+from datetime import datetime
 from aiogithubapi import AIOGitHubAPIException, GitHub
 from homeassistant.const import EVENT_HOMEASSISTANT_STARTED
 from homeassistant.const import __version__ as HAVERSION
-from homeassistant.exceptions import ConfigEntryNotReady
+from homeassistant.core import CoreState
+from homeassistant.exceptions import ConfigEntryNotReady, HomeAssistantError
 from homeassistant.helpers.aiohttp_client import async_create_clientsession
 from homeassistant.helpers.event import async_call_later
 
-from custom_components.hacs.const import DOMAIN, STARTUP, VERSION
+from custom_components.hacs.const import (
+    DOMAIN,
+    HACS_GITHUB_API_HEADERS,
+    INTEGRATION_VERSION,
+    STARTUP,
+)
+from custom_components.hacs.enums import HacsDisabledReason, HacsStage, LovelaceMode
 from custom_components.hacs.hacsbase.configuration import Configuration
 from custom_components.hacs.hacsbase.data import HacsData
 from custom_components.hacs.helpers.functions.constrains import check_constrains
@@ -77,7 +84,6 @@ async def async_setup(hass, config):
 
     await _async_common_setup(hass)
 
-    hass.data[DOMAIN] = config[DOMAIN]
     hacs.configuration = Configuration.from_dict(config[DOMAIN])
     hacs.configuration.config_type = "yaml"
     await async_startup_wrapper_for_yaml()
@@ -95,11 +101,11 @@ async def async_startup_wrapper_for_config_entry():
     if not startup_result:
         hacs.system.disabled = True
         raise ConfigEntryNotReady
-    hacs.system.disabled = False
+    hacs.enable()
     return startup_result
 
 
-async def async_startup_wrapper_for_yaml():
+async def async_startup_wrapper_for_yaml(_=None):
     """Startup wrapper for yaml config."""
     hacs = get_hacs()
     try:
@@ -108,34 +114,30 @@ async def async_startup_wrapper_for_yaml():
         startup_result = False
     if not startup_result:
         hacs.system.disabled = True
-        hacs.hass.components.frontend.async_remove_panel(
-            hacs.configuration.sidepanel_title.lower()
-            .replace(" ", "_")
-            .replace("-", "_")
-        )
         hacs.log.info("Could not setup HACS, trying again in 15 min")
-        if int(hacs.system.ha_version.split(".")[1]) >= 117:
-            async_call_later(hacs.hass, 900, async_startup_wrapper_for_yaml)
-        else:
-            async_call_later(hacs.hass, 900, async_startup_wrapper_for_yaml())
+        async_call_later(hacs.hass, 900, async_startup_wrapper_for_yaml)
         return
-    hacs.system.disabled = False
+    hacs.enable()
 
 
 async def async_hacs_startup():
     """HACS startup tasks."""
     hacs = get_hacs()
+    hacs.hass.data[DOMAIN] = hacs
 
     try:
         lovelace_info = await system_health_info(hacs.hass)
-    except TypeError:
+    except (TypeError, KeyError, HomeAssistantError):
         # If this happens, the users YAML is not valid, we assume YAML mode
         lovelace_info = {"mode": "yaml"}
     hacs.log.debug(f"Configuration type: {hacs.configuration.config_type}")
-    hacs.version = VERSION
+    hacs.version = INTEGRATION_VERSION
     hacs.log.info(STARTUP)
     hacs.core.config_path = hacs.hass.config.path()
     hacs.system.ha_version = HAVERSION
+
+    hacs.system.lovelace_mode = lovelace_info.get("mode", "yaml")
+    hacs.core.lovelace_mode = LovelaceMode(lovelace_info.get("mode", "yaml"))
 
     # Setup websocket API
     await async_setup_hacs_websockt_api()
@@ -146,24 +148,31 @@ async def async_hacs_startup():
     # Clear old storage files
     await async_clear_storage()
 
-    hacs.system.lovelace_mode = lovelace_info.get("mode", "yaml")
-    hacs.system.disabled = False
+    hacs.enable()
     hacs.github = GitHub(
-        hacs.configuration.token, async_create_clientsession(hacs.hass)
+        hacs.configuration.token,
+        async_create_clientsession(hacs.hass),
+        headers=HACS_GITHUB_API_HEADERS,
     )
     hacs.data = HacsData()
 
     can_update = await get_fetch_updates_for(hacs.github)
     if can_update is None:
         hacs.log.critical("Your GitHub token is not valid")
+        hacs.disable(HacsDisabledReason.INVALID_TOKEN)
         return False
 
     if can_update != 0:
         hacs.log.debug(f"Can update {can_update} repositories")
     else:
-        hacs.log.info(
-            "HACS is ratelimited, repository updates will resume when the limit is cleared, this can take up to 1 hour"
+        reset = datetime.fromtimestamp(int(hacs.github.client.ratelimits.reset))
+        hacs.log.error(
+            "HACS is ratelimited, HACS will resume setup when the limit is cleared (%02d:%02d:%02d)",
+            reset.hour,
+            reset.minute,
+            reset.second,
         )
+        hacs.disable(HacsDisabledReason.RATE_LIMIT)
         return False
 
     # Check HACS Constrains
@@ -171,6 +180,7 @@ async def async_hacs_startup():
         if hacs.configuration.config_type == "flow":
             if hacs.configuration.config_entry is not None:
                 await async_remove_entry(hacs.hass, hacs.configuration.config_entry)
+        hacs.disable(HacsDisabledReason.CONSTRAINS)
         return False
 
     # Load HACS
@@ -178,6 +188,7 @@ async def async_hacs_startup():
         if hacs.configuration.config_type == "flow":
             if hacs.configuration.config_entry is not None:
                 await async_remove_entry(hacs.hass, hacs.configuration.config_entry)
+        hacs.disable(HacsDisabledReason.LOAD_HACS)
         return False
 
     # Restore from storefiles
@@ -187,14 +198,12 @@ async def async_hacs_startup():
         if hacs.configuration.config_type == "flow":
             if hacs.configuration.config_entry is not None:
                 await async_remove_entry(hacs.hass, hacs.configuration.config_entry)
+        hacs.disable(HacsDisabledReason.RESTORE)
         return False
 
     # Setup startup tasks
-    if hacs.status.new:
-        if int(hacs.system.ha_version.split(".")[1]) >= 117:
-            async_call_later(hacs.hass, 5, hacs.startup_tasks)
-        else:
-            async_call_later(hacs.hass, 5, hacs.startup_tasks())
+    if hacs.hass.state == CoreState.running:
+        async_call_later(hacs.hass, 5, hacs.startup_tasks)
     else:
         hacs.hass.bus.async_listen_once(EVENT_HOMEASSISTANT_STARTED, hacs.startup_tasks)
 
