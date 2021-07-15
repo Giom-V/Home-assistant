@@ -26,13 +26,14 @@ ATTR_LAST_UPDATED = 'last_updated'
 CONF_CLIENT_ID = 'client_id'
 CONF_CLIENT_SECRET = 'client_secret'
 DEFAULT_NAME = 'Google Fit'
+DEFAULT_CREDENTIALS_FILE = '.google_fit.credentials.json'
 ICON = 'mdi:heart-pulse'
-MIN_TIME_BETWEEN_SCANS = timedelta(minutes=10)
-MIN_TIME_BETWEEN_UPDATES = timedelta(minutes=10)
+MIN_TIME_BETWEEN_SCANS = timedelta(minutes=30)
+MIN_TIME_BETWEEN_UPDATES = timedelta(minutes=30)
+TOKEN_FILE = '.{}.token'.format(SENSOR)
 SENSOR_NAME = '{} {}'
 
-
-# # Define schema of sensor.
+# Define schema of sensor.
 PLATFORM_SCHEMA = config_validation.PLATFORM_SCHEMA.extend({
     voluptuous.Required(CONF_CLIENT_ID): config_validation.string,
     voluptuous.Required(CONF_CLIENT_SECRET): config_validation.string,
@@ -59,7 +60,6 @@ MOVE_TIME = 'move time'
 CALORIES = 'calories'
 SLEEP = 'sleep'
 HEARTRATE = 'heart rate'
-TOKEN_FILE = ''
 
 # Endpoint scopes required for the sensor.
 # Read more: https://developers.google.com/fit/rest/v1/authorization
@@ -79,7 +79,6 @@ def _today_dataset_end():
 
 def _get_client(token_file):
         """Get the Google Fit service with the storage file token.
-
         Args:
         token_file: str, File path for API token.
 
@@ -101,10 +100,8 @@ def _get_client(token_file):
 
 def setup(hass, config):
     """Set up the Google Fit platform."""
-    name = config.get(const.CONF_NAME)
-    TOKEN_FILE = '.{}_{}.token'.format(name,SENSOR)
     token_file = hass.config.path(TOKEN_FILE)
-    if not os.path.exists(token_file):
+    if not os.path.isfile(token_file):
         return do_authentication(hass, config)
 
     return True
@@ -112,7 +109,6 @@ def setup(hass, config):
 
 def do_authentication(hass, config):
     """Notify user of actions and authenticate.
-
     Notify user of user_code and verification_url then poll until we have an
     access token.
     """
@@ -160,8 +156,7 @@ def do_authentication(hass, config):
         except oauth2client.FlowExchangeError:
             # not ready yet, call again
             return
-        name = config.get(const.CONF_NAME)
-        TOKEN_FILE = '.{}_{}.token'.format(name,SENSOR)
+
         storage = oauth2file.Storage(hass.config.path(TOKEN_FILE))
         storage.put(credentials)
         listener()
@@ -174,11 +169,10 @@ def do_authentication(hass, config):
 def setup_platform(hass, config, add_devices, discovery_info=None):
     """Adds sensor platform to the list of platforms."""
     setup(hass, config)
-    name = config.get(const.CONF_NAME)
-    TOKEN_FILE = '.{}_{}.token'.format(name,SENSOR)
+
     token_file = hass.config.path(TOKEN_FILE)
     client = _get_client(token_file)
-    
+    name = config.get(const.CONF_NAME)
     add_devices([GoogleFitWeightSensor(client, name),
         GoogleFitHeartRateSensor(client, name),
         GoogleFitHeightSensor(client, name),
@@ -284,16 +278,6 @@ class GoogleFitSensor(entity.Entity):
 
     def _get_dataset(self, source):
         dataset = "%s-%s" % (_today_dataset_start(), _today_dataset_end())
-
-        return self._client.users().dataSources(). \
-            datasets(). \
-            get(userId=API_USER_ID, dataSourceId=source, datasetId=dataset). \
-            execute()
-
-    def _get_dataset_from_last_update(self, source):
-        dataset_start = int(_today_dataset_start())
-        dataset_start = dataset_start -1080000000000
-        dataset = "%s-%s" % (dataset_start, _today_dataset_end())
 
         return self._client.users().dataSources(). \
             datasets(). \
@@ -421,7 +405,7 @@ class GoogleFitHeightSensor(GoogleFitSensor):
 
 class GoogleFitHeartRateSensor(GoogleFitSensor):
     DATA_SOURCE = "derived:com.google.heart_rate.bpm:com.google.android.gms:" \
-        "merge_heart_rate_bpm"
+                  "merge_heart_rate_bpm"
 
     @property
     def unit_of_measurement(self):
@@ -441,27 +425,40 @@ class GoogleFitHeartRateSensor(GoogleFitSensor):
     @util.Throttle(MIN_TIME_BETWEEN_SCANS, MIN_TIME_BETWEEN_UPDATES)
     def update(self):
         """Extracts the relevant data points for from the Fitness API."""
-        values = {}
-        for datapoint in self._get_dataset_from_last_update(self.DATA_SOURCE)["point"]:
-            datapoint_value = datapoint["value"][0]["fpVal"]
-            datapoint_value_ts= datapoint["startTimeNanos"]
-            values[datapoint_value_ts] = datapoint_value
+        heartrate_datasources = self._get_datasources('com.google.heart_rate.bpm')
 
-        time_updates = list(values.keys())
-        time_updates.sort(reverse=True)
-        if not time_updates:
-            self._attributes = {}
-            return None
-        
-        last_time_update = time_updates[0]
-        last_heartrate = values[last_time_update]
+        heart_datapoints = {}
+        for datasource in heartrate_datasources:
+            datasource_id = datasource.get('dataStreamId')
+            heart_request = self._client.users().dataSources().\
+                dataPointChanges().list(
+                    userId=API_USER_ID,
+                    dataSourceId=datasource_id,
+                )
+            heart_data = heart_request.execute()
+            heart_inserted_datapoints = heart_data.get('insertedDataPoint')
+            for datapoint in heart_inserted_datapoints:
+                point_value = datapoint.get('value')
+                if not point_value:
+                    continue
+                heartrate = point_value[0].get('fpVal')
+                if not heartrate:
+                    continue
+                last_update_milis = int(datapoint.get('modifiedTimeMillis', 0))
+                if not last_update_milis:
+                    continue
+                heart_datapoints[last_update_milis] = heartrate
 
-        self._last_updated = round(int(last_time_update) / 1000000000)
-        self._state = last_heartrate
-        _LOGGER.debug("Last Heart Rate %s at %s", last_heartrate, self._last_updated)
+        if heart_datapoints:
+            time_updates = list(heart_datapoints.keys())
+            time_updates.sort(reverse=True)
+
+            last_time_update = time_updates[0]
+            last_heartrate = heart_datapoints[last_time_update]
+
+            self._last_updated = round(last_time_update / 1000)
+            self._state = last_heartrate
         self._attributes = {}
-
-
 
 
 class GoogleFitStepsSensor(GoogleFitSensor):
@@ -598,7 +595,9 @@ class GoogleFitDistanceSensor(GoogleFitSensor):
         self._attributes = {}
 
 class GoogleFitSleepSensor(GoogleFitSensor):
-    
+    DATA_SOURCE = "derived:com.google.step_count.delta:" \
+        "com.google.android.gms:estimated_steps"
+
     @property
     def _name_suffix(self):
         """Returns the name suffix of the sensor."""
@@ -617,6 +616,7 @@ class GoogleFitSleepSensor(GoogleFitSensor):
     @util.Throttle(MIN_TIME_BETWEEN_SCANS, MIN_TIME_BETWEEN_UPDATES)
     def update(self):
         """Extracts the relevant data points for from the Fitness API."""
+
         yesterday = datetime.now().replace(hour=17,minute=0,second=0,microsecond=0)
         yesterday = yesterday - timedelta(days=1)
         starttime = yesterday.isoformat("T") + "Z"
@@ -629,6 +629,7 @@ class GoogleFitSleepSensor(GoogleFitSensor):
         deep_sleep = []
         light_sleep = []
         _LOGGER.debug("Sleep dataset %s", sleep_dataset)
+        starttime
         for point in sleep_dataset["session"]:
             if int(point["activityType"]) == 72 :
                 starts.append(int(point["startTimeMillis"]))
@@ -643,7 +644,6 @@ class GoogleFitSleepSensor(GoogleFitSensor):
                     light_sleep_end = datetime.fromtimestamp(int(point["endTimeMillis"]) / 1000)
                     _LOGGER.debug("Light Sleep dataset Total %s", (light_sleep_end - light_sleep_start))
                     light_sleep.append(light_sleep_end - light_sleep_start)
-        
         if len(starts) != 0 or len(ends) != 0:
             bed_time = datetime.fromtimestamp(round(min(starts) / 1000))
             wake_up_time = datetime.fromtimestamp(round(max(ends) / 1000))
