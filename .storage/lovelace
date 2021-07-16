@@ -7,16 +7,10 @@
                 {
                     "icon": "mdi:home-modern",
                     "path": "rooms",
-                    "title": "",
+                    "title": "Home",
                     "visible": [
                         {
-                            "user": "882d5cbae4fb4da282c01c79cf4216ff"
-                        },
-                        {
-                            "user": "6d6b7b9773144a66957cec1889954f68"
-                        },
-                        {
-                            "user": "32c4026d06a64efaacd2b41fbe2395cc"
+                            "user": "2a54ceccc9d74a409021b53d9ff4a71a"
                         }
                     ],
                     "badges": [],
@@ -632,13 +626,7 @@
                     "title": "Home",
                     "visible": [
                         {
-                            "user": "882d5cbae4fb4da282c01c79cf4216ff"
-                        },
-                        {
-                            "user": "6d6b7b9773144a66957cec1889954f68"
-                        },
-                        {
-                            "user": "32c4026d06a64efaacd2b41fbe2395cc"
+                            "user": "2a54ceccc9d74a409021b53d9ff4a71a"
                         }
                     ],
                     "badges": [
@@ -1344,13 +1332,7 @@
                     "title": "Meteo",
                     "visible": [
                         {
-                            "user": "882d5cbae4fb4da282c01c79cf4216ff"
-                        },
-                        {
-                            "user": "6d6b7b9773144a66957cec1889954f68"
-                        },
-                        {
-                            "user": "32c4026d06a64efaacd2b41fbe2395cc"
+                            "user": "2a54ceccc9d74a409021b53d9ff4a71a"
                         }
                     ],
                     "badges": [
@@ -1563,13 +1545,7 @@
                     "title": "Media",
                     "visible": [
                         {
-                            "user": "882d5cbae4fb4da282c01c79cf4216ff"
-                        },
-                        {
-                            "user": "6d6b7b9773144a66957cec1889954f68"
-                        },
-                        {
-                            "user": "32c4026d06a64efaacd2b41fbe2395cc"
+                            "user": "2a54ceccc9d74a409021b53d9ff4a71a"
                         }
                     ],
                     "badges": [],
@@ -1648,13 +1624,7 @@
                     "title": "Security",
                     "visible": [
                         {
-                            "user": "882d5cbae4fb4da282c01c79cf4216ff"
-                        },
-                        {
-                            "user": "6d6b7b9773144a66957cec1889954f68"
-                        },
-                        {
-                            "user": "32c4026d06a64efaacd2b41fbe2395cc"
+                            "user": "2a54ceccc9d74a409021b53d9ff4a71a"
                         }
                     ],
                     "badges": [],
@@ -1778,13 +1748,7 @@
                     "title": "Health",
                     "visible": [
                         {
-                            "user": "882d5cbae4fb4da282c01c79cf4216ff"
-                        },
-                        {
-                            "user": "6d6b7b9773144a66957cec1889954f68"
-                        },
-                        {
-                            "user": "32c4026d06a64efaacd2b41fbe2395cc"
+                            "user": "2a54ceccc9d74a409021b53d9ff4a71a"
                         }
                     ],
                     "badges": [],
@@ -1879,13 +1843,7 @@
                     "title": "Admin",
                     "visible": [
                         {
-                            "user": "882d5cbae4fb4da282c01c79cf4216ff"
-                        },
-                        {
-                            "user": "6d6b7b9773144a66957cec1889954f68"
-                        },
-                        {
-                            "user": "32c4026d06a64efaacd2b41fbe2395cc"
+                            "user": "2a54ceccc9d74a409021b53d9ff4a71a"
                         }
                     ],
                     "badges": [
@@ -2125,13 +2083,7 @@
                     "title": "People",
                     "visible": [
                         {
-                            "user": "882d5cbae4fb4da282c01c79cf4216ff"
-                        },
-                        {
-                            "user": "6d6b7b9773144a66957cec1889954f68"
-                        },
-                        {
-                            "user": "32c4026d06a64efaacd2b41fbe2395cc"
+                            "user": "2a54ceccc9d74a409021b53d9ff4a71a"
                         }
                     ],
                     "badges": [
@@ -2240,13 +2192,7 @@
                     "title": "Automations",
                     "visible": [
                         {
-                            "user": "882d5cbae4fb4da282c01c79cf4216ff"
-                        },
-                        {
-                            "user": "6d6b7b9773144a66957cec1889954f68"
-                        },
-                        {
-                            "user": "32c4026d06a64efaacd2b41fbe2395cc"
+                            "user": "2a54ceccc9d74a409021b53d9ff4a71a"
                         }
                     ],
                     "badges": [],
@@ -2361,13 +2307,7 @@
                     "title": "Tests",
                     "visible": [
                         {
-                            "user": "882d5cbae4fb4da282c01c79cf4216ff"
-                        },
-                        {
-                            "user": "6d6b7b9773144a66957cec1889954f68"
-                        },
-                        {
-                            "user": "32c4026d06a64efaacd2b41fbe2395cc"
+                            "user": "2a54ceccc9d74a409021b53d9ff4a71a"
                         }
                     ],
                     "badges": [],
@@ -2648,13 +2588,7 @@
                     "title": "Cannes",
                     "visible": [
                         {
-                            "user": "882d5cbae4fb4da282c01c79cf4216ff"
-                        },
-                        {
-                            "user": "6d6b7b9773144a66957cec1889954f68"
-                        },
-                        {
-                            "user": "32c4026d06a64efaacd2b41fbe2395cc"
+                            "user": "2a54ceccc9d74a409021b53d9ff4a71a"
                         }
                     ],
                     "badges": [
