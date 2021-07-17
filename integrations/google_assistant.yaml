@@ -14,14 +14,6 @@ google_assistant:
   #   - switch
   expose_by_default: false
   entity_config:
-    light.basement:
-      expose: true
-    light.basement_stairs:
-      expose: true
-    light.office_light:
-      expose: true
-    light.office_light_2:
-      expose: true
     switch.wake_up_nas:
       expose: true
     switch.wake_up_pc:
