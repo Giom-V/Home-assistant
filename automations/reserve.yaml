@@ -1,0 +1,29 @@
+- id: switch_on_reserve
+  alias: Switch on reserve light
+  description: ""
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.reserve_door
+      to: "on"
+  condition: []
+  action:
+    - type: turn_on
+      device_id: 3c921fe3f446f89f31a59945a5f27e95
+      entity_id: light.reserve
+      domain: light
+      brightness_pct: 100
+  mode: single
+- id: switch_off_reserve
+  alias: Switch on reserve light
+  description: ""
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.reserve_door
+      from: "on"
+  condition: []
+  action:
+    - type: turn_off
+      device_id: 3c921fe3f446f89f31a59945a5f27e95
+      entity_id: light.reserve
+      domain: light
+  mode: single
