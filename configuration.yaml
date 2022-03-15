@@ -51,11 +51,10 @@ binary_sensor:
   - platform: template
     sensors:
        people_home:
-         friendly_name: 'People Home'
+        friendly_name: "People Home"
          device_class: presence
          value_template: >
-           {{ is_state('person.giom_2', 'home') or
-              is_state('person.claire_2', 'home') }}
+          {{ is_state('person.giom', 'home') || is_state('person.claire', 'home') }}
 
 # Yeelights
 yeelight:
@@ -177,6 +176,12 @@ zone:
     radius: 100
     icon: mdi:gamepad-variant
         
+  - name: Google
+    latitude: !secret googleLatitude
+    longitude: !secret googleLongitude
+    radius: 100
+    icon: mdi:google
+
   - name: École
     latitude: !secret schoolLatitude
     longitude: !secret schoolLongitude
