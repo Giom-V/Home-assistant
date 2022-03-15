@@ -406,7 +406,7 @@
                 "manufacturer": "Home Assistant Community Add-ons",
                 "model": "Home Assistant Add-on",
                 "name": "Node-RED",
-                "sw_version": "11.0.4",
+                "sw_version": "11.1.0",
                 "hw_version": null,
                 "entry_type": "service",
                 "id": "8a0b9158b4a1c2c2725ace400144edae",
@@ -485,11 +485,11 @@
                     ],
                     [
                         "tplink",
-                        "60:32:B1:A8:DF:3D"
+                        "60:32:B1:A8:DF:3D_80067CFBCC0BB2EDBB23A5AA4135A1061D7B928F00"
                     ],
                     [
                         "tplink",
-                        "60:32:B1:A8:DF:3D_80067CFBCC0BB2EDBB23A5AA4135A1061D7B928F00"
+                        "60:32:B1:A8:DF:3D"
                     ]
                 ],
                 "manufacturer": "TP-Link",

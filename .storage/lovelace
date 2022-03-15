@@ -1076,6 +1076,12 @@
                                     ]
                                 }
                             ]
+                        },
+                        {
+                            "type": "custom:content-card-linky",
+                            "nbJoursAffichage": "7",
+                            "titleName": "Linky Cesson",
+                            "entity": "sensor.myenedis_14476845147777"
                         }
                     ]
                 },

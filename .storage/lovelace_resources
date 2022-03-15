@@ -68,6 +68,11 @@
                 "url": "/hacsfiles/aftership-card/aftership-card.js?hacstag=145142810122",
                 "type": "module",
                 "id": "cbe19a64322a4ff992f4f338a4826302"
+            },
+            {
+                "url": "/hacsfiles/content-card-linky/content-card-linky.js?hacstag=3130384471112",
+                "type": "module",
+                "id": "d28e66a6787e467bb458928f35ac7f8b"
             }
         ]
     }
