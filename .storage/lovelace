@@ -617,6 +617,458 @@
                             "heading": "\ud83d\udda5 Bureau",
                             "row_size": 2,
                             "type": "custom:banner-card"
+                        },
+                        {
+                            "type": "vertical-stack",
+                            "cards": [
+                                {
+                                    "type": "picture-elements",
+                                    "elements": [
+                                        {
+                                            "type": "state-badge",
+                                            "entity": "binary_sensor.ev6_hood",
+                                            "style": {
+                                                "top": "5%",
+                                                "left": "3%"
+                                            }
+                                        },
+                                        {
+                                            "type": "state-badge",
+                                            "entity": "binary_sensor.ev6_smart_key_battery_warning",
+                                            "style": {
+                                                "top": "5%",
+                                                "left": "3%"
+                                            }
+                                        },
+                                        {
+                                            "type": "conditional",
+                                            "conditions": [
+                                                {
+                                                    "entity": "binary_sensor.ev6_trunk",
+                                                    "state": "on"
+                                                }
+                                            ],
+                                            "elements": [
+                                                {
+                                                    "type": "state-icon",
+                                                    "entity": "binary_sensor.ev6_trunk",
+                                                    "style": {
+                                                        "top": "30%",
+                                                        "left": "90%",
+                                                        "--paper-item-icon-color": "red"
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "type": "conditional",
+                                            "conditions": [
+                                                {
+                                                    "entity": "binary_sensor.ev6_door_front_left",
+                                                    "state": "on"
+                                                }
+                                            ],
+                                            "elements": [
+                                                {
+                                                    "type": "state-icon",
+                                                    "entity": "binary_sensor.ev6_door_front_left",
+                                                    "style": {
+                                                        "top": "50%",
+                                                        "left": "65%",
+                                                        "--paper-item-icon-color": "red"
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "type": "conditional",
+                                            "conditions": [
+                                                {
+                                                    "entity": "binary_sensor.ev6_door_rear_left",
+                                                    "state": "on"
+                                                }
+                                            ],
+                                            "elements": [
+                                                {
+                                                    "type": "state-icon",
+                                                    "entity": "binary_sensor.ev6_door_rear_left",
+                                                    "style": {
+                                                        "top": "50%",
+                                                        "left": "80%",
+                                                        "--paper-item-icon-color": "red"
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "type": "conditional",
+                                            "conditions": [
+                                                {
+                                                    "entity": "binary_sensor.ev6_door_front_right",
+                                                    "state": "on"
+                                                }
+                                            ],
+                                            "elements": [
+                                                {
+                                                    "type": "state-icon",
+                                                    "entity": "binary_sensor.ev6_door_front_right",
+                                                    "style": {
+                                                        "top": "30%",
+                                                        "left": "40%",
+                                                        "--paper-item-icon-color": "red"
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "type": "conditional",
+                                            "conditions": [
+                                                {
+                                                    "entity": "binary_sensor.ev6_door_rear_right",
+                                                    "state": "on"
+                                                }
+                                            ],
+                                            "elements": [
+                                                {
+                                                    "type": "state-icon",
+                                                    "entity": "binary_sensor.ev6_door_rear_right",
+                                                    "style": {
+                                                        "top": "30%",
+                                                        "left": "55%",
+                                                        "--paper-item-icon-color": "red"
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "type": "state-icon",
+                                            "entity": "sensor.ev6_odometer",
+                                            "style": {
+                                                "top": "5%",
+                                                "left": "3%"
+                                            }
+                                        },
+                                        {
+                                            "type": "state-label",
+                                            "entity": "sensor.ev6_odometer",
+                                            "style": {
+                                                "top": "6%",
+                                                "left": "4%",
+                                                "max-width": "1px"
+                                            }
+                                        },
+                                        {
+                                            "type": "state-icon",
+                                            "entity": "sensor.ev6_range_by_ev",
+                                            "style": {
+                                                "top": "15%",
+                                                "left": "3%"
+                                            }
+                                        },
+                                        {
+                                            "type": "state-label",
+                                            "entity": "sensor.ev6_range_by_ev",
+                                            "style": {
+                                                "top": "16%",
+                                                "left": "4%",
+                                                "max-width": "1px"
+                                            }
+                                        },
+                                        {
+                                            "type": "state-icon",
+                                            "entity": "binary_sensor.ev6_charging",
+                                            "style": {
+                                                "top": "25%",
+                                                "left": "3%"
+                                            }
+                                        },
+                                        {
+                                            "type": "state-label",
+                                            "entity": "sensor.ev6_car_battery",
+                                            "style": {
+                                                "top": "26%",
+                                                "left": "4%",
+                                                "max-width": "1px"
+                                            }
+                                        },
+                                        {
+                                            "type": "state-icon",
+                                            "entity": "binary_sensor.ev6_plugged_in",
+                                            "style": {
+                                                "top": "35%",
+                                                "left": "3%"
+                                            }
+                                        },
+                                        {
+                                            "type": "conditional",
+                                            "conditions": [
+                                                {
+                                                    "entity": "binary_sensor.ev6_plugged_in",
+                                                    "state": "on"
+                                                }
+                                            ],
+                                            "elements": [
+                                                {
+                                                    "type": "state-label",
+                                                    "entity": "sensor.ev6_estimated_current_charge_duration",
+                                                    "style": {
+                                                        "top": "36%",
+                                                        "left": "4%",
+                                                        "max-width": "1px"
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "type": "state-icon",
+                                            "entity": "binary_sensor.ev6_engine",
+                                            "style": {
+                                                "top": "45%",
+                                                "left": "3%"
+                                            }
+                                        },
+                                        {
+                                            "type": "state-label",
+                                            "entity": "sensor.ev6_last_update",
+                                            "style": {
+                                                "top": "4%",
+                                                "left": "84%"
+                                            },
+                                            "tap_action": {
+                                                "action": "call-service",
+                                                "service": "kia_uvo.force_update"
+                                            }
+                                        },
+                                        {
+                                            "type": "conditional",
+                                            "conditions": [
+                                                {
+                                                    "entity": "binary_sensor.ev6_defroster",
+                                                    "state": "on"
+                                                }
+                                            ],
+                                            "elements": [
+                                                {
+                                                    "type": "state-icon",
+                                                    "entity": "binary_sensor.ev6_defroster",
+                                                    "style": {
+                                                        "top": "12%",
+                                                        "left": "97%"
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "type": "conditional",
+                                            "conditions": [
+                                                {
+                                                    "entity": "binary_sensor.ev6_air_conditioner",
+                                                    "state": "on"
+                                                }
+                                            ],
+                                            "elements": [
+                                                {
+                                                    "type": "state-icon",
+                                                    "entity": "binary_sensor.ev6_air_conditioner",
+                                                    "style": {
+                                                        "top": "22%",
+                                                        "left": "97%"
+                                                    }
+                                                },
+                                                {
+                                                    "type": "state-label",
+                                                    "entity": "sensor.ev6_set_temperature",
+                                                    "style": {
+                                                        "top": "23%",
+                                                        "left": "83%",
+                                                        "max-width": "1px"
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "type": "conditional",
+                                            "conditions": [
+                                                {
+                                                    "entity": "binary_sensor.ev6_back_window_heater",
+                                                    "state": "on"
+                                                }
+                                            ],
+                                            "elements": [
+                                                {
+                                                    "type": "state-icon",
+                                                    "entity": "binary_sensor.ev6_back_window_heater",
+                                                    "style": {
+                                                        "top": "32%",
+                                                        "left": "97%"
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "type": "conditional",
+                                            "conditions": [
+                                                {
+                                                    "entity": "binary_sensor.ev6_steering_wheel_heater",
+                                                    "state": "on"
+                                                }
+                                            ],
+                                            "elements": [
+                                                {
+                                                    "type": "state-icon",
+                                                    "entity": "binary_sensor.ev6_steering_wheel_heater",
+                                                    "style": {
+                                                        "top": "42%",
+                                                        "left": "97%"
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "type": "conditional",
+                                            "conditions": [
+                                                {
+                                                    "entity": "binary_sensor.ev6_tire_pressure_all",
+                                                    "state": "on"
+                                                }
+                                            ],
+                                            "elements": [
+                                                {
+                                                    "type": "state-icon",
+                                                    "entity": "binary_sensor.ev6_tire_pressure_all",
+                                                    "style": {
+                                                        "top": "52%",
+                                                        "left": "97%",
+                                                        "--paper-item-icon-color": "red"
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "type": "conditional",
+                                            "conditions": [
+                                                {
+                                                    "entity": "binary_sensor.ev6_washer_fluid_warning",
+                                                    "state": "on"
+                                                }
+                                            ],
+                                            "elements": [
+                                                {
+                                                    "type": "state-icon",
+                                                    "entity": "binary_sensor.ev6_washer_fluid_warning",
+                                                    "style": {
+                                                        "top": "62%",
+                                                        "left": "97%",
+                                                        "--paper-item-icon-color": "red"
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "type": "conditional",
+                                            "conditions": [
+                                                {
+                                                    "entity": "binary_sensor.ev6_data",
+                                                    "state": "off"
+                                                }
+                                            ],
+                                            "elements": [
+                                                {
+                                                    "type": "state-icon",
+                                                    "entity": "binary_sensor.ev6_data",
+                                                    "style": {
+                                                        "top": "72%",
+                                                        "left": "97%",
+                                                        "--paper-item-icon-color": "red"
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "type": "state-label",
+                                            "entity": "sensor.ev6_geocoded_location",
+                                            "style": {
+                                                "top": "97%",
+                                                "left": "0%",
+                                                "max-width": "1px",
+                                                "color": "lightgrey"
+                                            }
+                                        }
+                                    ],
+                                    "image": "https://photoref.carboatservices.fr/S0lB/RVY2/98b028a7da83541e9ba384116674a979/MQ==/0b70c77cdf60d436514f5505697aad48.png"
+                                },
+                                {
+                                    "type": "horizontal-stack",
+                                    "cards": [
+                                        {
+                                            "show_name": true,
+                                            "show_icon": true,
+                                            "type": "button",
+                                            "tap_action": {
+                                                "action": "call-service",
+                                                "service": "kia_uvo.start_charge",
+                                                "service_data": {},
+                                                "target": {}
+                                            },
+                                            "entity": "binary_sensor.ev6_charging",
+                                            "name": "Start/Stop(hold) charge",
+                                            "hold_action": {
+                                                "action": "call-service",
+                                                "service": "kia_uvo.stop_charge",
+                                                "service_data": {},
+                                                "target": {}
+                                            }
+                                        },
+                                        {
+                                            "show_name": true,
+                                            "show_icon": true,
+                                            "type": "button",
+                                            "tap_action": {
+                                                "action": "call-service",
+                                                "service": "kia_uvo.start_climate",
+                                                "service_data": {
+                                                    "Duration": 10,
+                                                    "Temperature": 21,
+                                                    "Defrost": true,
+                                                    "Heating": true
+                                                },
+                                                "target": {}
+                                            },
+                                            "entity": "binary_sensor.ev6_air_conditioner",
+                                            "name": "Start/Stop(hold) AC",
+                                            "hold_action": {
+                                                "action": "call-service",
+                                                "service": "kia_uvo.stop_climate",
+                                                "service_data": {},
+                                                "target": {}
+                                            }
+                                        },
+                                        {
+                                            "show_name": true,
+                                            "show_icon": true,
+                                            "type": "button",
+                                            "tap_action": {
+                                                "action": "call-service",
+                                                "service": "lock.lock",
+                                                "service_data": {},
+                                                "target": {
+                                                    "entity_id": "lock.ev6_door_lock"
+                                                }
+                                            },
+                                            "entity": "lock.ev6_door_lock",
+                                            "name": "Lock/Unlock(hold) doors",
+                                            "hold_action": {
+                                                "action": "call-service",
+                                                "service": "lock.unlock",
+                                                "service_data": {},
+                                                "target": {
+                                                    "entity_id": "lock.ev6_door_lock"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
                         }
                     ]
                 },
