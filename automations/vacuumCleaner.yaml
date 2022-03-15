@@ -116,7 +116,7 @@
   alias: vacuum Kitchen and dining room when we are away (Covid version)
   trigger:
   - platform: state
-    entity_id: person.giom_2, person.claire_2
+    entity_id: person.giom, person.claire
     from: home
     for:
       minutes: 5
@@ -151,12 +151,12 @@
         - sat
         - sun
       - condition: state
-        entity_id: person.giom_2
+        entity_id: person.giom
         state: not_home
         for:
           minutes: 5
       - condition: state
-        entity_id: person.claire_2
+        entity_id: person.claire
         state: not_home
         for:
           minutes: 5

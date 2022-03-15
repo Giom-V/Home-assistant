@@ -1,0 +1,17 @@
+# https://www.home-assistant.io/integrations/statistics
+sensor:
+  - platform: statistics
+    name: Temperature apparente
+    entity_id: sensor.dark_sky_apparent_temperature
+    max_age:
+      days: 30
+  - platform: statistics
+    name: Temperature sous-sol
+    entity_id: sensor.basement_temperature
+    max_age:
+      days: 7
+  - platform: statistics
+    name: Humidité sous-sol
+    entity_id: sensor.basement_humidity
+    max_age:
+      days: 7

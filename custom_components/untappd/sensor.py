@@ -49,7 +49,7 @@ ATTR_DESCRIPTION = "description"
 
 SCAN_INTERVAL = timedelta(seconds=300)
 
-ICON = "mdi:untappd"
+ICON = "mdi:mdi-glass-mug-variant"
 
 PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
     {
@@ -142,7 +142,7 @@ class UntappdCheckinSensor(Entity):
         return ICON
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         return {
             ATTR_ABV: self._abv,
             ATTR_BEER: self._beer,
@@ -215,7 +215,7 @@ class UntappdWishlistSensor(Entity):
         return ICON
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         return self.hass.data[WISHLIST_DATA]
 
 
@@ -270,7 +270,7 @@ class UntappdLastBadgeSensor(Entity):
         return ICON
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         return {
             ATTR_BADGE: self._badge,
             ATTR_LEVEL: self._level,

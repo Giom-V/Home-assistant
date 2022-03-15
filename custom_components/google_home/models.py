@@ -26,11 +26,13 @@ class GoogleHomeDevice:
 
     def __init__(
         self,
+        device_id: str,
         name: str,
         auth_token: str | None,
         ip_address: str | None = None,
         hardware: str | None = None,
     ):
+        self.device_id = device_id
         self.name = name
         self.auth_token = auth_token
         self.ip_address = ip_address
@@ -68,11 +70,12 @@ class GoogleHomeDevice:
         ]
 
     def get_sorted_alarms(self) -> list[GoogleHomeAlarm]:
-        """Returns alarms in a sorted order. Inactive alarms are in the end."""
+        """Returns alarms in a sorted order. Inactive & missed alarms are at the end."""
         return sorted(
             self._alarms,
             key=lambda k: k.fire_time
-            if k.status != GoogleHomeAlarmStatus.INACTIVE
+            if k.status
+            not in (GoogleHomeAlarmStatus.INACTIVE, GoogleHomeAlarmStatus.MISSED)
             else k.fire_time + sys.maxsize,
         )
 
@@ -101,11 +104,11 @@ class GoogleHomeDevice:
         """Return Do Not Disturb status."""
         return self._do_not_disturb
 
-    def set_alarm_volume(self, volume: float) -> None:
+    def set_alarm_volume(self, volume: int) -> None:
         """Set Alarm Volume status."""
         self._alarm_volume = volume
 
-    def get_alarm_volume(self) -> float:
+    def get_alarm_volume(self) -> int:
         """Return Alarm Volume status."""
         return self._alarm_volume
 
@@ -193,6 +196,7 @@ class GoogleHomeAlarmStatus(Enum):
     RINGING = 2
     SNOOZED = 3
     INACTIVE = 4
+    MISSED = 5
 
 
 class GoogleHomeTimerStatus(Enum):

@@ -1,5 +1,6 @@
 {
     "version": 1,
+    "minor_version": 1,
     "key": "lovelace",
     "data": {
         "config": {
@@ -19,7 +20,7 @@
                             "background": "#0B1CAB",
                             "entities": [
                                 {
-                                    "entity": "person.giom_2",
+                                    "entity": "person.giom",
                                     "map_state": {
                                         "Ubisoft": "mdi:gamepad-variant",
                                         "Universit\u00e9": "mdi:beaker",
@@ -59,7 +60,7 @@
                             "background": "#AF0092",
                             "entities": [
                                 {
-                                    "entity": "person.claire_2",
+                                    "entity": "person.claire",
                                     "map_state": {
                                         "Garderie": "fas:baby",
                                         "Ubisoft": "mdi:gamepad-variant",
@@ -592,6 +593,12 @@
                                     "name": "Lampe"
                                 },
                                 {
+                                    "entity": "binary_sensor.muted"
+                                },
+                                {
+                                    "entity": "binary_sensor.in_meeting"
+                                },
+                                {
                                     "entity": "sensor.office_temperature",
                                     "name": "Temperature"
                                 },
@@ -1110,10 +1117,10 @@
                             "entity": "sensor.dark_sky_precip_1d"
                         },
                         {
-                            "entity": "person.claire_2"
+                            "entity": "person.claire"
                         },
                         {
-                            "entity": "person.giom_2"
+                            "entity": "person.giom"
                         },
                         {
                             "entity": "sensor.sonarr_upcoming"
@@ -2540,10 +2547,10 @@
                     ],
                     "badges": [
                         {
-                            "entity": "person.giom_2"
+                            "entity": "person.giom"
                         },
                         {
-                            "entity": "person.claire_2"
+                            "entity": "person.claire"
                         },
                         {
                             "entity": "binary_sensor.people_home"
@@ -2557,7 +2564,10 @@
                                     "entity": "device_tracker.cellgiom"
                                 },
                                 {
-                                    "entity": "person.giom_2"
+                                    "entity": "person.giom"
+                                },
+                                {
+                                    "entity": "zone.home"
                                 }
                             ],
                             "hours_to_show": 24,
@@ -2571,7 +2581,13 @@
                                     "entity": "device_tracker.cellclaire"
                                 },
                                 {
-                                    "entity": "person.claire_2"
+                                    "entity": "person.claire"
+                                },
+                                {
+                                    "entity": "zone.universite"
+                                },
+                                {
+                                    "entity": "zone.home"
                                 }
                             ],
                             "hours_to_show": 24,
@@ -2590,7 +2606,10 @@
                                     "entity": "device_tracker.google_maps_108886437999779306059"
                                 },
                                 {
-                                    "entity": "person.giom_2"
+                                    "entity": "person.giom"
+                                },
+                                {
+                                    "entity": "person.guillaume"
                                 }
                             ],
                             "title": "Giom",
@@ -2630,7 +2649,7 @@
                                     "entity": "device_tracker.google_maps_116551309970452496819"
                                 },
                                 {
-                                    "entity": "person.claire_2"
+                                    "entity": "person.claire"
                                 }
                             ],
                             "title": "Claire",
@@ -3102,16 +3121,35 @@
                 {
                     "title": "Temp\u00e9rature int\u00e9rieures",
                     "path": "temperature-interieures",
-                    "panel": true,
+                    "type": "panel",
                     "badges": [],
                     "cards": [
                         {
-                            "animate": true,
+                            "type": "statistics-graph",
+                            "entities": [
+                                "sensor.basement_temperature",
+                                "sensor.bathroom_temperature",
+                                "sensor.bedroom_temperature",
+                                "sensor.freezer_door_temperature",
+                                "sensor.garage_temperature",
+                                "sensor.office_button_temperature",
+                                "sensor.dark_sky_apparent_temperature"
+                            ],
+                            "days_to_show": 30,
+                            "chart_type": "line",
+                            "stat_types": [
+                                "mean",
+                                "min",
+                                "max"
+                            ]
+                        },
+                        {
+                            "type": "custom:mini-graph-card",
                             "entities": [
                                 {
-                                    "entity": "sensor.aurore_bedroom_temperature",
+                                    "entity": "sensor.bedroom_temperature",
                                     "index": 4,
-                                    "name": "T\u00b0 Chambre d'Aurore"
+                                    "name": "T\u00b0 Chambre"
                                 },
                                 {
                                     "entity": "sensor.bathroom_temperature",
@@ -3119,36 +3157,29 @@
                                     "name": "T\u00b0 Salle de bain"
                                 },
                                 {
-                                    "entity": "sensor.button_temperature",
-                                    "index": 6,
-                                    "name": "T\u00b0 Chambre"
-                                },
-                                {
-                                    "entity": "sensor.living_room_temperature",
-                                    "index": 1,
-                                    "name": "T\u00b0 Salon"
-                                },
-                                {
-                                    "entity": "sensor.solarium_temperature",
+                                    "entity": "sensor.garage_temperature",
                                     "index": 9,
-                                    "name": "T\u00b0 Solarium"
-                                },
-                                {
-                                    "entity": "sensor.office_temperature",
-                                    "index": 8,
-                                    "name": "T\u00b0 Bureau"
+                                    "name": "T\u00b0 Garage"
                                 },
                                 {
                                     "entity": "sensor.basement_temperature",
+                                    "index": 8,
+                                    "name": "T\u00b0 Sous-sol"
+                                },
+                                {
+                                    "entity": "sensor.temperature_sous_sol",
                                     "index": 7,
                                     "name": "T\u00b0 Sous-sol"
+                                },
+                                {
+                                    "entity": "sensor.freezer_door_temperature",
+                                    "index": 10,
+                                    "name": "T\u00b0 Freezer"
                                 }
                             ],
                             "hour24": true,
-                            "hours_to_show": 24,
-                            "points_per_hour": 2,
-                            "name": "Temp\u00e9ratures int\u00e9rieures",
-                            "type": "custom:mini-graph-card"
+                            "hours_to_show": 168,
+                            "name": "Temp\u00e9ratures"
                         }
                     ]
                 }

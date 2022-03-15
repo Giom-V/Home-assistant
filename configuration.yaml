@@ -11,17 +11,17 @@ homeassistant:
   elevation: 47
   # metric for Metric, imperial for Imperial
   unit_system: metric
-  # Pick yours from here: 
+  # Pick yours from here:
   # http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
   time_zone: America/Toronto
   # Customization file
   customize: !include customize.yaml
-#  allowlist_external_dirs: #TODO: reaad external dirs
-#    - !secret externalDirShare
-#    - !secret externalDirTmp
-#    - !secret externalDirDafang
+  #  allowlist_external_dirs: #TODO: reaad external dirs
+  #    - !secret externalDirShare
+  #    - !secret externalDirTmp
+  #    - !secret externalDirDafang
   external_url: !secret base_url
-  internal_url: !secret internal_url 
+  internal_url: !secret internal_url
   auth_providers:
     - type: trusted_networks
       trusted_networks:
@@ -30,11 +30,11 @@ homeassistant:
         - 192.168.1.0/24
         - 192.168.86.0/24
         - 192.168.86.100
-#        - 216.98.48.0/20 # All Ubisoft
+      #        - 216.98.48.0/20 # All Ubisoft
       allow_bypass_login: true
     - type: homeassistant
-#    - type: legacy_api_password
-#      api_password: !secret http_password
+  #    - type: legacy_api_password
+  #      api_password: !secret http_password
   # https://www.home-assistant.io/docs/configuration/splitting_configuration/
   # https://www.home-assistant.io/docs/configuration/packages/
   # Splitted between integrations and entites as https://github.com/jonathanadams/Home-Assistant-Configuration
@@ -47,14 +47,14 @@ binary_sensor:
   - platform: aurora
   - platform: workday
     country: CA
-    province: QC   
+    province: QC
   - platform: template
     sensors:
-       people_home:
+      people_home:
         friendly_name: "People Home"
-         device_class: presence
-         value_template: >
-          {{ is_state('person.giom', 'home') || is_state('person.claire', 'home') }}
+        device_class: presence
+        value_template: >
+          {{ is_state('person.giom', 'home') or is_state('person.claire', 'home') }}
 
 # Yeelights
 yeelight:
@@ -89,7 +89,7 @@ yeelight:
       transition: 1000
       use_music_mode: False #(defaults to False)
       save_on_change: False #(defaults to True)
-        
+
 media_player:
   # Google Cast
   - platform: cast
@@ -109,8 +109,8 @@ device_tracker:
     hosts: 192.168.86.100-109
     new_device_defaults:
       track_new_devices: True
-  
-# https://www.home-assistant.io/components/person/  
+
+# https://www.home-assistant.io/components/person/
 person:
   - name: Giom
     id: giom
@@ -136,18 +136,18 @@ notify:
     platform: free_mobile
     username: !secret freeMobileUsername
     access_token: !secret freeMobileToken
-    
+
 panel_iframe:
   slack:
-    title: 'Slack'
-    url: 'https://gi-home.slack.com/unreads/'
+    title: "Slack"
+    url: "https://gi-home.slack.com/unreads/"
   sonarr:
-    title: 'Sonarr'
+    title: "Sonarr"
     url: !secret sonarrUrl
   utorrent:
-    title: 'uTorrent'
-    url: 'https://remote.bittorrent.com/'
-    
+    title: "uTorrent"
+    url: "https://remote.bittorrent.com/"
+
 # weblink:
 #   entities:
 #     - name: Slack
@@ -157,7 +157,7 @@ panel_iframe:
 
 shell_command:
   resize_sunrise_pic: mogrify -resize 1080x720 /home/homeassistant/.homeassistant/Share/last_sunrise.jpg
-  create_daily_gif: 'convert -delay 20 -limit area 0 -resize 25% -loop 0 {rpi_camera_{{ now().strftime("%Y%m%d") }}-*_night.jpg,rpi_camera_{{ now().strftime("%Y%m%d") }}-*_day.jpg} {{ now().strftime("%Y%m%d") }}.gif'    
+  create_daily_gif: 'convert -delay 20 -limit area 0 -resize 25% -loop 0 {rpi_camera_{{ now().strftime("%Y%m%d") }}-*_night.jpg,rpi_camera_{{ now().strftime("%Y%m%d") }}-*_day.jpg} {{ now().strftime("%Y%m%d") }}.gif'
 
 ####################################################
 #                       Zones                      #
@@ -175,7 +175,7 @@ zone:
     longitude: !secret ubisoftLongitude
     radius: 100
     icon: mdi:gamepad-variant
-        
+
   - name: Google
     latitude: !secret googleLatitude
     longitude: !secret googleLongitude
@@ -194,12 +194,12 @@ zone:
     longitude: !secret homeLongitude
     radius: 100
     icon: mdi:home-circle
-    
-# temporarily disabling the google calendar integration to fix the rest    
+
+# temporarily disabling the google calendar integration to fix the rest
 #google:
 #  client_id: !secret googleDeveloperClientID
 #  client_secret: !secret googleDeveloperSecret
-  
+
 tplink:
 
 mqtt:
@@ -221,3 +221,9 @@ light:
 ####################################################
 #                 Work in progress                 #
 ####################################################
+
+rest:
+  - resource: http://192.168.86.33:8249/state
+    binary_sensor:
+      - name: "In a meeting"
+        value_template: "{{ value_json.in_meeting }}"

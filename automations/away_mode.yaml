@@ -2,7 +2,7 @@
   alias: Switch Away mode on when we are away for more than an hour
   trigger:
   - platform: state
-    entity_id: person.giom_2, person.claire_2
+    entity_id: person.giom, person.claire
     to: not_home
     for:
       minutes: 60
@@ -23,7 +23,7 @@
   alias: Switch Away mode off when we come back
   trigger:
   - platform: state
-    entity_id: person.giom_2, person.claire_2
+    entity_id: person.giom, person.claire
     to: home
   action:
   - service: input_boolean.turn_off

@@ -42,10 +42,10 @@
                             "entity": "binary_sensor.vpir_motion_control"
                         },
                         {
-                            "entity": "person.giom_2"
+                            "entity": "person.giom"
                         },
                         {
-                            "entity": "person.claire_2"
+                            "entity": "person.claire"
                         },
                         {
                             "entity": "person.claire"

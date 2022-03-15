@@ -9,91 +9,90 @@ vacuum_dispatch:
         level: error
         logger: script.vacuum_dispatch
     - service_template: >
-        {% set room_lower = room|lower %}
-        {% if "cuisine" in room_lower %}
-          {% if "manger" in room_lower %}
+        {% if "cuisine" in room|lower %}
+          {% if "manger" in room|lower %}
             script.vacuum_kitchen_and_diningroom
-          {% elif "table" in room_lower %}
-            script.vacuum_kitchen_and_diningroom
-          {% else %}
-            script.vacuum_kitchen
-          {% endif %}
-        {% elif "kitchen" in room_lower %}
-          {% if "dining" in room_lower %}
-            script.vacuum_kitchen_and_diningroom
-          {% elif "table" in room_lower %}
+          {% elif "table" in room|lower %}
             script.vacuum_kitchen_and_diningroom
           {% else %}
             script.vacuum_kitchen
           {% endif %}
-        {% elif "manger" in room_lower %}
+        {% elif "kitchen" in room|lower %}
+          {% if "dining" in room|lower %}
+            script.vacuum_kitchen_and_diningroom
+          {% elif "table" in room|lower %}
+            script.vacuum_kitchen_and_diningroom
+          {% else %}
+            script.vacuum_kitchen
+          {% endif %}
+        {% elif "manger" in room|lower %}
           script.vacuum_diningroom
-        {% elif "repas" in room_lower %}
+        {% elif "repas" in room|lower %}
           script.vacuum_diningroom
-        {% elif "dining" in room_lower %}
+        {% elif "dining" in room|lower %}
           script.vacuum_diningroom
-        {% elif "table" in room_lower %}
+        {% elif "table" in room|lower %}
           script.vacuum_diningroom
-        {% elif "bain" in room_lower %}
+        {% elif "bain" in room|lower %}
           script.vacuum_bathroom
-        {% elif "toilet" in room_lower %}
+        {% elif "toilet" in room|lower %}
           script.vacuum_bathroom
-        {% elif "bath" in room_lower %}
+        {% elif "bath" in room|lower %}
           vacuum_bathroom
-        {% elif "chambre" in room_lower %}
-          {% if "aurore" in room_lower %}
+        {% elif "chambre" in room|lower %}
+          {% if "aurore" in room|lower %}
             script.vacuum_aurore_bedroom
-          {% elif "enfant" in room_lower %}
+          {% elif "enfant" in room|lower %}
             script.vacuum_aurore_bedroom
-          {% elif "petite" in room_lower %}
-            script.vacuum_aurore_bedroom
-          {% else %}
-            script.vacuum_bedroom
-          {% endif %}
-        {% elif "bedroom" in room_lower %}
-          {% if "aurore" in room_lower %}
-            script.vacuum_aurore_bedroom
-          {% elif "kid" in room_lower %}
-            script.vacuum_aurore_bedroom
-          {% elif "small" in room_lower %}
+          {% elif "petite" in room|lower %}
             script.vacuum_aurore_bedroom
           {% else %}
             script.vacuum_bedroom
           {% endif %}
-        {% elif "aurore" in room_lower %}
+        {% elif "bedroom" in room|lower %}
+          {% if "aurore" in room|lower %}
+            script.vacuum_aurore_bedroom
+          {% elif "kid" in room|lower %}
+            script.vacuum_aurore_bedroom
+          {% elif "small" in room|lower %}
+            script.vacuum_aurore_bedroom
+          {% else %}
+            script.vacuum_bedroom
+          {% endif %}
+        {% elif "aurore" in room|lower %}
           script.vacuum_aurore_zone
-        {% elif "salon" in room_lower %}
+        {% elif "salon" in room|lower %}
           script.vacuum_livingroom
-        {% elif "canapé" in room_lower %}
+        {% elif "canapé" in room|lower %}
           script.vacuum_livingroom
-        {% elif "living" in room_lower %}
+        {% elif "living" in room|lower %}
           script.vacuum_livingroom
-        {% elif "entrée" in room_lower %}
-          script.vacuum_livingroom
-        {% elif "couloir" in room_lower %}
-          script.vacuum_livingroom
+        {% elif "entrée" in room|lower %}
+          script.vacuum_entry
+        {% elif "couloir" in room|lower %}
+          script.vacuum_hallway
         {% else %}
           script.vacuum_diningroom
         {% endif %}
       data_template:
         times: '{% set times = 1 %}
-          {% if "2 fois" in room_lower %}
+          {% if "2 fois" in room|lower %}
             {% set times = 2 %}
-          {% elif "deux fois" in room_lower %}
+          {% elif "deux fois" in room|lower %}
             {% set times = 2 %}
-          {% elif "2 times" in room_lower %}
+          {% elif "2 times" in room|lower %}
             {% set times = 2 %}
-          {% elif "two times" in room_lower %}
+          {% elif "two times" in room|lower %}
             {% set times = 2 %}
-          {% elif "twice" in room_lower %}
+          {% elif "twice" in room|lower %}
             {% set times = 2 %}
-          {% elif "3 fois" in room_lower %}
+          {% elif "3 fois" in room|lower %}
             {% set times = 3 %}
-          {% elif "trois fois" in room_lower %}
+          {% elif "trois fois" in room|lower %}
             {% set times = 3 %}
-          {% elif "3 times" in room_lower %}
+          {% elif "3 times" in room|lower %}
             {% set times = 3 %}
-          {% elif "three times" in room_lower %}
+          {% elif "three times" in room|lower %}
             {% set times = 3 %}
           {% endif %}
           {{ times }}'

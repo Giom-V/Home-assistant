@@ -1,5 +1,6 @@
 {
     "version": 1,
+    "minor_version": 1,
     "key": "lovelace_resources",
     "data": {
         "items": [
@@ -51,7 +52,7 @@
             {
                 "id": "36d93ed25e7440d683d37fc342776549",
                 "type": "module",
-                "url": "/hacsfiles/mini-graph-card/mini-graph-card-bundle.js?hacstag=1512800620100"
+                "url": "/hacsfiles/mini-graph-card/mini-graph-card-bundle.js?hacstag=1512800620110"
             },
             {
                 "id": "4656b9b6d85a455b81b097efa13222c6",
