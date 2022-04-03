@@ -1,177 +1,177 @@
 - id: zone_cleaning
   alias: Start Cleaning Room
   trigger:
-  - platform: state
-    entity_id: input_select.vacuum_room
-    from: Select Input
+    - platform: state
+      entity_id: input_select.vacuum_room
+      from: Select Input
   action:
-  - service: script.vacuum_dispatch
-    data_template:
-      room: '{{ trigger.to_state.state }}'
-  - service: input_select.select_option
-    entity_id: input_select.vacuum_room
-    data_template:
-      option: Select Input
+    - service: script.vacuum_dispatch
+      data_template:
+        room: "{{ trigger.to_state.state }}"
+    - service: input_select.select_option
+      entity_id: input_select.vacuum_room
+      data_template:
+        option: Select Input
 - id: IFTTT_zone_cleaning_webhook
   alias: Clean room as asked through IFTTT
   trigger:
     platform: webhook
     webhook_id: vacuumDispatch
   condition:
-  - condition: template
-    value_template: '{{ trigger.json.type == ''call_service'' }}'
-  - condition: template
-    value_template: '{{ trigger.json.service == ''script.vacuum_dispatch'' }}'
+    - condition: template
+      value_template: "{{ trigger.json.type == 'call_service' }}"
+    - condition: template
+      value_template: "{{ trigger.json.service == 'script.vacuum_dispatch' }}"
   action:
-  - service: system_log.write
-    data_template:
-      message: 'json received: {{ trigger.json }}'
-      level: info
-  - service: vacuum.set_fan_speed
-    data:
-      fan_speed: Standard
-      entity_id: vacuum.xiaomi_vacuum_cleaner
-  - service_template: script.vacuum_dispatch
-    data_template:
-      room: '{{ trigger.json.room }}'
+    - service: system_log.write
+      data_template:
+        message: "json received: {{ trigger.json }}"
+        level: info
+    - service: vacuum.set_fan_speed
+      data:
+        fan_speed: Standard
+        entity_id: vacuum.xiaomi_vacuum_cleaner
+    - service: script.vacuum_dispatch
+      data:
+        room: "{{ trigger.json.room }}"
 - id: IFTTT_zone_mopping_webhook
   alias: Mop room as asked through IFTTT
   trigger:
     platform: webhook
     webhook_id: vacuumMop
   condition:
-  - condition: template
-    value_template: '{{ trigger.json.type == ''call_service'' }}'
-  - condition: template
-    value_template: '{{ trigger.json.service == ''script.vacuum_mop'' }}'
+    - condition: template
+      value_template: "{{ trigger.json.type == 'call_service' }}"
+    - condition: template
+      value_template: "{{ trigger.json.service == 'script.vacuum_mop' }}"
   action:
-  - service: system_log.write
-    data_template:
-      message: 'json received: {{ trigger.json }}'
-      level: info
-  - service: vacuum.set_fan_speed
-    data:
-      fan_speed: Gentle
-      entity_id: vacuum.xiaomi_vacuum_cleaner
-  - service_template: script.vacuum_dispatch
-    data_template:
-      room: '{{ trigger.json.room }}'
-  - delay:
-      minutes: 1
-  - wait_template: '{{ is_state(''vacuum.xiaomi_vacuum_cleaner'', ''docked'') }}'
-  - service: vacuum.set_fan_speed
-    data:
-      fan_speed: Standard
-      entity_id: vacuum.xiaomi_vacuum_cleaner
+    - service: system_log.write
+      data_template:
+        message: "json received: {{ trigger.json }}"
+        level: info
+    - service: vacuum.set_fan_speed
+      data:
+        fan_speed: Gentle
+        entity_id: vacuum.xiaomi_vacuum_cleaner
+    - service: script.vacuum_dispatch
+      data:
+        room: "{{ trigger.json.room }}"
+    - delay:
+        minutes: 1
+    - wait_template: "{{ is_state('vacuum.xiaomi_vacuum_cleaner', 'docked') }}"
+    - service: vacuum.set_fan_speed
+      data:
+        fan_speed: Standard
+        entity_id: vacuum.xiaomi_vacuum_cleaner
 - id: IFTTT_stop_vacuum_webhook
   alias: Stop vacuum as asked through IFTTT
   trigger:
     platform: webhook
     webhook_id: vacuumStop
   condition:
-  - condition: template
-    value_template: '{{ trigger.json.type == ''call_service'' }}'
-  - condition: template
-    value_template: '{{ trigger.json.service == ''script.vacuum_stop'' }}'
+    - condition: template
+      value_template: "{{ trigger.json.type == 'call_service' }}"
+    - condition: template
+      value_template: "{{ trigger.json.service == 'script.vacuum_stop' }}"
   action:
-  - service: system_log.write
-    data_template:
-      message: 'json received: {{ trigger.json }}'
-      level: info
-  - service: vacuum.stop
-    data:
-      entity_id: vacuum.xiaomi_vacuum_cleaner
+    - service: system_log.write
+      data_template:
+        message: "json received: {{ trigger.json }}"
+        level: info
+    - service: vacuum.stop
+      data:
+        entity_id: vacuum.xiaomi_vacuum_cleaner
 - id: IFTTT_recharge_vacuum_webhook
   alias: Send vacuum to base as asked through IFTTT
   trigger:
     platform: webhook
     webhook_id: vacuumGoToBase
   condition:
-  - condition: template
-    value_template: '{{ trigger.json.type == ''call_service'' }}'
-  - condition: template
-    value_template: '{{ trigger.json.service == ''script.vacuum_go_to_base'' }}'
+    - condition: template
+      value_template: "{{ trigger.json.type == 'call_service' }}"
+    - condition: template
+      value_template: "{{ trigger.json.service == 'script.vacuum_go_to_base' }}"
   action:
-  - service: system_log.write
-    data_template:
-      message: 'json received: {{ trigger.json }}'
-      level: info
-  - service: vacuum.return_to_base
-    data:
-      entity_id: vacuum.xiaomi_vacuum_cleaner
+    - service: system_log.write
+      data_template:
+        message: "json received: {{ trigger.json }}"
+        level: info
+    - service: vacuum.return_to_base
+      data:
+        entity_id: vacuum.xiaomi_vacuum_cleaner
 - id: vacuum_kitchen_and_dining_room_when_we_are_away
   alias: vacuum Kitchen and dining room when we are away
   trigger:
-  - at: '14:00'
-    platform: time
+    - at: "14:00"
+      platform: time
   condition:
-  - condition: state
-    entity_id: binary_sensor.people_home
-    state: 'off'
+    - condition: state
+      entity_id: binary_sensor.people_home
+      state: "off"
   action:
-  - service: script.turn_on
-    data:
-      entity_id: script.vacuum_kitchen_and_diningroom
+    - service: script.turn_on
+      data:
+        entity_id: script.vacuum_kitchen_and_diningroom
 - id: vacuum_kitchen_and_dining_room_when_we_are_away_covid_version
   alias: vacuum Kitchen and dining room when we are away (Covid version)
   trigger:
-  - platform: state
-    entity_id: person.giom, person.claire
-    from: home
-    for:
-      minutes: 5
+    - platform: state
+      entity_id: person.giom, person.claire
+      from: home
+      for:
+        minutes: 5
   condition:
-  # - condition: state
-  #   entity_id: vacuum.xiaomi_vacuum_cleaner
-  #   state: 'docked'
-  #   for:
-  #     hours: 9
-  - condition: template
-    value_template: >
-      {{ states('sensor.time') < states('input_datetime.nighttime_end')[0:5] }}
-  - condition: template
-    value_template: >
-      {{ now().timestamp() > state_attr('input_datetime.last_vacuum','timestamp') + (12 * 60 * 60) }}
-  - condition: state
-    entity_id: input_boolean.visitors
-    state: 'off'
-  - condition: or
-    conditions:
-    - condition: time # This part is related to the WFH situation during the Covid pandemic
-      weekday:
-      - mon
-      - tue
-      - wed
-      - thu
-      - fri
-    - condition: and
+    # - condition: state
+    #   entity_id: vacuum.xiaomi_vacuum_cleaner
+    #   state: 'docked'
+    #   for:
+    #     hours: 9
+    - condition: template
+      value_template: >
+        {{ states('sensor.time') < states('input_datetime.nighttime_end')[0:5] }}
+    - condition: template
+      value_template: >
+        {{ now().timestamp() > state_attr('input_datetime.last_vacuum','timestamp') + (12 * 60 * 60) }}
+    - condition: state
+      entity_id: input_boolean.visitors
+      state: "off"
+    - condition: or
       conditions:
-      - condition: time
-        weekday:
-        - sat
-        - sun
-      - condition: state
-        entity_id: person.giom
-        state: not_home
-        for:
-          minutes: 5
-      - condition: state
-        entity_id: person.claire
-        state: not_home
-        for:
-          minutes: 5
+        - condition: time # This part is related to the WFH situation during the Covid pandemic
+          weekday:
+            - mon
+            - tue
+            - wed
+            - thu
+            - fri
+        - condition: and
+          conditions:
+            - condition: time
+              weekday:
+                - sat
+                - sun
+            - condition: state
+              entity_id: person.giom
+              state: not_home
+              for:
+                minutes: 5
+            - condition: state
+              entity_id: person.claire
+              state: not_home
+              for:
+                minutes: 5
   action:
-  - service: script.turn_on
-    data:
-      entity_id: script.vacuum_kitchen_and_diningroom
+    - service: script.turn_on
+      data:
+        entity_id: script.vacuum_kitchen_and_diningroom
 - id: last_vacuum_clean_time_update
   alias: Update the time of the last cleaning
   trigger:
-  - platform: state
-    entity_id: vacuum.xiaomi_vacuum_cleaner
-    to: 'cleaning'
+    - platform: state
+      entity_id: vacuum.xiaomi_vacuum_cleaner
+      to: "cleaning"
   action:
-  - service: input_datetime.set_datetime
-    entity_id: input_datetime.last_vacuum
-    data:
-      datetime: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
+    - service: input_datetime.set_datetime
+      entity_id: input_datetime.last_vacuum
+      data:
+        datetime: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
