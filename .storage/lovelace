@@ -632,20 +632,24 @@
                                     "type": "picture-elements",
                                     "elements": [
                                         {
-                                            "type": "state-badge",
-                                            "entity": "binary_sensor.ev6_hood",
-                                            "style": {
-                                                "top": "5%",
-                                                "left": "3%"
-                                            }
-                                        },
-                                        {
-                                            "type": "state-badge",
-                                            "entity": "binary_sensor.ev6_smart_key_battery_warning",
-                                            "style": {
-                                                "top": "5%",
-                                                "left": "3%"
-                                            }
+                                            "type": "conditional",
+                                            "conditions": [
+                                                {
+                                                    "entity": "binary_sensor.ev6_hood",
+                                                    "state": "on"
+                                                }
+                                            ],
+                                            "elements": [
+                                                {
+                                                    "type": "state-icon",
+                                                    "entity": "binary_sensor.ev6_hood",
+                                                    "style": {
+                                                        "top": "45%",
+                                                        "left": "25%",
+                                                        "--paper-item-icon-color": "red"
+                                                    }
+                                                }
+                                            ]
                                         },
                                         {
                                             "type": "conditional",
@@ -791,7 +795,7 @@
                                         },
                                         {
                                             "type": "state-label",
-                                            "entity": "sensor.ev6_car_battery",
+                                            "entity": "sensor.ev6_ev_battery",
                                             "style": {
                                                 "top": "26%",
                                                 "left": "4%",
@@ -985,6 +989,26 @@
                                                     "entity": "binary_sensor.ev6_data",
                                                     "style": {
                                                         "top": "72%",
+                                                        "left": "97%",
+                                                        "--paper-item-icon-color": "red"
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "type": "conditional",
+                                            "conditions": [
+                                                {
+                                                    "entity": "binary_sensor.ev6_smart_key_battery_warning",
+                                                    "state": "on"
+                                                }
+                                            ],
+                                            "elements": [
+                                                {
+                                                    "type": "state-icon",
+                                                    "entity": "binary_sensor.ev6_smart_key_battery_warning",
+                                                    "style": {
+                                                        "top": "82%",
                                                         "left": "97%",
                                                         "--paper-item-icon-color": "red"
                                                     }
