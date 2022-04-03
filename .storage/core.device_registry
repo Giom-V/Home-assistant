@@ -18,7 +18,7 @@
                 "manufacturer": "Home Assistant",
                 "model": "Home Assistant Operating System",
                 "name": "Home Assistant Operating System",
-                "sw_version": "7.4",
+                "sw_version": "7.6",
                 "hw_version": null,
                 "entry_type": "service",
                 "id": "b34f693eec80f539377a8b29244719a2",
@@ -382,7 +382,7 @@
                 "manufacturer": "Home Assistant Community Add-ons",
                 "model": "Home Assistant Add-on",
                 "name": "Log Viewer",
-                "sw_version": "0.12.2",
+                "sw_version": "0.13.0",
                 "hw_version": null,
                 "entry_type": "service",
                 "id": "e06b430caedef2553ec09479029e77c2",
@@ -406,7 +406,7 @@
                 "manufacturer": "Home Assistant Community Add-ons",
                 "model": "Home Assistant Add-on",
                 "name": "Node-RED",
-                "sw_version": "11.1.0",
+                "sw_version": "11.1.1",
                 "hw_version": null,
                 "entry_type": "service",
                 "id": "8a0b9158b4a1c2c2725ace400144edae",
@@ -430,7 +430,7 @@
                 "manufacturer": "Home Assistant Community Add-ons",
                 "model": "Home Assistant Add-on",
                 "name": "Studio Code Server",
-                "sw_version": "4.1.0",
+                "sw_version": "4.2.0",
                 "hw_version": null,
                 "entry_type": "service",
                 "id": "97fc6f11cba39295bdd62aeb9be4e8ac",
@@ -481,11 +481,11 @@
                     ],
                     [
                         "tplink",
-                        "60:32:B1:A8:DF:3D_80067CFBCC0BB2EDBB23A5AA4135A1061D7B928F01"
+                        "60:32:B1:A8:DF:3D_80067CFBCC0BB2EDBB23A5AA4135A1061D7B928F00"
                     ],
                     [
                         "tplink",
-                        "60:32:B1:A8:DF:3D_80067CFBCC0BB2EDBB23A5AA4135A1061D7B928F00"
+                        "60:32:B1:A8:DF:3D_80067CFBCC0BB2EDBB23A5AA4135A1061D7B928F01"
                     ],
                     [
                         "tplink",
@@ -755,7 +755,7 @@
                 "manufacturer": "hacs.xyz",
                 "model": "",
                 "name": "HACS",
-                "sw_version": "1.23.0",
+                "sw_version": "1.24.0",
                 "hw_version": null,
                 "entry_type": "service",
                 "id": "cf2872db8ee979c09d231d54c98ef78f",
@@ -3858,12 +3858,94 @@
                 "manufacturer": "Kia",
                 "model": "EV6",
                 "name": "EV6",
-                "sw_version": "2022-03-11 21:04:22.599",
+                "sw_version": "2022-03-11 22:04:22.599",
                 "hw_version": null,
                 "entry_type": null,
                 "id": "e038c4749ed521a1d72b160a4163447a",
                 "via_device_id": "e038c4749ed521a1d72b160a4163447a",
                 "area_id": "",
+                "name_by_user": null,
+                "disabled_by": null,
+                "configuration_url": null
+            },
+            {
+                "config_entries": [
+                    "9443db0bd6692a1b089cee3b3d5cbd06"
+                ],
+                "connections": [
+                    [
+                        "zigbee",
+                        "0c:43:14:ff:fe:f6:2c:8a"
+                    ]
+                ],
+                "identifiers": [
+                    [
+                        "deconz",
+                        "0c:43:14:ff:fe:f6:2c:8a"
+                    ]
+                ],
+                "manufacturer": "_TZ3000_vzopcetz",
+                "model": null,
+                "name": "On/Off plug-in unit 8",
+                "sw_version": null,
+                "hw_version": null,
+                "entry_type": null,
+                "id": "d437e500bc37e2cbd9119d9ae51214bf",
+                "via_device_id": "7032749d1f2c26ac7b933aae68e57547",
+                "area_id": null,
+                "name_by_user": null,
+                "disabled_by": null,
+                "configuration_url": null
+            },
+            {
+                "config_entries": [
+                    "9443db0bd6692a1b089cee3b3d5cbd06"
+                ],
+                "connections": [],
+                "identifiers": [
+                    [
+                        "deconz",
+                        "00212E04F2B1-/groups/6"
+                    ]
+                ],
+                "manufacturer": "Dresden Elektronik",
+                "model": "deCONZ group",
+                "name": "Bureau",
+                "sw_version": null,
+                "hw_version": null,
+                "entry_type": null,
+                "id": "c298990dd4aa3d88b3b8844d0d495e99",
+                "via_device_id": "7032749d1f2c26ac7b933aae68e57547",
+                "area_id": null,
+                "name_by_user": null,
+                "disabled_by": null,
+                "configuration_url": null
+            },
+            {
+                "config_entries": [
+                    "9443db0bd6692a1b089cee3b3d5cbd06"
+                ],
+                "connections": [
+                    [
+                        "zigbee",
+                        "cc:86:ec:ff:fe:16:79:dd"
+                    ]
+                ],
+                "identifiers": [
+                    [
+                        "deconz",
+                        "cc:86:ec:ff:fe:16:79:dd"
+                    ]
+                ],
+                "manufacturer": "Unknown",
+                "model": null,
+                "name": "Extended color light 2",
+                "sw_version": null,
+                "hw_version": null,
+                "entry_type": null,
+                "id": "f1e7b29bd824ec88bdf7a3b1a2f58916",
+                "via_device_id": "7032749d1f2c26ac7b933aae68e57547",
+                "area_id": null,
                 "name_by_user": null,
                 "disabled_by": null,
                 "configuration_url": null

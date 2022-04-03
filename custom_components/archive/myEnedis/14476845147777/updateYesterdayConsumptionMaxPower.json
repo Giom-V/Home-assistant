@@ -1,0 +1,1 @@
+{"meter_reading": {"usage_point_id": "14476845147777", "start": "2022-04-01", "end": "2022-04-02", "quality": "BRUT", "reading_type": {"unit": "VA", "measurement_kind": "power", "aggregate": "maximum", "measuring_period": "P1D"}, "interval_reading": [{"value": "7285", "date": "2022-04-01 23:33:27"}]}}
