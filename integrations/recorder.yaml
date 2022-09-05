@@ -91,6 +91,8 @@ recorder:
       - sensor.macot_la_plagne_*
       - sensor.saint_martinien_*
       - sensor.withings_*
+      - sensor.ev6*
+      - binary_sensor.ev6*
     entities:
       - automation.clean_room_as_asked_through_ifttt
       - automation.create_the_daily_gif
@@ -131,6 +133,7 @@ recorder:
       - input_boolean.visitors
       - input_select.living_room_color
       - input_select.vacuum_room
+      - lock.ev6_door_lock
       - script.1542490337256
       - script.create_daily_gif
       - script.living_room_color

@@ -1,79 +1,74 @@
 {
-    "version": 1,
-    "minor_version": 1,
-    "key": "lovelace_resources",
-    "data": {
-        "items": [
-            {
-                "id": "57548ac9a95e46ea826dd17628065a1f",
-                "type": "js",
-                "url": "/hacsfiles/upcoming-media-card/upcoming-media-card.js"
-            },
-            {
-                "id": "1829de7e0d184f0e88d4914e6233c836",
-                "type": "module",
-                "url": "/hacsfiles/lovelace-auto-entities/auto-entities.js"
-            },
-            {
-                "id": "8e6f715232ce49f7beb5b7580496b462",
-                "type": "js",
-                "url": "/hacsfiles/lovelace-home-feed-card/lovelace-home-feed-card.js"
-            },
-            {
-                "id": "c9bcda2a37e541d48aed060c0154363d",
-                "type": "module",
-                "url": "/hacsfiles/config-template-card/config-template-card.js"
-            },
-            {
-                "id": "d3ab6852d1204081acba94c990cd0861",
-                "type": "js",
-                "url": "/local/tiles-card/tiles-card.js"
-            },
-            {
-                "id": "fb992f36db3b4980a7633deea1fb54ff",
-                "type": "module",
-                "url": "/hacsfiles/lovelace-xiaomi-vacuum-map-card/xiaomi-vacuum-map-card.js"
-            },
-            {
-                "id": "e776e37e51e44b20b7af4b3c43cb79c1",
-                "type": "module",
-                "url": "/hacsfiles/weather-card/weather-card.js"
-            },
-            {
-                "id": "1da14e874d6643d7996095dd419ede11",
-                "type": "module",
-                "url": "/hacsfiles/lovelace-xiaomi-vacuum-card/xiaomi-vacuum-card.js"
-            },
-            {
-                "id": "5630af2238aa4c75a0a30322b499b0dc",
-                "type": "module",
-                "url": "/hacsfiles/banner-card/banner-card.js"
-            },
-            {
-                "id": "36d93ed25e7440d683d37fc342776549",
-                "type": "module",
-                "url": "/hacsfiles/mini-graph-card/mini-graph-card-bundle.js?hacstag=1512800620110"
-            },
-            {
-                "id": "4656b9b6d85a455b81b097efa13222c6",
-                "type": "module",
-                "url": "/hacsfiles/entity-attributes-card/entity-attributes-card.js"
-            },
-            {
-                "id": "251fec2cae604bb5abb4137b1b95b318",
-                "type": "module",
-                "url": "/hacsfiles/lovelace-card-templater/lovelace-card-templater.js"
-            },
-            {
-                "url": "/hacsfiles/aftership-card/aftership-card.js?hacstag=145142810122",
-                "type": "module",
-                "id": "cbe19a64322a4ff992f4f338a4826302"
-            },
-            {
-                "url": "/hacsfiles/content-card-linky/content-card-linky.js?hacstag=3130384471112",
-                "type": "module",
-                "id": "d28e66a6787e467bb458928f35ac7f8b"
-            }
-        ]
-    }
+  "version": 1,
+  "minor_version": 1,
+  "key": "lovelace_resources",
+  "data": {
+    "items": [
+      {
+        "id": "57548ac9a95e46ea826dd17628065a1f",
+        "type": "js",
+        "url": "/hacsfiles/upcoming-media-card/upcoming-media-card.js"
+      },
+      {
+        "id": "1829de7e0d184f0e88d4914e6233c836",
+        "type": "module",
+        "url": "/hacsfiles/lovelace-auto-entities/auto-entities.js"
+      },
+      {
+        "id": "8e6f715232ce49f7beb5b7580496b462",
+        "type": "js",
+        "url": "/hacsfiles/lovelace-home-feed-card/lovelace-home-feed-card.js"
+      },
+      {
+        "id": "c9bcda2a37e541d48aed060c0154363d",
+        "type": "module",
+        "url": "/hacsfiles/config-template-card/config-template-card.js"
+      },
+      {
+        "id": "d3ab6852d1204081acba94c990cd0861",
+        "type": "js",
+        "url": "/local/tiles-card/tiles-card.js"
+      },
+      {
+        "id": "fb992f36db3b4980a7633deea1fb54ff",
+        "type": "module",
+        "url": "/hacsfiles/lovelace-xiaomi-vacuum-map-card/xiaomi-vacuum-map-card.js"
+      },
+      {
+        "id": "e776e37e51e44b20b7af4b3c43cb79c1",
+        "type": "module",
+        "url": "/hacsfiles/weather-card/weather-card.js"
+      },
+      {
+        "id": "1da14e874d6643d7996095dd419ede11",
+        "type": "module",
+        "url": "/hacsfiles/lovelace-xiaomi-vacuum-card/xiaomi-vacuum-card.js"
+      },
+      {
+        "id": "5630af2238aa4c75a0a30322b499b0dc",
+        "type": "module",
+        "url": "/hacsfiles/banner-card/banner-card.js"
+      },
+      {
+        "id": "36d93ed25e7440d683d37fc342776549",
+        "type": "module",
+        "url": "/hacsfiles/mini-graph-card/mini-graph-card-bundle.js?hacstag=1512800620110"
+      },
+      {
+        "id": "4656b9b6d85a455b81b097efa13222c6",
+        "type": "module",
+        "url": "/hacsfiles/entity-attributes-card/entity-attributes-card.js"
+      },
+      {
+        "id": "251fec2cae604bb5abb4137b1b95b318",
+        "type": "module",
+        "url": "/hacsfiles/lovelace-card-templater/lovelace-card-templater.js"
+      },
+      {
+        "url": "/hacsfiles/content-card-linky/content-card-linky.js?hacstag=3130384471112",
+        "type": "module",
+        "id": "d28e66a6787e467bb458928f35ac7f8b"
+      }
+    ]
+  }
 }
