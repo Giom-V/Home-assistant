@@ -105,10 +105,10 @@ device_tracker:
     max_gps_accuracy: 1000
     new_device_defaults:
       track_new_devices: True
-  - platform: nmap_tracker
-    hosts: 192.168.86.100-109
-    new_device_defaults:
-      track_new_devices: True
+  # - platform: nmap_tracker
+  #   hosts: 192.168.86.100-109
+  #   new_device_defaults:
+  #     track_new_devices: True
 
 # https://www.home-assistant.io/components/person/
 person:
@@ -217,6 +217,9 @@ light:
   - platform: switch
     name: Cuisine
     entity_id: switch.lumiere_cuisine
+  - platform: dlight
+    host: 192.168.1.21
+    device_id: E5b18418
 
 ####################################################
 #                 Work in progress                 #

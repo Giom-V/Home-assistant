@@ -1,0 +1,10 @@
+{
+  "domain": "dlight",
+  "name": "dLight",
+  "documentation": "https://user.git.corp.google.com/pberruti/homeassistant_dlight",
+  "dependencies": [],
+  "codeowners": ["@pberruti"],
+  "requirements": [],
+  "iot_class": "local_polling",
+  "version": "1.0.0"
+}
