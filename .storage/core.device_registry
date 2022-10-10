@@ -5,10 +5,16 @@
   "data": {
     "devices": [
       {
+        "area_id": null,
         "config_entries": [
           "d93297bcd4718d8af2c2b5be798e50ca"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": null,
+        "entry_type": "service",
+        "hw_version": null,
+        "id": "b34f693eec80f539377a8b29244719a2",
         "identifiers": [
           [
             "hassio",
@@ -17,22 +23,22 @@
         ],
         "manufacturer": "Home Assistant",
         "model": "Home Assistant Operating System",
-        "name": "Home Assistant Operating System",
-        "sw_version": "8.5",
-        "hw_version": null,
-        "entry_type": "service",
-        "id": "b34f693eec80f539377a8b29244719a2",
-        "via_device_id": null,
-        "area_id": null,
         "name_by_user": null,
-        "disabled_by": null,
-        "configuration_url": null
+        "name": "Home Assistant Operating System",
+        "sw_version": "9.0",
+        "via_device_id": null
       },
       {
+        "area_id": null,
         "config_entries": [
           "6c560dbae06f29779b6e7e4ab089b4dd"
         ],
+        "configuration_url": "https://www.met.no/en",
         "connections": [],
+        "disabled_by": null,
+        "entry_type": "service",
+        "hw_version": null,
+        "id": "3f54c831b03b895134517625edff3a91",
         "identifiers": [
           [
             "met"
@@ -40,46 +46,46 @@
         ],
         "manufacturer": "Met.no",
         "model": "Forecast",
+        "name_by_user": null,
         "name": "Forecast",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": "service",
-        "id": "3f54c831b03b895134517625edff3a91",
-        "via_device_id": null,
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": null,
-        "configuration_url": "https://www.met.no/en"
+        "via_device_id": null
       },
       {
+        "area_id": "basement",
         "config_entries": [
           "b50271e7d7c0201424ba9afadf199a70"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": null,
+        "entry_type": null,
+        "hw_version": null,
+        "id": "1be054fd9442d10d0c57bf721ef34edc",
         "identifiers": [
           [
             "cast",
             "3c1c2cebd2ba4f7dd184c60dbf70841d"
           ]
         ],
-        "manufacturer": "None",
+        "manufacturer": "Google Inc.",
         "model": "Google Nest Hub",
+        "name_by_user": null,
         "name": "Bureau",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "1be054fd9442d10d0c57bf721ef34edc",
-        "via_device_id": null,
-        "area_id": "basement",
-        "name_by_user": null,
-        "disabled_by": null,
-        "configuration_url": null
+        "via_device_id": null
       },
       {
+        "area_id": null,
         "config_entries": [
           "b50271e7d7c0201424ba9afadf199a70"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": null,
+        "entry_type": null,
+        "hw_version": null,
+        "id": "b6004d438630b20122ff0cbad806a467",
         "identifiers": [
           [
             "cast",
@@ -88,22 +94,22 @@
         ],
         "manufacturer": "None",
         "model": "Google Home Mini",
+        "name_by_user": null,
         "name": "Salle de bain",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "b6004d438630b20122ff0cbad806a467",
-        "via_device_id": null,
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": null,
-        "configuration_url": null
+        "via_device_id": null
       },
       {
+        "area_id": null,
         "config_entries": [
           "b50271e7d7c0201424ba9afadf199a70"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": null,
+        "entry_type": null,
+        "hw_version": null,
+        "id": "830b42a525fb4914ea703c3ca77db7e0",
         "identifiers": [
           [
             "cast",
@@ -112,22 +118,22 @@
         ],
         "manufacturer": "None",
         "model": "Chromecast Ultra",
+        "name_by_user": null,
         "name": "Ultra",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "830b42a525fb4914ea703c3ca77db7e0",
-        "via_device_id": null,
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": null,
-        "configuration_url": null
+        "via_device_id": null
       },
       {
+        "area_id": null,
         "config_entries": [
           "b50271e7d7c0201424ba9afadf199a70"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": null,
+        "entry_type": null,
+        "hw_version": null,
+        "id": "7bdcf60cebbff648e8af6bf09f543ca4",
         "identifiers": [
           [
             "cast",
@@ -136,22 +142,22 @@
         ],
         "manufacturer": "Google Inc.",
         "model": "Google Home",
+        "name_by_user": null,
         "name": "Salle à manger",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "7bdcf60cebbff648e8af6bf09f543ca4",
-        "via_device_id": null,
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": null,
-        "configuration_url": null
+        "via_device_id": null
       },
       {
+        "area_id": null,
         "config_entries": [
           "b50271e7d7c0201424ba9afadf199a70"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": null,
+        "entry_type": null,
+        "hw_version": null,
+        "id": "ac9489cf8f8f81a630ec47ae11e43cea",
         "identifiers": [
           [
             "cast",
@@ -160,22 +166,22 @@
         ],
         "manufacturer": "Google Inc.",
         "model": "Chromecast",
+        "name_by_user": null,
         "name": "Télé Salon",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "ac9489cf8f8f81a630ec47ae11e43cea",
-        "via_device_id": null,
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": null,
-        "configuration_url": null
+        "via_device_id": null
       },
       {
+        "area_id": null,
         "config_entries": [
           "b50271e7d7c0201424ba9afadf199a70"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": null,
+        "entry_type": null,
+        "hw_version": null,
+        "id": "0df19f8c174a3481fab845bc022d9a51",
         "identifiers": [
           [
             "cast",
@@ -184,27 +190,27 @@
         ],
         "manufacturer": "LENOVO",
         "model": "Lenovo Smart Clock",
+        "name_by_user": null,
         "name": "Réveil",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "0df19f8c174a3481fab845bc022d9a51",
-        "via_device_id": null,
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": null,
-        "configuration_url": null
+        "via_device_id": null
       },
       {
+        "area_id": "basement",
         "config_entries": [
           "93edc17d9930024cc456b9bf98c06776"
         ],
+        "configuration_url": null,
         "connections": [
           [
             "upnp",
             "uuid:485f43e4-a76f-4324-ab2d-6c1aac325871"
           ]
         ],
+        "disabled_by": "config_entry",
+        "entry_type": null,
+        "hw_version": null,
+        "id": "86127c316bc4b183581e755f383651f5",
         "identifiers": [
           [
             "upnp",
@@ -213,22 +219,22 @@
         ],
         "manufacturer": "Google",
         "model": "OnHub",
+        "name_by_user": null,
         "name": "OnHub",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "86127c316bc4b183581e755f383651f5",
-        "via_device_id": null,
-        "area_id": "basement",
-        "name_by_user": null,
-        "disabled_by": "config_entry",
-        "configuration_url": null
+        "via_device_id": null
       },
       {
+        "area_id": null,
         "config_entries": [
           "d93297bcd4718d8af2c2b5be798e50ca"
         ],
+        "configuration_url": "homeassistant://hassio/addon/core_configurator",
         "connections": [],
+        "disabled_by": null,
+        "entry_type": "service",
+        "hw_version": null,
+        "id": "c64bcbced234060929ba077c822cffbb",
         "identifiers": [
           [
             "hassio",
@@ -237,22 +243,22 @@
         ],
         "manufacturer": "Official add-ons",
         "model": "Home Assistant Add-on",
-        "name": "File editor",
-        "sw_version": "5.3.3",
-        "hw_version": null,
-        "entry_type": "service",
-        "id": "c64bcbced234060929ba077c822cffbb",
-        "via_device_id": null,
-        "area_id": null,
         "name_by_user": null,
-        "disabled_by": null,
-        "configuration_url": "homeassistant://hassio/addon/core_configurator"
+        "name": "File editor",
+        "sw_version": "5.4.1",
+        "via_device_id": null
       },
       {
+        "area_id": null,
         "config_entries": [
           "d93297bcd4718d8af2c2b5be798e50ca"
         ],
+        "configuration_url": "homeassistant://hassio/addon/core_letsencrypt",
         "connections": [],
+        "disabled_by": null,
+        "entry_type": "service",
+        "hw_version": null,
+        "id": "f11978ee9b0cea19eddfc0efe92835d2",
         "identifiers": [
           [
             "hassio",
@@ -261,22 +267,22 @@
         ],
         "manufacturer": "Official add-ons",
         "model": "Home Assistant Add-on",
+        "name_by_user": null,
         "name": "Let's Encrypt",
         "sw_version": "4.12.7",
-        "hw_version": null,
-        "entry_type": "service",
-        "id": "f11978ee9b0cea19eddfc0efe92835d2",
-        "via_device_id": null,
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": null,
-        "configuration_url": "homeassistant://hassio/addon/core_letsencrypt"
+        "via_device_id": null
       },
       {
+        "area_id": null,
         "config_entries": [
           "d93297bcd4718d8af2c2b5be798e50ca"
         ],
+        "configuration_url": "homeassistant://hassio/addon/core_deconz",
         "connections": [],
+        "disabled_by": null,
+        "entry_type": "service",
+        "hw_version": null,
+        "id": "920bfb4e8c91345991159b5903eaaad4",
         "identifiers": [
           [
             "hassio",
@@ -285,22 +291,22 @@
         ],
         "manufacturer": "Official add-ons",
         "model": "Home Assistant Add-on",
-        "name": "deCONZ",
-        "sw_version": "6.15.0",
-        "hw_version": null,
-        "entry_type": "service",
-        "id": "920bfb4e8c91345991159b5903eaaad4",
-        "via_device_id": null,
-        "area_id": null,
         "name_by_user": null,
-        "disabled_by": null,
-        "configuration_url": "homeassistant://hassio/addon/core_deconz"
+        "name": "deCONZ",
+        "sw_version": "6.16.0",
+        "via_device_id": null
       },
       {
+        "area_id": null,
         "config_entries": [
           "d93297bcd4718d8af2c2b5be798e50ca"
         ],
+        "configuration_url": "homeassistant://hassio/addon/core_check_config",
         "connections": [],
+        "disabled_by": null,
+        "entry_type": "service",
+        "hw_version": null,
+        "id": "423fb2072e517f366430deffd9c0b08f",
         "identifiers": [
           [
             "hassio",
@@ -309,22 +315,22 @@
         ],
         "manufacturer": "Official add-ons",
         "model": "Home Assistant Add-on",
+        "name_by_user": null,
         "name": "Check Home Assistant configuration",
         "sw_version": "3.11.0",
-        "hw_version": null,
-        "entry_type": "service",
-        "id": "423fb2072e517f366430deffd9c0b08f",
-        "via_device_id": null,
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": null,
-        "configuration_url": "homeassistant://hassio/addon/core_check_config"
+        "via_device_id": null
       },
       {
+        "area_id": null,
         "config_entries": [
           "d93297bcd4718d8af2c2b5be798e50ca"
         ],
+        "configuration_url": "homeassistant://hassio/addon/core_samba",
         "connections": [],
+        "disabled_by": null,
+        "entry_type": "service",
+        "hw_version": null,
+        "id": "491c9b90018ac774df4d28778ef2a9f2",
         "identifiers": [
           [
             "hassio",
@@ -333,22 +339,22 @@
         ],
         "manufacturer": "Official add-ons",
         "model": "Home Assistant Add-on",
+        "name_by_user": null,
         "name": "Samba share",
         "sw_version": "10.0.0",
-        "hw_version": null,
-        "entry_type": "service",
-        "id": "491c9b90018ac774df4d28778ef2a9f2",
-        "via_device_id": null,
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": null,
-        "configuration_url": "homeassistant://hassio/addon/core_samba"
+        "via_device_id": null
       },
       {
+        "area_id": null,
         "config_entries": [
           "4075888a52fde8fb6b66a33db4f5936f"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": null,
+        "entry_type": null,
+        "hw_version": null,
+        "id": "c0929a292287cd08e07d3a52c26b9b60",
         "identifiers": [
           [
             "mobile_app",
@@ -357,22 +363,22 @@
         ],
         "manufacturer": "OnePlus",
         "model": "ONEPLUS A6000",
+        "name_by_user": null,
         "name": "ONEPLUS A6000",
         "sw_version": "30",
-        "hw_version": null,
-        "entry_type": null,
-        "id": "c0929a292287cd08e07d3a52c26b9b60",
-        "via_device_id": null,
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": null,
-        "configuration_url": null
+        "via_device_id": null
       },
       {
+        "area_id": null,
         "config_entries": [
           "d93297bcd4718d8af2c2b5be798e50ca"
         ],
+        "configuration_url": "homeassistant://hassio/addon/a0d7b954_logviewer",
         "connections": [],
+        "disabled_by": null,
+        "entry_type": "service",
+        "hw_version": null,
+        "id": "e06b430caedef2553ec09479029e77c2",
         "identifiers": [
           [
             "hassio",
@@ -381,22 +387,22 @@
         ],
         "manufacturer": "Home Assistant Community Add-ons",
         "model": "Home Assistant Add-on",
+        "name_by_user": null,
         "name": "Log Viewer",
         "sw_version": "0.14.0",
-        "hw_version": null,
-        "entry_type": "service",
-        "id": "e06b430caedef2553ec09479029e77c2",
-        "via_device_id": null,
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": null,
-        "configuration_url": "homeassistant://hassio/addon/a0d7b954_logviewer"
+        "via_device_id": null
       },
       {
+        "area_id": null,
         "config_entries": [
           "d93297bcd4718d8af2c2b5be798e50ca"
         ],
+        "configuration_url": "homeassistant://hassio/addon/a0d7b954_nodered",
         "connections": [],
+        "disabled_by": null,
+        "entry_type": "service",
+        "hw_version": null,
+        "id": "8a0b9158b4a1c2c2725ace400144edae",
         "identifiers": [
           [
             "hassio",
@@ -405,22 +411,22 @@
         ],
         "manufacturer": "Home Assistant Community Add-ons",
         "model": "Home Assistant Add-on",
-        "name": "Node-RED",
-        "sw_version": "13.3.2",
-        "hw_version": null,
-        "entry_type": "service",
-        "id": "8a0b9158b4a1c2c2725ace400144edae",
-        "via_device_id": null,
-        "area_id": null,
         "name_by_user": null,
-        "disabled_by": null,
-        "configuration_url": "homeassistant://hassio/addon/a0d7b954_nodered"
+        "name": "Node-RED",
+        "sw_version": "13.4.0",
+        "via_device_id": null
       },
       {
+        "area_id": null,
         "config_entries": [
           "d93297bcd4718d8af2c2b5be798e50ca"
         ],
+        "configuration_url": "homeassistant://hassio/addon/a0d7b954_vscode",
         "connections": [],
+        "disabled_by": null,
+        "entry_type": "service",
+        "hw_version": null,
+        "id": "97fc6f11cba39295bdd62aeb9be4e8ac",
         "identifiers": [
           [
             "hassio",
@@ -429,22 +435,22 @@
         ],
         "manufacturer": "Home Assistant Community Add-ons",
         "model": "Home Assistant Add-on",
-        "name": "Studio Code Server",
-        "sw_version": "5.3.0",
-        "hw_version": null,
-        "entry_type": "service",
-        "id": "97fc6f11cba39295bdd62aeb9be4e8ac",
-        "via_device_id": null,
-        "area_id": null,
         "name_by_user": null,
-        "disabled_by": null,
-        "configuration_url": "homeassistant://hassio/addon/a0d7b954_vscode"
+        "name": "Studio Code Server",
+        "sw_version": "5.4.0",
+        "via_device_id": null
       },
       {
+        "area_id": null,
         "config_entries": [
           "d93297bcd4718d8af2c2b5be798e50ca"
         ],
+        "configuration_url": "homeassistant://hassio/addon/core_ssh",
         "connections": [],
+        "disabled_by": null,
+        "entry_type": "service",
+        "hw_version": null,
+        "id": "a29ed2ba4f26c75ae34b63769b1050ac",
         "identifiers": [
           [
             "hassio",
@@ -453,35 +459,31 @@
         ],
         "manufacturer": "Official add-ons",
         "model": "Home Assistant Add-on",
+        "name_by_user": null,
         "name": "Terminal & SSH",
         "sw_version": "9.6.1",
-        "hw_version": null,
-        "entry_type": "service",
-        "id": "a29ed2ba4f26c75ae34b63769b1050ac",
-        "via_device_id": null,
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": null,
-        "configuration_url": "homeassistant://hassio/addon/core_ssh"
+        "via_device_id": null
       },
       {
+        "area_id": null,
         "config_entries": [
           "2d7981ac9176114c1a2619bd7290b06f"
         ],
+        "configuration_url": null,
         "connections": [
           [
             "mac",
             "60:32:b1:a8:df:3d"
           ]
         ],
+        "disabled_by": null,
+        "entry_type": null,
+        "hw_version": null,
+        "id": "3fef20558b7eb7162b903c01197a06d3",
         "identifiers": [
           [
             "tplink",
             "60:32:B1:A8:DF:3D"
-          ],
-          [
-            "tplink",
-            "60:32:B1:A8:DF:3D_80067CFBCC0BB2EDBB23A5AA4135A1061D7B928F02"
           ],
           [
             "tplink",
@@ -490,31 +492,35 @@
           [
             "tplink",
             "60:32:B1:A8:DF:3D_80067CFBCC0BB2EDBB23A5AA4135A1061D7B928F01"
+          ],
+          [
+            "tplink",
+            "60:32:B1:A8:DF:3D_80067CFBCC0BB2EDBB23A5AA4135A1061D7B928F02"
           ]
         ],
         "manufacturer": "TP-Link",
         "model": "KP303(US)",
+        "name_by_user": null,
         "name": "TP-LINK_Power Strip_DF3D",
         "sw_version": "1.0.10 Build 200828 Rel.162602",
-        "hw_version": null,
-        "entry_type": null,
-        "id": "3fef20558b7eb7162b903c01197a06d3",
-        "via_device_id": null,
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": null,
-        "configuration_url": null
+        "via_device_id": null
       },
       {
+        "area_id": null,
         "config_entries": [
           "ed39140f9dcc60d0924a6a66ba2ee9da"
         ],
+        "configuration_url": null,
         "connections": [
           [
             "mac",
             "50:ec:50:1a:77:00"
           ]
         ],
+        "disabled_by": null,
+        "entry_type": null,
+        "hw_version": null,
+        "id": "3bd7ea9094dacdcb707f482264f08014",
         "identifiers": [
           [
             "xiaomi_miio",
@@ -523,46 +529,46 @@
         ],
         "manufacturer": "Xiaomi",
         "model": "roborock.vacuum.s5",
+        "name_by_user": null,
         "name": "Xiaomi Vacuum cleaner",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "3bd7ea9094dacdcb707f482264f08014",
-        "via_device_id": null,
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": null,
-        "configuration_url": null
+        "via_device_id": null
       },
       {
+        "area_id": null,
         "config_entries": [
           "9443db0bd6692a1b089cee3b3d5cbd06"
         ],
+        "configuration_url": null,
         "connections": [
           [
             "mac",
             "02:42:ac:1e:21:00"
           ]
         ],
+        "disabled_by": null,
+        "entry_type": null,
+        "hw_version": null,
+        "id": "217df940ceda680b17da19ccaa1b8b3c",
         "identifiers": [],
         "manufacturer": null,
         "model": null,
+        "name_by_user": null,
         "name": null,
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "217df940ceda680b17da19ccaa1b8b3c",
-        "via_device_id": null,
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": null,
-        "configuration_url": null
+        "via_device_id": null
       },
       {
+        "area_id": null,
         "config_entries": [
           "9443db0bd6692a1b089cee3b3d5cbd06"
         ],
+        "configuration_url": "homeassistant://hassio/ingress/core_deconz",
         "connections": [],
+        "disabled_by": null,
+        "entry_type": "service",
+        "hw_version": null,
+        "id": "7032749d1f2c26ac7b933aae68e57547",
         "identifiers": [
           [
             "deconz",
@@ -571,27 +577,27 @@
         ],
         "manufacturer": "Dresden Elektronik",
         "model": "deCONZ",
-        "name": "Phoscon-GW",
-        "sw_version": "2.17.1",
-        "hw_version": null,
-        "entry_type": "service",
-        "id": "7032749d1f2c26ac7b933aae68e57547",
-        "via_device_id": null,
-        "area_id": null,
         "name_by_user": null,
-        "disabled_by": null,
-        "configuration_url": "homeassistant://hassio/ingress/core_deconz"
+        "name": "Phoscon-GW",
+        "sw_version": "2.18.2",
+        "via_device_id": null
       },
       {
+        "area_id": null,
         "config_entries": [
           "9443db0bd6692a1b089cee3b3d5cbd06"
         ],
+        "configuration_url": null,
         "connections": [
           [
             "zigbee",
             "00:21:2e:ff:ff:04:f2:b1"
           ]
         ],
+        "disabled_by": null,
+        "entry_type": null,
+        "hw_version": null,
+        "id": "b742356bde85f8cd2444efbc375cc7bd",
         "identifiers": [
           [
             "deconz",
@@ -600,51 +606,51 @@
         ],
         "manufacturer": "Philips",
         "model": "PHDL00",
+        "name_by_user": null,
         "name": "Daylight",
         "sw_version": "1.0",
-        "hw_version": null,
-        "entry_type": null,
-        "id": "b742356bde85f8cd2444efbc375cc7bd",
-        "via_device_id": "7032749d1f2c26ac7b933aae68e57547",
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": null,
-        "configuration_url": null
+        "via_device_id": "7032749d1f2c26ac7b933aae68e57547"
       },
       {
+        "area_id": null,
         "config_entries": [
           "9443db0bd6692a1b089cee3b3d5cbd06"
         ],
+        "configuration_url": null,
         "connections": [
           [
             "mac",
             "02:42:ac:1e:21:05"
           ]
         ],
+        "disabled_by": null,
+        "entry_type": null,
+        "hw_version": null,
+        "id": "aad3f34d37c8fd9e4ace7cc4187bcde7",
         "identifiers": [],
         "manufacturer": null,
         "model": null,
+        "name_by_user": null,
         "name": null,
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "aad3f34d37c8fd9e4ace7cc4187bcde7",
-        "via_device_id": null,
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": null,
-        "configuration_url": null
+        "via_device_id": null
       },
       {
+        "area_id": null,
         "config_entries": [
           "9443db0bd6692a1b089cee3b3d5cbd06"
         ],
+        "configuration_url": null,
         "connections": [
           [
             "zigbee",
             "cc:cc:cc:ff:fe:97:67:e0"
           ]
         ],
+        "disabled_by": null,
+        "entry_type": null,
+        "hw_version": null,
+        "id": "2dbd7ee5623fba0c9e685bb960a9b244",
         "identifiers": [
           [
             "deconz",
@@ -653,27 +659,27 @@
         ],
         "manufacturer": "IKEA of Sweden",
         "model": "TRADFRI bulb E26 WW 806lm",
+        "name_by_user": null,
         "name": "Reserve",
         "sw_version": "2.1.022",
-        "hw_version": null,
-        "entry_type": null,
-        "id": "2dbd7ee5623fba0c9e685bb960a9b244",
-        "via_device_id": "7032749d1f2c26ac7b933aae68e57547",
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": null,
-        "configuration_url": null
+        "via_device_id": "7032749d1f2c26ac7b933aae68e57547"
       },
       {
+        "area_id": null,
         "config_entries": [
           "9443db0bd6692a1b089cee3b3d5cbd06"
         ],
+        "configuration_url": null,
         "connections": [
           [
             "zigbee",
             "00:15:8d:00:03:03:18:fd"
           ]
         ],
+        "disabled_by": null,
+        "entry_type": null,
+        "hw_version": null,
+        "id": "1bfafbcdd2e89aed04a461d82da0fee2",
         "identifiers": [
           [
             "deconz",
@@ -682,22 +688,22 @@
         ],
         "manufacturer": "LUMI",
         "model": "lumi.sensor_magnet",
+        "name_by_user": null,
         "name": "Reserve door",
         "sw_version": "",
-        "hw_version": null,
-        "entry_type": null,
-        "id": "1bfafbcdd2e89aed04a461d82da0fee2",
-        "via_device_id": "7032749d1f2c26ac7b933aae68e57547",
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": null,
-        "configuration_url": null
+        "via_device_id": "7032749d1f2c26ac7b933aae68e57547"
       },
       {
+        "area_id": null,
         "config_entries": [
           "d93297bcd4718d8af2c2b5be798e50ca"
         ],
+        "configuration_url": "homeassistant://hassio/addon/a0d7b954_portainer",
         "connections": [],
+        "disabled_by": null,
+        "entry_type": "service",
+        "hw_version": null,
+        "id": "1d015dc63028f18272605dfa58327cac",
         "identifiers": [
           [
             "hassio",
@@ -706,22 +712,22 @@
         ],
         "manufacturer": "Home Assistant Community Add-ons",
         "model": "Home Assistant Add-on",
+        "name_by_user": null,
         "name": "Portainer",
         "sw_version": "2.0.0",
-        "hw_version": null,
-        "entry_type": "service",
-        "id": "1d015dc63028f18272605dfa58327cac",
-        "via_device_id": null,
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": null,
-        "configuration_url": "homeassistant://hassio/addon/a0d7b954_portainer"
+        "via_device_id": null
       },
       {
+        "area_id": null,
         "config_entries": [
           "9443db0bd6692a1b089cee3b3d5cbd06"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": null,
+        "entry_type": null,
+        "hw_version": null,
+        "id": "3c921fe3f446f89f31a59945a5f27e95",
         "identifiers": [
           [
             "deconz",
@@ -730,22 +736,22 @@
         ],
         "manufacturer": "Dresden Elektronik",
         "model": "deCONZ group",
+        "name_by_user": null,
         "name": "Reserve",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "3c921fe3f446f89f31a59945a5f27e95",
-        "via_device_id": "7032749d1f2c26ac7b933aae68e57547",
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": null,
-        "configuration_url": null
+        "via_device_id": "7032749d1f2c26ac7b933aae68e57547"
       },
       {
+        "area_id": null,
         "config_entries": [
           "d307abc40bdd56f63d74cc49de23df0a"
         ],
+        "configuration_url": "homeassistant://hacs",
         "connections": [],
+        "disabled_by": null,
+        "entry_type": "service",
+        "hw_version": null,
+        "id": "cf2872db8ee979c09d231d54c98ef78f",
         "identifiers": [
           [
             "hacs",
@@ -754,46 +760,46 @@
         ],
         "manufacturer": "hacs.xyz",
         "model": "",
-        "name": "HACS",
-        "sw_version": "1.27.1",
-        "hw_version": null,
-        "entry_type": "service",
-        "id": "cf2872db8ee979c09d231d54c98ef78f",
-        "via_device_id": null,
-        "area_id": null,
         "name_by_user": null,
-        "disabled_by": null,
-        "configuration_url": "homeassistant://hacs"
+        "name": "HACS",
+        "sw_version": "1.27.2",
+        "via_device_id": null
       },
       {
+        "area_id": null,
         "config_entries": [
           "9443db0bd6692a1b089cee3b3d5cbd06"
         ],
+        "configuration_url": null,
         "connections": [
           [
             "mac",
             "02:42:ac:1e:21:04"
           ]
         ],
+        "disabled_by": null,
+        "entry_type": null,
+        "hw_version": null,
+        "id": "48529909ae02f21753b547b3ba0d530d",
         "identifiers": [],
         "manufacturer": null,
         "model": null,
+        "name_by_user": null,
         "name": null,
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "48529909ae02f21753b547b3ba0d530d",
-        "via_device_id": null,
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": null,
-        "configuration_url": null
+        "via_device_id": null
       },
       {
+        "area_id": null,
         "config_entries": [
           "358fa1c584d6a1db6d6146a4cdc384c5"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": "config_entry",
+        "entry_type": null,
+        "hw_version": null,
+        "id": "9736e8fe708f2492b212a9087785df69",
         "identifiers": [
           [
             "googlewifi",
@@ -802,22 +808,22 @@
         ],
         "manufacturer": "Google",
         "model": "Connected Client",
+        "name_by_user": null,
         "name": "Withings",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "9736e8fe708f2492b212a9087785df69",
-        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487",
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": "config_entry",
-        "configuration_url": null
+        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487"
       },
       {
+        "area_id": null,
         "config_entries": [
           "358fa1c584d6a1db6d6146a4cdc384c5"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": "config_entry",
+        "entry_type": null,
+        "hw_version": null,
+        "id": "d9ef6ecd074b4b0d6f2f99dad47e9718",
         "identifiers": [
           [
             "googlewifi",
@@ -826,22 +832,22 @@
         ],
         "manufacturer": "Google",
         "model": "Connected Client",
+        "name_by_user": null,
         "name": "Unnamed device",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "d9ef6ecd074b4b0d6f2f99dad47e9718",
-        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487",
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": "config_entry",
-        "configuration_url": null
+        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487"
       },
       {
+        "area_id": null,
         "config_entries": [
           "358fa1c584d6a1db6d6146a4cdc384c5"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": "config_entry",
+        "entry_type": null,
+        "hw_version": null,
+        "id": "d2515a96887bd9648880a499761985a0",
         "identifiers": [
           [
             "googlewifi",
@@ -850,22 +856,22 @@
         ],
         "manufacturer": "Google",
         "model": "Connected Client",
+        "name_by_user": null,
         "name": "Réveil (Lenovo Smart Clock)",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "d2515a96887bd9648880a499761985a0",
-        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487",
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": "config_entry",
-        "configuration_url": null
+        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487"
       },
       {
+        "area_id": null,
         "config_entries": [
           "358fa1c584d6a1db6d6146a4cdc384c5"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": "config_entry",
+        "entry_type": null,
+        "hw_version": null,
+        "id": "28867bc1cf5000fa813929199af59125",
         "identifiers": [
           [
             "googlewifi",
@@ -874,22 +880,22 @@
         ],
         "manufacturer": "Google",
         "model": "Connected Client",
+        "name_by_user": null,
         "name": "TP-Link",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "28867bc1cf5000fa813929199af59125",
-        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487",
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": "config_entry",
-        "configuration_url": null
+        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487"
       },
       {
+        "area_id": null,
         "config_entries": [
           "358fa1c584d6a1db6d6146a4cdc384c5"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": "config_entry",
+        "entry_type": null,
+        "hw_version": null,
+        "id": "8320a0ec8883657fd0f1667d9a58ecf5",
         "identifiers": [
           [
             "googlewifi",
@@ -898,22 +904,22 @@
         ],
         "manufacturer": "Google",
         "model": "Connected Client",
+        "name_by_user": null,
         "name": "Unnamed device",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "8320a0ec8883657fd0f1667d9a58ecf5",
-        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487",
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": "config_entry",
-        "configuration_url": null
+        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487"
       },
       {
+        "area_id": null,
         "config_entries": [
           "358fa1c584d6a1db6d6146a4cdc384c5"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": "config_entry",
+        "entry_type": null,
+        "hw_version": null,
+        "id": "0f72d336e60acc116762e1eff5cea798",
         "identifiers": [
           [
             "googlewifi",
@@ -922,22 +928,22 @@
         ],
         "manufacturer": "Google",
         "model": "Connected Client",
+        "name_by_user": null,
         "name": "Xiaomi",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "0f72d336e60acc116762e1eff5cea798",
-        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487",
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": "config_entry",
-        "configuration_url": null
+        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487"
       },
       {
+        "area_id": null,
         "config_entries": [
           "358fa1c584d6a1db6d6146a4cdc384c5"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": "config_entry",
+        "entry_type": null,
+        "hw_version": null,
+        "id": "cbc198c1c4478dbb157e4f15eaa0c67f",
         "identifiers": [
           [
             "googlewifi",
@@ -946,22 +952,22 @@
         ],
         "manufacturer": "Google",
         "model": "Connected Client",
+        "name_by_user": null,
         "name": "Google Android device (Google)",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "cbc198c1c4478dbb157e4f15eaa0c67f",
-        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487",
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": "config_entry",
-        "configuration_url": null
+        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487"
       },
       {
+        "area_id": null,
         "config_entries": [
           "358fa1c584d6a1db6d6146a4cdc384c5"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": "config_entry",
+        "entry_type": null,
+        "hw_version": null,
+        "id": "a1d396267006cbe0743d58de1c1e2142",
         "identifiers": [
           [
             "googlewifi",
@@ -970,22 +976,22 @@
         ],
         "manufacturer": "Google",
         "model": "Connected Client",
+        "name_by_user": null,
         "name": "Xiaomi",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "a1d396267006cbe0743d58de1c1e2142",
-        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487",
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": "config_entry",
-        "configuration_url": null
+        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487"
       },
       {
+        "area_id": null,
         "config_entries": [
           "358fa1c584d6a1db6d6146a4cdc384c5"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": "config_entry",
+        "entry_type": null,
+        "hw_version": null,
+        "id": "59d727df2fe96597ed7de5798ba1dcd6",
         "identifiers": [
           [
             "googlewifi",
@@ -994,22 +1000,22 @@
         ],
         "manufacturer": "Google",
         "model": "Connected Client",
+        "name_by_user": null,
         "name": "Unnamed device",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "59d727df2fe96597ed7de5798ba1dcd6",
-        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487",
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": "config_entry",
-        "configuration_url": null
+        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487"
       },
       {
+        "area_id": null,
         "config_entries": [
           "358fa1c584d6a1db6d6146a4cdc384c5"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": "config_entry",
+        "entry_type": null,
+        "hw_version": null,
+        "id": "32bbded8dfee13024cfcd234ad26bdc7",
         "identifiers": [
           [
             "googlewifi",
@@ -1018,22 +1024,22 @@
         ],
         "manufacturer": "Google",
         "model": "Connected Client",
+        "name_by_user": null,
         "name": "Unnamed device",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "32bbded8dfee13024cfcd234ad26bdc7",
-        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487",
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": "config_entry",
-        "configuration_url": null
+        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487"
       },
       {
+        "area_id": null,
         "config_entries": [
           "358fa1c584d6a1db6d6146a4cdc384c5"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": "config_entry",
+        "entry_type": null,
+        "hw_version": null,
+        "id": "a34d77964f376e65cba9e1b11ababe6b",
         "identifiers": [
           [
             "googlewifi",
@@ -1042,22 +1048,22 @@
         ],
         "manufacturer": "Google",
         "model": "Connected Client",
+        "name_by_user": null,
         "name": "Honor Claire (Huawei Android device)",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "a34d77964f376e65cba9e1b11ababe6b",
-        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487",
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": "config_entry",
-        "configuration_url": null
+        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487"
       },
       {
+        "area_id": null,
         "config_entries": [
           "358fa1c584d6a1db6d6146a4cdc384c5"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": "config_entry",
+        "entry_type": null,
+        "hw_version": null,
+        "id": "e1b979dc60045128d96053551d88748a",
         "identifiers": [
           [
             "googlewifi",
@@ -1066,22 +1072,22 @@
         ],
         "manufacturer": "Google",
         "model": "Connected Client",
+        "name_by_user": null,
         "name": "Unnamed device",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "e1b979dc60045128d96053551d88748a",
-        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487",
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": "config_entry",
-        "configuration_url": null
+        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487"
       },
       {
+        "area_id": null,
         "config_entries": [
           "358fa1c584d6a1db6d6146a4cdc384c5"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": "config_entry",
+        "entry_type": null,
+        "hw_version": null,
+        "id": "49d5ea64881f098d2168eec8a5a204ff",
         "identifiers": [
           [
             "googlewifi",
@@ -1090,22 +1096,22 @@
         ],
         "manufacturer": "Google",
         "model": "Connected Client",
+        "name_by_user": null,
         "name": "Unnamed device",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "49d5ea64881f098d2168eec8a5a204ff",
-        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487",
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": "config_entry",
-        "configuration_url": null
+        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487"
       },
       {
+        "area_id": null,
         "config_entries": [
           "358fa1c584d6a1db6d6146a4cdc384c5"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": "config_entry",
+        "entry_type": null,
+        "hw_version": null,
+        "id": "045eee52a15e3d101e6f885b63b779a6",
         "identifiers": [
           [
             "googlewifi",
@@ -1114,22 +1120,22 @@
         ],
         "manufacturer": "Google",
         "model": "Connected Client",
+        "name_by_user": null,
         "name": "Salle de bain (Google Home Mini)",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "045eee52a15e3d101e6f885b63b779a6",
-        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487",
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": "config_entry",
-        "configuration_url": null
+        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487"
       },
       {
+        "area_id": null,
         "config_entries": [
           "358fa1c584d6a1db6d6146a4cdc384c5"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": "config_entry",
+        "entry_type": null,
+        "hw_version": null,
+        "id": "bf14e734deaee49aa7d69bb9d56e58fc",
         "identifiers": [
           [
             "googlewifi",
@@ -1138,22 +1144,22 @@
         ],
         "manufacturer": "Google",
         "model": "Connected Client",
+        "name_by_user": null,
         "name": "Unnamed device",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "bf14e734deaee49aa7d69bb9d56e58fc",
-        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487",
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": "config_entry",
-        "configuration_url": null
+        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487"
       },
       {
+        "area_id": null,
         "config_entries": [
           "358fa1c584d6a1db6d6146a4cdc384c5"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": "config_entry",
+        "entry_type": null,
+        "hw_version": null,
+        "id": "2714e6bbf879bd60c62dbe859dda62b3",
         "identifiers": [
           [
             "googlewifi",
@@ -1162,22 +1168,22 @@
         ],
         "manufacturer": "Google",
         "model": "Connected Client",
+        "name_by_user": null,
         "name": "Xiaomi",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "2714e6bbf879bd60c62dbe859dda62b3",
-        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487",
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": "config_entry",
-        "configuration_url": null
+        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487"
       },
       {
+        "area_id": null,
         "config_entries": [
           "358fa1c584d6a1db6d6146a4cdc384c5"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": "config_entry",
+        "entry_type": null,
+        "hw_version": null,
+        "id": "7db2c7a8d419a4651aa09128bdac8b3e",
         "identifiers": [
           [
             "googlewifi",
@@ -1186,22 +1192,22 @@
         ],
         "manufacturer": "Google",
         "model": "Connected Client",
+        "name_by_user": null,
         "name": "TP-Link",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "7db2c7a8d419a4651aa09128bdac8b3e",
-        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487",
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": "config_entry",
-        "configuration_url": null
+        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487"
       },
       {
+        "area_id": null,
         "config_entries": [
           "358fa1c584d6a1db6d6146a4cdc384c5"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": "config_entry",
+        "entry_type": null,
+        "hw_version": null,
+        "id": "67b4fd752021038121dc2afd43f472e8",
         "identifiers": [
           [
             "googlewifi",
@@ -1210,22 +1216,22 @@
         ],
         "manufacturer": "Google",
         "model": "Connected Client",
+        "name_by_user": null,
         "name": "Pixel 4 XL",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "67b4fd752021038121dc2afd43f472e8",
-        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487",
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": "config_entry",
-        "configuration_url": null
+        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487"
       },
       {
+        "area_id": null,
         "config_entries": [
           "358fa1c584d6a1db6d6146a4cdc384c5"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": "config_entry",
+        "entry_type": null,
+        "hw_version": null,
+        "id": "2ec863cfc2802107c6105fd9aa0ba27f",
         "identifiers": [
           [
             "googlewifi",
@@ -1234,22 +1240,22 @@
         ],
         "manufacturer": "Google",
         "model": "Connected Client",
+        "name_by_user": null,
         "name": "Unnamed device",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "2ec863cfc2802107c6105fd9aa0ba27f",
-        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487",
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": "config_entry",
-        "configuration_url": null
+        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487"
       },
       {
+        "area_id": null,
         "config_entries": [
           "358fa1c584d6a1db6d6146a4cdc384c5"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": "config_entry",
+        "entry_type": null,
+        "hw_version": null,
+        "id": "8ddade80d19a577585f3966f3380c9b8",
         "identifiers": [
           [
             "googlewifi",
@@ -1258,22 +1264,22 @@
         ],
         "manufacturer": "Google",
         "model": "Connected Client",
+        "name_by_user": null,
         "name": "Unnamed device",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "8ddade80d19a577585f3966f3380c9b8",
-        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487",
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": "config_entry",
-        "configuration_url": null
+        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487"
       },
       {
+        "area_id": null,
         "config_entries": [
           "358fa1c584d6a1db6d6146a4cdc384c5"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": "config_entry",
+        "entry_type": null,
+        "hw_version": null,
+        "id": "6dc2a707eca95d84758bf479aff4ae15",
         "identifiers": [
           [
             "googlewifi",
@@ -1282,22 +1288,22 @@
         ],
         "manufacturer": "Google",
         "model": "Connected Client",
+        "name_by_user": null,
         "name": "Unnamed device",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "6dc2a707eca95d84758bf479aff4ae15",
-        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487",
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": "config_entry",
-        "configuration_url": null
+        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487"
       },
       {
+        "area_id": null,
         "config_entries": [
           "358fa1c584d6a1db6d6146a4cdc384c5"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": "config_entry",
+        "entry_type": null,
+        "hw_version": null,
+        "id": "ba3379dae0ee4aa421594c5290785b4e",
         "identifiers": [
           [
             "googlewifi",
@@ -1306,22 +1312,22 @@
         ],
         "manufacturer": "Google",
         "model": "Connected Client",
+        "name_by_user": null,
         "name": "Google",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "ba3379dae0ee4aa421594c5290785b4e",
-        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487",
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": "config_entry",
-        "configuration_url": null
+        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487"
       },
       {
+        "area_id": null,
         "config_entries": [
           "358fa1c584d6a1db6d6146a4cdc384c5"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": "config_entry",
+        "entry_type": null,
+        "hw_version": null,
+        "id": "abd4d2ee7a98f23dc231912b2b12213f",
         "identifiers": [
           [
             "googlewifi",
@@ -1330,22 +1336,22 @@
         ],
         "manufacturer": "Google",
         "model": "Connected Client",
+        "name_by_user": null,
         "name": "TP-Link",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "abd4d2ee7a98f23dc231912b2b12213f",
-        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487",
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": "config_entry",
-        "configuration_url": null
+        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487"
       },
       {
+        "area_id": null,
         "config_entries": [
           "358fa1c584d6a1db6d6146a4cdc384c5"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": "config_entry",
+        "entry_type": null,
+        "hw_version": null,
+        "id": "b3a8df8aa3545a29a98befe631f979eb",
         "identifiers": [
           [
             "googlewifi",
@@ -1354,22 +1360,22 @@
         ],
         "manufacturer": "Google",
         "model": "Connected Client",
+        "name_by_user": null,
         "name": "Unnamed device",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "b3a8df8aa3545a29a98befe631f979eb",
-        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487",
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": "config_entry",
-        "configuration_url": null
+        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487"
       },
       {
+        "area_id": null,
         "config_entries": [
           "358fa1c584d6a1db6d6146a4cdc384c5"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": "config_entry",
+        "entry_type": null,
+        "hw_version": null,
+        "id": "4fd897a22e8e5e439ccd5e65aa4d67b6",
         "identifiers": [
           [
             "googlewifi",
@@ -1378,22 +1384,22 @@
         ],
         "manufacturer": "Google",
         "model": "Connected Client",
+        "name_by_user": null,
         "name": "Apple",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "4fd897a22e8e5e439ccd5e65aa4d67b6",
-        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487",
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": "config_entry",
-        "configuration_url": null
+        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487"
       },
       {
+        "area_id": null,
         "config_entries": [
           "358fa1c584d6a1db6d6146a4cdc384c5"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": "config_entry",
+        "entry_type": null,
+        "hw_version": null,
+        "id": "a39bb1e800530948a96cddf05d1ed422",
         "identifiers": [
           [
             "googlewifi",
@@ -1402,22 +1408,22 @@
         ],
         "manufacturer": "Google",
         "model": "Connected Client",
+        "name_by_user": null,
         "name": "Unnamed device",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "a39bb1e800530948a96cddf05d1ed422",
-        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487",
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": "config_entry",
-        "configuration_url": null
+        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487"
       },
       {
+        "area_id": null,
         "config_entries": [
           "358fa1c584d6a1db6d6146a4cdc384c5"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": "config_entry",
+        "entry_type": null,
+        "hw_version": null,
+        "id": "41b3c6168419637ebc4e02614c704b57",
         "identifiers": [
           [
             "googlewifi",
@@ -1426,22 +1432,22 @@
         ],
         "manufacturer": "Google",
         "model": "Connected Client",
+        "name_by_user": null,
         "name": "Unnamed device",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "41b3c6168419637ebc4e02614c704b57",
-        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487",
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": "config_entry",
-        "configuration_url": null
+        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487"
       },
       {
+        "area_id": null,
         "config_entries": [
           "358fa1c584d6a1db6d6146a4cdc384c5"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": "config_entry",
+        "entry_type": null,
+        "hw_version": null,
+        "id": "827571840fac5e2007203b2564aa8578",
         "identifiers": [
           [
             "googlewifi",
@@ -1450,22 +1456,22 @@
         ],
         "manufacturer": "Google",
         "model": "Connected Client",
+        "name_by_user": null,
         "name": "Unnamed device",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "827571840fac5e2007203b2564aa8578",
-        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487",
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": "config_entry",
-        "configuration_url": null
+        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487"
       },
       {
+        "area_id": null,
         "config_entries": [
           "358fa1c584d6a1db6d6146a4cdc384c5"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": "config_entry",
+        "entry_type": null,
+        "hw_version": null,
+        "id": "61bdd8ac4ebb31c6a27bac917154a11e",
         "identifiers": [
           [
             "googlewifi",
@@ -1474,22 +1480,22 @@
         ],
         "manufacturer": "Google",
         "model": "Connected Client",
+        "name_by_user": null,
         "name": "LG G6 Claire (LG Android device)",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "61bdd8ac4ebb31c6a27bac917154a11e",
-        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487",
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": "config_entry",
-        "configuration_url": null
+        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487"
       },
       {
+        "area_id": null,
         "config_entries": [
           "358fa1c584d6a1db6d6146a4cdc384c5"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": "config_entry",
+        "entry_type": null,
+        "hw_version": null,
+        "id": "c3746636df4f45c027142529459047d0",
         "identifiers": [
           [
             "googlewifi",
@@ -1498,22 +1504,22 @@
         ],
         "manufacturer": "Google",
         "model": "Connected Client",
+        "name_by_user": null,
         "name": "roborock-vacuum-s5_miio261829159 (Xiaomi)",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "c3746636df4f45c027142529459047d0",
-        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487",
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": "config_entry",
-        "configuration_url": null
+        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487"
       },
       {
+        "area_id": null,
         "config_entries": [
           "358fa1c584d6a1db6d6146a4cdc384c5"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": "config_entry",
+        "entry_type": null,
+        "hw_version": null,
+        "id": "435eab0d82ebc88dde1ef1582ee16004",
         "identifiers": [
           [
             "googlewifi",
@@ -1522,22 +1528,22 @@
         ],
         "manufacturer": "Google",
         "model": "Connected Client",
+        "name_by_user": null,
         "name": "Unnamed device",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "435eab0d82ebc88dde1ef1582ee16004",
-        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487",
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": "config_entry",
-        "configuration_url": null
+        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487"
       },
       {
+        "area_id": null,
         "config_entries": [
           "358fa1c584d6a1db6d6146a4cdc384c5"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": "config_entry",
+        "entry_type": null,
+        "hw_version": null,
+        "id": "a2aacb3d890cbd0fc9c3708e35a2e17e",
         "identifiers": [
           [
             "googlewifi",
@@ -1546,22 +1552,22 @@
         ],
         "manufacturer": "Google",
         "model": "Connected Client",
+        "name_by_user": null,
         "name": "Unnamed device",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "a2aacb3d890cbd0fc9c3708e35a2e17e",
-        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487",
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": "config_entry",
-        "configuration_url": null
+        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487"
       },
       {
+        "area_id": null,
         "config_entries": [
           "358fa1c584d6a1db6d6146a4cdc384c5"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": "config_entry",
+        "entry_type": null,
+        "hw_version": null,
+        "id": "f0ff9f0d2166e62c439e4ce02f02980b",
         "identifiers": [
           [
             "googlewifi",
@@ -1570,22 +1576,22 @@
         ],
         "manufacturer": "Google",
         "model": "Connected Client",
+        "name_by_user": null,
         "name": "Unnamed device",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "f0ff9f0d2166e62c439e4ce02f02980b",
-        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487",
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": "config_entry",
-        "configuration_url": null
+        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487"
       },
       {
+        "area_id": null,
         "config_entries": [
           "358fa1c584d6a1db6d6146a4cdc384c5"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": "config_entry",
+        "entry_type": null,
+        "hw_version": null,
+        "id": "2da8f25a6b402899f576024ed2f6ea42",
         "identifiers": [
           [
             "googlewifi",
@@ -1594,22 +1600,22 @@
         ],
         "manufacturer": "Google",
         "model": "Connected Client",
+        "name_by_user": null,
         "name": "Salle à manger (Google Home)",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "2da8f25a6b402899f576024ed2f6ea42",
-        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487",
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": "config_entry",
-        "configuration_url": null
+        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487"
       },
       {
+        "area_id": null,
         "config_entries": [
           "358fa1c584d6a1db6d6146a4cdc384c5"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": "config_entry",
+        "entry_type": null,
+        "hw_version": null,
+        "id": "d59923a9ac85182e3ad123cc0d576fbc",
         "identifiers": [
           [
             "googlewifi",
@@ -1618,22 +1624,22 @@
         ],
         "manufacturer": "Google",
         "model": "Connected Client",
+        "name_by_user": null,
         "name": "Wyze",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "d59923a9ac85182e3ad123cc0d576fbc",
-        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487",
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": "config_entry",
-        "configuration_url": null
+        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487"
       },
       {
+        "area_id": null,
         "config_entries": [
           "358fa1c584d6a1db6d6146a4cdc384c5"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": "config_entry",
+        "entry_type": null,
+        "hw_version": null,
+        "id": "b15a5d1b1ed0565fff3a3adb73c4ea6c",
         "identifiers": [
           [
             "googlewifi",
@@ -1642,22 +1648,22 @@
         ],
         "manufacturer": "Google",
         "model": "Connected Client",
+        "name_by_user": null,
         "name": "Google Android device (Google)",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "b15a5d1b1ed0565fff3a3adb73c4ea6c",
-        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487",
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": "config_entry",
-        "configuration_url": null
+        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487"
       },
       {
+        "area_id": null,
         "config_entries": [
           "358fa1c584d6a1db6d6146a4cdc384c5"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": "config_entry",
+        "entry_type": null,
+        "hw_version": null,
+        "id": "a09769c37385720c9854a954b7b88d42",
         "identifiers": [
           [
             "googlewifi",
@@ -1666,22 +1672,22 @@
         ],
         "manufacturer": "Google",
         "model": "Connected Client",
+        "name_by_user": null,
         "name": "Télé Salon (Chromecast)",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "a09769c37385720c9854a954b7b88d42",
-        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487",
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": "config_entry",
-        "configuration_url": null
+        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487"
       },
       {
+        "area_id": null,
         "config_entries": [
           "358fa1c584d6a1db6d6146a4cdc384c5"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": "config_entry",
+        "entry_type": null,
+        "hw_version": null,
+        "id": "c54027dcf714b965abc5a126144bbb66",
         "identifiers": [
           [
             "googlewifi",
@@ -1690,22 +1696,22 @@
         ],
         "manufacturer": "Google",
         "model": "Connected Client",
+        "name_by_user": null,
         "name": "Unnamed device",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "c54027dcf714b965abc5a126144bbb66",
-        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487",
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": "config_entry",
-        "configuration_url": null
+        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487"
       },
       {
+        "area_id": null,
         "config_entries": [
           "358fa1c584d6a1db6d6146a4cdc384c5"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": "config_entry",
+        "entry_type": null,
+        "hw_version": null,
+        "id": "6e8403a862cb1bc09df5abe5687dc3c6",
         "identifiers": [
           [
             "googlewifi",
@@ -1714,22 +1720,22 @@
         ],
         "manufacturer": "Google",
         "model": "Connected Client",
+        "name_by_user": null,
         "name": "Unnamed device",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "6e8403a862cb1bc09df5abe5687dc3c6",
-        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487",
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": "config_entry",
-        "configuration_url": null
+        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487"
       },
       {
+        "area_id": null,
         "config_entries": [
           "358fa1c584d6a1db6d6146a4cdc384c5"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": "config_entry",
+        "entry_type": null,
+        "hw_version": null,
+        "id": "f30f6eaead63cbf5eab1a8c826b86c68",
         "identifiers": [
           [
             "googlewifi",
@@ -1738,22 +1744,22 @@
         ],
         "manufacturer": "Google",
         "model": "Connected Client",
+        "name_by_user": null,
         "name": "Unnamed device",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "f30f6eaead63cbf5eab1a8c826b86c68",
-        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487",
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": "config_entry",
-        "configuration_url": null
+        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487"
       },
       {
+        "area_id": null,
         "config_entries": [
           "358fa1c584d6a1db6d6146a4cdc384c5"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": "config_entry",
+        "entry_type": null,
+        "hw_version": null,
+        "id": "386d654ed1fcd6b0580168ad0a94a95c",
         "identifiers": [
           [
             "googlewifi",
@@ -1762,22 +1768,22 @@
         ],
         "manufacturer": "Google",
         "model": "Connected Client",
+        "name_by_user": null,
         "name": "Unnamed device",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "386d654ed1fcd6b0580168ad0a94a95c",
-        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487",
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": "config_entry",
-        "configuration_url": null
+        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487"
       },
       {
+        "area_id": null,
         "config_entries": [
           "358fa1c584d6a1db6d6146a4cdc384c5"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": "config_entry",
+        "entry_type": null,
+        "hw_version": null,
+        "id": "f1ea06804295e65fed9c222020c656e3",
         "identifiers": [
           [
             "googlewifi",
@@ -1786,22 +1792,22 @@
         ],
         "manufacturer": "Google",
         "model": "Connected Client",
+        "name_by_user": null,
         "name": "Detecteur fuites",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "f1ea06804295e65fed9c222020c656e3",
-        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487",
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": "config_entry",
-        "configuration_url": null
+        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487"
       },
       {
+        "area_id": null,
         "config_entries": [
           "358fa1c584d6a1db6d6146a4cdc384c5"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": "config_entry",
+        "entry_type": null,
+        "hw_version": null,
+        "id": "38e2d96c21ed687a82b4220eb6ff6f9f",
         "identifiers": [
           [
             "googlewifi",
@@ -1810,22 +1816,22 @@
         ],
         "manufacturer": "Google",
         "model": "Connected Client",
+        "name_by_user": null,
         "name": "Withings",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "38e2d96c21ed687a82b4220eb6ff6f9f",
-        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487",
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": "config_entry",
-        "configuration_url": null
+        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487"
       },
       {
+        "area_id": null,
         "config_entries": [
           "358fa1c584d6a1db6d6146a4cdc384c5"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": "config_entry",
+        "entry_type": null,
+        "hw_version": null,
+        "id": "78fef64db3023659d3ab3d022a417536",
         "identifiers": [
           [
             "googlewifi",
@@ -1834,22 +1840,22 @@
         ],
         "manufacturer": "Google",
         "model": "Connected Client",
+        "name_by_user": null,
         "name": "Google",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "78fef64db3023659d3ab3d022a417536",
-        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487",
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": "config_entry",
-        "configuration_url": null
+        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487"
       },
       {
+        "area_id": null,
         "config_entries": [
           "358fa1c584d6a1db6d6146a4cdc384c5"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": "config_entry",
+        "entry_type": null,
+        "hw_version": null,
+        "id": "aab86f5a00fe1ec3f047a9bb5841e528",
         "identifiers": [
           [
             "googlewifi",
@@ -1858,22 +1864,22 @@
         ],
         "manufacturer": "Google",
         "model": "Connected Client",
+        "name_by_user": null,
         "name": "HP",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "aab86f5a00fe1ec3f047a9bb5841e528",
-        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487",
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": "config_entry",
-        "configuration_url": null
+        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487"
       },
       {
+        "area_id": null,
         "config_entries": [
           "358fa1c584d6a1db6d6146a4cdc384c5"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": "config_entry",
+        "entry_type": null,
+        "hw_version": null,
+        "id": "751b111fc00d075578c857472af650df",
         "identifiers": [
           [
             "googlewifi",
@@ -1882,22 +1888,22 @@
         ],
         "manufacturer": "Google",
         "model": "Connected Client",
+        "name_by_user": null,
         "name": "Unnamed device",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "751b111fc00d075578c857472af650df",
-        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487",
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": "config_entry",
-        "configuration_url": null
+        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487"
       },
       {
+        "area_id": null,
         "config_entries": [
           "358fa1c584d6a1db6d6146a4cdc384c5"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": "config_entry",
+        "entry_type": null,
+        "hw_version": null,
+        "id": "38075a090c9943fbcbe54ee63e043ddb",
         "identifiers": [
           [
             "googlewifi",
@@ -1906,22 +1912,22 @@
         ],
         "manufacturer": "Google",
         "model": "Connected Client",
+        "name_by_user": null,
         "name": "Unnamed device",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "38075a090c9943fbcbe54ee63e043ddb",
-        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487",
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": "config_entry",
-        "configuration_url": null
+        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487"
       },
       {
+        "area_id": null,
         "config_entries": [
           "358fa1c584d6a1db6d6146a4cdc384c5"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": "config_entry",
+        "entry_type": null,
+        "hw_version": null,
+        "id": "dd5e0638472c0f91150e7506562cf920",
         "identifiers": [
           [
             "googlewifi",
@@ -1930,22 +1936,22 @@
         ],
         "manufacturer": "Google",
         "model": "Connected Client",
+        "name_by_user": null,
         "name": "Google",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "dd5e0638472c0f91150e7506562cf920",
-        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487",
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": "config_entry",
-        "configuration_url": null
+        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487"
       },
       {
+        "area_id": null,
         "config_entries": [
           "358fa1c584d6a1db6d6146a4cdc384c5"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": "config_entry",
+        "entry_type": null,
+        "hw_version": null,
+        "id": "f034d4f5d60efdc75fc852c45916b97c",
         "identifiers": [
           [
             "googlewifi",
@@ -1954,22 +1960,22 @@
         ],
         "manufacturer": "Google",
         "model": "Connected Client",
+        "name_by_user": null,
         "name": "OnePlus 6",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "f034d4f5d60efdc75fc852c45916b97c",
-        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487",
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": "config_entry",
-        "configuration_url": null
+        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487"
       },
       {
+        "area_id": null,
         "config_entries": [
           "358fa1c584d6a1db6d6146a4cdc384c5"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": "config_entry",
+        "entry_type": null,
+        "hw_version": null,
+        "id": "b9e7e58edf44754f6e8dbd7c4fe9bd5c",
         "identifiers": [
           [
             "googlewifi",
@@ -1978,22 +1984,22 @@
         ],
         "manufacturer": "Google",
         "model": "Connected Client",
+        "name_by_user": null,
         "name": "Unnamed device",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "b9e7e58edf44754f6e8dbd7c4fe9bd5c",
-        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487",
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": "config_entry",
-        "configuration_url": null
+        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487"
       },
       {
+        "area_id": null,
         "config_entries": [
           "358fa1c584d6a1db6d6146a4cdc384c5"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": "config_entry",
+        "entry_type": null,
+        "hw_version": null,
+        "id": "83f34f4687dc486101fa6584036f58d7",
         "identifiers": [
           [
             "googlewifi",
@@ -2002,22 +2008,22 @@
         ],
         "manufacturer": "Google",
         "model": "Connected Client",
+        "name_by_user": null,
         "name": "Ultra (Chromecast Ultra)",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "83f34f4687dc486101fa6584036f58d7",
-        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487",
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": "config_entry",
-        "configuration_url": null
+        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487"
       },
       {
+        "area_id": null,
         "config_entries": [
           "358fa1c584d6a1db6d6146a4cdc384c5"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": "config_entry",
+        "entry_type": null,
+        "hw_version": null,
+        "id": "068692cee1b9d4cb5064f19a25ef5bc9",
         "identifiers": [
           [
             "googlewifi",
@@ -2026,22 +2032,22 @@
         ],
         "manufacturer": "Google",
         "model": "Connected Client",
+        "name_by_user": null,
         "name": "Unnamed device",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "068692cee1b9d4cb5064f19a25ef5bc9",
-        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487",
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": "config_entry",
-        "configuration_url": null
+        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487"
       },
       {
+        "area_id": null,
         "config_entries": [
           "358fa1c584d6a1db6d6146a4cdc384c5"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": "config_entry",
+        "entry_type": null,
+        "hw_version": null,
+        "id": "b00ed7e478099aa0ab3859af2ce30e68",
         "identifiers": [
           [
             "googlewifi",
@@ -2050,22 +2056,22 @@
         ],
         "manufacturer": "Google",
         "model": "Connected Client",
+        "name_by_user": null,
         "name": "Zigpii (Raspberry Pi)",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "b00ed7e478099aa0ab3859af2ce30e68",
-        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487",
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": "config_entry",
-        "configuration_url": null
+        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487"
       },
       {
+        "area_id": null,
         "config_entries": [
           "358fa1c584d6a1db6d6146a4cdc384c5"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": "config_entry",
+        "entry_type": null,
+        "hw_version": null,
+        "id": "ee75c8ede9d7a6836e8c34e45e7adbd6",
         "identifiers": [
           [
             "googlewifi",
@@ -2074,22 +2080,22 @@
         ],
         "manufacturer": "Google",
         "model": "Connected Client",
+        "name_by_user": null,
         "name": "Switch (Nintendo Switch)",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "ee75c8ede9d7a6836e8c34e45e7adbd6",
-        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487",
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": "config_entry",
-        "configuration_url": null
+        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487"
       },
       {
+        "area_id": null,
         "config_entries": [
           "358fa1c584d6a1db6d6146a4cdc384c5"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": "config_entry",
+        "entry_type": null,
+        "hw_version": null,
+        "id": "83687f7dd0ac44a986d0b7b102889b82",
         "identifiers": [
           [
             "googlewifi",
@@ -2098,22 +2104,22 @@
         ],
         "manufacturer": "Google",
         "model": "Connected Client",
+        "name_by_user": null,
         "name": "Unnamed device",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "83687f7dd0ac44a986d0b7b102889b82",
-        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487",
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": "config_entry",
-        "configuration_url": null
+        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487"
       },
       {
+        "area_id": null,
         "config_entries": [
           "358fa1c584d6a1db6d6146a4cdc384c5"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": "config_entry",
+        "entry_type": null,
+        "hw_version": null,
+        "id": "a24fbbb8fabedea03c660c9244b17ec2",
         "identifiers": [
           [
             "googlewifi",
@@ -2122,22 +2128,22 @@
         ],
         "manufacturer": "Google",
         "model": "Connected Client",
+        "name_by_user": null,
         "name": "PS4-D665DB",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "a24fbbb8fabedea03c660c9244b17ec2",
-        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487",
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": "config_entry",
-        "configuration_url": null
+        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487"
       },
       {
+        "area_id": null,
         "config_entries": [
           "358fa1c584d6a1db6d6146a4cdc384c5"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": "config_entry",
+        "entry_type": null,
+        "hw_version": null,
+        "id": "e3467c1e78978be2bcc4054c6ca142bc",
         "identifiers": [
           [
             "googlewifi",
@@ -2146,22 +2152,22 @@
         ],
         "manufacturer": "Google",
         "model": "Connected Client",
+        "name_by_user": null,
         "name": "yeelink-tempo (Xiaomi)",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "e3467c1e78978be2bcc4054c6ca142bc",
-        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487",
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": "config_entry",
-        "configuration_url": null
+        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487"
       },
       {
+        "area_id": null,
         "config_entries": [
           "358fa1c584d6a1db6d6146a4cdc384c5"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": "config_entry",
+        "entry_type": null,
+        "hw_version": null,
+        "id": "3ceefc68e152d77ef936db7cf76b2d55",
         "identifiers": [
           [
             "googlewifi",
@@ -2170,22 +2176,22 @@
         ],
         "manufacturer": "Google",
         "model": "Connected Client",
+        "name_by_user": null,
         "name": "Unnamed device",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "3ceefc68e152d77ef936db7cf76b2d55",
-        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487",
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": "config_entry",
-        "configuration_url": null
+        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487"
       },
       {
+        "area_id": null,
         "config_entries": [
           "358fa1c584d6a1db6d6146a4cdc384c5"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": "config_entry",
+        "entry_type": null,
+        "hw_version": null,
+        "id": "8d7b1d44fd9465421f9b5c0377644a83",
         "identifiers": [
           [
             "googlewifi",
@@ -2194,22 +2200,22 @@
         ],
         "manufacturer": "Google",
         "model": "Connected Client",
+        "name_by_user": null,
         "name": "DAFANG Camera (Xiaomi)",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "8d7b1d44fd9465421f9b5c0377644a83",
-        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487",
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": "config_entry",
-        "configuration_url": null
+        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487"
       },
       {
+        "area_id": null,
         "config_entries": [
           "358fa1c584d6a1db6d6146a4cdc384c5"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": "config_entry",
+        "entry_type": null,
+        "hw_version": null,
+        "id": "8a5d97cd0edc57156f95f3728fd6225f",
         "identifiers": [
           [
             "googlewifi",
@@ -2218,22 +2224,22 @@
         ],
         "manufacturer": "Google",
         "model": "Connected Client",
+        "name_by_user": null,
         "name": "KP303 (TP-Link)",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "8a5d97cd0edc57156f95f3728fd6225f",
-        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487",
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": "config_entry",
-        "configuration_url": null
+        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487"
       },
       {
+        "area_id": null,
         "config_entries": [
           "358fa1c584d6a1db6d6146a4cdc384c5"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": "config_entry",
+        "entry_type": null,
+        "hw_version": null,
+        "id": "42531a2c7a4160cee448293695d7482a",
         "identifiers": [
           [
             "googlewifi",
@@ -2242,22 +2248,22 @@
         ],
         "manufacturer": "Google",
         "model": "Connected Client",
+        "name_by_user": null,
         "name": "Unnamed device",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "42531a2c7a4160cee448293695d7482a",
-        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487",
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": "config_entry",
-        "configuration_url": null
+        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487"
       },
       {
+        "area_id": null,
         "config_entries": [
           "358fa1c584d6a1db6d6146a4cdc384c5"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": "config_entry",
+        "entry_type": null,
+        "hw_version": null,
+        "id": "dcf5e15236a7f25e6a11ed013018edfc",
         "identifiers": [
           [
             "googlewifi",
@@ -2266,22 +2272,22 @@
         ],
         "manufacturer": "Google",
         "model": "Connected Client",
+        "name_by_user": null,
         "name": "Raspberry Pi",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "dcf5e15236a7f25e6a11ed013018edfc",
-        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487",
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": "config_entry",
-        "configuration_url": null
+        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487"
       },
       {
+        "area_id": null,
         "config_entries": [
           "358fa1c584d6a1db6d6146a4cdc384c5"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": "config_entry",
+        "entry_type": null,
+        "hw_version": null,
+        "id": "1f2280aeed6d57669cb918377d18d3f9",
         "identifiers": [
           [
             "googlewifi",
@@ -2290,22 +2296,22 @@
         ],
         "manufacturer": "Google",
         "model": "Connected Client",
+        "name_by_user": null,
         "name": "Unnamed device",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "1f2280aeed6d57669cb918377d18d3f9",
-        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487",
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": "config_entry",
-        "configuration_url": null
+        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487"
       },
       {
+        "area_id": null,
         "config_entries": [
           "358fa1c584d6a1db6d6146a4cdc384c5"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": "config_entry",
+        "entry_type": null,
+        "hw_version": null,
+        "id": "96300ed853f4b03cde9b3ea546bfd4e8",
         "identifiers": [
           [
             "googlewifi",
@@ -2314,22 +2320,22 @@
         ],
         "manufacturer": "Google",
         "model": "Connected Client",
+        "name_by_user": null,
         "name": "BRWc0b5d7b7d48*",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "96300ed853f4b03cde9b3ea546bfd4e8",
-        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487",
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": "config_entry",
-        "configuration_url": null
+        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487"
       },
       {
+        "area_id": null,
         "config_entries": [
           "358fa1c584d6a1db6d6146a4cdc384c5"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": "config_entry",
+        "entry_type": null,
+        "hw_version": null,
+        "id": "136ae756199fefd67bd940a1d2b11dcd",
         "identifiers": [
           [
             "googlewifi",
@@ -2338,22 +2344,22 @@
         ],
         "manufacturer": "Google",
         "model": "Connected Client",
+        "name_by_user": null,
         "name": "Salle familiale (Google Nest Hub)",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "136ae756199fefd67bd940a1d2b11dcd",
-        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487",
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": "config_entry",
-        "configuration_url": null
+        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487"
       },
       {
+        "area_id": null,
         "config_entries": [
           "358fa1c584d6a1db6d6146a4cdc384c5"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": "config_entry",
+        "entry_type": null,
+        "hw_version": null,
+        "id": "f942f1a6ff47638cbd1c3a41ac719c27",
         "identifiers": [
           [
             "googlewifi",
@@ -2362,22 +2368,22 @@
         ],
         "manufacturer": "Google",
         "model": "Connected Client",
+        "name_by_user": null,
         "name": "ChromeOS device",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "f942f1a6ff47638cbd1c3a41ac719c27",
-        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487",
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": "config_entry",
-        "configuration_url": null
+        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487"
       },
       {
+        "area_id": null,
         "config_entries": [
           "358fa1c584d6a1db6d6146a4cdc384c5"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": "config_entry",
+        "entry_type": null,
+        "hw_version": null,
+        "id": "9a0634d8af1929a2f561f9a053679ad8",
         "identifiers": [
           [
             "googlewifi",
@@ -2386,22 +2392,22 @@
         ],
         "manufacturer": "Google",
         "model": "Connected Client",
+        "name_by_user": null,
         "name": "Unnamed device",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "9a0634d8af1929a2f561f9a053679ad8",
-        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487",
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": "config_entry",
-        "configuration_url": null
+        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487"
       },
       {
+        "area_id": null,
         "config_entries": [
           "358fa1c584d6a1db6d6146a4cdc384c5"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": "config_entry",
+        "entry_type": null,
+        "hw_version": null,
+        "id": "90a641cce3a3f2837197c0e1350a11d6",
         "identifiers": [
           [
             "googlewifi",
@@ -2410,22 +2416,22 @@
         ],
         "manufacturer": "Google",
         "model": "Connected Client",
+        "name_by_user": null,
         "name": "Unnamed device",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "90a641cce3a3f2837197c0e1350a11d6",
-        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487",
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": "config_entry",
-        "configuration_url": null
+        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487"
       },
       {
+        "area_id": null,
         "config_entries": [
           "358fa1c584d6a1db6d6146a4cdc384c5"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": "config_entry",
+        "entry_type": null,
+        "hw_version": null,
+        "id": "8cd517ce8002d4834a278943dda0bbf0",
         "identifiers": [
           [
             "googlewifi",
@@ -2434,22 +2440,22 @@
         ],
         "manufacturer": "Google",
         "model": "Connected Client",
+        "name_by_user": null,
         "name": "Unnamed device",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "8cd517ce8002d4834a278943dda0bbf0",
-        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487",
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": "config_entry",
-        "configuration_url": null
+        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487"
       },
       {
+        "area_id": null,
         "config_entries": [
           "358fa1c584d6a1db6d6146a4cdc384c5"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": "config_entry",
+        "entry_type": null,
+        "hw_version": null,
+        "id": "0e64132befdfd68c2b83cca48a843d34",
         "identifiers": [
           [
             "googlewifi",
@@ -2458,22 +2464,22 @@
         ],
         "manufacturer": "Google",
         "model": "Connected Client",
+        "name_by_user": null,
         "name": "Yeelight solarium (Xiaomi)",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "0e64132befdfd68c2b83cca48a843d34",
-        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487",
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": "config_entry",
-        "configuration_url": null
+        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487"
       },
       {
+        "area_id": null,
         "config_entries": [
           "358fa1c584d6a1db6d6146a4cdc384c5"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": "config_entry",
+        "entry_type": null,
+        "hw_version": null,
+        "id": "3e9f8efcd0f07f240c07b3d83b070ec0",
         "identifiers": [
           [
             "googlewifi",
@@ -2482,22 +2488,22 @@
         ],
         "manufacturer": "Google",
         "model": "Connected Client",
+        "name_by_user": null,
         "name": "Unnamed device",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "3e9f8efcd0f07f240c07b3d83b070ec0",
-        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487",
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": "config_entry",
-        "configuration_url": null
+        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487"
       },
       {
+        "area_id": null,
         "config_entries": [
           "358fa1c584d6a1db6d6146a4cdc384c5"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": "config_entry",
+        "entry_type": null,
+        "hw_version": null,
+        "id": "5c0e14c31aa9a82752030a695d65c25d",
         "identifiers": [
           [
             "googlewifi",
@@ -2506,22 +2512,22 @@
         ],
         "manufacturer": "Google",
         "model": "Connected Client",
+        "name_by_user": null,
         "name": "Unnamed device",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "5c0e14c31aa9a82752030a695d65c25d",
-        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487",
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": "config_entry",
-        "configuration_url": null
+        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487"
       },
       {
+        "area_id": null,
         "config_entries": [
           "358fa1c584d6a1db6d6146a4cdc384c5"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": "config_entry",
+        "entry_type": null,
+        "hw_version": null,
+        "id": "1a5545ce5e53d0b085455acbe0fd500d",
         "identifiers": [
           [
             "googlewifi",
@@ -2530,22 +2536,22 @@
         ],
         "manufacturer": "Google",
         "model": "Connected Client",
+        "name_by_user": null,
         "name": "Raspberry Pi",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "1a5545ce5e53d0b085455acbe0fd500d",
-        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487",
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": "config_entry",
-        "configuration_url": null
+        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487"
       },
       {
+        "area_id": null,
         "config_entries": [
           "358fa1c584d6a1db6d6146a4cdc384c5"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": "config_entry",
+        "entry_type": null,
+        "hw_version": null,
+        "id": "1fff8bdd8a5d699f12fe56ccf7d35fa8",
         "identifiers": [
           [
             "googlewifi",
@@ -2554,22 +2560,22 @@
         ],
         "manufacturer": "Google",
         "model": "Connected Client",
+        "name_by_user": null,
         "name": "giom1 (Windows device)",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "1fff8bdd8a5d699f12fe56ccf7d35fa8",
-        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487",
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": "config_entry",
-        "configuration_url": null
+        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487"
       },
       {
+        "area_id": null,
         "config_entries": [
           "358fa1c584d6a1db6d6146a4cdc384c5"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": "config_entry",
+        "entry_type": null,
+        "hw_version": null,
+        "id": "f4a2992973da73421727c153c8af1496",
         "identifiers": [
           [
             "googlewifi",
@@ -2578,22 +2584,22 @@
         ],
         "manufacturer": "Google",
         "model": "Connected Client",
+        "name_by_user": null,
         "name": "Windows device",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "f4a2992973da73421727c153c8af1496",
-        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487",
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": "config_entry",
-        "configuration_url": null
+        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487"
       },
       {
+        "area_id": null,
         "config_entries": [
           "358fa1c584d6a1db6d6146a4cdc384c5"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": "config_entry",
+        "entry_type": null,
+        "hw_version": null,
+        "id": "50b974ea3a57f7b2ecc8966feea9a547",
         "identifiers": [
           [
             "googlewifi",
@@ -2602,22 +2608,22 @@
         ],
         "manufacturer": "Google",
         "model": "Connected Client",
+        "name_by_user": null,
         "name": "Giom (Windows device)",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "50b974ea3a57f7b2ecc8966feea9a547",
-        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487",
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": "config_entry",
-        "configuration_url": null
+        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487"
       },
       {
+        "area_id": null,
         "config_entries": [
           "358fa1c584d6a1db6d6146a4cdc384c5"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": "config_entry",
+        "entry_type": null,
+        "hw_version": null,
+        "id": "bbf10431d928eabe909c20ed00073272",
         "identifiers": [
           [
             "googlewifi",
@@ -2626,22 +2632,22 @@
         ],
         "manufacturer": "Google",
         "model": "Connected Client",
+        "name_by_user": null,
         "name": "PC Claire (Windows device)",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "bbf10431d928eabe909c20ed00073272",
-        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487",
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": "config_entry",
-        "configuration_url": null
+        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487"
       },
       {
+        "area_id": null,
         "config_entries": [
           "358fa1c584d6a1db6d6146a4cdc384c5"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": "config_entry",
+        "entry_type": null,
+        "hw_version": null,
+        "id": "f194cf719fafd1f36c48f5694742177b",
         "identifiers": [
           [
             "googlewifi",
@@ -2650,22 +2656,22 @@
         ],
         "manufacturer": "Google",
         "model": "Connected Client",
+        "name_by_user": null,
         "name": "homeassistant (Raspberry Pi)",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "f194cf719fafd1f36c48f5694742177b",
-        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487",
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": "config_entry",
-        "configuration_url": null
+        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487"
       },
       {
+        "area_id": null,
         "config_entries": [
           "358fa1c584d6a1db6d6146a4cdc384c5"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": "config_entry",
+        "entry_type": null,
+        "hw_version": null,
+        "id": "4cff1ad016630a9caa456848055dbfbc",
         "identifiers": [
           [
             "googlewifi",
@@ -2674,22 +2680,22 @@
         ],
         "manufacturer": "Google",
         "model": "Connected Client",
+        "name_by_user": null,
         "name": "Windows device",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "4cff1ad016630a9caa456848055dbfbc",
-        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487",
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": "config_entry",
-        "configuration_url": null
+        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487"
       },
       {
+        "area_id": null,
         "config_entries": [
           "358fa1c584d6a1db6d6146a4cdc384c5"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": "config_entry",
+        "entry_type": null,
+        "hw_version": null,
+        "id": "559cfa455cc26ed9c26df85779b690e6",
         "identifiers": [
           [
             "googlewifi",
@@ -2698,22 +2704,22 @@
         ],
         "manufacturer": "Google",
         "model": "Connected Client",
+        "name_by_user": null,
         "name": "Unnamed device",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "559cfa455cc26ed9c26df85779b690e6",
-        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487",
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": "config_entry",
-        "configuration_url": null
+        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487"
       },
       {
+        "area_id": null,
         "config_entries": [
           "358fa1c584d6a1db6d6146a4cdc384c5"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": "config_entry",
+        "entry_type": null,
+        "hw_version": null,
+        "id": "e6a7bf9ebd6e078d73ecea08efc7bd08",
         "identifiers": [
           [
             "googlewifi",
@@ -2722,22 +2728,22 @@
         ],
         "manufacturer": "Google",
         "model": "Connected Client",
+        "name_by_user": null,
         "name": "ASTOR-QC (ASUS)",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "e6a7bf9ebd6e078d73ecea08efc7bd08",
-        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487",
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": "config_entry",
-        "configuration_url": null
+        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487"
       },
       {
+        "area_id": null,
         "config_entries": [
           "358fa1c584d6a1db6d6146a4cdc384c5"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": "config_entry",
+        "entry_type": null,
+        "hw_version": null,
+        "id": "bbc3c267621e8d8f5dd72b9e9682cf5f",
         "identifiers": [
           [
             "googlewifi",
@@ -2746,22 +2752,22 @@
         ],
         "manufacturer": "Google",
         "model": "Connected Client",
+        "name_by_user": null,
         "name": "Unnamed device",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "bbc3c267621e8d8f5dd72b9e9682cf5f",
-        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487",
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": "config_entry",
-        "configuration_url": null
+        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487"
       },
       {
+        "area_id": null,
         "config_entries": [
           "358fa1c584d6a1db6d6146a4cdc384c5"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": "config_entry",
+        "entry_type": null,
+        "hw_version": null,
+        "id": "f1f9fe3682a76c17f67a5f07fdfb2487",
         "identifiers": [
           [
             "googlewifi",
@@ -2770,22 +2776,22 @@
         ],
         "manufacturer": "Google",
         "model": "Google Wifi",
+        "name_by_user": null,
         "name": "Google Wifi System AAAAABBLhV4 Total Devices",
         "sw_version": "13729.57.24",
-        "hw_version": null,
-        "entry_type": null,
-        "id": "f1f9fe3682a76c17f67a5f07fdfb2487",
-        "via_device_id": null,
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": "config_entry",
-        "configuration_url": null
+        "via_device_id": null
       },
       {
+        "area_id": null,
         "config_entries": [
           "358fa1c584d6a1db6d6146a4cdc384c5"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": "config_entry",
+        "entry_type": null,
+        "hw_version": null,
+        "id": "e80b62bf6bf2c3adc0a036936b4e8fa4",
         "identifiers": [
           [
             "googlewifi",
@@ -2794,22 +2800,22 @@
         ],
         "manufacturer": "Google",
         "model": "Connected Client",
+        "name_by_user": null,
         "name": "Sous-sol Access Point",
         "sw_version": "13729.57.24",
-        "hw_version": null,
-        "entry_type": null,
-        "id": "e80b62bf6bf2c3adc0a036936b4e8fa4",
-        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487",
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": "config_entry",
-        "configuration_url": null
+        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487"
       },
       {
+        "area_id": null,
         "config_entries": [
           "358fa1c584d6a1db6d6146a4cdc384c5"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": "config_entry",
+        "entry_type": null,
+        "hw_version": null,
+        "id": "b4c15f7461d7b533f49729539475645a",
         "identifiers": [
           [
             "googlewifi",
@@ -2818,22 +2824,22 @@
         ],
         "manufacturer": "Google",
         "model": "Connected Client",
+        "name_by_user": null,
         "name": "Sous-sol Access Point",
         "sw_version": "13729.57.24",
-        "hw_version": null,
-        "entry_type": null,
-        "id": "b4c15f7461d7b533f49729539475645a",
-        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487",
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": "config_entry",
-        "configuration_url": null
+        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487"
       },
       {
+        "area_id": null,
         "config_entries": [
           "358fa1c584d6a1db6d6146a4cdc384c5"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": "config_entry",
+        "entry_type": null,
+        "hw_version": null,
+        "id": "d93654a27ce2480753035ed417912c9b",
         "identifiers": [
           [
             "googlewifi",
@@ -2842,22 +2848,22 @@
         ],
         "manufacturer": "Google",
         "model": "Connected Client",
+        "name_by_user": null,
         "name": "Bureau Access Point",
         "sw_version": "13729.57.24",
-        "hw_version": null,
-        "entry_type": null,
-        "id": "d93654a27ce2480753035ed417912c9b",
-        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487",
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": "config_entry",
-        "configuration_url": null
+        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487"
       },
       {
+        "area_id": null,
         "config_entries": [
           "358fa1c584d6a1db6d6146a4cdc384c5"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": "config_entry",
+        "entry_type": null,
+        "hw_version": null,
+        "id": "6860a48bd374642052bc6ae8d103bb9a",
         "identifiers": [
           [
             "googlewifi",
@@ -2866,22 +2872,22 @@
         ],
         "manufacturer": "Google",
         "model": "Connected Client",
+        "name_by_user": null,
         "name": "Salon Access Point",
         "sw_version": "13729.57.24",
-        "hw_version": null,
-        "entry_type": null,
-        "id": "6860a48bd374642052bc6ae8d103bb9a",
-        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487",
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": "config_entry",
-        "configuration_url": null
+        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487"
       },
       {
+        "area_id": null,
         "config_entries": [
           "358fa1c584d6a1db6d6146a4cdc384c5"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": "config_entry",
+        "entry_type": null,
+        "hw_version": null,
+        "id": "27a63bb07c33c99ac51ed256dc488099",
         "identifiers": [
           [
             "googlewifi",
@@ -2890,22 +2896,22 @@
         ],
         "manufacturer": "Google",
         "model": "Connected Client",
+        "name_by_user": null,
         "name": "Unnamed device",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "27a63bb07c33c99ac51ed256dc488099",
-        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487",
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": "config_entry",
-        "configuration_url": null
+        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487"
       },
       {
+        "area_id": null,
         "config_entries": [
           "358fa1c584d6a1db6d6146a4cdc384c5"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": "config_entry",
+        "entry_type": null,
+        "hw_version": null,
+        "id": "a7d8a679ffaab096e3e8c8072d784cab",
         "identifiers": [
           [
             "googlewifi",
@@ -2914,22 +2920,22 @@
         ],
         "manufacturer": "Google",
         "model": "Connected Client",
+        "name_by_user": null,
         "name": "LG Android device (LG)",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "a7d8a679ffaab096e3e8c8072d784cab",
-        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487",
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": "config_entry",
-        "configuration_url": null
+        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487"
       },
       {
+        "area_id": null,
         "config_entries": [
           "358fa1c584d6a1db6d6146a4cdc384c5"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": "config_entry",
+        "entry_type": null,
+        "hw_version": null,
+        "id": "6b6993af7ab93d2d71ba51bc6b034601",
         "identifiers": [
           [
             "googlewifi",
@@ -2938,22 +2944,22 @@
         ],
         "manufacturer": "Google",
         "model": "Connected Client",
+        "name_by_user": null,
         "name": "ASUS",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "6b6993af7ab93d2d71ba51bc6b034601",
-        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487",
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": "config_entry",
-        "configuration_url": null
+        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487"
       },
       {
+        "area_id": null,
         "config_entries": [
           "358fa1c584d6a1db6d6146a4cdc384c5"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": "config_entry",
+        "entry_type": null,
+        "hw_version": null,
+        "id": "cd05833dfa9a644b7120f61c895f01fd",
         "identifiers": [
           [
             "googlewifi",
@@ -2962,22 +2968,22 @@
         ],
         "manufacturer": "Google",
         "model": "Connected Client",
+        "name_by_user": null,
         "name": "Unnamed device",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "cd05833dfa9a644b7120f61c895f01fd",
-        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487",
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": "config_entry",
-        "configuration_url": null
+        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487"
       },
       {
+        "area_id": null,
         "config_entries": [
           "358fa1c584d6a1db6d6146a4cdc384c5"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": "config_entry",
+        "entry_type": null,
+        "hw_version": null,
+        "id": "4f0270333eeb05eb413cdce75c05841f",
         "identifiers": [
           [
             "googlewifi",
@@ -2986,22 +2992,22 @@
         ],
         "manufacturer": "Google",
         "model": "Connected Client",
+        "name_by_user": null,
         "name": "Unnamed device",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "4f0270333eeb05eb413cdce75c05841f",
-        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487",
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": "config_entry",
-        "configuration_url": null
+        "via_device_id": "f1f9fe3682a76c17f67a5f07fdfb2487"
       },
       {
+        "area_id": null,
         "config_entries": [
           "d93297bcd4718d8af2c2b5be798e50ca"
         ],
+        "configuration_url": "homeassistant://hassio/addon/core_google_assistant",
         "connections": [],
+        "disabled_by": null,
+        "entry_type": "service",
+        "hw_version": null,
+        "id": "c9c56adfc8f417cbc0e1628665d68fec",
         "identifiers": [
           [
             "hassio",
@@ -3010,22 +3016,22 @@
         ],
         "manufacturer": "Official add-ons",
         "model": "Home Assistant Add-on",
+        "name_by_user": null,
         "name": "Google Assistant SDK",
         "sw_version": "2.5.0",
-        "hw_version": null,
-        "entry_type": "service",
-        "id": "c9c56adfc8f417cbc0e1628665d68fec",
-        "via_device_id": null,
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": null,
-        "configuration_url": "homeassistant://hassio/addon/core_google_assistant"
+        "via_device_id": null
       },
       {
+        "area_id": null,
         "config_entries": [
           "d93297bcd4718d8af2c2b5be798e50ca"
         ],
+        "configuration_url": "homeassistant://hassio/addon/core_mosquitto",
         "connections": [],
+        "disabled_by": null,
+        "entry_type": "service",
+        "hw_version": null,
+        "id": "59fb1c3642ccc108415c7643c5a7dd60",
         "identifiers": [
           [
             "hassio",
@@ -3034,22 +3040,22 @@
         ],
         "manufacturer": "Official add-ons",
         "model": "Home Assistant Add-on",
+        "name_by_user": null,
         "name": "Mosquitto broker",
         "sw_version": "6.1.3",
-        "hw_version": null,
-        "entry_type": "service",
-        "id": "59fb1c3642ccc108415c7643c5a7dd60",
-        "via_device_id": null,
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": null,
-        "configuration_url": "homeassistant://hassio/addon/core_mosquitto"
+        "via_device_id": null
       },
       {
+        "area_id": null,
         "config_entries": [
           "d93297bcd4718d8af2c2b5be798e50ca"
         ],
+        "configuration_url": "homeassistant://hassio/addon/core_rpc_shutdown",
         "connections": [],
+        "disabled_by": null,
+        "entry_type": "service",
+        "hw_version": null,
+        "id": "6d83264617ce10d3be59a9db0df76340",
         "identifiers": [
           [
             "hassio",
@@ -3058,22 +3064,22 @@
         ],
         "manufacturer": "Official add-ons",
         "model": "Home Assistant Add-on",
+        "name_by_user": null,
         "name": "RPC Shutdown",
         "sw_version": "2.2",
-        "hw_version": null,
-        "entry_type": "service",
-        "id": "6d83264617ce10d3be59a9db0df76340",
-        "via_device_id": null,
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": null,
-        "configuration_url": "homeassistant://hassio/addon/core_rpc_shutdown"
+        "via_device_id": null
       },
       {
+        "area_id": null,
         "config_entries": [
           "d93297bcd4718d8af2c2b5be798e50ca"
         ],
+        "configuration_url": "homeassistant://hassio/addon/core_git_pull",
         "connections": [],
+        "disabled_by": null,
+        "entry_type": "service",
+        "hw_version": null,
+        "id": "a5ebfb5febd69ba6cc5055f8b8f48e8b",
         "identifiers": [
           [
             "hassio",
@@ -3082,51 +3088,51 @@
         ],
         "manufacturer": "Official add-ons",
         "model": "Home Assistant Add-on",
+        "name_by_user": null,
         "name": "Git pull",
         "sw_version": "7.13.1",
-        "hw_version": null,
-        "entry_type": "service",
-        "id": "a5ebfb5febd69ba6cc5055f8b8f48e8b",
-        "via_device_id": null,
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": null,
-        "configuration_url": "homeassistant://hassio/addon/core_git_pull"
+        "via_device_id": null
       },
       {
+        "area_id": null,
         "config_entries": [
           "9443db0bd6692a1b089cee3b3d5cbd06"
         ],
+        "configuration_url": null,
         "connections": [
           [
             "mac",
             "02:42:ac:1e:21:01"
           ]
         ],
+        "disabled_by": null,
+        "entry_type": null,
+        "hw_version": null,
+        "id": "b42594d4399e6515caf11194093c4fe0",
         "identifiers": [],
         "manufacturer": null,
         "model": null,
+        "name_by_user": null,
         "name": null,
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "b42594d4399e6515caf11194093c4fe0",
-        "via_device_id": null,
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": null,
-        "configuration_url": null
+        "via_device_id": null
       },
       {
+        "area_id": null,
         "config_entries": [
           "9443db0bd6692a1b089cee3b3d5cbd06"
         ],
+        "configuration_url": null,
         "connections": [
           [
             "zigbee",
             "00:0d:6f:ff:fe:30:60:53"
           ]
         ],
+        "disabled_by": null,
+        "entry_type": null,
+        "hw_version": null,
+        "id": "7b844cd7f969196edabd1ddc5fe00bdb",
         "identifiers": [
           [
             "deconz",
@@ -3135,27 +3141,27 @@
         ],
         "manufacturer": "IKEA of Sweden",
         "model": "TRADFRI signal repeater",
+        "name_by_user": null,
         "name": "Range extender",
         "sw_version": "2.0.019",
-        "hw_version": null,
-        "entry_type": null,
-        "id": "7b844cd7f969196edabd1ddc5fe00bdb",
-        "via_device_id": "7032749d1f2c26ac7b933aae68e57547",
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": null,
-        "configuration_url": null
+        "via_device_id": "7032749d1f2c26ac7b933aae68e57547"
       },
       {
+        "area_id": null,
         "config_entries": [
           "9443db0bd6692a1b089cee3b3d5cbd06"
         ],
+        "configuration_url": null,
         "connections": [
           [
             "zigbee",
             "00:15:8d:00:04:a0:71:4f"
           ]
         ],
+        "disabled_by": null,
+        "entry_type": null,
+        "hw_version": null,
+        "id": "144692f9b5a2090c70b16b86bf285bfd",
         "identifiers": [
           [
             "deconz",
@@ -3164,27 +3170,27 @@
         ],
         "manufacturer": "LUMI",
         "model": "lumi.sensor_wleak.aq1",
+        "name_by_user": null,
         "name": "Water Sensor",
         "sw_version": "20170721",
-        "hw_version": null,
-        "entry_type": null,
-        "id": "144692f9b5a2090c70b16b86bf285bfd",
-        "via_device_id": "7032749d1f2c26ac7b933aae68e57547",
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": null,
-        "configuration_url": null
+        "via_device_id": "7032749d1f2c26ac7b933aae68e57547"
       },
       {
+        "area_id": null,
         "config_entries": [
           "9443db0bd6692a1b089cee3b3d5cbd06"
         ],
+        "configuration_url": null,
         "connections": [
           [
             "zigbee",
             "28:6d:97:00:01:10:cd:26"
           ]
         ],
+        "disabled_by": null,
+        "entry_type": null,
+        "hw_version": null,
+        "id": "bd42176d16a1d12f6fde55c147476465",
         "identifiers": [
           [
             "deconz",
@@ -3193,27 +3199,27 @@
         ],
         "manufacturer": "Samjin",
         "model": "button",
+        "name_by_user": "Office button",
         "name": "Temperature 5",
         "sw_version": "",
-        "hw_version": null,
-        "entry_type": null,
-        "id": "bd42176d16a1d12f6fde55c147476465",
-        "via_device_id": "7032749d1f2c26ac7b933aae68e57547",
-        "area_id": null,
-        "name_by_user": "Office button",
-        "disabled_by": null,
-        "configuration_url": null
+        "via_device_id": "7032749d1f2c26ac7b933aae68e57547"
       },
       {
+        "area_id": null,
         "config_entries": [
           "9443db0bd6692a1b089cee3b3d5cbd06"
         ],
+        "configuration_url": null,
         "connections": [
           [
             "zigbee",
             "00:15:8d:00:04:0e:72:e0"
           ]
         ],
+        "disabled_by": null,
+        "entry_type": null,
+        "hw_version": null,
+        "id": "38d4996759ce33ffb241baa1410aafaf",
         "identifiers": [
           [
             "deconz",
@@ -3222,27 +3228,27 @@
         ],
         "manufacturer": "LUMI",
         "model": "lumi.sensor_ht",
+        "name_by_user": null,
         "name": "Basement",
         "sw_version": "",
-        "hw_version": null,
-        "entry_type": null,
-        "id": "38d4996759ce33ffb241baa1410aafaf",
-        "via_device_id": "7032749d1f2c26ac7b933aae68e57547",
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": null,
-        "configuration_url": null
+        "via_device_id": "7032749d1f2c26ac7b933aae68e57547"
       },
       {
+        "area_id": null,
         "config_entries": [
           "9443db0bd6692a1b089cee3b3d5cbd06"
         ],
+        "configuration_url": null,
         "connections": [
           [
             "zigbee",
             "00:15:8d:00:04:64:b6:5e"
           ]
         ],
+        "disabled_by": null,
+        "entry_type": null,
+        "hw_version": null,
+        "id": "d1d331cbcb5e3d6150012af861bc1f74",
         "identifiers": [
           [
             "deconz",
@@ -3251,27 +3257,27 @@
         ],
         "manufacturer": "LUMI",
         "model": "lumi.weather",
+        "name_by_user": null,
         "name": "Garage",
         "sw_version": "",
-        "hw_version": null,
-        "entry_type": null,
-        "id": "d1d331cbcb5e3d6150012af861bc1f74",
-        "via_device_id": "7032749d1f2c26ac7b933aae68e57547",
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": null,
-        "configuration_url": null
+        "via_device_id": "7032749d1f2c26ac7b933aae68e57547"
       },
       {
+        "area_id": null,
         "config_entries": [
           "9443db0bd6692a1b089cee3b3d5cbd06"
         ],
+        "configuration_url": null,
         "connections": [
           [
             "zigbee",
             "00:15:8d:00:04:0e:76:b8"
           ]
         ],
+        "disabled_by": null,
+        "entry_type": null,
+        "hw_version": null,
+        "id": "1f5c6499c979b7d1974fbe3871a1e30c",
         "identifiers": [
           [
             "deconz",
@@ -3280,27 +3286,27 @@
         ],
         "manufacturer": "LUMI",
         "model": "lumi.sensor_ht",
+        "name_by_user": null,
         "name": "Bedroom",
         "sw_version": "",
-        "hw_version": null,
-        "entry_type": null,
-        "id": "1f5c6499c979b7d1974fbe3871a1e30c",
-        "via_device_id": "7032749d1f2c26ac7b933aae68e57547",
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": null,
-        "configuration_url": null
+        "via_device_id": "7032749d1f2c26ac7b933aae68e57547"
       },
       {
+        "area_id": null,
         "config_entries": [
           "9443db0bd6692a1b089cee3b3d5cbd06"
         ],
+        "configuration_url": null,
         "connections": [
           [
             "zigbee",
             "00:15:8d:00:04:60:52:fc"
           ]
         ],
+        "disabled_by": null,
+        "entry_type": null,
+        "hw_version": null,
+        "id": "b537f6f2e66b48e2277cca345a94b54a",
         "identifiers": [
           [
             "deconz",
@@ -3309,27 +3315,27 @@
         ],
         "manufacturer": "LUMI",
         "model": "lumi.weather",
+        "name_by_user": null,
         "name": "Bathroom",
         "sw_version": "",
-        "hw_version": null,
-        "entry_type": null,
-        "id": "b537f6f2e66b48e2277cca345a94b54a",
-        "via_device_id": "7032749d1f2c26ac7b933aae68e57547",
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": null,
-        "configuration_url": null
+        "via_device_id": "7032749d1f2c26ac7b933aae68e57547"
       },
       {
+        "area_id": null,
         "config_entries": [
           "9443db0bd6692a1b089cee3b3d5cbd06"
         ],
+        "configuration_url": null,
         "connections": [
           [
             "zigbee",
             "cc:cc:cc:ff:fe:cf:8f:87"
           ]
         ],
+        "disabled_by": null,
+        "entry_type": null,
+        "hw_version": null,
+        "id": "2749c646e7fd030d3083c753273ced34",
         "identifiers": [
           [
             "deconz",
@@ -3338,27 +3344,27 @@
         ],
         "manufacturer": "IKEA of Sweden",
         "model": "TRADFRI motion sensor",
+        "name_by_user": null,
         "name": "Office Motion sensor",
         "sw_version": "2.0.022",
-        "hw_version": null,
-        "entry_type": null,
-        "id": "2749c646e7fd030d3083c753273ced34",
-        "via_device_id": "7032749d1f2c26ac7b933aae68e57547",
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": null,
-        "configuration_url": null
+        "via_device_id": "7032749d1f2c26ac7b933aae68e57547"
       },
       {
+        "area_id": null,
         "config_entries": [
           "9443db0bd6692a1b089cee3b3d5cbd06"
         ],
+        "configuration_url": null,
         "connections": [
           [
             "zigbee",
             "00:15:8d:00:04:01:6b:a8"
           ]
         ],
+        "disabled_by": null,
+        "entry_type": null,
+        "hw_version": null,
+        "id": "6c7afb06c4f08dcf118432443df4d522",
         "identifiers": [
           [
             "deconz",
@@ -3367,27 +3373,27 @@
         ],
         "manufacturer": "LUMI",
         "model": "lumi.sensor_magnet.aq2",
+        "name_by_user": null,
         "name": "Freezer door",
         "sw_version": "20161128",
-        "hw_version": null,
-        "entry_type": null,
-        "id": "6c7afb06c4f08dcf118432443df4d522",
-        "via_device_id": "7032749d1f2c26ac7b933aae68e57547",
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": null,
-        "configuration_url": null
+        "via_device_id": "7032749d1f2c26ac7b933aae68e57547"
       },
       {
+        "area_id": null,
         "config_entries": [
           "9443db0bd6692a1b089cee3b3d5cbd06"
         ],
+        "configuration_url": null,
         "connections": [
           [
             "zigbee",
             "cc:cc:cc:ff:fe:4e:86:12"
           ]
         ],
+        "disabled_by": null,
+        "entry_type": null,
+        "hw_version": null,
+        "id": "53e8f8e1deeb4e48e7b21d37dad788f3",
         "identifiers": [
           [
             "deconz",
@@ -3396,22 +3402,22 @@
         ],
         "manufacturer": "IKEA of Sweden",
         "model": "TRADFRI bulb E26 WW 806lm",
+        "name_by_user": "Couloir sous-sol",
         "name": "Couloir sous-sol",
         "sw_version": "2.1.022",
-        "hw_version": null,
-        "entry_type": null,
-        "id": "53e8f8e1deeb4e48e7b21d37dad788f3",
-        "via_device_id": "7032749d1f2c26ac7b933aae68e57547",
-        "area_id": null,
-        "name_by_user": "Couloir sous-sol",
-        "disabled_by": null,
-        "configuration_url": null
+        "via_device_id": "7032749d1f2c26ac7b933aae68e57547"
       },
       {
+        "area_id": null,
         "config_entries": [
           "9443db0bd6692a1b089cee3b3d5cbd06"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": null,
+        "entry_type": null,
+        "hw_version": null,
+        "id": "b8f70b97e0fe9f51eb27b40f27df59f9",
         "identifiers": [
           [
             "deconz",
@@ -3420,22 +3426,22 @@
         ],
         "manufacturer": "Dresden Elektronik",
         "model": "deCONZ group",
+        "name_by_user": null,
         "name": "Sous-sol",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "b8f70b97e0fe9f51eb27b40f27df59f9",
-        "via_device_id": "7032749d1f2c26ac7b933aae68e57547",
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": null,
-        "configuration_url": null
+        "via_device_id": "7032749d1f2c26ac7b933aae68e57547"
       },
       {
+        "area_id": null,
         "config_entries": [
           "36342a027a2874a4152d04ad709aaa19"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": null,
+        "entry_type": null,
+        "hw_version": null,
+        "id": "00fd0c22a86033399ba37ed5e0fc2e09",
         "identifiers": [
           [
             "mobile_app",
@@ -3444,22 +3450,22 @@
         ],
         "manufacturer": "Google",
         "model": "Pixel 4 XL",
+        "name_by_user": null,
         "name": "Pixel 4 XL",
         "sw_version": "32",
-        "hw_version": null,
-        "entry_type": null,
-        "id": "00fd0c22a86033399ba37ed5e0fc2e09",
-        "via_device_id": null,
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": null,
-        "configuration_url": null
+        "via_device_id": null
       },
       {
+        "area_id": null,
         "config_entries": [
           "d93297bcd4718d8af2c2b5be798e50ca"
         ],
+        "configuration_url": "homeassistant://hassio/addon/6a3d001f_assistant_relay",
         "connections": [],
+        "disabled_by": null,
+        "entry_type": "service",
+        "hw_version": null,
+        "id": "ed8109472108d92f1f386c964eb73b27",
         "identifiers": [
           [
             "hassio",
@@ -3468,27 +3474,27 @@
         ],
         "manufacturer": "Assistant Relay for Hassio",
         "model": "Home Assistant Add-on",
+        "name_by_user": null,
         "name": "Assistant Relay",
         "sw_version": "0.7.4",
-        "hw_version": null,
-        "entry_type": "service",
-        "id": "ed8109472108d92f1f386c964eb73b27",
-        "via_device_id": null,
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": null,
-        "configuration_url": "homeassistant://hassio/addon/6a3d001f_assistant_relay"
+        "via_device_id": null
       },
       {
+        "area_id": null,
         "config_entries": [
           "edd18c619f9e0c90fa7ef3c2415cb9af"
         ],
+        "configuration_url": null,
         "connections": [
           [
             "mac",
             "78:11:dc:79:60:af"
           ]
         ],
+        "disabled_by": null,
+        "entry_type": null,
+        "hw_version": null,
+        "id": "c725719cc474517afc1fc71f806c6edd",
         "identifiers": [
           [
             "mqtt",
@@ -3497,22 +3503,22 @@
         ],
         "manufacturer": "Xiaomi",
         "model": "Dafang",
+        "name_by_user": null,
         "name": "Xiaomi Dafang",
         "sw_version": "Dafang Hacks",
-        "hw_version": null,
-        "entry_type": null,
-        "id": "c725719cc474517afc1fc71f806c6edd",
-        "via_device_id": null,
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": null,
-        "configuration_url": null
+        "via_device_id": null
       },
       {
+        "area_id": null,
         "config_entries": [
           "31c62137ad35db7ee726384798c4757f"
         ],
+        "configuration_url": "https://www.speedtest.net/",
         "connections": [],
+        "disabled_by": null,
+        "entry_type": "service",
+        "hw_version": null,
+        "id": "b308daf38b565f8860cc59a41ade8d51",
         "identifiers": [
           [
             "speedtestdotnet",
@@ -3521,22 +3527,22 @@
         ],
         "manufacturer": null,
         "model": null,
+        "name_by_user": null,
         "name": "SpeedTest",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": "service",
-        "id": "b308daf38b565f8860cc59a41ade8d51",
-        "via_device_id": null,
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": null,
-        "configuration_url": "https://www.speedtest.net/"
+        "via_device_id": null
       },
       {
+        "area_id": null,
         "config_entries": [
           "b50271e7d7c0201424ba9afadf199a70"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": null,
+        "entry_type": null,
+        "hw_version": null,
+        "id": "afe6b7a9a496ec4edf8756563f71fc88",
         "identifiers": [
           [
             "cast",
@@ -3545,22 +3551,22 @@
         ],
         "manufacturer": "Google Inc.",
         "model": "Chromecast Ultra",
+        "name_by_user": null,
         "name": "Télé Salon",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "afe6b7a9a496ec4edf8756563f71fc88",
-        "via_device_id": null,
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": null,
-        "configuration_url": null
+        "via_device_id": null
       },
       {
+        "area_id": "office",
         "config_entries": [
           "a41688f80e798c908fc7948d95b4ca95"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": null,
+        "entry_type": null,
+        "hw_version": null,
+        "id": "d46e18f81ffadbf162f2d7d4ec0491a3",
         "identifiers": [
           [
             "yeelight",
@@ -3569,22 +3575,22 @@
         ],
         "manufacturer": "Yeelight",
         "model": "color",
+        "name_by_user": null,
         "name": "Yeelight Color 0x7e7452d",
         "sw_version": "65",
-        "hw_version": null,
-        "entry_type": null,
-        "id": "d46e18f81ffadbf162f2d7d4ec0491a3",
-        "via_device_id": null,
-        "area_id": "office",
-        "name_by_user": null,
-        "disabled_by": null,
-        "configuration_url": null
+        "via_device_id": null
       },
       {
+        "area_id": null,
         "config_entries": [
           "fcc20d3810238fda0f24797ae92b82ec"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": null,
+        "entry_type": null,
+        "hw_version": null,
+        "id": "0e2760a69502584cb21a1279b3767414",
         "identifiers": [
           [
             "mobile_app",
@@ -3593,22 +3599,22 @@
         ],
         "manufacturer": "Compal",
         "model": "Suunto 7",
+        "name_by_user": null,
         "name": "Suunto 7",
         "sw_version": "28",
-        "hw_version": null,
-        "entry_type": null,
-        "id": "0e2760a69502584cb21a1279b3767414",
-        "via_device_id": null,
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": null,
-        "configuration_url": null
+        "via_device_id": null
       },
       {
+        "area_id": null,
         "config_entries": [
           "77d142caf5b2319cc3d0b0b4b1449b80"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": null,
+        "entry_type": null,
+        "hw_version": null,
+        "id": "a3aee634909457c93b311b729e37c27b",
         "identifiers": [
           [
             "sleep_as_android",
@@ -3617,22 +3623,22 @@
         ],
         "manufacturer": "SleepAsAndroid",
         "model": "MQTT",
+        "name_by_user": null,
         "name": "SleepAsAndroid_Pixel4XL",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "a3aee634909457c93b311b729e37c27b",
-        "via_device_id": null,
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": null,
-        "configuration_url": null
+        "via_device_id": null
       },
       {
+        "area_id": null,
         "config_entries": [
           "c355c32ceda8a168625e88ecdfa0a7bb"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": null,
+        "entry_type": null,
+        "hw_version": null,
+        "id": "479488c2783c622da40d50e2f0c65288",
         "identifiers": [
           [
             "mobile_app",
@@ -3641,22 +3647,22 @@
         ],
         "manufacturer": "Compal",
         "model": "Suunto 7",
+        "name_by_user": null,
         "name": "Suunto 7",
         "sw_version": "28",
-        "hw_version": null,
-        "entry_type": null,
-        "id": "479488c2783c622da40d50e2f0c65288",
-        "via_device_id": null,
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": null,
-        "configuration_url": null
+        "via_device_id": null
       },
       {
+        "area_id": null,
         "config_entries": [
           "b50271e7d7c0201424ba9afadf199a70"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": null,
+        "entry_type": null,
+        "hw_version": null,
+        "id": "24cb73c518eefa33e318dd04f9e5ab10",
         "identifiers": [
           [
             "cast",
@@ -3665,22 +3671,22 @@
         ],
         "manufacturer": "Google Inc.",
         "model": "Google Home Mini",
+        "name_by_user": null,
         "name": "Salle de bain",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "24cb73c518eefa33e318dd04f9e5ab10",
-        "via_device_id": null,
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": null,
-        "configuration_url": null
+        "via_device_id": null
       },
       {
+        "area_id": null,
         "config_entries": [
           "d93297bcd4718d8af2c2b5be798e50ca"
         ],
+        "configuration_url": "homeassistant://hassio/addon/core_duckdns",
         "connections": [],
+        "disabled_by": null,
+        "entry_type": "service",
+        "hw_version": null,
+        "id": "135c313c89b73eca72c8642095cb30c7",
         "identifiers": [
           [
             "hassio",
@@ -3689,22 +3695,22 @@
         ],
         "manufacturer": "Official add-ons",
         "model": "Home Assistant Add-on",
+        "name_by_user": null,
         "name": "Duck DNS",
         "sw_version": "1.15.0",
-        "hw_version": null,
-        "entry_type": "service",
-        "id": "135c313c89b73eca72c8642095cb30c7",
-        "via_device_id": null,
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": null,
-        "configuration_url": "homeassistant://hassio/addon/core_duckdns"
+        "via_device_id": null
       },
       {
+        "area_id": null,
         "config_entries": [
           "236fa91c4f1ec2ed52ee981861fdaeda"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": null,
+        "entry_type": "service",
+        "hw_version": null,
+        "id": "4c6af2e4e228bbace6f1e7eb39c434a2",
         "identifiers": [
           [
             "Home Assistant",
@@ -3713,22 +3719,22 @@
         ],
         "manufacturer": "Home Assistant",
         "model": null,
+        "name_by_user": null,
         "name": "Home Assistant Version",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": "service",
-        "id": "4c6af2e4e228bbace6f1e7eb39c434a2",
-        "via_device_id": null,
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": null,
-        "configuration_url": null
+        "via_device_id": null
       },
       {
+        "area_id": null,
         "config_entries": [
           "b50271e7d7c0201424ba9afadf199a70"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": null,
+        "entry_type": null,
+        "hw_version": null,
+        "id": "54a8a185141352698488b7a5e6228adc",
         "identifiers": [
           [
             "cast",
@@ -3737,22 +3743,22 @@
         ],
         "manufacturer": "Google Inc.",
         "model": "Google Cast Group",
+        "name_by_user": null,
         "name": "Partout",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "54a8a185141352698488b7a5e6228adc",
-        "via_device_id": null,
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": null,
-        "configuration_url": null
+        "via_device_id": null
       },
       {
+        "area_id": "",
         "config_entries": [
           "ef3867cf200be1310e60f1b4f282fc8c"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": null,
+        "entry_type": null,
+        "hw_version": null,
+        "id": "e038c4749ed521a1d72b160a4163447a",
         "identifiers": [
           [
             "kia_uvo",
@@ -3761,27 +3767,27 @@
         ],
         "manufacturer": "Kia",
         "model": "EV6",
+        "name_by_user": null,
         "name": "Bleuette",
         "sw_version": "2022-03-11 22:04:22.599",
-        "hw_version": null,
-        "entry_type": null,
-        "id": "e038c4749ed521a1d72b160a4163447a",
-        "via_device_id": "e038c4749ed521a1d72b160a4163447a",
-        "area_id": "",
-        "name_by_user": null,
-        "disabled_by": null,
-        "configuration_url": null
+        "via_device_id": "e038c4749ed521a1d72b160a4163447a"
       },
       {
+        "area_id": null,
         "config_entries": [
           "9443db0bd6692a1b089cee3b3d5cbd06"
         ],
+        "configuration_url": null,
         "connections": [
           [
             "zigbee",
             "0c:43:14:ff:fe:f6:2c:8a"
           ]
         ],
+        "disabled_by": null,
+        "entry_type": null,
+        "hw_version": null,
+        "id": "d437e500bc37e2cbd9119d9ae51214bf",
         "identifiers": [
           [
             "deconz",
@@ -3790,22 +3796,22 @@
         ],
         "manufacturer": "_TZ3000_vzopcetz",
         "model": "TS011F",
+        "name_by_user": null,
         "name": "On/Off plug-in unit 8",
         "sw_version": "70",
-        "hw_version": null,
-        "entry_type": null,
-        "id": "d437e500bc37e2cbd9119d9ae51214bf",
-        "via_device_id": "7032749d1f2c26ac7b933aae68e57547",
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": null,
-        "configuration_url": null
+        "via_device_id": "7032749d1f2c26ac7b933aae68e57547"
       },
       {
+        "area_id": null,
         "config_entries": [
           "9443db0bd6692a1b089cee3b3d5cbd06"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": null,
+        "entry_type": null,
+        "hw_version": null,
+        "id": "c298990dd4aa3d88b3b8844d0d495e99",
         "identifiers": [
           [
             "deconz",
@@ -3814,27 +3820,27 @@
         ],
         "manufacturer": "Dresden Elektronik",
         "model": "deCONZ group",
+        "name_by_user": null,
         "name": "Bureau",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "c298990dd4aa3d88b3b8844d0d495e99",
-        "via_device_id": "7032749d1f2c26ac7b933aae68e57547",
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": null,
-        "configuration_url": null
+        "via_device_id": "7032749d1f2c26ac7b933aae68e57547"
       },
       {
+        "area_id": null,
         "config_entries": [
           "9443db0bd6692a1b089cee3b3d5cbd06"
         ],
+        "configuration_url": null,
         "connections": [
           [
             "zigbee",
             "cc:86:ec:ff:fe:16:79:dd"
           ]
         ],
+        "disabled_by": null,
+        "entry_type": null,
+        "hw_version": null,
+        "id": "f1e7b29bd824ec88bdf7a3b1a2f58916",
         "identifiers": [
           [
             "deconz",
@@ -3843,22 +3849,22 @@
         ],
         "manufacturer": "LIDL Livarno Lux",
         "model": "HG06104A",
+        "name_by_user": null,
         "name": "Extended color light 2",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "f1e7b29bd824ec88bdf7a3b1a2f58916",
-        "via_device_id": "7032749d1f2c26ac7b933aae68e57547",
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": null,
-        "configuration_url": null
+        "via_device_id": "7032749d1f2c26ac7b933aae68e57547"
       },
       {
+        "area_id": null,
         "config_entries": [
           "b50271e7d7c0201424ba9afadf199a70"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": null,
+        "entry_type": null,
+        "hw_version": null,
+        "id": "6dfd29939dd89b791955960ac80d0455",
         "identifiers": [
           [
             "cast",
@@ -3867,22 +3873,22 @@
         ],
         "manufacturer": "Google Inc.",
         "model": "Nest Audio",
+        "name_by_user": null,
         "name": "Gogol Audio",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "6dfd29939dd89b791955960ac80d0455",
-        "via_device_id": null,
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": null,
-        "configuration_url": null
+        "via_device_id": null
       },
       {
+        "area_id": null,
         "config_entries": [
           "b50271e7d7c0201424ba9afadf199a70"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": null,
+        "entry_type": null,
+        "hw_version": null,
+        "id": "75f433218c2b6a4b0ef9b64c70cc427a",
         "identifiers": [
           [
             "cast",
@@ -3891,22 +3897,22 @@
         ],
         "manufacturer": "Google Inc.",
         "model": "Google Home Mini",
-        "name": "Autres 2",
-        "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "75f433218c2b6a4b0ef9b64c70cc427a",
-        "via_device_id": null,
-        "area_id": null,
         "name_by_user": null,
-        "disabled_by": null,
-        "configuration_url": null
+        "name": "Mini cuisine",
+        "sw_version": null,
+        "via_device_id": null
       },
       {
+        "area_id": null,
         "config_entries": [
           "d93297bcd4718d8af2c2b5be798e50ca"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": null,
+        "entry_type": "service",
+        "hw_version": null,
+        "id": "102e1803d59ceaa1202791c594507ac4",
         "identifiers": [
           [
             "hassio",
@@ -3915,22 +3921,22 @@
         ],
         "manufacturer": "Home Assistant",
         "model": "Home Assistant Core",
-        "name": "Home Assistant Core",
-        "sw_version": "2022.8.7",
-        "hw_version": null,
-        "entry_type": "service",
-        "id": "102e1803d59ceaa1202791c594507ac4",
-        "via_device_id": null,
-        "area_id": null,
         "name_by_user": null,
-        "disabled_by": null,
-        "configuration_url": null
+        "name": "Home Assistant Core",
+        "sw_version": "2022.10.1",
+        "via_device_id": null
       },
       {
+        "area_id": null,
         "config_entries": [
           "d93297bcd4718d8af2c2b5be798e50ca"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": null,
+        "entry_type": "service",
+        "hw_version": null,
+        "id": "e4d8900ea75279f0ac9b1a5ad404d4e4",
         "identifiers": [
           [
             "hassio",
@@ -3939,22 +3945,22 @@
         ],
         "manufacturer": "Home Assistant",
         "model": "Home Assistant Supervisor",
-        "name": "Home Assistant Supervisor",
-        "sw_version": "2022.08.5",
-        "hw_version": null,
-        "entry_type": "service",
-        "id": "e4d8900ea75279f0ac9b1a5ad404d4e4",
-        "via_device_id": null,
-        "area_id": null,
         "name_by_user": null,
-        "disabled_by": null,
-        "configuration_url": null
+        "name": "Home Assistant Supervisor",
+        "sw_version": "2022.10.0",
+        "via_device_id": null
       },
       {
+        "area_id": null,
         "config_entries": [
           "d93297bcd4718d8af2c2b5be798e50ca"
         ],
+        "configuration_url": "homeassistant://hassio/addon/a0d7b954_influxdb",
         "connections": [],
+        "disabled_by": null,
+        "entry_type": "service",
+        "hw_version": null,
+        "id": "b31914b0337c64745524512a7605ad1b",
         "identifiers": [
           [
             "hassio",
@@ -3963,22 +3969,22 @@
         ],
         "manufacturer": "Home Assistant Community Add-ons",
         "model": "Home Assistant Add-on",
+        "name_by_user": null,
         "name": "InfluxDB",
         "sw_version": "4.5.0",
-        "hw_version": null,
-        "entry_type": "service",
-        "id": "b31914b0337c64745524512a7605ad1b",
-        "via_device_id": null,
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": null,
-        "configuration_url": "homeassistant://hassio/addon/a0d7b954_influxdb"
+        "via_device_id": null
       },
       {
+        "area_id": null,
         "config_entries": [
           "d307abc40bdd56f63d74cc49de23df0a"
         ],
+        "configuration_url": "homeassistant://hacs",
         "connections": [],
+        "disabled_by": null,
+        "entry_type": "service",
+        "hw_version": null,
+        "id": "aee06c053b98972b7fe4add3f9531d18",
         "identifiers": [
           [
             "hacs",
@@ -3987,22 +3993,22 @@
         ],
         "manufacturer": "iantrich, engrbm",
         "model": "integration",
+        "name_by_user": null,
         "name": "Trakt",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": "service",
-        "id": "aee06c053b98972b7fe4add3f9531d18",
-        "via_device_id": null,
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": null,
-        "configuration_url": "homeassistant://hacs"
+        "via_device_id": null
       },
       {
+        "area_id": null,
         "config_entries": [
           "d307abc40bdd56f63d74cc49de23df0a"
         ],
+        "configuration_url": "homeassistant://hacs",
         "connections": [],
+        "disabled_by": null,
+        "entry_type": "service",
+        "hw_version": null,
+        "id": "dbe2b0381f650bf53a343968c2569e98",
         "identifiers": [
           [
             "hacs",
@@ -4011,22 +4017,22 @@
         ],
         "manufacturer": "iantrich, swetoast",
         "model": "integration",
+        "name_by_user": null,
         "name": "Untappd",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": "service",
-        "id": "dbe2b0381f650bf53a343968c2569e98",
-        "via_device_id": null,
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": null,
-        "configuration_url": "homeassistant://hacs"
+        "via_device_id": null
       },
       {
+        "area_id": null,
         "config_entries": [
           "d307abc40bdd56f63d74cc49de23df0a"
         ],
+        "configuration_url": "homeassistant://hacs",
         "connections": [],
+        "disabled_by": null,
+        "entry_type": "service",
+        "hw_version": null,
+        "id": "083872c1c529711cdfccac1f329a635d",
         "identifiers": [
           [
             "hacs",
@@ -4035,22 +4041,22 @@
         ],
         "manufacturer": "djtimca",
         "model": "integration",
+        "name_by_user": null,
         "name": "Google WiFi",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": "service",
-        "id": "083872c1c529711cdfccac1f329a635d",
-        "via_device_id": null,
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": null,
-        "configuration_url": "homeassistant://hacs"
+        "via_device_id": null
       },
       {
+        "area_id": null,
         "config_entries": [
           "d307abc40bdd56f63d74cc49de23df0a"
         ],
+        "configuration_url": "homeassistant://hacs",
         "connections": [],
+        "disabled_by": null,
+        "entry_type": "service",
+        "hw_version": null,
+        "id": "da28fb0cdc9dc626834668bbc82bcc9b",
         "identifiers": [
           [
             "hacs",
@@ -4059,22 +4065,22 @@
         ],
         "manufacturer": "leikoilja, DurgNomis-drol, ArnyminerZ, KapJI",
         "model": "integration",
+        "name_by_user": null,
         "name": "Google Home",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": "service",
-        "id": "da28fb0cdc9dc626834668bbc82bcc9b",
-        "via_device_id": null,
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": null,
-        "configuration_url": "homeassistant://hacs"
+        "via_device_id": null
       },
       {
+        "area_id": null,
         "config_entries": [
           "d307abc40bdd56f63d74cc49de23df0a"
         ],
+        "configuration_url": "homeassistant://hacs",
         "connections": [],
+        "disabled_by": null,
+        "entry_type": "service",
+        "hw_version": null,
+        "id": "3a0a3183847188b2e3bf1fec043d9630",
         "identifiers": [
           [
             "hacs",
@@ -4083,22 +4089,22 @@
         ],
         "manufacturer": "",
         "model": "integration",
+        "name_by_user": null,
         "name": "fontawesome",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": "service",
-        "id": "3a0a3183847188b2e3bf1fec043d9630",
-        "via_device_id": null,
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": null,
-        "configuration_url": "homeassistant://hacs"
+        "via_device_id": null
       },
       {
+        "area_id": null,
         "config_entries": [
           "d307abc40bdd56f63d74cc49de23df0a"
         ],
+        "configuration_url": "homeassistant://hacs",
         "connections": [],
+        "disabled_by": null,
+        "entry_type": "service",
+        "hw_version": null,
+        "id": "83a1d9ff86d16eed53850b0a99eaaaab",
         "identifiers": [
           [
             "hacs",
@@ -4107,22 +4113,22 @@
         ],
         "manufacturer": "",
         "model": "plugin",
+        "name_by_user": null,
         "name": "mini-graph-card",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": "service",
-        "id": "83a1d9ff86d16eed53850b0a99eaaaab",
-        "via_device_id": null,
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": null,
-        "configuration_url": "homeassistant://hacs"
+        "via_device_id": null
       },
       {
+        "area_id": null,
         "config_entries": [
           "d307abc40bdd56f63d74cc49de23df0a"
         ],
+        "configuration_url": "homeassistant://hacs",
         "connections": [],
+        "disabled_by": null,
+        "entry_type": "service",
+        "hw_version": null,
+        "id": "e5a7860c79969c920b9f49a7c9340aa1",
         "identifiers": [
           [
             "hacs",
@@ -4131,22 +4137,22 @@
         ],
         "manufacturer": "cyberjunky",
         "model": "integration",
+        "name_by_user": null,
         "name": "Google Fit",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": "service",
-        "id": "e5a7860c79969c920b9f49a7c9340aa1",
-        "via_device_id": null,
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": null,
-        "configuration_url": "homeassistant://hacs"
+        "via_device_id": null
       },
       {
+        "area_id": null,
         "config_entries": [
           "d307abc40bdd56f63d74cc49de23df0a"
         ],
+        "configuration_url": "homeassistant://hacs",
         "connections": [],
+        "disabled_by": null,
+        "entry_type": "service",
+        "hw_version": null,
+        "id": "c2c9bee1db3fef020e7a7524c0f68e88",
         "identifiers": [
           [
             "hacs",
@@ -4155,22 +4161,22 @@
         ],
         "manufacturer": "JoshuaMulliken",
         "model": "integration",
+        "name_by_user": null,
         "name": "Wyze",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": "service",
-        "id": "c2c9bee1db3fef020e7a7524c0f68e88",
-        "via_device_id": null,
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": null,
-        "configuration_url": "homeassistant://hacs"
+        "via_device_id": null
       },
       {
+        "area_id": null,
         "config_entries": [
           "d307abc40bdd56f63d74cc49de23df0a"
         ],
+        "configuration_url": "homeassistant://hacs",
         "connections": [],
+        "disabled_by": null,
+        "entry_type": "service",
+        "hw_version": null,
+        "id": "d174201ed96a66cd0f64ea63bd207223",
         "identifiers": [
           [
             "hacs",
@@ -4179,22 +4185,22 @@
         ],
         "manufacturer": "IATkachenko",
         "model": "integration",
+        "name_by_user": null,
         "name": "Sleep As Android",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": "service",
-        "id": "d174201ed96a66cd0f64ea63bd207223",
-        "via_device_id": null,
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": null,
-        "configuration_url": "homeassistant://hacs"
+        "via_device_id": null
       },
       {
+        "area_id": null,
         "config_entries": [
           "d307abc40bdd56f63d74cc49de23df0a"
         ],
+        "configuration_url": "homeassistant://hacs",
         "connections": [],
+        "disabled_by": null,
+        "entry_type": "service",
+        "hw_version": null,
+        "id": "1a31a3c555afa6a7768c4686a2ac04a0",
         "identifiers": [
           [
             "hacs",
@@ -4203,22 +4209,22 @@
         ],
         "manufacturer": "fuatakgun",
         "model": "integration",
+        "name_by_user": null,
         "name": "Kia Uvo / Hyundai Bluelink",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": "service",
-        "id": "1a31a3c555afa6a7768c4686a2ac04a0",
-        "via_device_id": null,
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": null,
-        "configuration_url": "homeassistant://hacs"
+        "via_device_id": null
       },
       {
+        "area_id": null,
         "config_entries": [
           "d307abc40bdd56f63d74cc49de23df0a"
         ],
+        "configuration_url": "homeassistant://hacs",
         "connections": [],
+        "disabled_by": null,
+        "entry_type": "service",
+        "hw_version": null,
+        "id": "273ee1b6e2e134a1dc86086c9be7ec0d",
         "identifiers": [
           [
             "hacs",
@@ -4227,22 +4233,22 @@
         ],
         "manufacturer": "saniho",
         "model": "integration",
+        "name_by_user": null,
         "name": "⚡ myEnedis sensor",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": "service",
-        "id": "273ee1b6e2e134a1dc86086c9be7ec0d",
-        "via_device_id": null,
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": null,
-        "configuration_url": "homeassistant://hacs"
+        "via_device_id": null
       },
       {
+        "area_id": null,
         "config_entries": [
           "d307abc40bdd56f63d74cc49de23df0a"
         ],
+        "configuration_url": "homeassistant://hacs",
         "connections": [],
+        "disabled_by": null,
+        "entry_type": "service",
+        "hw_version": null,
+        "id": "1453674f5132f39678971a4cc4871859",
         "identifiers": [
           [
             "hacs",
@@ -4251,22 +4257,22 @@
         ],
         "manufacturer": "",
         "model": "plugin",
+        "name_by_user": null,
         "name": "Linky Content Card",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": "service",
-        "id": "1453674f5132f39678971a4cc4871859",
-        "via_device_id": null,
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": null,
-        "configuration_url": "homeassistant://hacs"
+        "via_device_id": null
       },
       {
+        "area_id": "office",
         "config_entries": [
           "fa00f9252e96df201efd74b72c6f5e05"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": null,
+        "entry_type": "service",
+        "hw_version": null,
+        "id": "58e8b4a54ddf63241fd62290ef688d00",
         "identifiers": [
           [
             "mutesync",
@@ -4275,22 +4281,22 @@
         ],
         "manufacturer": "mütesync",
         "model": "mutesync app",
+        "name_by_user": null,
         "name": "mutesync",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": "service",
-        "id": "58e8b4a54ddf63241fd62290ef688d00",
-        "via_device_id": null,
-        "area_id": "office",
-        "name_by_user": null,
-        "disabled_by": null,
-        "configuration_url": null
+        "via_device_id": null
       },
       {
+        "area_id": null,
         "config_entries": [
           "77d142caf5b2319cc3d0b0b4b1449b80"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": null,
+        "entry_type": null,
+        "hw_version": null,
+        "id": "92a82fab4fd96f97ec181296117bab24",
         "identifiers": [
           [
             "sleep_as_android",
@@ -4299,22 +4305,22 @@
         ],
         "manufacturer": "SleepAsAndroid",
         "model": "MQTT",
+        "name_by_user": null,
         "name": "SleepAsAndroid_Pixel6Pro",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": null,
-        "id": "92a82fab4fd96f97ec181296117bab24",
-        "via_device_id": null,
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": null,
-        "configuration_url": null
+        "via_device_id": null
       },
       {
+        "area_id": null,
         "config_entries": [
           "d307abc40bdd56f63d74cc49de23df0a"
         ],
+        "configuration_url": "homeassistant://hacs",
         "connections": [],
+        "disabled_by": null,
+        "entry_type": "service",
+        "hw_version": null,
+        "id": "26d63681324cd045ebacc0e24a3098a9",
         "identifiers": [
           [
             "hacs",
@@ -4323,27 +4329,27 @@
         ],
         "manufacturer": "chris60600",
         "model": "integration",
+        "name_by_user": null,
         "name": "Pollens",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": "service",
-        "id": "26d63681324cd045ebacc0e24a3098a9",
-        "via_device_id": null,
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": null,
-        "configuration_url": "homeassistant://hacs"
+        "via_device_id": null
       },
       {
+        "area_id": "office",
         "config_entries": [
           "afb514890e0696b65fd18511c8073520"
         ],
+        "configuration_url": "https://4l0p1uzt.fbxos.fr:11759/",
         "connections": [
           [
             "mac",
             "20:66:cf:1b:bf:04"
           ]
         ],
+        "disabled_by": null,
+        "entry_type": null,
+        "hw_version": null,
+        "id": "0aa0353c6156bf04ce28a47f0e3f7d10",
         "identifiers": [
           [
             "freebox",
@@ -4352,22 +4358,22 @@
         ],
         "manufacturer": "Freebox SAS",
         "model": null,
+        "name_by_user": null,
         "name": "Freebox v7 (r1)",
         "sw_version": "4.6.3",
-        "hw_version": null,
-        "entry_type": null,
-        "id": "0aa0353c6156bf04ce28a47f0e3f7d10",
-        "via_device_id": null,
-        "area_id": "office",
-        "name_by_user": null,
-        "disabled_by": null,
-        "configuration_url": "https://4l0p1uzt.fbxos.fr:11759/"
+        "via_device_id": null
       },
       {
+        "area_id": null,
         "config_entries": [
           "6b103aa6bc3ff9a7ccaf4839f54e104f"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": null,
+        "entry_type": "service",
+        "hw_version": null,
+        "id": "5224ba7d2ccc6c0032a1f0188f98559c",
         "identifiers": [
           [
             "uptime",
@@ -4376,22 +4382,22 @@
         ],
         "manufacturer": null,
         "model": null,
+        "name_by_user": null,
         "name": "Uptime",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": "service",
-        "id": "5224ba7d2ccc6c0032a1f0188f98559c",
-        "via_device_id": null,
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": null,
-        "configuration_url": null
+        "via_device_id": null
       },
       {
+        "area_id": null,
         "config_entries": [
           "65afcbb9edb654505878f6d0f868d0eb"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": null,
+        "entry_type": "service",
+        "hw_version": null,
+        "id": "1e9d06e0eda7eeeb18cc408eb452c0bb",
         "identifiers": [
           [
             "moon",
@@ -4400,22 +4406,22 @@
         ],
         "manufacturer": null,
         "model": null,
+        "name_by_user": null,
         "name": "Moon",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": "service",
-        "id": "1e9d06e0eda7eeeb18cc408eb452c0bb",
-        "via_device_id": null,
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": null,
-        "configuration_url": null
+        "via_device_id": null
       },
       {
+        "area_id": null,
         "config_entries": [
           "218df22387053c8ae0622c06e1b1dfd4"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": null,
+        "entry_type": "service",
+        "hw_version": null,
+        "id": "af53ee68620225b5b6c6bc08c3ca794c",
         "identifiers": [
           [
             "season",
@@ -4424,22 +4430,22 @@
         ],
         "manufacturer": null,
         "model": null,
+        "name_by_user": null,
         "name": "Season",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": "service",
-        "id": "af53ee68620225b5b6c6bc08c3ca794c",
-        "via_device_id": null,
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": null,
-        "configuration_url": null
+        "via_device_id": null
       },
       {
+        "area_id": null,
         "config_entries": [
           "7dbff526dbf24ebf842c999b33ae3864"
         ],
+        "configuration_url": "https://weather.gc.ca/",
         "connections": [],
+        "disabled_by": null,
+        "entry_type": "service",
+        "hw_version": null,
+        "id": "183e28babeaf16dbe586cb2e75bd7e7d",
         "identifiers": [
           [
             "environment_canada",
@@ -4448,22 +4454,22 @@
         ],
         "manufacturer": "Environment Canada",
         "model": null,
+        "name_by_user": null,
         "name": "Vanier",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": "service",
-        "id": "183e28babeaf16dbe586cb2e75bd7e7d",
-        "via_device_id": null,
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": null,
-        "configuration_url": "https://weather.gc.ca/"
+        "via_device_id": null
       },
       {
+        "area_id": null,
         "config_entries": [
           "66a08589d058e5a84e684cf0d9b88867"
         ],
+        "configuration_url": null,
         "connections": [],
+        "disabled_by": null,
+        "entry_type": "service",
+        "hw_version": null,
+        "id": "bd000c0ebf6ddc3a7e43ead777568c56",
         "identifiers": [
           [
             "google_assistant",
@@ -4472,22 +4478,22 @@
         ],
         "manufacturer": "Google",
         "model": "Google Assistant",
+        "name_by_user": null,
         "name": "home-assistant-268316",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": "service",
-        "id": "bd000c0ebf6ddc3a7e43ead777568c56",
-        "via_device_id": null,
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": null,
-        "configuration_url": null
+        "via_device_id": null
       },
       {
+        "area_id": null,
         "config_entries": [
           "d307abc40bdd56f63d74cc49de23df0a"
         ],
+        "configuration_url": "homeassistant://hacs",
         "connections": [],
+        "disabled_by": null,
+        "entry_type": "service",
+        "hw_version": null,
+        "id": "9bb5cd88431542175d752fc375d25a71",
         "identifiers": [
           [
             "hacs",
@@ -4496,22 +4502,22 @@
         ],
         "manufacturer": "AlexxIT",
         "model": "integration",
+        "name_by_user": null,
         "name": "Sonoff LAN",
         "sw_version": null,
-        "hw_version": null,
-        "entry_type": "service",
-        "id": "9bb5cd88431542175d752fc375d25a71",
-        "via_device_id": null,
-        "area_id": null,
-        "name_by_user": null,
-        "disabled_by": null,
-        "configuration_url": "homeassistant://hacs"
+        "via_device_id": null
       },
       {
+        "area_id": null,
         "config_entries": [
           "d93297bcd4718d8af2c2b5be798e50ca"
         ],
+        "configuration_url": "homeassistant://hassio/addon/f4f71350_ewelink_smart_home_slug",
         "connections": [],
+        "disabled_by": null,
+        "entry_type": "service",
+        "hw_version": null,
+        "id": "261b9afb450791c6258cb21692286e1c",
         "identifiers": [
           [
             "hassio",
@@ -4520,16 +4526,184 @@
         ],
         "manufacturer": "eWeLink add-ons",
         "model": "Home Assistant Add-on",
-        "name": "eWeLink Smart Home",
-        "sw_version": "1.2.9",
-        "hw_version": null,
-        "entry_type": "service",
-        "id": "261b9afb450791c6258cb21692286e1c",
-        "via_device_id": null,
-        "area_id": null,
         "name_by_user": null,
+        "name": "eWeLink Smart Home",
+        "sw_version": "1.3.3",
+        "via_device_id": null
+      },
+      {
+        "area_id": null,
+        "config_entries": [
+          "d307abc40bdd56f63d74cc49de23df0a"
+        ],
+        "configuration_url": "homeassistant://hacs",
+        "connections": [],
         "disabled_by": null,
-        "configuration_url": "homeassistant://hassio/addon/f4f71350_ewelink_smart_home_slug"
+        "entry_type": "service",
+        "hw_version": null,
+        "id": "240ffa1553300823abfdda30038892b4",
+        "identifiers": [
+          [
+            "hacs",
+            "444350375"
+          ]
+        ],
+        "manufacturer": "",
+        "model": "plugin",
+        "name_by_user": null,
+        "name": "Mushroom",
+        "sw_version": null,
+        "via_device_id": null
+      },
+      {
+        "area_id": null,
+        "config_entries": [
+          "77d142caf5b2319cc3d0b0b4b1449b80"
+        ],
+        "configuration_url": null,
+        "connections": [],
+        "disabled_by": null,
+        "entry_type": null,
+        "hw_version": null,
+        "id": "16331c77a3c75b8c2c277ba85538b345",
+        "identifiers": [
+          [
+            "sleep_as_android",
+            "SleepAsAndroid_Pixel7Pro"
+          ]
+        ],
+        "manufacturer": "SleepAsAndroid",
+        "model": "MQTT",
+        "name_by_user": null,
+        "name": "SleepAsAndroid_Pixel7Pro",
+        "sw_version": null,
+        "via_device_id": null
+      },
+      {
+        "area_id": null,
+        "config_entries": [
+          "b50271e7d7c0201424ba9afadf199a70"
+        ],
+        "configuration_url": null,
+        "connections": [],
+        "disabled_by": null,
+        "entry_type": null,
+        "hw_version": null,
+        "id": "0a9f4a5407aeb38fb5c20bed7bae59c7",
+        "identifiers": [
+          [
+            "cast",
+            "c49092e1c79143c7ee5a7f72e76e33c1"
+          ]
+        ],
+        "manufacturer": "Google Inc.",
+        "model": "Google Nest Hub",
+        "name_by_user": null,
+        "name": "Nouveau reveil",
+        "sw_version": null,
+        "via_device_id": null
+      },
+      {
+        "area_id": "office",
+        "config_entries": [
+          "d23f7ebfe2aacd6f967bb81d62fe6532"
+        ],
+        "configuration_url": null,
+        "connections": [],
+        "disabled_by": null,
+        "entry_type": null,
+        "hw_version": null,
+        "id": "7bbab4257dd3484ebdd5ab6bc8bee417",
+        "identifiers": [
+          [
+            "wyzeapi",
+            "2CAA8ED0A555"
+          ]
+        ],
+        "manufacturer": "WyzeLabs",
+        "model": "WYZEC1-JZ",
+        "name_by_user": null,
+        "name": "Wyze cam",
+        "sw_version": null,
+        "via_device_id": null
+      },
+      {
+        "area_id": "office",
+        "config_entries": [
+          "d23f7ebfe2aacd6f967bb81d62fe6532"
+        ],
+        "configuration_url": null,
+        "connections": [],
+        "disabled_by": null,
+        "entry_type": null,
+        "hw_version": null,
+        "id": "ff14378a955dc84a03edb4384780ac46",
+        "identifiers": [
+          [
+            "wyzeapi",
+            "wyzeapi.wyze.notification.toggle"
+          ]
+        ],
+        "manufacturer": "WyzeLabs",
+        "model": "WyzeNotificationToggle",
+        "name_by_user": null,
+        "name": "Wyze Notifications",
+        "sw_version": null,
+        "via_device_id": null
+      },
+      {
+        "area_id": null,
+        "config_entries": [
+          "d93297bcd4718d8af2c2b5be798e50ca"
+        ],
+        "configuration_url": "homeassistant://hassio/addon/af71aba8_docker-wyze-bridge",
+        "connections": [],
+        "disabled_by": null,
+        "entry_type": "service",
+        "hw_version": null,
+        "id": "0f8260f833dff403ad33a0c9c93305ae",
+        "identifiers": [
+          [
+            "hassio",
+            "af71aba8_docker-wyze-bridge"
+          ]
+        ],
+        "manufacturer": "docker-wyze-bridge",
+        "model": "Home Assistant Add-on",
+        "name_by_user": null,
+        "name": "Docker Wyze Bridge",
+        "sw_version": "1.8.8",
+        "via_device_id": null
+      },
+      {
+        "area_id": null,
+        "config_entries": [
+          "afb514890e0696b65fd18511c8073520",
+          "edd18c619f9e0c90fa7ef3c2415cb9af"
+        ],
+        "configuration_url": null,
+        "connections": [
+          [
+            "mac",
+            "2c:aa:8e:d0:a5:55"
+          ]
+        ],
+        "disabled_by": null,
+        "entry_type": null,
+        "hw_version": null,
+        "id": "212eab6cab449e5480d99e01d7a8fd3b",
+        "identifiers": [
+          [
+            "mqtt",
+            "2CAA8ED0A555"
+          ]
+        ],
+        "manufacturer": "Wyze",
+        "model": "WYZEC1-JZ",
+        "name_by_user": null,
+        "name": null,
+        "sw_version": "4.9.8.1002",
+        "via_device_id": null
       }
     ],
     "deleted_devices": [

@@ -68,6 +68,11 @@
         "url": "/hacsfiles/content-card-linky/content-card-linky.js?hacstag=3130384471112",
         "type": "module",
         "id": "d28e66a6787e467bb458928f35ac7f8b"
+      },
+      {
+        "url": "/hacsfiles/lovelace-mushroom/mushroom.js?hacstag=444350375213",
+        "type": "module",
+        "id": "4d8157ab9ecf48ef9c386323825634fd"
       }
     ]
   }

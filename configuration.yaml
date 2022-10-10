@@ -137,6 +137,22 @@ notify:
     username: !secret freeMobileUsername
     access_token: !secret freeMobileToken
 
+# Hangout https://www.home-assistant.io/integrations/hangouts/
+hangouts:
+  intents:
+    HangoutsHelp:
+      sentences:
+        - Help
+    LivingRoomTemperature:
+      sentences:
+        - What is the temperature in the living room
+      conversations:
+        - id: hangoutConversation
+  default_conversations:
+    - id: hangoutConversation
+  error_suppressed_conversations:
+    - id: hangoutConversation
+
 panel_iframe:
   slack:
     title: "Slack"
@@ -218,7 +234,7 @@ light:
     name: Cuisine
     entity_id: switch.lumiere_cuisine
   - platform: dlight
-    host: 192.168.1.21
+    host: 192.168.86.21
     device_id: E5b18418
 
 ####################################################
