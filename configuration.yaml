@@ -46,8 +46,8 @@ homeassistant:
 binary_sensor:
   - platform: aurora
   - platform: workday
-    country: CA
-    province: QC
+    country: FR
+    #province: QC
   - platform: template
     sensors:
       people_home:
@@ -57,38 +57,38 @@ binary_sensor:
           {{ is_state('person.giom', 'home') or is_state('person.claire', 'home') }}
 
 # Yeelights
-yeelight:
-  devices:
-    192.168.86.130:
-      name: Solarium
-      transition: 1000
-      use_music_mode: False #(defaults to False)
-      save_on_change: False #(defaults to True)
-    192.168.86.131:
-      name: Color
-      transition: 1000
-      use_music_mode: True #(defaults to False)
-      save_on_change: False #(defaults to True)
-    192.168.86.132:
-      name: Freezer
-      transition: 1000
-      use_music_mode: False #(defaults to False)
-      save_on_change: False #(defaults to True)
-    192.168.86.134:
-      name: Canapé Droite
-      transition: 1000
-      use_music_mode: False #(defaults to False)
-      save_on_change: False #(defaults to True)
-    192.168.86.135:
-      name: Bedroom
-      transition: 1000
-      use_music_mode: False #(defaults to False)
-      save_on_change: False #(defaults to True)
-    192.168.86.136:
-      name: Canapé Gauche
-      transition: 1000
-      use_music_mode: False #(defaults to False)
-      save_on_change: False #(defaults to True)
+# yeelight:
+#   devices:
+#     192.168.86.130:
+#       name: Solarium
+#       transition: 1000
+#       use_music_mode: False #(defaults to False)
+#       save_on_change: False #(defaults to True)
+#     192.168.86.131:
+#       name: Color
+#       transition: 1000
+#       use_music_mode: True #(defaults to False)
+#       save_on_change: False #(defaults to True)
+#     192.168.86.132:
+#       name: Freezer
+#       transition: 1000
+#       use_music_mode: False #(defaults to False)
+#       save_on_change: False #(defaults to True)
+#     192.168.86.134:
+#       name: Canapé Droite
+#       transition: 1000
+#       use_music_mode: False #(defaults to False)
+#       save_on_change: False #(defaults to True)
+#     192.168.86.135:
+#       name: Bedroom
+#       transition: 1000
+#       use_music_mode: False #(defaults to False)
+#       save_on_change: False #(defaults to True)
+#     192.168.86.136:
+#       name: Canapé Gauche
+#       transition: 1000
+#       use_music_mode: False #(defaults to False)
+#       save_on_change: False #(defaults to True)
 
 media_player:
   # Google Cast
@@ -153,16 +153,16 @@ hangouts:
   error_suppressed_conversations:
     - id: hangoutConversation
 
-panel_iframe:
-  slack:
-    title: "Slack"
-    url: "https://gi-home.slack.com/unreads/"
-  sonarr:
-    title: "Sonarr"
-    url: !secret sonarrUrl
-  utorrent:
-    title: "uTorrent"
-    url: "https://remote.bittorrent.com/"
+# panel_iframe:
+#   slack:
+#     title: "Slack"
+#     url: "https://gi-home.slack.com/unreads/"
+#   sonarr:
+#     title: "Sonarr"
+#     url: !secret sonarrUrl
+#   utorrent:
+#     title: "uTorrent"
+#     url: "https://remote.bittorrent.com/"
 
 # weblink:
 #   entities:
@@ -216,7 +216,7 @@ zone:
 #  client_id: !secret googleDeveloperClientID
 #  client_secret: !secret googleDeveloperSecret
 
-tplink:
+#tplink:
 
 mqtt:
   broker: localhost

@@ -476,26 +476,26 @@
             "60:32:b1:a8:df:3d"
           ]
         ],
-        "disabled_by": null,
+        "disabled_by": "config_entry",
         "entry_type": null,
         "hw_version": null,
         "id": "3fef20558b7eb7162b903c01197a06d3",
         "identifiers": [
           [
             "tplink",
-            "60:32:B1:A8:DF:3D"
-          ],
-          [
-            "tplink",
             "60:32:B1:A8:DF:3D_80067CFBCC0BB2EDBB23A5AA4135A1061D7B928F00"
           ],
           [
             "tplink",
-            "60:32:B1:A8:DF:3D_80067CFBCC0BB2EDBB23A5AA4135A1061D7B928F01"
+            "60:32:B1:A8:DF:3D"
           ],
           [
             "tplink",
             "60:32:B1:A8:DF:3D_80067CFBCC0BB2EDBB23A5AA4135A1061D7B928F02"
+          ],
+          [
+            "tplink",
+            "60:32:B1:A8:DF:3D_80067CFBCC0BB2EDBB23A5AA4135A1061D7B928F01"
           ]
         ],
         "manufacturer": "TP-Link",
@@ -762,7 +762,7 @@
         "model": "",
         "name_by_user": null,
         "name": "HACS",
-        "sw_version": "1.27.2",
+        "sw_version": "1.28.0",
         "via_device_id": null
       },
       {
@@ -3563,7 +3563,7 @@
         ],
         "configuration_url": null,
         "connections": [],
-        "disabled_by": null,
+        "disabled_by": "config_entry",
         "entry_type": null,
         "hw_version": null,
         "id": "d46e18f81ffadbf162f2d7d4ec0491a3",
@@ -3923,7 +3923,7 @@
         "model": "Home Assistant Core",
         "name_by_user": null,
         "name": "Home Assistant Core",
-        "sw_version": "2022.10.1",
+        "sw_version": "2022.10.3",
         "via_device_id": null
       },
       {
@@ -4442,7 +4442,7 @@
         ],
         "configuration_url": "https://weather.gc.ca/",
         "connections": [],
-        "disabled_by": null,
+        "disabled_by": "config_entry",
         "entry_type": "service",
         "hw_version": null,
         "id": "183e28babeaf16dbe586cb2e75bd7e7d",
@@ -4678,8 +4678,8 @@
       {
         "area_id": null,
         "config_entries": [
-          "afb514890e0696b65fd18511c8073520",
-          "edd18c619f9e0c90fa7ef3c2415cb9af"
+          "edd18c619f9e0c90fa7ef3c2415cb9af",
+          "afb514890e0696b65fd18511c8073520"
         ],
         "configuration_url": null,
         "connections": [
@@ -4703,6 +4703,54 @@
         "name_by_user": null,
         "name": null,
         "sw_version": "4.9.8.1002",
+        "via_device_id": null
+      },
+      {
+        "area_id": null,
+        "config_entries": [
+          "8104ad3c275c86e99930530cec5c1e34"
+        ],
+        "configuration_url": null,
+        "connections": [],
+        "disabled_by": null,
+        "entry_type": null,
+        "hw_version": null,
+        "id": "d58d879598c8f154712ffd3f210324b7",
+        "identifiers": [
+          [
+            "mobile_app",
+            "078f8f5bae84de8c"
+          ]
+        ],
+        "manufacturer": "Google",
+        "model": "Pixel 7 Pro",
+        "name_by_user": null,
+        "name": "Pixel 7 Pro",
+        "sw_version": "33",
+        "via_device_id": null
+      },
+      {
+        "area_id": null,
+        "config_entries": [
+          "ec1ecd6a2c88c4849238e946dbbf7049"
+        ],
+        "configuration_url": null,
+        "connections": [],
+        "disabled_by": null,
+        "entry_type": null,
+        "hw_version": null,
+        "id": "6837eecc2655d8614cd6faddaa0085d3",
+        "identifiers": [
+          [
+            "mobile_app",
+            "01f8d1f6d5c06c3c"
+          ]
+        ],
+        "manufacturer": "Compal",
+        "model": "Suunto 7",
+        "name_by_user": null,
+        "name": "Suunto 7 8730",
+        "sw_version": "28",
         "via_device_id": null
       }
     ],
