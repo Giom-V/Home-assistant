@@ -1,0 +1,2 @@
+# ignore all json files in sub-directories
+*/*.json
