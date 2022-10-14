@@ -1,1 +1,1 @@
-{"meter_reading": {"usage_point_id": "19677423985708", "start": "2021-10-09", "end": "2021-10-10", "quality": "BRUT", "reading_type": {"unit": "Wh", "measurement_kind": "energy", "aggregate": "sum", "measuring_period": "P1D"}, "interval_reading": [{"value": "0", "date": "2021-10-09"}]}}
+{"meter_reading": {"usage_point_id": "19677423985708", "start": "2021-10-12", "end": "2021-10-13", "quality": "BRUT", "reading_type": {"unit": "Wh", "measurement_kind": "energy", "aggregate": "sum", "measuring_period": "P1D"}, "interval_reading": [{"value": "0", "date": "2021-10-12"}]}}

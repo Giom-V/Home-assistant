@@ -15672,7 +15672,7 @@
         "name": null,
         "options": {},
         "original_device_class": null,
-        "original_icon": "mdi:lock-open-variant",
+        "original_icon": "mdi:lock",
         "original_name": "Bleuette Door Lock",
         "platform": "kia_uvo",
         "supported_features": 0,
@@ -20831,11 +20831,9 @@
       },
       {
         "area_id": null,
-        "capabilities": {
-          "state_class": "measurement"
-        },
+        "capabilities": null,
         "config_entry_id": "8104ad3c275c86e99930530cec5c1e34",
-        "device_class": null,
+        "device_class": "battery",
         "device_id": "d58d879598c8f154712ffd3f210324b7",
         "disabled_by": null,
         "entity_category": "diagnostic",
@@ -20847,7 +20845,7 @@
         "name": null,
         "options": {},
         "original_device_class": "battery",
-        "original_icon": "mdi:battery-80",
+        "original_icon": "mdi:battery-70",
         "original_name": "Pixel 7 Pro Battery Level",
         "platform": "mobile_app",
         "supported_features": 0,
@@ -20870,7 +20868,7 @@
         "name": null,
         "options": {},
         "original_device_class": null,
-        "original_icon": "mdi:battery-minus",
+        "original_icon": "mdi:battery",
         "original_name": "Pixel 7 Pro Battery State",
         "platform": "mobile_app",
         "supported_features": 0,
@@ -20881,7 +20879,7 @@
         "area_id": null,
         "capabilities": null,
         "config_entry_id": "8104ad3c275c86e99930530cec5c1e34",
-        "device_class": null,
+        "device_class": "plug",
         "device_id": "d58d879598c8f154712ffd3f210324b7",
         "disabled_by": null,
         "entity_category": "diagnostic",
@@ -20916,7 +20914,7 @@
         "name": null,
         "options": {},
         "original_device_class": null,
-        "original_icon": "mdi:battery",
+        "original_icon": "mdi:battery-charging-wireless",
         "original_name": "Pixel 7 Pro Charger Type",
         "platform": "mobile_app",
         "supported_features": 0,
@@ -20948,11 +20946,9 @@
       },
       {
         "area_id": null,
-        "capabilities": {
-          "state_class": "measurement"
-        },
+        "capabilities": null,
         "config_entry_id": "8104ad3c275c86e99930530cec5c1e34",
-        "device_class": null,
+        "device_class": "temperature",
         "device_id": "d58d879598c8f154712ffd3f210324b7",
         "disabled_by": null,
         "entity_category": "diagnostic",
@@ -20973,9 +20969,7 @@
       },
       {
         "area_id": null,
-        "capabilities": {
-          "state_class": "measurement"
-        },
+        "capabilities": null,
         "config_entry_id": "8104ad3c275c86e99930530cec5c1e34",
         "device_class": "power",
         "device_id": "d58d879598c8f154712ffd3f210324b7",
@@ -22222,11 +22216,9 @@
       },
       {
         "area_id": null,
-        "capabilities": {
-          "state_class": "measurement"
-        },
+        "capabilities": null,
         "config_entry_id": "ec1ecd6a2c88c4849238e946dbbf7049",
-        "device_class": null,
+        "device_class": "battery",
         "device_id": "6837eecc2655d8614cd6faddaa0085d3",
         "disabled_by": null,
         "entity_category": "diagnostic",
@@ -22238,7 +22230,7 @@
         "name": null,
         "options": {},
         "original_device_class": "battery",
-        "original_icon": "mdi:battery-80",
+        "original_icon": "mdi:battery-60",
         "original_name": "Suunto 7 8730 Battery Level",
         "platform": "mobile_app",
         "supported_features": 0,
@@ -22261,7 +22253,7 @@
         "name": null,
         "options": {},
         "original_device_class": null,
-        "original_icon": "mdi:battery-minus",
+        "original_icon": "mdi:battery-plus",
         "original_name": "Suunto 7 8730 Battery State",
         "platform": "mobile_app",
         "supported_features": 0,
@@ -22272,7 +22264,7 @@
         "area_id": null,
         "capabilities": null,
         "config_entry_id": "ec1ecd6a2c88c4849238e946dbbf7049",
-        "device_class": null,
+        "device_class": "plug",
         "device_id": "6837eecc2655d8614cd6faddaa0085d3",
         "disabled_by": null,
         "entity_category": "diagnostic",
@@ -22284,7 +22276,7 @@
         "name": null,
         "options": {},
         "original_device_class": "plug",
-        "original_icon": "mdi:power-plug-off",
+        "original_icon": "mdi:power-plug",
         "original_name": "Suunto 7 8730 Is Charging",
         "platform": "mobile_app",
         "supported_features": 0,
@@ -22307,7 +22299,7 @@
         "name": null,
         "options": {},
         "original_device_class": null,
-        "original_icon": "mdi:battery",
+        "original_icon": "mdi:power-plug",
         "original_name": "Suunto 7 8730 Charger Type",
         "platform": "mobile_app",
         "supported_features": 0,
@@ -22339,11 +22331,9 @@
       },
       {
         "area_id": null,
-        "capabilities": {
-          "state_class": "measurement"
-        },
+        "capabilities": null,
         "config_entry_id": "ec1ecd6a2c88c4849238e946dbbf7049",
-        "device_class": null,
+        "device_class": "temperature",
         "device_id": "6837eecc2655d8614cd6faddaa0085d3",
         "disabled_by": null,
         "entity_category": "diagnostic",
@@ -22364,11 +22354,9 @@
       },
       {
         "area_id": null,
-        "capabilities": {
-          "state_class": "measurement"
-        },
+        "capabilities": null,
         "config_entry_id": "ec1ecd6a2c88c4849238e946dbbf7049",
-        "device_class": null,
+        "device_class": "power",
         "device_id": "6837eecc2655d8614cd6faddaa0085d3",
         "disabled_by": null,
         "entity_category": "diagnostic",

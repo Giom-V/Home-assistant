@@ -25,7 +25,7 @@
         "model": "Home Assistant Operating System",
         "name_by_user": null,
         "name": "Home Assistant Operating System",
-        "sw_version": "9.0",
+        "sw_version": "9.2",
         "via_device_id": null
       },
       {
@@ -483,10 +483,6 @@
         "identifiers": [
           [
             "tplink",
-            "60:32:B1:A8:DF:3D_80067CFBCC0BB2EDBB23A5AA4135A1061D7B928F00"
-          ],
-          [
-            "tplink",
             "60:32:B1:A8:DF:3D"
           ],
           [
@@ -496,6 +492,10 @@
           [
             "tplink",
             "60:32:B1:A8:DF:3D_80067CFBCC0BB2EDBB23A5AA4135A1061D7B928F01"
+          ],
+          [
+            "tplink",
+            "60:32:B1:A8:DF:3D_80067CFBCC0BB2EDBB23A5AA4135A1061D7B928F00"
           ]
         ],
         "manufacturer": "TP-Link",
@@ -4672,14 +4672,14 @@
         "model": "Home Assistant Add-on",
         "name_by_user": null,
         "name": "Docker Wyze Bridge",
-        "sw_version": "1.8.8",
+        "sw_version": "1.8.10",
         "via_device_id": null
       },
       {
         "area_id": null,
         "config_entries": [
-          "edd18c619f9e0c90fa7ef3c2415cb9af",
-          "afb514890e0696b65fd18511c8073520"
+          "afb514890e0696b65fd18511c8073520",
+          "edd18c619f9e0c90fa7ef3c2415cb9af"
         ],
         "configuration_url": null,
         "connections": [
