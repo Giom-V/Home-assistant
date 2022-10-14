@@ -22230,7 +22230,7 @@
         "name": null,
         "options": {},
         "original_device_class": "battery",
-        "original_icon": "mdi:battery-60",
+        "original_icon": "mdi:battery-70",
         "original_name": "Suunto 7 8730 Battery Level",
         "platform": "mobile_app",
         "supported_features": 0,
