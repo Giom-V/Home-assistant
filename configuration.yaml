@@ -236,13 +236,12 @@ light:
   - platform: dlight
     host: 192.168.86.21
     device_id: E5b18418
-
 ####################################################
 #                 Work in progress                 #
 ####################################################
 
-rest:
-  - resource: http://192.168.86.33:8249/state
-    binary_sensor:
-      - name: "In a meeting"
-        value_template: "{{ value_json.in_meeting }}"
+# rest:
+#   - resource: http://192.168.86.219:8249/state
+#     binary_sensor:
+#       - name: "In a meeting"
+#         value_template: "{{ value_json.in_meeting }}"
