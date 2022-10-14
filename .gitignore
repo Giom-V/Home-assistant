@@ -61,3 +61,11 @@ node-red
 !/.storage/core.area_registry
 !/.storage/core.entity_registry
 !/.storage/core.device_registry
+
+# ignore all json and txt files in Enedis sub-directories
+custom_components/archive/myEnedis/*/*.json
+custom_components/archive/myEnedis/*/*.txt
+
+# Ignore wyze cam image and auth files
+www/wyze-cam.jpg
+wyze-bridge/*.pickle

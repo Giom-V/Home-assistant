@@ -1,3 +1,0 @@
-# ignore all json and txt files in sub-directories
-*/*.json
-*/*.txt
