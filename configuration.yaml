@@ -3,7 +3,7 @@
 ###################################################
 homeassistant:
   # Name of the location where Home Assistant is running
-  name: Quebec
+  name: Cesson-Sévigné
   # Location required to calculate the time the sun rises and sets
   latitude: !secret homeLatitude
   longitude: !secret homeLongitude
@@ -39,6 +39,18 @@ homeassistant:
   # https://www.home-assistant.io/docs/configuration/packages/
   # Splitted between integrations and entites as https://github.com/jonathanadams/Home-Assistant-Configuration
   packages: !include_dir_named integrations
+
+# things in default config that should be moved in integrations/
+bluetooth:
+dhcp:
+energy:
+hardware:
+homeassistant_alerts:
+media_source:
+my:
+ssdp:
+usb:
+zeroconf:
 
 ####################################################
 #            Sensors and components                #
@@ -224,10 +236,10 @@ mqtt:
   discovery_prefix: homeassistant
   password: !secret mqttPassword
 
-vacuum:
-  - platform: xiaomi_miio
-    host: !secret vaccumIP
-    token: !secret roborockToken
+# vacuum:
+#   - platform: xiaomi_miio
+#     host: !secret vaccumIP
+#     token: !secret roborockToken
 
 light:
   - platform: switch
