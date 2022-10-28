@@ -73,3 +73,4 @@ custom_components/myEnedis/myEnedis/test_data/*.txt
 # Ignore wyze cam image and auth files
 www/wyze-cam.jpg
 wyze-bridge/*.pickle
+wyze-bridge/mfa_token.txt
