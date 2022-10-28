@@ -68,6 +68,7 @@ custom_components/archive/myEnedis/14476845147777/*.json
 custom_components/archive/myEnedis/19677423985708/*.json
 custom_components/archive/myEnedis/14476845147777/*.txt
 custom_components/archive/myEnedis/19677423985708/*.txt
+custom_components/myEnedis/myEnedis/test_data/*.txt
 
 # Ignore wyze cam image and auth files
 www/wyze-cam.jpg

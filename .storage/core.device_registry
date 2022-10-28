@@ -25,7 +25,7 @@
         "model": "Home Assistant Operating System",
         "name_by_user": null,
         "name": "Home Assistant Operating System",
-        "sw_version": "9.2",
+        "sw_version": "9.3",
         "via_device_id": null
       },
       {
@@ -293,7 +293,7 @@
         "model": "Home Assistant Add-on",
         "name_by_user": null,
         "name": "deCONZ",
-        "sw_version": "6.16.0",
+        "sw_version": "6.17.0",
         "via_device_id": null
       },
       {
@@ -413,7 +413,7 @@
         "model": "Home Assistant Add-on",
         "name_by_user": null,
         "name": "Node-RED",
-        "sw_version": "13.4.0",
+        "sw_version": "13.5.0",
         "via_device_id": null
       },
       {
@@ -483,19 +483,19 @@
         "identifiers": [
           [
             "tplink",
-            "60:32:B1:A8:DF:3D"
-          ],
-          [
-            "tplink",
             "60:32:B1:A8:DF:3D_80067CFBCC0BB2EDBB23A5AA4135A1061D7B928F02"
           ],
           [
             "tplink",
-            "60:32:B1:A8:DF:3D_80067CFBCC0BB2EDBB23A5AA4135A1061D7B928F01"
+            "60:32:B1:A8:DF:3D_80067CFBCC0BB2EDBB23A5AA4135A1061D7B928F00"
           ],
           [
             "tplink",
-            "60:32:B1:A8:DF:3D_80067CFBCC0BB2EDBB23A5AA4135A1061D7B928F00"
+            "60:32:B1:A8:DF:3D"
+          ],
+          [
+            "tplink",
+            "60:32:B1:A8:DF:3D_80067CFBCC0BB2EDBB23A5AA4135A1061D7B928F01"
           ]
         ],
         "manufacturer": "TP-Link",
@@ -506,9 +506,10 @@
         "via_device_id": null
       },
       {
-        "area_id": null,
+        "area_id": "living_room",
         "config_entries": [
-          "ed39140f9dcc60d0924a6a66ba2ee9da"
+          "bfb3718dce14c044a496d2c251142ccd",
+          "7918d54afa2f1eb478f458e93f64c6fe"
         ],
         "configuration_url": null,
         "connections": [
@@ -530,7 +531,7 @@
         "manufacturer": "Xiaomi",
         "model": "roborock.vacuum.s5",
         "name_by_user": null,
-        "name": "Xiaomi Vacuum cleaner",
+        "name": "Robbie",
         "sw_version": null,
         "via_device_id": null
       },
@@ -579,7 +580,7 @@
         "model": "deCONZ",
         "name_by_user": null,
         "name": "Phoscon-GW",
-        "sw_version": "2.18.2",
+        "sw_version": "2.19.1",
         "via_device_id": null
       },
       {
@@ -762,7 +763,7 @@
         "model": "",
         "name_by_user": null,
         "name": "HACS",
-        "sw_version": "1.28.0",
+        "sw_version": "1.28.3",
         "via_device_id": null
       },
       {
@@ -3449,10 +3450,10 @@
           ]
         ],
         "manufacturer": "Google",
-        "model": "Pixel 4 XL",
+        "model": "Pixel 6 Pro",
         "name_by_user": null,
-        "name": "Pixel 4 XL",
-        "sw_version": "32",
+        "name": "Pixel 6",
+        "sw_version": "33",
         "via_device_id": null
       },
       {
@@ -3923,7 +3924,7 @@
         "model": "Home Assistant Core",
         "name_by_user": null,
         "name": "Home Assistant Core",
-        "sw_version": "2022.10.3",
+        "sw_version": "2022.10.5",
         "via_device_id": null
       },
       {
@@ -4263,30 +4264,6 @@
         "via_device_id": null
       },
       {
-        "area_id": "office",
-        "config_entries": [
-          "fa00f9252e96df201efd74b72c6f5e05"
-        ],
-        "configuration_url": null,
-        "connections": [],
-        "disabled_by": null,
-        "entry_type": "service",
-        "hw_version": null,
-        "id": "58e8b4a54ddf63241fd62290ef688d00",
-        "identifiers": [
-          [
-            "mutesync",
-            "8a3cc5fe-a6c4-4df5-b285-16c1e77a68b0"
-          ]
-        ],
-        "manufacturer": "mütesync",
-        "model": "mutesync app",
-        "name_by_user": null,
-        "name": "mutesync",
-        "sw_version": null,
-        "via_device_id": null
-      },
-      {
         "area_id": null,
         "config_entries": [
           "77d142caf5b2319cc3d0b0b4b1449b80"
@@ -4332,35 +4309,6 @@
         "name_by_user": null,
         "name": "Pollens",
         "sw_version": null,
-        "via_device_id": null
-      },
-      {
-        "area_id": "office",
-        "config_entries": [
-          "afb514890e0696b65fd18511c8073520"
-        ],
-        "configuration_url": "https://4l0p1uzt.fbxos.fr:11759/",
-        "connections": [
-          [
-            "mac",
-            "20:66:cf:1b:bf:04"
-          ]
-        ],
-        "disabled_by": null,
-        "entry_type": null,
-        "hw_version": null,
-        "id": "0aa0353c6156bf04ce28a47f0e3f7d10",
-        "identifiers": [
-          [
-            "freebox",
-            "20:66:CF:1B:BF:04"
-          ]
-        ],
-        "manufacturer": "Freebox SAS",
-        "model": null,
-        "name_by_user": null,
-        "name": "Freebox v7 (r1)",
-        "sw_version": "4.6.3",
         "via_device_id": null
       },
       {
@@ -4672,13 +4620,13 @@
         "model": "Home Assistant Add-on",
         "name_by_user": null,
         "name": "Docker Wyze Bridge",
-        "sw_version": "1.8.10",
+        "sw_version": "1.8.11",
         "via_device_id": null
       },
       {
         "area_id": null,
         "config_entries": [
-          "afb514890e0696b65fd18511c8073520",
+          "7918d54afa2f1eb478f458e93f64c6fe",
           "edd18c619f9e0c90fa7ef3c2415cb9af"
         ],
         "configuration_url": null,
@@ -4702,7 +4650,7 @@
         "model": "WYZEC1-JZ",
         "name_by_user": null,
         "name": null,
-        "sw_version": "4.9.8.1002",
+        "sw_version": "4.9.9.1433",
         "via_device_id": null
       },
       {
@@ -4751,6 +4699,340 @@
         "name_by_user": null,
         "name": "Suunto 7 8730",
         "sw_version": "28",
+        "via_device_id": null
+      },
+      {
+        "area_id": "kitchen",
+        "config_entries": [
+          "b848744edad5b3e9ee94b734713f7d4a"
+        ],
+        "configuration_url": "https://account.smartthings.com",
+        "connections": [],
+        "disabled_by": null,
+        "entry_type": null,
+        "hw_version": null,
+        "id": "a9f7c03344f6b85e68bb9fd859d99e56",
+        "identifiers": [
+          [
+            "smartthings",
+            "ea2bc7ef-319a-4059-b476-33eaa979db10"
+          ]
+        ],
+        "manufacturer": "Unavailable",
+        "model": null,
+        "name_by_user": null,
+        "name": "Lave-linge",
+        "sw_version": null,
+        "via_device_id": null
+      },
+      {
+        "area_id": null,
+        "config_entries": [
+          "b50271e7d7c0201424ba9afadf199a70"
+        ],
+        "configuration_url": null,
+        "connections": [],
+        "disabled_by": null,
+        "entry_type": null,
+        "hw_version": null,
+        "id": "3ecfddbabd9a07763cd4d2e271dc4eeb",
+        "identifiers": [
+          [
+            "cast",
+            "fab0cc2426a5de887a7c0e0fa855d208"
+          ]
+        ],
+        "manufacturer": "Freebox",
+        "model": "Freebox Player POP",
+        "name_by_user": null,
+        "name": "Freebox Player POP",
+        "sw_version": null,
+        "via_device_id": null
+      },
+      {
+        "area_id": "office",
+        "config_entries": [
+          "bdaf5b0eac453b7cf2b20ee3dad3ded8"
+        ],
+        "configuration_url": null,
+        "connections": [],
+        "disabled_by": null,
+        "entry_type": "service",
+        "hw_version": null,
+        "id": "58e8b4a54ddf63241fd62290ef688d00",
+        "identifiers": [
+          [
+            "mutesync",
+            "8a3cc5fe-a6c4-4df5-b285-16c1e77a68b0"
+          ]
+        ],
+        "manufacturer": "mütesync",
+        "model": "mutesync app",
+        "name_by_user": null,
+        "name": "mutesync",
+        "sw_version": null,
+        "via_device_id": null
+      },
+      {
+        "area_id": null,
+        "config_entries": [
+          "7918d54afa2f1eb478f458e93f64c6fe"
+        ],
+        "configuration_url": "https://4l0p1uzt.fbxos.fr:13091/",
+        "connections": [
+          [
+            "mac",
+            "20:66:cf:1b:bf:04"
+          ]
+        ],
+        "disabled_by": null,
+        "entry_type": null,
+        "hw_version": null,
+        "id": "0aa0353c6156bf04ce28a47f0e3f7d10",
+        "identifiers": [
+          [
+            "upnp_host",
+            "192.168.1.254"
+          ],
+          [
+            "upnp_serial_number",
+            "2066CF1BBF04"
+          ],
+          [
+            "upnp",
+            "uuid:igd73616d61-6a65-7374-650a-2066cf1bbf04::urn:schemas-upnp-org:device:InternetGatewayDevice:1"
+          ]
+        ],
+        "manufacturer": "Freebox SAS",
+        "model": null,
+        "name_by_user": null,
+        "name": "Freebox v7 (r1)",
+        "sw_version": "4.6.5.1",
+        "via_device_id": null
+      },
+      {
+        "area_id": "office",
+        "config_entries": [
+          "7918d54afa2f1eb478f458e93f64c6fe",
+          "33c6900cf831dff998dfd4fbe751cb57"
+        ],
+        "configuration_url": null,
+        "connections": [
+          [
+            "mac",
+            "54:48:e6:d3:80:7f"
+          ]
+        ],
+        "disabled_by": null,
+        "entry_type": null,
+        "hw_version": null,
+        "id": "d289257ebfadb61abab25485734acc18",
+        "identifiers": [
+          [
+            "xiaomi_miio",
+            "54:48:e6:d3:80:7f"
+          ]
+        ],
+        "manufacturer": "Xiaomi",
+        "model": "zhimi.airpurifier.mb4",
+        "name_by_user": null,
+        "name": "Mi Air Purifier 3C",
+        "sw_version": null,
+        "via_device_id": null
+      },
+      {
+        "area_id": "living_room",
+        "config_entries": [
+          "f6975f09d3f4af2d6c5db1b6a0252c42"
+        ],
+        "configuration_url": null,
+        "connections": [],
+        "disabled_by": null,
+        "entry_type": null,
+        "hw_version": null,
+        "id": "91f9bea4cb0b3da999c3d3df83bb5180",
+        "identifiers": [
+          [
+            "google_home",
+            "6fb77ce8-6116-4add-beba-c415443068df"
+          ]
+        ],
+        "manufacturer": "Google Home",
+        "model": "Chromecast",
+        "name_by_user": null,
+        "name": "Google Home Télé Salon",
+        "sw_version": null,
+        "via_device_id": null
+      },
+      {
+        "area_id": "office",
+        "config_entries": [
+          "50699acd1dfcd2b642603b1d4a91cf8a"
+        ],
+        "configuration_url": null,
+        "connections": [
+          [
+            "bluetooth",
+            "DC:A6:32:01:8D:49"
+          ]
+        ],
+        "disabled_by": null,
+        "entry_type": null,
+        "hw_version": "usb:v1D6Bp0246d053F",
+        "id": "10801b11414facff5eb7936703570c41",
+        "identifiers": [],
+        "manufacturer": null,
+        "model": null,
+        "name_by_user": null,
+        "name": "hci0 (DC:A6:32:01:8D:49)",
+        "sw_version": "homeassistant",
+        "via_device_id": null
+      },
+      {
+        "area_id": "office",
+        "config_entries": [
+          "3c819ca3869da3220092c59b353cc474"
+        ],
+        "configuration_url": "http://192.168.1.168/",
+        "connections": [],
+        "disabled_by": null,
+        "entry_type": null,
+        "hw_version": null,
+        "id": "7e06422c485c6118cbf9e37acacc5c91",
+        "identifiers": [
+          [
+            "brother",
+            "E78297L1N974550"
+          ]
+        ],
+        "manufacturer": "Brother",
+        "model": "MFC-L2710DW",
+        "name_by_user": null,
+        "name": "MFC-L2710DW",
+        "sw_version": "W2109161048",
+        "via_device_id": null
+      },
+      {
+        "area_id": "office",
+        "config_entries": [
+          "e24a5515bf6c16bef2f826799183cb54"
+        ],
+        "configuration_url": null,
+        "connections": [],
+        "disabled_by": null,
+        "entry_type": null,
+        "hw_version": null,
+        "id": "fbc89f9d6ec4d91fbff502405a4f0a90",
+        "identifiers": [
+          [
+            "ipp",
+            "e3248000-80ce-11db-8000-b422005fb659"
+          ]
+        ],
+        "manufacturer": "Brother",
+        "model": "MFC-L2710DW series",
+        "name_by_user": null,
+        "name": "Brother MFC-L2710DW series",
+        "sw_version": [
+          "W2109161048:0577",
+          "1.04"
+        ],
+        "via_device_id": null
+      },
+      {
+        "area_id": "garden",
+        "config_entries": [
+          "d6470a0eb359abf7c2093b9f0aaa7d4d"
+        ],
+        "configuration_url": null,
+        "connections": [],
+        "disabled_by": null,
+        "entry_type": null,
+        "hw_version": null,
+        "id": "033b8589dd583f9142b48bd463dcccd0",
+        "identifiers": [
+          [
+            "nest",
+            "enterprises/92a14747-3fe1-4fc1-be67-e2317dc65ec7/devices/AVPHwEvCJs2BGsst93-AGzA3iMyDSGAcR_TmH1cP-WlhyWqg05kyK3LGqykp9QW6pnlTc_kUpGH5MNIYkGomOd5yPBAuPg"
+          ]
+        ],
+        "manufacturer": "Google Nest",
+        "model": "Doorbell",
+        "name_by_user": null,
+        "name": "Sonette",
+        "sw_version": null,
+        "via_device_id": null
+      },
+      {
+        "area_id": null,
+        "config_entries": [
+          "3d69a6d30dc7bd213b9d5f9367e42be6"
+        ],
+        "configuration_url": "https://www.electricitymap.org/",
+        "connections": [],
+        "disabled_by": null,
+        "entry_type": "service",
+        "hw_version": null,
+        "id": "5d485975a1406f2d75c11b8acf469fe9",
+        "identifiers": [
+          [
+            "co2signal",
+            "3d69a6d30dc7bd213b9d5f9367e42be6"
+          ]
+        ],
+        "manufacturer": "Tmrow.com",
+        "model": null,
+        "name_by_user": null,
+        "name": "CO2 signal",
+        "sw_version": null,
+        "via_device_id": null
+      },
+      {
+        "area_id": null,
+        "config_entries": [
+          "b50271e7d7c0201424ba9afadf199a70"
+        ],
+        "configuration_url": null,
+        "connections": [],
+        "disabled_by": null,
+        "entry_type": null,
+        "hw_version": null,
+        "id": "16abb50ae83bf2a68fc921af16a9b187",
+        "identifiers": [
+          [
+            "cast",
+            "d3da22a7d7d6e0e9d32e9a0063bd5021"
+          ]
+        ],
+        "manufacturer": "KONKA",
+        "model": "HK 4K Google TV",
+        "name_by_user": null,
+        "name": "GoogleTV8926",
+        "sw_version": null,
+        "via_device_id": null
+      },
+      {
+        "area_id": null,
+        "config_entries": [
+          "b50271e7d7c0201424ba9afadf199a70"
+        ],
+        "configuration_url": null,
+        "connections": [],
+        "disabled_by": null,
+        "entry_type": null,
+        "hw_version": null,
+        "id": "dd548565374dd816c8a353fd22765b92",
+        "identifiers": [
+          [
+            "cast",
+            "0d6d8cf7c07e8253fa1897f72eb03f6e"
+          ]
+        ],
+        "manufacturer": "KONKA",
+        "model": "HK 4K Google TV",
+        "name_by_user": null,
+        "name": "Salon",
+        "sw_version": null,
         "via_device_id": null
       }
     ],
@@ -4810,6 +5092,18 @@
         ],
         "id": "5659d76b543ae2e76acd9148d24dac4f",
         "orphaned_timestamp": null
+      },
+      {
+        "config_entries": [],
+        "connections": [],
+        "identifiers": [
+          [
+            "nest",
+            "enterprises/49c08ab9-d793-4377-8cb5-98461072b963/devices/AVPHwEupCOEyiI_mbt7syghjc59sPcMagQlAFXKXo-p_mJOS4wLzYtThQAa9fliMB30Ui7qHxoMEQDn23HdlFEEf5OVzpQ"
+          ]
+        ],
+        "id": "9b85d74194247de85a73a0f077075d60",
+        "orphaned_timestamp": 1666186633.5711658
       }
     ]
   }
