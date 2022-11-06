@@ -74,3 +74,4 @@ custom_components/myEnedis/myEnedis/test_data/*.txt
 www/wyze-cam.jpg
 wyze-bridge/*.pickle
 wyze-bridge/mfa_token.txt
+nest/event_media/*.mp4

@@ -12,7 +12,7 @@ from homeassistant.const import (
     TEMP_FAHRENHEIT,
     TEMP_CELSIUS,
 )
-from homeassistant.util import distance as distance_util
+from homeassistant.util.unit_conversion import DistanceConverter as distance_util
 import homeassistant.util.dt as dt_util
 from homeassistant.components.sensor import SensorStateClass, SensorEntity
 from .Vehicle import Vehicle
@@ -134,7 +134,7 @@ async def async_setup_entry(hass, config_entry, async_add_entities):
             (
                 "targetSOCACCapacity",
                 "Target Capacity of Charge AC",
-                "vehicleStatus.evStatus.targetSOC.1.targetSOClevel",
+                "vehicleStatus.evStatus.reservChargeInfos.targetSOClist.1.targetSOClevel",
                 PERCENTAGE,
                 "mdi:car-electric",
                 None,
@@ -145,7 +145,7 @@ async def async_setup_entry(hass, config_entry, async_add_entities):
             (
                 "targetSOCDCCapacity",
                 "Target Capacity of Charge DC",
-                "vehicleStatus.evStatus.targetSOC.0.targetSOClevel",
+                "vehicleStatus.evStatus.reservChargeInfos.targetSOClist.0.targetSOClevel",
                 PERCENTAGE,
                 "mdi:car-electric",
                 None,
@@ -180,7 +180,7 @@ async def async_setup_entry(hass, config_entry, async_add_entities):
                 (
                     "targetSOCACRange",
                     "Target Range of Charge AC",
-                    "vehicleStatus.evStatus.targetSOC.1.dte.rangeByFuel.totalAvailableRange.value",
+                    "vehicleStatus.evStatus.reservChargeInfos.targetSOClist.1.dte.rangeByFuel.totalAvailableRange.value",
                     DYNAMIC_DISTANCE_UNIT,
                     "mdi:ev-station",
                     None,
@@ -191,7 +191,7 @@ async def async_setup_entry(hass, config_entry, async_add_entities):
                 (
                     "targetSOCDCRange",
                     "Target Range of Charge DC",
-                    "vehicleStatus.evStatus.targetSOC.0.dte.rangeByFuel.totalAvailableRange.value",
+                    "vehicleStatus.evStatus.reservChargeInfos.targetSOClist.0.dte.rangeByFuel.totalAvailableRange.value",
                     DYNAMIC_DISTANCE_UNIT,
                     "mdi:ev-station",
                     None,
@@ -275,7 +275,7 @@ async def async_setup_entry(hass, config_entry, async_add_entities):
             "vehicleStatus.battery.batSoc",
             PERCENTAGE,
             "mdi:car-battery",
-            DEVICE_CLASS_BATTERY,
+            None,
             None,
         )
     )
@@ -359,9 +359,9 @@ class InstrumentSensor(KiaUvoEntity, SensorEntity):
     @property
     def state(self):
         if self._id.startswith("targetSOC"):
-            self.vehicle.get_child_value("vehicleStatus.evStatus.targetSOC").sort(
-                key=lambda x: x["plugType"]
-            )
+            self.vehicle.get_child_value(
+                "vehicleStatus.evStatus.reservChargeInfos.targetSOClist"
+            ).sort(key=lambda x: x["plugType"])
         if self._id == "lastUpdated":
             return dt_util.as_local(self.vehicle.last_updated).isoformat()
 

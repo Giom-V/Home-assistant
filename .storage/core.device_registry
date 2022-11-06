@@ -413,7 +413,7 @@
         "model": "Home Assistant Add-on",
         "name_by_user": null,
         "name": "Node-RED",
-        "sw_version": "13.5.0",
+        "sw_version": "13.5.1",
         "via_device_id": null
       },
       {
@@ -483,11 +483,7 @@
         "identifiers": [
           [
             "tplink",
-            "60:32:B1:A8:DF:3D_80067CFBCC0BB2EDBB23A5AA4135A1061D7B928F02"
-          ],
-          [
-            "tplink",
-            "60:32:B1:A8:DF:3D_80067CFBCC0BB2EDBB23A5AA4135A1061D7B928F00"
+            "60:32:B1:A8:DF:3D_80067CFBCC0BB2EDBB23A5AA4135A1061D7B928F01"
           ],
           [
             "tplink",
@@ -495,7 +491,11 @@
           ],
           [
             "tplink",
-            "60:32:B1:A8:DF:3D_80067CFBCC0BB2EDBB23A5AA4135A1061D7B928F01"
+            "60:32:B1:A8:DF:3D_80067CFBCC0BB2EDBB23A5AA4135A1061D7B928F00"
+          ],
+          [
+            "tplink",
+            "60:32:B1:A8:DF:3D_80067CFBCC0BB2EDBB23A5AA4135A1061D7B928F02"
           ]
         ],
         "manufacturer": "TP-Link",
@@ -3924,7 +3924,7 @@
         "model": "Home Assistant Core",
         "name_by_user": null,
         "name": "Home Assistant Core",
-        "sw_version": "2022.10.5",
+        "sw_version": "2022.11.1",
         "via_device_id": null
       },
       {
@@ -3948,7 +3948,7 @@
         "model": "Home Assistant Supervisor",
         "name_by_user": null,
         "name": "Home Assistant Supervisor",
-        "sw_version": "2022.10.0",
+        "sw_version": "2022.10.2",
         "via_device_id": null
       },
       {
@@ -4620,14 +4620,14 @@
         "model": "Home Assistant Add-on",
         "name_by_user": null,
         "name": "Docker Wyze Bridge",
-        "sw_version": "1.8.11",
+        "sw_version": "1.9.0",
         "via_device_id": null
       },
       {
         "area_id": null,
         "config_entries": [
-          "7918d54afa2f1eb478f458e93f64c6fe",
-          "edd18c619f9e0c90fa7ef3c2415cb9af"
+          "edd18c619f9e0c90fa7ef3c2415cb9af",
+          "7918d54afa2f1eb478f458e93f64c6fe"
         ],
         "configuration_url": null,
         "connections": [
@@ -4776,7 +4776,8 @@
       {
         "area_id": null,
         "config_entries": [
-          "7918d54afa2f1eb478f458e93f64c6fe"
+          "7918d54afa2f1eb478f458e93f64c6fe",
+          "c420d1770642856e943ee39c36c66e4b"
         ],
         "configuration_url": "https://4l0p1uzt.fbxos.fr:13091/",
         "connections": [
@@ -4791,12 +4792,12 @@
         "id": "0aa0353c6156bf04ce28a47f0e3f7d10",
         "identifiers": [
           [
-            "upnp_host",
-            "192.168.1.254"
-          ],
-          [
             "upnp_serial_number",
             "2066CF1BBF04"
+          ],
+          [
+            "upnp_host",
+            "192.168.1.254"
           ],
           [
             "upnp",
@@ -4807,14 +4808,14 @@
         "model": null,
         "name_by_user": null,
         "name": "Freebox v7 (r1)",
-        "sw_version": "4.6.5.1",
+        "sw_version": "4.7.0",
         "via_device_id": null
       },
       {
         "area_id": "office",
         "config_entries": [
-          "7918d54afa2f1eb478f458e93f64c6fe",
-          "33c6900cf831dff998dfd4fbe751cb57"
+          "33c6900cf831dff998dfd4fbe751cb57",
+          "7918d54afa2f1eb478f458e93f64c6fe"
         ],
         "configuration_url": null,
         "connections": [
@@ -4917,7 +4918,7 @@
         "config_entries": [
           "e24a5515bf6c16bef2f826799183cb54"
         ],
-        "configuration_url": null,
+        "configuration_url": "http://192.168.1.168/net/net/airprint.html",
         "connections": [],
         "disabled_by": null,
         "entry_type": null,
@@ -5032,6 +5033,174 @@
         "model": "HK 4K Google TV",
         "name_by_user": null,
         "name": "Salon",
+        "sw_version": null,
+        "via_device_id": null
+      },
+      {
+        "area_id": null,
+        "config_entries": [
+          "f6975f09d3f4af2d6c5db1b6a0252c42"
+        ],
+        "configuration_url": null,
+        "connections": [],
+        "disabled_by": null,
+        "entry_type": null,
+        "hw_version": null,
+        "id": "7c9ecee689365d990d8577018460035e",
+        "identifiers": [
+          [
+            "google_home",
+            "009662fa-89b7-4703-8cb6-716a5faa9478"
+          ]
+        ],
+        "manufacturer": "Google Home",
+        "model": "Google Home Mini",
+        "name_by_user": null,
+        "name": "Google Home Salle de bain",
+        "sw_version": null,
+        "via_device_id": null
+      },
+      {
+        "area_id": null,
+        "config_entries": [
+          "f6975f09d3f4af2d6c5db1b6a0252c42"
+        ],
+        "configuration_url": null,
+        "connections": [],
+        "disabled_by": null,
+        "entry_type": null,
+        "hw_version": null,
+        "id": "2b7cae2b3516c75664c0b6865060e295",
+        "identifiers": [
+          [
+            "google_home",
+            "0e506d2b-d976-4be1-a2df-08dfe1722a5a"
+          ]
+        ],
+        "manufacturer": "Google Home",
+        "model": "Google Nest Hub",
+        "name_by_user": null,
+        "name": "Google Home Nouveau reveil",
+        "sw_version": null,
+        "via_device_id": null
+      },
+      {
+        "area_id": null,
+        "config_entries": [
+          "f6975f09d3f4af2d6c5db1b6a0252c42"
+        ],
+        "configuration_url": null,
+        "connections": [],
+        "disabled_by": null,
+        "entry_type": null,
+        "hw_version": null,
+        "id": "15e91083534405197b8360f7fcfa22a6",
+        "identifiers": [
+          [
+            "google_home",
+            "3ff5f756-aad0-4ba9-aa1d-d5e043a1f7d7"
+          ]
+        ],
+        "manufacturer": "Google Home",
+        "model": "Nest Audio",
+        "name_by_user": null,
+        "name": "Google Home Gogol Audio",
+        "sw_version": null,
+        "via_device_id": null
+      },
+      {
+        "area_id": null,
+        "config_entries": [
+          "f6975f09d3f4af2d6c5db1b6a0252c42"
+        ],
+        "configuration_url": null,
+        "connections": [],
+        "disabled_by": null,
+        "entry_type": null,
+        "hw_version": null,
+        "id": "89fc22947e474f043dd4affab65e6a0a",
+        "identifiers": [
+          [
+            "google_home",
+            "573327b8-6517-4376-bb10-14ede81c68ff"
+          ]
+        ],
+        "manufacturer": "Google Home",
+        "model": "Google Nest Hub",
+        "name_by_user": null,
+        "name": "Google Home Bureau",
+        "sw_version": null,
+        "via_device_id": null
+      },
+      {
+        "area_id": null,
+        "config_entries": [
+          "f6975f09d3f4af2d6c5db1b6a0252c42"
+        ],
+        "configuration_url": null,
+        "connections": [],
+        "disabled_by": null,
+        "entry_type": null,
+        "hw_version": null,
+        "id": "6669c1d7f3341e67338b43f5bcca6a55",
+        "identifiers": [
+          [
+            "google_home",
+            "7624062c-81a3-4274-9852-d7bef126dc53"
+          ]
+        ],
+        "manufacturer": "Google Home",
+        "model": "Google Home Mini",
+        "name_by_user": null,
+        "name": "Google Home Mini cuisine",
+        "sw_version": null,
+        "via_device_id": null
+      },
+      {
+        "area_id": null,
+        "config_entries": [
+          "f6975f09d3f4af2d6c5db1b6a0252c42"
+        ],
+        "configuration_url": null,
+        "connections": [],
+        "disabled_by": null,
+        "entry_type": null,
+        "hw_version": null,
+        "id": "e9b5f48d53644580b5f67b02efbf4d82",
+        "identifiers": [
+          [
+            "google_home",
+            "ce966140-e1d8-4b13-85e2-9fbfdb99bcac"
+          ]
+        ],
+        "manufacturer": "Google Home",
+        "model": "Google Home",
+        "name_by_user": null,
+        "name": "Google Home Salle à manger",
+        "sw_version": null,
+        "via_device_id": null
+      },
+      {
+        "area_id": null,
+        "config_entries": [
+          "f6975f09d3f4af2d6c5db1b6a0252c42"
+        ],
+        "configuration_url": null,
+        "connections": [],
+        "disabled_by": null,
+        "entry_type": null,
+        "hw_version": null,
+        "id": "9d2b2445591a3cf3232238c4cbe6bad6",
+        "identifiers": [
+          [
+            "google_home",
+            "8d6d8218-496d-4b79-9de1-b00134a13711"
+          ]
+        ],
+        "manufacturer": "Google Home",
+        "model": "HK 4K Google TV",
+        "name_by_user": null,
+        "name": "Google Home Salon",
         "sw_version": null,
         "via_device_id": null
       }
