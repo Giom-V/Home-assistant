@@ -6,7 +6,7 @@ tts: #TODO: Split
   - platform: google_translate
     service_name: google_say
     language: 'fr'
-    base_url: !secret base_url
+#    base_url: !secret base_url
   - platform: watson_tts
     watson_apikey: !secret IBM_APIKey
     voice: fr-FR_ReneeV3Voice
