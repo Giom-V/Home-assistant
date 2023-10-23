@@ -56,10 +56,6 @@ zeroconf:
 #            Sensors and components                #
 ####################################################
 binary_sensor:
-  - platform: aurora
-  - platform: workday
-    country: FR
-    #province: QC
   - platform: template
     sensors:
       people_home:
@@ -233,7 +229,7 @@ rest:
 
 media_player:
   # Google Cast
-  - platform: cast
+  #- platform: cast
   #Emby
   #- platform: emby
   #  host: !secret NAS_IP
@@ -247,26 +243,25 @@ device_tracker:
     new_device_defaults:
       track_new_devices: True
   # - platform: nmap_tracker
-  #   hosts: 192.168.86.100-109
+  #   hosts: 192.168.86.100-120
   #   new_device_defaults:
   #     track_new_devices: True
 
 # https://www.home-assistant.io/components/person/
-person:
-  - name: Giom
-    id: giom
-    user_id: !secret giomUserId
-    device_trackers:
-      - device_tracker.Pixel4XL
-      - device_tracker.op6
-      - device_tracker.oneplus6_lan
-      - device_tracker.google_maps_108886437999779306059
-  - name: Claire
-    id: claire
-    user_id: !secret claireUserId
-    device_trackers:
-      - device_tracker.cellClaire
-      - device_tracker.google_maps_116551309970452496819
+# person:
+#   - name: Giom
+#     id: giom
+#     user_id: !secret giomUserId
+#     device_trackers:
+#       - device_tracker.google_maps_108886437999779306059
+#       - device_tracker.pixel_7_pro_8
+#       - device_tracker.mes_cles
+#       - device_tracker.portefeuille
+#   - name: Claire
+#     id: claire
+#     user_id: !secret claireUserId
+#     device_trackers:
+#       - device_tracker.google_maps_116551309970452496819
 
 notify:
   - platform: slack
@@ -277,22 +272,6 @@ notify:
     platform: free_mobile
     username: !secret freeMobileUsername
     access_token: !secret freeMobileToken
-
-# Hangout https://www.home-assistant.io/integrations/hangouts/
-hangouts:
-  intents:
-    HangoutsHelp:
-      sentences:
-        - Help
-    LivingRoomTemperature:
-      sentences:
-        - What is the temperature in the living room
-      conversations:
-        - id: hangoutConversation
-  default_conversations:
-    - id: hangoutConversation
-  error_suppressed_conversations:
-    - id: hangoutConversation
 
 # panel_iframe:
 #   slack:
@@ -359,11 +338,11 @@ zone:
 
 #tplink:
 
-mqtt:
-  broker: localhost
-  discovery: true
-  discovery_prefix: homeassistant
-  password: !secret mqttPassword
+# mqtt:
+#   broker: localhost
+#   discovery: true
+#   discovery_prefix: homeassistant
+#   password: !secret mqttPassword
 
 # vacuum:
 #   - platform: xiaomi_miio
