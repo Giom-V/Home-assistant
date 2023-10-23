@@ -26,7 +26,7 @@
       },
       {
         "id": "d3ab6852d1204081acba94c990cd0861",
-        "type": "js",
+        "type": "css",
         "url": "/local/tiles-card/tiles-card.js"
       },
       {
@@ -47,7 +47,7 @@
       {
         "id": "5630af2238aa4c75a0a30322b499b0dc",
         "type": "module",
-        "url": "/hacsfiles/banner-card/banner-card.js"
+        "url": "/hacsfiles/banner-card/banner-card.js?hacstag=1867657040130"
       },
       {
         "id": "36d93ed25e7440d683d37fc342776549",
@@ -73,6 +73,56 @@
         "url": "/hacsfiles/lovelace-mushroom/mushroom.js?hacstag=444350375213",
         "type": "module",
         "id": "4d8157ab9ecf48ef9c386323825634fd"
+      },
+      {
+        "url": "/hacsfiles/lovelace-plotly-graph-card/plotly-graph-card.js?hacstag=413812496331",
+        "type": "module",
+        "id": "d5d47edb7b82471a89d2f2146bfa9a4d"
+      },
+      {
+        "url": "/hacsfiles/room-card/room-card.js?hacstag=45444094910720",
+        "type": "module",
+        "id": "5de86bb954df421a8e972231b5314797"
+      },
+      {
+        "url": "/local/customCSS.css",
+        "type": "css",
+        "id": "9220d014765148dca79c0d6c76f87938"
+      },
+      {
+        "url": "/hacsfiles/lovelace-card-mod/card-mod.js?hacstag=190927524322",
+        "type": "module",
+        "id": "bf4535f789c148acb2c00e56cec42c92"
+      },
+      {
+        "id": "280b89194d154db8bfc43cfe849c11e9",
+        "url": "/hacsfiles/ha-floorplan/floorplan.js?hacstag=1883234941035",
+        "type": "module"
+      },
+      {
+        "id": "bf1b87ad00c54a4d8c939e65c22f3fd8",
+        "url": "/hacsfiles/stack-in-card/stack-in-card.js?hacstag=248954055020",
+        "type": "module"
+      },
+      {
+        "id": "7109f08ace634f11ae19d6198c97a732",
+        "url": "/hacsfiles/button-card/button-card.js?hacstag=146194325411",
+        "type": "module"
+      },
+      {
+        "id": "1a4f26f1443d48639261f4f06841a563",
+        "url": "/hacsfiles/compass-card/compass-card.js?hacstag=286038496200",
+        "type": "module"
+      },
+      {
+        "id": "afdbe4f6c71f4ac89273ef1a275a2e11",
+        "url": "/hacsfiles/apexcharts-card/apexcharts-card.js?hacstag=331701152204",
+        "type": "module"
+      },
+      {
+        "id": "2a8e3ee19c4b400096adfa93e0bf394a",
+        "url": "/hacsfiles/battery-state-card/battery-state-card.js?hacstag=256292682211",
+        "type": "module"
       }
     ]
   }
