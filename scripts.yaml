@@ -1,0 +1,9 @@
+party_mode:
+  alias: Party mode
+  sequence:
+  - service: scene.turn_on
+    target:
+      entity_id: scene.party_scene
+    metadata: {}
+  mode: single
+  icon: mdi:party-popper
