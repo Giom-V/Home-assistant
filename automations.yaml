@@ -310,6 +310,33 @@
     type: set_value
     value: '{{ [states(''number.aurores_light_bulb_start_up_color_temperature'') |
       int - 40 , 255] | min | float }}'
+  mode: single
+- id: '1678555411746'
+  alias: Allumer les lumières de la terrasse au coucher du soleil
+  description: ''
+  trigger:
+  - platform: sun
+    event: sunset
+    offset: 00:30
+  condition:
+  - condition: state
+    entity_id: binary_sensor.people_home
+    state: 'on'
+  action:
+  - type: turn_on
+    device_id: 5e75d15e67ac1988a925403412f6cd1a
+    entity_id: light.lumiere_exterieure_1_forceonlight
+    domain: light
+    enabled: false
+  - type: turn_on
+    device_id: c2eedf7108fcbb4f944ae4b273d0227b
+    entity_id: light.lumiere_exterieure_2_forceonlight
+    domain: light
+  - type: turn_on
+    device_id: e310bad303788f20ec0ac63b758667f1
+    entity_id: light.lumiere_exterieure_3_forceonlight
+    domain: light
+  mode: single
 - id: '1678555471570'
   alias: Extinction des feux
   description: ''
