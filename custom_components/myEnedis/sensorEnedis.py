@@ -104,18 +104,24 @@ class manageSensorState:
         return status_counts, state
 
     def getExistsRecentVersion(self, versionCurrent, versionGit):
-        import packaging
-        import packaging.version
-
-        # If only one of the versions exists, result is False
-        if (versionCurrent is None) or (versionGit is None):
-            return False
-
-        # Get version representations
-        currVersionObj = packaging.version.parse(versionCurrent)
-        gitVersionObj = packaging.version.parse(versionGit)
-
-        return currVersionObj < gitVersionObj
+        # import packaging.version
+        #
+        # # If only one of the versions exists, result is False
+        # if (versionCurrent is None) or (versionGit is None) or (versionGit == ""):
+        #     return False
+        #
+        # # self._LOGGER.error(
+        # #    "-- ** versionGit : %s, versionGit : %s" %( versionCurrent, versionGit )
+        # # )
+        # # Get version representations
+        # currVersionObj = packaging.version.parse(versionCurrent)
+        # try:
+        #     # version par encore disponible
+        #     gitVersionObj = packaging.version.parse(versionGit)
+        # except:
+        #     return False
+        # return currVersionObj < gitVersionObj
+        return False
 
     def getStatusEnergy(self, typeSensor=_consommation):
         state = "unavailable"
@@ -123,6 +129,36 @@ class manageSensorState:
         if self._myDataEnedis.getTimeLastCall() is not None:
             state = "{:.3f}".format(
                 self._myDataEnedis.getCurrentYear().getValue() * 0.001
+            )
+
+        return status_counts, state
+
+    def getStatusEcoWatt(self):
+        # import random
+        state = ""
+        status_counts: dict[str, str] = defaultdict(str)
+
+        status_counts["version"] = self.version
+
+        status_counts["lastSensorCall"] = \
+            datetime.datetime.now().strftime(format="%Y-%m-%d %H:%M:%S")
+
+        today = datetime.datetime.today().replace(minute=0, second=0, microsecond=0)
+        end = datetime.datetime.now() + datetime.timedelta(hours=12)
+        end = end.replace(minute=0, second=0, microsecond=0)
+        status_counts["forecast"] = {}
+        for maDate in self._myDataEnedis.getEcoWatt().getValue().keys():
+            if (maDate >= today) and (maDate < end):
+                clef = maDate.strftime(format="%H h")
+                valeur = self._myDataEnedis.getEcoWatt().getValue()[maDate]
+                # valeur = random.randrange(3) + 1 # pour mettre des valeurs aléatoire
+                status_counts["forecast"][clef] = valeur
+        status_counts["begin"] = today
+        status_counts["end"] = end
+        # ajout last update du sensor a
+        if self._myDataEnedis.getTimeLastCall() is not None:
+            state = "{:.3f}".format(
+                123456
             )
 
         return status_counts, state
@@ -195,13 +231,14 @@ class manageSensorState:
         status: dict[str, int | float | str | list] = defaultdict(int)
         status["version"] = self.version
         status["versionGit"] = data.getGitVersion()
+        status["serviceEnedis"] = data.getServiceEnedis()
         status["versionUpdateAvailable"] = self.getExistsRecentVersion(
             self.version, data.getGitVersion()
         )
 
         if data.getTimeLastCall() is not None:
             self._LOGGER.info(
-                "-- ** on va mettre à jour : %s" % data.contract.get_PDL_ID()
+                "-- ** on va mettre à jour : %s", data.contract.get_PDL_ID()
             )
             status["nbCall"] = data.getNbCall()
             status["typeCompteur"] = typeSensor
@@ -261,7 +298,7 @@ class manageSensorState:
                             valeur = -1
                             if clef in last7daysHC.keys():
                                 valeur = last7daysHC[clef]
-                            status["day_%s_HC" % (niemejour)] = valeur
+                            status[f"day_{niemejour}_HC"] = valeur
                         # gestion du cout par jour ....
 
                         niemejour = 0
@@ -407,6 +444,20 @@ class manageSensorState:
                         status["errorLastCallInterne"] = data.getErrorLastCall()
 
                         if (
+                            (lastYear is not None)
+                            and (lastYear != 0)
+                            and (currYear is not None)
+                        ):
+                            valeur = (
+                                100
+                                * (currYear - lastYear)
+                                / lastYear
+                            )
+                            status["year_evolution"] = f"{valeur:.3f}"
+                        else:
+                            status["year_evolution"] = 0
+
+                        if (
                             (lastMonthLastYear is not None)
                             and (lastMonthLastYear != 0)
                             and (lastMonth is not None)
@@ -511,7 +562,7 @@ class manageSensorState:
             status["errorLastCall"] = data.getCardErrorLastCall()
             status["errorLastCallInterne"] = data.getErrorLastCall()
         self._LOGGER.info("*** SENSOR ***")
-        self._LOGGER.info("status :%s" % status)
-        self._LOGGER.info("state :%s" % state)
+        self._LOGGER.info("status :%s", status)
+        self._LOGGER.info("state :%s", state)
         self._LOGGER.info("*** FIN SENSOR ***")
         return status, state

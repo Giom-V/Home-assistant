@@ -1,4 +1,4 @@
-"""Config flow for Hello World integration."""
+"""Config flow for Pollens integration."""
 from __future__ import annotations
 
 import logging
@@ -12,6 +12,7 @@ from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant, callback
 from homeassistant.data_entry_flow import FlowResult
 from homeassistant.helpers import aiohttp_client
+from homeassistant.helpers import selector
 
 from .const import (
     CONF_VERSION,
@@ -50,7 +51,7 @@ async def validate_input(hass: HomeAssistant, data: dict) -> dict[str, Any]:
 
 
 class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
-    """Handle a config flow for Hello World."""
+    """Handle a config flow for Pollens."""
 
     VERSION = CONF_VERSION
     # Pick one of the available connection classes in homeassistant/config_entries.py
@@ -99,12 +100,6 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             description_placeholders={"docs_url": "pollens.fr"},
             errors=errors,
         )
-
-    # async def async_step_import(self, conf: dict) -> FlowResult:
-    #     """Import a configuration from configuration.yaml."""
-    #     return await self.async_step_user(
-    #         user_input={CONF_COUNTRYCODE: conf[CONF_LOCATIONS]}
-    #     )
 
     async def async_step_select_pollens(self, user_input=None):
         """Select pollens step 2"""
@@ -169,10 +164,11 @@ class OptionsFlowHandler(config_entries.OptionsFlow):
             step_id="init",
             data_schema=vol.Schema(
                 {
+                    # Configuration of scan interval mini 3 h max 24h              
                     vol.Optional(
                         CONF_SCAN_INTERVAL,
                         default=self.config_entry.options.get(CONF_SCAN_INTERVAL, 1),
-                    ): vol.All(vol.Coerce(int), vol.Range(min=1, max=24)),
+                    ): selector.NumberSelector(selector.NumberSelectorConfig(min=3, max=24, mode=selector.NumberSelectorMode.BOX)),
                 }
             ),
             errors=errors,

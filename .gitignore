@@ -59,11 +59,14 @@ node-red
 !/.storage/lovelace
 !/.storage/lovelace.lovelace_*
 !/.storage/lovelace_resources
+!/.storage/core.area_registry
+!/.storage/core.device_registry
+!/.storage/core.entity_registry
 
 # Do not ignore specific custom components
-custom_components/
+#custom_components/
 !/custom_components/dlight/*
-www/community/*
+#www/community/*
 
 # ignore all json and txt files in Enedis sub-directories
 custom_components/archive/myEnedis/14476845147777/*.json

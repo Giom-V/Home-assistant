@@ -1,42 +1,109 @@
 {
   "version": 1,
-  "minor_version": 1,
+  "minor_version": 3,
   "key": "core.area_registry",
   "data": {
     "areas": [
       {
+        "aliases": [],
         "name": "Living Room",
         "id": "living_room",
         "picture": null
       },
       {
+        "aliases": [],
         "name": "Kitchen",
         "id": "kitchen",
         "picture": null
       },
       {
+        "aliases": [],
         "name": "Bedroom",
         "id": "bedroom",
         "picture": null
       },
       {
+        "aliases": [],
         "name": "Office",
         "id": "office",
         "picture": null
       },
       {
+        "aliases": [],
         "name": "Basement",
         "id": "basement",
         "picture": null
       },
       {
+        "aliases": [],
         "name": "Garden",
         "id": "garden",
         "picture": null
       },
       {
+        "aliases": [],
         "name": "Jardin de devant",
         "id": "jardin_de_devant",
+        "picture": null
+      },
+      {
+        "aliases": [],
+        "name": "Bathroom",
+        "id": "bathroom",
+        "picture": null
+      },
+      {
+        "aliases": [],
+        "name": "Aurore's bedroom",
+        "id": "aurore_s_bedroom",
+        "picture": null
+      },
+      {
+        "aliases": [],
+        "name": "EV6",
+        "id": "ev6",
+        "picture": null
+      },
+      {
+        "aliases": [],
+        "name": "Shower room",
+        "id": "shower_room",
+        "picture": null
+      },
+      {
+        "aliases": [],
+        "name": "Kids room",
+        "id": "kids_room",
+        "picture": null
+      },
+      {
+        "aliases": [],
+        "name": "Attic",
+        "id": "attic",
+        "picture": null
+      },
+      {
+        "aliases": [],
+        "name": "Back kitchen",
+        "id": "back_kitchen",
+        "picture": null
+      },
+      {
+        "aliases": [],
+        "name": "Cannes",
+        "id": "cannes",
+        "picture": null
+      },
+      {
+        "aliases": [],
+        "name": "Salon",
+        "id": "salon",
+        "picture": null
+      },
+      {
+        "aliases": [],
+        "name": "Giom",
+        "id": "giom",
         "picture": null
       }
     ]

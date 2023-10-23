@@ -3,6 +3,8 @@ from __future__ import annotations
 try:
     from .const import (  # isort:skip
         __nameMyEnedis__,
+        _ENEDIS_MyElectricData,
+        _ENEDIS_EnedisGateway,
     )
 
 except ImportError:
@@ -14,6 +16,8 @@ import datetime
 import logging
 import re
 import sys
+
+from . import apiconst as API
 
 _LOGGER = logging.getLogger(__nameMyEnedis__)
 
@@ -45,7 +49,9 @@ class myCall:
         self._lastAnswer = None
         self._contentType = "application/json"
         self._contentHeaderMyEnedis = "home-assistant-myEnedis"
-        self._serverName = "https://enedisgateway.tech/api"
+        self._serviceEnedis = None
+        self._serverNameUrl = {'enedisGateway': "https://enedisgateway.tech/api",
+                               'myElectricalData': "https://www.myelectricaldata.fr"}
 
     @staticmethod
     def sanitizeCounter() -> int:
@@ -66,8 +72,9 @@ class myCall:
         myCall._MyCallsSinceRestart += 1
         return myCall._MyCallsSinceRestart
 
-    def setParam(self, PDL_ID: str, token: str, version: str):
-        self._PDL_ID, self._token, self._version = PDL_ID, token, version
+    def setParam(self, PDL_ID: str, token: str, version: str, serviceEnedis: str):
+        self._PDL_ID, self._token, self._version, self._serviceEnedis = \
+            PDL_ID, token, version, serviceEnedis
 
     def getDefaultHeader(self) -> dict[str, str]:
         return {
@@ -76,6 +83,15 @@ class myCall:
             "call-service": self._contentHeaderMyEnedis,
             "ha_sensor_myenedis_version": self._version,
         }
+
+    def getServiceEnedis(self):
+        return self._serviceEnedis
+
+    def isMyElectricData(self, serviceEnedis):
+        return serviceEnedis == _ENEDIS_MyElectricData
+
+    def isEnedisGateway(self, serviceEnedis):
+        return serviceEnedis == _ENEDIS_EnedisGateway
 
     def setLastAnswer(self, lastanswer):
         self._lastAnswer = lastanswer
@@ -122,7 +138,41 @@ class myCall:
         with open(fname, "w") as f:
             f.write(data)
 
-    def post_and_get_json(self, url, params=None, data=None, headers=None):
+    def getUrl(self, serviceEnedis, data):
+        if self.isMyElectricData(serviceEnedis):
+            url = self._serverNameUrl[serviceEnedis]
+            if data["type"] == "contracts":
+                url = url + "/" + data["type"] + "/" + data["usage_point_id"] + "/"
+            elif data["type"] == "daily_consumption":
+                url = url + "/" + data["type"] + "/" + data["usage_point_id"] + "/" + \
+                    "start" + "/" + data["start"] + "/" + \
+                    "end" + "/" + data["end"] + "/"
+            elif data["type"] == "daily_consumption_max_power":
+                url = url + "/" + data["type"] + "/" + data["usage_point_id"] + "/" + \
+                    "start" + "/" + data["start"] + "/" + \
+                    "end" + "/" + data["end"] + "/"
+            elif data["type"] == "daily_production":
+                url = url + "/" + data["type"] + "/" + data["usage_point_id"] + "/" + \
+                    "start" + "/" + data["start"] + "/" + \
+                    "end" + "/" + data["end"] + "/"
+            elif data["type"] == "consumption_load_curve":
+                url = url + "/" + data["type"] + "/" + data["usage_point_id"] + "/" + \
+                    "start" + "/" + data["start"] + "/" + \
+                    "end" + "/" + data["end"] + "/"
+            elif data["type"] == "rte/ecowatt":
+                url = url + "/" + data["type"] + "/" + \
+                    data["start"] + "/" + \
+                    data["end"] + "/"
+            return "get", url
+            # return "get", url + "cache"
+        elif self.isEnedisGateway(serviceEnedis):
+            url = self._serverNameUrl[serviceEnedis]
+            return "post", url
+        else:
+            return None
+
+    def post_and_get_json(self, serviceEnedis=None, params=None,
+                          data=None, headers=None):
         import json
         import random
         import time
@@ -134,13 +184,18 @@ class myCall:
         minDelay: float = INITIAL_CALL_DELAY
         while maxTriesToGo > 0:
             maxTriesToGo -= 1
+            hasError = True  # Suppose error, will be set to False if no exception
             try:
                 if not myCall.isAvailable():
+                    _LOGGER.warning(
+                        "Nombre d'appels à l'API dépassé,"
+                        " ou dernière erreur trop récente"
+                    )
                     dataAnswer = {
-                        "error_code": "UNAVAILABLE",
-                        "enedis_return": {
-                            "error": "UNAVAILABLE",
-                            "message": "Indisponible, essayez plus tard",
+                        API.ERROR_CODE: "UNAVAILABLE",
+                        API.ENEDIS_RETURN: {
+                            API.ENEDIS_RETURN_ERROR: "UNAVAILABLE",
+                            API.ENEDIS_RETURN_MESSAGE: "Indisponible, essayez plus tard",
                         },
                     }
                     self.setLastAnswer(dataAnswer)
@@ -161,16 +216,23 @@ class myCall:
                 counter = myCall.increaseCallCounter()
                 logPrefix = f"====== Appel http #{counter} !!! "
                 _LOGGER.info(f"{logPrefix}=====")
-
-                # raise(requests.exceptions.Timeout) # pour raiser un timeout de test ;)
-                response = session.post(
-                    url,
-                    params=params,
-                    data=json.dumps(data),
-                    headers=headers,
-                    timeout=30,
-                )
-                # Generate test data with next line
+                method, url = self.getUrl(serviceEnedis, data)
+                if method == "post":
+                    response = session.post(
+                        url,
+                        params=params,
+                        data=json.dumps(data),
+                        headers=headers,
+                        timeout=30,
+                    )
+                else:
+                    response = session.get(
+                        url,
+                        params=params,
+                        data=json.dumps(data),
+                        headers=headers,
+                        timeout=30,)
+                # Write API result to file (test generation, debug)
                 self.saveApiReturn(counter, response.text)
 
                 response.raise_for_status()
@@ -180,14 +242,15 @@ class myCall:
                 _LOGGER.info(f"{logPrefix}data : {data} =====")
                 _LOGGER.info(f"{logPrefix}reponse : {dataAnswer} =====")
                 maxTriesToGo = 0  # Done
+                hasError = False
             except requests.exceptions.Timeout:
                 myCall.handleTimeout()
                 # a ajouter raison de l'erreur !!!
                 _LOGGER.error(f"{logPrefix}requests.exceptions.Timeout")
                 dataAnswer = {
-                    "enedis_return": {
-                        "error": "UNKERROR_TIMEOUT",
-                        "message": "Timeout",
+                    API.ENEDIS_RETURN: {
+                        API.ENEDIS_RETURN_ERROR: "UNKERROR_TIMEOUT",
+                        API.ENEDIS_RETURN_MESSAGE: "Timeout",
                     }
                 }
                 self.setLastAnswer(dataAnswer)
@@ -202,8 +265,7 @@ class myCall:
                     _LOGGER.error(f"data : {json.dumps(data)} ")
                     _LOGGER.error(f"Error JSON : {response.text} ")
                     _LOGGER.error("*" * 60)
-                # with open('error.json', 'w') as outfile:
-                #    json.dump(response.json(), outfile)
+
                 dataAnswer = response.json()
                 self.setLastAnswer(dataAnswer)
 
@@ -215,12 +277,13 @@ class myCall:
                 ):
                     maxTriesToGo = 0  # Fatal error, do not try again
 
-        _LOGGER.debug("Data answer: %r", dataAnswer)
-        # if ( "enedis_return" in dataAnswer.keys() ):
-        #    if ( type( dataAnswer["enedis_return"] ) is dict ):
-        #        if ( "error" in dataAnswer["enedis_return"].keys()):
-        #            if ( dataAnswer["enedis_return"]["error"] == "UNKERROR_TIMEOUT"):
-        #                raise error
+            # Log result as error in case of exception, or as debug otherwise
+            _LOGGER.log(
+                logging.ERROR if hasError else logging.DEBUG,
+                "Data answer: %r",
+                dataAnswer,
+            )
+
         return dataAnswer
 
     def getDataPeriod(self, deb: str, fin: str | None) -> tuple[str, bool]:
@@ -234,7 +297,7 @@ class myCall:
             }
             headers = self.getDefaultHeader()
             dataAnswer = self.post_and_get_json(
-                self._serverName, data=payload, headers=headers
+                self.getServiceEnedis(), data=payload, headers=headers
             )
             callDone = True
         else:
@@ -255,7 +318,7 @@ class myCall:
             }
             headers = self.getDefaultHeader()
             dataAnswer = self.post_and_get_json(
-                self._serverName, data=payload, headers=headers
+                self.getServiceEnedis(), data=payload, headers=headers
             )
             callDone = True
         else:
@@ -275,7 +338,27 @@ class myCall:
             }
             headers = self.getDefaultHeader()
             dataAnswer = self.post_and_get_json(
-                self._serverName, data=payload, headers=headers
+                self.getServiceEnedis(), data=payload, headers=headers
+            )
+            callDone = True
+        else:
+            # pas de donnée
+            callDone = False
+            dataAnswer = ""
+        self.setLastAnswer(dataAnswer)
+        return dataAnswer, callDone
+
+    def getDataEcoWatt(self, deb, fin):
+        if fin is not None:
+            payload = {
+                "type": "rte/ecowatt",
+                "usage_point_id": self._PDL_ID,
+                "start": str(deb),
+                "end": str(fin),
+            }
+            headers = self.getDefaultHeader()
+            dataAnswer = self.post_and_get_json(
+                self.getServiceEnedis(), data=payload, headers=headers
             )
             callDone = True
         else:
@@ -295,7 +378,7 @@ class myCall:
             }
             headers = self.getDefaultHeader()
             dataAnswer = self.post_and_get_json(
-                self._serverName, data=payload, headers=headers
+                self.getServiceEnedis(), data=payload, headers=headers
             )
             callDone = True
         else:
@@ -312,6 +395,6 @@ class myCall:
         }
         headers = self.getDefaultHeader()
         dataAnswer = self.post_and_get_json(
-            self._serverName, data=payload, headers=headers
+            self.getServiceEnedis(), data=payload, headers=headers
         )
         return dataAnswer

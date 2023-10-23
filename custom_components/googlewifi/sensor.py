@@ -5,6 +5,11 @@ from homeassistant.exceptions import HomeAssistantError
 from homeassistant.helpers import entity_platform
 from homeassistant.helpers.update_coordinator import UpdateFailed
 from homeassistant.util.dt import as_local, parse_datetime
+from homeassistant.components.sensor import (
+    SensorDeviceClass,
+    SensorEntity,
+    SensorStateClass,
+)
 
 from . import GoogleWifiEntity, GoogleWiFiUpdater
 from .const import (
@@ -121,7 +126,7 @@ async def async_setup_entry(hass, entry, async_add_entities):
     )
 
 
-class GoogleWifiSpeedSensor(GoogleWifiEntity):
+class GoogleWifiSpeedSensor(GoogleWifiEntity, SensorEntity):
     """Defines a Google WiFi Speed sensor."""
 
     def __init__(
@@ -143,6 +148,8 @@ class GoogleWifiSpeedSensor(GoogleWifiEntity):
         self.attrs = {}
         self._unit_of_measurement = unit_of_measure
 
+    _attr_state_class = SensorStateClass.MEASUREMENT
+    
     @property
     def unique_id(self):
         """Return the unique id for this sensor."""
@@ -173,7 +180,7 @@ class GoogleWifiSpeedSensor(GoogleWifiEntity):
                     self._state = unit_convert(self._state, self._unit_of_measurement)
 
             return self._state
-
+    
     @property
     def unit_of_measurement(self):
         """Return the unit of measurement of the sensor."""

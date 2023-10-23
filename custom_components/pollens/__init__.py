@@ -83,8 +83,9 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         UNDO_LISTENER: undo_listener,
         "pollens_api": api,
     }
+    await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
+    _LOGGER.debug("Setup of %s successful", entry.title)
 
-    hass.config_entries.async_setup_platforms(entry, PLATFORMS)
     return True
 
 
