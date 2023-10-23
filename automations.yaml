@@ -16,6 +16,57 @@
     data:
       entity_id: script.preheat_car
   mode: single
+- id: '1669906661965'
+  alias: Long-press office button
+  description: ''
+  trigger:
+  - device_id: bd42176d16a1d12f6fde55c147476465
+    domain: zha
+    platform: device
+    type: remote_button_long_press
+    subtype: remote_button_long_press
+  condition: []
+  action:
+  - service: script.turn_on
+    data: {}
+    target:
+      entity_id: script.preheat_car
+  mode: single
+- id: '1669906783150'
+  alias: Press office button
+  description: ''
+  trigger:
+  - device_id: bd42176d16a1d12f6fde55c147476465
+    domain: zha
+    platform: device
+    type: remote_button_short_press
+    subtype: remote_button_short_press
+  condition: []
+  action:
+  - type: toggle
+    device_id: d437e500bc37e2cbd9119d9ae51214bf
+    entity_id: switch.vertical_monitor
+    domain: switch
+  - type: toggle
+    device_id: d437e500bc37e2cbd9119d9ae51214bf
+    entity_id: switch.hdr_monitor
+    domain: switch
+  mode: single
+- id: '1669999603054'
+  alias: Turn on D-Light when I am in a meeting
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - binary_sensor.in_meeting
+    to: 'on'
+  condition: []
+  action:
+  - service: light.turn_on
+    data: {}
+    target:
+      entity_id: light.dlight
+  mode: single
 - id: '1687101568970'
   alias: Turn on Govee LED strip when we switch on the TV during the evening
   description: ''
