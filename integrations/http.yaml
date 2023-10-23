@@ -1,10 +1,15 @@
 # https://home-assistant.io/components/http/
 
 http:
-  # ip_ban_enabled: false
+  ip_ban_enabled: false
   trusted_proxies:
     - 192.168.86.0/24 #TODO: secret?
+    - 192.168.1.0/24 #TODO: secret?
+    - 192.168.86.254
   use_x_forwarded_for: true
-  login_attempts_threshold: 5
+  login_attempts_threshold: 100
   ssl_certificate: !secret SSLCertificate #TODO: reactivate
   ssl_key: !secret SSLKey
+  cors_allowed_origins:
+    - 192.168.86.0/24 #TODO: secret?
+    - 192.168.1.0/24 #TODO: secret?
