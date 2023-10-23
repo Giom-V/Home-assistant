@@ -37,7 +37,6 @@ google_calendars.yaml
 *.old.yaml
 *.code-workspace
 .storage/core.entity_registry
-custom_components/
 
 # Secrets
 secrets.yaml
@@ -60,9 +59,10 @@ node-red
 !/.storage/lovelace
 !/.storage/lovelace.lovelace_*
 !/.storage/lovelace_resources
-/.storage/core.area_registry
-/.storage/core.entity_registry
-/.storage/core.device_registry
+
+# Do not ignore specific custom components
+custom_components/
+!/custom_components/dlight/*
 
 # ignore all json and txt files in Enedis sub-directories
 custom_components/archive/myEnedis/14476845147777/*.json

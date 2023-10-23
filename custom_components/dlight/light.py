@@ -1,146 +1,146 @@
-#!/usr/bin/env python3
-"""dLight integration"""
-
-from __future__ import annotations
-
-import json
+import asyncio
 import logging
-import socket
 
-import voluptuous as vol
+from typing import Any
 
-# Import the device class from the component that you want to support
-import homeassistant.helpers.config_validation as cv
-from homeassistant.components.light import (SUPPORT_BRIGHTNESS, SUPPORT_COLOR_TEMP, ATTR_BRIGHTNESS, ATTR_COLOR_TEMP, PLATFORM_SCHEMA, LightEntity)
-from homeassistant.const import CONF_HOST, CONF_DEVICE_ID, CONF_PORT
+from datetime import timedelta
 from homeassistant.core import HomeAssistant
+from homeassistant.config_entries import ConfigEntry
+from homeassistant.helpers.entity import DeviceInfo
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
-from homeassistant.helpers.typing import ConfigType, DiscoveryInfoType
+import homeassistant.util.color as color_util
+from homeassistant.components.light import (
+    ATTR_BRIGHTNESS,
+    ATTR_COLOR_TEMP,
+    ColorMode,
+    LightEntity,
+)
 
-DOMAIN = 'dlight'
+from .const import DOMAIN
+from . import dlight
+
 _LOGGER = logging.getLogger(__name__)
 
-# Validation of the user's configuration
-PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend({
-    vol.Required(CONF_HOST): cv.string,
-    vol.Required(CONF_DEVICE_ID): cv.string,
-    vol.Optional(CONF_PORT, default=3333): cv.port,
-})
 
-def get_query_device_info(device_id):
-    return {
-        "commandId": "1",
-        "deviceId": device_id,
-        "commandType": "QUERY_DEVICE_INFO",
-    }
+SCAN_INTERVAL = timedelta(seconds=5)
 
-def get_query_device_states(device_id):
-    return {
-        "commandId": "2",
-        "deviceId": device_id,
-        "commandType": "QUERY_DEVICE_STATES",
-    }
 
-def get_execute(device_id):
-    return {
-        "commandId": "3",
-        "deviceId": device_id,
-        "commandType": "EXECUTE",
-    }
-
-def setup_platform(
-        hass: HomeAssistant,
-        config: ConfigType,
-        add_entities: AddEntitiesCallback,
-        discovery_info: DiscoveryInfoType | None = None
+async def async_setup_entry(
+    hass: HomeAssistant,
+    config_entry: ConfigEntry,
+    async_add_entities: AddEntitiesCallback,
 ) -> None:
-    add_entities([dLight(config[CONF_HOST], config[CONF_PORT], config[CONF_DEVICE_ID])], True)
+    """Set up dlights dynamically through discovery."""
 
-class dLight(LightEntity):
+    devices = await dlight.discover_devices(hass)
+    entities: list[DLight] = [DLight(device) for device in devices]
+    # for device in devices:
+    #     entities.append(DLight(device))
+
+    async_add_entities(entities)
+
+
+class DLight(LightEntity):
     """Representation of a dLight."""
 
-    def __init__(self, host, port, device_id) -> None:
+    def __init__(self, discovery: dlight.DLightDiscovery) -> None:
         """Initialize a dLight."""
-        self._host = host
-        self._port = port
-        self._device_id = device_id
+        self._discovery = discovery
+        self._attr_unique_id = self._discovery.deviceId
+        self._attr_name = self._discovery.deviceModel + " " + self._discovery.deviceId
+        self._available = True
 
     @property
-    def supported_features(self):
-        return SUPPORT_BRIGHTNESS | SUPPORT_COLOR_TEMP
+    def device_info(self) -> DeviceInfo:
+        """Information about this entity/device."""
+        return DeviceInfo(
+            identifiers={(DOMAIN, str(self._discovery.deviceId))},
+            name=self.name,
+            sw_version=self._discovery.swVersion,
+            hw_version=self._discovery.hwVersion,
+            model=self._discovery.deviceModel,
+        )
 
     @property
-    def min_mireds(self):
-        """Return the minimum color temperature in mireds for the dLight.
-
-        This is calculated as 1000000 / 2600."""
-        return 167
+    def icon(self):
+        """Return the icon to use in the frontend, if any."""
+        return "mdi:desk-lamp"
 
     @property
-    def max_mireds(self):
-        """Return the maximum color temperature in mireds for the dLight.
-
-        This is calculated as 1000000 / 6000."""
-        return 384
+    def supported_color_modes(self):
+        """Flag supported color modes."""
+        return {ColorMode.BRIGHTNESS, ColorMode.COLOR_TEMP}
 
     @property
-    def unique_id(self) -> str:
-        """Return a unique ID to use for this entity."""
-        return self._device_id
+    def min_color_temp_kelvin(self) -> int:
+        """Return the warmest color_temp_kelvin that this light supports."""
+        return 2600
 
     @property
-    def name(self) -> str:
-        """Display name of this light."""
-        return f"dLight {self._device_id}"
+    def max_color_temp_kelvin(self) -> int:
+        """Return the coldest color_temp_kelvin that this light supports."""
+        return 6000
 
     @property
-    def brightness(self):
-        """Return the brightness of the light."""
-        return self._brightness * 255 / 100
+    def available(self) -> bool:
+        return self._available
 
-    @property
-    def color_temp(self):
-        """Return the color temperature of the light in mireds."""
-        return int(1000000 / self._temperature)
+    def _update_state(self, states: dict[str, Any]) -> None:
+        """Update internal state based on response from lamp"""
+        self._available = True
 
-    @property
-    def is_on(self) -> bool | None:
-        """Return true if light is on."""
-        return self._on
+        if "on" in states:
+            self._attr_is_on = states["on"]
+        if "brightness" in states:
+            self._attr_brightness = int(
+                round(255 * (int(states["brightness"]) / 100), 0)
+            )
+        if "color" in states:
+            self._attr_color_temp_kelvin = states["color"]["temperature"]
 
-    def turn_on(self, **kwargs: Any) -> None:
-        """Instruct the light to turn on."""
-        values = { "on": True }
+    def _mark_state_as_unavailable(self) -> None:
+        self._attr_is_on = None
+        self._attr_brightness = None
+        self._attr_color_temp_kelvin = None
+        self._available = False
+
+    async def async_update(self):
+        """Poll device state"""
+        try:
+            result = await dlight.get_state(self._discovery)
+            self._update_state(result["states"])
+        except dlight.DLightRequestUnsuccessfulException:
+            _LOGGER.warning("Async Update Failed: %s\n%s", self._discovery, result)
+            self._mark_state_as_unavailable()
+        except (asyncio.TimeoutError, OSError):
+            # Device is unavailable
+            # TODO - schedule a new device discovery in case the IP has changed.
+            self._mark_state_as_unavailable()
+
+    async def async_turn_on(self, **kwargs):
+        """Turn the device on."""
+        dlight_config: dict[str, Any] = {"on": True}
         if ATTR_BRIGHTNESS in kwargs:
-            values[ATTR_BRIGHTNESS] = int(float(kwargs[ATTR_BRIGHTNESS]) / 255 * 100)
+            brightness = int(float(kwargs[ATTR_BRIGHTNESS]) / 255 * 100)
+            dlight_config[ATTR_BRIGHTNESS] = brightness
         if ATTR_COLOR_TEMP in kwargs:
-            values["color"] = { "temperature": int(1000000 / float(kwargs[ATTR_COLOR_TEMP])) }
+            temp = color_util.color_temperature_kelvin_to_mired(
+                float(kwargs[ATTR_COLOR_TEMP])
+            )
+            dlight_config["color"] = {"temperature": temp}
 
-        self.set_values(**values)
+        try:
+            result = await dlight.set_values(self._discovery, dlight_config)
+            self._update_state(result)
+        except Exception as e:
+            _LOGGER.warning("Async Turn On Failed: %s\n%s", self._discovery, e)
 
-    def turn_off(self, **kwargs: Any) -> None:
-        """Instruct the light to turn off."""
-        self.set_values(on=False)
+    async def async_turn_off(self, **kwargs):
+        """Turn device off."""
+        dlight_config: dict[str, Any] = {"on": False}
 
-    def update(self) -> None:
-        """Fetch new state data for this light."""
-        self._on, self._brightness, self._temperature = self.get_states()
-
-    def get_states(self):
-        states = self.make_call(get_query_device_states(self._device_id))['states']
-        return states['on'], states['brightness'], states['color']['temperature']
-
-    def make_call(self, query):
-        jquery = json.dumps(query)
-        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-            s.connect((self._host, self._port))
-            s.sendall(bytes(jquery, encoding='UTF-8'))
-            data = s.recv(8*1024)
-            recv = data.decode('UTF-8')
-        # TODO: Parse the result if SUCCESS and set cached values
-        return json.loads(recv[4:])
-
-    def set_values(self, **kwargs):
-        query = get_execute(self._device_id).copy()
-        query['commands'] = [kwargs]
-        return self.make_call(query)
+        try:
+            result = await dlight.set_values(self._discovery, dlight_config)
+            self._update_state(result)
+        except Exception as e:
+            _LOGGER.warning("Async Turn Off Failed: %s\n%s", self._discovery, e)

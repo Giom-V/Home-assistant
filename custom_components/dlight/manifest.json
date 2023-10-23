@@ -1,10 +1,14 @@
 {
   "domain": "dlight",
-  "name": "dLight",
-  "documentation": "https://user.git.corp.google.com/pberruti/homeassistant_dlight",
-  "dependencies": [],
-  "codeowners": ["@pberruti"],
+  "name": "dlight",
+  "config_flow": true,
+  "documentation": "https: //www.home-assistant.io/integrations/dlight",
   "requirements": [],
+  "ssdp": [],
+  "zeroconf": [],
+  "homekit": {},
+  "dependencies": [],
+  "codeowners": ["@edalquist"],
   "iot_class": "local_polling",
   "version": "1.0.0"
 }
