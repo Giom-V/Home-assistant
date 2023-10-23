@@ -223,6 +223,145 @@
     target:
       entity_id: light.dlight
   mode: single
+- id: '1677099297248'
+  alias: Aurore's bed lights
+  description: ''
+  trigger:
+  - device_id: 40e2c9d25a557a13b74303960127118d
+    domain: zha
+    platform: device
+    type: remote_button_short_press
+    subtype: turn_off
+  - device_id: e059cad12f0a2c750a56719a911dc8e6
+    domain: zha
+    platform: device
+    type: remote_button_short_press
+    subtype: turn_off
+  condition: []
+  action:
+  - type: toggle
+    device_id: cef49caed9c762db670b6d2a85a15832
+    entity_id: switch.aurore_bed_light_switch
+    domain: switch
+  mode: single
+- id: '1677698797768'
+  alias: Aurore's room main light bulb
+  description: ''
+  trigger:
+  - device_id: 40e2c9d25a557a13b74303960127118d
+    domain: zha
+    platform: device
+    type: remote_button_short_press
+    subtype: turn_on
+  - device_id: e059cad12f0a2c750a56719a911dc8e6
+    domain: zha
+    platform: device
+    type: remote_button_short_press
+    subtype: turn_on
+  condition: []
+  action:
+  - type: toggle
+    device_id: e87ea47d487bcb4708a442aa8ebacfb1
+    entity_id: light.aurores_light_bulb
+    domain: light
+  mode: single
+- id: '1677701807876'
+  alias: Aurore's Light color temperature up
+  description: ''
+  trigger:
+  - device_id: e059cad12f0a2c750a56719a911dc8e6
+    domain: zha
+    platform: device
+    type: remote_button_short_press
+    subtype: right
+  condition:
+  - condition: device
+    type: is_on
+    device_id: e87ea47d487bcb4708a442aa8ebacfb1
+    entity_id: light.aurores_light_bulb
+    domain: light
+  action:
+  - device_id: e87ea47d487bcb4708a442aa8ebacfb1
+    domain: number
+    entity_id: number.aurores_light_bulb_start_up_color_temperature
+    type: set_value
+    value: '{{ [states(''number.aurores_light_bulb_start_up_color_temperature'') |
+      int + 40 , 255] | min | float }}'
+  mode: single
+- id: '1677701807876'
+  alias: Aurore's Light color temperature down
+  description: ''
+  trigger:
+  - device_id: e059cad12f0a2c750a56719a911dc8e6
+    domain: zha
+    platform: device
+    type: remote_button_short_press
+    subtype: left
+  condition:
+  - condition: device
+    type: is_on
+    device_id: e87ea47d487bcb4708a442aa8ebacfb1
+    entity_id: light.aurores_light_bulb
+    domain: light
+  action:
+  - device_id: e87ea47d487bcb4708a442aa8ebacfb1
+    domain: number
+    entity_id: number.aurores_light_bulb_start_up_color_temperature
+    type: set_value
+    value: '{{ [states(''number.aurores_light_bulb_start_up_color_temperature'') |
+      int - 40 , 255] | min | float }}'
+- id: '1678555471570'
+  alias: Extinction des feux
+  description: ''
+  trigger:
+  - platform: time
+    at: '23:00:00'
+  condition: []
+  action:
+  - type: turn_off
+    device_id: 5e75d15e67ac1988a925403412f6cd1a
+    entity_id: light.lumiere_exterieure_1_forceonlight
+    domain: light
+  - type: turn_off
+    device_id: c2eedf7108fcbb4f944ae4b273d0227b
+    entity_id: light.lumiere_exterieure_2_forceonlight
+    domain: light
+  - type: turn_off
+    device_id: e310bad303788f20ec0ac63b758667f1
+    entity_id: light.lumiere_exterieure_3_forceonlight
+    domain: light
+  - service: select.select_option
+    data:
+      option: 'Off'
+    target:
+      entity_id: select.aurores_light_bulb_start_up_behavior
+  - type: turn_off
+    device_id: cef49caed9c762db670b6d2a85a15832
+    entity_id: switch.aurore_bed_light_switch
+    domain: switch
+  - type: turn_off
+    device_id: d437e500bc37e2cbd9119d9ae51214bf
+    entity_id: switch.hdr_monitor
+    domain: switch
+  - type: turn_off
+    device_id: d437e500bc37e2cbd9119d9ae51214bf
+    entity_id: switch.vertical_monitor
+    domain: switch
+  mode: single
+- id: '1679085142205'
+  alias: During the day Aurore's light bulb default behavior is On
+  description: ''
+  trigger:
+  - platform: time
+    at: 07:00:00
+  condition: []
+  action:
+  - service: select.select_option
+    data:
+      option: 'On'
+    target:
+      entity_id: select.aurores_light_bulb_start_up_behavior
+  mode: single
 - id: '1679262865155'
   alias: Turn on the pond's pump during off-peak hours
   description: ''
