@@ -20,10 +20,11 @@ jobs:
             touch ./customize.yaml
             touch ./google_calendar.yaml
             mv secrets/home-assistant.fake.json secrets/home-assistant.json
-            python3 -m venv .
+            python -m venv .
             source bin/activate
             pip3 install --pre --upgrade homeassistant
             pwd
             ls
             export PATH=/home/homeassistant/.local/bin
+            python -m venv -c ~/repo/ --script check_config
             hass -c . --script check_config --info all
