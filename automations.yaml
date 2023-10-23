@@ -550,6 +550,14 @@
     entity_id: switch.chargeur_velo_switch
     domain: switch
   mode: single
+- id: '1684424597025'
+  alias: Disable vacuum camera update when docked
+  description: ''
+  use_blueprint:
+    path: homeassistant/deactivate_vacuum_sync.yaml
+    input:
+      vacuum: vacuum.rondelle
+      camera: camera.rondelle_s_map
 - id: toggle_bike_charger_peak_hours
   alias: Turn on the bike's chargeur only during off-peak hours
   description: ''
