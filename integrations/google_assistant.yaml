@@ -24,7 +24,9 @@ google_assistant:
       expose: true
     input_boolean.away_mode:
       expose: true
-    scene.lightsoff:
+    script.party_mode:
+      name: Party mode script
       expose: true
-    script.mop_kitchen_and_dining_room:
+    scene.party_scene:
+      name: Party mode scene
       expose: true

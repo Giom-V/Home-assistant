@@ -1,0 +1,48 @@
+- id: party_scene
+  name: Party scene
+  entities:
+    light.shapes_c5aa:
+      min_color_temp_kelvin: 1200
+      max_color_temp_kelvin: 6493
+      min_mireds: 154
+      max_mireds: 833
+      effect_list:
+      - Aurore boréale
+      - Beatdrop
+      - Blaze
+      - Cocoa Beach
+      - Cotton Candy
+      - Date Night
+      - Hip Hop
+      - Hot Sauce
+      - Jungle
+      - Lightscape
+      - Morning Sky
+      - Northern Lights
+      - Pop Rocks
+      - Prism
+      - Starlight
+      - Sundown
+      - Waterfall
+      supported_color_modes:
+      - color_temp
+      - hs
+      color_mode: hs
+      brightness: 254
+      hs_color:
+      - 0
+      - 0
+      rgb_color:
+      - 255
+      - 255
+      - 255
+      xy_color:
+      - 0.323
+      - 0.329
+      icon: mdi:triangle-outline
+      friendly_name: Shapes C5AA
+      supported_features: 36
+      effect: Hip Hop
+      state: 'on'
+  icon: mdi:party-popper
+  metadata: {}
