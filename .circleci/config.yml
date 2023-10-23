@@ -21,7 +21,6 @@ ha-check-config: &ha-check-config
           touch ./customize.yaml
           touch ./google_calendar.yaml
           mv secrets/home-assistant.fake.json secrets/home-assistant.json
-          pip3 install --pre --upgrade homeassistant
     - run:
         name: Check config
         command: |
