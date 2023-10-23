@@ -98,7 +98,7 @@ jobs:
     <<: *ha-check-config
 
 workflows:
-  version: 2
+  version: 2.1
   validate-and-check-config:
     jobs:
       #- yamllint
@@ -115,3 +115,7 @@ workflows:
            # - yamllint
             #- jsonlint
             #- markdownlint
+  build-workflow:
+    jobs:
+      - build:
+          context: JIRA_WEBHOOK
