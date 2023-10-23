@@ -1,3 +1,27 @@
+- id: '1666186950016'
+  alias: Test Nest sonnette
+  description: ''
+  trigger:
+  - platform: device
+    device_id: 033b8589dd583f9142b48bd463dcccd0
+    domain: nest
+    type: doorbell_chime
+  - platform: device
+    device_id: 033b8589dd583f9142b48bd463dcccd0
+    domain: nest
+    type: camera_person
+    enabled: false
+  - platform: device
+    device_id: 033b8589dd583f9142b48bd463dcccd0
+    domain: nest
+    type: camera_motion
+    enabled: false
+  condition: []
+  action:
+  - service: rest_command.gchat
+    data:
+      text: Sonette pressée!
+  mode: single
 - id: '1667896446367'
   alias: Turn off Air purifier for a while if the air quality is good
   description: ''
@@ -222,6 +246,22 @@
     data: {}
     target:
       entity_id: light.dlight
+  mode: single
+- id: '1676633819245'
+  alias: Testing led strip
+  description: ''
+  trigger:
+  - device_id: bd42176d16a1d12f6fde55c147476465
+    domain: zha
+    platform: device
+    type: remote_button_double_press
+    subtype: remote_button_double_press
+  condition: []
+  action:
+  - type: toggle
+    device_id: f1e7b29bd824ec88bdf7a3b1a2f58916
+    entity_id: light.led_strip_light
+    domain: light
   mode: single
 - id: '1677099297248'
   alias: Aurore's bed lights
