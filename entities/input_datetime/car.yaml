@@ -1,0 +1,8 @@
+last_time_bleuette_left_home:
+  name: Saves the last time Bleuette left home
+  has_date: true
+  has_time: true
+last_time_bleuette_left_nozay:
+  name: Saves the last time Bleuette left Nozay
+  has_date: true
+  has_time: true
