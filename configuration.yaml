@@ -13,7 +13,9 @@ homeassistant:
   unit_system: metric
   # Pick yours from here:
   # http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
-  time_zone: America/Toronto
+  time_zone: Europe/Paris
+  # Country
+  country: FR
   # Customization file
   customize: !include customize.yaml
   #  allowlist_external_dirs: #TODO: reaad external dirs
