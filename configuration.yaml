@@ -383,3 +383,31 @@ light:
 #     binary_sensor:
 #       - name: "In a meeting"
 #         value_template: "{{ value_json.in_meeting }}"
+
+rest_command:
+  gchat:
+    url: !secret gchatWebhook
+    method: POST
+    content_type: "application/json; charset=utf-8"
+    verify_ssl: true
+    payload: '{"text": {{ text | to_json }}}'
+  gchatalert:
+    url: !secret gchatAlertWebhook
+    method: POST
+    content_type: "application/json; charset=utf-8"
+    verify_ssl: true
+    payload: '{"text": {{ text | to_json }}}'
+  nanoleaf:
+    url: !secret nanoleafUrl
+    method: PUT
+    payload: >
+      { "write" : {"command": "display", "animType": "static", "animData":
+      {%- set all = [ 3329, 26694, 35769, 64745, 22722, 0 ] %}
+      {%- set ns = namespace(panels=[panels | count | string]) %}
+      {%- for panel in panels %}
+      {%- set ns.panels = ns.panels + [ '{} 1 {} {} {} 0 20'.format(all[panel.number-1], panel.r, panel.g, panel.b) ] %}
+      {%- endfor %}
+      "{{ ns.panels | join(' ') }}",
+      "loop": false, "palette": [], "colorType": "HSB"}
+      }
+    content_type: "application/json"
