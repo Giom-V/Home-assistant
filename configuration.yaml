@@ -78,6 +78,124 @@ template:
         state_class: measurement
         state: >
           {{ (states('sensor.bleuette_ev_range') | float / states('sensor.bleuette_ev_battery_level') | float * 100 ) | int }}
+  # Pollens from Tomorrow.io (copied from https://community.home-assistant.io/t/uk-and-worldwide-pollen-count-using-tomorrow-io-api/306560)
+  - sensor:
+      - name: Pollen - Grass
+        unique_id: sensor.pollen_grass
+        state: "{{ states('sensor.pollen_grass_index_day_0') }}"
+        icon: "mdi:grass"
+        attributes:
+          Today: "{{ states('sensor.pollen_grass_index_day_0') }}"
+          Tomorrow: "{{ states('sensor.pollen_grass_index_day_1') }}"
+          Today + 2: "{{ states('sensor.pollen_grass_index_day_2') }}"
+          Today + 3: "{{ states('sensor.pollen_grass_index_day_3') }}"
+          Today + 4: "{{ states('sensor.pollen_grass_index_day_4') }}"
+      - name: Pollen - Tree
+        unique_id: sensor.pollen_tree
+        state: "{{ state_attr('sensor.pollen_grass_index_day_0', 'treeIndex') }}"
+        icon: "mdi:tree"
+        attributes:
+          Today: "{{ state_attr('sensor.pollen_grass_index_day_0', 'treeIndex') }}"
+          Tomorrow: "{{ state_attr('sensor.pollen_grass_index_day_1', 'treeIndex') }}"
+          Today + 2: "{{ state_attr('sensor.pollen_grass_index_day_2', 'treeIndex') }}"
+          Today + 3: "{{ state_attr('sensor.pollen_grass_index_day_3', 'treeIndex') }}"
+          Today + 4: "{{ state_attr('sensor.pollen_grass_index_day_4', 'treeIndex') }}"
+      - name: Pollen - Weed
+        unique_id: sensor.pollen_weed
+        state: "{{ state_attr('sensor.pollen_grass_index_day_0', 'weedIndex') }}"
+        icon: "mdi:spa"
+        attributes:
+          Today: "{{ state_attr('sensor.pollen_grass_index_day_0', 'weedIndex') }}"
+          Tomorrow: "{{ state_attr('sensor.pollen_grass_index_day_1', 'weedIndex') }}"
+          Today + 2: "{{ state_attr('sensor.pollen_grass_index_day_2', 'weedIndex') }}"
+          Today + 3: "{{ state_attr('sensor.pollen_grass_index_day_3', 'weedIndex') }}"
+          Today + 4: "{{ state_attr('sensor.pollen_grass_index_day_4', 'weedIndex') }}"
+
+# Pollens from Tomorrow.io (copied from https://community.home-assistant.io/t/uk-and-worldwide-pollen-count-using-tomorrow-io-api/306560)
+rest:
+  - resource: !secret tomorrow-api-pollen
+    scan_interval: 3600
+    sensor:
+      ### Pollen - Tree Index
+      - name: "Pollen - Grass Index - Day 0"
+        value_template: "{{ value_json.data.timelines[0].intervals[0]['values']['grassIndex'] }}"
+        json_attributes_path: "$.data.timelines[0].intervals[0].values"
+        json_attributes:
+          - treeIndex
+          - weedIndex
+          - grassIndex
+          - grassGrassIndex
+          - weedRagweedIndex
+      - name: "Pollen - Grass Index - Day 1"
+        value_template: "{{ value_json.data.timelines[0].intervals[1]['values']['grassIndex'] }}"
+        json_attributes_path: "$.data.timelines[0].intervals[1].values"
+        json_attributes:
+          - treeIndex
+          - weedIndex
+          - grassIndex
+          - grassGrassIndex
+          - weedRagweedIndex
+      - name: "Pollen - Grass Index - Day 2"
+        value_template: "{{ value_json.data.timelines[0].intervals[2]['values']['grassIndex'] }}"
+        json_attributes_path: "$.data.timelines[0].intervals[2].values"
+        json_attributes:
+          - treeIndex
+          - weedIndex
+          - grassIndex
+          - grassGrassIndex
+          - weedRagweedIndex
+      - name: "Pollen - Grass Index - Day 3"
+        value_template: "{{ value_json.data.timelines[0].intervals[3]['values']['grassIndex'] }}"
+        json_attributes_path: "$.data.timelines[0].intervals[3].values"
+        json_attributes:
+          - treeIndex
+          - weedIndex
+          - grassIndex
+          - grassGrassIndex
+          - weedRagweedIndex
+      - name: "Pollen - Grass Index - Day 4"
+        value_template: "{{ value_json.data.timelines[0].intervals[4]['values']['grassIndex'] }}"
+        json_attributes_path: "$.data.timelines[0].intervals[4].values"
+        json_attributes:
+          - treeIndex
+          - weedIndex
+          - grassIndex
+          - grassGrassIndex
+          - weedRagweedIndex
+  - resource: !secret tomorrow-api-pollen-current
+    scan_interval: 600
+    sensor:
+      ### Pollen - Tree Index
+      - name: "Pollen - Current"
+        value_template: "{{ value_json.data.timelines[0].intervals[0]['values']['grassIndex'] }}"
+        json_attributes_path: "$.data.timelines[0].intervals[0].values"
+        json_attributes:
+          - treeIndex
+          - weedIndex
+          - grassIndex
+          - grassGrassIndex
+          - weedRagweedIndextree
+          - AcaciaIndex
+          - treeAshIndex
+          - treeBeechIndex
+          - treeBirchIndex
+          - treeCedarIndex
+          - treeCypressIndex
+          - treeElderIndex
+          - treeElmIndex
+          - treeHemlockIndex
+          - treeHickoryIndex
+          - treeJuniperIndex
+          - treeMahoganyIndex
+          - treeMapleIndex
+          - treeMulberryIndex
+          - treeOakIndex
+          - treePineIndex
+          - treeCottonwoodIndex
+          - treeSpruceIndex
+          - treeSycamoreIndex
+          - treeWalnutIndex
+          - treeWillowIndex
 
 # Yeelights
 # yeelight:
