@@ -93,13 +93,13 @@ workflows:
       #- yamllint
       #- jsonlint
       #- markdownlint
-      - check-ha-latest:
-          requires:
-            - yamllint
-            - jsonlint
-            - markdownlint
-      - check-ha-rc:
-          requires:
-            - yamllint
-            - jsonlint
-            - markdownlint
+      - check-ha-latest #:
+          #requires:
+           # - yamllint
+            #- jsonlint
+            #- markdownlint
+      - check-ha-rc #:
+          #requires:
+           # - yamllint
+            #- jsonlint
+            #- markdownlint
