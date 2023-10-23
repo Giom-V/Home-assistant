@@ -38,6 +38,7 @@ jobs:
   yamllint:
     docker:
       - image: sdesbure/yamllint
+    resource_class: small
     steps:
       - checkout
       - run:
@@ -52,6 +53,7 @@ jobs:
   jsonlint:
     docker:
       - image: sahsu/docker-jsonlint
+    resource_class: small
     steps:
       - checkout
       - run:
@@ -75,6 +77,7 @@ jobs:
   markdownlint:
     docker:
       - image: pipelinecomponents/remark-lint:latest
+    resource_class: small
     steps:
       - checkout
       - run:
@@ -85,11 +88,13 @@ jobs:
   check-ha-latest:
     docker:
       - image: homeassistant/home-assistant:latest
+    resource_class: medium
     <<: *ha-check-config
 
   check-ha-rc:
     docker:
       - image: homeassistant/home-assistant:rc
+    resource_class: medium
     <<: *ha-check-config
 
 workflows:
