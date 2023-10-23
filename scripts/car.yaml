@@ -1,0 +1,21 @@
+preheat_car:
+  alias: "Preheat the car"
+  sequence:
+    - service: kia_uvo.start_climate
+      data:
+        Temperature: 23
+        Duration: 10
+        Defrost: true
+        Heating: true
+open_car:
+  alias: "Open the car"
+  sequence:
+    - service: kia_uvo.unlock
+      data:
+        device_id: e038c4749ed521a1d72b160a4163447a
+close_car:
+  alias: "Close the car"
+  sequence:
+    - service: kia_uvo.lock
+      data:
+        device_id: e038c4749ed521a1d72b160a4163447a
