@@ -7,11 +7,26 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Check config
+          name: Set-up before install
           command: |
             touch fake.pem
             mv secrets.fake.yaml secrets.yaml
+            mkdir tmp/
+            touch ./home-assistant_v2.db
+            touch ./home-assistant.log
+            touch ./known_devices.yaml
+            touch ./secrets/fake_ssl_cert
+            touch ./secrets/fake_ssl_key
+            touch ./customize.yaml
+            touch ./google_calendar.yaml
+            mv secrets/home-assistant.fake.json secrets/home-assistant.json
+      - run:
+          name: Installation
+          command: |
             python3.11 -m venv .
             source bin/activate
             pip3 install --pre --upgrade homeassistant
+      - run:
+          name: Test config
+          command: |
             hass -c . --script check_config --info all
