@@ -1,0 +1,111 @@
+version: 2
+
+ha-check-config: &ha-check-config
+  environment:
+    PYTHONPATH: "/usr/src/app:$PYTHONPATH"
+  working_directory: ~/repo
+  steps:
+    - checkout
+    - run:
+        name: Prepare
+        command: |
+          python -m homeassistant --version
+          touch fake.pem
+          mv secrets.fake.yaml secrets.yaml
+          mkdir tmp/
+          touch ./home-assistant_v2.db
+          touch ./home-assistant.log
+          touch ./known_devices.yaml
+          touch ./secrets/fake_ssl_cert
+          touch ./secrets/fake_ssl_key
+          touch ./customize.yaml
+          touch ./google_calendar.yaml
+          mv secrets/home-assistant.fake.json secrets/home-assistant.json
+    - run:
+        name: Check config
+        command: |
+          python -m homeassistant \
+            --config . \
+            --script check_config
+
+jobs:
+  yamllint:
+    docker:
+      - image: sdesbure/yamllint
+    steps:
+      - checkout
+      - run:
+          name: Check Dependencies
+          command: |
+            yamllint --version
+      - run:
+          name: Check YAML
+          command: |
+            yamllint .
+
+  jsonlint:
+    docker:
+      - image: sahsu/docker-jsonlint
+    steps:
+      - checkout
+      - run:
+          name: Check Dependencies
+          command: |
+            jsonlint --version || true
+      - run:
+          name: Check YAML
+          command: |
+            for file in $(find . -type f -name "*.json"); do
+              if ! jsonlint -q $file; then
+                export FAILED=1
+              else
+                echo "$file OK"
+              fi
+            done
+            if [ "${FAILED}" = "1" ]; then
+              exit 1
+            fi
+
+  markdownlint:
+    docker:
+      - image: pipelinecomponents/remark-lint:latest
+    steps:
+      - checkout
+      - run:
+          name: Check Markdown
+          command: |
+            remark --no-stdout --color --frail .
+
+  check-ha-old:
+    docker:
+      - image: homeassistant/home-assistant:2021.1.4
+    <<: *ha-check-config
+
+  check-ha-latest:
+    docker:
+      - image: homeassistant/home-assistant:latest
+    <<: *ha-check-config
+
+  check-ha-rc:
+    docker:
+      - image: homeassistant/home-assistant:rc
+    <<: *ha-check-config
+
+workflows:
+  version: 2
+  validate-and-check-config:
+    jobs:
+      #- yamllint
+      #- jsonlint
+      #- markdownlint
+      - check-ha-old
+      #- check-ha-latest:
+          #requires:
+           # - yamllint
+            #- jsonlint
+            #- markdownlint
+      #- check-ha-rc:
+          #requires:
+           # - yamllint
+            #- jsonlint
+            #- markdownlint
