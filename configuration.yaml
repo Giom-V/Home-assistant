@@ -284,6 +284,15 @@ notify:
 #     title: "uTorrent"
 #     url: "https://remote.bittorrent.com/"
 
+panel_custom:
+  - name: ZHA
+    sidebar_title: ZHA
+    sidebar_icon: fapro:house-signal
+    url_path: "config/zha/dashboard?config_entry=9dbff30f417c5ea5ae211e42d0fa5433"
+    module_url: /api/hassio/app/entrypoint.js
+    embed_iframe: true
+    require_admin: true
+
 # weblink:
 #   entities:
 #     - name: Slack
