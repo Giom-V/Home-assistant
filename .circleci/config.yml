@@ -21,6 +21,9 @@ ha-check-config: &ha-check-config
           touch ./customize.yaml
           touch ./google_calendar.yaml
           mv secrets/home-assistant.fake.json secrets/home-assistant.json
+          ls -R .
+          ls -R ./config/ 
+          ls -R ~/repo
     - run:
         name: Check config
         command: |
