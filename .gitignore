@@ -63,6 +63,7 @@ node-red
 # Do not ignore specific custom components
 custom_components/
 !/custom_components/dlight/*
+www/community/*
 
 # ignore all json and txt files in Enedis sub-directories
 custom_components/archive/myEnedis/14476845147777/*.json
@@ -76,3 +77,4 @@ www/wyze-cam.jpg
 wyze-bridge/*.pickle
 wyze-bridge/mfa_token.txt
 nest/event_media/*.mp4
+nest/event_media/*
