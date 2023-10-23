@@ -2,99 +2,92 @@
   alias: Alert me if the temperature is too low
   trigger:
     - platform: numeric_state
-      entity_id: sensor.aurore_bedroom_temperature, sensor.basement_temperature, sensor.bathroom_temperature, sensor.button_temperature, sensor.living_room_temperature, sensor.office_temperature
+      entity_id: sensor.backkitchen_temperature, sensor.flood_sensor_basement_temperature, sensor.flood_sensor_kitchen_temperature, sensor.office_button_temperature, sensor.temperature_sous_sol, sensor.aurore_bedroom_temperature, sensor.bathroom_temperature, sensor.shower_temperature, sensor.playroom_temperature, sensor.basement_temperature, sensor.valve_salon_current_temperature
       below: 10
-    - platform: numeric_state
-      entity_id: sensor.solarium_temperature
-      below: 3
-    - platform: state
-      entity_id: binary_sensor.solarium_cold, binary_sensor.living_room_cold
-      to: "on"
   action:
-    - service: hangouts.send_message
+    - service: rest_command.gchatalert
       data:
-        target:
-          - id: !secret hangoutConversation
-        message:
-          - text: Température basse!
+        text: Température basse!
     - service: tts.google_say
       entity_id: "all"
       data:
         message: La température est trop basse
-- id: alert_noise
-  alias: Alert me if the minut detects noise
+- id: alert_temperature_high
+  alias: Alert me if the temperature is too high
   trigger:
-    - platform: state
-      entity_id: binary_sensor.solarium_heat, binary_sensor.living_room_heat
-      to: "on"
+    - platform: numeric_state
+      entity_id: sensor.backkitchen_temperature, sensor.flood_sensor_basement_temperature, sensor.flood_sensor_kitchen_temperature, sensor.office_button_temperature, sensor.temperature_sous_sol, sensor.aurore_bedroom_temperature, sensor.bathroom_temperature, sensor.shower_temperature, sensor.playroom_temperature, sensor.basement_temperature, sensor.valve_salon_current_temperature
+      above: 30
   action:
-    - service: hangouts.send_message
+    - service: rest_command.gchatalert
       data:
-        target:
-          - id: !secret hangoutConversation
-        message:
-          - text: Canicule detectée!
-- id: alert_moisture
-  alias: Alert me if the minut detects moisture
-  trigger:
-    - platform: state
-      entity_id: binary_sensor.solarium_moisture, binary_sensor.living_room_moisture
-      to: "on"
-  action:
-    - service: hangouts.send_message
-      data:
-        target:
-          - id: !secret hangoutConversation
-        message:
-          - text: Risque de moisisure detectée!
-- id: alert_button pressed
-  alias: Alert me if the minut is pressed
-  trigger:
-    - platform: state
-      entity_id: binary_sensor.solarium_button_press, binary_sensor.living_room_button_press, binary_sensor.living_room_button_press_2
-      to: "on"
-  action:
-    - service: hangouts.send_message
-      data:
-        target:
-          - id: !secret hangoutConversation
-        message:
-          - text: Bouton du minut pressé!
-- id: FreezerLeftOpen
-  alias: Freezer left open for more than 10mn
-  trigger:
-    - platform: state
-      entity_id: binary_sensor.freezer_door
-      to: "on"
-      for: "0:10:00"
-  action:
-    - service: light.turn_on
-      data:
-        effect: "Police2"
-      entity_id: light.basement_corridor
+        text: Température hyper haute!
     - service: tts.google_say
       entity_id: "all"
       data:
-        message: Attention, le congélateur est resté ouvert !
-    - service: hangouts.send_message
-      data:
-        target:
-          - id: !secret hangoutConversation
-        message:
-          - text: Attention, le congélateur est resté ouvert !
-- id: FreezerAlreayOpenWhenBasementLightSwitchesOn
-  alias: Freezer opened for more than 10mn when light switches on
-  trigger:
-    - platform: state
-      entity_id: light.basement_corridor
-      to: "on"
-  condition:
-    - condition: state
-      entity_id: binary_sensor.freezer_door
-      state: "on"
-      for: "0:10:00"
-  action:
-    - service: light.turn_on
-      data:
-        effect: "Police2"
-      entity_id: light.basement_corridor
+        message: Il fait super chaud!
+# - id: alert_noise
+#   alias: Alert me if the minut detects noise
+#   trigger:
+#     - platform: state
+#       entity_id: binary_sensor.solarium_heat, binary_sensor.living_room_heat
+#       to: "on"
+#   action:
+#     - service: rest_command.gchatalert
+#       data:
+#         text: Canicule detectée!
+# - id: alert_moisture
+#   alias: Alert me if the minut detects moisture
+#   trigger:
+#     - platform: state
+#       entity_id: binary_sensor.solarium_moisture, binary_sensor.living_room_moisture
+#       to: "on"
+#   action:
+#     - service: rest_command.gchatalert
+#       data:
+#         text: Risque de moisisure detectée!
+# - id: alert_button pressed
+#   alias: Alert me if the minut is pressed
+#   trigger:
+#     - platform: state
+#       entity_id: binary_sensor.solarium_button_press, binary_sensor.living_room_button_press, binary_sensor.living_room_button_press_2
+#       to: "on"
+#   action:
+#     - service: rest_command.gchat
+#       data:
+#         text: Bouton du minut pressé!
+# - id: FreezerLeftOpen
+#   alias: Freezer left open for more than 10mn
+#   trigger:
+#     - platform: state
+#       entity_id: binary_sensor.freezer_door
+#       to: "on"
+#       for: "0:10:00"
+#   action:
+#     - service: light.turn_on
+#       data:
+#         effect: "Police2"
+#       entity_id: light.basement_corridor
+#     - service: tts.google_say
+#       entity_id: "all"
+#       data:
+#         message: Attention, le congélateur est resté ouvert !
+#     - service: rest_command.gchatalert
+#       data:
+#         text: Attention, le congélateur est resté ouvert !
+# - id: FreezerAlreayOpenWhenBasementLightSwitchesOn
+#   alias: Freezer opened for more than 10mn when light switches on
+#   trigger:
+#     - platform: state
+#       entity_id: light.basement_corridor
+#       to: "on"
+#   condition:
+#     - condition: state
+#       entity_id: binary_sensor.freezer_door
+#       state: "on"
+#       for: "0:10:00"
+#   action:
+#     - service: light.turn_on
+#       data:
+#         effect: "Police2"
+#       entity_id: light.basement_corridor

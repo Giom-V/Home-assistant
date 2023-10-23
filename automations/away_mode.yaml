@@ -1,209 +1,522 @@
 - id: auto_switch_away_mode_on
   alias: Switch Away mode on when we are away for more than an hour
   trigger:
-  - platform: state
-    entity_id: person.giom, person.claire
-    to: not_home
-    for:
-      minutes: 60
+    - platform: state
+      entity_id: person.guillaume, person.claire
+      to: not_home
+      for:
+        minutes: 60
+    - platform: state
+      entity_id: binary_sensor.visitors
+      to: "off"
+      for:
+        minutes: 60
+    - platform: state
+      entity_id: binary_sensor.people_home
+      to: "off"
+      for:
+        minutes: 60
   condition:
-  - condition: state
-    entity_id: input_boolean.visitors
-    state: 'off'
-  - condition: state
-    entity_id: binary_sensor.people_home
-    state: 'off'
-    for:
-      minutes: 60
+    - condition: state
+      entity_id: person.guillaume
+      state: not_home
+    - condition: state
+      entity_id: person.claire
+      state: not_home
+    - condition: state
+      entity_id: input_boolean.visitors
+      state: "off"
+    - condition: state
+      entity_id: binary_sensor.people_home
+      state: "off"
+      for:
+        minutes: 60
   action:
-  - service: input_boolean.turn_on
-    data:
-      entity_id: input_boolean.away_mode
+    - service: input_boolean.turn_on
+      data:
+        entity_id: input_boolean.away_mode
 - id: auto_switch_away_mode_off
   alias: Switch Away mode off when we come back
   trigger:
-  - platform: state
-    entity_id: person.giom, person.claire
-    to: home
+    - platform: state
+      entity_id: person.guillaume, person.claire
+      to: home
+    - platform: state
+      entity_id: binary_sensor.people_home
+      to: "on"
   action:
-  - service: input_boolean.turn_off
-    data:
-      entity_id: input_boolean.away_mode
-- id: activate_motion_detection
-  alias: Switch motion detection and alarms on when the away mode is on
-  trigger:
-  - platform: state
-    entity_id: input_boolean.away_mode
-    to: 'on'
-  action:
-  - service: switch.turn_on
-    data:
-      entity_id: switch.dafang_camera_motion_detection
-  - service: alarm_control_panel.alarm_arm_away
-    data:
-      entity_id: alarm_control_panel.home
-- id: dectivate_motion_detection
-  alias: Switch motion detection off when the away mode is off
-  trigger:
-  - platform: state
-    entity_id: input_boolean.away_mode
-    to: 'off'
-  action:
-  - service: switch.turn_off
-    data:
-      entity_id: switch.dafang_camera_motion_detection
-  - service: alarm_control_panel.alarm_disarm
-    data:
-      entity_id: alarm_control_panel.home
+    - service: input_boolean.turn_off
+      data:
+        entity_id: input_boolean.away_mode
+    - service: media_player.volume_set
+      data:
+        entity_id: "all"
+        volume_level: 0.5
+    - service: media_player.volume_set
+      data:
+        entity_id: media_player.salon
+        volume_level: 0.2
+# - id: activate_motion_detection
+#   alias: Switch motion detection and alarms on when the away mode is on
+#   trigger:
+#     - platform: state
+#       entity_id: input_boolean.away_mode
+#       to: "on"
+#   action:
+#     - service: switch.turn_on
+#       data:
+#         entity_id: switch.dafang_camera_motion_detection
+#     - service: alarm_control_panel.alarm_arm_away
+#       data:
+#         entity_id: alarm_control_panel.home
+# - id: dectivate_motion_detection
+#   alias: Switch motion detection off when the away mode is off
+#   trigger:
+#     - platform: state
+#       entity_id: input_boolean.away_mode
+#       to: "off"
+#   action:
+#     - service: switch.turn_off
+#       data:
+#         entity_id: switch.dafang_camera_motion_detection
+#     - service: alarm_control_panel.alarm_disarm
+#       data:
+#         entity_id: alarm_control_panel.home
 - id: motion_detected
   alias: Motion detected
   trigger:
-    payload: 'ON'
-    platform: mqtt
-    topic: Home/dafang_camera/motion
+    - payload: "ON"
+      platform: mqtt
+      topic: Home/dafang_camera/motion
+      id: motion_detected_by_dafang
+    - type: motion
+      platform: device
+      device_id: f3d362f3864cea27ab830b74d5a53160
+      entity_id: 022eee26a289f45cc2f63291d0672e08
+      domain: binary_sensor
+      id: motion_detected_in_basement
+      for:
+        minutes: 2
+    - type: motion
+      platform: device
+      device_id: 503cfe5383b425946724e6829258c82c
+      entity_id: 5ea98d95b2bee9ed8e7d62822437373e
+      domain: binary_sensor
+      id: motion_detected_in_kitchen
+      for:
+        minutes: 2
+  condition:
+    - condition: state
+      entity_id: input_boolean.away_mode
+      state: "on"
+    - condition: state
+      entity_id: person.guillaume
+      state: not_home
+    - condition: state
+      entity_id: person.claire
+      state: not_home
+    - condition: state
+      entity_id: input_boolean.visitors
+      state: "off"
+    - condition: state
+      entity_id: binary_sensor.people_home
+      state: "off"
   action:
-  - service: hangouts.send_message
-    data:
-      target:
-      - id: !secret hangoutConversation
-      message:
-      - text: Mouvement detecté !
-  - service: scene.turn_on
-    entity_id: scene.maxbrightnesslivingroom
-  - service: input_select.select_option
-    entity_id: input_select.living_room_color
-    data:
-      option: White
-  - service: media_player.volume_set
-    data:
-      entity_id: "all"
-      volume_level: 1
-  - delay: 00:00:02
-  - service: tts.google_say
-    entity_id: "all"
-    data:
-      message: Présence détectée ! Vous n'avez rien à faire ici, merci de partir immédiatement !
-  - delay: 00:01:00
-  - service: tts.google_say
-    entity_id: "all"
-    data:
-      message: Propriétaire et voisins avisés, partez immédiatement !
-  - delay: 00:01:00
-  - service: hangouts.send_message
-    data:
-      target:
-      - id: !secret hangoutConversation
-      message:
-      - text: Photo d'il y a 2 minutes
+    - choose:
+        - conditions:
+            - condition: trigger
+              id:
+                - motion_detected_by_dafang
+          sequence:
+            - service: rest_command.gchatalert
+              data:
+                text: Mouvement detecté avec DaFang !
+        - conditions:
+            - condition: trigger
+              id:
+                - motion_detected_in_basement
+          sequence:
+            - service: rest_command.gchatalert
+              data:
+                text: Mouvement detecté dans le sous-sol !
+        - conditions:
+            - condition: trigger
+              id:
+                - motion_detected_in_kitchen
+          sequence:
+            - service: rest_command.gchatalert
+              data:
+                text: Mouvement detecté dans la cuisine !
+    #    - service: scene.turn_on
+    #      entity_id: scene.maxbrightnesslivingroom
+    #    - service: input_select.select_option
+    #      entity_id: input_select.living_room_color
+    #      data:
+    #        option: White
+    - service: media_player.volume_set
       data:
-        image_file: /home/pi/FTP/dafang_camera/last_picture.jpg
-  - service: tts.google_say
-    entity_id: "all"
-    data:
-      message: Vidéo transférée, c'est votre dernier avertissement !!!
+        entity_id: "all"
+        volume_level: 1
+    - delay: 00:00:02
+    - service: tts.google_say
+      entity_id: "all"
+      data:
+        message: Présence détectée ! Vous n'avez rien à faire ici, merci de partir immédiatement !
+    - delay: 00:01:00
+    - service: tts.google_say
+      entity_id: "all"
+      data:
+        message: Propriétaire et voisins avisés, partez immédiatement !
+    - delay: 00:01:00
+    - choose:
+        - conditions:
+            - condition: trigger
+              id:
+                - motion_detected_by_dafang
+          sequence:
+            - service: rest_command.gchatalert
+              data:
+                text: Présence détectée sur DaFang !!!
+          #     data:
+          #       image_file: /home/pi/FTP/dafang_camera/last_picture.jpg
+        - conditions:
+            - condition: trigger
+              id:
+                - motion_detected_in_basement
+          sequence:
+            - service: rest_command.gchatalert
+              data:
+                text: Présence détectée dans le sous-sol !!!
+        - conditions:
+            - condition: trigger
+              id:
+                - motion_detected_in_kitchen
+          sequence:
+            - service: rest_command.gchatalert
+              data:
+                text: Présence détectée dans la cuisine !!!
+    - service: tts.google_say
+      entity_id: "all"
+      data:
+        message: Vidéo transférée, c'est votre dernier avertissement !!!
 - id: door_opened_while_away
   alias: Door openned while away
   trigger:
-  - type: opened
-    platform: device
-    device_id: eb097d5c6fd44da5b5fcd7ccd54b4674
-    entity_id: binary_sensor.solarium_door
-    domain: binary_sensor
-  condition: 
-  - condition: state
-    entity_id: input_boolean.away_mode
-    state: 'on'
+    - platform: state
+      entity_id:
+        - binary_sensor.porte_chambre_opening
+      to: "on"
+      id: door_opened_bedroom
+    - platform: state
+      entity_id:
+        - binary_sensor.porte_chambre_opening
+      to: "open"
+      id: door_opened_bedroom_2
+    - platform: state
+      entity_id:
+        - binary_sensor.tz3000_decxrtwa_ts0203_iaszone
+      to: "on"
+      id: door_opened_backdoor
+    - platform: state
+      entity_id:
+        - binary_sensor.tz3000_decxrtwa_ts0203_iaszone
+      to: "open"
+      id: door_opened_backdoor_2
+    - platform: state
+      entity_id:
+        - binary_sensor.porte_sous_sol_opening
+      to: "on"
+      id: door_opened_basement
+    - platform: state
+      entity_id:
+        - binary_sensor.porte_sous_sol_opening
+      to: "open"
+      id: door_opened_basement_2
+  condition:
+    - condition: state
+      entity_id: input_boolean.away_mode
+      state: "on"
+    - condition: state
+      entity_id: person.guillaume
+      state: not_home
+    - condition: state
+      entity_id: person.claire
+      state: not_home
+    - condition: state
+      entity_id: input_boolean.visitors
+      state: "off"
+    - condition: state
+      entity_id: binary_sensor.people_home
+      state: "off"
   action:
-  - service: hangouts.send_message
-    data:
-      target:
-      - id: !secret hangoutConversation
-      message:
-      - text: Porte ouverte!
-  - service: media_player.volume_set
-    data:
+    - choose:
+        - conditions:
+            - condition: trigger
+              id:
+                - door_opened_bedroom
+                - door_opened_bedroom_2
+          sequence:
+            - service: rest_command.gchatalert
+              data:
+                text: Porte de la chambre ouverte!
+        - conditions:
+            - condition: trigger
+              id:
+                - door_opened_backdoor
+                - door_opened_backdoor_2
+          sequence:
+            - service: rest_command.gchatalert
+              data:
+                text: Porte arrière ouverte!
+        - conditions:
+            - condition: trigger
+              id:
+                - door_opened_basement
+                - door_opened_basement_2
+          sequence:
+            - service: rest_command.gchatalert
+              data:
+                text: Porte arrière-cuisine ouverte!
+    - service: media_player.volume_set
+      data:
+        entity_id: "all"
+        volume_level: 1
+    - delay: 00:00:02
+    - service: tts.google_say
       entity_id: "all"
-      volume_level: 1
-  - delay: 00:00:02
-  - service: tts.google_say
-    entity_id: "all"
-    data:
-      message: Ouverture de porte détecté ! Vous n'avez rien à faire ici, merci de partir immédiatement !
-  - delay: 00:02:00
-  - service: tts.google_say
-    entity_id: "all"
-    data:
-      message: Ouverture de porte détecté ! Vous n'avez rien à faire ici, merci de partir immédiatement !
+      data:
+        message: Ouverture de porte détectée ! Vous n'avez rien à faire ici, merci de partir immédiatement !
+    - delay: 00:02:00
+    - service: tts.google_say
+      entity_id: "all"
+      data:
+        message: Ouverture de porte détectée ! Dernier avertissement avant appel de la police !
 - id: movement_while_away
   alias: Mouvement detected while away
   trigger:
-  - platform: state
-    entity_id: binary_sensor.vpir_motion_control
-    from: clear
-  condition: 
-  - condition: state
-    entity_id: input_boolean.away_mode
-    state: 'on'
+    - platform: state
+      entity_id: binary_sensor.motion_sensor_basement_stairs_motion
+      from: clear
+      id: motion_detected_in_stairs
+    - type: occupied
+      platform: device
+      device_id: c29b54d2d76585c6044055cf25b07b71
+      entity_id: 2f22ff488f61645fb4abb67c4741ac92
+      domain: binary_sensor
+      id: motion_detected_in_living_room
+  condition:
+    - condition: state
+      entity_id: input_boolean.away_mode
+      state: "on"
+    - condition: state
+      entity_id: person.guillaume
+      state: not_home
+    - condition: state
+      entity_id: person.claire
+      state: not_home
+    - condition: state
+      entity_id: input_boolean.visitors
+      state: "off"
+    - condition: state
+      entity_id: binary_sensor.people_home
+      state: "off"
   action:
-  - service: hangouts.send_message
-    data:
-      target:
-      - id: !secret hangoutConversation
-      message:
-      - text: Mouvement dans l'escalier!
-  - service: media_player.volume_set
-    data:
-      entity_id: "all"
-      volume_level: 1
-  - delay: 00:00:02
-  - service: tts.google_say
-    entity_id: "all"
-    data:
-      message: Mouvement detecté dans l'escalier ! Vous n'avez rien à faire ici, merci de partir immédiatement !
+    - choose:
+        - conditions:
+            - condition: trigger
+              id:
+                - motion_detected_in_stairs
+          sequence:
+            - service: rest_command.gchatalert
+              data:
+                text: Mouvement dans l'escalier!
+        - conditions:
+            - condition: trigger
+              id:
+                - motion_detected_in_living_room
+          sequence:
+            - service: rest_command.gchatalert
+              data:
+                text: Présence dans le salon!
+    - service: media_player.volume_set
+      data:
+        entity_id: "all"
+        volume_level: 1
+    - delay: 00:00:02
+    - choose:
+        - conditions:
+            - condition: trigger
+              id:
+                - motion_detected_in_stairs
+          sequence:
+            - service: tts.google_say
+              entity_id: "all"
+              data:
+                message: Mouvement detecté dans l'escalier ! Vous n'avez rien à faire ici, merci de partir immédiatement !
+        - conditions:
+            - condition: trigger
+              id:
+                - motion_detected_in_living_room
+          sequence:
+            - service: tts.google_say
+              entity_id: "all"
+              data:
+                message: Présence détectée dans la salon ! Vous n'avez rien à faire ici, merci de partir immédiatement !
 - id: lights_while_away
   alias: Lights switched on while away
   trigger:
-  - platform: state
-    entity_id: light.basement, light.office_light, light.office_light_2, switch.lumiere_cuisine
-  condition: 
-  - condition: state
-    entity_id: input_boolean.away_mode
-    state: 'on'
+    - platform: state
+      entity_id: light.aurores_light_bulb, light.basement_stairs_light_light
+  condition:
+    - condition: state
+      entity_id: input_boolean.away_mode
+      state: "on"
+    - condition: state
+      entity_id: person.guillaume
+      state: not_home
+    - condition: state
+      entity_id: person.claire
+      state: not_home
+    - condition: state
+      entity_id: input_boolean.visitors
+      state: "off"
+    - condition: state
+      entity_id: binary_sensor.people_home
+      state: "off"
   action:
-  - service: hangouts.send_message
-    data:
-      target:
-      - id: !secret hangoutConversation
-      message:
-      - text: Lumière allumée dans l'escalier!
-  - service: media_player.volume_set
-    data:
+    - service: rest_command.gchatalert
+      data:
+        text: Lumière allumée!
+    - service: media_player.volume_set
+      data:
+        entity_id: "all"
+        volume_level: 1
+    - delay: 00:00:02
+    - service: tts.google_say
       entity_id: "all"
-      volume_level: 1
-  - delay: 00:00:02
-  - service: tts.google_say
-    entity_id: "all"
-    data:
-      message: Qui êtes-vous ? Vous n'avez rien à faire ici, merci de partir immédiatement !
-- id: alert_sound
-  alias: Alert me if some sound is detected while away
+      data:
+        message: Qui êtes-vous ? Vous n'avez rien à faire ici, merci de partir immédiatement !
+# - id: alert_sound
+#   alias: Alert me if some sound is detected while away
+#   trigger:
+#     - platform: state
+#       entity_id: binary_sensor.living_room_sound, binary_sensor.solarium_sound
+#       to: "on"
+#   action:
+#     - service: rest_command.gchatalert
+#       data:
+#         text: Bruit détecté!
+#     - service: media_player.volume_set
+#       data:
+#         entity_id: "all"
+#         volume_level: 1
+#     - delay: 00:00:02
+#     - service: tts.google_say
+#       entity_id: "all"
+#       data:
+#         message: Je vous entend!
+- id: "1689540989633"
+  alias: Presence simulation Bureau
+  description: ""
   trigger:
-  - platform: state
-    entity_id: binary_sensor.living_room_sound, binary_sensor.solarium_sound
-    to: 'on'
+    - platform: sun
+      event: sunrise
+      offset: "- 00:30:00"
+  condition:
+    - condition: state
+      entity_id: input_boolean.away_mode
+      state: "on"
+    - condition: state
+      entity_id: person.guillaume
+      state: not_home
+    - condition: state
+      entity_id: person.claire
+      state: not_home
+    - condition: state
+      entity_id: input_boolean.visitors
+      state: "off"
+    - condition: state
+      entity_id: binary_sensor.people_home
+      state: "off"
   action:
-  - service: hangouts.send_message
-    data:
-      target:
-      - id: !secret hangoutConversation
-      message:
-      - text: Bruit détecté!
-  - service: media_player.volume_set
-    data:
-      entity_id: "all"
-      volume_level: 1
-  - delay: 00:00:02
-  - service: tts.google_say
-    entity_id: "all"
-    data:
-      message: Je vous entend!
+    - delay: "{{ range(0, 45*60)+1 | random }}"
+    - type: turn_on
+      device_id: 0a6824f55b50cd544737383fedcb096d
+      entity_id: 67b730781c4061abd48a082c52434181
+      domain: switch
+    - wait_for_trigger:
+        - platform: time
+          at: "23:00:00"
+    - delay: "{{ range(0, 15*60)+1 | random }}"
+    - type: turn_off
+      device_id: 0a6824f55b50cd544737383fedcb096d
+      entity_id: 67b730781c4061abd48a082c52434181
+      domain: switch
+  mode: single
+- id: "1689541214168"
+  alias: Presence simulation Aurore's bedroom
+  description: ""
+  trigger:
+    - platform: sun
+      event: sunrise
+      offset: "- 00:30:00"
+  condition:
+    - condition: state
+      entity_id: input_boolean.away_mode
+      state: "on"
+    - condition: state
+      entity_id: person.guillaume
+      state: not_home
+    - condition: state
+      entity_id: person.claire
+      state: not_home
+    - condition: state
+      entity_id: input_boolean.visitors
+      state: "off"
+    - condition: state
+      entity_id: binary_sensor.people_home
+      state: "off"
+  action:
+    - delay: "{{ range(0, 30*60)+1 | random }}"
+    - type: turn_on
+      device_id: cef49caed9c762db670b6d2a85a15832
+      entity_id: 97d86c445dc8aed67c905d3981bfba94
+      domain: switch
+    - wait_for_trigger:
+        - platform: time
+          at: "22:15:00"
+    - delay: "{{ range(0, 15*60)+1 | random }}"
+    - type: turn_off
+      device_id: cef49caed9c762db670b6d2a85a15832
+      entity_id: 97d86c445dc8aed67c905d3981bfba94
+      domain: switch
+  mode: single
+- id: "1687266007380"
+  alias: Reboot HA every week when we are away
+  description: ""
+  trigger:
+    - platform: time
+      at: 04:05:06
+  condition:
+    - condition: state
+      entity_id: binary_sensor.people_home
+      state: "off"
+      for:
+        hours: 24
+        minutes: 0
+        seconds: 0
+    - condition: state
+      entity_id: input_boolean.away_mode
+      state: "on"
+      for:
+        hours: 24
+        minutes: 0
+        seconds: 0
+    - condition: template
+      value_template:
+        "{{ (now().timestamp() - states('sensor.uptime')|as_timestamp)
+        > 7 * 24 * 60 * 60 }}"
+  action:
+    - service: hassio.host_reboot
+      data: {}
+  mode: single
