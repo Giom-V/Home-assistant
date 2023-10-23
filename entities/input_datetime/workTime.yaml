@@ -1,0 +1,12 @@
+work_start:
+  name: Starting to work at
+  has_date: false
+  has_time: true
+  initial: "9:00"
+  icon: mdi:account-tie
+work_end:
+  name: Stopping to work at
+  has_date: false
+  has_time: true
+  initial: "18:00"
+  icon: mdi:account-tie-outline

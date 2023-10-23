@@ -76,6 +76,18 @@ template:
         state_class: measurement
         state: >
           {{ (states('sensor.bleuette_ev_range') | float / states('sensor.bleuette_ev_battery_level') | float * 100 ) | int }}
+  - trigger:
+      - platform: webhook
+        webhook_id: googleDesktop-giom1
+        allowed_methods:
+          - POST
+          - PUT
+        local_only: true
+    sensor:
+      - name: "Google Desktop"
+        unique_id: google_desktop
+        state: "{{trigger.json.state}}"
+        icon: mdi:eye-lock-open-outline
   # Pollens from Tomorrow.io (copied from https://community.home-assistant.io/t/uk-and-worldwide-pollen-count-using-tomorrow-io-api/306560)
   - sensor:
       - name: Pollen - Grass
