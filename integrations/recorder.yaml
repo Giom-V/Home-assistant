@@ -1,8 +1,8 @@
 # https://www.home-assistant.io/components/recorder/
 
 recorder:
-  purge_keep_days: 15
-  commit_interval: 60
+  purge_keep_days: 365
+  commit_interval: 30
   exclude:
     domains:
       # All domains can be optained by running this template:
@@ -11,7 +11,6 @@ recorder:
       # {%- endfor %}
       - cover
       - group
-      - hangouts
       - input_boolean
       - input_select
       - scene
@@ -66,6 +65,8 @@ recorder:
       - sensor.time
     event_types:
       - time_changed
+    entity_globs:
+      - device_tracker.unnamed_device_*
   include:
     domains:
       - alarm_control_panel
@@ -80,6 +81,10 @@ recorder:
       - sensor
       - vacuum
       - weather
+      - fan
+      - kia_uvo
+      - lock
+      - climate
     entity_globs:
       - sensor.*_humidity
       - sensor.*_humidity_*
@@ -91,8 +96,9 @@ recorder:
       - sensor.macot_la_plagne_*
       - sensor.saint_martinien_*
       - sensor.withings_*
-      - sensor.ev6*
-      - binary_sensor.ev6*
+      - sensor.bleuette_*
+      - binary_sensor.bleuette_*
+      - number.bleuette_*
     entities:
       - automation.clean_room_as_asked_through_ifttt
       - automation.create_the_daily_gif
@@ -131,8 +137,12 @@ recorder:
       - camera.raspberry_pi_camera
       - input_boolean.away_mode
       - input_boolean.visitors
+      - input_boolean.working
+      - input_boolean.in_meet_meeting
       - input_select.living_room_color
       - input_select.vacuum_room
+      - input_datetime.last_time_bleuette_left_home
+      - input_datetime.last_time_bleuette_left_nozay
       - lock.ev6_door_lock
       - script.1542490337256
       - script.create_daily_gif
@@ -143,3 +153,9 @@ recorder:
       - switch.dafang_camera_motion_detection
       - switch.lumiere_cuisine
       - switch.veilleuse
+      - switch.aurore_bed_light_switch
+      - switch.chauffage_sdb
+      - switch.pompe_switch
+      - switch.chargeur_velo_switch
+      - switch.chargeur_voiture
+      - switch.pc_bureau
