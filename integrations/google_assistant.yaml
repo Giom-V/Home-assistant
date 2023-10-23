@@ -14,14 +14,6 @@ google_assistant:
   #   - switch
   expose_by_default: false
   entity_config:
-    light.basement:
-      expose: true
-    light.basement_stairs:
-      expose: true
-    light.office_light:
-      expose: true
-    light.office_light_2:
-      expose: true
     switch.wake_up_nas:
       expose: true
     switch.wake_up_pc:
@@ -32,7 +24,58 @@ google_assistant:
       expose: true
     input_boolean.away_mode:
       expose: true
-    scene.lightsoff:
+    script.vacuum_kitchen_and_diningroom:
       expose: true
-    script.mop_kitchen_and_dining_room:
+    script.preheat_car:
+      expose: true
+    script.open_car:
+      expose: true
+    script.close_car:
+      expose: true
+    vacuum.robbie:
+      expose: true
+    vacuum.rondelle:
+      expose: true
+    switch.pompe_switch:
+      name: Pompe bassin
+      expose: true
+      aliases:
+        - Fontaine
+        - Fontaine bassin
+        - Pompe
+    light.lumiere_exterieure_1_forceonlight:
+      name: Lumière extérieure mur
+      expose: true
+    light.lumiere_exterieure_2_forceonlight:
+      name: Lumière extérieure laurier -thym
+      expose: true
+    light.lumiere_exterieure_3_forceonlight:
+      name: Lumière extérieure magnolia
+      expose: true
+    switch.aurores_light_bulb:
+      name: Suspension Aurore
+      expose: true
+      aliases:
+        - Lampe nuage
+    light.aurore_bed_light_switch:
+      name: Guirlande Aurore
+      expose: true
+      aliases:
+        - Guirlande d'Aurore
+        - Guirlande
+        - Lit d'Aurore
+    lock.bleuette_door_lock:
+      name: Portières bleuette
+      expose: true
+    switch.hdr_monitor:
+      name: Écran HDR
+      expose: true
+    switch.vertical_monitor:
+      name: Écran Vertical
+      expose: true
+    script.party_mode:
+      name: Party mode script
+      expose: true
+    scene.party_scene:
+      name: Party mode scene
       expose: true

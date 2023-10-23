@@ -7,6 +7,8 @@
 # Logs
 logs
 *.log
+*.log.1
+*.log.fault
 
 # Ignore Folders
 .cloud
@@ -34,6 +36,7 @@ customize.yaml
 google_calendars.yaml
 *.old.yaml
 *.code-workspace
+.storage/core.entity_registry
 
 # Secrets
 secrets.yaml
@@ -57,5 +60,25 @@ node-red
 !/.storage/lovelace.lovelace_*
 !/.storage/lovelace_resources
 !/.storage/core.area_registry
-!/.storage/core.entity_registry
 !/.storage/core.device_registry
+!/.storage/core.entity_registry
+
+# Do not ignore specific custom components
+#custom_components/
+!/custom_components/dlight/*
+#www/community/*
+
+# ignore all json and txt files in Enedis sub-directories
+custom_components/archive/myEnedis/14476845147777/*.json
+custom_components/archive/myEnedis/19677423985708/*.json
+custom_components/archive/myEnedis/14476845147777/*.txt
+custom_components/archive/myEnedis/19677423985708/*.txt
+custom_components/myEnedis/myEnedis/test_data/*.txt
+
+# Ignore wyze cam image and auth files
+www/wyze-cam.jpg
+wyze-bridge/*.pickle
+wyze-bridge/mfa_token.txt
+nest/event_media/*.mp4
+nest/event_media/*
+image/*

@@ -1,0 +1,228 @@
+force_update: 
+  fields: 
+    device_id: 
+      required: false
+      selector: 
+        device: 
+          integration: kia_uvo
+update: 
+  fields: 
+    device_id: 
+      required: false
+      selector: 
+        device: 
+          integration: kia_uvo
+start_climate:
+  fields: 
+    device_id:
+      required: false
+      selector: 
+        device: 
+          integration: kia_uvo
+    duration:
+      required: false
+      example: 5
+      default: 5
+      selector:
+        number:
+            min: 1
+            max: 10
+            step: 1
+            unit_of_measurement: minutes
+    climate:
+      required: true
+      default: true  
+      selector:
+        boolean: 
+    temperature:
+      required: true
+      example: 21.5
+      default: 21
+      selector:
+        number:
+            min: 16
+            max: 85
+            step: 0.5
+            mode: box
+            unit_of_measurement: Degrees
+    defrost:
+      required: false
+      default: false
+      selector:
+        boolean:
+    heating:
+      required: true
+      example: false
+      default: false  
+      selector:
+        select:  
+          options:
+            - label: "Off"
+              value: "0"
+            - label: "Steering Wheel, Side and Back Defroster"
+              value: "1"
+            - label: "Rear Window Only"
+              value: "2"
+            - label: "Steering Wheel Only"
+              value: "3"
+    flseat:
+      required: false
+      selector:
+        select:
+          options:  
+            - label: "Off"
+              value: "0"
+            - label: "On"
+              value: "1"
+            - label: "Low Cool"
+              value: "3"
+            - label: "Medium Cool"
+              value: "4"
+            - label: "High Cool"
+              value: "5"
+            - label: "Low Heat"
+              value: "6"
+            - label: "Medium Heat"
+              value: "7"
+            - label: "High Heat"
+              value: "8" 
+    frseat:
+      required: false
+      selector:
+        select:
+          options:  
+            - label: "Off"
+              value: "0"
+            - label: "On"
+              value: "1"
+            - label: "Low Cool"
+              value: "3"
+            - label: "Medium Cool"
+              value: "4"
+            - label: "High Cool"
+              value: "5"
+            - label: "Low Heat"
+              value: "6"
+            - label: "Medium Heat"
+              value: "7"
+            - label: "High Heat"
+              value: "8"  
+    rlseat:
+      required: false
+      selector:
+        select:
+          options:  
+            - label: "Off"
+              value: "0"
+            - label: "On"
+              value: "1"
+            - label: "Low Cool"
+              value: "3"
+            - label: "Medium Cool"
+              value: "4"
+            - label: "High Cool"
+              value: "5"
+            - label: "Low Heat"
+              value: "6"
+            - label: "Medium Heat"
+              value: "7"
+            - label: "High Heat"
+              value: "8" 
+    rrseat:
+      required: false
+      selector:
+        select:
+          options:  
+            - label: "Off"
+              value: "0"
+            - label: "On"
+              value: "1"
+            - label: "Low Cool"
+              value: "3"
+            - label: "Medium Cool"
+              value: "4"
+            - label: "High Cool"
+              value: "5"
+            - label: "Low Heat"
+              value: "6"
+            - label: "Medium Heat"
+              value: "7"
+            - label: "High Heat"
+              value: "8" 
+stop_climate:
+  fields: 
+    device_id: 
+      required: false
+      selector: 
+        device: 
+          integration: kia_uvo
+start_charge:
+  fields: 
+    device_id: 
+      required: false
+      selector: 
+        device: 
+          integration: kia_uvo
+stop_charge:
+  fields: 
+    device_id: 
+      required: false
+      selector: 
+        device: 
+          integration: kia_uvo
+lock:
+  fields: 
+    device_id: 
+      required: false
+      selector: 
+        device: 
+          integration: kia_uvo
+unlock:
+  fields: 
+    device_id: 
+      required: false
+      selector: 
+        device: 
+          integration: kia_uvo
+close_charge_port:
+  fields: 
+    device_id: 
+      required: false
+      selector: 
+        device: 
+          integration: kia_uvo
+open_charge_port:
+  description: Open Charge Port
+  fields: 
+    device_id: 
+      required: false
+      selector: 
+        device: 
+          integration: kia_uvo        
+set_charge_limits:
+  fields:
+    device_id: 
+      required: false
+      selector: 
+        device: 
+          integration: kia_uvo
+    dc_limit:
+      required: false
+      example: 50
+      default: 90
+      selector:
+        number:
+            min: 50
+            max: 100
+            step: 10
+            unit_of_measurement: '%'
+    ac_limit:
+      required: false
+      example: 50
+      default: 90
+      selector:
+        number:
+            min: 50
+            max: 100
+            step: 10
+            unit_of_measurement: '%'

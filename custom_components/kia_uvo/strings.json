@@ -1,0 +1,41 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "data": {
+          "username": "[%key:common::config_flow::data::username%]",
+          "password": "[%key:common::config_flow::data::password%]",
+          "region": "[%key:component::hyundai_kia_connect::config::step::user::data::region%]",
+          "brand": "[%key:component::hyundai_kia_connect::config::step::user::data::brand%]",
+          "pin": "[%key:common::config_flow::data::pin%]"
+        }
+      },
+      "reauth_confirm": {
+        "title": "[%key:component::hyundai_kia_connect::config::step::reauth_confirm::title%]",
+        "description": "[%key:component::hyundai_kia_connect::config::step::reauth_confirm::description%]"
+      }
+    },
+    "error": {
+      "invalid_auth": "[%key:common::config_flow::error::invalid_auth%]",
+      "unknown": "[%key:common::config_flow::error::unknown%]"
+    },
+    "abort": {
+      "already_configured": "[%key:common::config_flow::abort::already_configured_device%]",
+      "reauth_successful": "[%key:common::config_flow::abort::reauth_successful%]"
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "data": {
+          "scan_interval": "[%key:component::hyundai_kia_connect::options::step::init::data::scan_interval%]",
+          "force_refresh": "[%key:component::hyundai_kia_connect::options::step::init::data::force_refresh%]",
+          "no_force_refresh_hour_start": "[%key:component::hyundai_kia_connect::options::step::init::data::no_force_refresh_hour_start%]",
+          "no_force_refresh_hour_finish": "[%key:component::hyundai_kia_connect::options::step::init::data::no_force_refresh_hour_finish%]",
+          "enable_geolocation_entity": "[%key:component::hyundai_kia_connect::options::step::init::data::enable_geolocation_entity%]",
+          "use_email_with_geocode_api": "[%key:component::hyundai_kia_connect::options::step::init::data::use_email_with_geocode_api%]"
+        }
+      }
+    }
+  }
+}

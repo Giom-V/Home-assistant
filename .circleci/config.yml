@@ -98,7 +98,7 @@ workflows:
       #- yamllint
       #- jsonlint
       #- markdownlint
-      - check-ha-old
+      - check-ha-latest
       #- check-ha-latest:
           #requires:
            # - yamllint

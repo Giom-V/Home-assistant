@@ -1,0 +1,82 @@
+- alias: Light red when in a meeting
+  description: ""
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.in_meeting
+      from: "off"
+      to: "on"
+  condition:
+    - condition: state
+      entity_id: binary_sensor.muted
+      state: "on"
+  action:
+    - service: light.turn_on
+      data:
+        color_name: blue
+      target:
+        device_id: d46e18f81ffadbf162f2d7d4ec0491a3
+  mode: single
+- alias: Light red when in a meeting
+  description: ""
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.in_meeting
+      from: "off"
+      to: "on"
+  condition:
+    - condition: state
+      entity_id: binary_sensor.muted
+      state: "off"
+  action:
+    - service: light.turn_on
+      data:
+        color_name: red
+      target:
+        device_id: d46e18f81ffadbf162f2d7d4ec0491a3
+  mode: single
+- alias: Light red when talking
+  description: ""
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.muted
+      from: "on"
+      to: "off"
+  condition: []
+  action:
+    - service: light.turn_on
+      target:
+        device_id: d46e18f81ffadbf162f2d7d4ec0491a3
+      data:
+        color_name: red
+  mode: single
+- alias: Light red when talking
+  description: ""
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.muted
+      from: "off"
+      to: "on"
+  condition:
+    - condition: state
+      entity_id: binary_sensor.in_meeting
+      state: "on"
+  action:
+    - service: light.turn_on
+      target:
+        device_id: d46e18f81ffadbf162f2d7d4ec0491a3
+      data:
+        color_name: blue
+  mode: single
+- alias: Light off when the meeting is finished
+  description: ""
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.in_meeting
+      from: "on"
+      to: "off"
+  condition: []
+  action:
+    - service: light.turn_off
+      target:
+        device_id: d46e18f81ffadbf162f2d7d4ec0491a3
+  mode: single

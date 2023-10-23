@@ -1,0 +1,8 @@
+# https://www.home-assistant.io/integrations/history_stats
+platform: history_stats
+name: Giom's time in calls this week
+entity_id: input_boolean.in_meet_meeting
+state: "on"
+type: time
+start: "{{ as_timestamp( now().replace(hour=0).replace(minute=0).replace(second=0) ) - now().weekday() * 86400 }}"
+end: "{{ now() }}"

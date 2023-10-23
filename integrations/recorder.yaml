@@ -1,17 +1,16 @@
 # https://www.home-assistant.io/components/recorder/
 
 recorder:
-  purge_keep_days: 15
-  commit_interval: 60
+  purge_keep_days: 365
+  commit_interval: 30
   exclude:
     domains:
       # All domains can be optained by running this template:
       # {%- for d in states | groupby('domain') %}
-      # {{ d[0] }}
+      #      - {{ d[0] }}
       # {%- endfor %}
       - cover
       - group
-      - hangouts
       - input_boolean
       - input_select
       - scene
@@ -40,8 +39,8 @@ recorder:
       - binary_sensor.updater
       - binary_sensor.workday_sensor
       - camera.dafang_camera_motion_snapshot
-      - light.basement_stairs
-      - light.escalier # because of deconz those 2 spam the database
+      - sensor.date_time
+      - sensor.date_time_utc
       - sensor.disk_use
       - sensor.disk_use_percent
       - sensor.load_15m
@@ -63,8 +62,11 @@ recorder:
       - sensor.swap_free
       - sensor.swap_use
       - sensor.swap_use_percent
+      - sensor.time
     event_types:
       - time_changed
+    entity_globs:
+      - device_tracker.unnamed_device_*
   include:
     domains:
       - alarm_control_panel
@@ -76,8 +78,13 @@ recorder:
       - persistent_notification
       - person
       - script
+      - sensor
       - vacuum
       - weather
+      - fan
+      - kia_uvo
+      - lock
+      - climate
     entity_globs:
       - sensor.*_humidity
       - sensor.*_humidity_*
@@ -89,6 +96,9 @@ recorder:
       - sensor.macot_la_plagne_*
       - sensor.saint_martinien_*
       - sensor.withings_*
+      - sensor.bleuette_*
+      - binary_sensor.bleuette_*
+      - number.bleuette_*
     entities:
       - automation.clean_room_as_asked_through_ifttt
       - automation.create_the_daily_gif
@@ -112,147 +122,40 @@ recorder:
       - automation.turn_off_solarium_light_10_minutes_after_we_arrived_if_after_6_30pm
       - automation.vaccum_kitchen_and_dining_room_when_we_are_away
       - binary_sensor.aurora_visibility
-      - binary_sensor.dafang_camera_motion_sensor
+      - binary_sensor.freezer_door
+      - binary_sensor.leak_detector
+      - binary_sensor.leak_detector_tampered
+      - binary_sensor.office_motion_sensor
+      - binary_sensor.oneplus_a6000_is_charging
       - binary_sensor.people_home
-      - binary_sensor.solarium_door
-      - binary_sensor.tradfri_motion_sensor
-      - binary_sensor.water_16
+      - binary_sensor.reserve_door
+      - binary_sensor.rpi_power_status
+      - binary_sensor.updater
+      - binary_sensor.workday_sensor
+      - binary_sensor.dafang_camera_motion_sensor
       - camera.dafang_camera
       - camera.raspberry_pi_camera
+      - input_boolean.away_mode
       - input_boolean.visitors
+      - input_boolean.working
+      - input_boolean.in_meet_meeting
       - input_select.living_room_color
       - input_select.vacuum_room
+      - input_datetime.last_time_bleuette_left_home
+      - input_datetime.last_time_bleuette_left_nozay
+      - lock.ev6_door_lock
       - script.1542490337256
       - script.create_daily_gif
       - script.living_room_color
       - script.switch_living_room_color
       - script.vaccum_reset_fan_speed_after_mopping
       - script.vacuum_dispatch
-      - sensor.aurore_bedroom_humidity
-      - sensor.aurore_bedroom_temperature
-      - sensor.basement_bedroom_humidity
-      - sensor.basement_bedroom_temperature
-      - sensor.basement_humidity
-      - sensor.basement_pressure
-      - sensor.basement_temperature
-      - sensor.bathroom_humidity
-      - sensor.bathroom_temperature
-      - sensor.button_temperature
-      - sensor.canada_confirmed
-      - sensor.canada_current
-      - sensor.canada_deaths
-      - sensor.canada_recovered
-      - sensor.cannes_cloud_cover
-      - sensor.cannes_daily_precipitation
-      - sensor.cannes_freeze_chance
-      - sensor.cannes_humidity
-      - sensor.cannes_pressure
-      - sensor.cannes_rain_chance
-      - sensor.cannes_snow_chance
-      - sensor.cannes_temperature
-      - sensor.cannes_uv
-      - sensor.cannes_weather_alert
-      - sensor.claire_s_time_at_work_last_week
-      - sensor.claire_s_time_at_work_this_week
-      - sensor.coublevie_cloud_cover
-      - sensor.coublevie_daily_precipitation
-      - sensor.coublevie_freeze_chance
-      - sensor.coublevie_rain_chance
-      - sensor.coublevie_snow_chance
-      - sensor.coublevie_uv
-      - sensor.coublevie_weather_alert
-      - sensor.dark_sky_apparent_temperature
-      - sensor.dark_sky_humidity
-      - sensor.dark_sky_ozone
-      - sensor.dark_sky_pressure
-      - sensor.dark_sky_temperature
-      - sensor.dark_sky_uv_index
-      - sensor.disk_free
-      - sensor.environment_canada_avis
-      - sensor.environment_canada_basse_temperature
-      - sensor.environment_canada_bulletins
-      - sensor.environment_canada_code_icone
-      - sensor.environment_canada_condition
-      - sensor.environment_canada_direction_de_vent
-      - sensor.environment_canada_haute_temperature
-      - sensor.environment_canada_humidex
-      - sensor.environment_canada_humidite
-      - sensor.environment_canada_indice_uv
-      - sensor.environment_canada_palier_de_vent
-      - sensor.environment_canada_point_de_rosee
-      - sensor.environment_canada_precipitation_d_hier
-      - sensor.environment_canada_pression
-      - sensor.environment_canada_prevision
-      - sensor.environment_canada_probabilite_d_averses
-      - sensor.environment_canada_rafale_de_vent
-      - sensor.france_confirmed
-      - sensor.france_current
-      - sensor.france_deaths
-      - sensor.france_recovered
-      - sensor.giom_s_time_at_work_last_week
-      - sensor.giom_s_time_at_work_this_week
-      - sensor.google_fit_distance
-      - sensor.google_fit_move_time
-      - sensor.google_fit_steps
-      - sensor.linky_yesterday
-      - sensor.living_room_humidity
-      - sensor.living_room_humidity_2
-      - sensor.living_room_pressure
-      - sensor.living_room_pressure_2
-      - sensor.living_room_sound_level
-      - sensor.living_room_sound_level_2
-      - sensor.living_room_temperature
-      - sensor.living_room_temperature_2
-      - sensor.macot_la_plagne_cloud_cover
-      - sensor.macot_la_plagne_daily_precipitation
-      - sensor.macot_la_plagne_freeze_chance
-      - sensor.macot_la_plagne_rain_chance
-      - sensor.macot_la_plagne_snow_chance
-      - sensor.macot_la_plagne_uv
-      - sensor.macot_la_plagne_weather_alert
-      - sensor.memory_use_percent
-      - sensor.meteomedia_flu_level
-      - sensor.meteomedia_mosquitos
-      - sensor.meteomedia_polen_details
-      - sensor.meteomedia_polen_level
-      - sensor.meteomedia_uv_current_max
-      - sensor.meteomedia_uv_level
-      - sensor.meteomedia_uv_level_max
-      - sensor.meteomedia_uv_level_max_scrape
-      - sensor.owm_humidity
-      - sensor.owm_pressure
-      - sensor.owm_rain
-      - sensor.owm_snow
-      - sensor.owm_temperature
-      - sensor.processor_use
-      - sensor.saint_martinien_cloud_cover
-      - sensor.saint_martinien_daily_precipitation
-      - sensor.saint_martinien_freeze_chance
-      - sensor.saint_martinien_next_rain
-      - sensor.saint_martinien_rain_chance
-      - sensor.saint_martinien_snow_chance
-      - sensor.saint_martinien_uv
-      - sensor.saint_martinien_weather_alert
-      - sensor.solarium_humidity
-      - sensor.solarium_pressure
-      - sensor.solarium_sound_level
-      - sensor.solarium_temperature
-      - sensor.speedtest_download
-      - sensor.speedtest_ping
-      - sensor.speedtest_upload
-      - sensor.temperature_water_sensor
-      - sensor.travel_time_to_work_claire
-      - sensor.travel_time_to_work_gmap
-      - sensor.u_s_air_pollution_level
-      - sensor.u_s_air_quality_index
-      - sensor.waqi_beauce_quebec_canada
-      - sensor.withings_weight_kg_aurore
-      - sensor.withings_weight_kg_claire
-      - sensor.withings_weight_kg_giom
-      - sensor.worldwide_confirmed
-      - sensor.worldwide_current
-      - sensor.worldwide_deaths
-      - sensor.worldwide_recovered
       - switch.dafang_camera_motion_detection
       - switch.lumiere_cuisine
       - switch.veilleuse
+      - switch.aurore_bed_light_switch
+      - switch.chauffage_sdb
+      - switch.pompe_switch
+      - switch.chargeur_velo_switch
+      - switch.chargeur_voiture
+      - switch.pc_bureau

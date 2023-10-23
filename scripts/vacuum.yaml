@@ -8,89 +8,98 @@ vacuum_dispatch:
         message: "Text received to dispatch Robbie: {{ room|lower }}"
         level: error
         logger: script.vacuum_dispatch
-    - service_template: >
-        {% set room_lower = room|lower %}
-        {% if "cuisine" in room_lower %}
-          {% if "manger" in room_lower %}
+    - service: >
+        {% if "cuisine" in room|lower %}
+          {% if "manger" in room|lower %}
             script.vacuum_kitchen_and_diningroom
-          {% elif "table" in room_lower %}
-            script.vacuum_kitchen_and_diningroom
-          {% else %}
-            script.vacuum_kitchen
-          {% endif %}
-        {% elif "kitchen" in room_lower %}
-          {% if "dining" in room_lower %}
-            script.vacuum_kitchen_and_diningroom
-          {% elif "table" in room_lower %}
+          {% elif "table" in room|lower %}
             script.vacuum_kitchen_and_diningroom
           {% else %}
             script.vacuum_kitchen
           {% endif %}
-        {% elif "manger" in room_lower %}
+        {% elif "kitchen" in room|lower %}
+          {% if "dining" in room|lower %}
+            script.vacuum_kitchen_and_diningroom
+          {% elif "table" in room|lower %}
+            script.vacuum_kitchen_and_diningroom
+          {% else %}
+            script.vacuum_kitchen
+          {% endif %}
+        {% elif "manger" in room|lower %}
           script.vacuum_diningroom
-        {% elif "repas" in room_lower %}
+        {% elif "repas" in room|lower %}
           script.vacuum_diningroom
-        {% elif "dining" in room_lower %}
+        {% elif "dining" in room|lower %}
           script.vacuum_diningroom
-        {% elif "table" in room_lower %}
+        {% elif "table" in room|lower %}
           script.vacuum_diningroom
-        {% elif "bain" in room_lower %}
+        {% elif "bain" in room|lower %}
           script.vacuum_bathroom
-        {% elif "toilet" in room_lower %}
+        {% elif "toilet" in room|lower %}
           script.vacuum_bathroom
-        {% elif "bath" in room_lower %}
+        {% elif "bath" in room|lower %}
           vacuum_bathroom
-        {% elif "chambre" in room_lower %}
-          {% if "aurore" in room_lower %}
-            script.vacuum_aurore_bedroom
-          {% elif "enfant" in room_lower %}
-            script.vacuum_aurore_bedroom
-          {% elif "petite" in room_lower %}
-            script.vacuum_aurore_bedroom
+        {% elif "chambre" in room|lower %}
+          {% if "aurore" in room|lower %}
+            script.vacuum_aurore_playroom
+          {% elif "enfant" in room|lower %}
+            script.vacuum_aurore_playroom
+          {% elif "petite" in room|lower %}
+            script.vacuum_aurore_playroom
           {% else %}
-            script.vacuum_bedroom
+            script.vacuum_office
           {% endif %}
-        {% elif "bedroom" in room_lower %}
-          {% if "aurore" in room_lower %}
-            script.vacuum_aurore_bedroom
-          {% elif "kid" in room_lower %}
-            script.vacuum_aurore_bedroom
-          {% elif "small" in room_lower %}
-            script.vacuum_aurore_bedroom
+        {% elif "bedroom" in room|lower %}
+          {% if "aurore" in room|lower %}
+            script.vacuum_aurore_playroom
+          {% elif "kid" in room|lower %}
+            script.vacuum_aurore_playroom
+          {% elif "small" in room|lower %}
+            script.vacuum_aurore_playroom
           {% else %}
-            script.vacuum_bedroom
+            script.vacuum_office
           {% endif %}
-        {% elif "aurore" in room_lower %}
-          script.vacuum_aurore_zone
-        {% elif "salon" in room_lower %}
+        {% elif "bureau" in room|lower %}
+          script.vacuum_office
+        {% elif "office" in room|lower %}
+          script.vacuum_office
+        {% elif "aurore" in room|lower %}
+          script.vacuum_aurore_playroom
+        {% elif "jeux" in room|lower %}
+          script.vacuum_aurore_playroom
+        {% elif "salon" in room|lower %}
           script.vacuum_livingroom
-        {% elif "canapé" in room_lower %}
+        {% elif "canapé" in room|lower %}
           script.vacuum_livingroom
-        {% elif "living" in room_lower %}
+        {% elif "living" in room|lower %}
           script.vacuum_livingroom
+        {% elif "entrée" in room|lower %}
+          script.vacuum_entry
+        {% elif "couloir" in room|lower %}
+          script.vacuum_hallway
         {% else %}
           script.vacuum_diningroom
         {% endif %}
       data_template:
         times: '{% set times = 1 %}
-          {% if "2 fois" in room_lower %}
-            {% set times = 2 %}
-          {% elif "deux fois" in room_lower %}
-            {% set times = 2 %}
-          {% elif "2 times" in room_lower %}
-            {% set times = 2 %}
-          {% elif "two times" in room_lower %}
-            {% set times = 2 %}
-          {% elif "twice" in room_lower %}
-            {% set times = 2 %}
-          {% elif "3 fois" in room_lower %}
-            {% set times = 3 %}
-          {% elif "trois fois" in room_lower %}
-            {% set times = 3 %}
-          {% elif "3 times" in room_lower %}
-            {% set times = 3 %}
-          {% elif "three times" in room_lower %}
-            {% set times = 3 %}
+          {% if "2 fois" in room|lower %}
+          {% set times = 2 %}
+          {% elif "deux fois" in room|lower %}
+          {% set times = 2 %}
+          {% elif "2 times" in room|lower %}
+          {% set times = 2 %}
+          {% elif "two times" in room|lower %}
+          {% set times = 2 %}
+          {% elif "twice" in room|lower %}
+          {% set times = 2 %}
+          {% elif "3 fois" in room|lower %}
+          {% set times = 3 %}
+          {% elif "trois fois" in room|lower %}
+          {% set times = 3 %}
+          {% elif "3 times" in room|lower %}
+          {% set times = 3 %}
+          {% elif "three times" in room|lower %}
+          {% set times = 3 %}
           {% endif %}
           {{ times }}'
 vacuum_kitchen:
@@ -98,186 +107,291 @@ vacuum_kitchen:
   sequence:
     - service: vacuum.stop
       data:
-        entity_id: vacuum.xiaomi_vacuum_cleaner
-    - service: xiaomi_miio.vacuum_clean_zone
-      data_template:
-        entity_id: vacuum.xiaomi_vacuum_cleaner
-        repeats: >
-          {% set vacuum_times = 1 %}
-          {% if times is defined %}
-           {% set vacuum_times = times %}
-          {% endif %}
-          {{vacuum_times}}
-        zone: [[24384,22183,27484,25133]]
-    # - service: vacuum.send_command # Alternative
-    #     entity_id: vacuum.xiaomi_vacuum_cleaner
-    #     command: app_segment_clean
-    #     params: [16]
+        entity_id: vacuum.rondelle
+    # - service: xiaomi_miio.vacuum_clean_zone
+    #   data_template:
+    #     repeats: >
+    #       {% set vacuum_times = 1 %}
+    #       {% if times is defined %}
+    #         {% set vacuum_times = times %}
+    #       {% endif %}
+    #       {{vacuum_times}}
+    #     zone: [[17721, 20931, 20271, 24281], [17743, 23354, 21543, 24254]]
+    - service: xiaomi_miio.vacuum_clean_segment
+      target:
+        entity_id: vacuum.rondelle
+      data:
+        segments: [19]
 vacuum_kitchen_and_diningroom:
   alias: "Vacuum Kitchen and Diningroom"
   sequence:
     - service: vacuum.stop
       data:
-        entity_id: vacuum.xiaomi_vacuum_cleaner
-    - service: xiaomi_miio.vacuum_clean_zone
-      data_template:
-        entity_id: vacuum.xiaomi_vacuum_cleaner
-        repeats: >
-          {% set vacuum_times = 1 %}
-          {% if times is defined %}
-           {% set vacuum_times = times %}
-          {% endif %}
-          {{vacuum_times}}
-        zone: 
-          - [24384,22183,27484,25133]
-          - [24964,25174,27714,28424]
-    # - service: vacuum.send_command # Alternative
-    #     entity_id: vacuum.xiaomi_vacuum_cleaner
-    #     command: app_segment_clean
-    #     params: [16,17]
+        entity_id: vacuum.rondelle
+    # - service: xiaomi_miio.vacuum_clean_zone
+    #   data_template:
+    #     entity_id: vacuum.rondelle
+    #     repeats: >
+    #       {% set vacuum_times = 1 %}
+    #       {% if times is defined %}
+    #        {% set vacuum_times = times %}
+    #       {% endif %}
+    #       {{vacuum_times}}
+    #     zone:
+    #       - [21113, 24965, 26163, 28965]
+    #       - [17721, 20931, 20271, 24281]
+    #       - [17743, 23354, 21543, 24254]
+    - service: xiaomi_miio.vacuum_clean_segment
+      target:
+        entity_id: vacuum.rondelle
+      data:
+        segments: [17, 16, 19, 20, 21, 22, 18]
 vacuum_diningroom:
   alias: "Vacuum Dining Room"
   sequence:
     - service: vacuum.stop
       data:
-        entity_id: vacuum.xiaomi_vacuum_cleaner
-    - service: xiaomi_miio.vacuum_clean_zone
-      data_template:
-        entity_id: vacuum.xiaomi_vacuum_cleaner
-        repeats: >
-          {% set vacuum_times = 1 %}
-          {% if times is defined %}
-           {% set vacuum_times = times %}
-          {% endif %}
-          {{vacuum_times}}
-        zone: [[24964,25174,27714,28424]]
-    # - service: vacuum.send_command # Alternative
-    #     entity_id: vacuum.xiaomi_vacuum_cleaner
-    #     command: app_segment_clean
-    #     params: [17]
+        entity_id: vacuum.rondelle
+    # - service: xiaomi_miio.vacuum_clean_zone
+    #   data_template:
+    #     entity_id: vacuum.rondelle
+    #     repeats: >
+    #       {% set vacuum_times = 1 %}
+    #       {% if times is defined %}
+    #        {% set vacuum_times = times %}
+    #       {% endif %}
+    #       {{vacuum_times}}
+    #     zone: [[21113, 24965, 26163, 28965]]
+    - service: xiaomi_miio.vacuum_clean_segment
+      target:
+        entity_id: vacuum.rondelle
+      data:
+        segments: [20]
 vacuum_bathroom:
   alias: "Vacuum Bathroom"
   sequence:
     - service: vacuum.stop
       data:
-        entity_id: vacuum.xiaomi_vacuum_cleaner
-    - service: xiaomi_miio.vacuum_clean_zone
-      data_template:
-        entity_id: vacuum.xiaomi_vacuum_cleaner
-        repeats: >
-          {% set vacuum_times = 1 %}
-          {% if times is defined %}
-           {% set vacuum_times = times %}
-          {% endif %}
-          {{vacuum_times}}
-        zone: [[23790,17237,28140,21137]]
-    # - service: vacuum.send_command # Alternative
-    #     entity_id: vacuum.xiaomi_vacuum_cleaner
-    #     command: app_segment_clean
-    #     params: [22]
-vacuum_bedroom:
-  alias: "Vacuum Bedroom"
+        entity_id: vacuum.robbie
+    # - service: xiaomi_miio.vacuum_clean_zone
+    #   data_template:
+    #     entity_id: vacuum.rondelle
+    #     repeats: >
+    #       {% set vacuum_times = 1 %}
+    #       {% if times is defined %}
+    #        {% set vacuum_times = times %}
+    #       {% endif %}
+    #       {{vacuum_times}}
+    #     zone: [[21458, 18156, 23658, 20006]]
+    - service: xiaomi_miio.vacuum_clean_segment
+      target:
+        entity_id: vacuum.robbie
+      data:
+        segments: [3]
+vacuum_office:
+  alias: "Vacuum Office"
   sequence:
     - service: vacuum.stop
       data:
-        entity_id: vacuum.xiaomi_vacuum_cleaner
-    - service: xiaomi_miio.vacuum_clean_zone
-      data_template:
-        entity_id: vacuum.xiaomi_vacuum_cleaner
-        repeats: >
-          {% set vacuum_times = 1 %}
-          {% if times is defined %}
-           {% set vacuum_times = times %}
-          {% endif %}
-          {{vacuum_times}}
-        zone: [[28091,17501,32541,21201]]
-    # - service: vacuum.send_command # Alternative
-    #     entity_id: vacuum.xiaomi_vacuum_cleaner
-    #     command: app_segment_clean
-    #     params: [24]
-vacuum_aurore_bedroom:
-  alias: "Vacuum Aurore's Bedroom"
+        entity_id: vacuum.robbie
+    # - service: xiaomi_miio.vacuum_clean_zone
+    #   data_template:
+    #     entity_id: vacuum.rondelle
+    #     repeats: >
+    #       {% set vacuum_times = 1 %}
+    #       {% if times is defined %}
+    #        {% set vacuum_times = times %}
+    #       {% endif %}
+    #       {{vacuum_times}}
+    #     zone: [[23217, 18350, 26167, 22150]]
+    - service: xiaomi_miio.vacuum_clean_segment
+      target:
+        entity_id: vacuum.robbie
+      data:
+        segments: [1]
+vacuum_aurore_playroom:
+  alias: "Vacuum Aurore's playroom"
   sequence:
     - service: vacuum.stop
       data:
-        entity_id: vacuum.xiaomi_vacuum_cleaner
-    - service: xiaomi_miio.vacuum_clean_zone
-      data_template:
-        entity_id: vacuum.xiaomi_vacuum_cleaner
-        repeats: >
-          {% set vacuum_times = 1 %}
-          {% if times is defined %}
-           {% set vacuum_times = times %}
-          {% endif %}
-          {{vacuum_times}}
-        zone: [[28098,21247,30898,23797]]
-    # - service: vacuum.send_command # Alternative
-    #     entity_id: vacuum.xiaomi_vacuum_cleaner
-    #     command: app_segment_clean
-    #     params: [23]
+        entity_id: vacuum.rondelle
+    # - service: xiaomi_miio.vacuum_clean_zone
+    #   data_template:
+    #     entity_id: vacuum.rondelle
+    #     repeats: >
+    #       {% set vacuum_times = 1 %}
+    #       {% if times is defined %}
+    #        {% set vacuum_times = times %}
+    #       {% endif %}
+    #       {{vacuum_times}}
+    #     zone: [[17686, 17478, 21436, 20928]]
+    - service: xiaomi_miio.vacuum_clean_segment
+      target:
+        entity_id: vacuum.rondelle
+      data:
+        segments: [23]
 vacuum_livingroom:
   alias: "Vacuum Living Room"
   sequence:
     - service: vacuum.stop
       data:
-        entity_id: vacuum.xiaomi_vacuum_cleaner
-    - service: xiaomi_miio.vacuum_clean_zone
-      data_template:
-        entity_id: vacuum.xiaomi_vacuum_cleaner
-        repeats: >
-          {% set vacuum_times = 1 %}
-          {% if times is defined %}
-           {% set vacuum_times = times %}
-          {% endif %}
-          {{vacuum_times}}
-        zone: [[27794,23764,32644,28264]]
-    # - service: vacuum.send_command # Alternative
-    #     entity_id: vacuum.xiaomi_vacuum_cleaner
-    #     command: app_segment_clean
-    #     params: [18]
-vacuum_aurore_zone:
-  alias: "Vacuum Aurore's zone"
+        entity_id: vacuum.rondelle
+    # - service: xiaomi_miio.vacuum_clean_zone
+    #   data_template:
+    #     entity_id: vacuum.rondelle
+    #     repeats: >
+    #       {% set vacuum_times = 1 %}
+    #       {% if times is defined %}
+    #        {% set vacuum_times = times %}
+    #       {% endif %}
+    #       {{vacuum_times}}
+    #     zone: [[21113, 24965, 26163, 28965]]
+    - service: xiaomi_miio.vacuum_clean_segment
+      target:
+        entity_id: vacuum.rondelle
+      data:
+        segments: [22]
+vacuum_entry:
+  alias: "Vacuum Entry"
   sequence:
     - service: vacuum.stop
       data:
-        entity_id: vacuum.xiaomi_vacuum_cleaner
-    - service: xiaomi_miio.vacuum_clean_zone
-      data_template:
-        entity_id: vacuum.xiaomi_vacuum_cleaner
-        repeats: >
-          {% set vacuum_times = 1 %}
-          {% if times is defined %}
-           {% set vacuum_times = times %}
-          {% endif %}
-          {{vacuum_times}}
-        zone: [[30749,24974,32449,28274]]
-    # - service: vacuum.send_command # Alternative
-    #     entity_id: vacuum.xiaomi_vacuum_cleaner
-    #     command: app_segment_clean
-    #     params: [19]
+        entity_id: vacuum.rondelle
+    # - service: xiaomi_miio.vacuum_clean_zone
+    #   data_template:
+    #     entity_id: vacuum.rondelle
+    #     repeats: >
+    #       {% set vacuum_times = 1 %}
+    #       {% if times is defined %}
+    #        {% set vacuum_times = times %}
+    #       {% endif %}
+    #       {{vacuum_times}}
+    #     zone: [[22846, 22160, 26096, 25010]]
+    - service: xiaomi_miio.vacuum_clean_segment
+      target:
+        entity_id: vacuum.rondelle
+      data:
+        segments: [16]
+vacuum_hallway:
+  alias: "Vacuum Hallway"
+  sequence:
+    - service: vacuum.stop
+      data:
+        entity_id: vacuum.rondelle
+    # - service: xiaomi_miio.vacuum_clean_zone
+    #   data_template:
+    #     entity_id: vacuum.rondelle
+    #     repeats: >
+    #       {% set vacuum_times = 1 %}
+    #       {% if times is defined %}
+    #        {% set vacuum_times = times %}
+    #       {% endif %}
+    #       {{vacuum_times}}
+    #     zone: [[21474, 19960, 22824, 25010]]
+    - service: xiaomi_miio.vacuum_clean_segment
+      target:
+        entity_id: vacuum.rondelle
+      data:
+        segments: [21]
+vacuum_hallway_upstairs:
+  alias: "Vacuum Hallway Upstairs"
+  sequence:
+    - service: vacuum.stop
+      data:
+        entity_id: vacuum.robbie
+    - service: xiaomi_miio.vacuum_clean_segment
+      target:
+        entity_id: vacuum.robbie
+      data:
+        segments: [16]
+vacuum_toilets:
+  alias: "Vacuum Toilets"
+  sequence:
+    - service: vacuum.stop
+      data:
+        entity_id: vacuum.rondelle
+    # - service: xiaomi_miio.vacuum_clean_zone
+    #   data_template:
+    #     entity_id: vacuum.rondelle
+    #     repeats: >
+    #       {% set vacuum_times = 1 %}
+    #       {% if times is defined %}
+    #        {% set vacuum_times = times %}
+    #       {% endif %}
+    #       {{vacuum_times}}
+    #     zone: [[21474, 19960, 22824, 25010]]
+    - service: xiaomi_miio.vacuum_clean_segment
+      target:
+        entity_id: vacuum.rondelle
+      data:
+        segments: [18]
+vacuum_green_bedroom:
+  alias: "Vacuum Green Bedroom"
+  sequence:
+    - service: vacuum.stop
+      data:
+        entity_id: vacuum.robbie
+    - service: xiaomi_miio.vacuum_clean_segment
+      target:
+        entity_id: vacuum.robbie
+      data:
+        segments: [17]
+vacuum_rose_bedroom:
+  alias: "Vacuum Roses Bedroom"
+  sequence:
+    - service: vacuum.stop
+      data:
+        entity_id: vacuum.robbie
+    - service: xiaomi_miio.vacuum_clean_segment
+      target:
+        entity_id: vacuum.robbie
+      data:
+        segments: [2]
+vacuum_aurore_bedroom:
+  alias: "Vacuum Aurore's Bedroom"
+  sequence:
+    - service: vacuum.stop
+      data:
+        entity_id: vacuum.robbie
+    - service: xiaomi_miio.vacuum_clean_segment
+      target:
+        entity_id: vacuum.robbie
+      data:
+        segments: [19]
+vacuum_shower:
+  alias: "Vacuum shower"
+  sequence:
+    - service: vacuum.stop
+      data:
+        entity_id: vacuum.robbie
+    - service: xiaomi_miio.vacuum_clean_segment
+      target:
+        entity_id: vacuum.robbie
+      data:
+        segments: [18]
 vacuum_reset_fan_speed_after_mopping: # This might be automatically managed by the vacuum (TODO: verify)
   alias: "Reset vacuum's fan speed after mopping"
   sequence:
     - delay:
         minutes: 1
-    - wait_template: "{{ is_state('vacuum.xiaomi_vacuum_cleaner', 'docked') }}"
+    - wait_template: "{{ is_state('vacuum.rondelle', 'docked') }}"
     - service: vacuum.set_fan_speed
       data:
         fan_speed: Standard
-        entity_id: vacuum.xiaomi_vacuum_cleaner
+        entity_id: vacuum.rondelle
 mop_bathroom:
   alias: "Mop Bathroom"
   sequence:
     - service: vacuum.stop
       data:
-        entity_id: vacuum.xiaomi_vacuum_cleaner
+        entity_id: vacuum.rondelle
     - service: vacuum.set_fan_speed
       data:
         fan_speed: Gentle
-        entity_id: vacuum.xiaomi_vacuum_cleaner
+        entity_id: vacuum.rondelle
     - service: script.vacuum_bathroom
       data_template:
-        times: '{{ times }}'
+        times: "{{ times }}"
     - service: script.turm_on
       data:
         entity_id: script.vacuum_reset_fan_speed_after_mopping
@@ -286,14 +400,14 @@ mop_kitchen:
   sequence:
     - service: vacuum.stop
       data:
-        entity_id: vacuum.xiaomi_vacuum_cleaner
+        entity_id: vacuum.rondelle
     - service: vacuum.set_fan_speed
       data:
         fan_speed: Gentle
-        entity_id: vacuum.xiaomi_vacuum_cleaner
+        entity_id: vacuum.rondelle
     - service: script.vacuum_kitchen
       data_template:
-        times: '{{ times }}'
+        times: "{{ times }}"
     - service: script.turm_on
       data:
         entity_id: script.vacuum_reset_fan_speed_after_mopping
@@ -302,14 +416,14 @@ mop_diningroom:
   sequence:
     - service: vacuum.stop
       data:
-        entity_id: vacuum.xiaomi_vacuum_cleaner
+        entity_id: vacuum.rondelle
     - service: vacuum.set_fan_speed
       data:
         fan_speed: Gentle
-        entity_id: vacuum.xiaomi_vacuum_cleaner
+        entity_id: vacuum.rondelle
     - service: script.vacuum_diningroom
       data_template:
-        times: '{{ times }}'
+        times: "{{ times }}"
     - service: script.turm_on
       data:
         entity_id: script.vacuum_reset_fan_speed_after_mopping
@@ -318,14 +432,14 @@ mop_kitchen_and_dining_room:
   sequence:
     - service: vacuum.stop
       data:
-        entity_id: vacuum.xiaomi_vacuum_cleaner
+        entity_id: vacuum.rondelle
     - service: vacuum.set_fan_speed
       data:
         fan_speed: Gentle
-        entity_id: vacuum.xiaomi_vacuum_cleaner
+        entity_id: vacuum.rondelle
     - service: script.vacuum_kitchen_and_diningroom
       data_template:
-        times: '{{ times }}'
+        times: "{{ times }}"
     - service: script.turm_on
       data:
         entity_id: script.vacuum_reset_fan_speed_after_mopping

@@ -6,8 +6,6 @@ sensors:
         !secret homeGPSCoordinates
       {%- elif is_state("input_select.destination", "Work") -%}
         !secret giomWorkplaceGPSCoordinates
-      {%- elif is_state("input_select.destination", "Parents") -%}
-        !secret garderieName
       {%- else -%}
         Unknown
       {%- endif %}

@@ -1,4 +1,5 @@
 # https://www.home-assistant.io/components/history/
 # Enables support for tracking state changes over time
+# What's recorded is managed in recorder.yaml.
 
 history:

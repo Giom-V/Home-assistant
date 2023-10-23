@@ -1,0 +1,11 @@
+{
+  "domain": "pollens",
+  "name": "Reseau National de Surveillance Aerobiologique ((R.N.S.A.))",
+  "documentation": "https://github.com/chris60600/pollens-home-assistant",
+  "issue_tracker": "https://github.com/chris60600/pollens-home-assistant/issues",
+  "requirements": [],
+  "codeowners": ["@chris60600"],
+  "config_flow": true,
+  "iot_class": "cloud_polling",
+  "version": "2023.06.01"
+}

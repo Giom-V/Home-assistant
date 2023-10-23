@@ -1,6 +1,6 @@
 # https://www.home-assistant.io/integrations/withings/
-
-withings:
-  client_id: !secret withingsClientID
-  client_secret: !secret withingsSecret
-  use_webhook: true
+# Now set-up in UI
+# withings:
+#   client_id: !secret withingsClientID
+#   client_secret: !secret withingsSecret
+#   use_webhook: true

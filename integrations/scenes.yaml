@@ -1,3 +1,7 @@
 # https://www.home-assistant.io/integrations/scene/
 
+# My own handmade scenes
 scene: !include_dir_merge_list ../scenes
+
+# Scenes I create in the UI
+scene ui: !include ../scenes.yaml

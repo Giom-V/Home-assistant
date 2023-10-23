@@ -1,11 +1,11 @@
 # Radarr
 # https://www.home-assistant.io/integrations/radarr/
-platform: radarr
-host: !secret NAS_IP
-api_key: !secret radarr_APIKey
-port: 17878
-monitored_conditions:
-  - movies
-  - upcoming
-  - status
-days: 30
+# platform: radarr
+# host: !secret NAS_IP
+# api_key: !secret radarr_APIKey
+# port: 17878
+# monitored_conditions:
+#   - movies
+#   - upcoming
+#   - status
+# days: 30

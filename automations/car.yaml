@@ -1,0 +1,158 @@
+- id: "SaveCarBatteryLevelAtHome"
+  alias: Save car's battery Level when at home
+  description: ""
+  trigger:
+    - platform: state
+      entity_id:
+        - sensor.bleuette_car_battery_level
+    - platform: zone
+      entity_id: device_tracker.bleuette_location
+      zone: zone.home
+      event: enter
+  condition:
+    - condition: zone
+      entity_id: device_tracker.bleuette_location
+      zone: zone.home
+  action:
+    - service: input_number.set_value
+      data:
+        value: "{{ states('sensor.bleuette_ev_battery_level') | int }}"
+      target:
+        entity_id: input_number.car_battery_when_leaving_home
+    - service: input_datetime.set_datetime
+      data:
+        datetime: "{{ now() }}"
+      target:
+        entity_id: input_datetime.last_time_bleuette_left_home
+  mode: single
+- id: "SaveCarBatteryLevelAtHomeFailsafe"
+  alias: Save car's battery Level when at home (Failsafe)
+  description: ""
+  trigger:
+    - platform: zone
+      entity_id: device_tracker.bleuette_location
+      zone: zone.home
+      event: leave
+  # condition:
+  #   - condition: template
+  #     value_template: >-
+  #       "{{ as_timestamp(now()) >
+  #       (as_timestamp(states('input_datetime.last_time_bleuette_left_home')) + 30 * 60 ) }}"
+  action:
+    - service: input_datetime.set_datetime
+      data:
+        datetime: "{{ now() }}"
+      target:
+        entity_id: input_datetime.last_time_bleuette_left_home
+  mode: single
+- id: "SaveCarBatteryLevelAtNozay"
+  alias: Save car's battery Level when at Nozay
+  description: ""
+  trigger:
+    - platform: state
+      entity_id:
+        - sensor.bleuette_car_battery_level
+    - platform: zone
+      entity_id: device_tracker.bleuette_location
+      zone: zone.nozay
+      event: enter
+  condition:
+    - condition: zone
+      entity_id: device_tracker.bleuette_location
+      zone: zone.nozay
+  action:
+    - service: input_number.set_value
+      data:
+        value: "{{ states('sensor.bleuette_ev_battery_level') | int }}"
+      target:
+        entity_id: input_number.car_battery_when_leaving_nozay
+    - service: input_datetime.set_datetime
+      data:
+        datetime: "{{ now() }}"
+      target:
+        entity_id: input_datetime.last_time_bleuette_left_nozay
+  mode: single
+- id: "SaveCarBatteryLevelAtNozayFailsafe"
+  alias: Save car's battery Level when at Nozay (Failsafe)
+  description: ""
+  trigger:
+    - platform: zone
+      entity_id: device_tracker.bleuette_location
+      zone: zone.nozay
+      event: leave
+  # condition:
+  #   - condition: template
+  #     value_template: >-
+  #       "{{ as_timestamp(now()) >
+  #       (as_timestamp(states('input_datetime.last_time_bleuette_left_nozay')) + 30 * 60 ) }}"
+  action:
+    - service: input_datetime.set_datetime
+      data:
+        datetime: "{{ now() }}"
+      target:
+        entity_id: input_datetime.last_time_bleuette_left_nozay
+  mode: single
+- id: "SaveCarConsumptionWhenArrivingInNozay"
+  alias: Save car's consumption when arriving in Nozay
+  trigger:
+    - platform: zone
+      entity_id: device_tracker.bleuette_location
+      zone: zone.nozay
+      event: enter
+  condition:
+    - condition: template
+      value_template: >-
+        "{{ as_timestamp(now()) <
+        (as_timestamp(states('input_datetime.last_time_bleuette_left_home')) + 4 * 60 * 60 ) }}"
+  action:
+    - service: google_sheets.append_sheet
+      data:
+        config_entry: 7becb5248c5dcf319860b1faa05a3170
+        worksheet: Bleuette
+        data:
+          Date: "{{ now().strftime('%-d-%b-%y') }}"
+          Départ: Cesson
+          Arrivée: Nozay
+          Batterie initiale: "{{ states('input_number.car_battery_when_leaving_home')|float(0) }}"
+          Batterie finale: "{{ states('sensor.bleuette_ev_battery_level')|float(0) }}"
+          Consommation: "{{ states('input_number.car_battery_when_leaving_home')|float(0) - states('sensor.bleuette_ev_battery_level')|float(0) }}"
+          Temperature: "{{ states('sensor.dark_sky_temperature') }}"
+          Météo: "{{ states('weather.dark_sky') }}"
+    - service: input_datetime.set_datetime
+      data:
+        timestamp: 1
+      target:
+        entity_id: input_datetime.last_time_bleuette_left_home
+  mode: single
+- id: "SaveCarConsumptionWhenComingBackFromNozay"
+  alias: Save car's consumption when coming back from Nozay
+  trigger:
+    - platform: zone
+      entity_id: device_tracker.bleuette_location
+      zone: zone.home
+      event: enter
+  condition:
+    - condition: template
+      value_template: >-
+        "{{ as_timestamp(now()) <
+        (as_timestamp(states('input_datetime.last_time_bleuette_left_nozay')) + 4 * 60 * 60 ) }}"
+  action:
+    - service: google_sheets.append_sheet
+      data:
+        config_entry: 7becb5248c5dcf319860b1faa05a3170
+        worksheet: Bleuette
+        data:
+          Date: "{{ now().strftime('%-d-%b-%y') }}"
+          Départ: Nozay
+          Arrivée: Cesson
+          Batterie initiale: "{{ states('input_number.car_battery_when_leaving_nozay')|float(0) }}"
+          Batterie finale: "{{ states('sensor.bleuette_ev_battery_level')|float(0) }}"
+          Consommation: "{{ states('input_number.car_battery_when_leaving_nozay')|float(0) - states('sensor.bleuette_ev_battery_level')|float(0) }}"
+          Temperature: "{{ states('sensor.dark_sky_temperature') }}"
+          Météo: "{{ states('weather.dark_sky') }}"
+    - service: input_datetime.set_datetime
+      data:
+        timestamp: 1
+      target:
+        entity_id: input_datetime.last_time_bleuette_left_nozay
+  mode: single

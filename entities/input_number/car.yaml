@@ -1,0 +1,17 @@
+# will be used to save sensor.bleuette_ev_battery_level value when at home
+car_battery_when_leaving_home:
+  name: Car battery level last time it was home
+  icon: mdi:car-battery
+  min: 0
+  max: 100
+  unit_of_measurement: "%"
+  step: 1
+  mode: box
+car_battery_when_leaving_nozay:
+  name: Car battery level last time it was at Nozay
+  icon: mdi:car-battery
+  min: 0
+  max: 100
+  unit_of_measurement: "%"
+  step: 1
+  mode: box

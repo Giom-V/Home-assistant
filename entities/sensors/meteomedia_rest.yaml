@@ -1,8 +1,8 @@
-platform: rest
-resource: https://www.theweathernetwork.com/api/data/caqc0714/cm/ci?ts=1312
-name: meteomedia_json
-json_attributes:
-  - obs
-  - bug
-  - reports
-value_template: '{{ value_json.obs.wxc }}'
+# platform: rest
+# resource: https://www.theweathernetwork.com/api/data/caqc0714/cm/ci?ts=1312
+# name: meteomedia_json
+# json_attributes:
+#   - obs
+#   - bug
+#   - reports
+# value_template: '{{ value_json.obs.wxc }}'

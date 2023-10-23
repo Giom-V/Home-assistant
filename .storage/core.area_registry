@@ -1,56 +1,111 @@
 {
-    "data": {
-        "areas": [
-            {
-                "id": "9c4968fca04144d0a45b4cb3e581afe3",
-                "name": "Salon"
-            },
-            {
-                "id": "868685c723f94f14befa9024a62f5745",
-                "name": "Cuisine"
-            },
-            {
-                "id": "fb771b4ed1124d9cb0f93fd1b2b5bd0c",
-                "name": "Solarium"
-            },
-            {
-                "id": "d2ba0908dc0e4f86b555872c232d8a18",
-                "name": "Salle \u00e0 manger"
-            },
-            {
-                "id": "257440c1b16b432b9fbf948a1815526d",
-                "name": "Chambre"
-            },
-            {
-                "id": "f345537ab65b46c5b78cdf82bf41ea9d",
-                "name": "Chambre d'Aurore"
-            },
-            {
-                "id": "26811538eded4148a4760d2e63b5ac91",
-                "name": "Salle de bain"
-            },
-            {
-                "id": "09a9199f5c064306b70b13d9d4c1e9bd",
-                "name": "Sous sol"
-            },
-            {
-                "id": "119eeda6dd6a4370a63ee6b8242ad21b",
-                "name": "Cannes"
-            },
-            {
-                "id": "253b2690b92441f386a7436bbb51deec",
-                "name": "La plagne"
-            },
-            {
-                "id": "d3c51cf238dd4ace8e6ad836e89b1bdc",
-                "name": "Tempo"
-            },
-            {
-                "id": "a429a49a25ad4e3caa67405bedf22636",
-                "name": "Bureau"
-            }
-        ]
-    },
-    "key": "core.area_registry",
-    "version": 1
+  "version": 1,
+  "minor_version": 3,
+  "key": "core.area_registry",
+  "data": {
+    "areas": [
+      {
+        "aliases": [],
+        "name": "Living Room",
+        "id": "living_room",
+        "picture": null
+      },
+      {
+        "aliases": [],
+        "name": "Kitchen",
+        "id": "kitchen",
+        "picture": null
+      },
+      {
+        "aliases": [],
+        "name": "Bedroom",
+        "id": "bedroom",
+        "picture": null
+      },
+      {
+        "aliases": [],
+        "name": "Office",
+        "id": "office",
+        "picture": null
+      },
+      {
+        "aliases": [],
+        "name": "Basement",
+        "id": "basement",
+        "picture": null
+      },
+      {
+        "aliases": [],
+        "name": "Garden",
+        "id": "garden",
+        "picture": null
+      },
+      {
+        "aliases": [],
+        "name": "Jardin de devant",
+        "id": "jardin_de_devant",
+        "picture": null
+      },
+      {
+        "aliases": [],
+        "name": "Bathroom",
+        "id": "bathroom",
+        "picture": null
+      },
+      {
+        "aliases": [],
+        "name": "Aurore's bedroom",
+        "id": "aurore_s_bedroom",
+        "picture": null
+      },
+      {
+        "aliases": [],
+        "name": "EV6",
+        "id": "ev6",
+        "picture": null
+      },
+      {
+        "aliases": [],
+        "name": "Shower room",
+        "id": "shower_room",
+        "picture": null
+      },
+      {
+        "aliases": [],
+        "name": "Kids room",
+        "id": "kids_room",
+        "picture": null
+      },
+      {
+        "aliases": [],
+        "name": "Attic",
+        "id": "attic",
+        "picture": null
+      },
+      {
+        "aliases": [],
+        "name": "Back kitchen",
+        "id": "back_kitchen",
+        "picture": null
+      },
+      {
+        "aliases": [],
+        "name": "Cannes",
+        "id": "cannes",
+        "picture": null
+      },
+      {
+        "aliases": [],
+        "name": "Salon",
+        "id": "salon",
+        "picture": null
+      },
+      {
+        "aliases": [],
+        "name": "Giom",
+        "id": "giom",
+        "picture": null
+      }
+    ]
+  }
 }
