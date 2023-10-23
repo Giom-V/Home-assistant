@@ -81,3 +81,4 @@ wyze-bridge/*.pickle
 wyze-bridge/mfa_token.txt
 nest/event_media/*.mp4
 nest/event_media/*
+image/*
