@@ -1,31 +1,131 @@
 version: 2
+
+ha-check-config: &ha-check-config
+  environment:
+    PYTHONPATH: "/usr/src/app:$PYTHONPATH"
+  steps:
+    - checkout
+    - run:
+        name: Prepare
+        command: |
+          python -m homeassistant --version
+          touch fake.pem
+          mv secrets.fake.yaml secrets.yaml
+          mkdir tmp/
+          touch ./home-assistant_v2.db
+          touch ./home-assistant.log
+          touch ./known_devices.yaml
+          touch ./secrets/fake_ssl_cert
+          touch ./secrets/fake_ssl_key
+          touch ./customize.yaml
+          touch ./google_calendar.yaml
+          mv secrets/home-assistant.fake.json secrets/home-assistant.json
+    - run:
+        name: Check config
+        command: |
+          python -m homeassistant \
+            --config ./config/ \
+            --script check_config \
+            --info all
+
 jobs:
-  build:
+  yamllint:
     docker:
-      - image: cimg/python:3.11.6
-    working_directory: ~/repo
+      - image: sdesbure/yamllint
     steps:
       - checkout
       - run:
-          name: Set-up before install
+          name: Check Dependencies
           command: |
-            touch fake.pem
-            mv secrets.fake.yaml secrets.yaml
-            mkdir tmp/
-            touch ./home-assistant_v2.db
-            touch ./home-assistant.log
-            touch ./known_devices.yaml
-            touch ./secrets/fake_ssl_cert
-            touch ./secrets/fake_ssl_key
-            touch ./customize.yaml
-            touch ./google_calendar.yaml
-            mv secrets/home-assistant.fake.json secrets/home-assistant.json
-            sudo apt install git libpython3-dev
-            python -m venv .
-            source bin/activate
-            pip3 install --pre --upgrade homeassistant
-            pwd
-            ls
-            export PATH=/home/homeassistant/.local/bin
-            python -m homeassistant --config ./config/ --script check_config --info all
-            hass -c . --script check_config --info all
+            yamllint --version
+      - run:
+          name: Check YAML
+          command: |
+            yamllint .
+
+  jsonlint:
+    docker:
+      - image: sahsu/docker-jsonlint
+    steps:
+      - checkout
+      - run:
+          name: Check Dependencies
+          command: |
+            jsonlint --version || true
+      - run:
+          name: Check YAML
+          command: |
+            for file in $(find . -type f -name "*.json"); do
+              if ! jsonlint -q $file; then
+                export FAILED=1
+              else
+                echo "$file OK"
+              fi
+            done
+            if [ "${FAILED}" = "1" ]; then
+              exit 1
+            fi
+
+  markdownlint:
+    docker:
+      - image: pipelinecomponents/remark-lint:latest
+    steps:
+      - checkout
+      - run:
+          name: Check Markdown
+          command: |
+            remark --no-stdout --color --frail .
+
+  esphome:
+    docker:
+      - image: esphome/esphome:latest
+    steps:
+      - checkout
+      - run:
+          name: ESPHome Version
+          command: |
+            esphome version
+      - run:
+          name: Prepare secrets.yaml
+          command: |
+            cp -R ./.stubs/* ./config/esphome/
+      - run:
+          name: Check ESPHome sketches
+          command: |
+            for file in $(find \
+              ./config/esphome \
+              -type f \
+              -name "*.yaml"\
+              -not -name "secrets.yaml"
+              ); do
+              esphome $file config
+            done
+
+  check-ha-latest:
+    docker:
+      - image: homeassistant/home-assistant:latest
+    <<: *ha-check-config
+
+  check-ha-rc:
+    docker:
+      - image: homeassistant/home-assistant:rc
+    <<: *ha-check-config
+
+workflows:
+  version: 2
+  validate-and-check-config:
+    jobs:
+      - yamllint
+      - jsonlint
+      - markdownlint
+      - esphome
+      - check-ha-latest:
+          requires:
+            - yamllint
+            - jsonlint
+            - markdownlint
+      - check-ha-rc:
+          requires:
+            - yamllint
+            - jsonlint
+            - markdownlint
