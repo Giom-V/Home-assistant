@@ -1,4 +1,7 @@
-version: 2
+version: 2.1
+
+orbs:
+  jira: circleci/jira@2.1.0
 
 ha-check-config: &ha-check-config
   environment:
@@ -27,6 +30,9 @@ ha-check-config: &ha-check-config
           python -m homeassistant \
             --config . \
             --script check_config
+    - jira/notify:
+        pipeline_id: << pipeline.id >>
+        pipeline_number: << pipeline.number >>
 
 jobs:
   yamllint:
