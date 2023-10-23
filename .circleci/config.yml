@@ -22,13 +22,12 @@ ha-check-config: &ha-check-config
           touch ./google_calendar.yaml
           mv secrets/home-assistant.fake.json secrets/home-assistant.json
           ls -R .
-          ls -R ./config/ 
           ls -R ~/repo
     - run:
         name: Check config
         command: |
           python -m homeassistant \
-            --config ./config/ \
+            --config . \
             --script check_config \
             --info all
 
