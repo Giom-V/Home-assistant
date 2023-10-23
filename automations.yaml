@@ -375,6 +375,49 @@
     entity_id: switch.vertical_monitor
     domain: switch
   mode: single
+- id: '1678917872103'
+  alias: Turn on Bathroom heating
+  description: ''
+  trigger:
+  - platform: device
+    type: turned_on
+    device_id: 1268d655a0515532f1cef89d736e539f
+    entity_id: switch.bouton_sdb_switch
+    domain: switch
+  - platform: event
+    event_type: ''
+    event_data:
+      step_mode: 0
+  condition: []
+  action:
+  - type: turn_on
+    device_id: 4a6b0aa18628bded0b46b3928ad3ba2d
+    entity_id: switch.chauffage_sdb
+    domain: switch
+  mode: single
+- id: '1678959025833'
+  alias: Turn off bathroom heating
+  description: ''
+  trigger:
+  - platform: device
+    type: turned_off
+    device_id: 1268d655a0515532f1cef89d736e539f
+    entity_id: switch.bouton_sdb_switch
+    domain: switch
+  - platform: event
+    event_type: ''
+    event_data:
+      level: 63
+      transition_time: 1
+      options_mask: None
+      options_override: None
+  condition: []
+  action:
+  - type: turn_off
+    device_id: 4a6b0aa18628bded0b46b3928ad3ba2d
+    entity_id: switch.chauffage_sdb
+    domain: switch
+  mode: single
 - id: '1679085142205'
   alias: During the day Aurore's light bulb default behavior is On
   description: ''
