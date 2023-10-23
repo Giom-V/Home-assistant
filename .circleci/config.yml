@@ -112,6 +112,7 @@ workflows:
             #- markdownlint
       #- check-ha-rc:
           #requires:
-           # - yamllint
+            #- check-ha-latest
+            #- yamllint
             #- jsonlint
             #- markdownlint
