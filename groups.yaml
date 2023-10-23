@@ -97,7 +97,7 @@ darksky:
     - sensor.dark_sky_visibility
     - sensor.dark_sky_wind_bearing
     - sensor.dark_sky_wind_speed
-    
+
 xiaomi:
   name: Xiaomi
   entities:
@@ -109,7 +109,7 @@ living_room_lights:
     - light.Color
     - light.canape_gauche
     - light.canape_droite
-    
+
 Dafang3:
   name: Dafang Camera
   entities:
@@ -130,7 +130,7 @@ Dafang3:
     - camera.dafang3_motion_snapshot
     - binary_sensor.dafang3_motion_sensor
     - cover.dafang3_move_left_right
-    - cover.dafang3_move_up_down  
+    - cover.dafang3_move_up_down
 
 SchoolAtHome:
   name: School at home time keeper
@@ -140,9 +140,16 @@ SchoolAtHome:
     - script.SchoolAtHome10
     - script.SchoolAtHome11
     - script.SchoolAtHome12
-    - script.SchoolAtHome13    
-    - script.SchoolAtHome14    
-    - script.SchoolAtHome15    
-    - script.SchoolAtHome1530    
-    - script.SchoolAtHome1630    
+    - script.SchoolAtHome13
+    - script.SchoolAtHome14
+    - script.SchoolAtHome15
+    - script.SchoolAtHome1530
+    - script.SchoolAtHome1630
     - script.SchoolAtHome1730
+
+OutsideLamps:
+  name: Lampe extérieures
+  entities:
+    - light.lumiere_exterieure_1_forceonlight
+    - light.lumiere_exterieure_2_forceonlight
+    - light.lumiere_exterieure_3_forceonlight
