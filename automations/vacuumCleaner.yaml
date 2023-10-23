@@ -17,6 +17,9 @@
   trigger:
     platform: webhook
     webhook_id: vacuumDispatch
+    allowed_methods:
+      - POST
+    local_only: false
   condition:
     - condition: template
       value_template: "{{ trigger.json.type == 'call_service' }}"
@@ -39,6 +42,9 @@
   trigger:
     platform: webhook
     webhook_id: vacuumMop
+    allowed_methods:
+      - POST
+    local_only: false
   condition:
     - condition: template
       value_template: "{{ trigger.json.type == 'call_service' }}"
@@ -68,6 +74,9 @@
   trigger:
     platform: webhook
     webhook_id: vacuumStop
+    allowed_methods:
+      - POST
+    local_only: false
   condition:
     - condition: template
       value_template: "{{ trigger.json.type == 'call_service' }}"
@@ -86,6 +95,9 @@
   trigger:
     platform: webhook
     webhook_id: vacuumGoToBase
+    allowed_methods:
+      - POST
+    local_only: false
   condition:
     - condition: template
       value_template: "{{ trigger.json.type == 'call_service' }}"
@@ -112,11 +124,14 @@
     - service: script.turn_on
       data:
         entity_id: script.vacuum_kitchen_and_diningroom
+    - service: script.turn_on
+      data:
+        entity_id: script.vacuum_bathroom
 - id: vacuum_kitchen_and_dining_room_when_we_are_away_covid_version
   alias: vacuum Kitchen and dining room when we are away (Covid version)
   trigger:
     - platform: state
-      entity_id: person.giom, person.claire
+      entity_id: person.guillaume, person.claire
       from: home
       for:
         minutes: 5
@@ -135,6 +150,17 @@
     - condition: state
       entity_id: input_boolean.visitors
       state: "off"
+    - not:
+        - condition: device
+          device_id: 3bd7ea9094dacdcb707f482264f08014
+          domain: vacuum
+          entity_id: e2f21eb7f540d2cc583036257700ad55
+          type: is_cleaning
+        - condition: device
+          device_id: 5cf729ccf4531403f3cbe23e4a80fecc
+          domain: vacuum
+          entity_id: f5343ef0c5abce9a544408954541df1d
+          type: is_cleaning
     - condition: or
       conditions:
         - condition: time # This part is related to the WFH situation during the Covid pandemic
@@ -151,7 +177,7 @@
                 - sat
                 - sun
             - condition: state
-              entity_id: person.giom
+              entity_id: person.guillaume
               state: not_home
               for:
                 minutes: 5
@@ -164,14 +190,71 @@
     - service: script.turn_on
       data:
         entity_id: script.vacuum_kitchen_and_diningroom
+    - service: script.turn_on
+      data:
+        entity_id: script.vacuum_bathroom
 - id: last_vacuum_clean_time_update
   alias: Update the time of the last cleaning
   trigger:
     - platform: state
-      entity_id: vacuum.xiaomi_vacuum_cleaner
+      entity_id: vacuum.rondelle
       to: "cleaning"
+      for:
+        minutes: 5
   action:
     - service: input_datetime.set_datetime
       entity_id: input_datetime.last_vacuum
       data:
         datetime: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
+- id: vacuum_fast_scan_auto_start_stop
+  alias: start/stop xiaomi fast scan interval
+  description: ""
+  trigger:
+    - platform: state
+      entity_id:
+        - vacuum.rondelle
+    - platform: state
+      entity_id:
+        - vacuum.robbie
+  condition: []
+  action:
+    - if:
+        - condition: state
+          entity_id: vacuum.rondelle
+          state: docked
+      then:
+        - if:
+            - condition: state
+              entity_id: vacuum.robbie
+              state: docked
+          then:
+            - service: automation.turn_off
+              data: {}
+              target:
+                entity_id: automation.vacuum_fast_scan
+          else:
+            - service: automation.turn_on
+              data: {}
+              target:
+                entity_id: automation.vacuum_fast_scan
+      else:
+        - service: automation.turn_on
+          data: {}
+          target:
+            entity_id: automation.vacuum_fast_scan
+  mode: single
+
+- id: vacuum_fast_scan
+  alias: update xiaomi map extractor
+  description: ""
+  trigger:
+    - platform: time_pattern
+      seconds: "10"
+  condition: []
+  action:
+    - service: homeassistant.update_entity
+      data: {}
+      target:
+        entity_id: camera.xiaomi_cloud_map_extractor
+  initial_state: false
+  mode: restart

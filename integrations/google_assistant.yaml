@@ -24,6 +24,13 @@ google_assistant:
       expose: true
     input_boolean.away_mode:
       expose: true
+    script.vacuum_kitchen_and_diningroom:
+      expose: true
+      expose: true
+    vacuum.robbie:
+      expose: true
+    vacuum.rondelle:
+      expose: true
     script.party_mode:
       name: Party mode script
       expose: true
