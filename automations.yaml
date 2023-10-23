@@ -223,6 +223,62 @@
     target:
       entity_id: light.dlight
   mode: single
+- id: '1679262865155'
+  alias: Turn on the pond's pump during off-peak hours
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - binary_sensor.heure_creuse
+    to: 'on'
+  condition: []
+  action:
+  - type: turn_on
+    device_id: a48ab46ddad605396107125f1515f518
+    entity_id: light.pompe_failsafe_light
+    domain: light
+  mode: single
+- id: '1679262911117'
+  alias: Turn off the pond's pump during peak hours
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - binary_sensor.heure_creuse
+    to: 'off'
+  - platform: time
+    at: '14:00:00'
+  condition:
+  - condition: state
+    entity_id: binary_sensor.heure_creuse
+    state: 'off'
+  action:
+  - type: turn_off
+    device_id: a48ab46ddad605396107125f1515f518
+    entity_id: light.pompe_failsafe_light
+    domain: light
+  mode: single
+- id: '1685014375600'
+  alias: Turn on pond's pump when we are here during lunch time
+  description: ''
+  trigger:
+  - platform: time
+    at: '12:00:00'
+  condition:
+  - condition: or
+    conditions:
+    - condition: state
+      entity_id: input_boolean.visitors
+      state: 'on'
+    - condition: state
+      entity_id: binary_sensor.people_home
+      state: 'on'
+  action:
+  - type: turn_on
+    device_id: 649f27a64226d45fe62a3f84f4f2d4b4
+    entity_id: switch.pompe_switch
+    domain: switch
+  mode: single
 - id: '1687101568970'
   alias: Turn on Govee LED strip when we switch on the TV during the evening
   description: ''
