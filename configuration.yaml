@@ -440,9 +440,7 @@ light:
   - platform: switch
     name: Cuisine
     entity_id: switch.lumiere_cuisine
-  - platform: dlight
-    host: 192.168.86.21
-    device_id: E5b18418
+
 ####################################################
 #                 Work in progress                 #
 ####################################################
