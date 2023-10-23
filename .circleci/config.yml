@@ -117,5 +117,5 @@ workflows:
             #- markdownlint
   build-workflow:
     jobs:
-      - ha-check-config:
+      - check-ha-latest:
           context: JIRA_WEBHOOK
