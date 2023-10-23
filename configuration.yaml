@@ -324,11 +324,20 @@ zone:
     radius: 100
     icon: mdi:school
 
+  - name: Nozay
+    latitude: !secret nozayLatitude
+    longitude: !secret nozayLongitude
+    radius: 250
+    icon: mdi:home-modern
+
   # This will override the default home zone
   - name: Home
     latitude: !secret homeLatitude
     longitude: !secret homeLongitude
     radius: 100
+    # latitude: 48.12761546073163
+    # longitude: -1.6037034988403323
+    # radius: 340
     icon: mdi:home-circle
 
 # temporarily disabling the google calendar integration to fix the rest
