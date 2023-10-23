@@ -566,6 +566,22 @@
     entity_id: switch.chargeur_velo_switch
     domain: switch
   mode: single
+- id: toggle_car_charger_peak_hours
+  alias: Turn on the car's chargeur only during off-peak hours
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - binary_sensor.heure_creuse
+    to: 'on'
+  condition: []
+  action:
+  - type: "{% if binary_sensor.heure_creuse.state = true %}\n  turn_on\n{% else %}\n
+      \ turn_off\n{% endif %}\n"
+    device_id: ed915ff8d67e254ac4696ba8ee133128
+    entity_id: switch.chargeur_voiture
+    domain: switch
+  mode: single
 - id: '1686121963583'
   alias: Turn off bike's charger during peak hours
   description: ''
