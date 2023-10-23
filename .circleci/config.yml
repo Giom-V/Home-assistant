@@ -27,6 +27,12 @@ jobs:
             source bin/activate
             pip3 install --pre --upgrade homeassistant
       - run:
+          name: Tests
+          command: |
+            pwd
+            ls
+            export PATH=/home/homeassistant/.local/bin
+      - run:
           name: Test config
           command: |
             hass -c . --script check_config --info all
