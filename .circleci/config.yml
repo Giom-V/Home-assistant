@@ -20,7 +20,7 @@ jobs:
             touch ./customize.yaml
             touch ./google_calendar.yaml
             mv secrets/home-assistant.fake.json secrets/home-assistant.json
-            sudo apt install git libpython3.7-dev
+            sudo apt install git libpython3.11-dev
             python -m venv .
             source bin/activate
             pip3 install --pre --upgrade homeassistant
