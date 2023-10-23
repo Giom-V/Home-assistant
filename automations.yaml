@@ -1,3 +1,21 @@
+- id: '1669558090658'
+  alias: Preheat the car
+  description: ''
+  trigger:
+  - platform: time
+    at: 08:20:00
+  condition:
+  - condition: time
+    weekday:
+    - tue
+  - condition: numeric_state
+    entity_id: sensor.dark_sky_temperature
+    below: 10
+  action:
+  - service: script.turn_on
+    data:
+      entity_id: script.preheat_car
+  mode: single
 - id: '1687101568970'
   alias: Turn on Govee LED strip when we switch on the TV during the evening
   description: ''
@@ -37,3 +55,22 @@
     domain: light
   mode: single
 - id: '1687949528073'
+- id: '1698006992086'
+  alias: Reload Kia integration when it's down
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - binary_sensor.bleuette_ev_battery_charge
+    to: unavailable
+    for:
+      hours: 1
+      minutes: 0
+      seconds: 0
+  condition: []
+  action:
+  - service: homeassistant.reload_config_entry
+    data: {}
+    target:
+      device_id: 1a31a3c555afa6a7768c4686a2ac04a0
+  mode: single

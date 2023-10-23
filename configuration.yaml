@@ -74,6 +74,7 @@ binary_sensor:
     name: "Are Auroras potentially visible?"
     entity_id: sensor.aurora_visibility_aurora_visibility
     upper: 1
+
 # Example configuration entry
 template:
   - trigger:
@@ -86,6 +87,50 @@ template:
         state_class: measurement
         state: >
           {{ (states('sensor.bleuette_ev_range') | float / states('sensor.bleuette_ev_battery_level') | float * 100 ) | int }}
+  - trigger:
+      - platform: time
+        at:
+          - "00:00"
+          - "00:05"
+          - "06:20"
+          - "06:25"
+          - "22:20"
+          - "22:25"
+      - platform: time_pattern
+        minutes: 30
+      - platform: time_pattern
+        minutes: 0
+    binary_sensor:
+      - name: "Heure creuse"
+        unique_id: heure_creuse
+        state: >
+          {% if now().isoweekday() >= 6 %}
+            true
+          {% elif is_state('binary_sensor.workday_sensor','off') %}
+            true
+          {% elif now().hour >= 23 or now().hour < 6 %}
+            true
+          {% elif now().hour == 22 and now().minute >= 20 %}
+            true
+          {% elif now().hour == 22 and now().minute < 20 %}
+            false
+          {% else %}
+            false
+          {% endif %}
+  - trigger:
+      - platform: state
+        entity_id: binary_sensor.heure_creuse
+    sensor:
+      - name: "Electricity price"
+        unique_id: electricity_price
+        unit_of_measurement: EUR/kWh
+        state_class: measurement
+        state: >
+          {% if is_state('binary_sensor.heure_creuse','off') %}
+            0.11532
+          {% else %}
+            0.23052
+          {% endif %}
   - trigger:
       - platform: webhook
         webhook_id: googleDesktop-giom1
