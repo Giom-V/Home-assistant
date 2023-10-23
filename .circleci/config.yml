@@ -26,8 +26,7 @@ ha-check-config: &ha-check-config
         command: |
           python -m homeassistant \
             --config . \
-            --script check_config \
-            --info all
+            --script check_config
 
 jobs:
   yamllint:
