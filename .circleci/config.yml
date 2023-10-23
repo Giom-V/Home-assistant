@@ -20,7 +20,7 @@ jobs:
             touch ./customize.yaml
             touch ./google_calendar.yaml
             mv secrets/home-assistant.fake.json secrets/home-assistant.json
-            python3.11 -m venv .
+            python3 -m venv .
             source bin/activate
             pip3 install --pre --upgrade homeassistant
             pwd
