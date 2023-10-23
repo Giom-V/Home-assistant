@@ -1,0 +1,39 @@
+- id: '1687101568970'
+  alias: Turn on Govee LED strip when we switch on the TV during the evening
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - binary_sensor.tv_is_in_use
+    to: 'on'
+  condition:
+  - condition: or
+    conditions:
+    - condition: time
+      after: '21:00:00'
+    - condition: sun
+      after: sunset
+    - condition: sun
+      before: sunrise
+  action:
+  - type: turn_on
+    device_id: 58be483dcfdf57ea1c31a2fb4c329411
+    entity_id: light.govee_tv
+    domain: light
+  mode: single
+- id: '1687101610893'
+  alias: Turn off Govee LED strip when we switch off the TV
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - binary_sensor.tv_is_in_use
+    to: 'off'
+  condition: []
+  action:
+  - type: turn_off
+    device_id: 58be483dcfdf57ea1c31a2fb4c329411
+    entity_id: light.govee_tv
+    domain: light
+  mode: single
+- id: '1687949528073'

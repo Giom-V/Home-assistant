@@ -64,6 +64,16 @@ binary_sensor:
         friendly_name: "People Home"
         device_class: presence
         value_template: >
+          {{ is_state('person.guillaume', 'home') or is_state('person.claire', 'home') }}
+  - platform: threshold
+    name: "TV is in use"
+    device_class: presence
+    entity_id: sensor.tv_active_power
+    upper: 75
+  - platform: threshold
+    name: "Are Auroras potentially visible?"
+    entity_id: sensor.aurora_visibility_aurora_visibility
+    upper: 1
 # Example configuration entry
 template:
   - trigger:
