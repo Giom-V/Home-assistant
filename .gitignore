@@ -59,9 +59,6 @@ node-red
 !/.storage/lovelace
 !/.storage/lovelace.lovelace_*
 !/.storage/lovelace_resources
-!/.storage/core.area_registry
-!/.storage/core.device_registry
-!/.storage/core.entity_registry
 
 # Do not ignore specific custom components
 #custom_components/
