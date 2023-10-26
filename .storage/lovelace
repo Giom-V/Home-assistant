@@ -39,11 +39,11 @@
                   "name": "Tps de meetings"
                 },
                 {
-                  "entity": "sensor.withings_weight_kg_giom",
+                  "entity": "sensor.weight",
                   "name": "Poids"
                 },
                 {
-                  "entity": "sensor.google_fit_steps",
+                  "entity": "sensor.steps_daily",
                   "name": "Pas",
                   "unit": "pas"
                 },
