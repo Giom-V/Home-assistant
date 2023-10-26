@@ -6,7 +6,9 @@
 [![Security Risk - CoPilot](https://copilot.blackducksoftware.com/github/repos/Giom-V/Home-assistant/branches/master/badge-risk.svg)](https://copilot.blackducksoftware.com/github/repos/Giom-V/Home-assistant)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/a5c5e4fe3edd434aad827e52ba9c69bc)](https://www.codacy.com/manual/Giom-V/Home-assistant?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Giom-V/Home-assistant&amp;utm_campaign=Badge_Grade)
 
-Personal home assistant configuration.
+This is my personal home assistant configuration. I'm sharing it to provide the community ideas on how to organize one's files and on which kind of automations are feasible and how.
+
+**Disclamer**: While I don't think it changes anything regarding how I manage my home automations and what I'm sharing here, I prefer to be transparent and reveal that I've recently starting to work for Google Nest and might be biaised towards the Nest products. Taht said I was already using my Nest Doorbell and my nest speakers/screens before joining so it's not like it changes anything.
 
 ## Organization of this GitHub
 
