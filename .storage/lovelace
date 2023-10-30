@@ -1230,6 +1230,789 @@
           ]
         },
         {
+          "theme": "Backend-selected",
+          "icon": "mdi:home-assistant",
+          "badges": [],
+          "cards": [
+            {
+              "type": "custom:mod-card",
+              "card_mod": {
+                "style": {
+                  ".": "ha-card {\n  background-color: #0B1CAB;\n}\n",
+                  "hui-vertical-stack-card$mushroom-title-card$": "h1.title {\n  color: white;\n  font-size: xx-large;\n}\n",
+                  "hui-vertical-stack-card$": "hui-horizontal-stack-card {\n  background-color: rgba(0, 0, 0, 0.3);\n  padding: 5px;\n}\nmushroom-title-card {\n  height: 55px;\n}\n",
+                  "hui-vertical-stack-card$hui-horizontal-stack-card$": {
+                    "mushroom-person-card$": "ha-card {\n  background-color: rgba(255, 255, 255, .75);\n}\n"
+                  },
+                  "hui-vertical-stack-card": {
+                    "$hui-horizontal-stack-card": {
+                      "$hui-vertical-stack-card": {
+                        "$mushroom-chips-card": {
+                          "$mushroom-entity-chip": {
+                            "$mushroom-chip": {
+                              "$": "ha-card {\n  background-color: rgba(255, 255, 255, .75) !important;\n}\n"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "card": {
+                "type": "vertical-stack",
+                "cards": [
+                  {
+                    "type": "custom:mushroom-title-card",
+                    "title": "🤵 Giom",
+                    "subtitle": "",
+                    "title_tap_action": {
+                      "action": "navigate",
+                      "navigation_path": "/lovelace/people"
+                    }
+                  },
+                  {
+                    "type": "horizontal-stack",
+                    "cards": [
+                      {
+                        "type": "custom:mushroom-person-card",
+                        "entity": "person.guillaume",
+                        "fill_container": false
+                      },
+                      {
+                        "type": "vertical-stack",
+                        "cards": [
+                          {
+                            "type": "custom:mushroom-chips-card",
+                            "chips": [
+                              {
+                                "type": "entity",
+                                "entity": "sensor.giom_s_time_at_work_this_week"
+                              },
+                              {
+                                "type": "entity",
+                                "entity": "sensor.giom_s_time_in_calls_this_week",
+                                "chips": "mdi:monitor-account"
+                              }
+                            ]
+                          },
+                          {
+                            "type": "custom:mushroom-chips-card",
+                            "chips": [
+                              {
+                                "type": "entity",
+                                "entity": "sensor.weight"
+                              },
+                              {
+                                "type": "entity",
+                                "entity": "sensor.steps_daily"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            {
+              "type": "custom:mod-card",
+              "card_mod": {
+                "style": {
+                  ".": "ha-card {\n  background-color: #00DEB2;\n}\n",
+                  "hui-vertical-stack-card$mushroom-title-card$": "h1.title {\n  color: white;\n  font-size: xx-large;\n}\n",
+                  "hui-vertical-stack-card$": "hui-horizontal-stack-card {\n  background-color: rgba(0, 0, 0, 0.3);\n  padding: 5px;\n}\nmushroom-title-card {\n  height: 55px;\n}\n",
+                  "hui-vertical-stack-card$hui-horizontal-stack-card$": {
+                    "mushroom-person-card$": "ha-card {\n  background-color: rgba(255, 255, 255, .75);\n}\n"
+                  },
+                  "hui-vertical-stack-card": {
+                    "$hui-horizontal-stack-card": {
+                      "$hui-vertical-stack-card": {
+                        "$mushroom-chips-card": {
+                          "$mushroom-entity-chip": {
+                            "$mushroom-chip": {
+                              "$": "ha-card {\n  background-color: rgba(255, 255, 255, .75) !important;\n}\n"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "card": {
+                "type": "vertical-stack",
+                "cards": [
+                  {
+                    "type": "custom:mushroom-title-card",
+                    "title": "🏞 Extérieur",
+                    "subtitle": "",
+                    "title_tap_action": {
+                      "action": "url",
+                      "url_path": "https://meteofrance.com/previsions-meteo-france/cesson-sevigne/35510"
+                    }
+                  },
+                  {
+                    "type": "conditional",
+                    "conditions": [
+                      {
+                        "entity": "binary_sensor.aurora_visibility_aurora_visibility_alert",
+                        "state_not": "on"
+                      }
+                    ],
+                    "card": {
+                      "type": "custom:mushroom-entity-card",
+                      "entity": "sensor.aurora_visibility_aurora_visibility",
+                      "icon_color": "teal",
+                      "icon": "mdi:aurora",
+                      "fill_container": false
+                    }
+                  },
+                  {
+                    "type": "horizontal-stack",
+                    "cards": [
+                      {
+                        "type": "custom:mini-graph-card",
+                        "entities": [
+                          "sensor.cesson_sevigne_temperature"
+                        ],
+                        "line_color": "#e16366",
+                        "icon": "mdi:tree",
+                        "line_width": 6,
+                        "font_size": 75,
+                        "unit": "°C",
+                        "name": "Ext"
+                      },
+                      {
+                        "type": "custom:mushroom-chips-card",
+                        "chips": [
+                          {
+                            "type": "entity",
+                            "entity": "weather.cesson_sevigne"
+                          },
+                          {
+                            "type": "entity",
+                            "entity": "sensor.cesson_sevigne_temperature"
+                          },
+                          {
+                            "type": "conditional",
+                            "conditions": [
+                              {
+                                "entity": "sensor.cesson_sevigne_rain_chance",
+                                "state_not": "0%"
+                              }
+                            ],
+                            "chip": {
+                              "type": "entity",
+                              "entity": "sensor.cesson_sevigne_rain_chance"
+                            }
+                          },
+                          {
+                            "type": "entity",
+                            "entity": "sensor.cesson_sevigne_uv"
+                          },
+                          {
+                            "type": "conditional",
+                            "conditions": [
+                              {
+                                "entity": "sensor.cesson_sevigne_next_rain",
+                                "state_not": "unknown"
+                              }
+                            ],
+                            "chip": {
+                              "type": "entity",
+                              "entity": "sensor.cesson_sevigne_next_rain"
+                            }
+                          },
+                          {
+                            "type": "conditional",
+                            "conditions": [
+                              {
+                                "entity": "sensor.pollen_grass",
+                                "state_not": "0"
+                              }
+                            ],
+                            "chip": {
+                              "type": "entity",
+                              "entity": "sensor.pollen_grass"
+                            }
+                          },
+                          {
+                            "type": "conditional",
+                            "conditions": [
+                              {
+                                "entity": "sensor.pollen_tree",
+                                "state_not": "0"
+                              }
+                            ],
+                            "chip": {
+                              "type": "entity",
+                              "entity": "sensor.pollen_tree"
+                            }
+                          },
+                          {
+                            "type": "conditional",
+                            "conditions": [
+                              {
+                                "entity": "sensor.pollen_weed",
+                                "state_not": "0"
+                              }
+                            ],
+                            "chip": {
+                              "type": "entity",
+                              "entity": "sensor.pollen_weed"
+                            }
+                          },
+                          {
+                            "type": "entity",
+                            "entity": "sensor.potager_temperature"
+                          },
+                          {
+                            "type": "entity",
+                            "entity": "sensor.potager_soil_moisture"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "horizontal-stack",
+                    "cards": [
+                      {
+                        "type": "custom:mini-graph-card",
+                        "entities": [
+                          "sensor.cesson_sevigne_temperature"
+                        ],
+                        "line_color": "#e16366",
+                        "icon": "mdi:tree",
+                        "line_width": 6,
+                        "font_size": 75,
+                        "unit": "°C",
+                        "name": "Ext"
+                      },
+                      {
+                        "type": "custom:mushroom-light-card",
+                        "entity": "light.lumiere_exterieure_1_forceonlight",
+                        "name": "Lampe mur",
+                        "use_light_color": true,
+                        "show_color_control": true,
+                        "show_color_temp_control": false,
+                        "show_brightness_control": true,
+                        "collapsible_controls": true,
+                        "fill_container": true
+                      },
+                      {
+                        "type": "custom:mushroom-light-card",
+                        "entity": "light.lumiere_exterieure_2_forceonlight",
+                        "name": "Lampe laurier-thym",
+                        "use_light_color": true,
+                        "show_color_control": true,
+                        "show_color_temp_control": false,
+                        "show_brightness_control": true,
+                        "collapsible_controls": true,
+                        "fill_container": true
+                      },
+                      {
+                        "type": "custom:mushroom-light-card",
+                        "entity": "light.lumiere_exterieure_3_forceonlight",
+                        "name": "Lampe magnolia",
+                        "use_light_color": true,
+                        "show_color_control": true,
+                        "show_color_temp_control": false,
+                        "show_brightness_control": true,
+                        "collapsible_controls": true,
+                        "fill_container": true
+                      }
+                    ]
+                  },
+                  {
+                    "type": "horizontal-stack",
+                    "cards": [
+                      {
+                        "type": "custom:mushroom-entity-card",
+                        "entity": "light.pompe_failsafe_light",
+                        "icon": "mdi:fountain",
+                        "fill_container": false,
+                        "tap_action": {
+                          "action": "toggle"
+                        },
+                        "hold_action": {
+                          "action": "more-info"
+                        }
+                      },
+                      {
+                        "type": "conditional",
+                        "conditions": [
+                          {
+                            "entity": "camera.sonette",
+                            "state_not": "unavailable"
+                          }
+                        ],
+                        "card": {
+                          "type": "custom:mushroom-entity-card",
+                          "entity": "camera.sonette"
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            {
+              "type": "vertical-stack",
+              "cards": [
+                {
+                  "type": "custom:mushroom-title-card",
+                  "title": "🤵 Giom",
+                  "subtitle": "",
+                  "title_tap_action": {
+                    "action": "navigate",
+                    "navigation_path": "/lovelace/people"
+                  }
+                },
+                {
+                  "type": "custom:mushroom-chips-card",
+                  "chips": [
+                    {
+                      "type": "entity",
+                      "entity": "sensor.weight"
+                    },
+                    {
+                      "type": "entity",
+                      "entity": "sensor.steps_daily"
+                    },
+                    {
+                      "type": "entity",
+                      "entity": "sensor.heart_rate"
+                    },
+                    {
+                      "type": "entity",
+                      "entity": "sensor.heart_points_daily"
+                    },
+                    {
+                      "type": "entity",
+                      "entity": "sensor.sleep"
+                    }
+                  ]
+                },
+                {
+                  "type": "horizontal-stack",
+                  "cards": [
+                    {
+                      "type": "custom:mushroom-person-card",
+                      "entity": "person.guillaume",
+                      "fill_container": false,
+                      "primary_info": "state",
+                      "secondary_info": "last-changed",
+                      "tap_action": {
+                        "action": "navigate",
+                        "navigation_path": "/lovelace/giom"
+                      }
+                    },
+                    {
+                      "type": "vertical-stack",
+                      "cards": [
+                        {
+                          "type": "custom:mushroom-chips-card",
+                          "chips": [
+                            {
+                              "type": "entity",
+                              "entity": "sensor.giom_s_time_at_work_this_week",
+                              "icon": "mdi:office-building-marker"
+                            },
+                            {
+                              "type": "entity",
+                              "entity": "sensor.giom_s_time_in_calls_this_week",
+                              "icon": "mdi:monitor-account"
+                            },
+                            {
+                              "type": "entity",
+                              "entity": "input_boolean.in_meet_meeting",
+                              "icon": "mdi:video-account",
+                              "use_entity_picture": false
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "vertical-stack",
+              "cards": [
+                {
+                  "type": "custom:mushroom-title-card",
+                  "title": "🏞 Extérieur",
+                  "subtitle": "",
+                  "title_tap_action": {
+                    "action": "url",
+                    "url_path": "https://meteofrance.com/previsions-meteo-france/cesson-sevigne/35510"
+                  }
+                },
+                {
+                  "type": "conditional",
+                  "conditions": [
+                    {
+                      "entity": "binary_sensor.aurora_visibility_aurora_visibility_alert",
+                      "state_not": "on"
+                    }
+                  ],
+                  "card": {
+                    "type": "custom:mushroom-entity-card",
+                    "entity": "sensor.aurora_visibility_aurora_visibility",
+                    "icon_color": "teal",
+                    "icon": "mdi:aurora",
+                    "fill_container": false
+                  }
+                },
+                {
+                  "type": "horizontal-stack",
+                  "cards": [
+                    {
+                      "type": "custom:mini-graph-card",
+                      "entities": [
+                        "sensor.cesson_sevigne_temperature"
+                      ],
+                      "line_color": "#e16366",
+                      "icon": "mdi:tree",
+                      "line_width": 6,
+                      "font_size": 75,
+                      "unit": "°C",
+                      "name": "Ext"
+                    },
+                    {
+                      "type": "custom:mushroom-chips-card",
+                      "chips": [
+                        {
+                          "type": "entity",
+                          "entity": "weather.cesson_sevigne"
+                        },
+                        {
+                          "type": "entity",
+                          "entity": "sensor.cesson_sevigne_temperature"
+                        },
+                        {
+                          "type": "conditional",
+                          "conditions": [
+                            {
+                              "entity": "sensor.cesson_sevigne_rain_chance",
+                              "state_not": "0%"
+                            }
+                          ],
+                          "chip": {
+                            "type": "entity",
+                            "entity": "sensor.cesson_sevigne_rain_chance"
+                          }
+                        },
+                        {
+                          "type": "entity",
+                          "entity": "sensor.cesson_sevigne_uv"
+                        },
+                        {
+                          "type": "conditional",
+                          "conditions": [
+                            {
+                              "entity": "sensor.cesson_sevigne_next_rain",
+                              "state_not": "unknown"
+                            }
+                          ],
+                          "chip": {
+                            "type": "entity",
+                            "entity": "sensor.cesson_sevigne_next_rain"
+                          }
+                        },
+                        {
+                          "type": "conditional",
+                          "conditions": [
+                            {
+                              "entity": "sensor.pollen_grass",
+                              "state_not": "0"
+                            }
+                          ],
+                          "chip": {
+                            "type": "entity",
+                            "entity": "sensor.pollen_grass"
+                          }
+                        },
+                        {
+                          "type": "conditional",
+                          "conditions": [
+                            {
+                              "entity": "sensor.pollen_tree",
+                              "state_not": "0"
+                            }
+                          ],
+                          "chip": {
+                            "type": "entity",
+                            "entity": "sensor.pollen_tree"
+                          }
+                        },
+                        {
+                          "type": "conditional",
+                          "conditions": [
+                            {
+                              "entity": "sensor.pollen_weed",
+                              "state_not": "0"
+                            }
+                          ],
+                          "chip": {
+                            "type": "entity",
+                            "entity": "sensor.pollen_weed"
+                          }
+                        },
+                        {
+                          "type": "entity",
+                          "entity": "sensor.potager_temperature"
+                        },
+                        {
+                          "type": "entity",
+                          "entity": "sensor.potager_soil_moisture"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "horizontal-stack",
+                  "cards": [
+                    {
+                      "type": "custom:mini-graph-card",
+                      "entities": [
+                        "sensor.cesson_sevigne_temperature"
+                      ],
+                      "line_color": "#e16366",
+                      "icon": "mdi:tree",
+                      "line_width": 6,
+                      "font_size": 75,
+                      "unit": "°C",
+                      "name": "Ext"
+                    },
+                    {
+                      "type": "custom:mushroom-light-card",
+                      "entity": "light.lumiere_exterieure_1_forceonlight",
+                      "name": "Lampe mur",
+                      "use_light_color": true,
+                      "show_color_control": true,
+                      "show_color_temp_control": false,
+                      "show_brightness_control": true,
+                      "collapsible_controls": true,
+                      "fill_container": true
+                    },
+                    {
+                      "type": "custom:mushroom-light-card",
+                      "entity": "light.lumiere_exterieure_2_forceonlight",
+                      "name": "Lampe laurier-thym",
+                      "use_light_color": true,
+                      "show_color_control": true,
+                      "show_color_temp_control": false,
+                      "show_brightness_control": true,
+                      "collapsible_controls": true,
+                      "fill_container": true
+                    },
+                    {
+                      "type": "custom:mushroom-light-card",
+                      "entity": "light.lumiere_exterieure_3_forceonlight",
+                      "name": "Lampe magnolia",
+                      "use_light_color": true,
+                      "show_color_control": true,
+                      "show_color_temp_control": false,
+                      "show_brightness_control": true,
+                      "collapsible_controls": true,
+                      "fill_container": true
+                    }
+                  ]
+                },
+                {
+                  "type": "horizontal-stack",
+                  "cards": [
+                    {
+                      "type": "custom:mushroom-entity-card",
+                      "entity": "light.pompe_failsafe_light",
+                      "icon": "mdi:fountain",
+                      "fill_container": false,
+                      "tap_action": {
+                        "action": "toggle"
+                      },
+                      "hold_action": {
+                        "action": "more-info"
+                      }
+                    },
+                    {
+                      "type": "conditional",
+                      "conditions": [
+                        {
+                          "entity": "camera.sonette",
+                          "state_not": "unavailable"
+                        }
+                      ],
+                      "card": {
+                        "type": "custom:mushroom-entity-card",
+                        "entity": "camera.sonette"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Admin",
+          "path": "admin",
+          "icon": "mdi:shield-crown-outline",
+          "visible": [
+            {
+              "user": "2a54ceccc9d74a409021b53d9ff4a71a"
+            }
+          ],
+          "badges": [],
+          "cards": [
+            {
+              "card": {
+                "show_header_toggle": false,
+                "title": "Versions and updates",
+                "type": "entities"
+              },
+              "filter": {
+                "include": [
+                  {
+                    "domain": "updater"
+                  },
+                  {
+                    "entity_id": "sensor.current_version"
+                  },
+                  {
+                    "entity_id": "binary_sensor.updater"
+                  },
+                  {
+                    "entity_id": "sensor.hacs"
+                  }
+                ],
+                "exclude": [
+                  {
+                    "state": "unavailable"
+                  }
+                ]
+              },
+              "type": "custom:auto-entities"
+            },
+            {
+              "type": "custom:battery-state-card",
+              "title": "Batteries",
+              "sort_by_level": "asc",
+              "collapse": 10,
+              "tap_action": "more-info",
+              "bulk_rename": [
+                {
+                  "from": "Battery",
+                  "to": "sensor"
+                },
+                {
+                  "from": "battery",
+                  "to": "sensor"
+                },
+                {
+                  "from": "/\\s(temperature|temp)\\s/",
+                  "to": " temp. "
+                }
+              ],
+              "filter": {
+                "include": [
+                  {
+                    "name": "entity_id",
+                    "value": "*_battery"
+                  },
+                  {
+                    "name": "attributes.device_class",
+                    "value": "battery"
+                  }
+                ],
+                "exclude": [
+                  {
+                    "name": "state",
+                    "value": 99,
+                    "operator": ">"
+                  },
+                  {
+                    "name": "entity_id",
+                    "value": "*pixel*"
+                  },
+                  {
+                    "name": "entity_id",
+                    "value": "*oneplus*"
+                  },
+                  {
+                    "name": "entity_id",
+                    "value": "*bleuette_smart_key_battery_warning*"
+                  }
+                ]
+              }
+            },
+            {
+              "type": "vertical-stack",
+              "cards": [
+                {
+                  "type": "custom:mushroom-title-card",
+                  "title": "Versions and updates"
+                },
+                {
+                  "type": "custom:mushroom-entity-card",
+                  "entity": "sensor.current_version"
+                },
+                {
+                  "type": "custom:mushroom-update-card",
+                  "entity": "update.home_assistant_operating_system_update",
+                  "show_buttons_control": true,
+                  "collapsible_controls": true,
+                  "icon": "mdi:home-assistant",
+                  "secondary_info": "state"
+                },
+                {
+                  "type": "custom:mushroom-update-card",
+                  "entity": "update.home_assistant_core_update",
+                  "show_buttons_control": true,
+                  "collapsible_controls": true,
+                  "icon": "mdi:home-assistant"
+                },
+                {
+                  "type": "custom:mushroom-update-card",
+                  "entity": "update.home_assistant_supervisor_update",
+                  "show_buttons_control": true,
+                  "collapsible_controls": true,
+                  "icon": "mdi:home-assistant"
+                },
+                {
+                  "type": "custom:auto-entities",
+                  "card": {
+                    "type": "grid",
+                    "columns": 1,
+                    "square": false
+                  },
+                  "card_param": "cards",
+                  "filter": {
+                    "include": [
+                      {
+                        "domain": "update",
+                        "state": "on",
+                        "options": {
+                          "type": "custom:mushroom-update-card",
+                          "show_buttons_control": true,
+                          "collapsible_controls": true
+                        }
+                      }
+                    ],
+                    "exclude": []
+                  },
+                  "show_empty": true
+                }
+              ]
+            }
+          ]
+        },
+        {
           "icon": "mdi:account-multiple",
           "panel": false,
           "path": "people",
@@ -1662,617 +2445,495 @@
           ]
         },
         {
-          "theme": "Backend-selected",
-          "icon": "mdi:home-assistant",
-          "badges": [],
+          "title": "Bleuette",
+          "path": "bleuette",
+          "icon": "mdi:car",
+          "subview": true,
+          "visible": [
+            {
+              "user": "c8df84d1ca1e4988b84f25c91d70d56e"
+            },
+            {
+              "user": "2a54ceccc9d74a409021b53d9ff4a71a"
+            }
+          ],
+          "type": "sidebar",
+          "badges": [
+            {
+              "entity": "sensor.bleuette_ev_battery_level"
+            }
+          ],
           "cards": [
             {
-              "type": "custom:mod-card",
-              "card_mod": {
-                "style": {
-                  ".": "ha-card {\n  background-color: #0B1CAB;\n}\n",
-                  "hui-vertical-stack-card$mushroom-title-card$": "h1.title {\n  color: white;\n  font-size: xx-large;\n}\n",
-                  "hui-vertical-stack-card$": "hui-horizontal-stack-card {\n  background-color: rgba(0, 0, 0, 0.3);\n  padding: 5px;\n}\nmushroom-title-card {\n  height: 55px;\n}\n",
-                  "hui-vertical-stack-card$hui-horizontal-stack-card$": {
-                    "mushroom-person-card$": "ha-card {\n  background-color: rgba(255, 255, 255, .75);\n}\n"
-                  },
-                  "hui-vertical-stack-card": {
-                    "$hui-horizontal-stack-card": {
-                      "$hui-vertical-stack-card": {
-                        "$mushroom-chips-card": {
-                          "$mushroom-entity-chip": {
-                            "$mushroom-chip": {
-                              "$": "ha-card {\n  background-color: rgba(255, 255, 255, .75) !important;\n}\n"
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              },
-              "card": {
-                "type": "vertical-stack",
-                "cards": [
-                  {
-                    "type": "custom:mushroom-title-card",
-                    "title": "🤵 Giom",
-                    "subtitle": "",
-                    "title_tap_action": {
-                      "action": "navigate",
-                      "navigation_path": "/lovelace/people"
-                    }
-                  },
-                  {
-                    "type": "horizontal-stack",
-                    "cards": [
-                      {
-                        "type": "custom:mushroom-person-card",
-                        "entity": "person.guillaume",
-                        "fill_container": false
-                      },
-                      {
-                        "type": "vertical-stack",
-                        "cards": [
-                          {
-                            "type": "custom:mushroom-chips-card",
-                            "chips": [
-                              {
-                                "type": "entity",
-                                "entity": "sensor.giom_s_time_at_work_this_week"
-                              },
-                              {
-                                "type": "entity",
-                                "entity": "sensor.giom_s_time_in_calls_this_week",
-                                "chips": "mdi:monitor-account"
-                              }
-                            ]
-                          },
-                          {
-                            "type": "custom:mushroom-chips-card",
-                            "chips": [
-                              {
-                                "type": "entity",
-                                "entity": "sensor.weight"
-                              },
-                              {
-                                "type": "entity",
-                                "entity": "sensor.steps_daily"
-                              }
-                            ]
-                          }
-                        ]
-                      }
-                    ]
-                  }
-                ]
-              }
-            },
-            {
-              "type": "custom:mod-card",
-              "card_mod": {
-                "style": {
-                  ".": "ha-card {\n  background-color: #00DEB2;\n}\n",
-                  "hui-vertical-stack-card$mushroom-title-card$": "h1.title {\n  color: white;\n  font-size: xx-large;\n}\n",
-                  "hui-vertical-stack-card$": "hui-horizontal-stack-card {\n  background-color: rgba(0, 0, 0, 0.3);\n  padding: 5px;\n}\nmushroom-title-card {\n  height: 55px;\n}\n",
-                  "hui-vertical-stack-card$hui-horizontal-stack-card$": {
-                    "mushroom-person-card$": "ha-card {\n  background-color: rgba(255, 255, 255, .75);\n}\n"
-                  },
-                  "hui-vertical-stack-card": {
-                    "$hui-horizontal-stack-card": {
-                      "$hui-vertical-stack-card": {
-                        "$mushroom-chips-card": {
-                          "$mushroom-entity-chip": {
-                            "$mushroom-chip": {
-                              "$": "ha-card {\n  background-color: rgba(255, 255, 255, .75) !important;\n}\n"
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              },
-              "card": {
-                "type": "vertical-stack",
-                "cards": [
-                  {
-                    "type": "custom:mushroom-title-card",
-                    "title": "🏞 Extérieur",
-                    "subtitle": "",
-                    "title_tap_action": {
-                      "action": "url",
-                      "url_path": "https://meteofrance.com/previsions-meteo-france/cesson-sevigne/35510"
-                    }
-                  },
-                  {
-                    "type": "conditional",
-                    "conditions": [
-                      {
-                        "entity": "binary_sensor.aurora_visibility_aurora_visibility_alert",
-                        "state_not": "on"
-                      }
-                    ],
-                    "card": {
-                      "type": "custom:mushroom-entity-card",
-                      "entity": "sensor.aurora_visibility_aurora_visibility",
-                      "icon_color": "teal",
-                      "icon": "mdi:aurora",
-                      "fill_container": false
-                    }
-                  },
-                  {
-                    "type": "horizontal-stack",
-                    "cards": [
-                      {
-                        "type": "custom:mini-graph-card",
-                        "entities": [
-                          "sensor.cesson_sevigne_temperature"
-                        ],
-                        "line_color": "#e16366",
-                        "icon": "mdi:tree",
-                        "line_width": 6,
-                        "font_size": 75,
-                        "unit": "°C",
-                        "name": "Ext"
-                      },
-                      {
-                        "type": "custom:mushroom-chips-card",
-                        "chips": [
-                          {
-                            "type": "entity",
-                            "entity": "weather.cesson_sevigne"
-                          },
-                          {
-                            "type": "entity",
-                            "entity": "sensor.cesson_sevigne_temperature"
-                          },
-                          {
-                            "type": "conditional",
-                            "conditions": [
-                              {
-                                "entity": "sensor.cesson_sevigne_rain_chance",
-                                "state_not": "0%"
-                              }
-                            ],
-                            "chip": {
-                              "type": "entity",
-                              "entity": "sensor.cesson_sevigne_rain_chance"
-                            }
-                          },
-                          {
-                            "type": "entity",
-                            "entity": "sensor.cesson_sevigne_uv"
-                          },
-                          {
-                            "type": "conditional",
-                            "conditions": [
-                              {
-                                "entity": "sensor.cesson_sevigne_next_rain",
-                                "state_not": "unknown"
-                              }
-                            ],
-                            "chip": {
-                              "type": "entity",
-                              "entity": "sensor.cesson_sevigne_next_rain"
-                            }
-                          },
-                          {
-                            "type": "conditional",
-                            "conditions": [
-                              {
-                                "entity": "sensor.pollen_grass",
-                                "state_not": "0"
-                              }
-                            ],
-                            "chip": {
-                              "type": "entity",
-                              "entity": "sensor.pollen_grass"
-                            }
-                          },
-                          {
-                            "type": "conditional",
-                            "conditions": [
-                              {
-                                "entity": "sensor.pollen_tree",
-                                "state_not": "0"
-                              }
-                            ],
-                            "chip": {
-                              "type": "entity",
-                              "entity": "sensor.pollen_tree"
-                            }
-                          },
-                          {
-                            "type": "conditional",
-                            "conditions": [
-                              {
-                                "entity": "sensor.pollen_weed",
-                                "state_not": "0"
-                              }
-                            ],
-                            "chip": {
-                              "type": "entity",
-                              "entity": "sensor.pollen_weed"
-                            }
-                          },
-                          {
-                            "type": "entity",
-                            "entity": "sensor.potager_temperature"
-                          },
-                          {
-                            "type": "entity",
-                            "entity": "sensor.potager_soil_moisture"
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "type": "horizontal-stack",
-                    "cards": [
-                      {
-                        "type": "custom:mini-graph-card",
-                        "entities": [
-                          "sensor.cesson_sevigne_temperature"
-                        ],
-                        "line_color": "#e16366",
-                        "icon": "mdi:tree",
-                        "line_width": 6,
-                        "font_size": 75,
-                        "unit": "°C",
-                        "name": "Ext"
-                      },
-                      {
-                        "type": "custom:mushroom-light-card",
-                        "entity": "light.lumiere_exterieure_1_forceonlight",
-                        "name": "Lampe mur",
-                        "use_light_color": true,
-                        "show_color_control": true,
-                        "show_color_temp_control": false,
-                        "show_brightness_control": true,
-                        "collapsible_controls": true,
-                        "fill_container": true
-                      },
-                      {
-                        "type": "custom:mushroom-light-card",
-                        "entity": "light.lumiere_exterieure_2_forceonlight",
-                        "name": "Lampe laurier-thym",
-                        "use_light_color": true,
-                        "show_color_control": true,
-                        "show_color_temp_control": false,
-                        "show_brightness_control": true,
-                        "collapsible_controls": true,
-                        "fill_container": true
-                      },
-                      {
-                        "type": "custom:mushroom-light-card",
-                        "entity": "light.lumiere_exterieure_3_forceonlight",
-                        "name": "Lampe magnolia",
-                        "use_light_color": true,
-                        "show_color_control": true,
-                        "show_color_temp_control": false,
-                        "show_brightness_control": true,
-                        "collapsible_controls": true,
-                        "fill_container": true
-                      }
-                    ]
-                  },
-                  {
-                    "type": "horizontal-stack",
-                    "cards": [
-                      {
-                        "type": "custom:mushroom-entity-card",
-                        "entity": "light.pompe_failsafe_light",
-                        "icon": "mdi:fountain",
-                        "fill_container": false,
-                        "tap_action": {
-                          "action": "toggle"
-                        },
-                        "hold_action": {
-                          "action": "more-info"
-                        }
-                      },
-                      {
-                        "type": "conditional",
-                        "conditions": [
-                          {
-                            "entity": "camera.sonette",
-                            "state_not": "unavailable"
-                          }
-                        ],
-                        "card": {
-                          "type": "custom:mushroom-entity-card",
-                          "entity": "camera.sonette"
-                        }
-                      }
-                    ]
-                  }
-                ]
-              }
-            },
-            {
               "type": "vertical-stack",
               "cards": [
                 {
-                  "type": "custom:mushroom-title-card",
-                  "title": "🤵 Giom",
-                  "subtitle": "",
-                  "title_tap_action": {
-                    "action": "navigate",
-                    "navigation_path": "/lovelace/people"
-                  }
-                },
-                {
-                  "type": "custom:mushroom-chips-card",
-                  "chips": [
+                  "type": "picture-elements",
+                  "elements": [
                     {
-                      "type": "entity",
-                      "entity": "sensor.weight"
-                    },
-                    {
-                      "type": "entity",
-                      "entity": "sensor.steps_daily"
-                    },
-                    {
-                      "type": "entity",
-                      "entity": "sensor.heart_rate"
-                    },
-                    {
-                      "type": "entity",
-                      "entity": "sensor.heart_points_daily"
-                    },
-                    {
-                      "type": "entity",
-                      "entity": "sensor.sleep"
-                    }
-                  ]
-                },
-                {
-                  "type": "horizontal-stack",
-                  "cards": [
-                    {
-                      "type": "custom:mushroom-person-card",
-                      "entity": "person.guillaume",
-                      "fill_container": false,
-                      "primary_info": "state",
-                      "secondary_info": "last-changed"
-                    },
-                    {
-                      "type": "vertical-stack",
-                      "cards": [
+                      "type": "conditional",
+                      "conditions": [
                         {
-                          "type": "custom:mushroom-chips-card",
-                          "chips": [
-                            {
-                              "type": "entity",
-                              "entity": "sensor.giom_s_time_at_work_this_week",
-                              "icon": "mdi:office-building-marker"
-                            },
-                            {
-                              "type": "entity",
-                              "entity": "sensor.giom_s_time_in_calls_this_week",
-                              "icon": "mdi:monitor-account"
-                            }
-                          ]
+                          "entity": "binary_sensor.bleuette_hood",
+                          "state": "on"
+                        }
+                      ],
+                      "elements": [
+                        {
+                          "type": "state-icon",
+                          "entity": "binary_sensor.bleuette_hood",
+                          "style": {
+                            "top": "45%",
+                            "left": "25%",
+                            "--paper-item-icon-color": "red"
+                          }
                         }
                       ]
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "type": "vertical-stack",
-              "cards": [
-                {
-                  "type": "custom:mushroom-title-card",
-                  "title": "🏞 Extérieur",
-                  "subtitle": "",
-                  "title_tap_action": {
-                    "action": "url",
-                    "url_path": "https://meteofrance.com/previsions-meteo-france/cesson-sevigne/35510"
-                  }
-                },
-                {
-                  "type": "conditional",
-                  "conditions": [
-                    {
-                      "entity": "binary_sensor.aurora_visibility_aurora_visibility_alert",
-                      "state_not": "on"
-                    }
-                  ],
-                  "card": {
-                    "type": "custom:mushroom-entity-card",
-                    "entity": "sensor.aurora_visibility_aurora_visibility",
-                    "icon_color": "teal",
-                    "icon": "mdi:aurora",
-                    "fill_container": false
-                  }
-                },
-                {
-                  "type": "horizontal-stack",
-                  "cards": [
-                    {
-                      "type": "custom:mini-graph-card",
-                      "entities": [
-                        "sensor.cesson_sevigne_temperature"
-                      ],
-                      "line_color": "#e16366",
-                      "icon": "mdi:tree",
-                      "line_width": 6,
-                      "font_size": 75,
-                      "unit": "°C",
-                      "name": "Ext"
                     },
                     {
-                      "type": "custom:mushroom-chips-card",
-                      "chips": [
+                      "type": "conditional",
+                      "conditions": [
                         {
-                          "type": "entity",
-                          "entity": "weather.cesson_sevigne"
-                        },
+                          "entity": "binary_sensor.bleuette_trunk",
+                          "state": "on"
+                        }
+                      ],
+                      "elements": [
                         {
-                          "type": "entity",
-                          "entity": "sensor.cesson_sevigne_temperature"
-                        },
-                        {
-                          "type": "conditional",
-                          "conditions": [
-                            {
-                              "entity": "sensor.cesson_sevigne_rain_chance",
-                              "state_not": "0%"
-                            }
-                          ],
-                          "chip": {
-                            "type": "entity",
-                            "entity": "sensor.cesson_sevigne_rain_chance"
+                          "type": "state-icon",
+                          "entity": "binary_sensor.bleuette_trunk",
+                          "style": {
+                            "top": "30%",
+                            "left": "90%",
+                            "--paper-item-icon-color": "red"
                           }
-                        },
-                        {
-                          "type": "entity",
-                          "entity": "sensor.cesson_sevigne_uv"
-                        },
-                        {
-                          "type": "conditional",
-                          "conditions": [
-                            {
-                              "entity": "sensor.cesson_sevigne_next_rain",
-                              "state_not": "unknown"
-                            }
-                          ],
-                          "chip": {
-                            "type": "entity",
-                            "entity": "sensor.cesson_sevigne_next_rain"
-                          }
-                        },
-                        {
-                          "type": "conditional",
-                          "conditions": [
-                            {
-                              "entity": "sensor.pollen_grass",
-                              "state_not": "0"
-                            }
-                          ],
-                          "chip": {
-                            "type": "entity",
-                            "entity": "sensor.pollen_grass"
-                          }
-                        },
-                        {
-                          "type": "conditional",
-                          "conditions": [
-                            {
-                              "entity": "sensor.pollen_tree",
-                              "state_not": "0"
-                            }
-                          ],
-                          "chip": {
-                            "type": "entity",
-                            "entity": "sensor.pollen_tree"
-                          }
-                        },
-                        {
-                          "type": "conditional",
-                          "conditions": [
-                            {
-                              "entity": "sensor.pollen_weed",
-                              "state_not": "0"
-                            }
-                          ],
-                          "chip": {
-                            "type": "entity",
-                            "entity": "sensor.pollen_weed"
-                          }
-                        },
-                        {
-                          "type": "entity",
-                          "entity": "sensor.potager_temperature"
-                        },
-                        {
-                          "type": "entity",
-                          "entity": "sensor.potager_soil_moisture"
                         }
                       ]
-                    }
-                  ]
-                },
-                {
-                  "type": "horizontal-stack",
-                  "cards": [
+                    },
                     {
-                      "type": "custom:mini-graph-card",
-                      "entities": [
-                        "sensor.cesson_sevigne_temperature"
+                      "type": "conditional",
+                      "conditions": [
+                        {
+                          "entity": "binary_sensor.bleuette_door_front_left",
+                          "state": "on"
+                        }
                       ],
-                      "line_color": "#e16366",
-                      "icon": "mdi:tree",
-                      "line_width": 6,
-                      "font_size": 75,
-                      "unit": "°C",
-                      "name": "Ext"
+                      "elements": [
+                        {
+                          "type": "state-icon",
+                          "entity": "binary_sensor.bleuette_door_front_left",
+                          "style": {
+                            "top": "50%",
+                            "left": "65%",
+                            "--paper-item-icon-color": "red"
+                          }
+                        }
+                      ]
                     },
                     {
-                      "type": "custom:mushroom-light-card",
-                      "entity": "light.lumiere_exterieure_1_forceonlight",
-                      "name": "Lampe mur",
-                      "use_light_color": true,
-                      "show_color_control": true,
-                      "show_color_temp_control": false,
-                      "show_brightness_control": true,
-                      "collapsible_controls": true,
-                      "fill_container": true
+                      "type": "conditional",
+                      "conditions": [
+                        {
+                          "entity": "binary_sensor.bleuette_door_rear_left",
+                          "state": "on"
+                        }
+                      ],
+                      "elements": [
+                        {
+                          "type": "state-icon",
+                          "entity": "binary_sensor.bleuette_door_rear_left",
+                          "style": {
+                            "top": "50%",
+                            "left": "80%",
+                            "--paper-item-icon-color": "red"
+                          }
+                        }
+                      ]
                     },
                     {
-                      "type": "custom:mushroom-light-card",
-                      "entity": "light.lumiere_exterieure_2_forceonlight",
-                      "name": "Lampe laurier-thym",
-                      "use_light_color": true,
-                      "show_color_control": true,
-                      "show_color_temp_control": false,
-                      "show_brightness_control": true,
-                      "collapsible_controls": true,
-                      "fill_container": true
+                      "type": "conditional",
+                      "conditions": [
+                        {
+                          "entity": "binary_sensor.bleuette_door_front_right",
+                          "state": "on"
+                        }
+                      ],
+                      "elements": [
+                        {
+                          "type": "state-icon",
+                          "entity": "binary_sensor.bleuette_door_front_right",
+                          "style": {
+                            "top": "30%",
+                            "left": "40%",
+                            "--paper-item-icon-color": "red"
+                          }
+                        }
+                      ]
                     },
                     {
-                      "type": "custom:mushroom-light-card",
-                      "entity": "light.lumiere_exterieure_3_forceonlight",
-                      "name": "Lampe magnolia",
-                      "use_light_color": true,
-                      "show_color_control": true,
-                      "show_color_temp_control": false,
-                      "show_brightness_control": true,
-                      "collapsible_controls": true,
-                      "fill_container": true
-                    }
-                  ]
-                },
-                {
-                  "type": "horizontal-stack",
-                  "cards": [
+                      "type": "conditional",
+                      "conditions": [
+                        {
+                          "entity": "binary_sensor.bleuette_door_rear_right",
+                          "state": "on"
+                        }
+                      ],
+                      "elements": [
+                        {
+                          "type": "state-icon",
+                          "entity": "binary_sensor.bleuette_door_rear_right",
+                          "style": {
+                            "top": "30%",
+                            "left": "55%",
+                            "--paper-item-icon-color": "red"
+                          }
+                        }
+                      ]
+                    },
                     {
-                      "type": "custom:mushroom-entity-card",
-                      "entity": "light.pompe_failsafe_light",
-                      "icon": "mdi:fountain",
-                      "fill_container": false,
-                      "tap_action": {
-                        "action": "toggle"
-                      },
-                      "hold_action": {
-                        "action": "more-info"
+                      "type": "state-icon",
+                      "entity": "sensor.bleuette_odometer",
+                      "style": {
+                        "top": "5%",
+                        "left": "3%"
+                      }
+                    },
+                    {
+                      "type": "state-label",
+                      "entity": "sensor.bleuette_odometer",
+                      "style": {
+                        "top": "6%",
+                        "left": "4%",
+                        "max-width": "1px"
+                      }
+                    },
+                    {
+                      "type": "state-icon",
+                      "entity": "sensor.bleuette_ev_range",
+                      "style": {
+                        "top": "15%",
+                        "left": "3%"
+                      }
+                    },
+                    {
+                      "type": "state-label",
+                      "entity": "sensor.bleuette_ev_range",
+                      "style": {
+                        "top": "16%",
+                        "left": "4%",
+                        "max-width": "1px"
+                      }
+                    },
+                    {
+                      "type": "state-label",
+                      "entity": "sensor.bleuette_autonomie_max",
+                      "style": {
+                        "top": "16%",
+                        "left": "20%",
+                        "max-width": "1px"
+                      }
+                    },
+                    {
+                      "type": "state-icon",
+                      "entity": "binary_sensor.bleuette_ev_battery_charge",
+                      "style": {
+                        "top": "25%",
+                        "left": "3%"
+                      }
+                    },
+                    {
+                      "type": "state-label",
+                      "entity": "sensor.bleuette_ev_battery_level",
+                      "style": {
+                        "top": "26%",
+                        "left": "4%",
+                        "max-width": "1px"
+                      }
+                    },
+                    {
+                      "type": "state-icon",
+                      "entity": "binary_sensor.bleuette_ev_battery_plug",
+                      "style": {
+                        "top": "35%",
+                        "left": "3%"
                       }
                     },
                     {
                       "type": "conditional",
                       "conditions": [
                         {
-                          "entity": "camera.sonette",
-                          "state_not": "unavailable"
+                          "entity": "binary_sensor.bleuette_ev_battery_plug",
+                          "state": "on"
                         }
                       ],
-                      "card": {
-                        "type": "custom:mushroom-entity-card",
-                        "entity": "camera.sonette"
+                      "elements": [
+                        {
+                          "type": "state-label",
+                          "entity": "sensor.bleuette_estimated_charge_duration",
+                          "style": {
+                            "top": "36%",
+                            "left": "4%",
+                            "max-width": "1px"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "state-icon",
+                      "entity": "binary_sensor.bleuette_engine",
+                      "style": {
+                        "top": "45%",
+                        "left": "3%"
+                      }
+                    },
+                    {
+                      "type": "state-label",
+                      "entity": "sensor.bleuette_last_updated_at",
+                      "style": {
+                        "top": "4%",
+                        "left": "83%"
+                      },
+                      "tap_action": {
+                        "action": "call-service",
+                        "service": "kia_uvo.force_update"
+                      }
+                    },
+                    {
+                      "type": "conditional",
+                      "conditions": [
+                        {
+                          "entity": "binary_sensor.bleuette_defroster",
+                          "state": "on"
+                        }
+                      ],
+                      "elements": [
+                        {
+                          "type": "state-icon",
+                          "entity": "binary_sensor.bleuette_defroster",
+                          "style": {
+                            "top": "12%",
+                            "left": "97%"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "conditional",
+                      "conditions": [
+                        {
+                          "entity": "binary_sensor.bleuette_air_conditioner",
+                          "state": "on"
+                        }
+                      ],
+                      "elements": [
+                        {
+                          "type": "state-icon",
+                          "entity": "binary_sensor.bleuette_air_conditioner",
+                          "style": {
+                            "top": "22%",
+                            "left": "97%"
+                          }
+                        },
+                        {
+                          "type": "state-label",
+                          "entity": "sensor.bleuette_set_temperature",
+                          "style": {
+                            "top": "23%",
+                            "left": "83%",
+                            "max-width": "1px"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "conditional",
+                      "conditions": [
+                        {
+                          "entity": "binary_sensor.bleuette_back_window_heater",
+                          "state": "on"
+                        }
+                      ],
+                      "elements": [
+                        {
+                          "type": "state-icon",
+                          "entity": "binary_sensor.bleuette_back_window_heater",
+                          "style": {
+                            "top": "32%",
+                            "left": "97%"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "conditional",
+                      "conditions": [
+                        {
+                          "entity": "binary_sensor.bleuette_steering_wheel_heater",
+                          "state": "on"
+                        }
+                      ],
+                      "elements": [
+                        {
+                          "type": "state-icon",
+                          "entity": "binary_sensor.bleuette_steering_wheel_heater",
+                          "style": {
+                            "top": "42%",
+                            "left": "97%"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "conditional",
+                      "conditions": [
+                        {
+                          "entity": "binary_sensor.bleuette_tire_pressure_all",
+                          "state": "on"
+                        }
+                      ],
+                      "elements": [
+                        {
+                          "type": "state-icon",
+                          "entity": "binary_sensor.bleuette_tire_pressure_all",
+                          "style": {
+                            "top": "52%",
+                            "left": "97%",
+                            "--paper-item-icon-color": "red"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "conditional",
+                      "conditions": [
+                        {
+                          "entity": "binary_sensor.bleuette_washer_fluid_warning",
+                          "state": "on"
+                        }
+                      ],
+                      "elements": [
+                        {
+                          "type": "state-icon",
+                          "entity": "binary_sensor.bleuette_washer_fluid_warning",
+                          "style": {
+                            "top": "62%",
+                            "left": "97%",
+                            "--paper-item-icon-color": "red"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "conditional",
+                      "conditions": [
+                        {
+                          "entity": "binary_sensor.bleuette_data",
+                          "state": "off"
+                        }
+                      ],
+                      "elements": [
+                        {
+                          "type": "state-icon",
+                          "entity": "binary_sensor.bleuette_data",
+                          "style": {
+                            "top": "72%",
+                            "left": "97%",
+                            "--paper-item-icon-color": "red"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "conditional",
+                      "conditions": [
+                        {
+                          "entity": "binary_sensor.bleuette_smart_key_battery_warning",
+                          "state": "on"
+                        }
+                      ],
+                      "elements": [
+                        {
+                          "type": "state-icon",
+                          "entity": "binary_sensor.bleuette_smart_key_battery_warning",
+                          "style": {
+                            "top": "82%",
+                            "left": "97%",
+                            "--paper-item-icon-color": "red"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "state-label",
+                      "entity": "sensor.bleuette_geocoded_location",
+                      "style": {
+                        "top": "97%",
+                        "left": "0%",
+                        "max-width": "1px",
+                        "color": "lightgrey"
+                      }
+                    }
+                  ],
+                  "image": "https://photoref.carboatservices.fr/S0lB/RVY2/98b028a7da83541e9ba384116674a979/MQ==/0b70c77cdf60d436514f5505697aad48.png"
+                },
+                {
+                  "type": "horizontal-stack",
+                  "cards": [
+                    {
+                      "show_name": true,
+                      "show_icon": true,
+                      "type": "button",
+                      "tap_action": {
+                        "action": "call-service",
+                        "service": "kia_uvo.start_charge",
+                        "service_data": {},
+                        "target": {}
+                      },
+                      "entity": "binary_sensor.bleuette_ev_battery_charge",
+                      "name": "Start/Stop(hold) charge",
+                      "hold_action": {
+                        "action": "call-service",
+                        "service": "kia_uvo.stop_charge",
+                        "service_data": {},
+                        "target": {}
+                      }
+                    },
+                    {
+                      "show_name": true,
+                      "show_icon": true,
+                      "type": "button",
+                      "tap_action": {
+                        "action": "call-service",
+                        "service": "script.preheat_car",
+                        "target": {},
+                        "data": {}
+                      },
+                      "entity": "binary_sensor.bleuette_air_conditioner",
+                      "name": "Start/Stop(hold) AC",
+                      "hold_action": {
+                        "action": "call-service",
+                        "service": "kia_uvo.stop_climate",
+                        "service_data": {},
+                        "target": {}
+                      }
+                    },
+                    {
+                      "show_name": true,
+                      "show_icon": true,
+                      "type": "button",
+                      "tap_action": {
+                        "action": "call-service",
+                        "service": "kia_uvo.lock",
+                        "target": {},
+                        "data": {}
+                      },
+                      "entity": "lock.bleuette_door_lock",
+                      "name": "Lock/Unlock(hold) doors",
+                      "hold_action": {
+                        "action": "call-service",
+                        "service": "kia_uvo.unlock",
+                        "target": {},
+                        "data": {}
                       }
                     }
                   ]
@@ -2282,155 +2943,32 @@
           ]
         },
         {
-          "title": "Admin",
-          "path": "admin",
-          "icon": "mdi:shield-crown-outline",
-          "visible": [
-            {
-              "user": "2a54ceccc9d74a409021b53d9ff4a71a"
-            }
-          ],
+          "title": "Giom",
+          "path": "giom",
+          "icon": "mdi:account",
+          "type": "panel",
+          "subview": true,
           "badges": [],
           "cards": [
             {
-              "card": {
-                "show_header_toggle": false,
-                "title": "Versions and updates",
-                "type": "entities"
-              },
-              "filter": {
-                "include": [
-                  {
-                    "domain": "updater"
-                  },
-                  {
-                    "entity_id": "sensor.current_version"
-                  },
-                  {
-                    "entity_id": "binary_sensor.updater"
-                  },
-                  {
-                    "entity_id": "sensor.hacs"
-                  }
-                ],
-                "exclude": [
-                  {
-                    "state": "unavailable"
-                  }
-                ]
-              },
-              "type": "custom:auto-entities"
-            },
-            {
-              "type": "custom:battery-state-card",
-              "title": "Batteries",
-              "sort_by_level": "asc",
-              "collapse": 10,
-              "tap_action": "more-info",
-              "bulk_rename": [
+              "dark_mode": true,
+              "entities": [
                 {
-                  "from": "Battery",
-                  "to": "sensor"
+                  "entity": "person.guillaume"
                 },
                 {
-                  "from": "battery",
-                  "to": "sensor"
+                  "entity": "zone.home"
                 },
                 {
-                  "from": "/\\s(temperature|temp)\\s/",
-                  "to": " temp. "
+                  "entity": "zone.google"
+                },
+                {
+                  "entity": "zone.ecole"
                 }
               ],
-              "filter": {
-                "include": [
-                  {
-                    "name": "entity_id",
-                    "value": "*_battery"
-                  },
-                  {
-                    "name": "attributes.device_class",
-                    "value": "battery"
-                  }
-                ],
-                "exclude": [
-                  {
-                    "name": "state",
-                    "value": 99,
-                    "operator": ">"
-                  },
-                  {
-                    "name": "entity_id",
-                    "value": "*pixel*"
-                  },
-                  {
-                    "name": "entity_id",
-                    "value": "*oneplus*"
-                  },
-                  {
-                    "name": "entity_id",
-                    "value": "*bleuette_smart_key_battery_warning*"
-                  }
-                ]
-              }
-            },
-            {
-              "type": "vertical-stack",
-              "cards": [
-                {
-                  "type": "custom:mushroom-title-card",
-                  "title": "Versions and updates"
-                },
-                {
-                  "type": "custom:mushroom-entity-card",
-                  "entity": "sensor.current_version"
-                },
-                {
-                  "type": "custom:mushroom-update-card",
-                  "entity": "update.home_assistant_operating_system_update",
-                  "show_buttons_control": true,
-                  "collapsible_controls": true,
-                  "icon": "mdi:home-assistant",
-                  "secondary_info": "state"
-                },
-                {
-                  "type": "custom:mushroom-update-card",
-                  "entity": "update.home_assistant_core_update",
-                  "show_buttons_control": true,
-                  "collapsible_controls": true,
-                  "icon": "mdi:home-assistant"
-                },
-                {
-                  "type": "custom:mushroom-update-card",
-                  "entity": "update.home_assistant_supervisor_update",
-                  "show_buttons_control": true,
-                  "collapsible_controls": true,
-                  "icon": "mdi:home-assistant"
-                },
-                {
-                  "type": "custom:auto-entities",
-                  "card": {
-                    "type": "grid",
-                    "columns": 1,
-                    "square": false
-                  },
-                  "card_param": "cards",
-                  "filter": {
-                    "include": [
-                      {
-                        "domain": "update",
-                        "state": "on",
-                        "options": {
-                          "type": "custom:mushroom-update-card",
-                          "show_buttons_control": true,
-                          "collapsible_controls": true
-                        }
-                      }
-                    ],
-                    "exclude": []
-                  },
-                  "show_empty": true
-                }
-              ]
+              "hours_to_show": 24,
+              "title": "Giom",
+              "type": "map"
             }
           ]
         }
