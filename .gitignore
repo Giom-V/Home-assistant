@@ -75,31 +75,6 @@ custom_components/archive/myEnedis/14476845147777/*.txt
 custom_components/archive/myEnedis/19677423985708/*.txt
 custom_components/archive/myEnedis/14415629518280/*.txt
 custom_components/myEnedis/myEnedis/test_data/*.txt
-custom_components/archive/myEnedis/14415629518280/lastCall.json
-custom_components/archive/myEnedis/14415629518280/updateCurrentMonth_Req.json
-custom_components/archive/myEnedis/14415629518280/updateCurrentMonth.json
-custom_components/archive/myEnedis/14415629518280/updateCurrentWeek_Req.json
-custom_components/archive/myEnedis/14415629518280/updateCurrentWeek.json
-custom_components/archive/myEnedis/14415629518280/updateCurrentYear_Req.json
-custom_components/archive/myEnedis/14415629518280/updateCurrentYear.json
-custom_components/archive/myEnedis/14415629518280/updateDataYesterdayHCHP_Req.json
-custom_components/archive/myEnedis/14415629518280/updateDataYesterdayHCHP.json
-custom_components/archive/myEnedis/14415629518280/updateEcoWatt_Req.json
-custom_components/archive/myEnedis/14415629518280/updateEcoWatt.json
-custom_components/archive/myEnedis/14415629518280/updateLast7Days_Req.json
-custom_components/archive/myEnedis/14415629518280/updateLast7Days.json
-custom_components/archive/myEnedis/14415629518280/updateLast7DaysDetails_Req.json
-custom_components/archive/myEnedis/14415629518280/updateLast7DaysDetails.json
-custom_components/archive/myEnedis/14415629518280/updateLastMonth_Req.json
-custom_components/archive/myEnedis/14415629518280/updateLastMonth.json
-custom_components/archive/myEnedis/14415629518280/updateLastWeek_Req.json
-custom_components/archive/myEnedis/14415629518280/updateLastWeek.json
-custom_components/archive/myEnedis/14415629518280/updateYesterday_Req.json
-custom_components/archive/myEnedis/14415629518280/updateYesterday.json
-custom_components/archive/myEnedis/14415629518280/updateYesterdayConsumptionMaxPower_Req.json
-custom_components/archive/myEnedis/14415629518280/updateYesterdayConsumptionMaxPower.json
-custom_components/archive/myEnedis/14415629518280/updateYesterdayProduction_Req.json
-custom_components/archive/myEnedis/14415629518280/updateYesterdayProduction.json
 
 # Ignore wyze cam image and auth files
 www/wyze-cam.jpg
