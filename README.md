@@ -17,7 +17,7 @@ After staring like everybody with everything in my [configuration](configuration
 -   basic configuration will stay in [configuration.yaml](configuration.yaml)
 -   every integration has its own yaml file in the [integrations](integrations/) folder
 -   when an integration corresponds to multiple entities ([lights](entities/lights/) for ex.), then they each have their own YAML file in the corresponding folder located in the [entities](entities/) folder.
--   [scripts](scripts/), [automations](automations/) and [scenes](scenes/) are grouped by "theme" (everything related to a room or a device for ex.) in their corresponding folder
+-   [scripts](scripts/), [automations](automations/) and [scenes](scenes/) are grouped by "theme" (everything related to a room or a device for ex.) in their corresponding folder. Each folder has or will have its own documentation to explain what each automation/script/scene does.
 
 With things moving to the UI more and more it's becoming more and more complicated to keep things organized but I'm trying my best.
 
@@ -89,7 +89,14 @@ Recently I've moved back to using the offical app since it also gives you the op
 
 ## Continuous integration
 
-At the moment I'm only using [Travis](https://travis-ci.org/) to check the configuration every time something is pushed to the master branch. This is configured in the [.travis.yml](.travis.yml) file. Now that Travis is not free anymore, I'm looking at moving to something else, like [CircleCI](circleci.com).
+I'm using [CircleCI](circleci.com) to check the configuration of every pull request or every time something is pushed to the master branch. This is configured in the [.cicleci/config.yml](.cicleci/config.yml) file but it's still far from perfect checking lint raises way too many errors at the moment (likely due to all the custom integrations, but I'm worried it won't work otherwise). It was based on [@mhaak work](https://github.com/mhaack/home-assistant-config/blob/master/.circleci/config.yml).
+
+I used to use [Travis](https://travis-ci.org/) because it was free for open source. But since it's not the case I've move top to [CircleCI](circleci.com). That said you can still have a look at my Travis configuration in the [.travis.yml](.travis.yml) file.
+
+## Tracking work
+
+I'm a former video game producer so I love Jira :D To keep my habits, I'm using Jira to keep track of what I plan to do. It's integrated with github (my commits and PR are linked to the Jira issues), slack (for notifications) and circleCI for [continuous integration](#continuous-integration).
 
 ## Useful links and thanks
 -  hacf.fr - French Home Asssitant community
+-  zigbee.blakadder.com - Zigbee devices compatibility database
