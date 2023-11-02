@@ -263,15 +263,16 @@
   alias: Turn on Bathroom heating
   description: ''
   trigger:
-  - platform: device
-    type: turned_on
-    device_id: 1268d655a0515532f1cef89d736e539f
-    entity_id: switch.bouton_sdb_switch
-    domain: switch
-  - platform: event
-    event_type: ''
-    event_data:
-      step_mode: 0
+  - device_id: 1268d655a0515532f1cef89d736e539f
+    domain: zha
+    platform: device
+    type: remote_button_short_press
+    subtype: button
+  - device_id: 1268d655a0515532f1cef89d736e539f
+    domain: zha
+    platform: device
+    type: remote_button_short_press
+    subtype: button_1
   condition: []
   action:
   - type: turn_on
