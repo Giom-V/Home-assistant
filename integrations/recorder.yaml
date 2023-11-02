@@ -13,6 +13,7 @@ recorder:
       - group
       - input_boolean
       - input_select
+      - todo
       - scene
       - sun
       - switch
