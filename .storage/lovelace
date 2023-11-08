@@ -1672,9 +1672,17 @@
                 "style": {
                   ".": "ha-card {\n  background-color: #0B1CAB;\n}\n",
                   "hui-vertical-stack-card$mushroom-title-card$": "h1.title {\n  color: white;\n  font-size: xx-large;\n}\n",
-                  "hui-vertical-stack-card$": "hui-horizontal-stack-card {\n  background-color: rgba(0, 0, 0, 0.3);\n  padding: 5px;\n}\nmushroom-title-card {\n  height: 55px;\n}\n",
+                  "hui-vertical-stack-card$": "hui-horizontal-stack-card, hui-conditional-card {\n  background-color: rgba(0, 0, 0, 0.3);\n  padding: 5px;\n  padding-top: 8px !important;\n  padding-bbottom: 5px !important;\n  margin-top: 0px !important;\n  margin-bottom: -0px !important;\n}\nmushroom-title-card {\n  height: 65px;\n}\n",
                   "hui-vertical-stack-card$hui-horizontal-stack-card$": {
-                    "mushroom-person-card$": "ha-card {\n  background-color: rgba(255, 255, 255, .75);\n}\n"
+                    "mushroom-person-card$": "ha-card {\n  background-color: rgba(255, 255, 255, .9);\n}\n"
+                  },
+                  "hui-vertical-stack-card$hui-horizontal-stack-card$hui-tile-card": {
+                    "$": "ha-card {\n  background-color: rgba(255, 255, 255, .9);\n}\n"
+                  },
+                  "hui-vertical-stack-card$mushroom-chips-card$mushroom-entity-chip": {
+                    "$mushroom-chip": {
+                      "$": "ha-card {\n  background-color: rgba(255, 255, 255, .9) !important;\n}\n"
+                    }
                   },
                   "hui-vertical-stack-card": {
                     "$hui-horizontal-stack-card": {
@@ -1682,7 +1690,7 @@
                         "$mushroom-chips-card": {
                           "$mushroom-entity-chip": {
                             "$mushroom-chip": {
-                              "$": "ha-card {\n  background-color: rgba(255, 255, 255, .75) !important;\n}\n"
+                              "$": "ha-card {\n  background-color: rgba(255, 255, 255, .9) !important;\n}\n"
                             }
                           }
                         }
@@ -1704,12 +1712,140 @@
                     }
                   },
                   {
+                    "type": "conditional",
+                    "conditions": [
+                      {
+                        "condition": "state",
+                        "entity": "sensor.steps_daily",
+                        "state_not": "unknown"
+                      }
+                    ],
+                    "card": {
+                      "type": "custom:mushroom-chips-card",
+                      "chips": [
+                        {
+                          "type": "entity",
+                          "entity": "sensor.weight"
+                        },
+                        {
+                          "type": "entity",
+                          "entity": "sensor.steps_daily"
+                        },
+                        {
+                          "type": "entity",
+                          "entity": "sensor.heart_rate"
+                        },
+                        {
+                          "type": "entity",
+                          "entity": "sensor.heart_points_daily"
+                        },
+                        {
+                          "type": "entity",
+                          "entity": "sensor.sleep"
+                        }
+                      ],
+                      "alignment": "center"
+                    }
+                  },
+                  {
                     "type": "horizontal-stack",
                     "cards": [
                       {
                         "type": "custom:mushroom-person-card",
                         "entity": "person.guillaume",
-                        "fill_container": false
+                        "fill_container": false,
+                        "primary_info": "state",
+                        "secondary_info": "last-changed",
+                        "icon_type": "entity-picture",
+                        "layout": "vertical"
+                      },
+                      {
+                        "type": "conditional",
+                        "conditions": [
+                          {
+                            "condition": "state",
+                            "entity": "input_boolean.working",
+                            "state": "on"
+                          },
+                          {
+                            "condition": "state",
+                            "entity": "input_boolean.in_meet_meeting",
+                            "state": "off"
+                          }
+                        ],
+                        "card": {
+                          "type": "tile",
+                          "entity": "input_boolean.working",
+                          "show_entity_picture": false,
+                          "vertical": true,
+                          "hide_state": false,
+                          "state_content": "last-changed",
+                          "name": "Working",
+                          "tap_action": {
+                            "action": "more-info"
+                          },
+                          "icon_tap_action": {
+                            "action": "toggle"
+                          }
+                        }
+                      },
+                      {
+                        "type": "conditional",
+                        "conditions": [
+                          {
+                            "condition": "state",
+                            "entity": "input_boolean.working",
+                            "state": "off"
+                          },
+                          {
+                            "condition": "state",
+                            "entity": "input_boolean.in_meet_meeting",
+                            "state": "off"
+                          }
+                        ],
+                        "card": {
+                          "type": "tile",
+                          "entity": "input_boolean.working",
+                          "show_entity_picture": false,
+                          "vertical": true,
+                          "hide_state": false,
+                          "state_content": "last-changed",
+                          "name": "Not Working",
+                          "tap_action": {
+                            "action": "more-info"
+                          },
+                          "icon_tap_action": {
+                            "action": "toggle"
+                          },
+                          "color": "lime"
+                        }
+                      },
+                      {
+                        "type": "conditional",
+                        "conditions": [
+                          {
+                            "condition": "state",
+                            "entity": "input_boolean.in_meet_meeting",
+                            "state": "on"
+                          }
+                        ],
+                        "card": {
+                          "type": "tile",
+                          "entity": "input_boolean.in_meet_meeting",
+                          "show_entity_picture": false,
+                          "vertical": true,
+                          "hide_state": false,
+                          "state_content": "last-changed",
+                          "name": "In meeting",
+                          "tap_action": {
+                            "action": "more-info"
+                          },
+                          "icon_tap_action": {
+                            "action": "toggle"
+                          },
+                          "icon": "mdi:monitor-account",
+                          "color": "red"
+                        }
                       },
                       {
                         "type": "vertical-stack",
@@ -1719,27 +1855,17 @@
                             "chips": [
                               {
                                 "type": "entity",
-                                "entity": "sensor.giom_s_time_at_work_this_week"
+                                "entity": "sensor.giom_s_time_at_work_this_week",
+                                "icon": "mdi:office-building-marker",
+                                "use_entity_picture": false
                               },
                               {
                                 "type": "entity",
                                 "entity": "sensor.giom_s_time_in_calls_this_week",
-                                "chips": "mdi:monitor-account"
+                                "icon": "mdi:monitor-account"
                               }
-                            ]
-                          },
-                          {
-                            "type": "custom:mushroom-chips-card",
-                            "chips": [
-                              {
-                                "type": "entity",
-                                "entity": "sensor.weight"
-                              },
-                              {
-                                "type": "entity",
-                                "entity": "sensor.steps_daily"
-                              }
-                            ]
+                            ],
+                            "alignment": "center"
                           }
                         ]
                       }
@@ -2004,29 +2130,40 @@
                   }
                 },
                 {
-                  "type": "custom:mushroom-chips-card",
-                  "chips": [
+                  "type": "conditional",
+                  "conditions": [
                     {
-                      "type": "entity",
-                      "entity": "sensor.weight"
-                    },
-                    {
-                      "type": "entity",
-                      "entity": "sensor.steps_daily"
-                    },
-                    {
-                      "type": "entity",
-                      "entity": "sensor.heart_rate"
-                    },
-                    {
-                      "type": "entity",
-                      "entity": "sensor.heart_points_daily"
-                    },
-                    {
-                      "type": "entity",
-                      "entity": "sensor.sleep"
+                      "condition": "state",
+                      "entity": "sensor.steps_daily",
+                      "state_not": "unknown"
                     }
-                  ]
+                  ],
+                  "card": {
+                    "type": "custom:mushroom-chips-card",
+                    "chips": [
+                      {
+                        "type": "entity",
+                        "entity": "sensor.weight"
+                      },
+                      {
+                        "type": "entity",
+                        "entity": "sensor.steps_daily"
+                      },
+                      {
+                        "type": "entity",
+                        "entity": "sensor.heart_rate"
+                      },
+                      {
+                        "type": "entity",
+                        "entity": "sensor.heart_points_daily"
+                      },
+                      {
+                        "type": "entity",
+                        "entity": "sensor.sleep"
+                      }
+                    ],
+                    "alignment": "center"
+                  }
                 },
                 {
                   "type": "horizontal-stack",
@@ -2036,7 +2173,98 @@
                       "entity": "person.guillaume",
                       "fill_container": false,
                       "primary_info": "state",
-                      "secondary_info": "last-changed"
+                      "secondary_info": "last-changed",
+                      "icon_type": "entity-picture",
+                      "layout": "vertical"
+                    },
+                    {
+                      "type": "conditional",
+                      "conditions": [
+                        {
+                          "condition": "state",
+                          "entity": "input_boolean.working",
+                          "state": "on"
+                        },
+                        {
+                          "condition": "state",
+                          "entity": "input_boolean.in_meet_meeting",
+                          "state": "off"
+                        }
+                      ],
+                      "card": {
+                        "type": "tile",
+                        "entity": "input_boolean.working",
+                        "show_entity_picture": false,
+                        "vertical": true,
+                        "hide_state": false,
+                        "state_content": "last-changed",
+                        "name": "Working",
+                        "tap_action": {
+                          "action": "more-info"
+                        },
+                        "icon_tap_action": {
+                          "action": "toggle"
+                        }
+                      }
+                    },
+                    {
+                      "type": "conditional",
+                      "conditions": [
+                        {
+                          "condition": "state",
+                          "entity": "input_boolean.working",
+                          "state": "off"
+                        },
+                        {
+                          "condition": "state",
+                          "entity": "input_boolean.in_meet_meeting",
+                          "state": "off"
+                        }
+                      ],
+                      "card": {
+                        "type": "tile",
+                        "entity": "input_boolean.working",
+                        "show_entity_picture": false,
+                        "vertical": true,
+                        "hide_state": false,
+                        "state_content": "last-changed",
+                        "name": "Not Working",
+                        "tap_action": {
+                          "action": "more-info"
+                        },
+                        "icon_tap_action": {
+                          "action": "toggle"
+                        },
+                        "color": "lime",
+                        "icon": "mdi:human-male-female-child"
+                      }
+                    },
+                    {
+                      "type": "conditional",
+                      "conditions": [
+                        {
+                          "condition": "state",
+                          "entity": "input_boolean.in_meet_meeting",
+                          "state": "on"
+                        }
+                      ],
+                      "card": {
+                        "type": "tile",
+                        "entity": "input_boolean.in_meet_meeting",
+                        "show_entity_picture": false,
+                        "vertical": true,
+                        "hide_state": false,
+                        "state_content": "last-changed",
+                        "name": "In meeting",
+                        "tap_action": {
+                          "action": "more-info"
+                        },
+                        "icon_tap_action": {
+                          "action": "toggle"
+                        },
+                        "icon": "mdi:monitor-account",
+                        "color": "red"
+                      }
                     },
                     {
                       "type": "vertical-stack",
@@ -2047,14 +2275,16 @@
                             {
                               "type": "entity",
                               "entity": "sensor.giom_s_time_at_work_this_week",
-                              "icon": "mdi:office-building-marker"
+                              "icon": "mdi:office-building-marker",
+                              "use_entity_picture": false
                             },
                             {
                               "type": "entity",
                               "entity": "sensor.giom_s_time_in_calls_this_week",
                               "icon": "mdi:monitor-account"
                             }
-                          ]
+                          ],
+                          "alignment": "center"
                         }
                       ]
                     }
@@ -2325,7 +2555,12 @@
               "type": "custom:battery-state-card",
               "title": "Batteries",
               "sort_by_level": "asc",
-              "collapse": 10,
+              "collapse": [
+                {
+                  "name": "{count} devices over {min}%",
+                  "min": 20
+                }
+              ],
               "tap_action": "more-info",
               "bulk_rename": [
                 {
