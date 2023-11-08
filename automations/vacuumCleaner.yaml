@@ -12,105 +12,105 @@
       entity_id: input_select.vacuum_room
       data_template:
         option: Select Input
-- id: IFTTT_zone_cleaning_webhook
-  alias: Clean room as asked through IFTTT
-  trigger:
-    platform: webhook
-    webhook_id: vacuumDispatch
-    allowed_methods:
-      - POST
-    local_only: false
-  condition:
-    - condition: template
-      value_template: "{{ trigger.json.type == 'call_service' }}"
-    - condition: template
-      value_template: "{{ trigger.json.service == 'script.vacuum_dispatch' }}"
-  action:
-    - service: system_log.write
-      data_template:
-        message: "json received: {{ trigger.json }}"
-        level: info
-    - service: vacuum.set_fan_speed
-      data:
-        fan_speed: Standard
-        entity_id: vacuum.xiaomi_vacuum_cleaner
-    - service: script.vacuum_dispatch
-      data:
-        room: "{{ trigger.json.room }}"
-- id: IFTTT_zone_mopping_webhook
-  alias: Mop room as asked through IFTTT
-  trigger:
-    platform: webhook
-    webhook_id: vacuumMop
-    allowed_methods:
-      - POST
-    local_only: false
-  condition:
-    - condition: template
-      value_template: "{{ trigger.json.type == 'call_service' }}"
-    - condition: template
-      value_template: "{{ trigger.json.service == 'script.vacuum_mop' }}"
-  action:
-    - service: system_log.write
-      data_template:
-        message: "json received: {{ trigger.json }}"
-        level: info
-    - service: vacuum.set_fan_speed
-      data:
-        fan_speed: Gentle
-        entity_id: vacuum.xiaomi_vacuum_cleaner
-    - service: script.vacuum_dispatch
-      data:
-        room: "{{ trigger.json.room }}"
-    - delay:
-        minutes: 1
-    - wait_template: "{{ is_state('vacuum.xiaomi_vacuum_cleaner', 'docked') }}"
-    - service: vacuum.set_fan_speed
-      data:
-        fan_speed: Standard
-        entity_id: vacuum.xiaomi_vacuum_cleaner
-- id: IFTTT_stop_vacuum_webhook
-  alias: Stop vacuum as asked through IFTTT
-  trigger:
-    platform: webhook
-    webhook_id: vacuumStop
-    allowed_methods:
-      - POST
-    local_only: false
-  condition:
-    - condition: template
-      value_template: "{{ trigger.json.type == 'call_service' }}"
-    - condition: template
-      value_template: "{{ trigger.json.service == 'script.vacuum_stop' }}"
-  action:
-    - service: system_log.write
-      data_template:
-        message: "json received: {{ trigger.json }}"
-        level: info
-    - service: vacuum.stop
-      data:
-        entity_id: vacuum.xiaomi_vacuum_cleaner
-- id: IFTTT_recharge_vacuum_webhook
-  alias: Send vacuum to base as asked through IFTTT
-  trigger:
-    platform: webhook
-    webhook_id: vacuumGoToBase
-    allowed_methods:
-      - POST
-    local_only: false
-  condition:
-    - condition: template
-      value_template: "{{ trigger.json.type == 'call_service' }}"
-    - condition: template
-      value_template: "{{ trigger.json.service == 'script.vacuum_go_to_base' }}"
-  action:
-    - service: system_log.write
-      data_template:
-        message: "json received: {{ trigger.json }}"
-        level: info
-    - service: vacuum.return_to_base
-      data:
-        entity_id: vacuum.xiaomi_vacuum_cleaner
+# - id: IFTTT_zone_cleaning_webhook
+#   alias: Clean room as asked through IFTTT
+#   trigger:
+#     platform: webhook
+#     webhook_id: vacuumDispatch
+#     allowed_methods:
+#       - POST
+#     local_only: false
+#   condition:
+#     - condition: template
+#       value_template: "{{ trigger.json.type == 'call_service' }}"
+#     - condition: template
+#       value_template: "{{ trigger.json.service == 'script.vacuum_dispatch' }}"
+#   action:
+#     - service: system_log.write
+#       data_template:
+#         message: "json received: {{ trigger.json }}"
+#         level: info
+#     - service: vacuum.set_fan_speed
+#       data:
+#         fan_speed: Standard
+#         entity_id: vacuum.xiaomi_vacuum_cleaner
+#     - service: script.vacuum_dispatch
+#       data:
+#         room: "{{ trigger.json.room }}"
+# - id: IFTTT_zone_mopping_webhook
+#   alias: Mop room as asked through IFTTT
+#   trigger:
+#     platform: webhook
+#     webhook_id: vacuumMop
+#     allowed_methods:
+#       - POST
+#     local_only: false
+#   condition:
+#     - condition: template
+#       value_template: "{{ trigger.json.type == 'call_service' }}"
+#     - condition: template
+#       value_template: "{{ trigger.json.service == 'script.vacuum_mop' }}"
+#   action:
+#     - service: system_log.write
+#       data_template:
+#         message: "json received: {{ trigger.json }}"
+#         level: info
+#     - service: vacuum.set_fan_speed
+#       data:
+#         fan_speed: Gentle
+#         entity_id: vacuum.xiaomi_vacuum_cleaner
+#     - service: script.vacuum_dispatch
+#       data:
+#         room: "{{ trigger.json.room }}"
+#     - delay:
+#         minutes: 1
+#     - wait_template: "{{ is_state('vacuum.xiaomi_vacuum_cleaner', 'docked') }}"
+#     - service: vacuum.set_fan_speed
+#       data:
+#         fan_speed: Standard
+#         entity_id: vacuum.xiaomi_vacuum_cleaner
+# - id: IFTTT_stop_vacuum_webhook
+#   alias: Stop vacuum as asked through IFTTT
+#   trigger:
+#     platform: webhook
+#     webhook_id: vacuumStop
+#     allowed_methods:
+#       - POST
+#     local_only: false
+#   condition:
+#     - condition: template
+#       value_template: "{{ trigger.json.type == 'call_service' }}"
+#     - condition: template
+#       value_template: "{{ trigger.json.service == 'script.vacuum_stop' }}"
+#   action:
+#     - service: system_log.write
+#       data_template:
+#         message: "json received: {{ trigger.json }}"
+#         level: info
+#     - service: vacuum.stop
+#       data:
+#         entity_id: vacuum.xiaomi_vacuum_cleaner
+# - id: IFTTT_recharge_vacuum_webhook
+#   alias: Send vacuum to base as asked through IFTTT
+#   trigger:
+#     platform: webhook
+#     webhook_id: vacuumGoToBase
+#     allowed_methods:
+#       - POST
+#     local_only: false
+#   condition:
+#     - condition: template
+#       value_template: "{{ trigger.json.type == 'call_service' }}"
+#     - condition: template
+#       value_template: "{{ trigger.json.service == 'script.vacuum_go_to_base' }}"
+#   action:
+#     - service: system_log.write
+#       data_template:
+#         message: "json received: {{ trigger.json }}"
+#         level: info
+#     - service: vacuum.return_to_base
+#       data:
+#         entity_id: vacuum.xiaomi_vacuum_cleaner
 - id: vacuum_kitchen_and_dining_room_when_we_are_away
   alias: vacuum Kitchen and dining room when we are away
   trigger:
