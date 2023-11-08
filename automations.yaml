@@ -762,6 +762,46 @@
       hours: 1
       minutes: 0
       seconds: 0
+  - platform: state
+    entity_id:
+    - binary_sensor.bleuette_ev_battery_charge
+    to: unavailable
+    for:
+      hours: 2
+      minutes: 0
+      seconds: 0
+  - platform: state
+    entity_id:
+    - binary_sensor.bleuette_ev_battery_charge
+    to: unavailable
+    for:
+      hours: 4
+      minutes: 0
+      seconds: 0
+  - platform: state
+    entity_id:
+    - binary_sensor.bleuette_ev_battery_charge
+    to: unavailable
+    for:
+      hours: 8
+      minutes: 0
+      seconds: 0
+  - platform: state
+    entity_id:
+    - binary_sensor.bleuette_ev_battery_charge
+    to: unavailable
+    for:
+      hours: 16
+      minutes: 0
+      seconds: 0
+  - platform: state
+    entity_id:
+    - binary_sensor.bleuette_ev_battery_charge
+    to: unavailable
+    for:
+      hours: 24
+      minutes: 0
+      seconds: 0
   condition: []
   action:
   - service: homeassistant.reload_config_entry
