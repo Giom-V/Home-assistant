@@ -1,3 +1,13 @@
+# These are all the automations related to my car and its charger since I only want to charge it during off-peak hours (and later on when producing a surplus of electricity with panels).
+#
+# The automations are:
+# * `Turn on the car's chargeur only during off-peak hours`: Swith on/off the plug controlling the car charger depending on the off-peak hours. I'm quite satisfied to have managed to do that in one automation instead of two.
+# * `Preheat the car`: In winter, on school days, if the temperature is low, preheat the car just before when we have to go to school.
+# * `Lock car when at home for at least an hour`: I very often forget to close my car's door so this is a failsafe.
+# * `Reload Kia integration when it's down`: Sadly the Kia integration can but flaky so this aims at making things better.
+#
+# There's also a bunch of automations related to logging my car consumption but since they don't work at the moment you should just ignore them.
+
 - id: toggle_car_charger_peak_hours
   alias: Turn on the car's chargeur only during off-peak hours
   description: ""

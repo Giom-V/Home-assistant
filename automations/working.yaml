@@ -1,3 +1,13 @@
+# These automations goal is to set the value of `input_boolean.working` depending on different signals to indicate if I'm working or not and impact other automations accordinly.
+#
+# `input_datetime.work_start` and `input_datetime.work_end` indicate my usual working hours.
+#
+# At the moment:
+# * `Sets that I'm working when I'm at home`: Says I'm working at the begining of my shift if I'm at home.
+# * `Sets that I'm not working when I leave`: I stop working if I'm not at home (went running or just to the school)
+# * `Sets that I'm working when I come back`: Back at work when I'm back
+# * `Sets that I stop working at the end of my shift`: End my working time at the time entered in `input_datetime.work_end`.
+
 - id: "1669379110562"
   alias: Sets that I'm working when I'm at home
   description: ""

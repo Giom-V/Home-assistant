@@ -1,3 +1,5 @@
+# Theses automations are meant to switch a light colors depending on if I'm in a meeting and if I'm talking (using the [Mutesync](mutesync.com) device and integration), but since I have set it up since my last move I'm not going to comment on it. It's quite straightforward so it shouldn't be hard to understand.
+
 - alias: Light red when in a meeting
   description: ""
   trigger:
