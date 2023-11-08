@@ -60,3 +60,15 @@
       target:
         entity_id: input_boolean.working
   mode: single
+- id: "1669379110552"
+  alias: Sets that I stop working at the end of my shift
+  description: ""
+  trigger:
+    - platform: time
+      at: input_datetime.work_end
+  action:
+    - service: input_boolean.turn_off
+      data: {}
+      target:
+        entity_id: input_boolean.working
+  mode: single
