@@ -144,6 +144,8 @@
     - condition: template
       value_template: >
         {{ states('sensor.time') < states('input_datetime.nighttime_end')[0:5] }}
+    - condition: time
+      after: "08:00:00"
     - condition: template
       value_template: >
         {{ now().timestamp() > state_attr('input_datetime.last_vacuum','timestamp') + (12 * 60 * 60) }}
@@ -163,19 +165,14 @@
           type: is_cleaning
     - condition: or
       conditions:
-        - condition: time # This part is related to the WFH situation during the Covid pandemic
-          weekday:
-            - mon
-            - tue
-            - wed
-            - thu
-            - fri
+        - condition: state # This part is related to the WFH situation during the Covid pandemic
+          entity_id: binary_sensor.workday_sensor
+          state: "on"
         - condition: and
           conditions:
-            - condition: time
-              weekday:
-                - sat
-                - sun
+            - condition: state
+              entity_id: binary_sensor.workday_sensor
+              state: "off"
             - condition: state
               entity_id: person.guillaume
               state: not_home
