@@ -14,10 +14,10 @@ This is my personal home assistant configuration. I'm sharing it to provide the 
 
 After staring like everybody with everything in my [configuration](configuration.yaml) file, I started to split it to better keep track of the changes using GitHub. I followed the example of [@jonathanadams](https://github.com/jonathanadams/Home-Assistant-Configuration) and split (or actually tried to since it's a work in progress) all the configuration this way:
 
-- basic configuration will stay in [configuration.yaml](configuration.yaml)
-- every integration has its own yaml file in the [integrations](integrations/) folder
-- when an integration corresponds to multiple entities ([lights](entities/lights/) for ex.), then they each have their own YAML file in the corresponding folder located in the [entities](entities/) folder.
-- [scripts](scripts/), [automations](automations/) and [scenes](scenes/) are grouped by "theme" (everything related to a room or a device for ex.) in their corresponding folder. Each folder has or will have its own documentation to explain what each automation/script/scene does.
+-   basic configuration will stay in [configuration.yaml](configuration.yaml)
+-   every integration has its own yaml file in the [integrations](integrations/) folder
+-   when an integration corresponds to multiple entities ([lights](entities/lights/) for ex.), then they each have their own YAML file in the corresponding folder located in the [entities](entities/) folder.
+-   [scripts](scripts/), [automations](automations/) and [scenes](scenes/) are grouped by "theme" (everything related to a room or a device for ex.) in their corresponding folder. Each folder has or will have its own documentation to explain what each automation/script/scene does.
 
 With things moving to the UI more and more it's becoming more and more complicated to keep things organized but I'm trying my best.
 
@@ -100,5 +100,5 @@ I'm a former video game producer so I love Jira :D To keep my habits, I'm using 
 
 ## Useful links and thanks
 
-- hacf.fr - French Home Asssitant community
-- zigbee.blakadder.com - Zigbee devices compatibility database
+-   hacf.fr - French Home Asssitant community
+-   zigbee.blakadder.com - Zigbee devices compatibility database
