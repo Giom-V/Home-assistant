@@ -14,7 +14,7 @@
 # * `Switch Away mode off when we come back`: This is the reverse automation, setting off `input_boolean.away_mode` and the alerts. It also sets the media players volumes back to normal since the alerts are raising them to the maximum.
 # * `Switch motion detection and alarms on when the away mode is on` and `Switch motion detection off when the away mode is off`: These used to switch the motion detection of my Dafang camera on and off when we were home/away, but that's not possible with my new Reolink cameras so I disabled the automations.
 # * `Motion detected`: Sends an alert (via Google Chat), and shout through all the media players if motion is detected by one of the cameras. Mode is `single` because I don't want the script to restart if motion is continuously detected.
-# * `Door openned while away`: Does the same thing but if a door is opened. 
+# * `Door openned while away`: Does the same thing but if a door is opened.
 # * `Mouvement detected while away`: Same again but if one of the motion sensors sees something.
 # * `Lights switched on while away`: Same with lights being switched on, the problem being that we also want to switch on the lights for presence detection, so for now the lights used for the presence are not in this automation.
 # * `Presence simulation Bureau`: Presence detection in my office. It uses randomness for more realness. Starts at a random time between 30 before sunset and 15mn after and ends between 11PM and 11:15PM.
