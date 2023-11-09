@@ -40,7 +40,7 @@ There are currently only 2 automations:
 
 I also used to have automations related to noise and moisture but they were using my [Minut Point](minut.com) devices but since I can't inteface them with HA I had to get rid of the automations. I also used to have 2 automations related to my freezer, using a door sensor because my daughter used to forget to close it, but I now have a new freezer which beeps so I also disabled the automations. I'm still keeping them all here as reference.
 
-#### Future improvements:
+#### Future improvements for alerts
 
 -   Maybe having different upper values for the temperature depending on the seasons
 -   I should group all temperature sensors in a group so that I won't have to list them all in each automation
@@ -73,7 +73,7 @@ The different automations are:
 -   `Presence simulation Aurore's bedroom`: Same thing but with slightly different times (the worst that could happen would be to have all lights switching on and off at the same time).
 -   `Reboot HA every week when we are away`: This one is a failsafe. When I'm away for a long time I want to be certain HA is not frozen, so I like to reboot it at least once a week. I also have a Shelly plug that I program to reboot the modem every week for the same reason.
 
-#### Future improvements:
+#### Future improvements for the away mode
 
 -   Use a scene to set the volume of the media players back when we come back (except it might not work with "all")
 -   Switch off the TV after the alerts
@@ -96,7 +96,7 @@ The automations are:
 
 There's also a bunch of automations related to logging my car consumption but since they don't work at the moment you should just ignore them.
 
-#### Future improvements:
+#### Future improvements for the car
 
 -   Add a failsafe when HA is booted to check on the off-peak hours and set the charger status accordingly
 -   Only preheat the car if it's not a holiday (using the calendar integration)
@@ -119,7 +119,7 @@ These are:
 -   `Switch off all lights when we go to bed`: Switches off all lights when it's time to go to bed (time set up in the `input_datetime.nighttime_end` helper) so that it forces us to do so instead of forgetting the time while watching a serie.
 -   `Switch off all lights when nobody's home for 30mn`: There's no need for lights if nobody is home.
 
-#### Future improvements:
+#### Future improvements
 
 -   Not switching off lights if we have visitors
 
@@ -139,7 +139,7 @@ The remaining automations are:
 -   `Update the time of the last cleaning`: I'm tracking in `input_datetime.last_vacuum` the last time the vaccum cleaner has been doing its job, so taht I'm not triggering it more than every 12h. That automation save the time whenever the vaccum is used.
 -   `Start/stop xiaomi fast scan interval` and `Update xiaomi map extractor`: The [Xiaomi integration](https://www.home-assistant.io/integrations/xiaomi_miio/#xiaomi-mi-robot-vacuum) stops working if it receives too many calls per day and the [map extractor](https://github.com/PiotrMachowski/Home-Assistant-custom-components-Xiaomi-Cloud-Map-Extractor) one is making a lot of calls if we want to be able to follow the vacuum on the map in real time. So that two automations work together to only update the map when one of the vacuum is in use.
 
-#### Future improvements:
+#### Future improvements for the vaccum cleaner
 
 -   Treat holidays as non-working days (using the calendar integration)
 -   Still vacuum even if we are here if no cleaning has been done for days
@@ -160,7 +160,7 @@ At the moment:
 -   `Sets that I'm working when I come back`: Back at work when I'm back
 -   `Sets that I stop working at the end of my shift`: End my working time at the time entered in `input_datetime.work_end`.
 
-#### Future improvements:
+#### Future improvements for the working indicator
 
 -   Use my computer status and meet status as an extra signal.
 
