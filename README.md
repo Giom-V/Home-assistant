@@ -100,5 +100,5 @@ I'm a former video game producer so I love Jira :D To keep my habits, I'm using 
 
 ## Useful links and thanks
 
--   hacf.fr - French Home Asssitant community
--   zigbee.blakadder.com - Zigbee devices compatibility database
+-   [hacf.fr](hacf.fr) - French Home Asssitant community
+-   [zigbee.blakadder.com](zigbee.blakadder.com) - Zigbee devices compatibility database

@@ -54,7 +54,7 @@ There are also some tentative for presence simulation.
 
 All those automations are using the 3 helpers
 
--   `binary_sensor.people_home` indicates if someone who's tracked (my wife and I) are home. The issue is that it doesn't take into account that my daughter could be [home alone](https://en.wikipedia.org/wiki/Home_Alone), which for now doesn not happen often since she's still young or that we may have visitors (my parents or my in-laws for ex.), which is a case that happen quite often.
+-   `binary_sensor.people_home` indicates if someone who's tracked (my wife and I) are home. The issue is that it doesn't take into account that my daughter could be [home alone](https://en.wikipedia.org/wiki/Home_Alone), which for now doesn not happen often since she's still young or that we may have visitors (my parents or my in-laws for ex.), which is a case that happen quite often.¶p
 -   `input_boolean.visitors` is meant to solve that problem. It indicates that we have someone visiting and prevents the different automations from triggering.
 -   `input_boolean.away_mode` indicates that the "alarm/alerts" are set. Using such a helper lets us clearly see the status and also let us overwrite it if needed.
 
