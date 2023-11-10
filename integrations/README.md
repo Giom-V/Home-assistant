@@ -66,8 +66,8 @@ Binary sensor that checks daily for new releases of Home Assistant.
 
 **Documentation:** <https://www.home-assistant.io/integrations/camera/>
 
-Point to the (cameras)[../entities/cameras] folder where each of the (two)
-camera are set-up.
+Point to the [cameras](../entities/cameras) folder where each of the cameras are
+set-up.
 
 ### [Google_assistant.yaml](google_assistant.yaml)
 
