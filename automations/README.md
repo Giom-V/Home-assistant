@@ -53,7 +53,7 @@ There are 3 automations:
 
 - `Turn on Air Purifier when I start working`: As its name implies starts the
   air purifier when I start working.
-  
+
 - `Turn off Air Purifier when I'm off`: Turns it off when I stop working
 
 - `Turn off Air purifier for a while if the air quality is good`: In case the
@@ -171,19 +171,13 @@ motion detection off when the away mode is off`: These used to switch the
 
 - Use a scene to set the volume of the media players back when we come back
   (except it might not work with "all")
-
 - Switch off the TV after the alerts
-
 - Switch cameras on/off depending on the away state instead of jsut the motion
   detection
-
 - Use app notifications for the alerts
-
 - Send pictures alongside the notifications when something is detected by the
   cameras
-
 - Find a way to have both the lights alert and presence detection
-
 - Continue to improve presence simulation (TV, or rando; colars in the living
   room to simulate it)
 
@@ -195,7 +189,7 @@ of electricity with panels).
 
 The automations are:
 
-- `Turn on the car's chargeur only during off-peak hours`: Swith on/off the
+- `Turn on the car's chargeur only during off-peak hours`: Switches on/off the
   plug controlling the car charger depending on the off-peak hours. I'm quite
   satisfied to have managed to do that in one automation instead of two.
 
@@ -215,7 +209,6 @@ since they don't work at the moment you should just ignore them.
 
 - Add a failsafe when HA is booted to check on the off-peak hours and set the
   charger status accordingly
-
 - Only preheat the car if it's not a holiday (using the calendar integration)
 
 ### [Meetings](meetings.yaml)
