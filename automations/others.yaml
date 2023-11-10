@@ -1,9 +1,17 @@
-# Miscellaneous automations, mostly (all?) related to lights, which were not fitting anywhere else.
+# Miscellaneous automations, mostly (all?) related to lights, which were not
+# fitting anywhere else.
 #
 # These are:
-# * `Switch off lights 30mn after sunrise` and `Switch off lights 60mn after sunrise`: Except maybe for my office, all lights should be switched off during the day so this is what those automations do (just slightly later during the Canadian winter).
-# * `Switch off all lights when we go to bed`: Switches off all lights when it's time to go to bed (time set up in the `input_datetime.nighttime_end` helper) so that it forces us to do so instead of forgetting the time while watching a serie.
-# * `Switch off all lights when nobody's home for 30mn`: There's no need for lights if nobody is home.
+# * `Switch off lights 30mn after sunrise` and `Switch off lights 60mn after
+#   sunrise`: Except maybe for my office, all lights should be switched off
+#   during the day so this is what those automations do (just slightly later
+#   during the Canadian winter).
+# * `Switch off all lights when we go to bed`: Switches off all lights when it's
+#   time to go to bed (time set up in the `input_datetime.nighttime_end` helper)
+#   so that it forces us to do so instead of forgetting the time while watching
+#   a serie.
+# * `Switch off all lights when nobody's home for 30mn`: There's no need for
+#   lights if nobody is home.
 
 - id: SwitchOffLightsInTheSummerMornings
   alias: Switch off lights 30mn after sunrise

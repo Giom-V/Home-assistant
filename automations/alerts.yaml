@@ -1,10 +1,19 @@
-# Those automations are meant to alert me if something weird is going on, eg. an abnormal temperature.
+# Those automations are meant to alert me if something weird is going on, eg. an
+# abnormal temperature.
 #
 # There are currently only 2 automations:
-# * `Alert me if the temperature is too low`: In case the temperature in any of the indoor rooms (including the basement) goes below 10 degrees, alert me through Google Chat and my Google Homes.
-# * `Alert me if the temperature is too high`: Same if the temperature goes over 30 (to be tweaked since I think it happens quite frequently in summer)
+# * `Alert me if the temperature is too low`: In case the temperature in any of
+#   the indoor rooms (including the basement) goes below 10 degrees, alert me
+#   through Google Chat and my Google Homes.
+# * `Alert me if the temperature is too high`: Same if the temperature goes over
+#   30 (to be tweaked since I think it happens quite frequently in summer)
 #
-# I also used to have automations related to noise and moisture but they were using my [Minut Point](minut.com) devices but since I can't inteface them with HA I had to get rid of the automations. I also used to have 2 automations related to my freezer, using a door sensor because my daughter used to forget to close it, but I now have a new freezer which beeps so I also disabled the automations. I'm still keeping them all here as reference.
+# I also used to have automations related to noise and moisture but they were
+# using my [Minut Point](minut.com) devices but since I can't inteface them with
+# HA I had to get rid of the automations. I also used to have 2 automations
+# related to my freezer, using a door sensor because my daughter used to forget
+# to close it, but I now have a new freezer which beeps so I also disabled the
+# automations. I'm still keeping them all here as reference.
 
 - id: alert_temperature_low
   alias: Alert me if the temperature is too low

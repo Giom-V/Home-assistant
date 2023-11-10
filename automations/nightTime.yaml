@@ -1,4 +1,7 @@
-# These are old automations that I'm not using anymore and just keeping for reference. There were all meant to switch on some lights and changing thjeir colors to give a hint to my daughter on whether it was time for the night routine or to go to bed.
+# These are old automations that I'm not using anymore and just keeping for
+# reference. There were all meant to switch on some lights and changing thjeir
+# colors to give a hint to my daughter on whether it was time for the night
+# routine or to go to bed.
 
 - id: NightTime
   alias: Night time

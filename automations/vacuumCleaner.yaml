@@ -1,15 +1,46 @@
 # Here are all the automations related to my vacuum cleaner.
 #
-# Note that some of the logic is managed in [scripts](../scripts/), in the [`vacuum.yaml`](../scripts/vacuum.yaml) file.
+# Note that some of the logic is managed in [scripts](../scripts/), in the
+# [`vacuum.yaml`](../scripts/vacuum.yaml) file.
 #
-# Some automations were related to the IFTT integration but since [Google removed the option for IFTTT to parce custom commands](https://ifttt.com/explore/google-assistant-changes), I had to get rid of them. Initially they were letting me say "OK Google, Clean the bedroom 3 times", and the string "the betroom 3 times" was passed down to HA, parsed (cf. [scripts](../scripts/vacuum.yaml)) and then the right command was sent to the vaccum.
+# Some automations were related to the IFTT integration but since [Google
+# removed the option for IFTTT to parce custom
+# commands](https://ifttt.com/explore/google-assistant-changes), I had to get
+# rid of them. Initially they were letting me say "OK Google, Clean the bedroom
+# 3 times", and the string "the betroom 3 times" was passed down to HA, parsed
+# (cf. [scripts](../scripts/vacuum.yaml)) and then the right command was sent to
+# the vaccum.
 #
 # The remaining automations are:
-# * `Start Cleaning Room`: I have a selector name `input_select.vacuum_room` which contains all the rooms in the house, selecting a room triggers the cleaning of it. I'm not really using it often but keeping it just in case.
-# * `vacuum Kitchen and dining room when we are away`: This one is a very basic automation that starts the vaccum at a fixed time if we are not home. It's not used anymore but kept as a reference. It was good enough when we were both working at the office but not anymore.
-# * `vacuum Kitchen and dining room when we are away (Covid version)`: It's the advanced version, named "Covid" because I started to work home during the pandemic. It waits for us to be away for 5mn (the timer is short because I was it to start while I'm bringin my daughter to school in the morning). Then if we do not have visitors, or if its' not too late or too early, if it's a worked day (in which case only 1 of us needs to be away) or not (in which case we need to be both away), and finally if it had not done any cleaning in the last 12h, it starts vaccuming the kitchen, the dining room and the bathroom. This is my most complicated automation, at least in regard to conditions.
-# * `Update the time of the last cleaning`: I'm tracking in `input_datetime.last_vacuum` the last time the vaccum cleaner has been doing its job, so taht I'm not triggering it more than every 12h. That automation save the time whenever the vaccum is used.
-# * `Start/stop xiaomi fast scan interval` and `Update xiaomi map extractor`: The [Xiaomi integration](https://www.home-assistant.io/integrations/xiaomi_miio/#xiaomi-mi-robot-vacuum) stops working if it receives too many calls per day and the [map extractor](https://github.com/PiotrMachowski/Home-Assistant-custom-components-Xiaomi-Cloud-Map-Extractor) one is making a lot of calls if we want to be able to follow the vacuum on the map in real time. So that two automations work together to only update the map when one of the vacuum is in use.
+# * `Start Cleaning Room`: I have a selector name `input_select.vacuum_room`
+#   which contains all the rooms in the house, selecting a room triggers the
+#   cleaning of it. I'm not really using it often but keeping it just in case.
+# * `vacuum Kitchen and dining room when we are away`: This one is a very basic
+#   automation that starts the vaccum at a fixed time if we are not home. It's
+#   not used anymore but kept as a reference. It was good enough when we were
+#   both working at the office but not anymore.
+# * `vacuum Kitchen and dining room when we are away (Covid version)`: It's the
+#   advanced version, named "Covid" because I started to work home during the
+#   pandemic. It waits for us to be away for 5mn (the timer is short because I
+#   was it to start while I'm bringin my daughter to school in the morning).
+#   Then if we do not have visitors, or if its' not too late or too early, if
+#   it's a worked day (in which case only 1 of us needs to be away) or not (in
+#   which case we need to be both away), and finally if it had not done any
+#   cleaning in the last 12h, it starts vaccuming the kitchen, the dining room
+#   and the bathroom. This is my most complicated automation, at least in regard
+#   to conditions.
+# * `Update the time of the last cleaning`: I'm tracking in
+#   `input_datetime.last_vacuum` the last time the vaccum cleaner has been doing
+#   its job, so taht I'm not triggering it more than every 12h. That automation
+#   save the time whenever the vaccum is used.
+# * `Start/stop xiaomi fast scan interval` and `Update xiaomi map extractor`:
+#   The [Xiaomi
+#   integration](https://www.home-assistant.io/integrations/xiaomi_miio/#xiaomi-mi-robot-vacuum)
+#   stops working if it receives too many calls per day and the [map
+#   extractor](https://github.com/PiotrMachowski/Home-Assistant-custom-components-Xiaomi-Cloud-Map-Extractor)
+#   one is making a lot of calls if we want to be able to follow the vacuum on
+#   the map in real time. So that two automations work together to only update
+#   the map when one of the vacuum is in use.
 
 - id: zone_cleaning
   alias: Start Cleaning Room
