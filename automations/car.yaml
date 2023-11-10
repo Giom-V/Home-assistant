@@ -1,3 +1,119 @@
+# These are all the automations related to my car and its charger since I only
+# want to charge it during off-peak hours (and later on when producing a surplus
+# of electricity with panels).
+#
+# The automations are:
+# * `Turn on the car's chargeur only during off-peak hours`: Swith on/off the
+#   plug controlling the car charger depending on the off-peak hours. I'm quite
+#   satisfied to have managed to do that in one automation instead of two.
+# * `Preheat the car`: In winter, on school days, if the temperature is low,
+#   preheat the car just before when we have to go to school.
+# * `Lock car when at home for at least an hour`: I very often forget to close
+#   my car's door so this is a failsafe.
+# * `Reload Kia integration when it's down`: Sadly the Kia integration can but
+#   flaky so this aims at making things better.
+#
+# There's also a bunch of automations related to logging my car consumption but
+# since they don't work at the moment you should just ignore them.
+
+- id: toggle_car_charger_peak_hours
+  alias: Turn on the car's chargeur only during off-peak hours
+  description: ""
+  trigger:
+    - platform: state
+      entity_id:
+        - binary_sensor.heure_creuse
+      to: "on"
+  condition: []
+  action:
+    - type:
+        "{% if binary_sensor.heure_creuse.state = true %}\n  turn_on\n{% else %}\n
+        \ turn_off\n{% endif %}\n"
+      device_id: ed915ff8d67e254ac4696ba8ee133128
+      entity_id: switch.chargeur_voiture
+      domain: switch
+  mode: single
+- id: "1669558090658"
+  alias: Preheat the car
+  description: ""
+  trigger:
+    - platform: time
+      at: 08:20:00
+  condition:
+    - condition: time
+      weekday:
+        - mon
+        - tue
+        - thu
+        - fri
+    - condition: numeric_state
+      entity_id: sensor.cesson_sevigne_temperature
+      below: 10
+  action:
+    - service: script.turn_on
+      data:
+        entity_id: script.preheat_car
+  mode: single
+- id: "1679429109960"
+  alias: Lock car when at home for at least an hour
+  description: ""
+  trigger:
+    - platform: state
+      entity_id:
+        - device_tracker.bleuette_location
+      to: home
+      for:
+        hours: 1
+        minutes: 0
+        seconds: 0
+    - platform: state
+      entity_id:
+        - lock.bleuette_door_lock
+      to: unlocked
+      for:
+        hours: 1
+        minutes: 0
+        seconds: 0
+  condition:
+    - condition: state
+      entity_id: lock.bleuette_door_lock
+      state: unlocked
+      for:
+        hours: 0
+        minutes: 0
+        seconds: 0
+    - condition: state
+      entity_id: device_tracker.bleuette_location
+      state: home
+      for:
+        hours: 0
+        minutes: 0
+        seconds: 0
+  action:
+    - service: lock.lock
+      data: {}
+      target:
+        entity_id: lock.bleuette_door_lock
+  mode: single
+- id: "1698006992086"
+  alias: Reload Kia integration when it's down
+  description: ""
+  trigger:
+    - platform: state
+      entity_id:
+        - binary_sensor.bleuette_ev_battery_charge
+      to: unavailable
+      for:
+        hours: 1
+        minutes: 0
+        seconds: 0
+  condition: []
+  action:
+    - service: homeassistant.reload_config_entry
+      data: {}
+      target:
+        device_id: 1a31a3c555afa6a7768c4686a2ac04a0
+  mode: single
 - id: "SaveCarBatteryLevelAtHome"
   alias: Save car's battery Level when at home
   description: ""

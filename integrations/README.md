@@ -1,8 +1,15 @@
-# Integration
+# Integrations
 
-**Documentation:** <https://www.home-assistant.io/docs/configuration/splitting_configuration/>
+**Documentation:**
+<https://www.home-assistant.io/docs/configuration/splitting_configuration/>
 
-Here we have a file per "integration". The can be very simple (a couple of line to give an token for ex.). But if they related to multiple other integrations, devices or entities, they usually point with a folder the [entities](../entitites) one where each of their sub-entities are listed.
+Here I have a file per "integration". They can be very simple (a couple of line
+to give an token for ex.). But if they related to multiple other integrations,
+devices or entities, they usually point with a folder the
+[entities](../entitites) one where each of their sub-entities are listed.
+
+This folder tends to becomes emptier since more and more integrations are now
+set-up in the UI.
 
 ## Core integrations
 
@@ -10,7 +17,8 @@ Here we have a file per "integration". The can be very simple (a couple of line 
 
 **Documentation:** <https://www.home-assistant.io/integrations/discovery/>
 
-Discovers and automatically configures zeroconf/mDNS and UPnP devices on your network.
+Discovers and automatically configures zeroconf/mDNS and UPnP devices on your
+network.
 
 ### [Http.yaml](http.yaml)
 
@@ -22,13 +30,16 @@ Manages the server url and port, as well as the SSL connection.
 
 **Documentation:** <https://www.home-assistant.io/integrations/logbook/>
 
-Web interface to keep track of everything that happens in Home Assistant. It depends on the recorder integration (currently using the default settings of it in my case).
+Web interface to keep track of everything that happens in Home Assistant. It
+depends on the recorder integration (currently using the default settings of it
+in my case).
 
 ### [Logger.yaml](logger.yaml)
 
 **Documentation:** <https://www.home-assistant.io/integrations/logger/>
 
-Defines the level of logging activities in Home Assistant so that we can get more logs for specific components.
+Defines the level of logging activities in Home Assistant so that we can get
+more logs for specific components.
 
 ### [Map.yaml](map.yaml)
 
@@ -40,7 +51,8 @@ Enables a map on the frontend to display the location of tracked devices.
 
 **Documentation:** <https://www.home-assistant.io/integrations/mobile_app/>
 
-Allows Home Assistant mobile apps to easily integrate with the Home Assistant server (in my case, [HassKit](https://github.com/tuanha2000vn/hasskit))
+Allows Home Assistant mobile apps to easily integrate with the Home Assistant
+server (in my case, [HassKit](https://github.com/tuanha2000vn/hasskit))
 
 ### [Updater.yaml](updater.yaml)
 
@@ -54,17 +66,17 @@ Binary sensor that checks daily for new releases of Home Assistant.
 
 **Documentation:** <https://www.home-assistant.io/integrations/camera/>
 
-Point to the (cameras)[../entities/cameras] folder where each of the (two) camera are set-up.
+Point to the [cameras](../entities/cameras) folder where each of the cameras are
+set-up.
 
 ### [Google_assistant.yaml](google_assistant.yaml)
 
-**Documentation:** <https://www.home-assistant.io/integrations/google_assistant/>
+**Documentation:**
+<https://www.home-assistant.io/integrations/google_assistant/>
 
-Enable the integration with Google Assistant. At the moment I mainly use it to expose zigbee devices to Google Assistant so that I can control them with my Google Homes.
-
-### [Input_boolean.yaml](input_boolean.yaml)
-
-**Documentation:** <https://www.home-assistant.io/integrations/input_boolean/>
+Enable the integration with Google Assistant. At the moment I mainly use it to
+expose zigbee devices to Google Assistant so that I can control them with my
+Google Homes.
 
 ### [Linky.yaml](linky.yaml)
 
@@ -81,3 +93,9 @@ Enable the integration with Google Assistant. At the moment I mainly use it to e
 ### [Weather.yaml](weather.yaml)
 
 **Documentation:** <https://www.home-assistant.io/integrations/weather/>
+
+## Helpers
+
+### [Input_boolean.yaml](input_boolean.yaml)
+
+**Documentation:** <https://www.home-assistant.io/integrations/input_boolean/>

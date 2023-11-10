@@ -1,53 +1,68 @@
+# Miscellaneous automations, mostly (all?) related to lights, which were not
+# fitting anywhere else.
+#
+# These are:
+# * `Switch off lights 30mn after sunrise` and `Switch off lights 60mn after
+#   sunrise`: Except maybe for my office, all lights should be switched off
+#   during the day so this is what those automations do (just slightly later
+#   during the Canadian winter).
+# * `Switch off all lights when we go to bed`: Switches off all lights when it's
+#   time to go to bed (time set up in the `input_datetime.nighttime_end` helper)
+#   so that it forces us to do so instead of forgetting the time while watching
+#   a serie.
+# * `Switch off all lights when nobody's home for 30mn`: There's no need for
+#   lights if nobody is home.
+
 - id: SwitchOffLightsInTheSummerMornings
   alias: Switch off lights 30mn after sunrise
-  description: ''
+  description: ""
   trigger:
-  - event: sunrise
-    offset: 00:30
-    platform: sun
-  condition: 
+    - event: sunrise
+      offset: 00:30
+      platform: sun
+  condition:
     - condition: state
       entity_id: season.season
       state:
         - summer
         - spring
   action:
-  - service: scene.turn_on
-    entity_id: scene.LightsOff
+    - service: scene.turn_on
+      entity_id: scene.LightsOff
 - id: SwitchOffLightsInTheWinterMornings
   alias: Switch off lights 60mn after sunrise
-  description: ''
+  description: ""
   trigger:
-  - at: '08:00:00'
-    platform: time
-  condition: 
+    - at: "08:00:00"
+      platform: time
+  condition:
     - condition: state
       entity_id: season.season
       state:
         - winter
         - autumn
   action:
-  - service: scene.turn_on
-    entity_id: scene.LightsOff
+    - service: scene.turn_on
+      entity_id: scene.LightsOff
 - id: SwitchOffLightsWhenWeGoToBed
   alias: Switch off all lights when we go to bed
-  description: ''
+  description: ""
   trigger:
     platform: template
     value_template: "{{ states('sensor.time') == states('input_datetime.nighttime_end')[0:5] }}"
   condition: []
   action:
-  - service: scene.turn_on
-    entity_id: scene.LightsOff
+    - service: scene.turn_on
+      entity_id: scene.LightsOff
 - id: SwitchOffLightsWhenNobodysHome
   alias: Switch off all lights when nobody's home for 30mn
   description: Switch off all lights when nobody's home for 30mn
   trigger:
-  - entity_id: binary_sensor.people_home
-    for: 30m
-    from: Home
-    platform: state
-    to: Away
+    - entity_id: binary_sensor.people_home
+      for: 30m
+      from: Home
+      platform: state
+      to: Away
   action:
-  - entity_id: scene.lightsoff
-    service: scene.turn_on
+    - entity_id: scene.lightsoff
+      service: scene.turn_on
