@@ -48,7 +48,7 @@ automations, and on top of that keeping the root
 
 ## My automations
 
-### [Air purifier](air_pirifier.yaml)
+### [Air purifier](air_purifier.yaml)
 
 Those automations are related to my air purifier located in my office. That's
 the reason why their are all using the `input_boolean.working` value that
