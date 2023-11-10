@@ -30,11 +30,14 @@ and split (or actually tried to since it's a work in progress) all the
 configuration this way:
 
 - basic configuration will stay in [configuration.yaml](configuration.yaml)
+
 - every integration has its own yaml file in the [integrations](integrations/)
   folder
+
 - when an integration corresponds to multiple entities
   ([lights](entities/lights/) for ex.), then they each have their own YAML file
   in the corresponding folder located in the [entities](entities/) folder.
+
 - [scripts](scripts/), [automations](automations/) and [scenes](scenes/) are
   grouped by "theme" (everything related to a room or a device for ex.) in their
   corresponding folder. Each folder has or will have its own documentation to
@@ -58,10 +61,10 @@ complicated to keep things organized but I'm trying my best.
 
 ### Energy
 
-| Name                 | Type           | Brand   | Link                                                                                                       | Integration       | Connectivity | Fully works?                                                           | Comment                      |
-| -------------------- | -------------- | ------- | ---------------------------------------------------------------------------------------------------------- | ----------------- | ------------ | ---------------------------------------------------------------------- | ---------------------------- |
+| Name                 | Type           | Brand   | Link                                                                                                       | Integration       | Connectivity | Fully works?                                                            | Comment                      |
+| -------------------- | -------------- | ------- | ---------------------------------------------------------------------------------------------------------- | ----------------- | ------------ | ----------------------------------------------------------------------- | ---------------------------- |
 | Smart Radiator Valve | Radiator Valve | Netatmo | [https://www.netatmo.com/en-eu/smart-radiator-valves](https://www.netatmo.com/en-eu/smart-radiator-valves) | Netatmo / Homekit | WiFi         | Yes, except you can only see the temperature with a .5 degree precision | My wife finds it a bit noisy |
-| Shelly plug S        |                | Shelly  |                                                                                                            | Shelly            | WiFi         | Yes!                                                                   | Great devices, affordable    |
+| Shelly plug S        |                | Shelly  |                                                                                                            | Shelly            | WiFi         | Yes!                                                                    | Great devices, affordable    |
 
 ### Lighting
 

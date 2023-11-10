@@ -24,16 +24,19 @@ rarely) empty as it should be.
 
 The way I'm managing having this folder with different files who contains
 automations, and on top of that keeping the root
-[automations.yaml](../automations.yaml) file iw that way:
+[automations.yaml](../automations.yaml) file is that way:
 
 - in the main [configuration.yaml](../configuration.yaml), this line
   `packages: !include_dir_named integrations` makes it so each integration has
   its own file in the [integrations/](../integrations/) folder.
+
 - in the [integrations/](../integrations/) folder we have a
   [automations.yaml](../integrations/automations.yaml) file.
+
 - in this [automations.yaml](../integrations/automations.yaml) we first load
   everything from this [automations/](../automations/) folder using this line:
   `automation manual: !include_dir_merge_list ../automations/`
+
 - the next line, `automation ui: !include ../automations.yaml` loads the root
   [automations.yaml](../automations.yaml) file
 
@@ -50,7 +53,9 @@ There are 3 automations:
 
 - `Turn on Air Purifier when I start working`: As its name implies starts the
   air purifier when I start working.
+  
 - `Turn off Air Purifier when I'm off`: Turns it off when I stop working
+
 - `Turn off Air purifier for a while if the air quality is good`: In case the
   air quality is good enough (PM5 under 2 for 5mn), I then turn off the air
   purifier until it becomes bad (PM5 over 5) for at least 15mn. This is meant
@@ -66,6 +71,7 @@ There are currently only 2 automations:
 - `Alert me if the temperature is too low`: In case the temperature in any of
   the indoor rooms (including the basement) goes below 10 degrees, alert me
   through Google Chat and my Google Homes.
+
 - `Alert me if the temperature is too high`: Same if the temperature goes over
   30 (to be tweaked since I think it happens quite frequently in summer)
 
@@ -100,16 +106,18 @@ All those automations are using the 3 helpers
   could be [home alone](https://en.wikipedia.org/wiki/Home_Alone), which for
   now doesn not happen often since she's still young or that we may have
   visitors (my parents or my in-laws for ex.), which is a case that happen
-  quite often.¶p
+  quite often.
+
 - `input_boolean.visitors` is meant to solve that problem. It indicates that
   we have someone visiting and prevents the different automations from
   triggering.
+
 - `input_boolean.away_mode` indicates that the "alarm/alerts" are set. Using
   such a helper lets us clearly see the status and also let us overwrite it if
   needed.
 
 All those helpers are exposed to Google home so that we can easily
-switch\*overwrite them.
+switch/overwrite them.
 
 The different automations are:
 
@@ -119,32 +127,41 @@ The different automations are:
   delay to prevent the alarm to switch too often, to cover for when we leave
   our daughter for a short while, or if the geofencing becomes flaky and our
   home/away presence switches.
+
 - `Switch Away mode off when we come back`: This is the reverse automation,
   setting off `input_boolean.away_mode` and the alerts. It also sets the media
   players volumes back to normal since the alerts are raising them to the
   maximum.
+
 - `Switch motion detection and alarms on when the away mode is on` and `Switch
 motion detection off when the away mode is off`: These used to switch the
   motion detection of my Dafang camera on and off when we were home/away, but
   that's not possible with my new Reolink cameras so I disabled the
   automations.
+
 - `Motion detected`: Sends an alert (via Google Chat), and shout through all
   the media players if motion is detected by one of the cameras. Mode is
   `single` because I don't want the script to restart if motion is
   continuously detected.
+
 - `Door openned while away`: Does the same thing but if a door is opened.
+
 - `Mouvement detected while away`: Same again but if one of the motion sensors
   sees something.
+
 - `Lights switched on while away`: Same with lights being switched on, the
   problem being that we also want to switch on the lights for presence
   detection, so for now the lights used for the presence are not in this
   automation.
+
 - `Presence simulation Bureau`: Presence detection in my office. It uses
   randomness for more realness. Starts at a random time between 30 before
   sunset and 15mn after and ends between 11PM and 11:15PM.
+
 - `Presence simulation Aurore's bedroom`: Same thing but with slightly
   different times (the worst that could happen would be to have all lights
   switching on and off at the same time).
+
 - `Reboot HA every week when we are away`: This one is a failsafe. When I'm
   away for a long time I want to be certain HA is not frozen, so I like to
   reboot it at least once a week. I also have a Shelly plug that I program to
@@ -154,13 +171,19 @@ motion detection off when the away mode is off`: These used to switch the
 
 - Use a scene to set the volume of the media players back when we come back
   (except it might not work with "all")
+
 - Switch off the TV after the alerts
+
 - Switch cameras on/off depending on the away state instead of jsut the motion
   detection
+
 - Use app notifications for the alerts
+
 - Send pictures alongside the notifications when something is detected by the
   cameras
+
 - Find a way to have both the lights alert and presence detection
+
 - Continue to improve presence simulation (TV, or rando; colars in the living
   room to simulate it)
 
@@ -175,10 +198,13 @@ The automations are:
 - `Turn on the car's chargeur only during off-peak hours`: Swith on/off the
   plug controlling the car charger depending on the off-peak hours. I'm quite
   satisfied to have managed to do that in one automation instead of two.
+
 - `Preheat the car`: In winter, on school days, if the temperature is low,
   preheat the car just before when we have to go to school.
+
 - `Lock car when at home for at least an hour`: I very often forget to close
   my car's door so this is a failsafe.
+
 - `Reload Kia integration when it's down`: Sadly the Kia integration can but
   flaky so this aims at making things better.
 
@@ -189,6 +215,7 @@ since they don't work at the moment you should just ignore them.
 
 - Add a failsafe when HA is booted to check on the off-peak hours and set the
   charger status accordingly
+
 - Only preheat the car if it's not a holiday (using the calendar integration)
 
 ### [Meetings](meetings.yaml)
@@ -216,10 +243,12 @@ These are:
 sunrise`: Except maybe for my office, all lights should be switched off
   during the day so this is what those automations do (just slightly later
   during the Canadian winter).
+
 - `Switch off all lights when we go to bed`: Switches off all lights when it's
   time to go to bed (time set up in the `input_datetime.nighttime_end` helper)
   so that it forces us to do so instead of forgetting the time while watching
   a serie.
+
 - `Switch off all lights when nobody's home for 30mn`: There's no need for
   lights if nobody is home.
 
@@ -247,10 +276,12 @@ The remaining automations are:
 - `Start Cleaning Room`: I have a selector name `input_select.vacuum_room`
   which contains all the rooms in the house, selecting a room triggers the
   cleaning of it. I'm not really using it often but keeping it just in case.
+
 - `vacuum Kitchen and dining room when we are away`: This one is a very basic
   automation that starts the vaccum at a fixed time if we are not home. It's
   not used anymore but kept as a reference. It was good enough when we were
   both working at the office but not anymore.
+
 - `vacuum Kitchen and dining room when we are away (Covid version)`: It's the
   advanced version, named "Covid" because I started to work home during the
   pandemic. It waits for us to be away for 5mn (the timer is short because I
@@ -261,10 +292,12 @@ The remaining automations are:
   cleaning in the last 12h, it starts vaccuming the kitchen, the dining room
   and the bathroom. This is my most complicated automation, at least in regard
   to conditions.
+
 - `Update the time of the last cleaning`: I'm tracking in
   `input_datetime.last_vacuum` the last time the vaccum cleaner has been doing
   its job, so taht I'm not triggering it more than every 12h. That automation
   save the time whenever the vaccum is used.
+
 - `Start/stop xiaomi fast scan interval` and `Update xiaomi map extractor`:
   The [Xiaomi
   integration](https://www.home-assistant.io/integrations/xiaomi_miio/#xiaomi-mi-robot-vacuum)
@@ -297,9 +330,12 @@ At the moment:
 
 - `Sets that I'm working when I'm at home`: Says I'm working at the begining
   of my shift if I'm at home.
+
 - `Sets that I'm not working when I leave`: I stop working if I'm not at home
   (went running or just to the school)
+
 - `Sets that I'm working when I come back`: Back at work when I'm back
+
 - `Sets that I stop working at the end of my shift`: End my working time at
   the time entered in `input_datetime.work_end`.
 
