@@ -1,0 +1,5 @@
+# From https://github.com/claytonjn/hass-circadian_lighting
+
+platform: circadian_lighting
+lights_ct:
+  - light.basement_stairs_light_light
