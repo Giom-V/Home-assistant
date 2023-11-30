@@ -4,3 +4,4 @@ platform: circadian_lighting
 lights_ct:
   - light.basement_stairs_light_light
   - light.aurores_light_bulb
+min_brightness: 50
