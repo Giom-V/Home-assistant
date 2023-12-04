@@ -1,3 +1,17 @@
+# Those automations are related to my air purifier located in my office. That's
+# the reason why their are all using the `input_boolean.working` value that
+# indicates if I'm working in my office or not. That value is managed in
+# [`working.yaml`](#working), documented below.
+#
+# There are 3 automations:
+# * `Turn on Air Purifier when I start working`: As its name implies starts the
+#   air purifier when I start working.
+# * `Turn off Air Purifier when I'm off`: Turns it off when I stop working
+# * `Turn off Air purifier for a while if the air quality is good`: In case the
+#   air quality is good enough (PM5 under 2 for 5mn), I then turn off the air
+#   purifier until it becomes bad (PM5 over 5) for at least 15mn. This is meant
+#   to save energy and extend filters life.
+
 - id: "1667896446367"
   alias: Turn off Air purifier for a while if the air quality is good
   description: ""

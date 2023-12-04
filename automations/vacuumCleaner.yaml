@@ -1,3 +1,47 @@
+# Here are all the automations related to my vacuum cleaner.
+#
+# Note that some of the logic is managed in [scripts](../scripts/), in the
+# [`vacuum.yaml`](../scripts/vacuum.yaml) file.
+#
+# Some automations were related to the IFTT integration but since [Google
+# removed the option for IFTTT to parce custom
+# commands](https://ifttt.com/explore/google-assistant-changes), I had to get
+# rid of them. Initially they were letting me say "OK Google, Clean the bedroom
+# 3 times", and the string "the betroom 3 times" was passed down to HA, parsed
+# (cf. [scripts](../scripts/vacuum.yaml)) and then the right command was sent to
+# the vaccum.
+#
+# The remaining automations are:
+# * `Start Cleaning Room`: I have a selector name `input_select.vacuum_room`
+#   which contains all the rooms in the house, selecting a room triggers the
+#   cleaning of it. I'm not really using it often but keeping it just in case.
+# * `vacuum Kitchen and dining room when we are away`: This one is a very basic
+#   automation that starts the vaccum at a fixed time if we are not home. It's
+#   not used anymore but kept as a reference. It was good enough when we were
+#   both working at the office but not anymore.
+# * `vacuum Kitchen and dining room when we are away (Covid version)`: It's the
+#   advanced version, named "Covid" because I started to work home during the
+#   pandemic. It waits for us to be away for 5mn (the timer is short because I
+#   was it to start while I'm bringin my daughter to school in the morning).
+#   Then if we do not have visitors, or if its' not too late or too early, if
+#   it's a worked day (in which case only 1 of us needs to be away) or not (in
+#   which case we need to be both away), and finally if it had not done any
+#   cleaning in the last 12h, it starts vaccuming the kitchen, the dining room
+#   and the bathroom. This is my most complicated automation, at least in regard
+#   to conditions.
+# * `Update the time of the last cleaning`: I'm tracking in
+#   `input_datetime.last_vacuum` the last time the vaccum cleaner has been doing
+#   its job, so taht I'm not triggering it more than every 12h. That automation
+#   save the time whenever the vaccum is used.
+# * `Start/stop xiaomi fast scan interval` and `Update xiaomi map extractor`:
+#   The [Xiaomi
+#   integration](https://www.home-assistant.io/integrations/xiaomi_miio/#xiaomi-mi-robot-vacuum)
+#   stops working if it receives too many calls per day and the [map
+#   extractor](https://github.com/PiotrMachowski/Home-Assistant-custom-components-Xiaomi-Cloud-Map-Extractor)
+#   one is making a lot of calls if we want to be able to follow the vacuum on
+#   the map in real time. So that two automations work together to only update
+#   the map when one of the vacuum is in use.
+
 - id: zone_cleaning
   alias: Start Cleaning Room
   trigger:
@@ -12,105 +56,105 @@
       entity_id: input_select.vacuum_room
       data_template:
         option: Select Input
-- id: IFTTT_zone_cleaning_webhook
-  alias: Clean room as asked through IFTTT
-  trigger:
-    platform: webhook
-    webhook_id: vacuumDispatch
-    allowed_methods:
-      - POST
-    local_only: false
-  condition:
-    - condition: template
-      value_template: "{{ trigger.json.type == 'call_service' }}"
-    - condition: template
-      value_template: "{{ trigger.json.service == 'script.vacuum_dispatch' }}"
-  action:
-    - service: system_log.write
-      data_template:
-        message: "json received: {{ trigger.json }}"
-        level: info
-    - service: vacuum.set_fan_speed
-      data:
-        fan_speed: Standard
-        entity_id: vacuum.xiaomi_vacuum_cleaner
-    - service: script.vacuum_dispatch
-      data:
-        room: "{{ trigger.json.room }}"
-- id: IFTTT_zone_mopping_webhook
-  alias: Mop room as asked through IFTTT
-  trigger:
-    platform: webhook
-    webhook_id: vacuumMop
-    allowed_methods:
-      - POST
-    local_only: false
-  condition:
-    - condition: template
-      value_template: "{{ trigger.json.type == 'call_service' }}"
-    - condition: template
-      value_template: "{{ trigger.json.service == 'script.vacuum_mop' }}"
-  action:
-    - service: system_log.write
-      data_template:
-        message: "json received: {{ trigger.json }}"
-        level: info
-    - service: vacuum.set_fan_speed
-      data:
-        fan_speed: Gentle
-        entity_id: vacuum.xiaomi_vacuum_cleaner
-    - service: script.vacuum_dispatch
-      data:
-        room: "{{ trigger.json.room }}"
-    - delay:
-        minutes: 1
-    - wait_template: "{{ is_state('vacuum.xiaomi_vacuum_cleaner', 'docked') }}"
-    - service: vacuum.set_fan_speed
-      data:
-        fan_speed: Standard
-        entity_id: vacuum.xiaomi_vacuum_cleaner
-- id: IFTTT_stop_vacuum_webhook
-  alias: Stop vacuum as asked through IFTTT
-  trigger:
-    platform: webhook
-    webhook_id: vacuumStop
-    allowed_methods:
-      - POST
-    local_only: false
-  condition:
-    - condition: template
-      value_template: "{{ trigger.json.type == 'call_service' }}"
-    - condition: template
-      value_template: "{{ trigger.json.service == 'script.vacuum_stop' }}"
-  action:
-    - service: system_log.write
-      data_template:
-        message: "json received: {{ trigger.json }}"
-        level: info
-    - service: vacuum.stop
-      data:
-        entity_id: vacuum.xiaomi_vacuum_cleaner
-- id: IFTTT_recharge_vacuum_webhook
-  alias: Send vacuum to base as asked through IFTTT
-  trigger:
-    platform: webhook
-    webhook_id: vacuumGoToBase
-    allowed_methods:
-      - POST
-    local_only: false
-  condition:
-    - condition: template
-      value_template: "{{ trigger.json.type == 'call_service' }}"
-    - condition: template
-      value_template: "{{ trigger.json.service == 'script.vacuum_go_to_base' }}"
-  action:
-    - service: system_log.write
-      data_template:
-        message: "json received: {{ trigger.json }}"
-        level: info
-    - service: vacuum.return_to_base
-      data:
-        entity_id: vacuum.xiaomi_vacuum_cleaner
+# - id: IFTTT_zone_cleaning_webhook
+#   alias: Clean room as asked through IFTTT
+#   trigger:
+#     platform: webhook
+#     webhook_id: vacuumDispatch
+#     allowed_methods:
+#       - POST
+#     local_only: false
+#   condition:
+#     - condition: template
+#       value_template: "{{ trigger.json.type == 'call_service' }}"
+#     - condition: template
+#       value_template: "{{ trigger.json.service == 'script.vacuum_dispatch' }}"
+#   action:
+#     - service: system_log.write
+#       data_template:
+#         message: "json received: {{ trigger.json }}"
+#         level: info
+#     - service: vacuum.set_fan_speed
+#       data:
+#         fan_speed: Standard
+#         entity_id: vacuum.xiaomi_vacuum_cleaner
+#     - service: script.vacuum_dispatch
+#       data:
+#         room: "{{ trigger.json.room }}"
+# - id: IFTTT_zone_mopping_webhook
+#   alias: Mop room as asked through IFTTT
+#   trigger:
+#     platform: webhook
+#     webhook_id: vacuumMop
+#     allowed_methods:
+#       - POST
+#     local_only: false
+#   condition:
+#     - condition: template
+#       value_template: "{{ trigger.json.type == 'call_service' }}"
+#     - condition: template
+#       value_template: "{{ trigger.json.service == 'script.vacuum_mop' }}"
+#   action:
+#     - service: system_log.write
+#       data_template:
+#         message: "json received: {{ trigger.json }}"
+#         level: info
+#     - service: vacuum.set_fan_speed
+#       data:
+#         fan_speed: Gentle
+#         entity_id: vacuum.xiaomi_vacuum_cleaner
+#     - service: script.vacuum_dispatch
+#       data:
+#         room: "{{ trigger.json.room }}"
+#     - delay:
+#         minutes: 1
+#     - wait_template: "{{ is_state('vacuum.xiaomi_vacuum_cleaner', 'docked') }}"
+#     - service: vacuum.set_fan_speed
+#       data:
+#         fan_speed: Standard
+#         entity_id: vacuum.xiaomi_vacuum_cleaner
+# - id: IFTTT_stop_vacuum_webhook
+#   alias: Stop vacuum as asked through IFTTT
+#   trigger:
+#     platform: webhook
+#     webhook_id: vacuumStop
+#     allowed_methods:
+#       - POST
+#     local_only: false
+#   condition:
+#     - condition: template
+#       value_template: "{{ trigger.json.type == 'call_service' }}"
+#     - condition: template
+#       value_template: "{{ trigger.json.service == 'script.vacuum_stop' }}"
+#   action:
+#     - service: system_log.write
+#       data_template:
+#         message: "json received: {{ trigger.json }}"
+#         level: info
+#     - service: vacuum.stop
+#       data:
+#         entity_id: vacuum.xiaomi_vacuum_cleaner
+# - id: IFTTT_recharge_vacuum_webhook
+#   alias: Send vacuum to base as asked through IFTTT
+#   trigger:
+#     platform: webhook
+#     webhook_id: vacuumGoToBase
+#     allowed_methods:
+#       - POST
+#     local_only: false
+#   condition:
+#     - condition: template
+#       value_template: "{{ trigger.json.type == 'call_service' }}"
+#     - condition: template
+#       value_template: "{{ trigger.json.service == 'script.vacuum_go_to_base' }}"
+#   action:
+#     - service: system_log.write
+#       data_template:
+#         message: "json received: {{ trigger.json }}"
+#         level: info
+#     - service: vacuum.return_to_base
+#       data:
+#         entity_id: vacuum.xiaomi_vacuum_cleaner
 - id: vacuum_kitchen_and_dining_room_when_we_are_away
   alias: vacuum Kitchen and dining room when we are away
   trigger:
@@ -144,6 +188,8 @@
     - condition: template
       value_template: >
         {{ states('sensor.time') < states('input_datetime.nighttime_end')[0:5] }}
+    - condition: time
+      after: "08:00:00"
     - condition: template
       value_template: >
         {{ now().timestamp() > state_attr('input_datetime.last_vacuum','timestamp') + (12 * 60 * 60) }}
@@ -163,19 +209,14 @@
           type: is_cleaning
     - condition: or
       conditions:
-        - condition: time # This part is related to the WFH situation during the Covid pandemic
-          weekday:
-            - mon
-            - tue
-            - wed
-            - thu
-            - fri
+        - condition: state # This part is related to the WFH situation during the Covid pandemic
+          entity_id: binary_sensor.workday_sensor
+          state: "on"
         - condition: and
           conditions:
-            - condition: time
-              weekday:
-                - sat
-                - sun
+            - condition: state
+              entity_id: binary_sensor.workday_sensor
+              state: "off"
             - condition: state
               entity_id: person.guillaume
               state: not_home
@@ -207,7 +248,7 @@
       data:
         datetime: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
 - id: vacuum_fast_scan_auto_start_stop
-  alias: start/stop xiaomi fast scan interval
+  alias: Start/stop xiaomi fast scan interval
   description: ""
   trigger:
     - platform: state
@@ -245,7 +286,7 @@
   mode: single
 
 - id: vacuum_fast_scan
-  alias: update xiaomi map extractor
+  alias: Update xiaomi map extractor
   description: ""
   trigger:
     - platform: time_pattern

@@ -22,24 +22,6 @@
     data:
       text: Sonette pressée!
   mode: single
-- id: '1669558090658'
-  alias: Preheat the car
-  description: ''
-  trigger:
-  - platform: time
-    at: 08:20:00
-  condition:
-  - condition: time
-    weekday:
-    - tue
-  - condition: numeric_state
-    entity_id: sensor.dark_sky_temperature
-    below: 10
-  action:
-  - service: script.turn_on
-    data:
-      entity_id: script.preheat_car
-  mode: single
 - id: '1669906661965'
   alias: Long-press office button
   description: ''
@@ -263,15 +245,16 @@
   alias: Turn on Bathroom heating
   description: ''
   trigger:
-  - platform: device
-    type: turned_on
-    device_id: 1268d655a0515532f1cef89d736e539f
-    entity_id: switch.bouton_sdb_switch
-    domain: switch
-  - platform: event
-    event_type: ''
-    event_data:
-      step_mode: 0
+  - device_id: 1268d655a0515532f1cef89d736e539f
+    domain: zha
+    platform: device
+    type: remote_button_short_press
+    subtype: button
+  - device_id: 1268d655a0515532f1cef89d736e539f
+    domain: zha
+    platform: device
+    type: remote_button_short_press
+    subtype: button_1
   condition: []
   action:
   - type: turn_on
@@ -372,47 +355,6 @@
     entity_id: switch.pompe_switch
     domain: switch
   mode: single
-- id: '1679429109960'
-  alias: Lock car when at home for at least an hour
-  description: ''
-  trigger:
-  - platform: state
-    entity_id:
-    - device_tracker.bleuette_location
-    to: home
-    for:
-      hours: 1
-      minutes: 0
-      seconds: 0
-  - platform: state
-    entity_id:
-    - lock.bleuette_door_lock
-    to: unlocked
-    for:
-      hours: 1
-      minutes: 0
-      seconds: 0
-  condition:
-  - condition: state
-    entity_id: lock.bleuette_door_lock
-    state: unlocked
-    for:
-      hours: 0
-      minutes: 0
-      seconds: 0
-  - condition: state
-    entity_id: device_tracker.bleuette_location
-    state: home
-    for:
-      hours: 0
-      minutes: 0
-      seconds: 0
-  action:
-  - service: lock.lock
-    data: {}
-    target:
-      entity_id: lock.bleuette_door_lock
-  mode: single
 - id: '1683644818608'
   alias: Switch off bike's chargeur after some time to save the battery
   description: ''
@@ -456,22 +398,6 @@
       \ turn_off\n{% endif %}\n"
     device_id: f88fc7c7685911a6f527510503647b60
     entity_id: switch.chargeur_velo_switch
-    domain: switch
-  mode: single
-- id: toggle_car_charger_peak_hours
-  alias: Turn on the car's chargeur only during off-peak hours
-  description: ''
-  trigger:
-  - platform: state
-    entity_id:
-    - binary_sensor.heure_creuse
-    to: 'on'
-  condition: []
-  action:
-  - type: "{% if binary_sensor.heure_creuse.state = true %}\n  turn_on\n{% else %}\n
-      \ turn_off\n{% endif %}\n"
-    device_id: ed915ff8d67e254ac4696ba8ee133128
-    entity_id: switch.chargeur_voiture
     domain: switch
   mode: single
 - id: '1686121963583'
@@ -748,25 +674,6 @@
     data:
       message: 'Fuite détectée '
       title: Fuite
-  mode: single
-- id: '1698006992086'
-  alias: Reload Kia integration when it's down
-  description: ''
-  trigger:
-  - platform: state
-    entity_id:
-    - binary_sensor.bleuette_ev_battery_charge
-    to: unavailable
-    for:
-      hours: 1
-      minutes: 0
-      seconds: 0
-  condition: []
-  action:
-  - service: homeassistant.reload_config_entry
-    data: {}
-    target:
-      device_id: 1a31a3c555afa6a7768c4686a2ac04a0
   mode: single
 - id: '1698686228058'
   alias: Washing machine has finished while I work
