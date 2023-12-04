@@ -524,7 +524,7 @@
     device_id: 697f0a9d8354bee483e0058a6e8b5410
     entity_id: light.basement_stairs_light_light
     domain: light
-    brightness_pct: 54
+  #    brightness_pct: 54
   mode: restart
 - id: '1688200466384'
   alias: Basement stairs lights off when motion stopped
