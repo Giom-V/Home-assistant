@@ -1,0 +1,4 @@
+# From https://github.com/claytonjn/hass-circadian_lighting
+# Set-up actually managed in ../entities/switches/circadian_lights.yaml
+
+circadian_lighting:
