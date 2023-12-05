@@ -2668,6 +2668,103 @@
               ]
             }
           ]
+        },
+        {
+          "title": "Tests",
+          "path": "tests",
+          "icon": "mdi:alert",
+          "type": "panel",
+          "badges": [],
+          "cards": [
+            {
+              "type": "custom:plotly-graph",
+              "entities": [
+                {
+                  "entity": "sensor.thermometre_salon_temperature",
+                  "name": "Salon"
+                },
+                {
+                  "entity": "sensor.shower_temperature",
+                  "name": "Douche"
+                },
+                {
+                  "entity": "sensor.ev6_temperature",
+                  "name": "EV6"
+                },
+                {
+                  "entity": "sensor.roof_temperature",
+                  "name": "Combles",
+                  "filters": [
+                    {
+                      "sliding_window_moving_average": {
+                        "window_size": 1,
+                        "extended": true,
+                        "centered": false
+                      }
+                    },
+                    {
+                      "exponential_moving_average": {
+                        "alpha": 1
+                      }
+                    }
+                  ]
+                },
+                {
+                  "entity": "",
+                  "name": "Now",
+                  "yaxis": "y9",
+                  "showlegend": false,
+                  "line": {
+                    "width": 1,
+                    "dash": "dot",
+                    "color": "deepskyblue"
+                  },
+                  "x": "$ex [Date.now(), Date.now()]",
+                  "y": [
+                    0,
+                    1
+                  ]
+                }
+              ],
+              "refresh_interval": 10,
+              "title": "Temperatures",
+              "hours_to_show": "1d",
+              "autorange_after_scroll": true,
+              "layout": {
+                "xaxis": {
+                  "rangeselector": {
+                    "y": 1.2,
+                    "buttons": [
+                      {
+                        "count": 1,
+                        "step": "hour"
+                      },
+                      {
+                        "count": 12,
+                        "step": "hour"
+                      },
+                      {
+                        "count": 1,
+                        "step": "day"
+                      },
+                      {
+                        "count": 7,
+                        "step": "day"
+                      },
+                      {
+                        "count": 1,
+                        "step": "month"
+                      },
+                      {
+                        "count": 3,
+                        "step": "month"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          ]
         }
       ],
       "title": "21 Bretonnière"

@@ -105,6 +105,18 @@
         "name": "Giom",
         "id": "giom",
         "picture": null
+      },
+      {
+        "aliases": [],
+        "name": "Hallway",
+        "id": "hallway",
+        "picture": null
+      },
+      {
+        "aliases": [],
+        "name": "Tests",
+        "id": "tests",
+        "picture": null
       }
     ]
   }
