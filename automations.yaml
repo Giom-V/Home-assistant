@@ -675,3 +675,74 @@
       message: 'Fuite détectée '
       title: Fuite
   mode: single
+- id: '1698686228058'
+  alias: Washing machine has finished while I work
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - sensor.lave_linge_washer_job_state
+    to: none
+    for:
+      hours: 0
+      minutes: 5
+      seconds: 0
+  condition:
+  - condition: state
+    entity_id: input_boolean.working
+    state: 'on'
+  action:
+  - if:
+    - condition: state
+      entity_id: input_boolean.in_meet_meeting
+      state: 'off'
+      for:
+        hours: 0
+        minutes: 5
+        seconds: 0
+    then:
+    - wait_for_trigger:
+      - platform: state
+        entity_id:
+        - input_boolean.in_meet_meeting
+        to: 'off'
+        for:
+          hours: 0
+          minutes: 5
+          seconds: 0
+    - service: media_player.play_media
+      target:
+        entity_id: media_player.nesthub3fc1
+      data:
+        media_content_id: media-source://tts/google_translate?message=Le+lave-linge+a+fini+de+tourner%2C+il+faut+aller+%C3%A9tendre+le+linge%21&language=fr-fr
+        media_content_type: provider
+      metadata:
+        title: Le lave-linge a fini de tourner, il faut aller étendre le linge!
+        thumbnail: https://brands.home-assistant.io/_/google_translate/logo.png
+        media_class: app
+        children_media_class:
+        navigateIds:
+        - {}
+        - media_content_type: app
+          media_content_id: media-source://tts
+        - media_content_type: provider
+          media_content_id: media-source://tts/google_translate?message=Le+lave-linge+a+fini+de+tourner%2C+il+faut+aller+%C3%A9tendre+le+linge%21&language=fr-fr
+    else:
+    - service: media_player.play_media
+      target:
+        entity_id: media_player.nesthub3fc1
+      data:
+        media_content_id: media-source://tts/google_translate?message=Le+lave-linge+a+fini+de+tourner%2C+il+faut+aller+%C3%A9tendre+le+linge%21&language=fr-fr
+        media_content_type: provider
+      metadata:
+        title: Le lave-linge a fini de tourner, il faut aller étendre le linge!
+        thumbnail: https://brands.home-assistant.io/_/google_translate/logo.png
+        media_class: app
+        children_media_class:
+        navigateIds:
+        - {}
+        - media_content_type: app
+          media_content_id: media-source://tts
+        - media_content_type: provider
+          media_content_id: media-source://tts/google_translate?message=Le+lave-linge+a+fini+de+tourner%2C+il+faut+aller+%C3%A9tendre+le+linge%21&language=fr-fr
+  mode: single
