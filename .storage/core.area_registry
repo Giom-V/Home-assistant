@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "minor_version": 3,
+  "minor_version": 4,
   "key": "core.area_registry",
   "data": {
     "areas": [
@@ -8,115 +8,134 @@
         "aliases": [],
         "name": "Living Room",
         "id": "living_room",
-        "picture": null
+        "picture": null,
+        "icon": null
       },
       {
         "aliases": [],
         "name": "Kitchen",
         "id": "kitchen",
-        "picture": null
+        "picture": null,
+        "icon": null
       },
       {
         "aliases": [],
         "name": "Bedroom",
         "id": "bedroom",
-        "picture": null
+        "picture": null,
+        "icon": null
       },
       {
         "aliases": [],
         "name": "Office",
         "id": "office",
-        "picture": null
+        "picture": null,
+        "icon": null
       },
       {
         "aliases": [],
         "name": "Basement",
         "id": "basement",
-        "picture": null
+        "picture": null,
+        "icon": null
       },
       {
         "aliases": [],
         "name": "Garden",
         "id": "garden",
-        "picture": null
+        "picture": null,
+        "icon": null
       },
       {
         "aliases": [],
         "name": "Jardin de devant",
         "id": "jardin_de_devant",
-        "picture": null
+        "picture": null,
+        "icon": null
       },
       {
         "aliases": [],
         "name": "Bathroom",
         "id": "bathroom",
-        "picture": null
+        "picture": null,
+        "icon": null
       },
       {
         "aliases": [],
         "name": "Aurore's bedroom",
         "id": "aurore_s_bedroom",
-        "picture": null
+        "picture": null,
+        "icon": null
       },
       {
         "aliases": [],
         "name": "EV6",
         "id": "ev6",
-        "picture": null
+        "picture": null,
+        "icon": null
       },
       {
         "aliases": [],
         "name": "Shower room",
         "id": "shower_room",
-        "picture": null
+        "picture": null,
+        "icon": null
       },
       {
         "aliases": [],
         "name": "Kids room",
         "id": "kids_room",
-        "picture": null
+        "picture": null,
+        "icon": null
       },
       {
         "aliases": [],
         "name": "Attic",
         "id": "attic",
-        "picture": null
+        "picture": null,
+        "icon": null
       },
       {
         "aliases": [],
         "name": "Back kitchen",
         "id": "back_kitchen",
-        "picture": null
+        "picture": null,
+        "icon": null
       },
       {
         "aliases": [],
         "name": "Cannes",
         "id": "cannes",
-        "picture": null
+        "picture": null,
+        "icon": null
       },
       {
         "aliases": [],
         "name": "Salon",
         "id": "salon",
-        "picture": null
+        "picture": null,
+        "icon": null
       },
       {
         "aliases": [],
         "name": "Giom",
         "id": "giom",
-        "picture": null
+        "picture": null,
+        "icon": null
       },
       {
         "aliases": [],
         "name": "Hallway",
         "id": "hallway",
-        "picture": null
+        "picture": null,
+        "icon": null
       },
       {
         "aliases": [],
         "name": "Tests",
         "id": "tests",
-        "picture": null
+        "picture": null,
+        "icon": null
       }
     ]
   }
