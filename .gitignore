@@ -83,3 +83,11 @@ wyze-bridge/mfa_token.txt
 nest/event_media/*.mp4
 nest/event_media/*
 image/*
+
+# Zigbee2mqtt
+zigbee2mqtt/log/*
+zigbee2mqtt/configuration.yaml
+zigbee2mqtt/state.json
+
+# Watchman
+watchman_report.txt
