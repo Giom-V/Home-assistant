@@ -1,0 +1,15 @@
+{
+  "domain": "solisart",
+  "name": "Solisart",
+  "codeowners": ["@Giom-V"],
+  "config_flow": false,
+  "dependencies": [],
+  "documentation": "https://www.home-assistant.io/integrations/ha_solisart",
+  "homekit": {},
+  "iot_class": "cloud_polling",
+  "requirements": ["requests", "lxml", "unidecode"],
+  "ssdp": [],
+  "zeroconf": [],
+  "integration_type": "device",
+  "version": "0.4"
+}
