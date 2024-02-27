@@ -1,0 +1,5 @@
+# Custom integration developped by myself for my solisart.fr heating system
+
+solisart:
+  username: !secret solisart_username
+  password: !secret solisart_password
