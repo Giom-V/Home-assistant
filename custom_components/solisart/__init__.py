@@ -31,7 +31,7 @@ CONFIG_SCHEMA = vol.Schema(
     },
     # The full HA configurations gets passed to `async_setup` so we need to allow
     # extra keys.
-    # TODO: Is taht really useful?
+    # TODO: Is that really useful?
     extra=vol.ALLOW_EXTRA,
 )
 
@@ -62,11 +62,7 @@ async def async_setup(hass: HomeAssistant, config: dict) -> bool:
     # Fetch initial data so we have data when entities subscribe
     await coordinator.async_config_entry_first_refresh()
 
-    hass.data[DOMAIN] = {
-        "conf": conf,
-        "coordinator": coordinator,
-        "session": session
-    }
+    hass.data[DOMAIN] = {"conf": conf, "coordinator": coordinator, "session": session}
     hass.async_create_task(async_load_platform(hass, "sensor", DOMAIN, {}, conf))
     hass.async_create_task(async_load_platform(hass, "binary_sensor", DOMAIN, {}, conf))
     hass.async_create_task(async_load_platform(hass, "switch", DOMAIN, {}, conf))
