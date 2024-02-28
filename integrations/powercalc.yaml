@@ -1,0 +1,5 @@
+# From https://github.com/bramstroker/homeassistant-powercalc
+# Creates power sensors for lights and devices
+# And also (the part I was the most interested in) daily consumption sensor (for my heat pump for ex.)
+
+powercalc:
