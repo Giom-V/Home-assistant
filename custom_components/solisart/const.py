@@ -4,11 +4,15 @@ DOMAIN = "solisart"
 URL = "https://my.solisart.fr/"
 URL_DATA = "https://my.solisart.fr/admin/divers/ajax/lecture_valeurs_donnees.php"
 URL_UPDATE = "https://my.solisart.fr/admin/divers/ajax/ecriture_valeurs_donnees.php"
-SOLISART_ID = "U0MxTTIwMjM0MDAx" #TODO: This should be recovered when logging in
+SOLISART_ID = "U0MxTTIwMjM0MDAx"  # TODO: This should be recovered when logging in
 
 # Data ids from Solisart
-HOLIDAY_MODE = 135
 HOLIDAY_MODE_TEMPERATURE = 134
+HOLIDAY_MODE = 135
+BOOST_FIRST_FLOOR = 179
+BOOST_GROUND_FLOOR = 180
+BOOST_WATER = 184
+HOLIDAY_MODE = 135
 T1_PANELS_OUT = 584
 T2_PANELS_IN = 585
 T4_TANK_TOP = 586
@@ -29,8 +33,8 @@ C2_FIRST_FLOOR = 619
 C3_GROUND_FLOOR = 620
 S10_SPA_FILTER = 623
 V3V_HEAT_PUMP = 628
-V3V_SUN = 627 #To be confirmed, maybe it just never work
-V3V_SUN2 = 629 #To be confirmed, maybe it just never work
+V3V_SUN = 627  # To be confirmed, maybe it just never work
+V3V_SUN2 = 629  # To be confirmed, maybe it just never work
 TARGET_SPA = 631
 TARGET_FIRST_FLOOR = 632
 TARGET_GROUND_FLOOR = 633
@@ -38,10 +42,11 @@ TARGET_UNDERFLOOR = 634
 TARGET_WATER = 635
 
 # Specific values
-HOLIDAY_MODE_ON = "checked"
-HOLIDAY_MODE_OFF = ""
+SWITCH_IS_ON = "checked"
 HEAT_PUMP_ON = "On"
 HEAT_PUMP_OFF = "Off"
+BOOST_ON = "1"
+BOOST_OFF = "0"
 
 # Sensors
 TEMPERATURE_SENSORS = [
@@ -75,4 +80,12 @@ PUMP_SENSORS = [
     ["V3V PAC", V3V_HEAT_PUMP],
     ["V3V panneaux solaires", V3V_SUN],
     ["V3V 629", V3V_SUN2],
+]
+
+# SWITCHES
+SWITCH_ENTITIES = [
+    ["Boost RDC", "mdi:radiator", BOOST_GROUND_FLOOR, SWITCH_IS_ON, BOOST_ON, BOOST_OFF],
+    ["Boost étage", "mdi:radiator", BOOST_FIRST_FLOOR, SWITCH_IS_ON, BOOST_ON, BOOST_OFF],
+    ["Boost eau chaude", "mdi:water-boiler", BOOST_WATER, SWITCH_IS_ON, BOOST_ON, BOOST_OFF],
+    ["Mode vacances Solisart", "mdi:home-export-outline", HOLIDAY_MODE, SWITCH_IS_ON, BOOST_ON, BOOST_OFF],
 ]
