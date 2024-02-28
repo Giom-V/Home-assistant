@@ -34,7 +34,6 @@ async def async_setup_platform(
 
     add_entities([SolisartHeatPumpBinarySensor(coordinator)], True)
 
-
 class SolisartHeatPumpBinarySensor(CoordinatorEntity, BinarySensorEntity):
     """Sensor for the heat pump status."""
 

@@ -32,12 +32,11 @@ NAMES = {
 
 
 class XEntity(Entity):
+    event: bool = False  # if True - skip set_state on entity init
     params: set = {}
     param: str = None
     uid: str = None
 
-    # fix Hass v2021.12 empty attribute bug
-    _attr_is_on = None
     _attr_should_poll = False
 
     def __init__(self, ewelink: XRegistry, device: XDevice) -> None:
@@ -85,7 +84,7 @@ class XEntity(Entity):
         )
 
         try:
-            self.internal_update(params)
+            self.internal_update(None if self.event else params)
         except Exception as e:
             _LOGGER.error(f"Can't init device: {device}", exc_info=e)
 

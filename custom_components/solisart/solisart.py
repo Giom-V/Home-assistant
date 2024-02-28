@@ -9,7 +9,6 @@ from homeassistant.core import HomeAssistant
 
 from .const import SOLISART_ID, URL, URL_DATA
 
-
 def encodeXML(values: list[list[int, str]]) -> str:
     xml = "<valeurs>"
     for value in values:
@@ -20,7 +19,6 @@ def encodeXML(values: list[list[int, str]]) -> str:
         xml += '" />'
     xml += "</valeurs>"
     return base64.b64encode(bytes(xml, "utf-8")).decode("utf-8")
-
 
 class Solisart:
     """Encapsulates logic for retrieving data from Solisart."""
