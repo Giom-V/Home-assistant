@@ -195,7 +195,7 @@ The automations are:
   plug controlling the car charger depending on the off-peak hours. I'm quite
   satisfied to have managed to do that in one automation instead of two.
 
-- `Preheat the car`: In winter, on school days, if the temperature is low,
+- `Preheat the car`: In winter, on school days, and if we are home, if the temperature is low,
   preheat the car just before when we have to go to school.
 
 - `Lock car when at home for at least an hour`: I very often forget to close my
