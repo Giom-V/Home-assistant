@@ -91,3 +91,6 @@ zigbee2mqtt/state.json
 
 # Watchman
 watchman_report.txt
+
+# Solisart custom integration (ask me if you want it)
+custom_components/solisart/*
