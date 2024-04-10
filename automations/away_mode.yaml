@@ -428,7 +428,8 @@
   alias: Lights switched on while away
   trigger:
     - platform: state
-      entity_id: light.aurores_light_bulb, light.basement_stairs_light_light
+      entity_id: light.basement_stairs_light_light #, lights_switched_on_while_away
+      # to: on from: off # TODO: test this variation
   condition:
     - condition: state
       entity_id: input_boolean.away_mode

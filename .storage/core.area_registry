@@ -1,141 +1,241 @@
 {
   "version": 1,
-  "minor_version": 4,
+  "minor_version": 6,
   "key": "core.area_registry",
   "data": {
     "areas": [
       {
         "aliases": [],
-        "name": "Living Room",
+        "floor_id": "rdc",
+        "icon": "mdi:sofa",
         "id": "living_room",
-        "picture": null,
-        "icon": null
-      },
-      {
-        "aliases": [],
-        "name": "Kitchen",
-        "id": "kitchen",
-        "picture": null,
-        "icon": null
-      },
-      {
-        "aliases": [],
-        "name": "Bedroom",
-        "id": "bedroom",
-        "picture": null,
-        "icon": null
-      },
-      {
-        "aliases": [],
-        "name": "Office",
-        "id": "office",
-        "picture": null,
-        "icon": null
-      },
-      {
-        "aliases": [],
-        "name": "Basement",
-        "id": "basement",
-        "picture": null,
-        "icon": null
-      },
-      {
-        "aliases": [],
-        "name": "Garden",
-        "id": "garden",
-        "picture": null,
-        "icon": null
-      },
-      {
-        "aliases": [],
-        "name": "Jardin de devant",
-        "id": "jardin_de_devant",
-        "picture": null,
-        "icon": null
-      },
-      {
-        "aliases": [],
-        "name": "Bathroom",
-        "id": "bathroom",
-        "picture": null,
-        "icon": null
-      },
-      {
-        "aliases": [],
-        "name": "Aurore's bedroom",
-        "id": "aurore_s_bedroom",
-        "picture": null,
-        "icon": null
-      },
-      {
-        "aliases": [],
-        "name": "EV6",
-        "id": "ev6",
-        "picture": null,
-        "icon": null
-      },
-      {
-        "aliases": [],
-        "name": "Shower room",
-        "id": "shower_room",
-        "picture": null,
-        "icon": null
-      },
-      {
-        "aliases": [],
-        "name": "Kids room",
-        "id": "kids_room",
-        "picture": null,
-        "icon": null
-      },
-      {
-        "aliases": [],
-        "name": "Attic",
-        "id": "attic",
-        "picture": null,
-        "icon": null
-      },
-      {
-        "aliases": [],
-        "name": "Back kitchen",
-        "id": "back_kitchen",
-        "picture": null,
-        "icon": null
-      },
-      {
-        "aliases": [],
-        "name": "Cannes",
-        "id": "cannes",
-        "picture": null,
-        "icon": null
-      },
-      {
-        "aliases": [],
+        "labels": [],
         "name": "Salon",
-        "id": "salon",
-        "picture": null,
-        "icon": null
+        "picture": "/api/image/serve/76bf87cb4e3e7ad45c87f0c6967d0ba1/512x512"
       },
       {
         "aliases": [],
-        "name": "Giom",
+        "floor_id": "rdc",
+        "icon": "mdi:chef-hat",
+        "id": "kitchen",
+        "labels": [],
+        "name": "Cuisine",
+        "picture": "/api/image/serve/697c6f96a163b4e1a81c09346c5df57e/512x512"
+      },
+      {
+        "aliases": [
+          "Chambre"
+        ],
+        "floor_id": "etage",
+        "icon": "mdi:bed",
+        "id": "bedroom",
+        "labels": [],
+        "name": "Chambre parentale",
+        "picture": "/api/image/serve/c95bb4b5d6fdf6d0e76028887c4a1612/512x512"
+      },
+      {
+        "aliases": [],
+        "floor_id": "etage",
+        "icon": "mdi:chair-rolling",
+        "id": "office",
+        "labels": [],
+        "name": "Bureau",
+        "picture": "/api/image/serve/3bc0cc230621640400616eb6b46642c9/512x512"
+      },
+      {
+        "aliases": [],
+        "floor_id": "sous_sol",
+        "icon": "fas:boxes-stacked",
+        "id": "basement",
+        "labels": [],
+        "name": "Sous-sol",
+        "picture": "/api/image/serve/ba14fba854eba76cd141cb15d55340ff/512x512"
+      },
+      {
+        "aliases": [],
+        "floor_id": "jardin",
+        "icon": "mdi:tree",
+        "id": "garden",
+        "labels": [],
+        "name": "Jardin",
+        "picture": "/api/image/serve/ea290d04c9ebd4c50dafc5a63073f62c/512x512"
+      },
+      {
+        "aliases": [],
+        "floor_id": "jardin",
+        "icon": "mdi:fountain",
+        "id": "jardin_de_devant",
+        "labels": [],
+        "name": "Terrasse",
+        "picture": "/api/image/serve/2b4b8714c4d116cac3d74d1356d67988/512x512"
+      },
+      {
+        "aliases": [],
+        "floor_id": "etage",
+        "icon": "mdi:bathtub",
+        "id": "bathroom",
+        "labels": [],
+        "name": "Salle de bain",
+        "picture": "/api/image/serve/ea277f366bb29069febed6e09181b901/512x512"
+      },
+      {
+        "aliases": [],
+        "floor_id": "etage",
+        "icon": "mdi:star-face",
+        "id": "aurore_s_bedroom",
+        "labels": [],
+        "name": "Chambre d'Aurore",
+        "picture": null
+      },
+      {
+        "aliases": [
+          "Voiture",
+          "Bleuette"
+        ],
+        "floor_id": "sous_sol",
+        "icon": "mdi:car",
+        "id": "ev6",
+        "labels": [
+          "appareils"
+        ],
+        "name": "EV6",
+        "picture": "/api/image/serve/fb4d7616cb5ab1d00c2fb15595b33b97/512x512"
+      },
+      {
+        "aliases": [
+          "Douche"
+        ],
+        "floor_id": "etage",
+        "icon": "mdi:shower-head",
+        "id": "shower_room",
+        "labels": [],
+        "name": "Salle de douche",
+        "picture": null
+      },
+      {
+        "aliases": [],
+        "floor_id": "rdc",
+        "icon": "mdi:teddy-bear",
+        "id": "kids_room",
+        "labels": [],
+        "name": "Salle de jeux",
+        "picture": "/api/image/serve/7d494c47d7c10c81986e8f45fe0faf66/512x512"
+      },
+      {
+        "aliases": [],
+        "floor_id": "toit",
+        "icon": "mdi:home-roof",
+        "id": "attic",
+        "labels": [],
+        "name": "Combles",
+        "picture": "/api/image/serve/d2cefbddc6a3e3c5a2e1e878a2f3027d/512x512"
+      },
+      {
+        "aliases": [
+          "Arrière-cuisine "
+        ],
+        "floor_id": "rdc",
+        "icon": "mdi:washing-machine",
+        "id": "back_kitchen",
+        "labels": [],
+        "name": "Arrière cuisine",
+        "picture": null
+      },
+      {
+        "aliases": [],
+        "floor_id": "appartements",
+        "icon": null,
+        "id": "cannes",
+        "labels": [],
+        "name": "Cannes",
+        "picture": null
+      },
+      {
+        "aliases": [],
+        "floor_id": "personnes",
+        "icon": "mdi:face-man",
         "id": "giom",
-        "picture": null,
-        "icon": null
+        "labels": [],
+        "name": "Giom",
+        "picture": null
       },
       {
-        "aliases": [],
-        "name": "Hallway",
+        "aliases": [
+          ""
+        ],
+        "floor_id": "rdc",
+        "icon": "mdi:coat-rack",
         "id": "hallway",
-        "picture": null,
-        "icon": null
+        "labels": [],
+        "name": "Entrée",
+        "picture": null
       },
       {
         "aliases": [],
-        "name": "Tests",
+        "floor_id": null,
+        "icon": "mdi:progress-wrench",
         "id": "tests",
-        "picture": null,
-        "icon": null
+        "labels": [],
+        "name": "Tests",
+        "picture": null
+      },
+      {
+        "aliases": [],
+        "floor_id": "rdc",
+        "icon": "mdi:table-furniture",
+        "id": "dinning_room",
+        "labels": [],
+        "name": "Salle à manger",
+        "picture": null
+      },
+      {
+        "aliases": [],
+        "floor_id": "coublevie",
+        "icon": "fas:house-medical",
+        "id": "coublevie",
+        "labels": [],
+        "name": "Coublevie",
+        "picture": null
+      },
+      {
+        "aliases": [],
+        "floor_id": "etage",
+        "icon": "mdi:bed-outline",
+        "id": "guest_s_room",
+        "labels": [],
+        "name": "Guest's room",
+        "picture": "/api/image/serve/7937b0623dc17bc7277482892431781e/512x512"
+      },
+      {
+        "aliases": [],
+        "floor_id": "etage",
+        "icon": "mdi:bookshelf",
+        "id": "mezzanine",
+        "labels": [],
+        "name": "Mezzanine",
+        "picture": null
+      },
+      {
+        "aliases": [],
+        "floor_id": null,
+        "icon": "mdi:home-group",
+        "id": "alentours",
+        "labels": [],
+        "name": "Alentours",
+        "picture": null
+      },
+      {
+        "aliases": [],
+        "floor_id": "sous_sol",
+        "icon": "mdi:server",
+        "id": "local_technique",
+        "labels": [
+          "appareils",
+          "energie",
+          "controle"
+        ],
+        "name": "Local Technique",
+        "picture": null
       }
     ]
   }
