@@ -153,3 +153,25 @@ OutsideLamps:
     - light.lumiere_exterieure_1_forceonlight
     - light.lumiere_exterieure_2_forceonlight
     - light.lumiere_exterieure_3_forceonlight
+
+LampesEvier:
+  name: Lumières évier
+  entities:
+    - light.lampe_evier_gauche_light
+    - light.lampe_evier_centre_light
+    - light.lampe_evier_droite_light
+
+LampesCiel:
+  name: Lumières ciel
+  entities:
+    - light.ciel_a1
+    - light.ciel_a3
+    - light.ciel_b2
+    - light.ciel_c1
+    - light.ciel_c3
+    - light.ciel_d2
+    - light.ciel_e1
+    - light.ciel_e3
+    - light.ciel_f2
+    - light.ciel_g1
+    - light.ciel_g3
