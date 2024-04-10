@@ -54,22 +54,26 @@
             "group": {
                 "data": {
                     "area": "Obszar",
-                    "device": "Urządzenie",
+                    "create_energy_sensor": "Create energy sensor",
                     "create_utility_meters": "Utwórz liczniki mediów (utility meter)",
+                    "device": "Urządzenie",
                     "group_energy_entities": "Członek encji energii",
                     "group_member_sensors": "Członek czujników powercalc",
                     "group_power_entities": "Członek encji mocy",
                     "hide_members": "Ukryj członków",
+                    "include_non_powercalc_sensors": "Include non powercalc sensors",
                     "name": "Nazwa",
                     "sub_groups": "Podgrupy",
                     "unique_id": "Unikatowy identyfikator"
                 },
                 "data_description": {
                     "area": "Dodaje wszystkie czujniki Powercalc z podanego obszaru",
+                    "create_energy_sensor": "Whether powercalc needs to create a kWh sensor",
                     "device": "Dodaj encje grupy utworzone przez Powercalc dla istniejącego urządzenia",
                     "group_energy_entities": "Dodatkowe czujniki energii (kWh) pochodzące z HA do włączenia",
                     "group_member_sensors": "Czujniki Powercalc do włączenia do grupy",
                     "group_power_entities": "Dodatkowe czujniki mocy (W) pochodzące z HA do włączenia",
+                    "include_non_powercalc_sensors": "Control whether to include non powercalc sensors when using the area option",
                     "sub_groups": "Wszystkie zawierające czujniki z wybranych podgrup zostaną również dodane do tej grupy"
                 },
                 "title": "Utwórz czujnik grupy"
@@ -116,12 +120,14 @@
                 "data": {
                     "autostart": "Autostart",
                     "playbooks": "Playbook'i",
-                    "repeat": "Powtarzaj"
+                    "repeat": "Powtarzaj",
+                    "state_trigger": "State trigger"
                 },
                 "data_description": {
                     "autostart": "Wskaż rozpoczęcie określonego playbooka po uruchomieniu HA. tj. 'program1'",
                     "playbooks": "Wprowadź playbook w każdym wierszu. Przykład\n\nprogram1: pralka/program1.csv",
-                    "repeat": "Przełącz, jeśli chcesz powtarzać playbook po jego zakończeniu"
+                    "repeat": "Przełącz, jeśli chcesz powtarzać playbook po jego zakończeniu",
+                    "state_trigger": "Trigger a playbook based on a state change. Example\n\nplaying: program1"
                 },
                 "title": "Konfiguracja Playbook'ów"
             },
@@ -132,14 +138,16 @@
                     "ignore_unavailable_state": "Ignoruj stan niedostępny",
                     "multiply_factor": "Mnożnik",
                     "multiply_factor_standby": "Mnożnik trybu gotowości (standby)",
-                    "unavailable_power": "Wartość mocy dla niedostęności"
+                    "unavailable_power": "Wartość mocy dla niedostęności",
+                    "utility_meter_tariffs": "Utility meter tariffs"
                 },
                 "data_description": {
                     "calculation_enabled_condition": "Skonfigurowana strategia obliczania mocy zostanie wykonana tylko wtedy, gdy ten szablon oszacuje prawdę lub 1, w przeciwnym razie czujnik mocy wyświetli 0",
                     "ignore_unavailable_state": "Przełącz to ustawienie, jeśli chcesz, aby czujnik mocy pozostał dostępny, nawet jeśli encja źródłowa jest niedostępna",
                     "multiply_factor": "Mnoży obliczoną moc przez ten współczynnik. Może być przydatny dla grup świateł",
                     "multiply_factor_standby": "Czy zastosować mnożnik również do mocy w trybie gotowości",
-                    "unavailable_power": "Moc w W do rejestrowania, gdy encja źródłowa jest w stanie niedostępności (unavailable)"
+                    "unavailable_power": "Moc w W do rejestrowania, gdy encja źródłowa jest w stanie niedostępności (unavailable)",
+                    "utility_meter_tariffs": "A list of supported tariffs, leave empty if only a single tariff is needed."
                 },
                 "description": "Poniższe opcje dotyczą zaawansowanej konfiguracji Powercalc. Większość użytkowników nie będzie z tego korzystać, więc możesz je pominąć",
                 "title": "Opcje zaawansowane"
@@ -178,6 +186,18 @@
                     "virtual_power": "Moc wirtualna (ręcznie)"
                 },
                 "title": "Wybierz typ sensora"
+            },
+            "utility_meter_options": {
+                "title": "Utility meter options",
+                "description": "Define the settings for utility meter creation here",
+                "data": {
+                    "utility_meter_types": "Cycles",
+                    "utility_meter_tariffs": "Tariffs"
+                },
+                "data_description": {
+                    "utility_meter_types": "Create utility meters for specified cycles",
+                    "utility_meter_tariffs": "A list of supported tariffs, leave empty if only a single tariff is needed."
+                }
             },
             "virtual_power": {
                 "data": {
@@ -244,6 +264,7 @@
                     "group_power_entities": "Członek encji mocy",
                     "hide_members": "Ukryj członków",
                     "ignore_unavailable_state": "Ignoruj stan niedostępny",
+                    "include_non_powercalc_sensors": "Include non powercalc sensors",
                     "max_power": "Maksymalna moc",
                     "min_power": "Minimalna moc",
                     "multiply_factor": "Mnożnik",
@@ -260,6 +281,7 @@
                     "unavailable_power": "Wartość mocy dla niedostęności",
                     "unit_of_measurement": "Jednostka pomiaru",
                     "update_frequency": "Częstotliwość aktualizacji",
+                    "utility_meter_tariffs": "Utility meter tariffs",
                     "value": "Wartość",
                     "value_template": "Szablon wartości"
                 },
@@ -274,6 +296,7 @@
                     "group_member_sensors": "Czujniki Powercalc do włączenia do grupy",
                     "group_power_entities": "Dodatkowe czujniki mocy (W) pochodzące z HA do włączenia",
                     "ignore_unavailable_state": "Przełącz to ustawienie, jeśli chcesz, aby czujnik mocy pozostał dostępny, nawet jeśli encja źródłowa jest niedostępna",
+                    "include_non_powercalc_sensors": "Control whether to include non powercalc sensors when using the area option",
                     "multiply_factor": "Mnoży obliczoną moc przez ten współczynnik. Może być przydatny dla grup świateł",
                     "multiply_factor_standby": "Czy zastosować mnożnik również do mocy w trybie gotowości",
                     "playbooks": "Wprowadź playbook w każdym wierszu. Przykład\n\nprogram1: pralka/program1.csv",
@@ -281,7 +304,8 @@
                     "repeat": "Przełącz, jeśli chcesz powtarzać playbook po jego zakończeniu",
                     "states_power": "Jedna para 'stan: moc' w każdym rzędzie, patrz przykład powyżej",
                     "sub_groups": "Wszystkie zawierające czujniki z wybranych podgrup zostaną również dodane do tej grupy",
-                    "unavailable_power": "Moc w W do rejestrowania, gdy encja źródłowa jest w stanie niedostępności (unavailable)"
+                    "unavailable_power": "Moc w W do rejestrowania, gdy encja źródłowa jest w stanie niedostępności (unavailable)",
+                    "utility_meter_tariffs": "A list of supported tariffs, leave empty if only a single tariff is needed."
                 }
             }
         }
@@ -330,6 +354,10 @@
                 }
             },
             "name": "Change GUI config"
+        },
+        "get_active_playbook": {
+            "description": "Get current running playbook",
+            "name": "Get active playbook"
         },
         "increase_daily_energy": {
             "description": "Zwiększa sensor o zadaną wartość.",

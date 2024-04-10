@@ -54,22 +54,26 @@
             "group": {
                 "data": {
                     "area": "Area",
-                    "device": "Device",
+                    "create_energy_sensor": "Create energy sensor",
                     "create_utility_meters": "Create utility meters",
+                    "device": "Device",
                     "group_energy_entities": "Additional energy entities",
                     "group_member_sensors": "Member powercalc sensors",
                     "group_power_entities": "Additional power entities",
                     "hide_members": "Hide members",
+                    "include_non_powercalc_sensors": "Include non powercalc sensors",
                     "name": "Name",
                     "sub_groups": "Sub groups",
                     "unique_id": "Unique id"
                 },
                 "data_description": {
                     "area": "Adds all power sensors from the specified area",
+                    "create_energy_sensor": "Whether powercalc needs to create a kWh sensor",
                     "device": "Add the group entities powercalc creates to an existing device",
                     "group_energy_entities": "Additional energy sensors (kWh) from your HA installation to include",
                     "group_member_sensors": "Powercalc sensors to include in the group",
                     "group_power_entities": "Additional power sensors (W) from your HA installation to include",
+                    "include_non_powercalc_sensors": "Control whether to include non powercalc sensors when using the area option",
                     "sub_groups": "All containing sensors from the selected subgroups will be added to this group as well"
                 },
                 "title": "Create a group sensor"
@@ -116,12 +120,14 @@
                 "data": {
                     "autostart": "Autostart",
                     "playbooks": "Playbooks",
-                    "repeat": "Repeat"
+                    "repeat": "Repeat",
+                    "state_trigger": "State trigger"
                 },
                 "data_description": {
                     "autostart": "Indicate to start a certain playbook when HA starts. i.e. 'program1'",
                     "playbooks": "Enter a playbook on each line. Example\n\nprogram1: washing_machine/program1.csv",
-                    "repeat": "Toggle when you want to keep repeating the playbook after it completes"
+                    "repeat": "Toggle when you want to keep repeating the playbook after it completes",
+                    "state_trigger": "Trigger a playbook based on a state change. Example\n\nplaying: program1"
                 },
                 "title": "Playbook config"
             },
@@ -181,6 +187,18 @@
                 },
                 "title": "Choose your sensor type"
             },
+            "utility_meter_options": {
+                "title": "Utility meter options",
+                "description": "Define the settings for utility meter creation here",
+                "data": {
+                    "utility_meter_types": "Cycles",
+                    "utility_meter_tariffs": "Tariffs"
+                },
+                "data_description": {
+                    "utility_meter_types": "Create utility meters for specified cycles",
+                    "utility_meter_tariffs": "A list of supported tariffs, leave empty if only a single tariff is needed."
+                }
+            },
             "virtual_power": {
                 "data": {
                     "create_energy_sensor": "Create energy sensor",
@@ -200,7 +218,7 @@
                     "standby_power": "Define the amount of power the device is consuming when in an OFF state",
                     "unique_id": "Specify a unique_id. This will allow to setup multiple power sensors for the same entity. When not specified it will take the unique_id of the source entity"
                 },
-                "description": "See the readme for more information about the possible strategies and configuration options",
+                "description": "See the readme for more information about the possible strategies and configuration options. Either source entity or name is required, or both.",
                 "title": "Create a virtual power sensor"
             },
             "wled": {
@@ -246,6 +264,7 @@
                     "group_power_entities": "Additional power entities",
                     "hide_members": "Hide members",
                     "ignore_unavailable_state": "Ignore unavailable state",
+                    "include_non_powercalc_sensors": "Include non powercalc sensors",
                     "max_power": "Max power",
                     "min_power": "Min power",
                     "multiply_factor": "Multiply factor",
@@ -277,6 +296,7 @@
                     "group_member_sensors": "Powercalc sensors to include in the group",
                     "group_power_entities": "Additional power sensors (W) from your HA installation to include",
                     "ignore_unavailable_state": "Toggle this setting when you want the power sensor to stay available even if the source entity is unavailable",
+                    "include_non_powercalc_sensors": "Control whether to include non powercalc sensors when using the area option",
                     "multiply_factor": "Multiplies the calculated power by this ratio. Can be useful for light groups",
                     "multiply_factor_standby": "Whether to also apply multiplication factor to standby power",
                     "playbooks": "Enter a playbook on each line. Example\n\nprogram1: washing_machine/program1.csv",
@@ -334,6 +354,10 @@
                 }
             },
             "name": "Change GUI config"
+        },
+        "get_active_playbook": {
+            "description": "Get current running playbook",
+            "name": "Get active playbook"
         },
         "increase_daily_energy": {
             "description": "Increases the sensor with a given amount.",

@@ -88,10 +88,12 @@ SENSOR_DESCRIPTIONS: Final[tuple[SensorEntityDescription, ...]] = (
     SensorEntityDescription(
         key="ev_battery_remain",
         name="EV Battery Level",
+        state_class=SensorStateClass.MEASUREMENT,
     ),
     SensorEntityDescription(
         key="ev_battery_capacity",
         name="EV Battery Capacity",
+        state_class=SensorStateClass.MEASUREMENT,
     ),
     SensorEntityDescription(
         key="_ev_driving_range",
@@ -256,11 +258,12 @@ async def async_setup_entry(
                 entities.append(
                     HyundaiKiaConnectSensor(coordinator, description, vehicle)
                 )
-        entities.append(
-            DailyDrivingStatsEntity(
-                coordinator, coordinator.vehicle_manager.vehicles[vehicle_id]
+        if vehicle.daily_stats:
+            entities.append(
+                DailyDrivingStatsEntity(
+                    coordinator, coordinator.vehicle_manager.vehicles[vehicle_id]
+                )
             )
-        )
         entities.append(
             VehicleEntity(coordinator, coordinator.vehicle_manager.vehicles[vehicle_id])
         )
