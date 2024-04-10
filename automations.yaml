@@ -1,386 +1,388 @@
-- id: "1666186950016"
+- id: '1666186950016'
   alias: Test Nest sonnette
-  description: ""
+  description: ''
   trigger:
-    - platform: device
-      device_id: 033b8589dd583f9142b48bd463dcccd0
-      domain: nest
-      type: doorbell_chime
-    - platform: device
-      device_id: 033b8589dd583f9142b48bd463dcccd0
-      domain: nest
-      type: camera_person
-      enabled: false
-    - platform: device
-      device_id: 033b8589dd583f9142b48bd463dcccd0
-      domain: nest
-      type: camera_motion
-      enabled: false
+  - platform: device
+    device_id: 033b8589dd583f9142b48bd463dcccd0
+    domain: nest
+    type: doorbell_chime
+  - platform: device
+    device_id: 033b8589dd583f9142b48bd463dcccd0
+    domain: nest
+    type: camera_person
+    enabled: false
+  - platform: device
+    device_id: 033b8589dd583f9142b48bd463dcccd0
+    domain: nest
+    type: camera_motion
+    enabled: false
   condition: []
   action:
-    - service: rest_command.gchat
-      data:
-        text: Sonette pressée!
+  - service: rest_command.gchat
+    data:
+      text: Sonette pressée!
   mode: single
-- id: "1669906661965"
+- id: '1669906661965'
   alias: Long-press office button
-  description: ""
+  description: ''
   trigger:
-    - device_id: bd42176d16a1d12f6fde55c147476465
-      domain: zha
-      platform: device
-      type: remote_button_long_press
-      subtype: remote_button_long_press
+  - device_id: bd42176d16a1d12f6fde55c147476465
+    domain: zha
+    platform: device
+    type: remote_button_long_press
+    subtype: remote_button_long_press
   condition: []
   action:
-    - service: script.turn_on
-      data: {}
-      target:
-        entity_id: script.preheat_car
+  - service: script.turn_on
+    data: {}
+    target:
+      entity_id: script.preheat_car
   mode: single
-- id: "1669906783150"
+- id: '1669906783150'
   alias: Press office button
-  description: ""
+  description: ''
   trigger:
-    - device_id: bd42176d16a1d12f6fde55c147476465
-      domain: zha
-      platform: device
-      type: remote_button_short_press
-      subtype: remote_button_short_press
+  - device_id: bd42176d16a1d12f6fde55c147476465
+    domain: zha
+    platform: device
+    type: remote_button_short_press
+    subtype: remote_button_short_press
   condition: []
   action:
-    - type: toggle
-      device_id: d437e500bc37e2cbd9119d9ae51214bf
-      entity_id: switch.vertical_monitor
-      domain: switch
-    - type: toggle
-      device_id: d437e500bc37e2cbd9119d9ae51214bf
-      entity_id: switch.hdr_monitor
-      domain: switch
+  - type: toggle
+    device_id: d437e500bc37e2cbd9119d9ae51214bf
+    entity_id: switch.vertical_monitor
+    domain: switch
+  - type: toggle
+    device_id: d437e500bc37e2cbd9119d9ae51214bf
+    entity_id: switch.hdr_monitor
+    domain: switch
   mode: single
-- id: "1669999603054"
+- id: '1669999603054'
   alias: Turn on D-Light when I am in a meeting
-  description: ""
+  description: ''
   trigger:
-    - platform: state
-      entity_id:
-        - binary_sensor.in_meeting
-      to: "on"
+  - platform: state
+    entity_id:
+    - binary_sensor.in_meeting
+    to: 'on'
   condition: []
   action:
-    - service: light.turn_on
-      data: {}
-      target:
-        entity_id: light.dlight
+  - service: light.turn_on
+    data: {}
+    target:
+      entity_id: light.dlight
   mode: single
-- id: "1676633819245"
+- id: '1676633819245'
   alias: Testing led strip
-  description: ""
+  description: ''
   trigger:
-    - device_id: bd42176d16a1d12f6fde55c147476465
-      domain: zha
-      platform: device
-      type: remote_button_double_press
-      subtype: remote_button_double_press
+  - device_id: bd42176d16a1d12f6fde55c147476465
+    domain: zha
+    platform: device
+    type: remote_button_double_press
+    subtype: remote_button_double_press
   condition: []
   action:
-    - type: toggle
-      device_id: f1e7b29bd824ec88bdf7a3b1a2f58916
-      entity_id: light.led_strip_light
-      domain: light
+  - type: toggle
+    device_id: f1e7b29bd824ec88bdf7a3b1a2f58916
+    entity_id: light.led_strip_light
+    domain: light
   mode: single
-- id: "1677099297248"
+- id: '1677099297248'
   alias: Aurore's bed lights
-  description: ""
+  description: ''
   trigger:
-    - device_id: 40e2c9d25a557a13b74303960127118d
-      domain: zha
-      platform: device
-      type: remote_button_short_press
-      subtype: turn_off
-    - device_id: e059cad12f0a2c750a56719a911dc8e6
-      domain: zha
-      platform: device
-      type: remote_button_short_press
-      subtype: turn_off
+  - device_id: 40e2c9d25a557a13b74303960127118d
+    domain: zha
+    platform: device
+    type: remote_button_short_press
+    subtype: turn_off
+  - device_id: e059cad12f0a2c750a56719a911dc8e6
+    domain: zha
+    platform: device
+    type: remote_button_short_press
+    subtype: turn_off
   condition: []
   action:
-    - type: toggle
-      device_id: cef49caed9c762db670b6d2a85a15832
-      entity_id: switch.aurore_bed_light_switch
-      domain: switch
+  - type: toggle
+    device_id: cef49caed9c762db670b6d2a85a15832
+    entity_id: switch.aurore_bed_light_switch
+    domain: switch
   mode: single
-- id: "1677698797768"
+- id: '1677698797768'
   alias: Aurore's room main light bulb
-  description: ""
+  description: ''
   trigger:
-    - device_id: 40e2c9d25a557a13b74303960127118d
-      domain: zha
-      platform: device
-      type: remote_button_short_press
-      subtype: turn_on
-    - device_id: e059cad12f0a2c750a56719a911dc8e6
-      domain: zha
-      platform: device
-      type: remote_button_short_press
-      subtype: turn_on
+  - device_id: 40e2c9d25a557a13b74303960127118d
+    domain: zha
+    platform: device
+    type: remote_button_short_press
+    subtype: turn_on
+  - device_id: e059cad12f0a2c750a56719a911dc8e6
+    domain: zha
+    platform: device
+    type: remote_button_short_press
+    subtype: turn_on
   condition: []
   action:
-    - type: toggle
-      device_id: e87ea47d487bcb4708a442aa8ebacfb1
-      entity_id: light.aurores_light_bulb
-      domain: light
+  - type: toggle
+    device_id: e87ea47d487bcb4708a442aa8ebacfb1
+    entity_id: light.aurores_light_bulb
+    domain: light
   mode: single
-- id: "1677701807876"
+- id: '1677701807876'
   alias: Aurore's Light color temperature up
-  description: ""
+  description: ''
   trigger:
-    - device_id: e059cad12f0a2c750a56719a911dc8e6
-      domain: zha
-      platform: device
-      type: remote_button_short_press
-      subtype: right
+  - device_id: e059cad12f0a2c750a56719a911dc8e6
+    domain: zha
+    platform: device
+    type: remote_button_short_press
+    subtype: right
   condition:
-    - condition: device
-      type: is_on
-      device_id: e87ea47d487bcb4708a442aa8ebacfb1
-      entity_id: light.aurores_light_bulb
-      domain: light
+  - condition: device
+    type: is_on
+    device_id: e87ea47d487bcb4708a442aa8ebacfb1
+    entity_id: light.aurores_light_bulb
+    domain: light
   action:
-    - device_id: e87ea47d487bcb4708a442aa8ebacfb1
-      domain: number
-      entity_id: number.aurores_light_bulb_start_up_color_temperature
-      type: set_value
-      value:
-        "{{ [states('number.aurores_light_bulb_start_up_color_temperature') |
-        int + 40 , 255] | min | float }}"
+  - device_id: e87ea47d487bcb4708a442aa8ebacfb1
+    domain: number
+    entity_id: number.aurores_light_bulb_start_up_color_temperature
+    type: set_value
+    value: '{{ [states(''number.aurores_light_bulb_start_up_color_temperature'') |
+      int + 40 , 255] | min | float }}'
   mode: single
-- id: "1677701807876"
+- id: '1677701807876'
   alias: Aurore's Light color temperature down
-  description: ""
+  description: ''
   trigger:
-    - device_id: e059cad12f0a2c750a56719a911dc8e6
-      domain: zha
-      platform: device
-      type: remote_button_short_press
-      subtype: left
+  - device_id: e059cad12f0a2c750a56719a911dc8e6
+    domain: zha
+    platform: device
+    type: remote_button_short_press
+    subtype: left
   condition:
-    - condition: device
-      type: is_on
-      device_id: e87ea47d487bcb4708a442aa8ebacfb1
-      entity_id: light.aurores_light_bulb
-      domain: light
+  - condition: device
+    type: is_on
+    device_id: e87ea47d487bcb4708a442aa8ebacfb1
+    entity_id: light.aurores_light_bulb
+    domain: light
   action:
-    - device_id: e87ea47d487bcb4708a442aa8ebacfb1
-      domain: number
-      entity_id: number.aurores_light_bulb_start_up_color_temperature
-      type: set_value
-      value:
-        "{{ [states('number.aurores_light_bulb_start_up_color_temperature') |
-        int - 40 , 255] | min | float }}"
+  - device_id: e87ea47d487bcb4708a442aa8ebacfb1
+    domain: number
+    entity_id: number.aurores_light_bulb_start_up_color_temperature
+    type: set_value
+    value: '{{ [states(''number.aurores_light_bulb_start_up_color_temperature'') |
+      int - 40 , 255] | min | float }}'
   mode: single
-- id: "1678555411746"
+- id: '1678555411746'
   alias: Allumer les lumières de la terrasse au coucher du soleil
-  description: ""
+  description: ''
   trigger:
-    - platform: sun
-      event: sunset
-      offset: 00:30
+  - platform: sun
+    event: sunset
+    offset: 00:30
   condition:
+  - condition: state
+    entity_id: binary_sensor.people_home
+    state: 'on'
+  action:
+  - type: turn_on
+    device_id: 5e75d15e67ac1988a925403412f6cd1a
+    entity_id: light.lumiere_exterieure_1_forceonlight
+    domain: light
+    enabled: false
+  - type: turn_on
+    device_id: c2eedf7108fcbb4f944ae4b273d0227b
+    entity_id: light.lumiere_exterieure_2_forceonlight
+    domain: light
+  - type: turn_on
+    device_id: e310bad303788f20ec0ac63b758667f1
+    entity_id: light.lumiere_exterieure_3_forceonlight
+    domain: light
+  mode: single
+- id: '1678555471570'
+  alias: Extinction des feux
+  description: ''
+  trigger:
+  - platform: time
+    at: '23:00:00'
+  condition: []
+  action:
+  - type: turn_off
+    device_id: 5e75d15e67ac1988a925403412f6cd1a
+    entity_id: light.lumiere_exterieure_1_forceonlight
+    domain: light
+  - type: turn_off
+    device_id: c2eedf7108fcbb4f944ae4b273d0227b
+    entity_id: light.lumiere_exterieure_2_forceonlight
+    domain: light
+  - type: turn_off
+    device_id: e310bad303788f20ec0ac63b758667f1
+    entity_id: light.lumiere_exterieure_3_forceonlight
+    domain: light
+  - service: select.select_option
+    data:
+      option: 'Off'
+    target:
+      entity_id: select.aurores_light_bulb_start_up_behavior
+  - type: turn_off
+    device_id: cef49caed9c762db670b6d2a85a15832
+    entity_id: switch.aurore_bed_light_switch
+    domain: switch
+  - type: turn_off
+    device_id: d437e500bc37e2cbd9119d9ae51214bf
+    entity_id: switch.hdr_monitor
+    domain: switch
+  - type: turn_off
+    device_id: d437e500bc37e2cbd9119d9ae51214bf
+    entity_id: switch.vertical_monitor
+    domain: switch
+  - type: turn_off
+    device_id: 93b4f42fad374b6536e6a0602f1708b0
+    entity_id: 0f22d93bb08479d66e2679f5bb3cd0aa
+    domain: switch
+  mode: single
+- id: '1678917872103'
+  alias: Turn on Bathroom heating
+  description: ''
+  trigger:
+  - device_id: 1268d655a0515532f1cef89d736e539f
+    domain: zha
+    platform: device
+    type: remote_button_short_press
+    subtype: button
+  - device_id: 1268d655a0515532f1cef89d736e539f
+    domain: zha
+    platform: device
+    type: remote_button_short_press
+    subtype: button_1
+  condition: []
+  action:
+  - type: turn_on
+    device_id: 4a6b0aa18628bded0b46b3928ad3ba2d
+    entity_id: switch.chauffage_sdb
+    domain: switch
+  mode: single
+- id: '1678959025833'
+  alias: Turn off bathroom heating
+  description: ''
+  trigger:
+  - platform: device
+    type: turned_off
+    device_id: 1268d655a0515532f1cef89d736e539f
+    entity_id: switch.bouton_sdb_switch
+    domain: switch
+  - platform: event
+    event_type: ''
+    event_data:
+      level: 63
+      transition_time: 1
+      options_mask: None
+      options_override: None
+  condition: []
+  action:
+  - type: turn_off
+    device_id: 4a6b0aa18628bded0b46b3928ad3ba2d
+    entity_id: switch.chauffage_sdb
+    domain: switch
+  mode: single
+- id: '1679085142205'
+  alias: During the day Aurore's light bulb default behavior is On
+  description: ''
+  trigger:
+  - platform: time
+    at: 07:00:00
+  condition: []
+  action:
+  - service: select.select_option
+    data:
+      option: 'On'
+    target:
+      entity_id: select.aurores_light_bulb_start_up_behavior
+  mode: single
+- id: '1679262865155'
+  alias: Turn on the pond's pump during off-peak hours
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - binary_sensor.heure_creuse
+    to: 'on'
+  condition: []
+  action:
+  - type: turn_on
+    device_id: a48ab46ddad605396107125f1515f518
+    entity_id: light.pompe_failsafe_light
+    domain: light
+  mode: single
+- id: '1679262911117'
+  alias: Turn off the pond's pump during peak hours
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - binary_sensor.heure_creuse
+    to: 'off'
+  - platform: time
+    at: '14:00:00'
+  condition:
+  - condition: state
+    entity_id: binary_sensor.heure_creuse
+    state: 'off'
+  action:
+  - type: turn_off
+    device_id: a48ab46ddad605396107125f1515f518
+    entity_id: light.pompe_failsafe_light
+    domain: light
+  mode: single
+- id: '1685014375600'
+  alias: Turn on pond's pump when we are here during lunch time
+  description: ''
+  trigger:
+  - platform: time
+    at: '12:00:00'
+  condition:
+  - condition: or
+    conditions:
+    - condition: state
+      entity_id: input_boolean.visitors
+      state: 'on'
     - condition: state
       entity_id: binary_sensor.people_home
-      state: "on"
+      state: 'on'
   action:
-    - type: turn_on
-      device_id: 5e75d15e67ac1988a925403412f6cd1a
-      entity_id: light.lumiere_exterieure_1_forceonlight
-      domain: light
-      enabled: false
-    - type: turn_on
-      device_id: c2eedf7108fcbb4f944ae4b273d0227b
-      entity_id: light.lumiere_exterieure_2_forceonlight
-      domain: light
-    - type: turn_on
-      device_id: e310bad303788f20ec0ac63b758667f1
-      entity_id: light.lumiere_exterieure_3_forceonlight
-      domain: light
+  - type: turn_on
+    device_id: 649f27a64226d45fe62a3f84f4f2d4b4
+    entity_id: switch.pompe_switch
+    domain: switch
   mode: single
-- id: "1678555471570"
-  alias: Extinction des feux
-  description: ""
-  trigger:
-    - platform: time
-      at: "23:00:00"
-  condition: []
-  action:
-    - type: turn_off
-      device_id: 5e75d15e67ac1988a925403412f6cd1a
-      entity_id: light.lumiere_exterieure_1_forceonlight
-      domain: light
-    - type: turn_off
-      device_id: c2eedf7108fcbb4f944ae4b273d0227b
-      entity_id: light.lumiere_exterieure_2_forceonlight
-      domain: light
-    - type: turn_off
-      device_id: e310bad303788f20ec0ac63b758667f1
-      entity_id: light.lumiere_exterieure_3_forceonlight
-      domain: light
-    - service: select.select_option
-      data:
-        option: "Off"
-      target:
-        entity_id: select.aurores_light_bulb_start_up_behavior
-    - type: turn_off
-      device_id: cef49caed9c762db670b6d2a85a15832
-      entity_id: switch.aurore_bed_light_switch
-      domain: switch
-    - type: turn_off
-      device_id: d437e500bc37e2cbd9119d9ae51214bf
-      entity_id: switch.hdr_monitor
-      domain: switch
-    - type: turn_off
-      device_id: d437e500bc37e2cbd9119d9ae51214bf
-      entity_id: switch.vertical_monitor
-      domain: switch
-  mode: single
-- id: "1678917872103"
-  alias: Turn on Bathroom heating
-  description: ""
-  trigger:
-    - device_id: 1268d655a0515532f1cef89d736e539f
-      domain: zha
-      platform: device
-      type: remote_button_short_press
-      subtype: button
-    - device_id: 1268d655a0515532f1cef89d736e539f
-      domain: zha
-      platform: device
-      type: remote_button_short_press
-      subtype: button_1
-  condition: []
-  action:
-    - type: turn_on
-      device_id: 4a6b0aa18628bded0b46b3928ad3ba2d
-      entity_id: switch.chauffage_sdb
-      domain: switch
-  mode: single
-- id: "1678959025833"
-  alias: Turn off bathroom heating
-  description: ""
-  trigger:
-    - platform: device
-      type: turned_off
-      device_id: 1268d655a0515532f1cef89d736e539f
-      entity_id: switch.bouton_sdb_switch
-      domain: switch
-    - platform: event
-      event_type: ""
-      event_data:
-        level: 63
-        transition_time: 1
-        options_mask: None
-        options_override: None
-  condition: []
-  action:
-    - type: turn_off
-      device_id: 4a6b0aa18628bded0b46b3928ad3ba2d
-      entity_id: switch.chauffage_sdb
-      domain: switch
-  mode: single
-- id: "1679085142205"
-  alias: During the day Aurore's light bulb default behavior is On
-  description: ""
-  trigger:
-    - platform: time
-      at: 07:00:00
-  condition: []
-  action:
-    - service: select.select_option
-      data:
-        option: "On"
-      target:
-        entity_id: select.aurores_light_bulb_start_up_behavior
-  mode: single
-- id: "1679262865155"
-  alias: Turn on the pond's pump during off-peak hours
-  description: ""
-  trigger:
-    - platform: state
-      entity_id:
-        - binary_sensor.heure_creuse
-      to: "on"
-  condition: []
-  action:
-    - type: turn_on
-      device_id: a48ab46ddad605396107125f1515f518
-      entity_id: light.pompe_failsafe_light
-      domain: light
-  mode: single
-- id: "1679262911117"
-  alias: Turn off the pond's pump during peak hours
-  description: ""
-  trigger:
-    - platform: state
-      entity_id:
-        - binary_sensor.heure_creuse
-      to: "off"
-    - platform: time
-      at: "14:00:00"
-  condition:
-    - condition: state
-      entity_id: binary_sensor.heure_creuse
-      state: "off"
-  action:
-    - type: turn_off
-      device_id: a48ab46ddad605396107125f1515f518
-      entity_id: light.pompe_failsafe_light
-      domain: light
-  mode: single
-- id: "1685014375600"
-  alias: Turn on pond's pump when we are here during lunch time
-  description: ""
-  trigger:
-    - platform: time
-      at: "12:00:00"
-  condition:
-    - condition: or
-      conditions:
-        - condition: state
-          entity_id: input_boolean.visitors
-          state: "on"
-        - condition: state
-          entity_id: binary_sensor.people_home
-          state: "on"
-  action:
-    - type: turn_on
-      device_id: 649f27a64226d45fe62a3f84f4f2d4b4
-      entity_id: switch.pompe_switch
-      domain: switch
-  mode: single
-- id: "1683644818608"
+- id: '1683644818608'
   alias: Switch off bike's chargeur after some time to save the battery
-  description: ""
+  description: ''
   trigger:
-    - type: power
-      platform: device
-      device_id: f88fc7c7685911a6f527510503647b60
-      entity_id: sensor.chargeur_velo_active_power
-      domain: sensor
-      above: 100
-      for:
-        hours: 6
-        minutes: 0
-        seconds: 0
+  - type: power
+    platform: device
+    device_id: f88fc7c7685911a6f527510503647b60
+    entity_id: sensor.chargeur_velo_active_power
+    domain: sensor
+    above: 100
+    for:
+      hours: 6
+      minutes: 0
+      seconds: 0
   condition: []
   action:
-    - type: turn_off
-      device_id: f88fc7c7685911a6f527510503647b60
-      entity_id: switch.chargeur_velo_switch
-      domain: switch
+  - type: turn_off
+    device_id: f88fc7c7685911a6f527510503647b60
+    entity_id: switch.chargeur_velo_switch
+    domain: switch
   mode: single
-- id: "1684424597025"
+- id: '1684424597025'
   alias: Disable vacuum camera update when docked
-  description: ""
+  description: ''
   use_blueprint:
     path: homeassistant/deactivate_vacuum_sync.yaml
     input:
@@ -388,148 +390,168 @@
       camera: camera.rondelle_s_map
 - id: toggle_bike_charger_peak_hours
   alias: Turn on the bike's chargeur only during off-peak hours
-  description: ""
+  description: ''
   trigger:
-    - platform: state
-      entity_id:
-        - binary_sensor.heure_creuse
-      to: "on"
+  - platform: state
+    entity_id:
+    - binary_sensor.heure_creuse
+    to: 'on'
   condition: []
   action:
-    - type:
-        "{% if binary_sensor.heure_creuse.state = true %}\n  turn_on\n{% else %}\n
-        \ turn_off\n{% endif %}\n"
-      device_id: f88fc7c7685911a6f527510503647b60
-      entity_id: switch.chargeur_velo_switch
-      domain: switch
+  - type: "{% if binary_sensor.heure_creuse.state = true %}\n  turn_on\n{% else %}\n
+      \ turn_off\n{% endif %}\n"
+    device_id: f88fc7c7685911a6f527510503647b60
+    entity_id: switch.chargeur_velo_switch
+    domain: switch
   mode: single
-- id: "1686121963583"
+- id: '1686121963583'
   alias: Turn off bike's charger during peak hours
-  description: ""
+  description: ''
   trigger:
-    - platform: state
-      entity_id:
-        - binary_sensor.heure_creuse
-      to: "off"
+  - platform: state
+    entity_id:
+    - binary_sensor.heure_creuse
+    to: 'off'
   condition: []
   action:
-    - type: turn_off
-      device_id: f88fc7c7685911a6f527510503647b60
-      entity_id: switch.chargeur_velo_switch
-      domain: switch
+  - type: turn_off
+    device_id: f88fc7c7685911a6f527510503647b60
+    entity_id: switch.chargeur_velo_switch
+    domain: switch
   mode: single
-- id: "1686122015021"
+- id: '1686122015021'
   alias: Turn on the bike's charger during off-peak hours
-  description: ""
+  description: ''
   trigger:
-    - platform: state
-      entity_id:
-        - binary_sensor.heure_creuse
-      to: "on"
+  - platform: state
+    entity_id:
+    - binary_sensor.heure_creuse
+    to: 'on'
   condition: []
   action:
-    - type: turn_on
-      device_id: f88fc7c7685911a6f527510503647b60
-      entity_id: switch.chargeur_velo_switch
-      domain: switch
+  - type: turn_on
+    device_id: f88fc7c7685911a6f527510503647b60
+    entity_id: switch.chargeur_velo_switch
+    domain: switch
   mode: single
-- id: "1687101568970"
+- id: '1687101568970'
   alias: Turn on Govee LED strip when we switch on the TV during the evening
-  description: ""
+  description: ''
   trigger:
-    - platform: state
-      entity_id:
-        - binary_sensor.tv_is_in_use
-      to: "on"
+  - platform: state
+    entity_id:
+    - binary_sensor.tv_is_in_use
+    to: 'on'
   condition:
-    - condition: or
-      conditions:
-        - condition: time
-          after: "21:00:00"
-        - condition: sun
-          after: sunset
-        - condition: sun
-          before: sunrise
+  - condition: or
+    conditions:
+    - condition: time
+      after: '21:00:00'
+    - condition: sun
+      after: sunset
+    - condition: sun
+      before: sunrise
   action:
-    - type: turn_on
-      device_id: 58be483dcfdf57ea1c31a2fb4c329411
-      entity_id: light.govee_tv
-      domain: light
+  - type: turn_on
+    device_id: 58be483dcfdf57ea1c31a2fb4c329411
+    entity_id: light.govee_tv
+    domain: light
   mode: single
-- id: "1687101610893"
+- id: '1687101610893'
   alias: Turn off Govee LED strip when we switch off the TV
-  description: ""
+  description: ''
   trigger:
-    - platform: state
-      entity_id:
-        - binary_sensor.tv_is_in_use
-      to: "off"
+  - platform: state
+    entity_id:
+    - binary_sensor.tv_is_in_use
+    to: 'off'
   condition: []
   action:
-    - type: turn_off
-      device_id: 58be483dcfdf57ea1c31a2fb4c329411
-      entity_id: light.govee_tv
-      domain: light
+  - type: turn_off
+    device_id: 58be483dcfdf57ea1c31a2fb4c329411
+    entity_id: light.govee_tv
+    domain: light
   mode: single
-- id: "1687949528073"
+- id: '1687949528073'
   alias: Close water if a leak is detected
-  description: ""
+  description: ''
   trigger:
-    - type: moist
-      platform: device
-      device_id: dd451c8daffe059f22ccc2209342cbc2
-      entity_id: binary_sensor.flood_detector_basement_flood
-      domain: binary_sensor
+  - type: moist
+    platform: device
+    device_id: dd451c8daffe059f22ccc2209342cbc2
+    entity_id: binary_sensor.flood_detector_basement_flood
+    domain: binary_sensor
   condition: []
   action:
-    - type: turn_off
-      device_id: 95c85383ea986cdfab0a3fe9c33f7a49
-      entity_id: light.vanne_light
-      domain: light
+  - type: turn_off
+    device_id: 95c85383ea986cdfab0a3fe9c33f7a49
+    entity_id: light.vanne_light
+    domain: light
   mode: single
-- id: "1688126732710"
-  alias: "Sécurité: couper l'eau si une fuite est détectée (pour l'instant dans
-    le jardin)"
-  description: ""
+- id: '1688126732710'
+  alias: 'Sécurité: couper l''eau si une fuite est détectée (pour l''instant dans
+    le jardin)'
+  description: ''
   trigger:
-    - type: humidity
-      platform: device
-      device_id: cad5fd413dbabbb36bdee8579c03dab8
-      entity_id: sensor.potager_soil_moisture
-      domain: sensor
-      above: 95
-      for:
-        hours: 0
-        minutes: 15
-        seconds: 0
+  - type: humidity
+    platform: device
+    device_id: cad5fd413dbabbb36bdee8579c03dab8
+    entity_id: sensor.potager_soil_moisture
+    domain: sensor
+    above: 95
+    for:
+      hours: 0
+      minutes: 15
+      seconds: 0
   condition:
-    - condition: state
-      entity_id: binary_sensor.people_home
-      state: "off"
+  - condition: state
+    entity_id: binary_sensor.people_home
+    state: 'off'
   action:
-    - type: turn_off
-      device_id: 95c85383ea986cdfab0a3fe9c33f7a49
-      entity_id: light.vanne_light
-      domain: light
+  - type: turn_off
+    device_id: 95c85383ea986cdfab0a3fe9c33f7a49
+    entity_id: light.vanne_light
+    domain: light
   mode: single
-- id: "1688200212515"
+- id: '1688200212515'
   alias: Basement stairs light when motion detected
-  description: ""
+  description: ''
   trigger:
-    - type: motion
-      platform: device
-      device_id: 9c37dc10f4cbe78c564574ef700d2689
-      entity_id: binary_sensor.motion_sensor_basement_stairs_motion
-      domain: binary_sensor
+  - type: motion
+    platform: device
+    device_id: 9c37dc10f4cbe78c564574ef700d2689
+    entity_id: binary_sensor.motion_sensor_basement_stairs_motion
+    domain: binary_sensor
   condition: []
   action:
   - type: turn_on
     device_id: 697f0a9d8354bee483e0058a6e8b5410
     entity_id: light.basement_stairs_light_light
     domain: light
-  #    brightness_pct: 54
-  mode: restart
-- id: '1688200466384'
+  - wait_for_trigger:
+    - type: no_motion
+      platform: device
+      device_id: 9c37dc10f4cbe78c564574ef700d2689
+      entity_id: 2247856e02bf3556557c139acc6bb72e
+      domain: binary_sensor
+      for:
+        hours: 0
+        minutes: 1
+        seconds: 0
+    enabled: true
+  - type: turn_off
+    device_id: 697f0a9d8354bee483e0058a6e8b5410
+    entity_id: ad28d0c88258e744ab5a720291522f3b
+    domain: light
+    enabled: true
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 15
+      milliseconds: 0
+  mode: single
+- &id001
+  id: '1688200466384'
   alias: Basement stairs lights off when motion stopped
   description: ''
   trigger:
@@ -544,161 +566,268 @@
       seconds: 0
   condition: []
   action:
-  - service: light.turn_off
-    data:
-      transition: 30
-    target:
-      entity_id: light.basement_stairs_light_light
-      domain: light
-      brightness_pct: 54
+  - type: turn_off
+    device_id: 697f0a9d8354bee483e0058a6e8b5410
+    entity_id: ad28d0c88258e744ab5a720291522f3b
+    domain: light
   mode: restart
-- id: "1688200466384"
-  alias: Basement stairs lights off when motion stopped
-  description: ""
-  trigger:
-    - type: no_motion
-      platform: device
-      device_id: 9c37dc10f4cbe78c564574ef700d2689
-      entity_id: binary_sensor.motion_sensor_basement_stairs_motion
-      domain: binary_sensor
-      for:
-        hours: 0
-        minutes: 1
-        seconds: 0
-  condition: []
-  action:
-    - service: light.turn_off
-      data:
-        transition: 30
-      target:
-        entity_id: light.basement_stairs_light_light
-  mode: restart
-- id: "1689543800532"
+- *id001
+- id: '1689543800532'
   alias: Flood detected
-  description: ""
+  description: ''
   trigger:
-    - type: moist
-      platform: device
-      device_id: 2a230f2371c0d65ab5cc143dbd0b7df3
-      entity_id: 4b6d3f99a99a0d92c0de91ac66d99384
-      domain: binary_sensor
-      id: flood_in_kitchen
-    - type: moist
-      platform: device
-      device_id: dd451c8daffe059f22ccc2209342cbc2
-      entity_id: 915a11f853df87ec87528861360129e7
-      domain: binary_sensor
-      id: flood_in_basement
+  - type: moist
+    platform: device
+    device_id: 2a230f2371c0d65ab5cc143dbd0b7df3
+    entity_id: 4b6d3f99a99a0d92c0de91ac66d99384
+    domain: binary_sensor
+    id: flood_in_kitchen
+  - type: moist
+    platform: device
+    device_id: dd451c8daffe059f22ccc2209342cbc2
+    entity_id: 915a11f853df87ec87528861360129e7
+    domain: binary_sensor
+    id: flood_in_basement
   condition: []
   action:
-    - choose:
-        - conditions:
-            - condition: trigger
-              id:
-                - flood_in_kitchen
-          sequence:
-            - service: rest_command.gchatalert
-              data:
-                text: Fuite dans la cuisine !
-        - conditions:
-            - condition: trigger
-              id:
-                - flood_in_basement
-          sequence:
-            - service: rest_command.gchatalert
-              data:
-                text: Fuite dans le sous-sol !
-    - type: turn_off
-      device_id: 95c85383ea986cdfab0a3fe9c33f7a49
-      entity_id: light.vanne_light
-      domain: light
+  - choose:
+    - conditions:
+      - condition: trigger
+        id:
+        - flood_in_kitchen
+      sequence:
+      - service: rest_command.gchatalert
+        data:
+          text: Fuite dans la cuisine !
+    - conditions:
+      - condition: trigger
+        id:
+        - flood_in_basement
+      sequence:
+      - service: rest_command.gchatalert
+        data:
+          text: Fuite dans le sous-sol !
+  - type: turn_off
+    device_id: 95c85383ea986cdfab0a3fe9c33f7a49
+    entity_id: light.vanne_light
+    domain: light
   mode: single
-- id: "1689544234632"
-  alias: "Cannes: Someone using the lights"
-  description: ""
+- id: '1689544234632'
+  alias: 'Cannes: Someone using the lights'
+  description: ''
   trigger:
-    - platform: device
-      type: changed_states
-      device_id: 67d10f5272ba4b86c29ef8b634bcf038
-      entity_id: c942d0966f6cc63a038dee34afa3685b
-      domain: light
-    - platform: device
-      type: changed_states
-      device_id: a075d0a16f2087a9d7f39d20a01cd8df
-      entity_id: a2304866e16ea00e44a9547079696d8f
-      domain: light
+  - platform: device
+    type: changed_states
+    device_id: 67d10f5272ba4b86c29ef8b634bcf038
+    entity_id: c942d0966f6cc63a038dee34afa3685b
+    domain: light
+  - platform: device
+    type: changed_states
+    device_id: a075d0a16f2087a9d7f39d20a01cd8df
+    entity_id: a2304866e16ea00e44a9547079696d8f
+    domain: light
   condition:
-    - condition: not
-      conditions:
-        - condition: zone
-          entity_id: person.guillaume
-          zone: zone.cannes
+  - condition: not
+    conditions:
+    - condition: zone
+      entity_id: person.guillaume
+      zone: zone.cannes
   action:
-    - service: rest_command.gchat
-      data:
-        text: Un locataire est en train de jouer avec les lumières de Cannes.
+  - service: rest_command.gchat
+    data:
+      text: Un locataire est en train de jouer avec les lumières de Cannes.
   mode: single
-- id: "1689544847933"
-  alias: La Plagne
-  description:
-    Alert if the heating still works while the resort should be closed
+- id: '1689544847933'
+  alias: Conso anormale à La Plagne
+  description: Alert if the heating still works while the resort should be closed
     and we're not there.
   trigger:
-    - platform: numeric_state
-      entity_id: sensor.myenedis_19677423985708
-      for:
-        hours: 1
-        minutes: 0
-        seconds: 0
-      above: 2
+  - platform: numeric_state
+    entity_id: sensor.myenedis_19677423985708
+    for:
+      hours: 1
+      minutes: 0
+      seconds: 0
+    above: 2
   condition:
-    - condition: not
-      conditions:
-        - condition: zone
-          entity_id: person.guillaume
-          zone: zone.la_plagne
-        - condition: template
-          value_template: "{% set n = now() %}
+  - condition: not
+    conditions:
+    - condition: zone
+      entity_id: person.guillaume
+      zone: zone.la_plagne
+    - condition: template
+      value_template: '{% set n = now() %}
 
-            {{ n.month < 12 and ( n.month > 5 or ( n.month == 5 and n.day <= 15 ) ) }}"
+        {{ n.month < 12 and ( n.month > 5 or ( n.month == 5 and n.day <= 15 ) ) }}'
   action:
-    - service: rest_command.gchat
-      data:
-        text: Chauffage en fonctionnement à La Plagne.
+  - service: rest_command.gchat
+    data:
+      text: Chauffage en fonctionnement à La Plagne.
   mode: single
-- id: "1697917560752"
-  alias: "Fuite au sous-sol "
-  description: ""
+- id: '1697917560752'
+  alias: 'Fuite au sous-sol '
+  description: ''
   trigger:
-    - type: moist
-      platform: device
-      device_id: 1182ddc99c6d86a6f5f82b0e05170b3f
-      entity_id: 5cff1292faeb8ba8417017b5a3440c65
-      domain: binary_sensor
-      for:
-        hours: 0
-        minutes: 2
-        seconds: 0
-    - type: moist
-      platform: device
-      device_id: 2904f86b89a60a20afcf47e53bec80a8
-      entity_id: 2c5888e5f268ec1d2ffc9720e0eb5849
-      domain: binary_sensor
-      for:
-        hours: 0
-        minutes: 2
-        seconds: 0
+  - type: moist
+    platform: device
+    device_id: 1182ddc99c6d86a6f5f82b0e05170b3f
+    entity_id: 5cff1292faeb8ba8417017b5a3440c65
+    domain: binary_sensor
+    for:
+      hours: 0
+      minutes: 2
+      seconds: 0
+  - type: moist
+    platform: device
+    device_id: 2904f86b89a60a20afcf47e53bec80a8
+    entity_id: 2c5888e5f268ec1d2ffc9720e0eb5849
+    domain: binary_sensor
+    for:
+      hours: 0
+      minutes: 2
+      seconds: 0
   condition: []
   action:
-    - service: rest_command.gchatalert
-      data:
-        text: Fuite au sous-sol !!!
-    - service: tts.google_say
-      entity_id: all
-      data:
-        message: Fuite détectée !
-    - service: notify.mobile_app_pixel_7_pro
-      data:
-        message: "Fuite détectée "
-        title: Fuite
+  - service: rest_command.gchatalert
+    data:
+      text: Fuite au sous-sol !!!
+  - service: tts.google_say
+    entity_id: all
+    data:
+      message: Fuite détectée !
+  - service: notify.mobile_app_pixel_7_pro
+    data:
+      message: 'Fuite détectée '
+      title: Fuite
+  mode: single
+- id: '1701885267125'
+  alias: 'Turn on Guirlande '
+  description: ''
+  trigger:
+  - platform: sun
+    event: sunset
+    offset: 0
+  condition: []
+  action:
+  - type: turn_on
+    device_id: 93b4f42fad374b6536e6a0602f1708b0
+    entity_id: 0f22d93bb08479d66e2679f5bb3cd0aa
+    domain: switch
+  mode: single
+- id: '1701885292744'
+  alias: 'Turn off Guirlande '
+  description: ''
+  trigger:
+  - platform: device
+    device_id: 98ca57dc34f30913565109817baf591f
+    domain: cover
+    entity_id: ed1cfca6e4f23b27177bdff5b92dd33b
+    type: closed
+    for:
+      hours: 0
+      minutes: 10
+      seconds: 0
+  condition: []
+  action:
+  - type: turn_off
+    device_id: 93b4f42fad374b6536e6a0602f1708b0
+    entity_id: 0f22d93bb08479d66e2679f5bb3cd0aa
+    domain: switch
+  - type: turn_off
+    device_id: 5e75d15e67ac1988a925403412f6cd1a
+    entity_id: bb8311f3e6def79849d52135f7f1dc0c
+    domain: light
+  - type: turn_off
+    device_id: c2eedf7108fcbb4f944ae4b273d0227b
+    entity_id: d57a58e9d09d56214d1fa00eda9917b9
+    domain: light
+  - type: turn_off
+    device_id: e310bad303788f20ec0ac63b758667f1
+    entity_id: eac3459946c00fb182e1aa26687ec3ed
+    domain: light
+  mode: single
+- id: '1703071835981'
+  alias: Conso heures pleines/creuses
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - binary_sensor.heure_creuse
+  condition: []
+  action:
+  - if:
+    - condition: state
+      entity_id: binary_sensor.heure_creuse
+      state: 'on'
+    then:
+    - device_id: 1a214649b9b77e47ee787c2109d1e2e2
+      domain: select
+      entity_id: 476a709158fbee446d7c0eee2661975d
+      type: select_option
+      option: Heures Creuses
+    - device_id: 1a214649b9b77e47ee787c2109d1e2e2
+      domain: select
+      entity_id: f6d4a900e165cafd27e94fbd4e7b3f15
+      type: select_option
+      option: Heures creuses
+    else:
+    - device_id: 1a214649b9b77e47ee787c2109d1e2e2
+      domain: select
+      entity_id: 476a709158fbee446d7c0eee2661975d
+      type: select_option
+      option: Heures pleines
+    - device_id: 1a214649b9b77e47ee787c2109d1e2e2
+      domain: select
+      entity_id: f6d4a900e165cafd27e94fbd4e7b3f15
+      type: select_option
+      option: Heures pleines
+  mode: single
+- id: '1704463513006'
+  alias: Alert when RPi power isn't enough
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - binary_sensor.rpi_power_status
+    to: 'on'
+  condition: []
+  action:
+  - service: notify.mobile_app_pixel_7_pro
+    metadata: {}
+    data:
+      message: Problème d'alimentaiton de la RPi
+      title: ⚠️Alim
+  - service: notify.slack
+    metadata: {}
+    data:
+      title: ⚠️Alim
+      message: Problème d'alimentaiton de la RPi
+  - service: rest_command.gchatalert
+    data:
+      text: Problème d'alimentaiton de la RPi
+  mode: single
+- id: '1707984261282'
+  alias: Close covers at sunset
+  description: ''
+  trigger:
+  - platform: sun
+    event: sunset
+    offset: 0
+  condition:
+  - condition: numeric_state
+    entity_id: sensor.temperature_exterieure_solisart
+    below: 20
+  action:
+  - device_id: dfe890255b2aec25d04652bf3f562bcb
+    domain: cover
+    entity_id: 9d96788bbf491daa38a43974d3af81fd
+    type: close
+  - device_id: 8f16b93c4fae1055fc21ef57afca5b0f
+    domain: cover
+    entity_id: 5159b1462f01722c359983c04fea0e28
+    type: close
+  - device_id: 733eb70641efac866005440f0d764623
+    domain: cover
+    entity_id: ad9bb28acca59679697828aaba529647
+    type: close
   mode: single
