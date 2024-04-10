@@ -14,16 +14,7 @@ google_assistant:
   #   - switch
   expose_by_default: false
   entity_config:
-    switch.wake_up_nas:
-      expose: true
-    switch.wake_up_pc:
-      expose: true
-    switch.wake_up_old_pc:
-      expose: true
-    input_boolean.visitors:
-      expose: true
-    input_boolean.away_mode:
-      expose: true
+    # Scripts and scenes
     script.vacuum_kitchen_and_diningroom:
       expose: true
     script.preheat_car:
@@ -32,31 +23,64 @@ google_assistant:
       expose: true
     script.close_car:
       expose: true
+    script.party_mode:
+      name: Party mode script
+      expose: true
+    scene.party_scene:
+      name: Party mode scene
+      expose: true
+    scene.noel:
+      expose: true
+
+    # virtual entities
+    switch.wake_up_nas:
+      expose: true
+      room: Sous-sol
+    switch.wake_up_pc:
+      expose: true
+      room: Bureau
+    switch.wake_up_old_pc:
+      expose: true
+      room: Bureau
+    input_boolean.visitors:
+      expose: true
+      room: Autres
+    input_boolean.away_mode:
+      expose: true
+      room: Autres
+
+    # Devices
+    ## Vacuums
     vacuum.robbie:
       expose: true
+      room: Salle de bain
     vacuum.rondelle:
       expose: true
-    switch.pompe_switch:
-      name: Pompe bassin
+      room: Salle à manger
+
+    ## Lights
+    light.lampe_evier_gauche_light:
+      name: Ampoule évier gauche
       expose: true
-      aliases:
-        - Fontaine
-        - Fontaine bassin
-        - Pompe
-    light.lumiere_exterieure_1_forceonlight:
-      name: Lumière extérieure mur
+      room: Cuisine
+    light.lampe_evier_centre_light:
+      name: Ampoule évier centre
       expose: true
-    light.lumiere_exterieure_2_forceonlight:
-      name: Lumière extérieure laurier -thym
+      room: Cuisine
+    light.lampe_evier_droite_light:
+      name: Ampoule évier droite
       expose: true
-    light.lumiere_exterieure_3_forceonlight:
-      name: Lumière extérieure magnolia
+      room: Cuisine
+    group.lampesciel:
+      name: Ciel salle à manger
       expose: true
+      room: Salle à manger
     switch.aurores_light_bulb:
       name: Suspension Aurore
       expose: true
       aliases:
         - Lampe nuage
+      room: Chambre d'Aurore
     light.aurore_bed_light_switch:
       name: Guirlande Aurore
       expose: true
@@ -64,18 +88,66 @@ google_assistant:
         - Guirlande d'Aurore
         - Guirlande
         - Lit d'Aurore
+      room: Chambre d'Aurore
+    light.basement_stairs_light_light:
+      name: Lampe escalier sous-sol
+      expose: true
+      room: Sous-sol
+    light.lumiere_exterieure_1_forceonlight:
+      name: Lumière extérieure mur
+      expose: true
+      room: Jardin de devant
+    light.lumiere_exterieure_2_forceonlight:
+      name: Lumière extérieure laurier -thym
+      expose: true
+      room: Jardin de devant
+    light.lumiere_exterieure_3_forceonlight:
+      name: Lumière extérieure magnolia
+      expose: true
+      room: Jardin de devant
+    switch.guirlande_switch:
+      name: Guirlande extérieure de Noël
+      expose: true
+      room: Jardin de devant
+
+    ## Sensors
+    sensor.detecteur_incendie_temperature:
+      name: Température cuisine
+      expose: true
+      room: Salle à manger
+    sensor.detecteur_incendie_humidity:
+      name: Humidité cuisine
+      expose: true
+      room: Salle à manger
+    sensor.detecteur_incendie_formaldehyde_concentration:
+      name: Particules cuisine
+      expose: true
+      room: Salle à manger
+
+    ## Covers
+    cover.legrand_shutter_sw_with_level_control_cover:
+      name: Volets baie salle à manger
+      expose: true
+      room: Salle à manger
+
+    ## Others
+    switch.pompe_switch:
+      name: Pompe bassin
+      expose: true
+      aliases:
+        - Fontaine
+        - Fontaine bassin
+        - Pompe
+      room: Jardin de devant
     lock.bleuette_door_lock:
       name: Portières bleuette
       expose: true
+      room: Sous-sol
     switch.hdr_monitor:
       name: Écran HDR
       expose: true
+      room: Bureau
     switch.vertical_monitor:
       name: Écran Vertical
       expose: true
-    script.party_mode:
-      name: Party mode script
-      expose: true
-    scene.party_scene:
-      name: Party mode scene
-      expose: true
+      room: Bureau
