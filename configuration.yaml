@@ -104,11 +104,7 @@ template:
       - name: "Heure creuse"
         unique_id: heure_creuse
         state: >
-          {% if now().isoweekday() >= 6 %}
-            true
-          {% elif is_state('binary_sensor.workday_sensor','off') %}
-            true
-          {% elif now().hour >= 23 or now().hour < 6 %}
+          {% if now().hour >= 23 or now().hour < 6 %}
             true
           {% elif now().hour == 22 and now().minute >= 20 %}
             true
@@ -119,18 +115,14 @@ template:
           {% endif %}
   - trigger:
       - platform: state
-        entity_id: binary_sensor.heure_creuse
+        entity_id: sensor.edf_tempo_prix_actuel
     sensor:
       - name: "Electricity price"
         unique_id: electricity_price
         unit_of_measurement: EUR/kWh
         state_class: measurement
         state: >
-          {% if is_state('binary_sensor.heure_creuse','off') %}
-            0.11532
-          {% else %}
-            0.23052
-          {% endif %}
+          {{ (states('sensor.edf_tempo_prix_actuel') | float / 100) | round(4) }}
   - trigger:
       - platform: webhook
         webhook_id: googleDesktop-giom1

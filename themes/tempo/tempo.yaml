@@ -1,0 +1,16 @@
+tempo:
+  modes:
+    light:
+      energy-grid-consumption-color-0: "#7DACDF"
+      energy-grid-consumption-color-1: "#005BBB"
+      energy-grid-consumption-color-2: "#cdcdcd"
+      energy-grid-consumption-color-3: "#919191"
+      energy-grid-consumption-color-4: "#ff947d"
+      energy-grid-consumption-color-5: "#E85130"
+    dark:
+      energy-grid-consumption-color-0: "#7DACDF"
+      energy-grid-consumption-color-1: "#005BBB"
+      energy-grid-consumption-color-2: "#cdcdcd"
+      energy-grid-consumption-color-3: "#919191"
+      energy-grid-consumption-color-4: "#ff947d"
+      energy-grid-consumption-color-5: "#E85130"

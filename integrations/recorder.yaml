@@ -159,3 +159,4 @@ recorder:
       - switch.chargeur_velo_switch
       - switch.chargeur_voiture
       - switch.pc_bureau
+      - sensor.electricity_price
