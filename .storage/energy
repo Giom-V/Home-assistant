@@ -1,0 +1,90 @@
+{
+  "version": 1,
+  "minor_version": 1,
+  "key": "energy",
+  "data": {
+    "energy_sources": [
+      {
+        "type": "grid",
+        "flow_from": [
+          {
+            "stat_energy_from": "sensor.linky_tier_1_summation_delivered",
+            "stat_cost": null,
+            "entity_energy_price": "sensor.electricity_price",
+            "number_energy_price": null
+          },
+          {
+            "stat_energy_from": "sensor.linky_tier_2_summation_delivered",
+            "stat_cost": null,
+            "entity_energy_price": "sensor.electricity_price",
+            "number_energy_price": null
+          },
+          {
+            "stat_energy_from": "sensor.linky_tier_3_summation_delivered",
+            "stat_cost": null,
+            "entity_energy_price": "sensor.electricity_price",
+            "number_energy_price": null
+          },
+          {
+            "stat_energy_from": "sensor.linky_tier_4_summation_delivered",
+            "stat_cost": null,
+            "entity_energy_price": "sensor.electricity_price",
+            "number_energy_price": null
+          },
+          {
+            "stat_energy_from": "sensor.linky_tier_5_summation_delivered",
+            "stat_cost": null,
+            "entity_energy_price": "sensor.electricity_price",
+            "number_energy_price": null
+          },
+          {
+            "stat_energy_from": "sensor.linky_tier_6_summation_delivered",
+            "stat_cost": null,
+            "entity_energy_price": "sensor.electricity_price",
+            "number_energy_price": null
+          }
+        ],
+        "flow_to": [],
+        "cost_adjustment_day": 0.0
+      }
+    ],
+    "device_consumption": [
+      {
+        "stat_consumption": "sensor.lave_linge_energy"
+      },
+      {
+        "stat_consumption": "sensor.chauffage_sdb_energy"
+      },
+      {
+        "stat_consumption": "sensor.chargeur_voiture_energy"
+      },
+      {
+        "stat_consumption": "sensor.pc_bureau_energy"
+      },
+      {
+        "stat_consumption": "sensor.owon_technology_inc_pc321_summation_delivered"
+      },
+      {
+        "stat_consumption": "sensor.tv_summation_delivered"
+      },
+      {
+        "stat_consumption": "sensor.pompe_summation_delivered"
+      },
+      {
+        "stat_consumption": "sensor.chargeur_velo_summation_delivered"
+      },
+      {
+        "stat_consumption": "sensor.conso_pac_energy_b"
+      },
+      {
+        "stat_consumption": "sensor.prise_camera_salle_a_manger_energy"
+      },
+      {
+        "stat_consumption": "sensor.prise_camera_salle_a_manger_device_energy"
+      },
+      {
+        "stat_consumption": "sensor.local_technique_energy"
+      }
+    ]
+  }
+}

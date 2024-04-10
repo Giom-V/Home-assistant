@@ -51,12 +51,16 @@ secrets/home-assistant.json
 # Node-Red
 node-red
 
-# Operating System Trash Files
+# Operating System Trash files
 .DS_Store
 
-# Do not ignore Lovelace Files
+# Storage
 .storage/*
+
+# Do not ignore dashbaord files
+!/.storage/energy
 !/.storage/lovelace
+!/.storage/lovelace.*
 !/.storage/lovelace.lovelace_*
 !/.storage/lovelace_resources
 .storage/core.device_registry

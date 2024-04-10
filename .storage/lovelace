@@ -3266,10 +3266,6 @@
                 {
                   "entity": "sensor.v3v_panneaux_solaires",
                   "color": "orange"
-                },
-                {
-                  "entity": "sensor.v3v_629",
-                  "color": "green"
                 }
               ]
             }

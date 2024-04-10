@@ -1,0 +1,681 @@
+{
+  "version": 1,
+  "minor_version": 1,
+  "key": "lovelace.dashboard_admin",
+  "data": {
+    "config": {
+      "views": [
+        {
+          "title": "Admin",
+          "path": "admin",
+          "icon": "mdi:shield-crown-outline",
+          "visible": [
+            {
+              "user": "2a54ceccc9d74a409021b53d9ff4a71a"
+            }
+          ],
+          "badges": [],
+          "cards": [
+            {
+              "card": {
+                "show_header_toggle": false,
+                "title": "Versions and updates",
+                "type": "entities"
+              },
+              "filter": {
+                "include": [
+                  {
+                    "domain": "updater"
+                  },
+                  {
+                    "entity_id": "sensor.current_version"
+                  },
+                  {
+                    "entity_id": "binary_sensor.updater"
+                  },
+                  {
+                    "entity_id": "sensor.hacs"
+                  }
+                ],
+                "exclude": [
+                  {
+                    "state": "unavailable"
+                  }
+                ]
+              },
+              "type": "custom:auto-entities"
+            },
+            {
+              "type": "vertical-stack",
+              "cards": [
+                {
+                  "type": "custom:mushroom-title-card",
+                  "title": "Versions and updates"
+                },
+                {
+                  "type": "custom:mushroom-entity-card",
+                  "entity": "sensor.current_version"
+                },
+                {
+                  "type": "custom:mushroom-update-card",
+                  "entity": "update.home_assistant_operating_system_update",
+                  "show_buttons_control": true,
+                  "collapsible_controls": true,
+                  "icon": "mdi:home-assistant",
+                  "secondary_info": "state"
+                },
+                {
+                  "type": "custom:mushroom-update-card",
+                  "entity": "update.home_assistant_core_update",
+                  "show_buttons_control": true,
+                  "collapsible_controls": true,
+                  "icon": "mdi:home-assistant"
+                },
+                {
+                  "type": "custom:mushroom-update-card",
+                  "entity": "update.home_assistant_supervisor_update",
+                  "show_buttons_control": true,
+                  "collapsible_controls": true,
+                  "icon": "mdi:home-assistant"
+                },
+                {
+                  "type": "custom:auto-entities",
+                  "card": {
+                    "type": "grid",
+                    "columns": 1,
+                    "square": false
+                  },
+                  "card_param": "cards",
+                  "filter": {
+                    "include": [
+                      {
+                        "domain": "update",
+                        "state": "on",
+                        "options": {
+                          "type": "custom:mushroom-update-card",
+                          "show_buttons_control": true,
+                          "collapsible_controls": true
+                        }
+                      }
+                    ],
+                    "exclude": [
+                      "update.home_assistant_operating_system_update",
+                      "update.home_assistant_core_update",
+                      "update.home_assistant_supervisor_update"
+                    ]
+                  },
+                  "show_empty": true
+                }
+              ]
+            },
+            {
+              "type": "custom:battery-state-card",
+              "title": "Batteries",
+              "sort_by_level": "asc",
+              "collapse": [
+                {
+                  "name": "{count} devices over {min}%",
+                  "min": 20
+                }
+              ],
+              "tap_action": "more-info",
+              "bulk_rename": [
+                {
+                  "from": "Battery",
+                  "to": "sensor"
+                },
+                {
+                  "from": "battery",
+                  "to": "sensor"
+                },
+                {
+                  "from": "/\\s(temperature|temp)\\s/",
+                  "to": " temp. "
+                }
+              ],
+              "filter": {
+                "include": [
+                  {
+                    "name": "entity_id",
+                    "value": "*_battery"
+                  },
+                  {
+                    "name": "attributes.device_class",
+                    "value": "battery"
+                  }
+                ],
+                "exclude": [
+                  {
+                    "name": "state",
+                    "value": 99,
+                    "operator": ">"
+                  },
+                  {
+                    "name": "entity_id",
+                    "value": "*pixel*"
+                  },
+                  {
+                    "name": "entity_id",
+                    "value": "*oneplus*"
+                  },
+                  {
+                    "name": "entity_id",
+                    "value": "*bleuette_smart_key_battery_warning*"
+                  }
+                ]
+              }
+            },
+            {
+              "type": "markdown",
+              "content": "<h2 class=\"some\"> <ha-icon icon='mdi:shield-half-full'></ha-icon> Watchman report</h2> <h3> Missing Services: {{ states.sensor.watchman_missing_services.state }} </h3> {%- for item in state_attr(\"sensor.watchman_missing_services\", \"services\") %} <hr><table><tr> <td>  <ha-icon icon='mdi:cloud-alert'></ha-icon> {{ item.id }} <a title=\"{{item.occurrences}}\">{{item.occurrences.split('/')[-1].split(':')[0]}}</a> </td></tr></table> {%- endfor %}",
+              "card_mod": {
+                "style": {
+                  "ha-markdown": {
+                    "$": "ha-markdown-element:first-of-type hr{\n  border-color: #303030;\n}\n"
+                  }
+                }
+              }
+            },
+            {
+              "type": "vertical-stack",
+              "cards": [
+                {
+                  "type": "horizontal-stack",
+                  "cards": [
+                    {
+                      "type": "markdown",
+                      "content": "<h2><ha-icon icon='mdi:shield-half-full'></ha-icon> Watchman report</h2> <h3>Missing Entities: {{ states.sensor.watchman_missing_entities.state }} </h3>",
+                      "card_mod": {
+                        "style": {
+                          "ha-markdown": {
+                            "$": "ha-markdown-element:first-of-type hr{\n  border-color: #303030;\n}\n"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "show_name": true,
+                      "show_icon": true,
+                      "type": "button",
+                      "tap_action": {
+                        "action": "call-service",
+                        "service": "watchman.report",
+                        "target": {},
+                        "data": {
+                          "create_file": true,
+                          "parse_config": true
+                        }
+                      },
+                      "entity": "sensor.watchman_missing_entities",
+                      "show_state": false,
+                      "icon_height": "50px",
+                      "name": "Update report"
+                    }
+                  ]
+                },
+                {
+                  "type": "markdown",
+                  "content": " {%- for item in state_attr(\"sensor.watchman_missing_entities\", \"entities\") %} <hr> <table><tr> <td> <ha-icon icon='mdi: {%- if item.state==\"missing\"-%}cloud-alert' {%- elif item.state==\"unavail\" -%}cloud-off-outline' {%- else-%}cloud-question' {%- endif -%} ></ha-icon> {{ item.id }} [{{item.state}}] <a title=\"{{item.occurrences}}\"> {{item.occurrences.split('/')[-1].split(':')[0]}}</a> </td></tr></table> {%- endfor %}",
+                  "card_mod": {
+                    "style": {
+                      "ha-markdown": {
+                        "$": "ha-markdown-element:first-of-type hr{\n  border-color: #303030;\n}\n"
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Zigbee",
+          "icon": "mdi:zigbee",
+          "type": "panel",
+          "badges": [],
+          "cards": [
+            {
+              "type": "vertical-stack",
+              "cards": [
+                {
+                  "type": "entity-filter",
+                  "entities": [
+                    {
+                      "entity": "sensor.tz3000_2putqrmw_ts011f_active_power"
+                    },
+                    {
+                      "entity": "light.aurores_light_bulb"
+                    },
+                    {
+                      "entity": "sensor.detecteur_incendie_vocs"
+                    },
+                    {
+                      "entity": "button.ikea_of_sweden_tradfri_signal_repeater_identify"
+                    },
+                    {
+                      "entity": "switch.hdr_monitor",
+                      "name": "Multiprise"
+                    },
+                    {
+                      "entity": "binary_sensor.tze204_ztc6ggyl_ts0601_occupancy"
+                    },
+                    {
+                      "entity": "sensor.tv_active_power"
+                    },
+                    {
+                      "entity": "light.basement_stairs_light_light"
+                    },
+                    {
+                      "entity": "sensor.chargeur_velo_active_power"
+                    },
+                    {
+                      "entity": "sensor.owon_technology_inc_pc321_instantaneous_demand"
+                    },
+                    {
+                      "entity": "light.lumiere_exterieure_1_forceonlight"
+                    },
+                    {
+                      "entity": "light.lumiere_exterieure_2_forceonlight"
+                    },
+                    {
+                      "entity": "light.lumiere_exterieure_3_forceonlight"
+                    },
+                    {
+                      "entity": "switch.pompe_failsafe"
+                    },
+                    {
+                      "entity": "sensor.linky_active_power"
+                    },
+                    {
+                      "entity": "sensor.aurore_big_switch_battery"
+                    },
+                    {
+                      "entity": "sensor.bouton_sdb_battery"
+                    },
+                    {
+                      "entity": "sensor.interrupteur_aurore_battery"
+                    },
+                    {
+                      "entity": "binary_sensor.porte_chambre_opening"
+                    },
+                    {
+                      "entity": "sensor.bedroom_temperature"
+                    },
+                    {
+                      "entity": "sensor.aurore_bedroom_temperature"
+                    },
+                    {
+                      "entity": "sensor.shower_temperature"
+                    },
+                    {
+                      "entity": "sensor.office_button_battery"
+                    },
+                    {
+                      "entity": "binary_sensor.porte_sous_sol_opening"
+                    },
+                    {
+                      "entity": "sensor.backkitchen_temperature"
+                    },
+                    {
+                      "entity": "binary_sensor.leak_detector_cable_moisture"
+                    },
+                    {
+                      "entity": "binary_sensor.leak_detector_round_moisture"
+                    },
+                    {
+                      "entity": "binary_sensor.motion_sensor_basement_stairs_motion"
+                    },
+                    {
+                      "entity": "sensor.ev6_temperature"
+                    },
+                    {
+                      "entity": "sensor.flood_sensor_basement_temperature"
+                    },
+                    {
+                      "entity": "sensor.lumi_lumi_weather_temperature"
+                    },
+                    {
+                      "entity": "switch.interrupteur_bureau"
+                    },
+                    {
+                      "entity": "switch.prise_camera_salle_a_manger"
+                    },
+                    {
+                      "entity": "sensor.conso_pac_power_b"
+                    },
+                    {
+                      "entity": "sensor.roof_temperature"
+                    },
+                    {
+                      "entity": "sensor.bathroom_temperature"
+                    }
+                  ],
+                  "state_filter": [
+                    {
+                      "operator": "==",
+                      "value": "unavailable"
+                    }
+                  ],
+                  "card": {
+                    "type": "entities",
+                    "title": "Disconnected devices",
+                    "show_header_toggle": false
+                  },
+                  "show_empty": false
+                },
+                {
+                  "type": "horizontal-stack",
+                  "cards": [
+                    {
+                      "type": "vertical-stack",
+                      "cards": [
+                        {
+                          "type": "custom:mushroom-title-card",
+                          "title": "ZHA (Wired)"
+                        },
+                        {
+                          "type": "entities",
+                          "entities": [
+                            {
+                              "entity": "sensor.tz3000_2putqrmw_ts011f_active_power"
+                            },
+                            {
+                              "entity": "light.aurores_light_bulb"
+                            }
+                          ],
+                          "show_header_toggle": false,
+                          "title": "First floor"
+                        },
+                        {
+                          "type": "entities",
+                          "entities": [
+                            {
+                              "entity": "sensor.detecteur_incendie_vocs"
+                            },
+                            {
+                              "entity": "button.ikea_of_sweden_tradfri_signal_repeater_identify"
+                            },
+                            {
+                              "entity": "light.lampe_evier_centre_light"
+                            },
+                            {
+                              "entity": "light.lampe_evier_droite_light"
+                            },
+                            {
+                              "entity": "light.lampe_evier_gauche_light"
+                            },
+                            {
+                              "entity": "switch.hdr_monitor",
+                              "name": "Multiprise bureau",
+                              "secondary_info": "none"
+                            },
+                            {
+                              "entity": "binary_sensor.tze204_ztc6ggyl_ts0601_occupancy"
+                            },
+                            {
+                              "entity": "sensor.tv_active_power"
+                            }
+                          ],
+                          "show_header_toggle": false,
+                          "title": "Ground floor"
+                        },
+                        {
+                          "type": "entities",
+                          "entities": [
+                            {
+                              "entity": "light.basement_stairs_light_light"
+                            },
+                            {
+                              "entity": "sensor.chargeur_velo_active_power"
+                            },
+                            {
+                              "entity": "sensor.owon_technology_inc_pc321_instantaneous_demand"
+                            }
+                          ],
+                          "show_header_toggle": false,
+                          "title": "Basement"
+                        },
+                        {
+                          "type": "entities",
+                          "entities": [
+                            {
+                              "entity": "light.lumiere_exterieure_1_forceonlight"
+                            },
+                            {
+                              "entity": "light.lumiere_exterieure_2_forceonlight"
+                            },
+                            {
+                              "entity": "light.lumiere_exterieure_3_forceonlight"
+                            },
+                            {
+                              "entity": "switch.pompe_failsafe"
+                            },
+                            {
+                              "entity": "sensor.linky_apparent_power"
+                            }
+                          ],
+                          "show_header_toggle": false,
+                          "title": "Outside"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "vertical-stack",
+                      "cards": [
+                        {
+                          "type": "custom:mushroom-title-card",
+                          "title": "ZHA (Battery)"
+                        },
+                        {
+                          "type": "entities",
+                          "entities": [
+                            {
+                              "entity": "sensor.aurore_big_switch_battery"
+                            },
+                            {
+                              "entity": "sensor.bouton_sdb_battery"
+                            },
+                            {
+                              "entity": "sensor.interrupteur_aurore_battery"
+                            },
+                            {
+                              "entity": "binary_sensor.porte_chambre_opening"
+                            },
+                            {
+                              "entity": "sensor.bedroom_temperature"
+                            },
+                            {
+                              "entity": "sensor.aurore_bedroom_temperature"
+                            },
+                            {
+                              "entity": "sensor.shower_temperature"
+                            }
+                          ],
+                          "show_header_toggle": false,
+                          "title": "First floor"
+                        },
+                        {
+                          "type": "entities",
+                          "entities": [
+                            {
+                              "entity": "sensor.office_button_battery"
+                            },
+                            {
+                              "entity": "binary_sensor.porte_sous_sol_opening"
+                            },
+                            {
+                              "entity": "sensor.backkitchen_temperature"
+                            }
+                          ],
+                          "show_header_toggle": false,
+                          "title": "Ground floor"
+                        },
+                        {
+                          "type": "entities",
+                          "entities": [
+                            {
+                              "entity": "binary_sensor.leak_detector_cable_moisture"
+                            },
+                            {
+                              "entity": "binary_sensor.leak_detector_round_moisture"
+                            },
+                            {
+                              "entity": "binary_sensor.motion_sensor_basement_stairs_motion"
+                            },
+                            {
+                              "entity": "sensor.ev6_temperature"
+                            },
+                            {
+                              "entity": "sensor.flood_sensor_basement_temperature"
+                            }
+                          ],
+                          "show_header_toggle": false,
+                          "title": "Basement"
+                        },
+                        {
+                          "type": "entities",
+                          "entities": [
+                            {
+                              "entity": "sensor.lumi_lumi_weather_temperature"
+                            }
+                          ],
+                          "show_header_toggle": false,
+                          "title": "Outside"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "vertical-stack",
+                      "cards": [
+                        {
+                          "type": "custom:mushroom-title-card",
+                          "title": "Z2M (Wired)"
+                        },
+                        {
+                          "type": "entities",
+                          "entities": [
+                            {
+                              "entity": "switch.interrupteur_bureau"
+                            }
+                          ],
+                          "show_header_toggle": false,
+                          "title": "First floor"
+                        },
+                        {
+                          "type": "entities",
+                          "entities": [
+                            {
+                              "entity": "switch.prise_camera_salle_a_manger"
+                            },
+                            {
+                              "entity": "light.ciel_a1"
+                            },
+                            {
+                              "entity": "light.ciel_a3"
+                            },
+                            {
+                              "entity": "light.ciel_b2"
+                            },
+                            {
+                              "entity": "light.ciel_c1"
+                            },
+                            {
+                              "entity": "light.ciel_c3"
+                            },
+                            {
+                              "entity": "light.ciel_d2"
+                            },
+                            {
+                              "entity": "light.ciel_e1"
+                            },
+                            {
+                              "entity": "light.ciel_e3"
+                            },
+                            {
+                              "entity": "light.ciel_f2"
+                            },
+                            {
+                              "entity": "light.ciel_g1"
+                            },
+                            {
+                              "entity": "light.ciel_g3"
+                            }
+                          ],
+                          "show_header_toggle": false,
+                          "title": "Ground floor"
+                        },
+                        {
+                          "type": "entities",
+                          "entities": [
+                            {
+                              "entity": "sensor.conso_pac_power_b"
+                            }
+                          ],
+                          "show_header_toggle": false,
+                          "title": "Basement"
+                        },
+                        {
+                          "type": "entities",
+                          "entities": [],
+                          "show_header_toggle": false,
+                          "title": "Outside"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "vertical-stack",
+                      "cards": [
+                        {
+                          "type": "custom:mushroom-title-card",
+                          "title": "Z2M (Battery)"
+                        },
+                        {
+                          "type": "entities",
+                          "entities": [
+                            {
+                              "entity": "sensor.roof_temperature"
+                            }
+                          ],
+                          "show_header_toggle": false,
+                          "title": "Attic"
+                        },
+                        {
+                          "type": "entities",
+                          "entities": [
+                            {
+                              "entity": "sensor.bathroom_temperature"
+                            }
+                          ],
+                          "show_header_toggle": false,
+                          "title": "First floor"
+                        },
+                        {
+                          "type": "entities",
+                          "entities": [],
+                          "show_header_toggle": false,
+                          "title": "Ground floor"
+                        },
+                        {
+                          "type": "entities",
+                          "entities": [],
+                          "show_header_toggle": false,
+                          "title": "Basement"
+                        },
+                        {
+                          "type": "entities",
+                          "entities": [],
+                          "show_header_toggle": false,
+                          "title": "Outside"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

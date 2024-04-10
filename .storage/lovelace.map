@@ -1,0 +1,51 @@
+{
+  "version": 1,
+  "minor_version": 1,
+  "key": "lovelace.map",
+  "data": {
+    "config": {
+      "title": "Map",
+      "views": [
+        {
+          "type": "panel",
+          "title": "Map",
+          "icon": "mdi:map",
+          "cards": [
+            {
+              "type": "map",
+              "auto_fit": true,
+              "entities": [
+                "person.guillaume",
+                "person.claire",
+                "zone.universite",
+                "zone.ubisoft",
+                "zone.google",
+                "zone.ecole",
+                "zone.nozay",
+                "zone.home",
+                "zone.cannes",
+                "zone.la_plagne",
+                "device_tracker.pixel_6",
+                "device_tracker.pixel_4_xl_claire",
+                "device_tracker.pixel_8_pro",
+                "device_tracker.bleuette_location",
+                "device_tracker.cles_jacqueline",
+                "device_tracker.mes_cles",
+                "device_tracker.portefeuille",
+                "device_tracker.pixel_8_pro_3",
+                "device_tracker.pixel_6_pro_6",
+                "sensor.netatmo_weathermap_cesson_sevigne_temperature_2",
+                "sensor.netatmo_weathermap_cesson_sevigne_pressure_2",
+                "sensor.netatmo_weathermap_cesson_sevigne_humidity_2",
+                "sensor.netatmo_weathermap_cesson_sevigne_rain",
+                "sensor.netatmo_weathermap_cesson_sevigne_rain_today",
+                "sensor.netatmo_weathermap_cesson_sevigne_wind_strength"
+              ],
+              "default_zoom": 5
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
