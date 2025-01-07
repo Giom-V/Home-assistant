@@ -92,6 +92,8 @@ image/*
 zigbee2mqtt/log/*
 zigbee2mqtt/configuration.yaml
 zigbee2mqtt/state.json
+zigbee2mqtt/database.db.*
+zigbee2mqtt/configuration_backup_v*.yaml
 
 # Watchman
 watchman_report.txt
