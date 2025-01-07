@@ -251,24 +251,24 @@
     domain: switch
   mode: single
 - id: '1678917872103'
-  alias: Turn on Bathroom heating
+  alias: Toggle Bathroom heating
   description: ''
   trigger:
-  - device_id: 1268d655a0515532f1cef89d736e539f
-    domain: zha
-    platform: device
-    type: remote_button_short_press
-    subtype: button
-  - device_id: 1268d655a0515532f1cef89d736e539f
-    domain: zha
-    platform: device
-    type: remote_button_short_press
-    subtype: button_1
+  - platform: device
+    domain: mqtt
+    device_id: 8b0c8128d37ebeb5d404e45e40e1e9f3
+    type: action
+    subtype: single
+  - platform: state
+    entity_id:
+    - sensor.bouton_sdb_action
+    to: single
+    enabled: false
   condition: []
   action:
-  - type: turn_on
+  - type: toggle
     device_id: 4a6b0aa18628bded0b46b3928ad3ba2d
-    entity_id: switch.chauffage_sdb
+    entity_id: 19ea51cc7b009ea53ab8f936806ba6ed
     domain: switch
   mode: single
 - id: '1678959025833'
@@ -276,17 +276,10 @@
   description: ''
   trigger:
   - platform: device
-    type: turned_off
-    device_id: 1268d655a0515532f1cef89d736e539f
-    entity_id: switch.bouton_sdb_switch
-    domain: switch
-  - platform: event
-    event_type: ''
-    event_data:
-      level: 63
-      transition_time: 1
-      options_mask: None
-      options_override: None
+    domain: mqtt
+    device_id: 8b0c8128d37ebeb5d404e45e40e1e9f3
+    type: action
+    subtype: double
   condition: []
   action:
   - type: turn_off
@@ -419,10 +412,11 @@
     to: 'off'
   condition: []
   action:
-  - type: turn_off
-    device_id: f88fc7c7685911a6f527510503647b60
-    entity_id: switch.chargeur_velo_switch
-    domain: switch
+  - action: switch.turn_off
+    target:
+      entity_id:
+      - switch.chargeur_velo_switch
+    data: {}
   mode: single
 - id: '1686122015021'
   alias: Turn on the bike's charger during off-peak hours
@@ -434,10 +428,11 @@
     to: 'on'
   condition: []
   action:
-  - type: turn_on
-    device_id: f88fc7c7685911a6f527510503647b60
-    entity_id: switch.chargeur_velo_switch
-    domain: switch
+  - action: switch.turn_on
+    metadata: {}
+    data: {}
+    target:
+      entity_id: switch.chargeur_velo_switch
   mode: single
 - id: '1687101568970'
   alias: Turn on Govee LED strip when we switch on the TV during the evening
@@ -814,15 +809,15 @@
 - id: '1707984261282'
   alias: Close covers at sunset
   description: ''
-  trigger:
-  - platform: sun
-    event: sunset
-    offset: 0
-  condition:
+  triggers:
+  - event: sunset
+    offset: 15
+    trigger: sun
+  conditions:
   - condition: numeric_state
     entity_id: sensor.temperature_exterieure_solisart
-    below: 20
-  action:
+    below: 10
+  actions:
   - device_id: dfe890255b2aec25d04652bf3f562bcb
     domain: cover
     entity_id: 9d96788bbf491daa38a43974d3af81fd
