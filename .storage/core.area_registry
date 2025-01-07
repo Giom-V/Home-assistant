@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "minor_version": 6,
+  "minor_version": 7,
   "key": "core.area_registry",
   "data": {
     "areas": [
@@ -11,7 +11,9 @@
         "id": "living_room",
         "labels": [],
         "name": "Salon",
-        "picture": "/api/image/serve/76bf87cb4e3e7ad45c87f0c6967d0ba1/512x512"
+        "picture": "/api/image/serve/76bf87cb4e3e7ad45c87f0c6967d0ba1/512x512",
+        "created_at": "1970-01-01T00:00:00+00:00",
+        "modified_at": "1970-01-01T00:00:00+00:00"
       },
       {
         "aliases": [],
@@ -20,7 +22,9 @@
         "id": "kitchen",
         "labels": [],
         "name": "Cuisine",
-        "picture": "/api/image/serve/697c6f96a163b4e1a81c09346c5df57e/512x512"
+        "picture": "/api/image/serve/697c6f96a163b4e1a81c09346c5df57e/512x512",
+        "created_at": "1970-01-01T00:00:00+00:00",
+        "modified_at": "1970-01-01T00:00:00+00:00"
       },
       {
         "aliases": [
@@ -31,7 +35,9 @@
         "id": "bedroom",
         "labels": [],
         "name": "Chambre parentale",
-        "picture": "/api/image/serve/c95bb4b5d6fdf6d0e76028887c4a1612/512x512"
+        "picture": "/api/image/serve/c95bb4b5d6fdf6d0e76028887c4a1612/512x512",
+        "created_at": "1970-01-01T00:00:00+00:00",
+        "modified_at": "1970-01-01T00:00:00+00:00"
       },
       {
         "aliases": [],
@@ -40,7 +46,9 @@
         "id": "office",
         "labels": [],
         "name": "Bureau",
-        "picture": "/api/image/serve/3bc0cc230621640400616eb6b46642c9/512x512"
+        "picture": "/api/image/serve/3bc0cc230621640400616eb6b46642c9/512x512",
+        "created_at": "1970-01-01T00:00:00+00:00",
+        "modified_at": "1970-01-01T00:00:00+00:00"
       },
       {
         "aliases": [],
@@ -49,7 +57,9 @@
         "id": "basement",
         "labels": [],
         "name": "Sous-sol",
-        "picture": "/api/image/serve/ba14fba854eba76cd141cb15d55340ff/512x512"
+        "picture": "/api/image/serve/ba14fba854eba76cd141cb15d55340ff/512x512",
+        "created_at": "1970-01-01T00:00:00+00:00",
+        "modified_at": "1970-01-01T00:00:00+00:00"
       },
       {
         "aliases": [],
@@ -58,7 +68,9 @@
         "id": "garden",
         "labels": [],
         "name": "Jardin",
-        "picture": "/api/image/serve/ea290d04c9ebd4c50dafc5a63073f62c/512x512"
+        "picture": "/api/image/serve/ea290d04c9ebd4c50dafc5a63073f62c/512x512",
+        "created_at": "1970-01-01T00:00:00+00:00",
+        "modified_at": "1970-01-01T00:00:00+00:00"
       },
       {
         "aliases": [],
@@ -67,7 +79,9 @@
         "id": "jardin_de_devant",
         "labels": [],
         "name": "Terrasse",
-        "picture": "/api/image/serve/2b4b8714c4d116cac3d74d1356d67988/512x512"
+        "picture": "/api/image/serve/2b4b8714c4d116cac3d74d1356d67988/512x512",
+        "created_at": "1970-01-01T00:00:00+00:00",
+        "modified_at": "1970-01-01T00:00:00+00:00"
       },
       {
         "aliases": [],
@@ -76,7 +90,9 @@
         "id": "bathroom",
         "labels": [],
         "name": "Salle de bain",
-        "picture": "/api/image/serve/ea277f366bb29069febed6e09181b901/512x512"
+        "picture": "/api/image/serve/ea277f366bb29069febed6e09181b901/512x512",
+        "created_at": "1970-01-01T00:00:00+00:00",
+        "modified_at": "1970-01-01T00:00:00+00:00"
       },
       {
         "aliases": [],
@@ -85,12 +101,14 @@
         "id": "aurore_s_bedroom",
         "labels": [],
         "name": "Chambre d'Aurore",
-        "picture": null
+        "picture": null,
+        "created_at": "1970-01-01T00:00:00+00:00",
+        "modified_at": "1970-01-01T00:00:00+00:00"
       },
       {
         "aliases": [
-          "Voiture",
-          "Bleuette"
+          "Bleuette",
+          "Voiture"
         ],
         "floor_id": "sous_sol",
         "icon": "mdi:car",
@@ -99,7 +117,9 @@
           "appareils"
         ],
         "name": "EV6",
-        "picture": "/api/image/serve/fb4d7616cb5ab1d00c2fb15595b33b97/512x512"
+        "picture": "/api/image/serve/fb4d7616cb5ab1d00c2fb15595b33b97/512x512",
+        "created_at": "1970-01-01T00:00:00+00:00",
+        "modified_at": "1970-01-01T00:00:00+00:00"
       },
       {
         "aliases": [
@@ -110,7 +130,9 @@
         "id": "shower_room",
         "labels": [],
         "name": "Salle de douche",
-        "picture": null
+        "picture": null,
+        "created_at": "1970-01-01T00:00:00+00:00",
+        "modified_at": "1970-01-01T00:00:00+00:00"
       },
       {
         "aliases": [],
@@ -119,7 +141,9 @@
         "id": "kids_room",
         "labels": [],
         "name": "Salle de jeux",
-        "picture": "/api/image/serve/7d494c47d7c10c81986e8f45fe0faf66/512x512"
+        "picture": "/api/image/serve/7d494c47d7c10c81986e8f45fe0faf66/512x512",
+        "created_at": "1970-01-01T00:00:00+00:00",
+        "modified_at": "1970-01-01T00:00:00+00:00"
       },
       {
         "aliases": [],
@@ -128,7 +152,9 @@
         "id": "attic",
         "labels": [],
         "name": "Combles",
-        "picture": "/api/image/serve/d2cefbddc6a3e3c5a2e1e878a2f3027d/512x512"
+        "picture": "/api/image/serve/d2cefbddc6a3e3c5a2e1e878a2f3027d/512x512",
+        "created_at": "1970-01-01T00:00:00+00:00",
+        "modified_at": "1970-01-01T00:00:00+00:00"
       },
       {
         "aliases": [
@@ -139,7 +165,9 @@
         "id": "back_kitchen",
         "labels": [],
         "name": "Arrière cuisine",
-        "picture": null
+        "picture": "/api/image/serve/46f0064e148e8f363553903e1a860c39/512x512",
+        "created_at": "1970-01-01T00:00:00+00:00",
+        "modified_at": "2024-08-31T07:31:31.709081+00:00"
       },
       {
         "aliases": [],
@@ -148,7 +176,9 @@
         "id": "cannes",
         "labels": [],
         "name": "Cannes",
-        "picture": null
+        "picture": null,
+        "created_at": "1970-01-01T00:00:00+00:00",
+        "modified_at": "1970-01-01T00:00:00+00:00"
       },
       {
         "aliases": [],
@@ -157,7 +187,9 @@
         "id": "giom",
         "labels": [],
         "name": "Giom",
-        "picture": null
+        "picture": null,
+        "created_at": "1970-01-01T00:00:00+00:00",
+        "modified_at": "1970-01-01T00:00:00+00:00"
       },
       {
         "aliases": [
@@ -168,7 +200,9 @@
         "id": "hallway",
         "labels": [],
         "name": "Entrée",
-        "picture": null
+        "picture": "/api/image/serve/a344747454d6610c0c38e13690456755/512x512",
+        "created_at": "1970-01-01T00:00:00+00:00",
+        "modified_at": "2024-08-31T07:30:54.179562+00:00"
       },
       {
         "aliases": [],
@@ -177,7 +211,9 @@
         "id": "tests",
         "labels": [],
         "name": "Tests",
-        "picture": null
+        "picture": null,
+        "created_at": "1970-01-01T00:00:00+00:00",
+        "modified_at": "1970-01-01T00:00:00+00:00"
       },
       {
         "aliases": [],
@@ -186,7 +222,9 @@
         "id": "dinning_room",
         "labels": [],
         "name": "Salle à manger",
-        "picture": null
+        "picture": null,
+        "created_at": "1970-01-01T00:00:00+00:00",
+        "modified_at": "1970-01-01T00:00:00+00:00"
       },
       {
         "aliases": [],
@@ -195,7 +233,9 @@
         "id": "coublevie",
         "labels": [],
         "name": "Coublevie",
-        "picture": null
+        "picture": null,
+        "created_at": "1970-01-01T00:00:00+00:00",
+        "modified_at": "1970-01-01T00:00:00+00:00"
       },
       {
         "aliases": [],
@@ -204,7 +244,9 @@
         "id": "guest_s_room",
         "labels": [],
         "name": "Guest's room",
-        "picture": "/api/image/serve/7937b0623dc17bc7277482892431781e/512x512"
+        "picture": "/api/image/serve/7937b0623dc17bc7277482892431781e/512x512",
+        "created_at": "1970-01-01T00:00:00+00:00",
+        "modified_at": "1970-01-01T00:00:00+00:00"
       },
       {
         "aliases": [],
@@ -213,7 +255,9 @@
         "id": "mezzanine",
         "labels": [],
         "name": "Mezzanine",
-        "picture": null
+        "picture": null,
+        "created_at": "1970-01-01T00:00:00+00:00",
+        "modified_at": "1970-01-01T00:00:00+00:00"
       },
       {
         "aliases": [],
@@ -222,7 +266,9 @@
         "id": "alentours",
         "labels": [],
         "name": "Alentours",
-        "picture": null
+        "picture": null,
+        "created_at": "1970-01-01T00:00:00+00:00",
+        "modified_at": "1970-01-01T00:00:00+00:00"
       },
       {
         "aliases": [],
@@ -230,12 +276,14 @@
         "icon": "mdi:server",
         "id": "local_technique",
         "labels": [
-          "appareils",
+          "controle",
           "energie",
-          "controle"
+          "appareils"
         ],
         "name": "Local Technique",
-        "picture": null
+        "picture": null,
+        "created_at": "1970-01-01T00:00:00+00:00",
+        "modified_at": "1970-01-01T00:00:00+00:00"
       }
     ]
   }
