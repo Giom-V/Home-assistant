@@ -988,6 +988,26 @@
       entity_id: 5159b1462f01722c359983c04fea0e28
       type: close
   mode: single
+- id: '1727272545121'
+  alias: Office window opened while it rains
+  description: ''
+  trigger:
+  - type: precipitation
+    platform: device
+    device_id: 67e35c5459774ea782ecdaa971168280
+    entity_id: b77fbbed5b6243550d7e1547d1915a32
+    domain: sensor
+    above: 0.1
+  condition:
+  - condition: state
+    entity_id: binary_sensor.velux_bureau_contact
+    state: 'on'
+  action:
+  - action: notify.mobile_app_pixel_8_pro
+    data:
+      title: "\U0001F327️ Pluie dans le bureau"
+      message: "Le velux est ouvert alors qu'il pleut \U0001F631"
+  mode: single
 - id: '1727285569924'
   alias: Alert when the water tank is too cold
   description: ''
