@@ -826,8 +826,13 @@
     domain: cover
     entity_id: 5159b1462f01722c359983c04fea0e28
     type: close
-  - device_id: 733eb70641efac866005440f0d764623
-    domain: cover
-    entity_id: ad9bb28acca59679697828aaba529647
-    type: close
+  - if:
+    - condition: state
+      entity_id: binary_sensor.velux_bureau_contact
+      state: 'off'
+    then:
+    - device_id: 733eb70641efac866005440f0d764623
+      domain: cover
+      entity_id: ad9bb28acca59679697828aaba529647
+      type: close
   mode: single
