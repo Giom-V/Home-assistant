@@ -67,6 +67,9 @@ recorder:
       - time_changed
     entity_globs:
       - device_tracker.unnamed_device_*
+      - sensor.conso_solisart_*
+      - sensor.conso_*
+
   include:
     domains:
       - alarm_control_panel
@@ -160,3 +163,6 @@ recorder:
       - switch.chargeur_voiture
       - switch.pc_bureau
       - sensor.electricity_price
+      - sensor.conso_pac_energy_b
+      - sensor.conso_pac_energy_a
+      - sensor.conso_totale_pompe_bassin_energy
