@@ -128,6 +128,11 @@
         "id": "feb508874f974d31af1d2bc7ba65df10",
         "url": "/hacsfiles/meteo-france-weather-card/meteo-france-weather-card.js?hacstag=194824532115",
         "type": "module"
+      {
+        "id": "7fedf22f26b54ca9844c5a4306baf370",
+        "url": "/hacsfiles/lovelace-wallpanel/wallpanel.js?hacstag=3095064164330",
+        "type": "module"
+      },
       }
     ]
   }

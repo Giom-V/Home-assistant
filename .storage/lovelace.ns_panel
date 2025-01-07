@@ -1,0 +1,924 @@
+{
+  "version": 1,
+  "minor_version": 1,
+  "key": "lovelace.ns_panel",
+  "data": {
+    "config": {
+      "wallpanel": {
+        "enabled": true,
+        "hide_toolbar": true,
+        "hide_sidebar": true,
+        "hide_toolbar_action_icons": false,
+        "idle_time": 0,
+        "fullscreen": false,
+        "user.giom": {
+          "enabled": false,
+          "hide_toolbar": false,
+          "hide_sidebar": false,
+          "fullscreen": false
+        }
+      },
+      "views": [
+        {
+          "title": "ns-panel-home",
+          "path": "home",
+          "cards": [
+            {
+              "type": "vertical-stack",
+              "cards": [
+                {
+                  "type": "conditional",
+                  "conditions": [
+                    {
+                      "condition": "state",
+                      "entity": "sensor.rte_tempo_prochaine_couleur",
+                      "state": "Rouge"
+                    }
+                  ],
+                  "card": {
+                    "type": "custom:mushroom-title-card",
+                    "title": "Journée rouge Tempo demain !"
+                  }
+                },
+                {
+                  "type": "conditional",
+                  "conditions": [
+                    {
+                      "condition": "state",
+                      "entity": "sensor.rte_tempo_couleur_actuelle",
+                      "state": "Rouge"
+                    }
+                  ],
+                  "card": {
+                    "type": "custom:mushroom-title-card",
+                    "title": "Journée rouge Tempo !!!"
+                  }
+                },
+                {
+                  "type": "conditional",
+                  "conditions": [
+                    {
+                      "condition": "numeric_state",
+                      "entity": "binary_sensor.aurora_visibility_aurora_visibility_alert",
+                      "above": 5
+                    }
+                  ],
+                  "card": {
+                    "type": "custom:mushroom-title-card",
+                    "title": "Aurores visibles !!!!!"
+                  }
+                },
+                {
+                  "type": "custom:mushroom-chips-card",
+                  "chips": [
+                    {
+                      "type": "template",
+                      "tap_action": {
+                        "action": "none"
+                      },
+                      "hold_action": {
+                        "action": "none"
+                      },
+                      "double_tap_action": {
+                        "action": "none"
+                      },
+                      "content": "{{ states('sensor.time') }} ",
+                      "entity": "sensor.time"
+                    },
+                    {
+                      "type": "conditional",
+                      "conditions": [
+                        {
+                          "condition": "state",
+                          "entity": "cover.legrand_shutter_sw_with_level_control_cover",
+                          "state_not": "open"
+                        }
+                      ],
+                      "chip": {
+                        "type": "action",
+                        "tap_action": {
+                          "action": "perform-action",
+                          "perform_action": "script.open_all_shutters",
+                          "target": {}
+                        },
+                        "icon": "mdi:window-shutter",
+                        "hold_action": {
+                          "action": "perform-action",
+                          "perform_action": "script.close_all_shutters",
+                          "target": {}
+                        }
+                      }
+                    },
+                    {
+                      "type": "conditional",
+                      "conditions": [
+                        {
+                          "condition": "state",
+                          "entity": "cover.legrand_shutter_sw_with_level_control_cover",
+                          "state": "open"
+                        }
+                      ],
+                      "chip": {
+                        "type": "action",
+                        "tap_action": {
+                          "action": "perform-action",
+                          "perform_action": "script.close_all_shutters",
+                          "target": {}
+                        },
+                        "icon": "mdi:window-shutter-open",
+                        "hold_action": {
+                          "action": "perform-action",
+                          "perform_action": "script.open_all_shutters",
+                          "target": {}
+                        }
+                      }
+                    },
+                    {
+                      "type": "conditional",
+                      "conditions": [
+                        {
+                          "condition": "state",
+                          "entity": "input_boolean.visitors",
+                          "state": "off"
+                        }
+                      ],
+                      "chip": {
+                        "type": "entity",
+                        "entity": "input_boolean.visitors",
+                        "tap_action": {
+                          "action": "toggle"
+                        },
+                        "content_info": "none"
+                      }
+                    },
+                    {
+                      "type": "conditional",
+                      "conditions": [
+                        {
+                          "condition": "state",
+                          "entity": "input_boolean.visitors",
+                          "state": "on"
+                        }
+                      ],
+                      "chip": {
+                        "type": "entity",
+                        "entity": "input_boolean.visitors",
+                        "tap_action": {
+                          "action": "toggle"
+                        },
+                        "content_info": "none",
+                        "icon_color": "red"
+                      }
+                    },
+                    {
+                      "type": "conditional",
+                      "conditions": [
+                        {
+                          "condition": "state",
+                          "entity": "input_boolean.away_mode",
+                          "state": "off"
+                        }
+                      ],
+                      "chip": {
+                        "type": "entity",
+                        "entity": "input_boolean.away_mode",
+                        "tap_action": {
+                          "action": "toggle"
+                        },
+                        "content_info": "none"
+                      }
+                    },
+                    {
+                      "type": "conditional",
+                      "conditions": [
+                        {
+                          "condition": "state",
+                          "entity": "input_boolean.away_mode",
+                          "state": "on"
+                        }
+                      ],
+                      "chip": {
+                        "type": "entity",
+                        "entity": "input_boolean.away_mode",
+                        "tap_action": {
+                          "action": "toggle"
+                        },
+                        "content_info": "none",
+                        "icon_color": "red"
+                      }
+                    }
+                  ],
+                  "alignment": "center",
+                  "card_mod": {
+                    "style": "ha-card {\n  --chip-font-size: 50px;\n  --chip-icon-size: 40px !important;\n  --chip-background: rgba(255, 255, 255, 0.8);\n  --chip-height: 50px !important;\n  --chip-border-radius: 25px !important;\n  --chip-padding: 5px;\n  --primary-text-color: black;\n}\nmushroom-template-chip:nth-child(1) {\n  --chip-font-size: 50px;\n  --chip-background: tranparent;\n  --chip-border-color: transparent;\n  font-family: monospace;\n  --chip-padding: 5px;\n  --primary-text-color: white;\n}\n"
+                  }
+                },
+                {
+                  "type": "custom:mushroom-chips-card",
+                  "chips": [
+                    {
+                      "type": "template",
+                      "tap_action": {
+                        "action": "none"
+                      },
+                      "hold_action": {
+                        "action": "none"
+                      },
+                      "double_tap_action": {
+                        "action": "none"
+                      },
+                      "content": "Étage: "
+                    },
+                    {
+                      "type": "entity",
+                      "entity": "sensor.temperature_etage",
+                      "icon_color": "accent",
+                      "hold_action": {
+                        "action": "navigate",
+                        "navigation_path": "/ns-panel-sub-views/temperatures"
+                      }
+                    },
+                    {
+                      "type": "entity",
+                      "entity": "sensor.bathroom_humidity",
+                      "icon_color": "cyan"
+                    },
+                    {
+                      "type": "entity",
+                      "entity": "sensor.station_netatmo_chambre_carbon_dioxide"
+                    },
+                    {
+                      "type": "conditional",
+                      "conditions": [
+                        {
+                          "condition": "state",
+                          "entity": "cover.volets_chambre",
+                          "state_not": "open"
+                        }
+                      ],
+                      "chip": {
+                        "type": "action",
+                        "tap_action": {
+                          "action": "perform-action",
+                          "perform_action": "script.open_all_first_floor_shutters",
+                          "target": {}
+                        },
+                        "icon": "mdi:window-shutter",
+                        "hold_action": {
+                          "action": "perform-action",
+                          "perform_action": "script.close_all_first_floor_shutters",
+                          "target": {}
+                        }
+                      }
+                    },
+                    {
+                      "type": "conditional",
+                      "conditions": [
+                        {
+                          "condition": "state",
+                          "entity": "cover.volets_chambre",
+                          "state": "open"
+                        }
+                      ],
+                      "chip": {
+                        "type": "action",
+                        "tap_action": {
+                          "action": "perform-action",
+                          "perform_action": "script.close_all_first_floor_shutters",
+                          "target": {}
+                        },
+                        "icon": "mdi:window-shutter-open",
+                        "hold_action": {
+                          "action": "perform-action",
+                          "perform_action": "script.open_all_first_floor_shutters",
+                          "target": {}
+                        }
+                      }
+                    }
+                  ],
+                  "card_mod": {
+                    "style": "ha-card {\n  --primary-text-color: black;\n  --chip-font-size: 20px;\n  --chip-icon-size: 35px !important;\n  --chip-background: rgba(255, 255, 255, 0.8);\n  background-color: #B70378 !important;\n  padding: 5px 2px;\n  border-radius: 10px !important;\n  font-family: fantasy;\n}\nmushroom-template-chip:nth-child(1) {\n  --primary-text-color: white;\n  --chip-font-size: 30px;\n  --chip-background: tranparent;\n  --chip-border-color: transparent;\n  font-family: system-ui;\n  width: 100px;\n}\n"
+                  }
+                },
+                {
+                  "type": "custom:mushroom-chips-card",
+                  "chips": [
+                    {
+                      "type": "template",
+                      "tap_action": {
+                        "action": "none"
+                      },
+                      "hold_action": {
+                        "action": "none"
+                      },
+                      "double_tap_action": {
+                        "action": "none"
+                      },
+                      "content": "RDC: "
+                    },
+                    {
+                      "type": "entity",
+                      "entity": "sensor.temperature_rdc",
+                      "content_info": "state",
+                      "icon_color": "accent",
+                      "use_entity_picture": false,
+                      "hold_action": {
+                        "action": "navigate",
+                        "navigation_path": "/ns-panel-sub-views/temperatures"
+                      }
+                    },
+                    {
+                      "type": "conditional",
+                      "conditions": [
+                        {
+                          "condition": "state",
+                          "entity": "cover.legrand_shutter_sw_with_level_control_cover",
+                          "state_not": "open"
+                        }
+                      ],
+                      "chip": {
+                        "type": "action",
+                        "tap_action": {
+                          "action": "perform-action",
+                          "perform_action": "script.open_all_ground_floor_shutters",
+                          "target": {}
+                        },
+                        "icon": "mdi:window-shutter",
+                        "hold_action": {
+                          "action": "perform-action",
+                          "perform_action": "script.close_all_group_floor_shutters",
+                          "target": {}
+                        }
+                      }
+                    },
+                    {
+                      "type": "conditional",
+                      "conditions": [
+                        {
+                          "condition": "state",
+                          "entity": "cover.legrand_shutter_sw_with_level_control_cover",
+                          "state": "open"
+                        }
+                      ],
+                      "chip": {
+                        "type": "action",
+                        "tap_action": {
+                          "action": "perform-action",
+                          "perform_action": "script.close_all_group_floor_shutters",
+                          "target": {}
+                        },
+                        "icon": "mdi:window-shutter-open",
+                        "hold_action": {
+                          "action": "perform-action",
+                          "perform_action": "script.open_all_ground_floor_shutters",
+                          "target": {}
+                        }
+                      }
+                    }
+                  ],
+                  "card_mod": {
+                    "style": "ha-card {\n  --primary-text-color: black;\n  --chip-font-size: 20px;\n  --chip-icon-size: 35px !important;\n  --chip-background: rgba(255, 255, 255, 0.8);\n  background-color: #0396B7 !important;\n  padding: 5px 2px;\n  border-radius: 10px !important;\n  font-family: fantasy;\n}\nmushroom-template-chip:nth-child(1) {\n  --primary-text-color: white;\n  --chip-font-size: 30px;\n  --chip-background: tranparent;\n  --chip-border-color: transparent;\n  font-family: system-ui;\n  width: 100px;\n}\n"
+                  }
+                },
+                {
+                  "type": "custom:mushroom-chips-card",
+                  "chips": [
+                    {
+                      "type": "template",
+                      "tap_action": {
+                        "action": "none"
+                      },
+                      "hold_action": {
+                        "action": "none"
+                      },
+                      "double_tap_action": {
+                        "action": "none"
+                      },
+                      "content": "Ss-sol: "
+                    },
+                    {
+                      "type": "entity",
+                      "entity": "sensor.basement_temperature",
+                      "icon_color": "accent",
+                      "hold_action": {
+                        "action": "navigate",
+                        "navigation_path": "/ns-panel-sub-views/temperatures"
+                      }
+                    },
+                    {
+                      "type": "entity",
+                      "entity": "camera.sous_sol_fluent",
+                      "content_info": "none"
+                    },
+                    {
+                      "type": "entity",
+                      "entity": "sensor.bleuette_ev_battery_level",
+                      "tap_action": {
+                        "action": "navigate",
+                        "navigation_path": "/ns-panel-sub-views/bleuette"
+                      },
+                      "hold_action": {
+                        "action": "more-info"
+                      },
+                      "double_tap_action": {
+                        "action": "more-info"
+                      },
+                      "icon": "mdi:car-electric"
+                    }
+                  ],
+                  "card_mod": {
+                    "style": "ha-card {\n  --primary-text-color: black;\n  --chip-font-size: 20px;\n  --chip-icon-size: 35px !important;\n  --chip-background: rgba(255, 255, 255, 0.8);\n  background-color: #685762 !important;\n  padding: 5px 2px;\n  border-radius: 10px !important;\n  font-family: fantasy;\n}\nmushroom-template-chip:nth-child(1) {\n  --primary-text-color: white;\n  --chip-font-size: 25px;\n  --chip-background: tranparent;\n  --chip-border-color: transparent;\n  font-family: system-ui;\n  width: 100px;\n}\n"
+                  }
+                },
+                {
+                  "type": "custom:mushroom-chips-card",
+                  "chips": [
+                    {
+                      "type": "template",
+                      "tap_action": {
+                        "action": "none"
+                      },
+                      "hold_action": {
+                        "action": "none"
+                      },
+                      "double_tap_action": {
+                        "action": "none"
+                      },
+                      "content": "Ext: "
+                    },
+                    {
+                      "type": "entity",
+                      "entity": "sensor.temperature_exterieure_solisart",
+                      "content_info": "state",
+                      "icon_color": "accent",
+                      "hold_action": {
+                        "action": "navigate",
+                        "navigation_path": "/ns-panel-sub-views/temperatures"
+                      },
+                      "name": "ext:",
+                      "use_entity_picture": false
+                    },
+                    {
+                      "type": "conditional",
+                      "conditions": [
+                        {
+                          "condition": "state",
+                          "entity": "light.pompe_failsafe_light",
+                          "state": "on"
+                        }
+                      ],
+                      "chip": {
+                        "type": "action",
+                        "tap_action": {
+                          "action": "perform-action",
+                          "perform_action": "light.turn_off",
+                          "target": {
+                            "entity_id": "light.pompe_failsafe_light"
+                          },
+                          "data": {}
+                        },
+                        "icon": "mdi:fountain",
+                        "icon_color": "primary"
+                      }
+                    },
+                    {
+                      "type": "conditional",
+                      "conditions": [
+                        {
+                          "condition": "state",
+                          "entity": "light.pompe_failsafe_light",
+                          "state": "off"
+                        }
+                      ],
+                      "chip": {
+                        "type": "action",
+                        "tap_action": {
+                          "action": "perform-action",
+                          "perform_action": "light.turn_on",
+                          "target": {
+                            "entity_id": "light.pompe_failsafe_light"
+                          }
+                        },
+                        "icon": "mdi:fountain",
+                        "icon_color": "light-grey"
+                      }
+                    },
+                    {
+                      "type": "entity",
+                      "entity": "camera.terrasse_fluent",
+                      "name": "T",
+                      "content_info": "none"
+                    },
+                    {
+                      "type": "entity",
+                      "entity": "camera.sonette_2",
+                      "content_info": "none",
+                      "name": "S",
+                      "icon": "mdi:doorbell-video"
+                    },
+                    {
+                      "type": "weather",
+                      "entity": "weather.home",
+                      "show_conditions": true,
+                      "show_temperature": true
+                    },
+                    {
+                      "type": "conditional",
+                      "conditions": [
+                        {
+                          "condition": "state",
+                          "entity": "sensor.pollens_35_graminees",
+                          "state": "élevé"
+                        }
+                      ],
+                      "chip": {
+                        "type": "entity",
+                        "entity": "sensor.pollens_35_graminees",
+                        "icon_color": "red",
+                        "content_info": "none"
+                      }
+                    },
+                    {
+                      "type": "conditional",
+                      "conditions": [
+                        {
+                          "condition": "state",
+                          "entity": "sensor.pollens_35_graminees",
+                          "state": "faible"
+                        }
+                      ],
+                      "chip": {
+                        "type": "entity",
+                        "entity": "sensor.pollens_35_graminees",
+                        "icon_color": "amber",
+                        "content_info": "none"
+                      }
+                    },
+                    {
+                      "type": "conditional",
+                      "conditions": [
+                        {
+                          "condition": "state",
+                          "entity": "sensor.pollens_35_ambroisies",
+                          "state": "élevé"
+                        }
+                      ],
+                      "chip": {
+                        "type": "entity",
+                        "entity": "sensor.pollens_35_ambroisies",
+                        "icon_color": "red",
+                        "content_info": "none"
+                      }
+                    },
+                    {
+                      "type": "conditional",
+                      "conditions": [
+                        {
+                          "condition": "state",
+                          "entity": "sensor.pollens_35_ambroisies",
+                          "state": "faible"
+                        }
+                      ],
+                      "chip": {
+                        "type": "entity",
+                        "entity": "sensor.pollens_35_ambroisies",
+                        "icon_color": "amber",
+                        "content_info": "none"
+                      }
+                    }
+                  ],
+                  "card_mod": {
+                    "style": "ha-card {\n  --primary-text-color: black;\n  --chip-font-size: 20px;\n  --chip-icon-size: 35px !important;\n  --chip-background: rgba(255, 255, 255, 0.8);\n  background-color: #79B473 !important;\n  padding: 5px 2px;\n  border-radius: 10px !important;\n  font-family: fantasy;\n}\nmushroom-template-chip:nth-child(1) {\n  --primary-text-color: white;\n  --chip-font-size: 30px;\n  --chip-background: tranparent;\n  --chip-border-color: transparent;\n  font-family: system-ui;\n  width: 100px;\n}\n"
+                  }
+                }
+              ]
+            }
+          ],
+          "type": "panel"
+        },
+        {
+          "title": "Draft",
+          "visible": [
+            {
+              "user": "2a54ceccc9d74a409021b53d9ff4a71a"
+            }
+          ],
+          "cards": [
+            {
+              "type": "vertical-stack",
+              "cards": [
+                {
+                  "type": "conditional",
+                  "conditions": [
+                    {
+                      "condition": "state",
+                      "entity": "sensor.rte_tempo_prochaine_couleur",
+                      "state": "Rouge"
+                    }
+                  ],
+                  "card": {
+                    "type": "custom:mushroom-title-card",
+                    "title": "Journée rouge Tempo demain !"
+                  }
+                },
+                {
+                  "type": "conditional",
+                  "conditions": [
+                    {
+                      "condition": "state",
+                      "entity": "sensor.rte_tempo_couleur_actuelle",
+                      "state": "Rouge"
+                    }
+                  ],
+                  "card": {
+                    "type": "custom:mushroom-title-card",
+                    "title": "Journée rouge Tempo !!!"
+                  }
+                },
+                {
+                  "type": "conditional",
+                  "conditions": [
+                    {
+                      "condition": "numeric_state",
+                      "entity": "binary_sensor.aurora_visibility_aurora_visibility_alert",
+                      "above": 5
+                    }
+                  ],
+                  "card": {
+                    "type": "custom:mushroom-title-card",
+                    "title": "Aurores visibles !!!!!"
+                  }
+                },
+                {
+                  "type": "horizontal-stack",
+                  "cards": [
+                    {
+                      "type": "custom:mushroom-title-card",
+                      "title": "Ext:"
+                    },
+                    {
+                      "type": "custom:mushroom-chips-card",
+                      "chips": [
+                        {
+                          "type": "weather",
+                          "entity": "weather.home",
+                          "show_conditions": true,
+                          "show_temperature": true
+                        },
+                        {
+                          "type": "conditional",
+                          "conditions": [
+                            {
+                              "condition": "state",
+                              "entity": "sensor.pollens_35_graminees",
+                              "state": "élevé"
+                            }
+                          ],
+                          "chip": {
+                            "type": "entity",
+                            "entity": "sensor.pollens_35_graminees",
+                            "icon_color": "red",
+                            "content_info": "none"
+                          }
+                        },
+                        {
+                          "type": "conditional",
+                          "conditions": [
+                            {
+                              "condition": "state",
+                              "entity": "sensor.pollens_35_graminees",
+                              "state": "faible"
+                            }
+                          ],
+                          "chip": {
+                            "type": "entity",
+                            "entity": "sensor.pollens_35_graminees",
+                            "icon_color": "amber",
+                            "content_info": "none"
+                          }
+                        },
+                        {
+                          "type": "conditional",
+                          "conditions": [
+                            {
+                              "condition": "state",
+                              "entity": "sensor.pollens_35_ambroisies",
+                              "state": "élevé"
+                            }
+                          ],
+                          "chip": {
+                            "type": "entity",
+                            "entity": "sensor.pollens_35_ambroisies",
+                            "icon_color": "red",
+                            "content_info": "none"
+                          }
+                        },
+                        {
+                          "type": "conditional",
+                          "conditions": [
+                            {
+                              "condition": "state",
+                              "entity": "sensor.pollens_35_ambroisies",
+                              "state": "faible"
+                            }
+                          ],
+                          "chip": {
+                            "type": "entity",
+                            "entity": "sensor.pollens_35_ambroisies",
+                            "icon_color": "amber",
+                            "content_info": "none"
+                          }
+                        },
+                        {
+                          "type": "entity",
+                          "entity": "sensor.temperature_exterieure_solisart",
+                          "content_info": "state",
+                          "icon_color": "accent",
+                          "name": "ext:",
+                          "use_entity_picture": false
+                        },
+                        {
+                          "type": "conditional",
+                          "conditions": [
+                            {
+                              "condition": "state",
+                              "entity": "switch.pompe_bassin_switch",
+                              "state": "on"
+                            }
+                          ],
+                          "chip": {
+                            "type": "action",
+                            "tap_action": {
+                              "action": "call-service",
+                              "service": "switch.turn_off",
+                              "target": {
+                                "entity_id": "switch.pompe_bassin_switch"
+                              }
+                            },
+                            "icon": "mdi:fountain",
+                            "icon_color": "primary"
+                          }
+                        },
+                        {
+                          "type": "conditional",
+                          "conditions": [
+                            {
+                              "condition": "state",
+                              "entity": "switch.pompe_bassin_switch",
+                              "state": "off"
+                            }
+                          ],
+                          "chip": {
+                            "type": "action",
+                            "tap_action": {
+                              "action": "call-service",
+                              "service": "switch.turn_on",
+                              "target": {
+                                "entity_id": [
+                                  "switch.pompe_bassin_switch"
+                                ]
+                              }
+                            },
+                            "icon": "mdi:fountain",
+                            "icon_color": "light-grey"
+                          }
+                        },
+                        {
+                          "type": "entity",
+                          "entity": "switch.pompe_bassin_switch",
+                          "hold_action": {
+                            "action": "more-info"
+                          },
+                          "icon": "mdi:fountain",
+                          "icon_color": "light-blue",
+                          "name": "Pompe",
+                          "content_info": "state",
+                          "use_entity_picture": true,
+                          "tap_action": {
+                            "action": "toggle"
+                          }
+                        },
+                        {
+                          "type": "entity",
+                          "entity": "camera.terrasse_fluent",
+                          "name": "T",
+                          "content_info": "none"
+                        },
+                        {
+                          "type": "entity",
+                          "entity": "camera.sonette_2",
+                          "content_info": "none",
+                          "name": "S",
+                          "icon": "mdi:doorbell-video"
+                        }
+                      ],
+                      "alignment": "justify"
+                    }
+                  ]
+                },
+                {
+                  "type": "horizontal-stack",
+                  "cards": [
+                    {
+                      "type": "custom:mushroom-title-card",
+                      "title": "Étage:"
+                    },
+                    {
+                      "type": "custom:mushroom-chips-card",
+                      "chips": [
+                        {
+                          "type": "entity",
+                          "entity": "sensor.temperature_etage",
+                          "icon_color": "accent"
+                        },
+                        {
+                          "type": "entity",
+                          "entity": "sensor.bathroom_humidity",
+                          "icon_color": "cyan"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "horizontal-stack",
+                  "cards": [
+                    {
+                      "type": "custom:mushroom-title-card",
+                      "title": "RDC:"
+                    },
+                    {
+                      "type": "custom:mushroom-chips-card",
+                      "chips": [
+                        {
+                          "type": "entity",
+                          "entity": "sensor.temperature_rdc",
+                          "content_info": "state",
+                          "icon_color": "accent",
+                          "name": "ext:",
+                          "use_entity_picture": false
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "horizontal-stack",
+                  "cards": [
+                    {
+                      "type": "custom:mushroom-title-card",
+                      "title": "Ss-sol:"
+                    },
+                    {
+                      "type": "custom:mushroom-chips-card",
+                      "chips": [
+                        {
+                          "type": "entity",
+                          "entity": "sensor.basement_temperature",
+                          "icon_color": "accent"
+                        },
+                        {
+                          "type": "entity",
+                          "entity": "camera.sous_sol_fluent",
+                          "content_info": "state"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "conditional",
+                  "conditions": [
+                    {
+                      "condition": "user",
+                      "users": [
+                        "2a54ceccc9d74a409021b53d9ff4a71a"
+                      ]
+                    }
+                  ],
+                  "card_mod": {
+                    "style": {
+                      "hui-horizontal-stack-card $": "mushroom-title-card:nth-of-type(1) {\n  width: 93px\n}\nmushroom-chips-card:nth-of-type(1) {\n  flex: 1 1 0;\n}\n",
+                      "hui-vertical-stack-card $": "hui-horizontal-stack-card:nth-of-type(1) {\n  background: red\n}\n"
+                    }
+                  },
+                  "card": {
+                    "type": "custom:mushroom-title-card",
+                    "title": "This is just here to contain the card mods for the other cards"
+                  }
+                }
+              ],
+              "card_mod": {
+                "style": {
+                  "hui-horizontal-stack-card $": "mushroom-title-card:nth-of-type(1) {\n  width: 93px\n}\nmushroom-chips-card:nth-of-type(1) {\n  flex: 1 1 0;\n}\n"
+                }
+              }
+            }
+          ],
+          "type": "panel"
+        }
+      ],
+      "title": "NS Panel"
+    }
+  }
+}
