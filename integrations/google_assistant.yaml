@@ -23,6 +23,10 @@ google_assistant:
       expose: true
     script.close_car:
       expose: true
+    script.open_all_shutters:
+      expose: true
+    script.close_all_shutters:
+      expose: true
     script.party_mode:
       name: Party mode script
       expose: true
@@ -129,6 +133,18 @@ google_assistant:
       name: Volets baie salle à manger
       expose: true
       room: Salle à manger
+    cover.volets_salle_de_jeux:
+      name: Volets salle de jeux
+      expose: true
+      room: Salle de jeux
+    cover.volets_chambre:
+      name: Volets chambre
+      expose: true
+      room: Chambre principale
+    cover.volets_cuisine:
+      name: Volets cuisine
+      expose: true
+      room: Cuisine
 
     ## Others
     switch.pompe_switch:
