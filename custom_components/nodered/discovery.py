@@ -1,12 +1,13 @@
 """Support for Node-RED discovery."""
+
 import asyncio
 import logging
 
+from homeassistant.core import HomeAssistant
 from homeassistant.helpers.dispatcher import (
     async_dispatcher_connect,
     async_dispatcher_send,
 )
-from homeassistant.helpers.typing import HomeAssistantType
 
 from .const import (
     CONF_BINARY_SENSOR,
@@ -48,9 +49,7 @@ CONFIG_ENTRY_IS_SETUP = "config_entry_is_setup"
 DISCOVERY_DISPATCHED = "discovery_dispatched"
 
 
-async def start_discovery(
-    hass: HomeAssistantType, hass_config, config_entry=None
-) -> bool:
+async def start_discovery(hass: HomeAssistant, hass_config, config_entry=None) -> bool:
     """Initialize of Node-RED Discovery."""
 
     async def async_device_message_received(msg, connection):
@@ -94,8 +93,8 @@ async def start_discovery(
 
             async with data[CONFIG_ENTRY_LOCK]:
                 if component not in data[CONFIG_ENTRY_IS_SETUP]:
-                    await hass.config_entries.async_forward_entry_setup(
-                        config_entry, component
+                    await hass.config_entries.async_forward_entry_setups(
+                        config_entry, [component]
                     )
                     data[CONFIG_ENTRY_IS_SETUP].add(component)
 
@@ -113,6 +112,6 @@ async def start_discovery(
     )
 
 
-def stop_discovery(hass: HomeAssistantType):
+def stop_discovery(hass: HomeAssistant):
     """Remove discovery dispatcher."""
     hass.data[DOMAIN_DATA][DISCOVERY_DISPATCHED]()

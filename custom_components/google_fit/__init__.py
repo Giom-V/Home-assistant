@@ -1,4 +1,5 @@
 """Support for Google Fit."""
+
 from __future__ import annotations
 
 from aiohttp.client_exceptions import ClientError, ClientResponseError
@@ -12,17 +13,21 @@ from homeassistant.helpers.config_entry_oauth2_flow import (
     OAuth2Session,
     async_get_config_entry_implementation,
 )
+from homeassistant.helpers.device_registry import DeviceEntry
 
 from .coordinator import Coordinator
 
 from .api import AsyncConfigEntryAuth, LOGGER
 from .const import DOMAIN
 
-PLATFORM = Platform.SENSOR
+PLATFORMS = [Platform.SENSOR]
+
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Set up Google Fit from a config entry."""
-    LOGGER.debug("Setting up Google Fit integration from configuration %s", entry.entry_id)
+    LOGGER.debug(
+        "Setting up Google Fit integration from configuration %s", entry.entry_id
+    )
     implementation = await async_get_config_entry_implementation(hass, entry)
 
     LOGGER.debug("Attempting to create OAuth2 session")
@@ -48,7 +53,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         "coordinator": coordinator,
     }
 
-    await hass.config_entries.async_forward_entry_setup(entry, PLATFORM)
+    await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
     entry.async_on_unload(entry.add_update_listener(update_listener))
 
     # Attempt to retrieve values immediately, not waiting for first
@@ -67,7 +72,7 @@ async def update_listener(hass, entry) -> None:
 
 async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Handle removal of an entry."""
-    if unloaded := await hass.config_entries.async_unload_platforms(entry, [PLATFORM]):
+    if unloaded := await hass.config_entries.async_unload_platforms(entry, PLATFORMS):
         hass.data[DOMAIN].pop(entry.entry_id)
     return unloaded
 
@@ -76,3 +81,10 @@ async def async_reload_entry(hass: HomeAssistant, entry: ConfigEntry) -> None:
     """Reload config entry."""
     await async_unload_entry(hass, entry)
     await async_setup_entry(hass, entry)
+
+
+async def async_remove_config_entry_device(
+    hass: HomeAssistant, config_entry: ConfigEntry, device_entry: DeviceEntry
+) -> bool:
+    """Remove Google Fit config entry."""
+    return True

@@ -1,26 +1,26 @@
 """The blitzortung integration."""
-import asyncio
-import json
+
 import logging
 import math
 import time
 
 import voluptuous as vol
 
+from homeassistant.components.sensor import SensorDeviceClass
 from homeassistant.config_entries import ConfigEntry
-from homeassistant.const import CONF_LATITUDE, CONF_LONGITUDE, CONF_NAME
-from homeassistant.core import HomeAssistant
+from homeassistant.const import CONF_LATITUDE, CONF_LONGITUDE, CONF_NAME, UnitOfLength
+from homeassistant.core import callback, HomeAssistant
 from homeassistant.helpers.dispatcher import async_dispatcher_connect
 from homeassistant.helpers.event import async_track_time_interval
 
+from homeassistant.util.json import json_loads_object
 from homeassistant.util.unit_system import IMPERIAL_SYSTEM
 from homeassistant.util.unit_conversion import DistanceConverter
-from homeassistant.const import (
-    LENGTH_KILOMETERS,
-    LENGTH_MILES,
-)
-from . import const
+
 from .const import (
+    ATTR_LIGHTNING_DISTANCE,
+    ATTR_LIGHTNING_AZIMUTH,
+    BLITZORTUNG_CONFIG,
     CONF_IDLE_RESET_TIMEOUT,
     CONF_MAX_TRACKED_LIGHTNINGS,
     CONF_RADIUS,
@@ -32,6 +32,7 @@ from .const import (
     DEFAULT_UPDATE_INTERVAL,
     DOMAIN,
     PLATFORMS,
+    SERVER_STATS,
 )
 from .geohash_utils import geohash_overlap
 from .mqtt import MQTT, MQTT_CONNECTED, MQTT_DISCONNECTED
@@ -40,32 +41,29 @@ from .version import __version__
 _LOGGER = logging.getLogger(__name__)
 
 CONFIG_SCHEMA = vol.Schema(
-    {DOMAIN: vol.Schema({vol.Optional(const.SERVER_STATS, default=False): bool})},
+    {DOMAIN: vol.Schema({vol.Optional(SERVER_STATS, default=False): bool})},
     extra=vol.ALLOW_EXTRA,
 )
+
+BlitzortungConfigEntry = ConfigEntry["BlitzortungCoordinator"]
 
 
 async def async_setup(hass: HomeAssistant, config: dict):
     """Initialize basic config of blitzortung component."""
-    hass.data.setdefault(DOMAIN, {})
-    hass.data[DOMAIN]["config"] = config.get(DOMAIN) or {}
+    hass.data[BLITZORTUNG_CONFIG] = config.get(DOMAIN) or {}
     return True
 
 
-async def async_setup_entry(hass: HomeAssistant, config_entry: ConfigEntry):
+async def async_setup_entry(hass: HomeAssistant, config_entry: BlitzortungConfigEntry):
     """Set up blitzortung from a config entry."""
-    hass.data.setdefault(DOMAIN, {})
-    config = hass.data[DOMAIN].get("config") or {}
+    config = hass.data[BLITZORTUNG_CONFIG]
 
-    latitude = config_entry.options.get(CONF_LATITUDE, hass.config.latitude)
-    longitude = config_entry.options.get(CONF_LONGITUDE, hass.config.longitude)
-    radius = config_entry.options.get(CONF_RADIUS, DEFAULT_RADIUS)
-    max_tracked_lightnings = config_entry.options.get(
-        CONF_MAX_TRACKED_LIGHTNINGS, DEFAULT_MAX_TRACKED_LIGHTNINGS
-    )
-    time_window_seconds = (
-        config_entry.options.get(CONF_TIME_WINDOW, DEFAULT_TIME_WINDOW) * 60
-    )
+    latitude = config_entry.data[CONF_LATITUDE]
+    longitude = config_entry.data[CONF_LONGITUDE]
+    radius = config_entry.options[CONF_RADIUS]
+    max_tracked_lightnings = config_entry.options[CONF_MAX_TRACKED_LIGHTNINGS]
+    time_window_seconds = config_entry.options[CONF_TIME_WINDOW] * 60
+
     if max_tracked_lightnings >= 500:
         _LOGGER.warning(
             "Large number of tracked lightnings: %s, it may lead to"
@@ -75,10 +73,12 @@ async def async_setup_entry(hass: HomeAssistant, config_entry: ConfigEntry):
 
     if hass.config.units == IMPERIAL_SYSTEM:
         radius_mi = radius
-        radius = DistanceConverter.convert(radius, LENGTH_MILES, LENGTH_KILOMETERS)
+        radius = DistanceConverter.convert(
+            radius, UnitOfLength.MILES, UnitOfLength.KILOMETERS
+        )
         _LOGGER.info("imperial system, %s mi -> %s km", radius_mi, radius)
 
-    coordinator = BlitzortungCoordinator(
+    config_entry.runtime_data = BlitzortungCoordinator(
         hass,
         latitude,
         longitude,
@@ -86,21 +86,11 @@ async def async_setup_entry(hass: HomeAssistant, config_entry: ConfigEntry):
         max_tracked_lightnings,
         time_window_seconds,
         DEFAULT_UPDATE_INTERVAL,
-        server_stats=config.get(const.SERVER_STATS),
+        server_stats=config.get(SERVER_STATS),
     )
 
-    hass.data[DOMAIN][config_entry.entry_id] = coordinator
-
-    async def start_platforms():
-        await asyncio.gather(
-            *[
-                hass.config_entries.async_forward_entry_setup(config_entry, component)
-                for component in PLATFORMS
-            ]
-        )
-        await coordinator.connect()
-
-    hass.async_create_task(start_platforms())
+    await hass.config_entries.async_forward_entry_setups(config_entry, PLATFORMS)
+    await config_entry.runtime_data.connect()
 
     if not config_entry.update_listeners:
         config_entry.add_update_listener(async_update_options)
@@ -108,31 +98,21 @@ async def async_setup_entry(hass: HomeAssistant, config_entry: ConfigEntry):
     return True
 
 
-async def async_update_options(hass, config_entry):
+async def async_update_options(hass, config_entry: BlitzortungConfigEntry):
     """Update options."""
     _LOGGER.info("async_update_options")
     await hass.config_entries.async_reload(config_entry.entry_id)
 
 
-async def async_unload_entry(hass: HomeAssistant, config_entry: ConfigEntry):
+async def async_unload_entry(hass: HomeAssistant, config_entry: BlitzortungConfigEntry):
     """Unload a config entry."""
-    coordinator = hass.data[DOMAIN].pop(config_entry.entry_id)
-    await coordinator.disconnect()
-    _LOGGER.info("disconnected")
+    await config_entry.runtime_data.disconnect()
+    _LOGGER.debug("Disconnected")
 
-    # cleanup platforms
-    unload_ok = all(
-        await asyncio.gather(
-            *[
-                hass.config_entries.async_forward_entry_unload(config_entry, component)
-                for component in PLATFORMS
-            ]
-        )
-    )
-    return unload_ok
+    return await hass.config_entries.async_unload_platforms(config_entry, PLATFORMS)
 
 
-async def async_migrate_entry(hass, entry):
+async def async_migrate_entry(hass, entry: BlitzortungConfigEntry):
     _LOGGER.debug("Migrating Blitzortung entry from Version %s", entry.version)
     if entry.version == 1:
         latitude = entry.data[CONF_LATITUDE]
@@ -158,6 +138,28 @@ async def async_migrate_entry(hass, entry):
             CONF_IDLE_RESET_TIMEOUT, DEFAULT_TIME_WINDOW
         )
         entry.version = 4
+    if entry.version == 4:
+        new_data = entry.data.copy()
+
+        latitude = entry.options.get(CONF_LATITUDE, hass.config.latitude)
+        longitude = entry.options.get(CONF_LONGITUDE, hass.config.longitude)
+        radius = entry.options.get(CONF_RADIUS, DEFAULT_RADIUS)
+        time_window = entry.options.get(CONF_TIME_WINDOW, DEFAULT_TIME_WINDOW)
+        max_tracked_lightnings = entry.options.get(
+            CONF_MAX_TRACKED_LIGHTNINGS, DEFAULT_MAX_TRACKED_LIGHTNINGS
+        )
+
+        new_data[CONF_LATITUDE] = latitude
+        new_data[CONF_LONGITUDE] = longitude
+        new_options = {
+            CONF_RADIUS: radius,
+            CONF_TIME_WINDOW: time_window,
+            CONF_MAX_TRACKED_LIGHTNINGS: max_tracked_lightnings,
+        }
+
+        hass.config_entries.async_update_entry(
+            entry, data=new_data, options=new_options, version=5
+        )
 
     return True
 
@@ -218,6 +220,7 @@ class BlitzortungCoordinator:
             )
         )
 
+    @callback
     def _on_connection_change(self, *args, **kwargs):
         if self.unloading:
             return
@@ -235,8 +238,8 @@ class BlitzortungCoordinator:
         distance = round(math.sqrt(dx * dx + dy * dy) * 6371, 1)
         azimuth = round(math.atan2(dx, dy) * 180 / math.pi) % 360
 
-        lightning[const.ATTR_LIGHTNING_DISTANCE] = distance
-        lightning[const.ATTR_LIGHTNING_AZIMUTH] = azimuth
+        lightning[ATTR_LIGHTNING_DISTANCE] = distance
+        lightning[ATTR_LIGHTNING_AZIMUTH] = azimuth
 
     async def connect(self):
         await self.mqtt_client.async_connect()
@@ -255,9 +258,7 @@ class BlitzortungCoordinator:
         )
 
         self._disconnect_callbacks.append(
-            async_track_time_interval(
-                self.hass, self._tick, const.DEFAULT_UPDATE_INTERVAL
-            )
+            async_track_time_interval(self.hass, self._tick, DEFAULT_UPDATE_INTERVAL)
         )
 
     async def disconnect(self):
@@ -270,7 +271,7 @@ class BlitzortungCoordinator:
         def parse_version(version_str):
             return tuple(map(int, version_str.split(".")))
 
-        data = json.loads(message.payload)
+        data = json_loads_object(message.payload)
         latest_version_str = data.get("latest_version")
         if latest_version_str:
             default_message = (
@@ -289,17 +290,17 @@ class BlitzortungCoordinator:
                     notification_id="blitzortung_new_version_available",
                 )
 
-    def on_mqtt_message(self, message, *args):
+    async def on_mqtt_message(self, message, *args):
         for callback in self.callbacks:
             callback(message)
         if message.topic.startswith("blitzortung/1.1"):
-            lightning = json.loads(message.payload)
+            lightning = json_loads_object(message.payload)
             self.compute_polar_coords(lightning)
-            if lightning[const.ATTR_LIGHTNING_DISTANCE] < self.radius:
-                _LOGGER.debug("ligntning data: %s", lightning)
+            if lightning[SensorDeviceClass.DISTANCE] < self.radius:
+                _LOGGER.debug("lightning data: %s", lightning)
                 self.last_time = time.time()
                 for callback in self.lightning_callbacks:
-                    callback(lightning)
+                    await callback(lightning)
                 for sensor in self.sensors:
                     sensor.update_lightning(lightning)
 

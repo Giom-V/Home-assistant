@@ -1,0 +1,779 @@
+{
+  "version": 1,
+  "minor_version": 1,
+  "key": "lovelace.ns_panel_sub_views",
+  "data": {
+    "config": {
+      "wallpanel": {
+        "enabled": true,
+        "hide_toolbar": false,
+        "hide_sidebar": true,
+        "hide_toolbar_action_icons": true,
+        "idle_time": 0,
+        "fullscreen": false
+      },
+      "views": [
+        {
+          "subview": true,
+          "title": "Bleuette",
+          "path": "bleuette",
+          "icon": "mdi:car",
+          "type": "panel",
+          "cards": [
+            {
+              "type": "vertical-stack",
+              "cards": [
+                {
+                  "type": "picture-elements",
+                  "elements": [
+                    {
+                      "type": "conditional",
+                      "conditions": [
+                        {
+                          "entity": "binary_sensor.bleuette_hood",
+                          "state": "on"
+                        }
+                      ],
+                      "elements": [
+                        {
+                          "type": "state-icon",
+                          "entity": "binary_sensor.bleuette_hood",
+                          "style": {
+                            "top": "45%",
+                            "left": "25%",
+                            "--paper-item-icon-color": "red"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "conditional",
+                      "conditions": [
+                        {
+                          "entity": "binary_sensor.bleuette_trunk",
+                          "state": "on"
+                        }
+                      ],
+                      "elements": [
+                        {
+                          "type": "state-icon",
+                          "entity": "binary_sensor.bleuette_trunk",
+                          "style": {
+                            "top": "30%",
+                            "left": "90%",
+                            "--paper-item-icon-color": "red"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "conditional",
+                      "conditions": [
+                        {
+                          "entity": "binary_sensor.bleuette_door_front_left",
+                          "state": "on"
+                        }
+                      ],
+                      "elements": [
+                        {
+                          "type": "state-icon",
+                          "entity": "binary_sensor.bleuette_door_front_left",
+                          "style": {
+                            "top": "50%",
+                            "left": "65%",
+                            "--paper-item-icon-color": "red"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "conditional",
+                      "conditions": [
+                        {
+                          "entity": "binary_sensor.bleuette_door_rear_left",
+                          "state": "on"
+                        }
+                      ],
+                      "elements": [
+                        {
+                          "type": "state-icon",
+                          "entity": "binary_sensor.bleuette_door_rear_left",
+                          "style": {
+                            "top": "50%",
+                            "left": "80%",
+                            "--paper-item-icon-color": "red"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "conditional",
+                      "conditions": [
+                        {
+                          "entity": "binary_sensor.bleuette_door_front_right",
+                          "state": "on"
+                        }
+                      ],
+                      "elements": [
+                        {
+                          "type": "state-icon",
+                          "entity": "binary_sensor.bleuette_door_front_right",
+                          "style": {
+                            "top": "30%",
+                            "left": "40%",
+                            "--paper-item-icon-color": "red"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "conditional",
+                      "conditions": [
+                        {
+                          "entity": "binary_sensor.bleuette_door_rear_right",
+                          "state": "on"
+                        }
+                      ],
+                      "elements": [
+                        {
+                          "type": "state-icon",
+                          "entity": "binary_sensor.bleuette_door_rear_right",
+                          "style": {
+                            "top": "30%",
+                            "left": "55%",
+                            "--paper-item-icon-color": "red"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "state-icon",
+                      "entity": "sensor.bleuette_odometer",
+                      "style": {
+                        "top": "5%",
+                        "left": "3%"
+                      }
+                    },
+                    {
+                      "type": "state-label",
+                      "entity": "sensor.bleuette_odometer",
+                      "style": {
+                        "top": "6%",
+                        "left": "4%",
+                        "max-width": "1px"
+                      }
+                    },
+                    {
+                      "type": "state-icon",
+                      "entity": "sensor.bleuette_ev_range",
+                      "style": {
+                        "top": "15%",
+                        "left": "3%"
+                      }
+                    },
+                    {
+                      "type": "state-label",
+                      "entity": "sensor.bleuette_ev_range",
+                      "style": {
+                        "top": "16%",
+                        "left": "4%",
+                        "max-width": "1px"
+                      }
+                    },
+                    {
+                      "type": "state-label",
+                      "entity": "sensor.bleuette_autonomie_max",
+                      "style": {
+                        "top": "16%",
+                        "left": "20%",
+                        "max-width": "1px"
+                      }
+                    },
+                    {
+                      "type": "state-icon",
+                      "entity": "binary_sensor.bleuette_ev_battery_charge",
+                      "style": {
+                        "top": "25%",
+                        "left": "3%"
+                      }
+                    },
+                    {
+                      "type": "state-label",
+                      "entity": "sensor.bleuette_ev_battery_level",
+                      "style": {
+                        "top": "26%",
+                        "left": "4%",
+                        "max-width": "1px"
+                      }
+                    },
+                    {
+                      "type": "state-icon",
+                      "entity": "binary_sensor.bleuette_ev_battery_plug",
+                      "style": {
+                        "top": "35%",
+                        "left": "3%"
+                      }
+                    },
+                    {
+                      "type": "conditional",
+                      "conditions": [
+                        {
+                          "entity": "binary_sensor.bleuette_ev_battery_plug",
+                          "state": "on"
+                        }
+                      ],
+                      "elements": [
+                        {
+                          "type": "state-label",
+                          "entity": "sensor.bleuette_estimated_charge_duration",
+                          "style": {
+                            "top": "36%",
+                            "left": "4%",
+                            "max-width": "1px"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "state-icon",
+                      "entity": "binary_sensor.bleuette_engine",
+                      "style": {
+                        "top": "45%",
+                        "left": "3%"
+                      }
+                    },
+                    {
+                      "type": "state-label",
+                      "entity": "sensor.bleuette_last_updated_at",
+                      "style": {
+                        "top": "4%",
+                        "left": "83%"
+                      },
+                      "tap_action": {
+                        "action": "call-service",
+                        "service": "kia_uvo.force_update"
+                      }
+                    },
+                    {
+                      "type": "conditional",
+                      "conditions": [
+                        {
+                          "entity": "binary_sensor.bleuette_defroster",
+                          "state": "on"
+                        }
+                      ],
+                      "elements": [
+                        {
+                          "type": "state-icon",
+                          "entity": "binary_sensor.bleuette_defroster",
+                          "style": {
+                            "top": "12%",
+                            "left": "97%"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "conditional",
+                      "conditions": [
+                        {
+                          "entity": "binary_sensor.bleuette_air_conditioner",
+                          "state": "on"
+                        }
+                      ],
+                      "elements": [
+                        {
+                          "type": "state-icon",
+                          "entity": "binary_sensor.bleuette_air_conditioner",
+                          "style": {
+                            "top": "22%",
+                            "left": "97%"
+                          }
+                        },
+                        {
+                          "type": "state-label",
+                          "entity": "sensor.bleuette_set_temperature",
+                          "style": {
+                            "top": "23%",
+                            "left": "83%",
+                            "max-width": "1px"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "conditional",
+                      "conditions": [
+                        {
+                          "entity": "binary_sensor.bleuette_back_window_heater",
+                          "state": "on"
+                        }
+                      ],
+                      "elements": [
+                        {
+                          "type": "state-icon",
+                          "entity": "binary_sensor.bleuette_back_window_heater",
+                          "style": {
+                            "top": "32%",
+                            "left": "97%"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "conditional",
+                      "conditions": [
+                        {
+                          "entity": "binary_sensor.bleuette_steering_wheel_heater",
+                          "state": "on"
+                        }
+                      ],
+                      "elements": [
+                        {
+                          "type": "state-icon",
+                          "entity": "binary_sensor.bleuette_steering_wheel_heater",
+                          "style": {
+                            "top": "42%",
+                            "left": "97%"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "conditional",
+                      "conditions": [
+                        {
+                          "entity": "binary_sensor.bleuette_tire_pressure_all",
+                          "state": "on"
+                        }
+                      ],
+                      "elements": [
+                        {
+                          "type": "state-icon",
+                          "entity": "binary_sensor.bleuette_tire_pressure_all",
+                          "style": {
+                            "top": "52%",
+                            "left": "97%",
+                            "--paper-item-icon-color": "red"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "conditional",
+                      "conditions": [
+                        {
+                          "entity": "binary_sensor.bleuette_washer_fluid_warning",
+                          "state": "on"
+                        }
+                      ],
+                      "elements": [
+                        {
+                          "type": "state-icon",
+                          "entity": "binary_sensor.bleuette_washer_fluid_warning",
+                          "style": {
+                            "top": "62%",
+                            "left": "97%",
+                            "--paper-item-icon-color": "red"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "conditional",
+                      "conditions": [
+                        {
+                          "entity": "binary_sensor.bleuette_data",
+                          "state": "off"
+                        }
+                      ],
+                      "elements": [
+                        {
+                          "type": "state-icon",
+                          "entity": "binary_sensor.bleuette_data",
+                          "style": {
+                            "top": "72%",
+                            "left": "97%",
+                            "--paper-item-icon-color": "red"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "conditional",
+                      "conditions": [
+                        {
+                          "entity": "binary_sensor.bleuette_smart_key_battery_warning",
+                          "state": "on"
+                        }
+                      ],
+                      "elements": [
+                        {
+                          "type": "state-icon",
+                          "entity": "binary_sensor.bleuette_smart_key_battery_warning",
+                          "style": {
+                            "top": "82%",
+                            "left": "97%",
+                            "--paper-item-icon-color": "red"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "state-label",
+                      "entity": "sensor.bleuette_geocoded_location",
+                      "style": {
+                        "top": "97%",
+                        "left": "0%",
+                        "max-width": "1px",
+                        "color": "lightgrey"
+                      }
+                    }
+                  ],
+                  "image": "https://photoref.carboatservices.fr/S0lB/RVY2/98b028a7da83541e9ba384116674a979/MQ==/0b70c77cdf60d436514f5505697aad48.png"
+                },
+                {
+                  "type": "custom:mushroom-chips-card",
+                  "chips": [
+                    {
+                      "type": "conditional",
+                      "conditions": [
+                        {
+                          "condition": "state",
+                          "entity": "binary_sensor.bleuette_ev_battery_charge",
+                          "state": "on"
+                        }
+                      ],
+                      "chip": {
+                        "type": "entity",
+                        "entity": "binary_sensor.bleuette_ev_battery_charge",
+                        "tap_action": {
+                          "action": "call-service",
+                          "service": "kia_uvo.stop_charge",
+                          "target": {}
+                        },
+                        "icon": "mdi:battery-remove",
+                        "icon_color": "red",
+                        "name": "Stop",
+                        "content_info": "name"
+                      }
+                    },
+                    {
+                      "type": "conditional",
+                      "conditions": [
+                        {
+                          "condition": "state",
+                          "entity": "binary_sensor.bleuette_ev_battery_charge",
+                          "state": "off"
+                        }
+                      ],
+                      "chip": {
+                        "type": "entity",
+                        "entity": "binary_sensor.bleuette_ev_battery_charge",
+                        "tap_action": {
+                          "action": "call-service",
+                          "service": "kia_uvo.start_charge",
+                          "target": {}
+                        },
+                        "icon": "mdi:battery-charging-high",
+                        "icon_color": "orange",
+                        "name": "Start",
+                        "content_info": "name"
+                      }
+                    },
+                    {
+                      "type": "conditional",
+                      "conditions": [
+                        {
+                          "condition": "state",
+                          "entity": "binary_sensor.bleuette_air_conditioner",
+                          "state": "on"
+                        }
+                      ],
+                      "chip": {
+                        "type": "entity",
+                        "entity": "binary_sensor.bleuette_air_conditioner",
+                        "tap_action": {
+                          "action": "call-service",
+                          "service": "kia_uvo.stop_climate",
+                          "target": {}
+                        },
+                        "icon": "mdi:air-conditioner",
+                        "icon_color": "red",
+                        "name": "Stop",
+                        "content_info": "name"
+                      }
+                    },
+                    {
+                      "type": "conditional",
+                      "conditions": [
+                        {
+                          "condition": "state",
+                          "entity": "binary_sensor.bleuette_air_conditioner",
+                          "state": "off"
+                        }
+                      ],
+                      "chip": {
+                        "type": "entity",
+                        "entity": "binary_sensor.bleuette_air_conditioner",
+                        "tap_action": {
+                          "action": "call-service",
+                          "service": "script.preheat_car",
+                          "target": {}
+                        },
+                        "icon": "mdi:air-conditioner",
+                        "icon_color": "grey",
+                        "name": "Pré-chauffe",
+                        "content_info": "name"
+                      }
+                    },
+                    {
+                      "type": "conditional",
+                      "conditions": [
+                        {
+                          "condition": "state",
+                          "entity": "lock.bleuette_door_lock",
+                          "state_not": "locked"
+                        }
+                      ],
+                      "chip": {
+                        "type": "entity",
+                        "entity": "binary_sensor.bleuette_air_conditioner",
+                        "tap_action": {
+                          "action": "call-service",
+                          "service": "kia_uvo.lock",
+                          "target": {}
+                        },
+                        "icon": "mdi:lock-open-variant-outline",
+                        "icon_color": "red",
+                        "name": "Lock",
+                        "content_info": "name"
+                      }
+                    },
+                    {
+                      "type": "conditional",
+                      "conditions": [
+                        {
+                          "condition": "state",
+                          "entity": "lock.bleuette_door_lock",
+                          "state": "locked"
+                        }
+                      ],
+                      "chip": {
+                        "type": "entity",
+                        "entity": "binary_sensor.bleuette_air_conditioner",
+                        "tap_action": {
+                          "action": "call-service",
+                          "service": "kia_uvo.unlock",
+                          "target": {}
+                        },
+                        "name": "Unlock",
+                        "icon": "mdi:lock",
+                        "icon_color": "grey",
+                        "content_info": "name"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Temperatures",
+          "path": "temperatures",
+          "icon": "mdi:home-thermometer-outline",
+          "type": "panel",
+          "cards": [
+            {
+              "type": "custom:plotly-graph",
+              "entities": [
+                {
+                  "entity": "sensor.module_exterieur_netatmo_temperature",
+                  "name": "Température extérieure",
+                  "line": {
+                    "color": "#79B473"
+                  },
+                  "filters": [
+                    {
+                      "sliding_window_moving_average": {
+                        "window_size": 1,
+                        "extended": true,
+                        "centered": false
+                      }
+                    },
+                    {
+                      "exponential_moving_average": {
+                        "alpha": 1
+                      }
+                    }
+                  ]
+                },
+                {
+                  "entity": "sensor.roof_temperature",
+                  "name": "Combles",
+                  "line": {
+                    "color": "#D0B17A"
+                  }
+                },
+                {
+                  "entity": "sensor.office_button_temperature",
+                  "name": "Bureau",
+                  "line": {
+                    "color": "#0D5EAB"
+                  }
+                },
+                {
+                  "entity": "sensor.station_netatmo_chambre_temperature",
+                  "name": "Chambre",
+                  "line": {
+                    "color": "#B70378"
+                  }
+                },
+                {
+                  "entity": "sensor.shower_temperature",
+                  "name": "Douche",
+                  "line": {
+                    "color": "#2E86AB"
+                  }
+                },
+                {
+                  "entity": "sensor.bathroom_temperature",
+                  "name": "SDB",
+                  "line": {
+                    "color": "#F4C95D"
+                  }
+                },
+                {
+                  "entity": "sensor.aurore_bedroom_temperature",
+                  "name": "Chambre d'Aurore",
+                  "line": {
+                    "color": "#C7F8F9"
+                  }
+                },
+                {
+                  "entity": "sensor.playroom_temperature",
+                  "name": "Salle de jeux",
+                  "line": {
+                    "color": "#706F9B"
+                  }
+                },
+                {
+                  "entity": "sensor.station_interieure_netatmo_temperature",
+                  "name": "Salon",
+                  "line": {
+                    "color": "#FF3B0A"
+                  }
+                },
+                {
+                  "entity": "sensor.detecteur_incendie_temperature",
+                  "name": "Cuisine",
+                  "line": {
+                    "color": "#0396B7"
+                  },
+                  "filters": [
+                    {
+                      "sliding_window_moving_average": {
+                        "window_size": 10,
+                        "extended": true,
+                        "centered": false
+                      }
+                    },
+                    {
+                      "exponential_moving_average": {
+                        "alpha": 1
+                      }
+                    }
+                  ]
+                },
+                {
+                  "entity": "sensor.temperature_rdc",
+                  "name": "Salle à manger",
+                  "line": {
+                    "color": "#F2F2F2"
+                  }
+                },
+                {
+                  "entity": "sensor.backkitchen_temperature",
+                  "name": "Arrière-cuisine",
+                  "line": {
+                    "color": "#581F18"
+                  }
+                },
+                {
+                  "entity": "sensor.basement_temperature",
+                  "name": "Sous-sol",
+                  "line": {
+                    "color": "#685762"
+                  }
+                },
+                {
+                  "entity": "sensor.ev6_temperature",
+                  "name": "EV6",
+                  "line": {
+                    "color": "#000000"
+                  }
+                },
+                {
+                  "entity": "",
+                  "name": "Now",
+                  "yaxis": "y9",
+                  "showlegend": false,
+                  "line": {
+                    "width": 1,
+                    "dash": "dot",
+                    "color": "deepskyblue"
+                  },
+                  "x": "$ex [Date.now(), Date.now()]",
+                  "y": [
+                    0,
+                    1
+                  ]
+                }
+              ],
+              "refresh_interval": 10,
+              "title": "Temperatures",
+              "hours_to_show": "1d",
+              "autorange_after_scroll": true,
+              "layout": {
+                "xaxis": {
+                  "rangeselector": {
+                    "y": 1.2,
+                    "buttons": [
+                      {
+                        "count": 1,
+                        "step": "hour"
+                      },
+                      {
+                        "count": 12,
+                        "step": "hour"
+                      },
+                      {
+                        "count": 1,
+                        "step": "day"
+                      },
+                      {
+                        "count": 7,
+                        "step": "day"
+                      },
+                      {
+                        "count": 1,
+                        "step": "month"
+                      },
+                      {
+                        "count": 3,
+                        "step": "month"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          ],
+          "subview": true
+        }
+      ],
+      "title": "NS Panel"
+    }
+  }
+}

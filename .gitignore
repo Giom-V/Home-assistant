@@ -51,12 +51,16 @@ secrets/home-assistant.json
 # Node-Red
 node-red
 
-# Operating System Trash Files
+# Operating System Trash files
 .DS_Store
 
-# Do not ignore Lovelace Files
+# Storage
 .storage/*
+
+# Do not ignore dashbaord files
+!/.storage/energy
 !/.storage/lovelace
+!/.storage/lovelace.*
 !/.storage/lovelace.lovelace_*
 !/.storage/lovelace_resources
 .storage/core.device_registry
@@ -83,3 +87,19 @@ wyze-bridge/mfa_token.txt
 nest/event_media/*.mp4
 nest/event_media/*
 image/*
+
+# Zigbee2mqtt
+zigbee2mqtt/log/*
+zigbee2mqtt/configuration.yaml
+zigbee2mqtt/state.json
+zigbee2mqtt/database.db.*
+zigbee2mqtt/configuration_backup_v*.yaml
+
+# Watchman
+watchman_report.txt
+
+# Solisart custom integration (ask me if you want it)
+custom_components/solisart/*
+
+# Corrupted database
+home-assistant_v2.*.corrupt.*

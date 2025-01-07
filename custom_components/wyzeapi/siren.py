@@ -3,18 +3,20 @@
 """Platform for siren integration."""
 import logging
 from typing import Any, Callable
+from aiohttp.client_exceptions import ClientConnectionError
 
 from wyzeapy import CameraService, Wyzeapy
 from wyzeapy.services.camera_service import Camera
+from wyzeapy.exceptions import AccessTokenError, ParameterError, UnknownApiError
 
 from homeassistant.components.siren import (
-    SUPPORT_TURN_OFF,
-    SUPPORT_TURN_ON,
     SirenEntity,
+    SirenEntityFeature,
 )
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import ATTR_ATTRIBUTION
 from homeassistant.core import HomeAssistant, callback
+from homeassistant.exceptions import HomeAssistantError
 from homeassistant.helpers.dispatcher import async_dispatcher_connect
 
 from .const import CAMERA_UPDATED, CONF_CLIENT, DOMAIN
@@ -41,8 +43,8 @@ async def async_setup_entry(hass: HomeAssistant, config_entry: ConfigEntry,
     camera_service = await client.camera_service
     sirens = []
     for camera in await camera_service.get_cameras():
-        # The Campan and V2 cameras don't have a siren
-        if camera.product_model not in ["WYZECP1_JEF", "WYZEC1-JZ"]:
+        # The campan v1, v2 camera, and video doorbell pro don't have sirens
+        if camera.product_model not in ["WYZECP1_JEF", "WYZEC1-JZ", "GW_BE1"]:
             sirens.append(WyzeCameraSiren(camera, camera_service))
 
     async_add_entities(sirens, True)
@@ -58,26 +60,36 @@ class WyzeCameraSiren(SirenEntity):
         self._service = camera_service
 
         self._attr_supported_features = (
-            SUPPORT_TURN_OFF | SUPPORT_TURN_ON
+            SirenEntityFeature.TURN_OFF | SirenEntityFeature.TURN_ON
         )
 
     @token_exception_handler
     async def async_turn_on(self, **kwargs) -> None:
         """Turn the siren on."""
-        await self._service.siren_on(self._device)
-
-        self._device.siren = True
-        self._just_updated = True
-        self.async_schedule_update_ha_state()
+        try:
+            await self._service.siren_on(self._device)
+        except (AccessTokenError, ParameterError, UnknownApiError) as err:
+            raise HomeAssistantError(f"Wyze returned an error: {err.args}") from err
+        except ClientConnectionError as err:
+            raise HomeAssistantError(err) from err
+        else:
+            self._device.siren = True
+            self._just_updated = True
+            self.async_schedule_update_ha_state()
 
     @token_exception_handler
     async def async_turn_off(self, **kwargs):
         """Turn the siren off."""
-        await self._service.siren_off(self._device)
-
-        self._device.siren = False
-        self._just_updated = True
-        self.async_schedule_update_ha_state()
+        try:
+            await self._service.siren_off(self._device)
+        except (AccessTokenError, ParameterError, UnknownApiError) as err:
+            raise HomeAssistantError(f"Wyze returned an error: {err.args}") from err
+        except ClientConnectionError as err:
+            raise HomeAssistantError(err) from err
+        else:
+            self._device.siren = False
+            self._just_updated = True
+            self.async_schedule_update_ha_state()
 
     @property
     def should_poll(self) -> bool:
@@ -100,17 +112,6 @@ class WyzeCameraSiren(SirenEntity):
     @property
     def unique_id(self):
         return f"{self._device.mac}-siren"
-
-    @property
-    def extra_state_attributes(self):
-        """Return device attributes of the entity."""
-        return {
-            ATTR_ATTRIBUTION: ATTRIBUTION,
-            "state": self.is_on,
-            "available": self.available,
-            "device model": f"{self._device.product_model}.siren",
-            "mac": self.unique_id
-        }
 
     @property
     def device_info(self):

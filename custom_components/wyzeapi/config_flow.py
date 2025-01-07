@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import logging
-from typing import Any, Dict
+from typing import Any, Optional
 
 import voluptuous as vol
 from homeassistant import config_entries
@@ -21,7 +21,8 @@ from .const import (
 
 _LOGGER = logging.getLogger(__name__)
 
-STEP_USER_DATA_SCHEMA = vol.Schema({CONF_USERNAME: str, CONF_PASSWORD: str, KEY_ID: str, API_KEY: str})
+STEP_USER_DATA_SCHEMA = vol.Schema({vol.Required(CONF_USERNAME): str, vol.Required(CONF_PASSWORD): str,
+                                    vol.Required(KEY_ID): str, vol.Required(API_KEY): str})
 STEP_2FA_DATA_SCHEMA = vol.Schema({CONF_ACCESS_TOKEN: str})
 
 class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
@@ -44,8 +45,8 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             self.client = await Wyzeapy.create()
 
     async def async_step_user(
-            self, user_input: Dict[str, Any] = None
-    ) -> Dict[str, Any]:
+            self, user_input: Optional[dict[str, any]] = None
+    ) -> dict[str, Any]:
         """Handle the initial step."""
         await self.get_client()
 
@@ -66,7 +67,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             )
         except CannotConnect:
             errors["base"] = "cannot_connect"
-        except InvalidAuth:
+        except exceptions.AccessTokenError:
             errors["base"] = "invalid_auth"
         except exceptions.TwoFactorAuthenticationEnabled:
             self.user_params[CONF_USERNAME] = user_input[CONF_USERNAME]
@@ -87,7 +88,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             step_id="user", data_schema=STEP_USER_DATA_SCHEMA, errors=errors
         )
 
-    async def async_step_2fa(self, user_input: Dict[str, Any] = None) -> Dict[str, Any]:
+    async def async_step_2fa(self, user_input: Optional[dict[str, Any]] = None) -> dict[str, Any]:
         if user_input is None:
             return self.async_show_form(step_id="2fa", data_schema=STEP_2FA_DATA_SCHEMA)
 
@@ -130,17 +131,15 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
     @staticmethod
     @callback
-    def async_get_options_flow(config_entry):
-        """Get the options flow for this handler."""
-        return OptionsFlowHandler(config_entry)
+    def async_get_options_flow(
+        config_entry: config_entries.ConfigEntry
+        ) -> OptionsFlowHandler:
+        """Create the Wyze options flow."""
+        return OptionsFlowHandler()
 
 
 class OptionsFlowHandler(config_entries.OptionsFlow):
     """Handle an option flow for Wyze."""
-
-    def __init__(self, config_entry: config_entries.ConfigEntry) -> None:
-        """Initialize options flow."""
-        self.config_entry = config_entry
 
     async def async_step_init(self, user_input=None):
         """Handle options flow."""

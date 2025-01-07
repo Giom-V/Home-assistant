@@ -1,4 +1,5 @@
 """TypeDefinition for Google Fit API."""
+
 from datetime import datetime, timedelta
 from typing import TypedDict, Any
 from collections.abc import Callable
@@ -156,6 +157,7 @@ class GoogleFitSensorDescription(SensorEntityDescription):
     data_key: str = "undefined"
     source: str = "undefined"
     is_int: bool = False  # If true, data is an integer. Otherwise, data is a float
+    infrequent_update: bool = False
 
 
 @dataclass

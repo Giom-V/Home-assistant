@@ -5,16 +5,20 @@ from abc import ABC
 from datetime import timedelta
 import logging
 from typing import Any, Callable, List
+from aiohttp.client_exceptions import ClientConnectionError
 
 from wyzeapy import LockService, Wyzeapy
 from wyzeapy.services.lock_service import Lock
 from wyzeapy.types import DeviceTypes
+from wyzeapy.exceptions import AccessTokenError, ParameterError, UnknownApiError
 
 import homeassistant.components.lock
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import ATTR_ATTRIBUTION
 from homeassistant.core import HomeAssistant, callback
 from homeassistant.helpers.dispatcher import async_dispatcher_send
+from homeassistant.helpers import device_registry as dr
+from homeassistant.exceptions import HomeAssistantError
 
 from .const import CONF_CLIENT, DOMAIN, LOCK_UPDATED
 from .token_manager import token_exception_handler
@@ -67,7 +71,13 @@ class WyzeLock(homeassistant.components.lock.LockEntity, ABC):
             "identifiers": {
                 (DOMAIN, self._lock.mac)
             },
-            "name": self.name,
+            "name": self._lock.nickname,
+            "connections": {
+                (
+                    dr.CONNECTION_NETWORK_MAC,
+                    self._lock.mac,
+                )
+            },
             "manufacturer": "WyzeLabs",
             "model": self._lock.product_model
         }
@@ -85,17 +95,27 @@ class WyzeLock(homeassistant.components.lock.LockEntity, ABC):
     @token_exception_handler
     async def async_lock(self, **kwargs):
         _LOGGER.debug("Turning on lock")
-        await self._lock_service.lock(self._lock)
-
-        self._lock.unlocked = False
-        self.async_schedule_update_ha_state()
+        try:
+            await self._lock_service.lock(self._lock)
+        except (AccessTokenError, ParameterError, UnknownApiError) as err:
+            raise HomeAssistantError(f"Wyze returned an error: {err.args}") from err
+        except ClientConnectionError as err:
+            raise HomeAssistantError(err) from err
+        else:
+            self._lock.unlocked = False
+            self.async_schedule_update_ha_state()
 
     @token_exception_handler
     async def async_unlock(self, **kwargs):
-        await self._lock_service.unlock(self._lock)
-
-        self._lock.unlocked = True
-        self.async_schedule_update_ha_state()
+        try:
+            await self._lock_service.unlock(self._lock)
+        except (AccessTokenError, ParameterError, UnknownApiError) as err:
+            raise HomeAssistantError(f"Wyze returned an error: {err.args}") from err
+        except ClientConnectionError as err:
+            raise HomeAssistantError(err) from err
+        else:
+            self._lock.unlocked = True
+            self.async_schedule_update_ha_state()
 
     @property
     def is_locked(self):
@@ -120,11 +140,7 @@ class WyzeLock(homeassistant.components.lock.LockEntity, ABC):
         """Return device attributes of the entity."""
         dev_info = {
             ATTR_ATTRIBUTION: ATTRIBUTION,
-            "state": self.state,
-            "available": self.available,
             "door_open": self._lock.door_open,
-            "device_model": self._lock.product_model,
-            "mac": self.unique_id
         }
 
         # Add the lock battery value if it exists

@@ -1,0 +1,118 @@
+{
+  "version": 1,
+  "minor_version": 1,
+  "key": "energy",
+  "data": {
+    "energy_sources": [
+      {
+        "type": "grid",
+        "flow_from": [
+          {
+            "stat_energy_from": "sensor.linky_tier_1_summation_delivered",
+            "stat_cost": null,
+            "entity_energy_price": "sensor.electricity_price",
+            "number_energy_price": null
+          },
+          {
+            "stat_energy_from": "sensor.linky_tier_2_summation_delivered",
+            "stat_cost": null,
+            "entity_energy_price": "sensor.electricity_price",
+            "number_energy_price": null
+          },
+          {
+            "stat_energy_from": "sensor.linky_tier_3_summation_delivered",
+            "stat_cost": null,
+            "entity_energy_price": "sensor.electricity_price",
+            "number_energy_price": null
+          },
+          {
+            "stat_energy_from": "sensor.linky_tier_4_summation_delivered",
+            "stat_cost": null,
+            "entity_energy_price": "sensor.electricity_price",
+            "number_energy_price": null
+          },
+          {
+            "stat_energy_from": "sensor.linky_tier_5_summation_delivered",
+            "stat_cost": null,
+            "entity_energy_price": "sensor.electricity_price",
+            "number_energy_price": null
+          },
+          {
+            "stat_energy_from": "sensor.linky_tier_6_summation_delivered",
+            "stat_cost": null,
+            "entity_energy_price": "sensor.electricity_price",
+            "number_energy_price": null
+          }
+        ],
+        "flow_to": [],
+        "cost_adjustment_day": 0.0
+      }
+    ],
+    "device_consumption": [
+      {
+        "stat_consumption": "sensor.lave_linge_energy",
+        "name": "Lave-Linge"
+      },
+      {
+        "stat_consumption": "sensor.chauffage_sdb_energy",
+        "name": "Chauffage SDB"
+      },
+      {
+        "stat_consumption": "sensor.chargeur_voiture_energy",
+        "name": "Recharge EV6"
+      },
+      {
+        "stat_consumption": "sensor.pc_bureau_energy",
+        "name": "PC Bureau"
+      },
+      {
+        "stat_consumption": "sensor.owon_technology_inc_pc321_summation_delivered",
+        "name": "Cuisine"
+      },
+      {
+        "stat_consumption": "sensor.tv_summation_delivered",
+        "name": "TV"
+      },
+      {
+        "stat_consumption": "sensor.chargeur_velo_summation_delivered",
+        "name": "Recharge vélo"
+      },
+      {
+        "stat_consumption": "sensor.prise_camera_salle_a_manger_energy",
+        "name": "Caméra salle à manger"
+      },
+      {
+        "stat_consumption": "sensor.local_technique_energy",
+        "name": "Local technique"
+      },
+      {
+        "stat_consumption": "sensor.porte_garage_switch_0_energy",
+        "name": "Porte garage"
+      },
+      {
+        "stat_consumption": "sensor.conso_pac_energy_a",
+        "name": "VMC"
+      },
+      {
+        "stat_consumption": "sensor.conso_pac_energy_b",
+        "name": "Solisart"
+      },
+      {
+        "stat_consumption": "sensor.frigo_energy",
+        "name": "Frigo"
+      },
+      {
+        "stat_consumption": "sensor.congelateur_energy",
+        "name": "Congel"
+      },
+      {
+        "stat_consumption": "sensor.conso_totale_pompe_bassin_energy",
+        "name": "Fontaine bassin"
+      },
+      {
+        "stat_consumption": "sensor.lave_vaisselle_energy",
+        "name": "Lave-vaisselle "
+      }
+    ]
+  }
+}

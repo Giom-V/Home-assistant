@@ -71,6 +71,24 @@ class XZigbeeMotion(XBinarySensor):
             self._attr_is_on = False
 
 
+class XHumanSensor(XEntity, BinarySensorEntity):
+    param = "human"
+    uid = "occupancy"
+    _attr_device_class = BinarySensorDeviceClass.OCCUPANCY
+
+    def set_state(self, params: dict):
+        self._attr_is_on = params[self.param] == 1
+
+
+class XLightSensor(XEntity, BinarySensorEntity):
+    param = "brState"
+    uid = "light"
+    _attr_device_class = BinarySensorDeviceClass.LIGHT
+
+    def set_state(self, params: dict):
+        self._attr_is_on = params[self.param] == "brighter"
+
+
 # noinspection PyAbstractClass
 class XRemoteSensor(BinarySensorEntity, RestoreEntity):
     _attr_is_on = False
@@ -114,8 +132,11 @@ class XRemoteSensor(BinarySensorEntity, RestoreEntity):
 
         self._attr_is_on = restore.state == STATE_ON
 
-        if self.is_on and self.timeout:
-            ts = restore.attributes[ATTR_LAST_TRIGGERED]
+        if (
+            self.is_on
+            and self.timeout
+            and (ts := restore.attributes.get(ATTR_LAST_TRIGGERED))
+        ):
             left = self.timeout - (dt.utcnow() - dt.parse_datetime(ts)).seconds
             if left > 0:
                 self.task = asyncio.create_task(self.clear_state(left))

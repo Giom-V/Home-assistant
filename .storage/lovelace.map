@@ -1,0 +1,95 @@
+{
+  "version": 1,
+  "minor_version": 1,
+  "key": "lovelace.map",
+  "data": {
+    "config": {
+      "title": "Map",
+      "views": [
+        {
+          "type": "panel",
+          "title": "Map",
+          "icon": "mdi:map",
+          "cards": [
+            {
+              "type": "map",
+              "auto_fit": true,
+              "entities": [
+                {
+                  "entity": "person.guillaume"
+                },
+                {
+                  "entity": "person.claire"
+                },
+                {
+                  "entity": "zone.universite"
+                },
+                {
+                  "entity": "zone.ubisoft"
+                },
+                {
+                  "entity": "zone.google"
+                },
+                {
+                  "entity": "zone.ecole"
+                },
+                {
+                  "entity": "zone.nozay"
+                },
+                {
+                  "entity": "zone.home"
+                },
+                {
+                  "entity": "zone.cannes"
+                },
+                {
+                  "entity": "zone.la_plagne"
+                },
+                {
+                  "entity": "device_tracker.pixel_4_xl_claire"
+                },
+                {
+                  "entity": "device_tracker.pixel_8_pro"
+                },
+                {
+                  "entity": "device_tracker.bleuette_location"
+                },
+                {
+                  "entity": "device_tracker.cles_jacqueline"
+                },
+                {
+                  "entity": "device_tracker.mes_cles"
+                },
+                {
+                  "entity": "device_tracker.portefeuille"
+                },
+                {
+                  "entity": "device_tracker.pixel_8_pro_3"
+                },
+                {
+                  "entity": "sensor.netatmo_weathermap_cesson_sevigne_temperature_2"
+                },
+                {
+                  "entity": "sensor.netatmo_weathermap_cesson_sevigne_pressure_2"
+                },
+                {
+                  "entity": "sensor.netatmo_weathermap_cesson_sevigne_humidity_2"
+                },
+                {
+                  "entity": "sensor.netatmo_weathermap_cesson_sevigne_rain"
+                },
+                {
+                  "entity": "sensor.netatmo_weathermap_cesson_sevigne_rain_today"
+                },
+                {
+                  "entity": "sensor.netatmo_weathermap_cesson_sevigne_wind_strength"
+                }
+              ],
+              "default_zoom": 5
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

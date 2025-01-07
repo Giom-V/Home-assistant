@@ -104,11 +104,7 @@ template:
       - name: "Heure creuse"
         unique_id: heure_creuse
         state: >
-          {% if now().isoweekday() >= 6 %}
-            true
-          {% elif is_state('binary_sensor.workday_sensor','off') %}
-            true
-          {% elif now().hour >= 23 or now().hour < 6 %}
+          {% if now().hour >= 23 or now().hour < 6 %}
             true
           {% elif now().hour == 22 and now().minute >= 20 %}
             true
@@ -119,18 +115,14 @@ template:
           {% endif %}
   - trigger:
       - platform: state
-        entity_id: binary_sensor.heure_creuse
+        entity_id: sensor.edf_tempo_prix_actuel
     sensor:
       - name: "Electricity price"
         unique_id: electricity_price
         unit_of_measurement: EUR/kWh
         state_class: measurement
         state: >
-          {% if is_state('binary_sensor.heure_creuse','off') %}
-            0.11532
-          {% else %}
-            0.23052
-          {% endif %}
+          {{ (states('sensor.edf_tempo_prix_actuel') | float / 100) | round(4) }}
   - trigger:
       - platform: webhook
         webhook_id: googleDesktop-giom1
@@ -261,7 +253,6 @@ rest:
           - treeSycamoreIndex
           - treeWalnutIndex
           - treeWillowIndex
-
 # Yeelights
 # yeelight:
 #   devices:
@@ -298,7 +289,7 @@ rest:
 
 media_player:
   # Google Cast
-  #- platform: cast
+  - platform: cast
   #Emby
   #- platform: emby
   #  host: !secret NAS_IP
@@ -312,7 +303,7 @@ device_tracker:
     new_device_defaults:
       track_new_devices: True
   # - platform: nmap_tracker
-  #   hosts: 192.168.86.100-120
+  #   hosts: 192.168.86.100-109
   #   new_device_defaults:
   #     track_new_devices: True
 
@@ -352,15 +343,6 @@ notify:
 #   utorrent:
 #     title: "uTorrent"
 #     url: "https://remote.bittorrent.com/"
-
-panel_custom:
-  - name: ZHA
-    sidebar_title: ZHA
-    sidebar_icon: fapro:house-signal
-    url_path: "config/zha/dashboard?config_entry=9dbff30f417c5ea5ae211e42d0fa5433"
-    module_url: /api/hassio/app/entrypoint.js
-    embed_iframe: true
-    require_admin: true
 
 # weblink:
 #   entities:
@@ -413,9 +395,6 @@ zone:
     latitude: !secret homeLatitude
     longitude: !secret homeLongitude
     radius: 100
-    # latitude: 48.12761546073163
-    # longitude: -1.6037034988403323
-    # radius: 340
     icon: mdi:home-circle
 
 # temporarily disabling the google calendar integration to fix the rest
@@ -440,7 +419,9 @@ light:
   - platform: switch
     name: Cuisine
     entity_id: switch.lumiere_cuisine
-
+  - platform: dlight
+    host: 192.168.1.89
+    device_id: E5b18418
 ####################################################
 #                 Work in progress                 #
 ####################################################
@@ -464,6 +445,7 @@ rest_command:
     content_type: "application/json; charset=utf-8"
     verify_ssl: true
     payload: '{"text": {{ text | to_json }}}'
+  # Tests
   nanoleaf:
     url: !secret nanoleafUrl
     method: PUT

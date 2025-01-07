@@ -70,12 +70,12 @@
         "id": "d28e66a6787e467bb458928f35ac7f8b"
       },
       {
-        "url": "/hacsfiles/lovelace-mushroom/mushroom.js?hacstag=444350375213",
+        "url": "/hacsfiles/lovelace-mushroom/mushroom.js?hacstag=444350375421",
         "type": "module",
         "id": "4d8157ab9ecf48ef9c386323825634fd"
       },
       {
-        "url": "/hacsfiles/lovelace-plotly-graph-card/plotly-graph-card.js?hacstag=413812496331",
+        "url": "/hacsfiles/lovelace-plotly-graph-card/plotly-graph-card.js?hacstag=413812496335",
         "type": "module",
         "id": "d5d47edb7b82471a89d2f2146bfa9a4d"
       },
@@ -96,7 +96,7 @@
       },
       {
         "id": "280b89194d154db8bfc43cfe849c11e9",
-        "url": "/hacsfiles/ha-floorplan/floorplan.js?hacstag=1883234941035",
+        "url": "/hacsfiles/ha-floorplan/floorplan.js?hacstag=1883234941047",
         "type": "module"
       },
       {
@@ -127,6 +127,21 @@
       {
         "id": "feb508874f974d31af1d2bc7ba65df10",
         "url": "/hacsfiles/meteo-france-weather-card/meteo-france-weather-card.js?hacstag=194824532115",
+        "type": "module"
+      },
+      {
+        "id": "7fedf22f26b54ca9844c5a4306baf370",
+        "url": "/hacsfiles/lovelace-wallpanel/wallpanel.js?hacstag=3095064164330",
+        "type": "module"
+      },
+      {
+        "id": "cc6749cd27b34485b40069a7d1215150",
+        "url": "/hacsfiles/lovelace-layout-card/layout-card.js?hacstag=156434866245",
+        "type": "module"
+      },
+      {
+        "id": "b2c0e5c06d314f23b8a5507d74590767",
+        "url": "/hacsfiles/fitbit-card/fitbit-card.js?hacstag=168570875111",
         "type": "module"
       }
     ]

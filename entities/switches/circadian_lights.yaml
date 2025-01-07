@@ -4,3 +4,7 @@ platform: circadian_lighting
 lights_ct:
   - light.basement_stairs_light_light
   - light.aurores_light_bulb
+  - light.lampe_evier_gauche_light
+  - light.lampe_evier_centre_light
+  - light.lampe_evier_droite_light
+min_brightness: 50
