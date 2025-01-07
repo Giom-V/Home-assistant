@@ -836,3 +836,47 @@
       entity_id: ad9bb28acca59679697828aaba529647
       type: close
   mode: single
+- id: '1713465676198'
+  alias: Turn on water pump for 5mn to scare animals
+  description: ''
+  trigger:
+  - type: turned_on
+    platform: device
+    device_id: 57baf06b6e5d461829e557034a4f91e9
+    entity_id: 3190902f15a62a454819df62970f1adb
+    domain: binary_sensor
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 10
+  condition:
+  - condition: not
+    conditions:
+    - condition: state
+      entity_id: sensor.rte_tempo_couleur_actuelle
+      state: Rouge
+  - type: is_off
+    condition: device
+    device_id: 57baf06b6e5d461829e557034a4f91e9
+    entity_id: 6228501c1464ed300a010500d31ecdd3
+    domain: binary_sensor
+  action:
+  - type: turn_on
+    device_id: a48ab46ddad605396107125f1515f518
+    entity_id: 8f72079da6828e4508dc22828595f3bf
+    domain: light
+  - delay:
+      hours: 0
+      minutes: 5
+      seconds: 0
+      milliseconds: 0
+  - if:
+    - condition: state
+      entity_id: binary_sensor.heure_creuse
+      state: 'off'
+    then:
+    - type: turn_off
+      device_id: a48ab46ddad605396107125f1515f518
+      entity_id: 8f72079da6828e4508dc22828595f3bf
+      domain: light
+  mode: restart
