@@ -880,3 +880,15 @@
       entity_id: 8f72079da6828e4508dc22828595f3bf
       domain: light
   mode: restart
+- id: '1718127656389'
+  alias: Gemini vision
+  description: ''
+  trigger: []
+  condition: []
+  action:
+  - service: google_generative_ai_conversation.generate_content
+    data:
+      prompt: is there a cat or a human is this image ? if there's a cat, simply answer
+        "cat", if a human, answer "human", if both answer "both", otherwise answer
+        "none".
+  mode: single
