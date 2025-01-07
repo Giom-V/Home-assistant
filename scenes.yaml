@@ -591,39 +591,93 @@
       min_mireds: 142
       max_mireds: 500
       effect_list:
+      - 'off'
       - colorloop
       supported_color_modes:
       - color_temp
       - xy
       friendly_name: Lampe évier centre Light
       supported_features: 44
-      state: unavailable
+      effect: 'off'
+      color_mode: color_temp
+      brightness: 254
+      color_temp_kelvin: 2000
+      color_temp: 500
+      hs_color:
+      - 30.601
+      - 94.547
+      rgb_color:
+      - 255
+      - 136
+      - 13
+      xy_color:
+      - 0.599
+      - 0.382
+      off_with_transition: false
+      off_brightness:
+      state: 'on'
     light.lampe_evier_droite_light:
       min_color_temp_kelvin: 2000
       max_color_temp_kelvin: 7042
       min_mireds: 142
       max_mireds: 500
       effect_list:
+      - 'off'
       - colorloop
       supported_color_modes:
       - color_temp
       - xy
       friendly_name: Lampe évier droite Light
       supported_features: 44
-      state: unavailable
+      effect: 'off'
+      color_mode: color_temp
+      brightness: 254
+      color_temp_kelvin: 2000
+      color_temp: 500
+      hs_color:
+      - 30.601
+      - 94.547
+      rgb_color:
+      - 255
+      - 136
+      - 13
+      xy_color:
+      - 0.599
+      - 0.382
+      off_with_transition: false
+      off_brightness:
+      state: 'on'
     light.lampe_evier_gauche_light:
       min_color_temp_kelvin: 2000
       max_color_temp_kelvin: 7042
       min_mireds: 142
       max_mireds: 500
       effect_list:
+      - 'off'
       - colorloop
       supported_color_modes:
       - color_temp
       - xy
       friendly_name: Lampe évier gauche Light
       supported_features: 44
-      state: unavailable
+      effect: 'off'
+      color_mode: color_temp
+      brightness: 254
+      color_temp_kelvin: 2000
+      color_temp: 500
+      hs_color:
+      - 30.601
+      - 94.547
+      rgb_color:
+      - 255
+      - 136
+      - 13
+      xy_color:
+      - 0.599
+      - 0.382
+      off_with_transition: false
+      off_brightness:
+      state: 'on'
     light.ciel_a1:
       min_color_temp_kelvin: 2000
       max_color_temp_kelvin: 7042
@@ -636,11 +690,14 @@
       - channel_change
       - finish_effect
       - stop_effect
+      - colorloop
+      - stop_colorloop
       supported_color_modes:
       - color_temp
       - xy
       friendly_name: Ciel A1
       supported_features: 44
+      effect:
       color_mode: color_temp
       brightness: 254
       color_temp_kelvin: 2000
@@ -662,9 +719,10 @@
         saturation: 95
         x: 0.5267
         y: 0.4133
-      color_power_on_behavior: initial
-      last_seen: '2024-01-07T08:42:16+01:00'
-      linkquality: 255
+      color_power_on_behavior: previous
+      do_not_disturb: false
+      last_seen: '2024-12-07T13:24:08+01:00'
+      linkquality: 240
       state: 'on'
     switch.ciel_a1_do_not_disturb:
       friendly_name: Ciel A1 Do not disturb
@@ -677,10 +735,11 @@
         x: 0.5267
         y: 0.4133
       color_mode: color_temp
-      color_power_on_behavior: initial
+      color_power_on_behavior: previous
       color_temp: 500
-      last_seen: '2024-01-07T08:42:16+01:00'
-      linkquality: 255
+      do_not_disturb: false
+      last_seen: '2024-12-07T13:24:08+01:00'
+      linkquality: 240
       state: 'off'
     light.ciel_a3:
       min_color_temp_kelvin: 2000
@@ -694,11 +753,14 @@
       - channel_change
       - finish_effect
       - stop_effect
+      - colorloop
+      - stop_colorloop
       supported_color_modes:
       - color_temp
       - xy
       friendly_name: Ciel A3
       supported_features: 44
+      effect:
       color_mode: color_temp
       brightness: 254
       color_temp_kelvin: 2000
@@ -720,9 +782,10 @@
         saturation: 95
         x: 0.5267
         y: 0.4133
-      color_power_on_behavior: initial
-      last_seen: '2024-01-07T08:43:07+01:00'
-      linkquality: 255
+      color_power_on_behavior: previous
+      do_not_disturb: false
+      last_seen: '2024-12-07T13:24:05+01:00'
+      linkquality: 252
       state: 'on'
     switch.ciel_a3_do_not_disturb:
       friendly_name: Ciel A3 Do not disturb
@@ -735,10 +798,11 @@
         x: 0.5267
         y: 0.4133
       color_mode: color_temp
-      color_power_on_behavior: initial
+      color_power_on_behavior: previous
       color_temp: 500
-      last_seen: '2024-01-07T08:43:07+01:00'
-      linkquality: 255
+      do_not_disturb: false
+      last_seen: '2024-12-07T13:24:05+01:00'
+      linkquality: 252
       state: 'off'
     light.ciel_b2:
       min_color_temp_kelvin: 2000
@@ -746,10 +810,20 @@
       min_mireds: 142
       max_mireds: 500
       effect_list:
+      - blink
+      - breathe
+      - okay
+      - channel_change
+      - finish_effect
+      - stop_effect
       - colorloop
+      - stop_colorloop
       supported_color_modes:
       - color_temp
       - xy
+      friendly_name: Ciel B2
+      supported_features: 44
+      effect:
       color_mode: color_temp
       brightness: 254
       color_temp_kelvin: 2000
@@ -764,11 +838,17 @@
       xy_color:
       - 0.599
       - 0.382
-      effect:
-      off_with_transition: false
-      off_brightness:
-      friendly_name: Ciel B2 Light
-      supported_features: 44
+      color:
+        h: 25
+        hue: 25
+        s: 95
+        saturation: 95
+        x: 0.5267
+        y: 0.4133
+      color_power_on_behavior: previous
+      do_not_disturb: false
+      last_seen: '2024-12-07T13:24:04+01:00'
+      linkquality: 252
       state: 'on'
     light.ciel_c1:
       min_color_temp_kelvin: 2000
@@ -782,11 +862,14 @@
       - channel_change
       - finish_effect
       - stop_effect
+      - colorloop
+      - stop_colorloop
       supported_color_modes:
       - color_temp
       - xy
       friendly_name: Ciel C1
       supported_features: 44
+      effect:
       color_mode: color_temp
       brightness: 254
       color_temp_kelvin: 2000
@@ -808,8 +891,9 @@
         saturation: 95
         x: 0.5267
         y: 0.4133
-      color_power_on_behavior: initial
-      last_seen: '2024-01-07T08:42:27+01:00'
+      color_power_on_behavior: previous
+      do_not_disturb: false
+      last_seen: '2024-12-07T13:24:07+01:00'
       linkquality: 255
       state: 'on'
     switch.ciel_c1_do_not_disturb:
@@ -823,9 +907,10 @@
         x: 0.5267
         y: 0.4133
       color_mode: color_temp
-      color_power_on_behavior: initial
+      color_power_on_behavior: previous
       color_temp: 500
-      last_seen: '2024-01-07T08:42:27+01:00'
+      do_not_disturb: false
+      last_seen: '2024-12-07T13:24:07+01:00'
       linkquality: 255
       state: 'off'
     light.ciel_c3:
@@ -840,11 +925,14 @@
       - channel_change
       - finish_effect
       - stop_effect
+      - colorloop
+      - stop_colorloop
       supported_color_modes:
       - color_temp
       - xy
       friendly_name: Ciel C3
       supported_features: 44
+      effect:
       color_mode: color_temp
       brightness: 254
       color_temp_kelvin: 2000
@@ -866,8 +954,9 @@
         saturation: 95
         x: 0.5267
         y: 0.4133
-      color_power_on_behavior: initial
-      last_seen: '2024-01-07T08:42:45+01:00'
+      color_power_on_behavior: previous
+      do_not_disturb: false
+      last_seen: '2024-12-07T13:24:05+01:00'
       linkquality: 255
       state: 'on'
     switch.ciel_c3_do_not_disturb:
@@ -881,9 +970,10 @@
         x: 0.5267
         y: 0.4133
       color_mode: color_temp
-      color_power_on_behavior: initial
+      color_power_on_behavior: previous
       color_temp: 500
-      last_seen: '2024-01-07T08:42:45+01:00'
+      do_not_disturb: false
+      last_seen: '2024-12-07T13:24:05+01:00'
       linkquality: 255
       state: 'off'
     light.ciel_d2:
@@ -898,11 +988,14 @@
       - channel_change
       - finish_effect
       - stop_effect
+      - colorloop
+      - stop_colorloop
       supported_color_modes:
       - color_temp
       - xy
       friendly_name: Ciel D2
       supported_features: 44
+      effect:
       color_mode: color_temp
       brightness: 254
       color_temp_kelvin: 2000
@@ -924,8 +1017,9 @@
         saturation: 95
         x: 0.5267
         y: 0.4133
-      color_power_on_behavior: initial
-      last_seen: '2024-01-07T08:42:59+01:00'
+      color_power_on_behavior: previous
+      do_not_disturb: false
+      last_seen: '2024-12-07T13:24:05+01:00'
       linkquality: 255
       state: 'on'
     switch.ciel_d2_do_not_disturb:
@@ -939,9 +1033,10 @@
         x: 0.5267
         y: 0.4133
       color_mode: color_temp
-      color_power_on_behavior: initial
+      color_power_on_behavior: previous
       color_temp: 500
-      last_seen: '2024-01-07T08:42:59+01:00'
+      do_not_disturb: false
+      last_seen: '2024-12-07T13:24:05+01:00'
       linkquality: 255
       state: 'off'
     light.ciel_e1:
@@ -956,11 +1051,14 @@
       - channel_change
       - finish_effect
       - stop_effect
+      - colorloop
+      - stop_colorloop
       supported_color_modes:
       - color_temp
       - xy
       friendly_name: Ciel E1
       supported_features: 44
+      effect:
       color_mode: color_temp
       brightness: 254
       color_temp_kelvin: 2000
@@ -982,8 +1080,9 @@
         saturation: 95
         x: 0.5267
         y: 0.4133
-      color_power_on_behavior: initial
-      last_seen: '2024-01-07T08:42:36+01:00'
+      color_power_on_behavior: previous
+      do_not_disturb: false
+      last_seen: '2024-12-07T13:24:07+01:00'
       linkquality: 255
       state: 'on'
     switch.ciel_e1_do_not_disturb:
@@ -997,9 +1096,10 @@
         x: 0.5267
         y: 0.4133
       color_mode: color_temp
-      color_power_on_behavior: initial
+      color_power_on_behavior: previous
       color_temp: 500
-      last_seen: '2024-01-07T08:42:36+01:00'
+      do_not_disturb: false
+      last_seen: '2024-12-07T13:24:07+01:00'
       linkquality: 255
       state: 'off'
     light.ciel_e3:
@@ -1014,11 +1114,14 @@
       - channel_change
       - finish_effect
       - stop_effect
+      - colorloop
+      - stop_colorloop
       supported_color_modes:
       - color_temp
       - xy
       friendly_name: Ciel E3
       supported_features: 44
+      effect:
       color_mode: color_temp
       brightness: 254
       color_temp_kelvin: 2000
@@ -1040,9 +1143,10 @@
         saturation: 95
         x: 0.5267
         y: 0.4133
-      color_power_on_behavior: initial
-      last_seen: '2024-01-07T08:42:56+01:00'
-      linkquality: 232
+      color_power_on_behavior: previous
+      do_not_disturb: false
+      last_seen: '2024-12-07T13:24:07+01:00'
+      linkquality: 228
       state: 'on'
     switch.ciel_e3_do_not_disturb:
       friendly_name: Ciel E3 Do not disturb
@@ -1055,10 +1159,11 @@
         x: 0.5267
         y: 0.4133
       color_mode: color_temp
-      color_power_on_behavior: initial
+      color_power_on_behavior: previous
       color_temp: 500
-      last_seen: '2024-01-07T08:42:56+01:00'
-      linkquality: 232
+      do_not_disturb: false
+      last_seen: '2024-12-07T13:24:07+01:00'
+      linkquality: 228
       state: 'off'
     light.ciel_f2:
       min_color_temp_kelvin: 2000
@@ -1072,11 +1177,14 @@
       - channel_change
       - finish_effect
       - stop_effect
+      - colorloop
+      - stop_colorloop
       supported_color_modes:
       - color_temp
       - xy
       friendly_name: Ciel F2
       supported_features: 44
+      effect:
       color_mode: color_temp
       brightness: 254
       color_temp_kelvin: 2000
@@ -1098,8 +1206,9 @@
         saturation: 95
         x: 0.5267
         y: 0.4133
-      color_power_on_behavior: initial
-      last_seen: '2024-01-07T08:42:40+01:00'
+      color_power_on_behavior:
+      do_not_disturb:
+      last_seen: '2024-12-07T13:24:04+01:00'
       linkquality: 255
       state: 'on'
     switch.ciel_f2_do_not_disturb:
@@ -1113,9 +1222,10 @@
         x: 0.5267
         y: 0.4133
       color_mode: color_temp
-      color_power_on_behavior: initial
+      color_power_on_behavior:
       color_temp: 500
-      last_seen: '2024-01-07T08:42:40+01:00'
+      do_not_disturb:
+      last_seen: '2024-12-07T13:24:04+01:00'
       linkquality: 255
       state: 'off'
     light.ciel_g1:
@@ -1130,11 +1240,14 @@
       - channel_change
       - finish_effect
       - stop_effect
+      - colorloop
+      - stop_colorloop
       supported_color_modes:
       - color_temp
       - xy
       friendly_name: Ciel G1
       supported_features: 44
+      effect:
       color_mode: color_temp
       brightness: 254
       color_temp_kelvin: 2000
@@ -1156,8 +1269,9 @@
         saturation: 95
         x: 0.5267
         y: 0.4133
-      color_power_on_behavior: initial
-      last_seen: '2024-01-07T08:42:43+01:00'
+      color_power_on_behavior:
+      do_not_disturb:
+      last_seen: '2024-12-07T13:24:08+01:00'
       linkquality: 255
       state: 'on'
     switch.ciel_g1_do_not_disturb:
@@ -1171,9 +1285,10 @@
         x: 0.5267
         y: 0.4133
       color_mode: color_temp
-      color_power_on_behavior: initial
+      color_power_on_behavior:
       color_temp: 500
-      last_seen: '2024-01-07T08:42:43+01:00'
+      do_not_disturb:
+      last_seen: '2024-12-07T13:24:08+01:00'
       linkquality: 255
       state: 'off'
     light.ciel_g3:
@@ -1188,51 +1303,56 @@
       - channel_change
       - finish_effect
       - stop_effect
+      - colorloop
+      - stop_colorloop
       supported_color_modes:
       - color_temp
       - xy
       friendly_name: Ciel G3
       supported_features: 44
+      effect:
       color_mode: color_temp
       brightness: 254
-      color_temp_kelvin: 3759
-      color_temp: 266
+      color_temp_kelvin: 2000
+      color_temp: 500
       hs_color:
-      - 26.952
-      - 39.419
+      - 30.601
+      - 94.547
       rgb_color:
       - 255
-      - 199
-      - 154
+      - 136
+      - 13
       xy_color:
-      - 0.436
-      - 0.369
+      - 0.599
+      - 0.382
       color:
-        h: 39
-        hue: 39
-        s: 56
-        saturation: 56
-        x: 0.3921
-        y: 0.3837
-      color_power_on_behavior: initial
-      last_seen: '2024-01-07T08:42:26+01:00'
-      linkquality: 132
+        h: 25
+        hue: 25
+        s: 95
+        saturation: 95
+        x: 0.5267
+        y: 0.4133
+      color_power_on_behavior: previous
+      do_not_disturb: false
+      last_seen: '2024-12-07T13:24:04+01:00'
+      linkquality: 255
       state: 'on'
     switch.ciel_g3_do_not_disturb:
       friendly_name: Ciel G3 Do not disturb
       brightness: 253
       color:
-        h: 39
-        hue: 39
-        s: 56
-        saturation: 56
-        x: 0.3921
-        y: 0.3837
+        h: 25
+        hue: 25
+        s: 95
+        saturation: 95
+        x: 0.5267
+        y: 0.4133
       color_mode: color_temp
-      color_power_on_behavior: initial
-      color_temp: 266
-      last_seen: '2024-01-07T08:42:26+01:00'
-      linkquality: 132
+      color_power_on_behavior: previous
+      color_temp: 500
+      do_not_disturb: false
+      last_seen: '2024-12-07T13:24:04+01:00'
+      linkquality: 255
       state: 'off'
     group.lampesciel:
       entity_id:
