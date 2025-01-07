@@ -266,7 +266,7 @@
                       "entity": "light.basement_stairs_light_light"
                     },
                     {
-                      "entity": "sensor.chargeur_velo_active_power"
+                      "entity": "switch.chargeur_velo_switch"
                     },
                     {
                       "entity": "sensor.owon_technology_inc_pc321_instantaneous_demand"
@@ -281,7 +281,7 @@
                       "entity": "light.lumiere_exterieure_3_forceonlight"
                     },
                     {
-                      "entity": "switch.pompe_failsafe"
+                      "entity": "light.pompe_failsafe_light"
                     },
                     {
                       "entity": "sensor.linky_active_power"
@@ -329,9 +329,6 @@
                       "entity": "sensor.ev6_temperature"
                     },
                     {
-                      "entity": "sensor.flood_sensor_basement_temperature"
-                    },
-                    {
                       "entity": "sensor.lumi_lumi_weather_temperature"
                     },
                     {
@@ -348,6 +345,27 @@
                     },
                     {
                       "entity": "sensor.bathroom_temperature"
+                    },
+                    {
+                      "entity": "sensor.frigo_power"
+                    },
+                    {
+                      "entity": "sensor.congelateur_power"
+                    },
+                    {
+                      "entity": "sensor.basement_temperature"
+                    },
+                    {
+                      "entity": "cover.volets_salle_de_jeux"
+                    },
+                    {
+                      "entity": "switch.lumiere_salle_de_jeux"
+                    },
+                    {
+                      "entity": "binary_sensor.tze204_ztc6ggyl_ts0601_occupancy"
+                    },
+                    {
+                      "entity": "switch.aurore_bed_light_switch"
                     }
                   ],
                   "state_filter": [
@@ -426,7 +444,7 @@
                               "entity": "light.basement_stairs_light_light"
                             },
                             {
-                              "entity": "sensor.chargeur_velo_active_power"
+                              "entity": "switch.chargeur_velo_switch"
                             },
                             {
                               "entity": "sensor.owon_technology_inc_pc321_instantaneous_demand"
@@ -448,7 +466,7 @@
                               "entity": "light.lumiere_exterieure_3_forceonlight"
                             },
                             {
-                              "entity": "switch.pompe_failsafe"
+                              "entity": "light.pompe_failsafe_light"
                             },
                             {
                               "entity": "sensor.linky_apparent_power"
@@ -486,9 +504,6 @@
                             },
                             {
                               "entity": "sensor.aurore_bedroom_temperature"
-                            },
-                            {
-                              "entity": "sensor.shower_temperature"
                             }
                           ],
                           "show_header_toggle": false,
@@ -502,9 +517,6 @@
                             },
                             {
                               "entity": "binary_sensor.porte_sous_sol_opening"
-                            },
-                            {
-                              "entity": "sensor.backkitchen_temperature"
                             }
                           ],
                           "show_header_toggle": false,
@@ -599,6 +611,18 @@
                             },
                             {
                               "entity": "light.ciel_g3"
+                            },
+                            {
+                              "entity": "sensor.frigo_power"
+                            },
+                            {
+                              "entity": "sensor.congelateur_power"
+                            },
+                            {
+                              "entity": "cover.volets_salle_de_jeux"
+                            },
+                            {
+                              "entity": "switch.lumiere_salle_de_jeux"
                             }
                           ],
                           "show_header_toggle": false,
@@ -644,6 +668,9 @@
                           "entities": [
                             {
                               "entity": "sensor.bathroom_temperature"
+                            },
+                            {
+                              "entity": "sensor.shower_temperature"
                             }
                           ],
                           "show_header_toggle": false,
@@ -651,13 +678,21 @@
                         },
                         {
                           "type": "entities",
-                          "entities": [],
+                          "entities": [
+                            {
+                              "entity": "sensor.backkitchen_temperature"
+                            }
+                          ],
                           "show_header_toggle": false,
                           "title": "Ground floor"
                         },
                         {
                           "type": "entities",
-                          "entities": [],
+                          "entities": [
+                            {
+                              "entity": "sensor.basement_temperature"
+                            }
+                          ],
                           "show_header_toggle": false,
                           "title": "Basement"
                         },
