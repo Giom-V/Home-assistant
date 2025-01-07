@@ -988,3 +988,22 @@
       entity_id: 5159b1462f01722c359983c04fea0e28
       type: close
   mode: single
+- id: '1727285569924'
+  alias: Alert when the water tank is too cold
+  description: ''
+  trigger:
+  - platform: numeric_state
+    entity_id:
+    - sensor.temperature_ballon_haut
+    for:
+      hours: 1
+      minutes: 0
+      seconds: 0
+    below: 40
+  condition: []
+  action:
+  - action: notify.mobile_app_pixel_8_pro
+    metadata: {}
+    data:
+      message: Chauffe-eau trop froid
+  mode: single
