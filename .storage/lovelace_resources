@@ -133,6 +133,11 @@
         "url": "/hacsfiles/lovelace-wallpanel/wallpanel.js?hacstag=3095064164330",
         "type": "module"
       },
+      },
+      {
+        "id": "b2c0e5c06d314f23b8a5507d74590767",
+        "url": "/hacsfiles/fitbit-card/fitbit-card.js?hacstag=168570875111",
+        "type": "module"
       }
     ]
   }

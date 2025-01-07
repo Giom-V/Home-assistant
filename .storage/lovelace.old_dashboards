@@ -1282,6 +1282,47 @@
                   "graph_span": "2h"
                 }
               ]
+            },
+            {
+              "type": "custom:fitbit-card",
+              "battery_entity": "sensor.google_pixel_watch_battery",
+              "header_entities": [
+                {
+                  "entity": "sensor.tracker_steps",
+                  "icon_color": "#14308D"
+                },
+                {
+                  "entity": "sensor.distance",
+                  "show_units": true
+                },
+                {
+                  "entity": "sensor.tracker_calories",
+                  "icon_color": "red"
+                }
+              ],
+              "entities": [
+                {
+                  "entity": "sensor.minutes_sedentary",
+                  "max": 1000
+                },
+                {
+                  "entity": "sensor.minutes_very_active",
+                  "max": 120
+                },
+                {
+                  "entity": "sensor.minutes_lightly_active",
+                  "max": 50,
+                  "color_stops": {
+                    "0": "red",
+                    "50": "yellow",
+                    "90": "green"
+                  }
+                },
+                {
+                  "entity": "sensor.resting_heart_rate",
+                  "show_units": true
+                }
+              ]
             }
           ]
         },
@@ -4172,6 +4213,47 @@
               ]
             }
           ]
+        },
+        {
+          "title": "test PAC/VMC",
+          "path": "test-pac-vmc",
+          "cards": [
+            {
+              "type": "vertical-stack",
+              "cards": [
+                {
+                  "type": "custom:plotly-graph",
+                  "entities": [
+                    {
+                      "entity": "sensor.conso_pac_power_a"
+                    },
+                    {
+                      "entity": "sensor.conso_pac_power_b"
+                    }
+                  ],
+                  "hours_to_show": 240,
+                  "refresh_interval": 10
+                },
+                {
+                  "chart_type": "line",
+                  "period": "hour",
+                  "type": "statistics-graph",
+                  "entities": [
+                    "sensor.conso_pac_power_a",
+                    "sensor.conso_pac_power_b"
+                  ],
+                  "stat_types": [
+                    "min",
+                    "mean",
+                    "max"
+                  ],
+                  "hide_legend": false,
+                  "days_to_show": 1
+                }
+              ]
+            }
+          ],
+          "type": "panel"
         }
       ]
     }
