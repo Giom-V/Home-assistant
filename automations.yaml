@@ -130,6 +130,11 @@
     device_id: e87ea47d487bcb4708a442aa8ebacfb1
     entity_id: light.aurores_light_bulb
     domain: light
+  - service: light.toggle
+    metadata: {}
+    data: {}
+    target:
+      entity_id: light.lumiere_chambre_aurore
   mode: single
 - id: '1677701807876'
   alias: Aurore's Light color temperature up
@@ -891,4 +896,62 @@
       prompt: is there a cat or a human is this image ? if there's a cat, simply answer
         "cat", if a human, answer "human", if both answer "both", otherwise answer
         "none".
+  mode: single
+- id: '1719993857867'
+  alias: Dim up Aurore's light
+  description: ''
+  trigger:
+  - device_id: e059cad12f0a2c750a56719a911dc8e6
+    domain: zha
+    platform: device
+    type: remote_button_long_press
+    subtype: dim_up
+  - device_id: 40e2c9d25a557a13b74303960127118d
+    domain: zha
+    platform: device
+    type: remote_button_long_press
+    subtype: dim_up
+  condition: []
+  action:
+  - service: light.turn_on
+    metadata: {}
+    data:
+      brightness_step_pct: 66
+    target:
+      entity_id: light.lumiere_chambre_aurore
+    enabled: false
+  - device_id: 7a0af38e25d8a8afb66dba181b664f33
+    domain: light
+    entity_id: c3acfa362782538431339214f251a5db
+    type: brightness_increase
+    enabled: false
+  - service: light.turn_on
+    metadata: {}
+    data:
+      brightness_step_pct: 25
+    target:
+      entity_id: light.lumiere_chambre_aurore
+  mode: single
+- id: '1719993909448'
+  alias: Dim down Aurore's light
+  description: ''
+  trigger:
+  - device_id: e059cad12f0a2c750a56719a911dc8e6
+    domain: zha
+    platform: device
+    type: remote_button_long_press
+    subtype: dim_down
+  - device_id: 40e2c9d25a557a13b74303960127118d
+    domain: zha
+    platform: device
+    type: remote_button_long_press
+    subtype: dim_down
+  condition: []
+  action:
+  - service: light.turn_on
+    metadata: {}
+    data:
+      brightness_step_pct: -20
+    target:
+      entity_id: light.lumiere_chambre_aurore
   mode: single
