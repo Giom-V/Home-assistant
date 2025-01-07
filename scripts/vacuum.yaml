@@ -145,6 +145,30 @@ vacuum_kitchen_and_diningroom:
       target:
         entity_id: vacuum.rondelle
       data:
+        segments: [19, 20]
+vacuum_ground_floor:
+  alias: "Vacuum Ground Floor"
+  sequence:
+    - service: vacuum.stop
+      data:
+        entity_id: vacuum.rondelle
+    # - service: xiaomi_miio.vacuum_clean_zone
+    #   data_template:
+    #     entity_id: vacuum.rondelle
+    #     repeats: >
+    #       {% set vacuum_times = 1 %}
+    #       {% if times is defined %}
+    #        {% set vacuum_times = times %}
+    #       {% endif %}
+    #       {{vacuum_times}}
+    #     zone:
+    #       - [21113, 24965, 26163, 28965]
+    #       - [17721, 20931, 20271, 24281]
+    #       - [17743, 23354, 21543, 24254]
+    - service: xiaomi_miio.vacuum_clean_segment
+      target:
+        entity_id: vacuum.rondelle
+      data:
         segments: [17, 16, 19, 20, 21, 22, 18]
 vacuum_diningroom:
   alias: "Vacuum Dining Room"
@@ -187,7 +211,7 @@ vacuum_bathroom:
       target:
         entity_id: vacuum.robbie
       data:
-        segments: [3]
+        segments: [1]
 vacuum_office:
   alias: "Vacuum Office"
   sequence:
@@ -208,7 +232,7 @@ vacuum_office:
       target:
         entity_id: vacuum.robbie
       data:
-        segments: [1]
+        segments: [20]
 vacuum_aurore_playroom:
   alias: "Vacuum Aurore's playroom"
   sequence:
@@ -303,7 +327,7 @@ vacuum_hallway_upstairs:
       target:
         entity_id: vacuum.robbie
       data:
-        segments: [16]
+        segments: [18]
 vacuum_toilets:
   alias: "Vacuum Toilets"
   sequence:
@@ -346,7 +370,7 @@ vacuum_rose_bedroom:
       target:
         entity_id: vacuum.robbie
       data:
-        segments: [2]
+        segments: [25]
 vacuum_aurore_bedroom:
   alias: "Vacuum Aurore's Bedroom"
   sequence:
@@ -357,7 +381,7 @@ vacuum_aurore_bedroom:
       target:
         entity_id: vacuum.robbie
       data:
-        segments: [19]
+        segments: [16]
 vacuum_shower:
   alias: "Vacuum shower"
   sequence:
@@ -368,7 +392,7 @@ vacuum_shower:
       target:
         entity_id: vacuum.robbie
       data:
-        segments: [18]
+        segments: [21]
 vacuum_reset_fan_speed_after_mopping: # This might be automatically managed by the vacuum (TODO: verify)
   alias: "Reset vacuum's fan speed after mopping"
   sequence:
