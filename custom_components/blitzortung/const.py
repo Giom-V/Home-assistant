@@ -1,14 +1,26 @@
 import datetime
+from typing import Any
+from dataclasses import dataclass
 
-SW_VERSION = "1.3.1"
+from homeassistant.util.hass_dict import HassKey
+
+from .version import __version__
+
+
+@dataclass
+class BlitzortungConfig:
+    config: dict[str, Any]
+
+
+SW_VERSION = __version__
 
 PLATFORMS = ["sensor", "geo_location"]
 
 DOMAIN = "blitzortung"
-DATA_UNSUBSCRIBE = "unsubscribe"
-ATTR_LIGHTNING_DISTANCE = "distance"
+BLITZORTUNG_CONFIG: HassKey[BlitzortungConfig] = HassKey(DOMAIN)
 ATTR_LIGHTNING_AZIMUTH = "azimuth"
 ATTR_LIGHTNING_COUNTER = "counter"
+ATTR_LIGHTNING_DISTANCE = "distance"
 
 SERVER_STATS = "server_stats"
 
@@ -32,3 +44,5 @@ ATTR_LON = "lon"
 ATTRIBUTION = "Data provided by blitzortung.org"
 ATTR_EXTERNAL_ID = "external_id"
 ATTR_PUBLICATION_DATE = "publication_date"
+
+BLIZORTUNG_URL = "https://map.blitzortung.org/#10/{lat}/{lon}"

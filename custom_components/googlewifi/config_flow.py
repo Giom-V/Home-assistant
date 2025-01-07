@@ -6,13 +6,7 @@ from googlewifi import GoogleWifi
 from homeassistant import config_entries
 from homeassistant.const import (
     CONF_SCAN_INTERVAL,
-    DATA_RATE_BYTES_PER_SECOND,
-    DATA_RATE_GIGABITS_PER_SECOND,
-    DATA_RATE_GIGABYTES_PER_SECOND,
-    DATA_RATE_KILOBITS_PER_SECOND,
-    DATA_RATE_KILOBYTES_PER_SECOND,
-    DATA_RATE_MEGABITS_PER_SECOND,
-    DATA_RATE_MEGABYTES_PER_SECOND,
+    UnitOfDataRate
 )
 from homeassistant.core import callback
 from homeassistant.helpers import aiohttp_client, config_entry_flow
@@ -125,17 +119,17 @@ class OptionsFlowHandler(config_entries.OptionsFlow):
                     vol.Optional(
                         CONF_SPEED_UNITS,
                         default=self.config_entry.options.get(
-                            CONF_SPEED_UNITS, DATA_RATE_MEGABITS_PER_SECOND
+                            CONF_SPEED_UNITS, UnitOfDataRate.MEGABITS_PER_SECOND
                         ),
                     ): vol.In(
                         {
-                            DATA_RATE_KILOBITS_PER_SECOND: "kbits/s",
-                            DATA_RATE_MEGABITS_PER_SECOND: "Mbit/s",
-                            DATA_RATE_GIGABITS_PER_SECOND: "Gbit/s",
-                            DATA_RATE_BYTES_PER_SECOND: "B/s",
-                            DATA_RATE_KILOBYTES_PER_SECOND: "kB/s",
-                            DATA_RATE_MEGABYTES_PER_SECOND: "MB/s",
-                            DATA_RATE_GIGABYTES_PER_SECOND: "GB/s",
+                            UnitOfDataRate.KILOBITS_PER_SECOND: "kbits/s",
+                            UnitOfDataRate.MEGABITS_PER_SECOND: "Mbit/s",
+                            UnitOfDataRate.GIGABITS_PER_SECOND: "Gbit/s",
+                            UnitOfDataRate.BYTES_PER_SECOND: "B/s",
+                            UnitOfDataRate.KILOBYTES_PER_SECOND: "kB/s",
+                            UnitOfDataRate.MEGABYTES_PER_SECOND: "MB/s",
+                            UnitOfDataRate.GIGABYTES_PER_SECOND: "GB/s",
                         }
                     ),
                 }

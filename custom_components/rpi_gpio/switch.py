@@ -1,118 +1,117 @@
-"""Allows to configure a switch using RPi GPIO."""
 from __future__ import annotations
+from typing import Any
 
+from . import DOMAIN
+
+import logging
+_LOGGER = logging.getLogger(__name__)
+
+from homeassistant.core import HomeAssistant
+from homeassistant.helpers.typing import ConfigType, DiscoveryInfoType
+from homeassistant.helpers.entity_platform import AddEntitiesCallback
+from homeassistant.helpers.config_validation import PLATFORM_SCHEMA
+from homeassistant.components.switch import SwitchEntity
+from homeassistant.const import CONF_SWITCHES, CONF_NAME, CONF_PORT, CONF_UNIQUE_ID, STATE_ON
+from homeassistant.helpers.restore_state import RestoreEntity
+from .hub import BIAS, DRIVE
+CONF_INVERT_LOGIC = "invert_logic"
+DEFAULT_INVERT_LOGIC = False
+CONF_PULL_MODE="pull_mode"
+DEFAULT_PULL_MODE = "AS_IS"
+CONF_DRIVE ="drive"
+DEFAULT_DRIVE = "PUSH_PULL"
+CONF_PERSISTENT = "persistent"
+DEFAULT_PERSISTENT = False
+
+import homeassistant.helpers.config_validation as cv
 import voluptuous as vol
 
-from homeassistant.components.switch import PLATFORM_SCHEMA, SwitchEntity
-from homeassistant.const import (
-    CONF_NAME,
-    CONF_PORT,
-    CONF_SWITCHES,
-    CONF_UNIQUE_ID,
-    DEVICE_DEFAULT_NAME,
-)
-from homeassistant.core import HomeAssistant
-import homeassistant.helpers.config_validation as cv
-from homeassistant.helpers.entity_platform import AddEntitiesCallback
-from homeassistant.helpers.reload import setup_reload_service
-from homeassistant.helpers.typing import ConfigType, DiscoveryInfoType
-
-from . import DOMAIN, PLATFORMS, setup_output, write_output
-
-CONF_PULL_MODE = "pull_mode"
-CONF_PORTS = "ports"
-CONF_INVERT_LOGIC = "invert_logic"
-
-DEFAULT_INVERT_LOGIC = False
-
-_SWITCHES_LEGACY_SCHEMA = vol.Schema({cv.positive_int: cv.string})
-
-_SWITCH_SCHEMA = vol.Schema(
-    {
-        vol.Required(CONF_NAME): cv.string,
-        vol.Required(CONF_PORT): cv.positive_int,
-        vol.Optional(CONF_INVERT_LOGIC, default=DEFAULT_INVERT_LOGIC): cv.boolean,
-        vol.Optional(CONF_UNIQUE_ID): cv.string,
-    }
-)
-
-
 PLATFORM_SCHEMA = vol.All(
-    PLATFORM_SCHEMA.extend(
-        {
-            vol.Exclusive(CONF_PORTS, CONF_SWITCHES): _SWITCHES_LEGACY_SCHEMA,
-            vol.Exclusive(CONF_SWITCHES, CONF_SWITCHES): vol.All(
-                cv.ensure_list, [_SWITCH_SCHEMA]
-            ),
-            vol.Optional(CONF_INVERT_LOGIC, default=DEFAULT_INVERT_LOGIC): cv.boolean,
-        },
-    ),
-    cv.has_at_least_one_key(CONF_PORTS, CONF_SWITCHES),
+    PLATFORM_SCHEMA.extend({
+        vol.Exclusive(CONF_SWITCHES, CONF_SWITCHES): vol.All(
+            cv.ensure_list, [{
+                vol.Required(CONF_NAME): cv.string,
+                vol.Required(CONF_PORT): cv.positive_int,
+                vol.Optional(CONF_UNIQUE_ID): cv.string,
+                vol.Optional(CONF_INVERT_LOGIC, default=DEFAULT_INVERT_LOGIC): cv.boolean,
+                vol.Optional(CONF_PULL_MODE, default=DEFAULT_PULL_MODE): vol.In(BIAS.keys()),
+                vol.Optional(CONF_DRIVE, default=DEFAULT_DRIVE): vol.In(DRIVE.keys()), 
+                vol.Optional(CONF_PERSISTENT, default=DEFAULT_PERSISTENT): cv.boolean,
+            }]
+        )
+    })
 )
 
 
-def setup_platform(
+async def async_setup_platform(
     hass: HomeAssistant,
     config: ConfigType,
-    add_entities: AddEntitiesCallback,
-    discovery_info: DiscoveryInfoType | None = None,
-) -> None:
-    """Set up the Raspberry PI GPIO devices."""
-    setup_reload_service(hass, DOMAIN, PLATFORMS)
+    async_add_entities: AddEntitiesCallback,
+    discovery_info: DiscoveryInfoType | None = None) -> None:
+
+    _LOGGER.debug(f"setup_platform: {config}")
+    hub = hass.data[DOMAIN]
+    if not hub._online:
+        _LOGGER.error("hub not online, bailing out")
 
     switches = []
-
-    switches_conf = config.get(CONF_SWITCHES)
-    if switches_conf is not None:
-        for switch in switches_conf:
-            switches.append(
-                RPiGPIOSwitch(
-                    switch[CONF_NAME],
-                    switch[CONF_PORT],
-                    switch[CONF_INVERT_LOGIC],
-                    switch.get(CONF_UNIQUE_ID),
-                )
+    for switch in config.get(CONF_SWITCHES):
+        switches.append(
+            GPIODSwitch(
+                hub,
+                switch[CONF_NAME],
+                switch[CONF_PORT],
+                switch.get(CONF_UNIQUE_ID) or f"{DOMAIN}_{switch[CONF_PORT]}_{switch[CONF_NAME].lower().replace(' ', '_')}",
+                switch.get(CONF_INVERT_LOGIC),
+                switch.get(CONF_PULL_MODE),
+                switch.get(CONF_DRIVE),
+                switch[CONF_PERSISTENT]
             )
+        )
 
-        add_entities(switches, True)
-        return
-
-    invert_logic = config[CONF_INVERT_LOGIC]
-
-    ports = config[CONF_PORTS]
-    for port, name in ports.items():
-        switches.append(RPiGPIOSwitch(name, port, invert_logic))
-
-    add_entities(switches)
+    async_add_entities(switches)
 
 
-class RPiGPIOSwitch(SwitchEntity):
-    """Representation of a  Raspberry Pi GPIO."""
+class GPIODSwitch(SwitchEntity, RestoreEntity):
+    _attr_should_poll = False
 
-    def __init__(self, name, port, invert_logic, unique_id=None):
-        """Initialize the pin."""
-        self._attr_name = name or DEVICE_DEFAULT_NAME
+    def __init__(self, hub, name, port, unique_id, active_low, bias, drive, persistent):
+        _LOGGER.debug(f"GPIODSwitch init: {port} - {name} - {unique_id} - active_low: {active_low} - bias: {bias} - drive: {drive} - persistent: {persistent}")
+        self._hub = hub
+        self._attr_name = name
         self._attr_unique_id = unique_id
-        self._attr_should_poll = False
         self._port = port
-        self._invert_logic = invert_logic
-        self._state = False
-        setup_output(self._port)
-        write_output(self._port, 1 if self._invert_logic else 0)
+        self._active_low = active_low
+        self._bias = bias
+        self._drive_mode = drive
+        self._persistent = persistent
+        self._line = None
+        self._hub.verify_port_ready(self._port)
+        
+    async def async_added_to_hass(self) -> None:
+        """Call when the switch is added to hass."""
+        await super().async_added_to_hass()
+        state = await self.async_get_last_state()
+        if not state or not self._persistent:
+            self._attr_is_on = False
+        else: 
+            _LOGGER.debug(f"setting initial persistent state for: {self._port}. state: {state.state}")
+            self._attr_is_on = True if state.state == STATE_ON else False
+            self.async_write_ha_state()
+        self._line = self._hub.add_switch(self._port, self._active_low, self._bias, self._drive_mode, self._attr_is_on)
 
-    @property
-    def is_on(self):
-        """Return true if device is on."""
-        return self._state
+    async def async_will_remove_from_hass(self) -> None:
+        await super().async_will_remove_from_hass()
+        _LOGGER.debug(f"GPIODSwitch async_will_remove_from_hass")
+        if self._line:
+            self._line.release()
 
-    def turn_on(self, **kwargs):
-        """Turn the device on."""
-        write_output(self._port, 0 if self._invert_logic else 1)
-        self._state = True
-        self.schedule_update_ha_state()
+    async def async_turn_on(self, **kwargs: Any) -> None:
+        self._hub.turn_on(self._line, self._port)
+        self._attr_is_on = True
+        self.async_write_ha_state()
 
-    def turn_off(self, **kwargs):
-        """Turn the device off."""
-        write_output(self._port, 1 if self._invert_logic else 0)
-        self._state = False
-        self.schedule_update_ha_state()
+    async def async_turn_off(self, **kwargs: Any) -> None:
+        self._hub.turn_off(self._line, self._port)
+        self._attr_is_on = False
+        self.async_write_ha_state()

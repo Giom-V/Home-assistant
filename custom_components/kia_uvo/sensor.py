@@ -1,9 +1,10 @@
 """Sensor for Hyundai / Kia Connect integration."""
+
 from __future__ import annotations
 
-from collections.abc import Callable
 import logging
 from typing import Final
+from datetime import date
 
 from hyundai_kia_connect_api import Vehicle
 
@@ -16,6 +17,7 @@ from homeassistant.components.sensor import (
 from homeassistant.const import (
     PERCENTAGE,
     UnitOfEnergy,
+    UnitOfPower,
     UnitOfTime,
 )
 
@@ -23,8 +25,7 @@ from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
-from .const import DOMAIN, DYNAMIC_UNIT
-from .coordinator import HyundaiKiaConnectDataUpdateCoordinator
+from .const import CHARGING_CURRENTS, DOMAIN, DYNAMIC_UNIT
 from .entity import HyundaiKiaConnectEntity
 
 _LOGGER = logging.getLogger(__name__)
@@ -236,9 +237,24 @@ SENSOR_DESCRIPTIONS: Final[tuple[SensorEntityDescription, ...]] = (
     ),
     SensorEntityDescription(
         key="ev_v2l_discharge_limit",
-        name="V2L Discharge Limit",
+        name="EV V2L Discharge Limit",
         native_unit_of_measurement=PERCENTAGE,
         device_class=SensorDeviceClass.BATTERY,
+    ),
+    SensorEntityDescription(
+        key="ev_charging_current",
+        name="EV Charging Current Limit",
+        icon="mdi:lightning-bolt-circle",
+        native_unit_of_measurement=PERCENTAGE,
+        device_class=SensorDeviceClass.POWER_FACTOR,
+    ),
+    SensorEntityDescription(
+        key="ev_charging_power",
+        name="EV Charging Power",
+        icon="mdi:flash",
+        native_unit_of_measurement=UnitOfPower.KILO_WATT,
+        device_class=SensorDeviceClass.POWER,
+        state_class=SensorStateClass.MEASUREMENT,
     ),
 )
 
@@ -261,6 +277,11 @@ async def async_setup_entry(
         if vehicle.daily_stats:
             entities.append(
                 DailyDrivingStatsEntity(
+                    coordinator, coordinator.vehicle_manager.vehicles[vehicle_id]
+                )
+            )
+            entities.append(
+                TodaysDailyDrivingStatsEntity(
                     coordinator, coordinator.vehicle_manager.vehicles[vehicle_id]
                 )
             )
@@ -290,7 +311,10 @@ class HyundaiKiaConnectSensor(SensorEntity, HyundaiKiaConnectEntity):
     @property
     def native_value(self):
         """Return the value reported by the sensor."""
-        return getattr(self.vehicle, self._key)
+        value = getattr(self.vehicle, self._key)
+        if self._key == "ev_charging_current":
+            return CHARGING_CURRENTS.get(value, None)
+        return value
 
     @property
     def native_unit_of_measurement(self):
@@ -372,3 +396,53 @@ class DailyDrivingStatsEntity(SensorEntity, HyundaiKiaConnectEntity):
     @property
     def unit_of_measurement(self):
         return UnitOfTime.DAYS
+
+
+class TodaysDailyDrivingStatsEntity(SensorEntity, HyundaiKiaConnectEntity):
+    def __init__(self, coordinator, vehicle: Vehicle):
+        super().__init__(coordinator, vehicle)
+
+    @property
+    def state(self):
+        today = date.today()
+        todayskey = today.strftime("%Y-%m-%d")
+        return todayskey
+
+    @property
+    def state_attributes(self):
+        today = date.today()
+        todayskey = today.strftime("%Y-%m-%d")
+        m = {
+            "today_date": todayskey,
+            "total_consumed": 0,
+            "engine_consumption": 0,
+            "climate_consumption": 0,
+            "onboard_electronics_consumption": 0,
+            "battery_care_consumption": 0,
+            "regenerated_energy": 0,
+            "distance": 0,
+        }
+        for day in self.vehicle.daily_stats:
+            key = day.date.strftime("%Y-%m-%d")
+            if key == todayskey:
+                todayvalue = {
+                    "today_date": key,
+                    "total_consumed": day.total_consumed,
+                    "engine_consumption": day.engine_consumption,
+                    "climate_consumption": day.climate_consumption,
+                    "onboard_electronics_consumption": day.onboard_electronics_consumption,
+                    "battery_care_consumption": day.battery_care_consumption,
+                    "regenerated_energy": day.regenerated_energy,
+                    "distance": day.distance,
+                }
+                m = todayvalue
+                break
+        return m
+
+    @property
+    def name(self):
+        return f"{self.vehicle.name} Todays Daily Driving Stats"
+
+    @property
+    def unique_id(self):
+        return f"{DOMAIN}-todays-daily-driving-stats-{self.vehicle.id}"

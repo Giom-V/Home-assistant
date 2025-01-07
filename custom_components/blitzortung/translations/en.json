@@ -4,12 +4,24 @@
       "user": {
         "description": "Set up Blitzortung lightning detection",
         "data": {
-          "name": "Name of the integration instance"
+          "name": "Name of the integration instance",
+          "latitude": "Latitude",
+          "longitude": "Longitude"
+        }
+      },
+      "reconfigure_confirm": {
+        "description": "Update configuration for {name}.",
+        "data": {
+          "latitude": "Latitude",
+          "longitude": "Longitude"
         }
       }
     },
     "error": {},
-    "abort": {}
+    "abort": {
+      "already_configured": "Service is already configured",
+      "reconfigure_successful": "Re-configuration was successful"
+    }
   },
   "options": {
     "step": {
@@ -22,6 +34,30 @@
           "max_tracked_lightnings": "Max number of tracked lightnings",
           "latitude": "Latitude",
           "longitude": "Longitude"
+        }
+      }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "azimuth": {
+        "state_attributes": {
+          "lat": {
+            "name": "Latitude"
+          },
+          "lon": {
+            "name": "Longitude"
+          }
+        }
+      },
+      "distance": {
+        "state_attributes": {
+          "lat": {
+            "name": "Latitude"
+          },
+          "lon": {
+            "name": "Longitude"
+          }
         }
       }
     }

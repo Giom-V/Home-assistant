@@ -2,6 +2,7 @@ from homeassistant.components.fan import (
     FanEntity,
     FanEntityFeature,
 )
+from homeassistant.const import MAJOR_VERSION, MINOR_VERSION
 
 from .core.const import DOMAIN
 from .core.entity import XEntity
@@ -22,19 +23,29 @@ SPEED_OFF = "off"
 SPEED_LOW = "low"
 SPEED_MEDIUM = "medium"
 SPEED_HIGH = "high"
+MODES = [SPEED_OFF, SPEED_LOW, SPEED_MEDIUM, SPEED_HIGH]
 
 
 # noinspection PyAbstractClass
 class XFan(XEntity, FanEntity):
     params = {"switches", "fan"}
     _attr_speed_count = 3
-    _attr_supported_features = FanEntityFeature.SET_SPEED
-    _attr_preset_modes = [SPEED_OFF, SPEED_LOW, SPEED_MEDIUM, SPEED_HIGH]
+
+    # https://developers.home-assistant.io/blog/2024/07/19/fan-fanentityfeatures-turn-on_off/
+    if (MAJOR_VERSION, MINOR_VERSION) >= (2024, 8):
+        _attr_supported_features = (
+            FanEntityFeature.SET_SPEED
+            | FanEntityFeature.TURN_OFF
+            | FanEntityFeature.TURN_ON
+        )
+    else:
+        _attr_supported_features = FanEntityFeature.SET_SPEED
 
     def __init__(self, ewelink: XRegistry, device: XDevice) -> None:
         super().__init__(ewelink, device)
 
         if device.get("preset_mode", True):
+            self._attr_preset_modes = MODES
             self._attr_supported_features |= FanEntityFeature.PRESET_MODE
 
     def set_state(self, params: dict):
@@ -61,9 +72,7 @@ class XFan(XEntity, FanEntity):
                 mode = SPEED_HIGH
 
         self._attr_percentage = int(
-            self._attr_preset_modes.index(mode or SPEED_OFF)
-            / self._attr_speed_count
-            * 100
+            MODES.index(mode or SPEED_OFF) / self._attr_speed_count * 100
         )
         self._attr_preset_mode = mode
 
@@ -167,6 +176,9 @@ class XFanDualR3(XFan):
 
 # noinspection PyAbstractClass
 class XToggleFan(XEntity, FanEntity):
+    if (MAJOR_VERSION, MINOR_VERSION) >= (2024, 8):
+        _attr_supported_features = FanEntityFeature.TURN_OFF | FanEntityFeature.TURN_ON
+
     @property
     def is_on(self):
         return self._attr_is_on

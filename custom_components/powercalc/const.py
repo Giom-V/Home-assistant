@@ -1,25 +1,23 @@
 """The Powercalc constants."""
 
+from __future__ import annotations
+
 from datetime import timedelta
+from enum import StrEnum
 from typing import Literal
-
-from awesomeversion.awesomeversion import AwesomeVersion
-from homeassistant.const import __version__ as HA_VERSION  # noqa
-
-if AwesomeVersion(HA_VERSION) >= AwesomeVersion("2023.8.0"):
-    from enum import StrEnum
-else:
-    from homeassistant.backports.enum import StrEnum  # pragma: no cover
 
 from homeassistant.components.utility_meter.const import DAILY, MONTHLY, WEEKLY
 from homeassistant.const import (
+    STATE_CLOSED,
     STATE_NOT_HOME,
     STATE_OFF,
+    STATE_OPEN,
     STATE_STANDBY,
     STATE_UNAVAILABLE,
 )
+from homeassistant.const import __version__ as HA_VERSION  # noqa
 
-MIN_HA_VERSION = "2023.1"
+MIN_HA_VERSION = "2024.4"
 
 DOMAIN = "powercalc"
 DOMAIN_CONFIG = "config"
@@ -27,7 +25,6 @@ DOMAIN_CONFIG = "config"
 DATA_CALCULATOR_FACTORY = "calculator_factory"
 DATA_CONFIGURED_ENTITIES = "configured_entities"
 DATA_DISCOVERY_MANAGER = "discovery_manager"
-DATA_DISCOVERED_ENTITIES = "discovered_entities"
 DATA_DOMAIN_ENTITIES = "domain_entities"
 DATA_USED_UNIQUE_IDS = "used_unique_ids"
 DATA_PROFILE_LIBRARY = "profile_library"
@@ -35,6 +32,7 @@ DATA_STANDBY_POWER_SENSORS = "standby_power_sensors"
 
 ENTRY_DATA_ENERGY_ENTITY = "_energy_entity"
 ENTRY_DATA_POWER_ENTITY = "_power_entity"
+ENTRY_GLOBAL_CONFIG_UNIQUE_ID = "powercalc_global_configuration"
 
 DUMMY_ENTITY_ID = "sensor.dummy"
 
@@ -50,6 +48,7 @@ CONF_CREATE_ENERGY_SENSORS = "create_energy_sensors"
 CONF_CREATE_UTILITY_METERS = "create_utility_meters"
 CONF_DAILY_FIXED_ENERGY = "daily_fixed_energy"
 CONF_DELAY = "delay"
+CONF_DISABLE_LIBRARY_DOWNLOAD = "disable_library_download"
 CONF_DISABLE_EXTENDED_ATTRIBUTES = "disable_extended_attributes"
 CONF_ENABLE_AUTODISCOVERY = "enable_autodiscovery"
 CONF_ENERGY_INTEGRATION_METHOD = "energy_integration_method"
@@ -59,6 +58,7 @@ CONF_ENERGY_SENSOR_NAMING = "energy_sensor_naming"
 CONF_ENERGY_SENSOR_FRIENDLY_NAMING = "energy_sensor_friendly_naming"
 CONF_ENERGY_SENSOR_PRECISION = "energy_sensor_precision"
 CONF_ENERGY_SENSOR_UNIT_PREFIX = "energy_sensor_unit_prefix"
+CONF_EXCLUDE_ENTITIES = "exclude_entities"
 CONF_FILTER = "filter"
 CONF_FIXED = "fixed"
 CONF_FORCE_UPDATE_FREQUENCY = "force_update_frequency"
@@ -68,23 +68,27 @@ CONF_GROUP = "group"
 CONF_GROUP_POWER_ENTITIES = "group_power_entities"
 CONF_GROUP_ENERGY_ENTITIES = "group_energy_entities"
 CONF_GROUP_MEMBER_SENSORS = "group_member_sensors"
+CONF_GROUP_TYPE = "group_type"
 CONF_GAMMA_CURVE = "gamma_curve"
 CONF_HIDE_MEMBERS = "hide_members"
 CONF_IGNORE_UNAVAILABLE_STATE = "ignore_unavailable_state"
 CONF_INCLUDE = "include"
 CONF_INCLUDE_NON_POWERCALC_SENSORS = "include_non_powercalc_sensors"
+CONF_LABEL = "label"
 CONF_LINEAR = "linear"
 CONF_MODEL = "model"
 CONF_MANUFACTURER = "manufacturer"
 CONF_MODE = "mode"
 CONF_MULTIPLY_FACTOR = "multiply_factor"
 CONF_MULTIPLY_FACTOR_STANDBY = "multiply_factor_standby"
+CONF_MULTI_SWITCH = "multi_switch"
 CONF_POWER_FACTOR = "power_factor"
 CONF_POWER_SENSOR_CATEGORY = "power_sensor_category"
 CONF_POWER_SENSOR_NAMING = "power_sensor_naming"
 CONF_POWER_SENSOR_FRIENDLY_NAMING = "power_sensor_friendly_naming"
 CONF_POWER_SENSOR_PRECISION = "power_sensor_precision"
 CONF_POWER = "power"
+CONF_POWER_OFF = "power_off"
 CONF_POWER_SENSOR_ID = "power_sensor_id"
 CONF_POWER_TEMPLATE = "power_template"
 CONF_PLAYBOOK = "playbook"
@@ -96,8 +100,11 @@ CONF_TEMPLATE = "template"
 CONF_REPEAT = "repeat"
 CONF_SENSOR_TYPE = "sensor_type"
 CONF_SENSORS = "sensors"
+CONF_SELF_USAGE_INCLUDED = "self_usage_included"
 CONF_SUB_PROFILE = "sub_profile"
-CONF_STATE_TRIGGER = "states_trigger"
+CONF_SUBTRACT_ENTITIES = "subtract_entities"
+CONF_STATE_TRIGGER = "state_trigger"
+CONF_STATES_TRIGGER = "states_trigger"
 CONF_SLEEP_POWER = "sleep_power"
 CONF_UNAVAILABLE_POWER = "unavailable_power"
 CONF_UPDATE_FREQUENCY = "update_frequency"
@@ -115,6 +122,7 @@ CONF_CALCULATION_ENABLED_CONDITION = "calculation_enabled_condition"
 CONF_DISABLE_STANDBY_POWER = "disable_standby_power"
 CONF_CUSTOM_MODEL_DIRECTORY = "custom_model_directory"
 CONF_UTILITY_METER_OFFSET = "utility_meter_offset"
+CONF_UTILITY_METER_NET_CONSUMPTION = "utility_meter_net_consumption"
 CONF_UTILITY_METER_TYPES = "utility_meter_types"
 CONF_UTILITY_METER_TARIFFS = "utility_meter_tariffs"
 CONF_OR = "or"
@@ -138,6 +146,8 @@ class UnitPrefix(StrEnum):
     NONE = "none"
     KILO = "k"
     MEGA = "M"
+    GIGA = "G"
+    TERA = "T"
 
 
 ENTITY_CATEGORY_CONFIG = "config"
@@ -157,12 +167,15 @@ DEFAULT_POWER_SENSOR_PRECISION = 2
 DEFAULT_ENERGY_INTEGRATION_METHOD = ENERGY_INTEGRATION_METHOD_LEFT
 DEFAULT_ENERGY_NAME_PATTERN = "{} energy"
 DEFAULT_ENERGY_SENSOR_PRECISION = 4
+DEFAULT_ENERGY_UNIT_PREFIX = UnitPrefix.KILO
 DEFAULT_ENTITY_CATEGORY: str | None = ENTITY_CATEGORY_NONE
 DEFAULT_UTILITY_METER_TYPES = [DAILY, WEEKLY, MONTHLY]
 
 DISCOVERY_SOURCE_ENTITY = "source_entity"
-DISCOVERY_POWER_PROFILE = "power_profile"
+DISCOVERY_POWER_PROFILES = "power_profiles"
 DISCOVERY_TYPE = "discovery_type"
+
+MANUFACTURER_WLED = "WLED"
 
 ATTR_CALCULATION_MODE = "calculation_mode"
 ATTR_ENERGY_SENSOR_ENTITY_ID = "energy_sensor_entity_id"
@@ -184,7 +197,7 @@ SERVICE_CHANGE_GUI_CONFIGURATION = "change_gui_config"
 
 SIGNAL_POWER_SENSOR_STATE_CHANGE = "powercalc_power_sensor_state_change"
 
-OFF_STATES = (STATE_OFF, STATE_NOT_HOME, STATE_STANDBY, STATE_UNAVAILABLE)
+OFF_STATES = (STATE_OFF, STATE_NOT_HOME, STATE_STANDBY, STATE_UNAVAILABLE, STATE_OPEN, STATE_CLOSED)
 
 
 class CalculationStrategy(StrEnum):
@@ -193,9 +206,13 @@ class CalculationStrategy(StrEnum):
     COMPOSITE = "composite"
     LUT = "lut"
     LINEAR = "linear"
+    MULTI_SWITCH = "multi_switch"
     FIXED = "fixed"
     PLAYBOOK = "playbook"
     WLED = "wled"
+
+
+CALCULATION_STRATEGY_CONF_KEYS: list[str] = [strategy.value for strategy in CalculationStrategy]
 
 
 class SensorType(StrEnum):
@@ -212,3 +229,12 @@ class PowercalcDiscoveryType(StrEnum):
     STANDBY_GROUP = "standby_group"
     LIBRARY = "library"
     USER_YAML = "user_yaml"
+
+
+class GroupType(StrEnum):
+    """Possible group types."""
+
+    CUSTOM = "custom"
+    DOMAIN = "domain"
+    STANDBY = "standby"
+    SUBTRACT = "subtract"

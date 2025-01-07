@@ -3,16 +3,18 @@
 """Platform for switch integration."""
 import logging
 from datetime import timedelta
-# Import the device class from the component that you want to support
 from typing import Any, Callable, List, Union
+from aiohttp.client_exceptions import ClientConnectionError
 
 from homeassistant.components.switch import SwitchEntity
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import ATTR_ATTRIBUTION
 from homeassistant.core import HomeAssistant, callback
+from homeassistant.exceptions import HomeAssistantError
 from homeassistant.helpers.dispatcher import async_dispatcher_send, async_dispatcher_connect
 from homeassistant.helpers import device_registry as dr
 from wyzeapy import CameraService, SwitchService, WallSwitchService, Wyzeapy, BulbService
+from wyzeapy.exceptions import AccessTokenError, ParameterError, UnknownApiError
 from wyzeapy.services.camera_service import Camera
 from wyzeapy.services.switch_service import Switch
 from wyzeapy.services.bulb_service import Bulb
@@ -25,7 +27,8 @@ from .token_manager import token_exception_handler
 _LOGGER = logging.getLogger(__name__)
 ATTRIBUTION = "Data provided by Wyze"
 SCAN_INTERVAL = timedelta(seconds=30)
-MOTION_SWITCH_UNSUPPORTED = ["GW_BE1", "LD_CFP"]  # Doorbell Cam, Floodlight Pro
+MOTION_SWITCH_UNSUPPORTED = ["GW_BE1", "GW_GC1", "GW_GC2"]  # Video doorbell pro, OG, OG 3x Telephoto
+POWER_SWITCH_UNSUPPORTED = ["GW_BE1"]  # Video doorbell pro (device has no off function)
 
 # noinspection DuplicatedCode
 @token_exception_handler
@@ -62,8 +65,15 @@ async def async_setup_entry(
 
     camera_switches = await camera_service.get_cameras()
     for switch in camera_switches:
-        switches.extend([WyzeSwitch(camera_service, switch)])
+
+        # Notification toggle switch
         switches.extend([WyzeCameraNotificationSwitch(camera_service, switch)])
+
+        # IoT Power switch
+        if switch.product_model not in POWER_SWITCH_UNSUPPORTED:
+            switches.extend([WyzeSwitch(camera_service, switch)])
+        
+        # Motion toggle switch
         if switch.product_model not in MOTION_SWITCH_UNSUPPORTED:
             switches.extend([WyzeCameraMotionSwitch(camera_service, switch)])
 
@@ -110,18 +120,28 @@ class WyzeNotifications(SwitchEntity):
         return False
 
     async def async_turn_on(self, **kwargs: Any) -> None:
-        await self._client.enable_notifications()
-
-        self._is_on = True
-        self._just_updated = True
-        self.async_schedule_update_ha_state()
+        try:
+            await self._client.enable_notifications()
+        except (AccessTokenError, ParameterError, UnknownApiError) as err:
+            raise HomeAssistantError(f"Wyze returned an error: {err.args}") from err
+        except ClientConnectionError as err:
+            raise HomeAssistantError(err) from err
+        else:
+            self._is_on = True
+            self._just_updated = True
+            self.async_schedule_update_ha_state()
 
     async def async_turn_off(self, **kwargs: Any) -> None:
-        await self._client.disable_notifications()
-
-        self._is_on = False
-        self._just_updated = True
-        self.async_schedule_update_ha_state()
+        try:
+            await self._client.disable_notifications()
+        except (AccessTokenError, ParameterError, UnknownApiError) as err:
+            raise HomeAssistantError(f"Wyze returned an error: {err.args}") from err
+        except ClientConnectionError as err:
+            raise HomeAssistantError(err) from err
+        else:
+            self._is_on = False
+            self._just_updated = True
+            self.async_schedule_update_ha_state()
 
     @property
     def name(self):
@@ -146,12 +166,6 @@ class WyzeNotifications(SwitchEntity):
 
 class WyzeSwitch(SwitchEntity):
     """Representation of a Wyze Switch."""
-
-    def turn_on(self, **kwargs: Any) -> None:
-        pass
-
-    def turn_off(self, **kwargs: Any) -> None:
-        pass
 
     _on: bool
     _available: bool
@@ -191,19 +205,29 @@ class WyzeSwitch(SwitchEntity):
 
     @token_exception_handler
     async def async_turn_on(self, **kwargs: Any) -> None:
-        await self._service.turn_on(self._device)
-
-        self._device.on = True
-        self._just_updated = True
-        self.async_schedule_update_ha_state()
+        try:
+            await self._service.turn_on(self._device)
+        except (AccessTokenError, ParameterError, UnknownApiError) as err:
+            raise HomeAssistantError(f"Wyze returned an error: {err.args}") from err
+        except ClientConnectionError as err:
+            raise HomeAssistantError(err) from err
+        else:
+            self._device.on = True
+            self._just_updated = True
+            self.async_schedule_update_ha_state()
 
     @token_exception_handler
     async def async_turn_off(self, **kwargs: Any) -> None:
-        await self._service.turn_off(self._device)
-
-        self._device.on = False
-        self._just_updated = True
-        self.async_schedule_update_ha_state()
+        try:
+            await self._service.turn_off(self._device)
+        except (AccessTokenError, ParameterError, UnknownApiError) as err:
+            raise HomeAssistantError(f"Wyze returned an error: {err.args}") from err
+        except ClientConnectionError as err:
+            raise HomeAssistantError(err) from err
+        else:
+            self._device.on = False
+            self._just_updated = True
+            self.async_schedule_update_ha_state()
 
     @property
     def name(self):
@@ -246,10 +270,7 @@ class WyzeSwitch(SwitchEntity):
 
     @token_exception_handler
     async def async_update(self):
-        """
-        This function updates the entity
-        """
-
+        """Update the entity."""
         if not self._just_updated:
             self._device = await self._service.update(self._device)
         else:
@@ -307,18 +328,16 @@ class WyzeCameraNotificationSwitch(SwitchEntity):
 
     _available: bool
 
-    def __init__(self, service: CameraService, device: Device):
+    def __init__(self, service: CameraService, device: Camera):
         """Initialize a Wyze Notification Switch."""
         self._service = service
-        self._device = Camera(device.raw_dict)
+        self._device = device
 
     @property
     def device_info(self):
         """Return the device info."""
         return {
-            "identifiers": {
-                (DOMAIN, self._device.mac)
-            },
+            "identifiers": {(DOMAIN, self._device.mac)},
             "name": self._device.nickname,
             "manufacturer": "WyzeLabs",
             "model": self._device.product_model
@@ -331,17 +350,28 @@ class WyzeCameraNotificationSwitch(SwitchEntity):
 
     async def async_turn_on(self, **kwargs: Any) -> None:
         """Turn on the switch."""
-        await self._service.turn_on_notifications(self._device)
+        try:
+            await self._service.turn_on_notifications(self._device)
+        except (AccessTokenError, ParameterError, UnknownApiError) as err:
+            raise HomeAssistantError(f"Wyze returned an error: {err.args}") from err
+        except ClientConnectionError as err:
+            raise HomeAssistantError(err) from err
+        else:
+            self._device.notify = True
+            self.async_write_ha_state()
 
-        self._device.notify = True
-        self.async_write_ha_state()
 
     async def async_turn_off(self, **kwargs: Any) -> None:
         """Turn off the switch."""
-        await self._service.turn_off_notifications(self._device)
-
-        self._device.notify = False
-        self.async_write_ha_state()
+        try:
+            await self._service.turn_off_notifications(self._device)
+        except (AccessTokenError, ParameterError, UnknownApiError) as err:
+            raise HomeAssistantError(f"Wyze returned an error: {err.args}") from err
+        except ClientConnectionError as err:
+            raise HomeAssistantError(err) from err
+        else:
+            self._device.notify = False
+            self.async_write_ha_state()
 
     @property
     def name(self):
@@ -385,10 +415,10 @@ class WyzeCameraMotionSwitch(SwitchEntity):
 
     _available: bool
 
-    def __init__(self, service: CameraService, device: Device) -> None:
+    def __init__(self, service: CameraService, device: Camera) -> None:
         """Initialize a Wyze Notification Switch."""
         self._service = service
-        self._device = Camera(device.raw_dict)
+        self._device = device
 
     @property
     def device_info(self):
@@ -407,17 +437,27 @@ class WyzeCameraMotionSwitch(SwitchEntity):
 
     async def async_turn_on(self, **kwargs: Any) -> None:
         """Turn on the switch."""
-        await self._service.turn_on_motion_detection(self._device)
-
-        self._device.motion = True
-        self.async_write_ha_state()
+        try:
+            await self._service.turn_on_motion_detection(self._device)
+        except (AccessTokenError, ParameterError, UnknownApiError) as err:
+            raise HomeAssistantError(f"Wyze returned an error: {err.args}") from err
+        except ClientConnectionError as err:
+            raise HomeAssistantError(err) from err
+        else:
+            self._device.motion = True
+            self.async_write_ha_state()
 
     async def async_turn_off(self, **kwargs: Any) -> None:
         """Turn off the switch."""
-        await self._service.turn_off_motion_detection(self._device)
-
-        self._device.motion = False
-        self.async_write_ha_state()
+        try:
+            await self._service.turn_off_motion_detection(self._device)
+        except (AccessTokenError, ParameterError, UnknownApiError) as err:
+            raise HomeAssistantError(f"Wyze returned an error: {err.args}") from err
+        except ClientConnectionError as err:
+            raise HomeAssistantError(err) from err
+        else:
+            self._device.motion = False
+            self.async_write_ha_state()
 
     @property
     def name(self):
@@ -481,17 +521,27 @@ class WzyeLightstripSwitch(SwitchEntity):
 
     async def async_turn_on(self, **kwargs: Any) -> None:
         """Turn on the switch."""
-        await self._service.music_mode_on(self._device)
-
-        self._device.music_mode = True
-        self.async_schedule_update_ha_state()
+        try:
+            await self._service.music_mode_on(self._device)
+        except (AccessTokenError, ParameterError, UnknownApiError) as err:
+            raise HomeAssistantError(f"Wyze returned an error: {err.args}") from err
+        except ClientConnectionError as err:
+            raise HomeAssistantError(err) from err
+        else:
+            self._device.music_mode = True
+            self.async_schedule_update_ha_state()
 
     async def async_turn_off(self, **kwargs: Any) -> None:
         """Turn off the switch."""
-        await self._service.music_mode_off(self._device)
-
-        self._device.music_mode = False
-        self.async_schedule_update_ha_state()
+        try:
+            await self._service.music_mode_off(self._device)
+        except (AccessTokenError, ParameterError, UnknownApiError) as err:
+            raise HomeAssistantError(f"Wyze returned an error: {err.args}") from err
+        except ClientConnectionError as err:
+            raise HomeAssistantError(err) from err
+        else:
+            self._device.music_mode = False
+            self.async_schedule_update_ha_state()
 
     @property
     def name(self):

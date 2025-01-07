@@ -1,11 +1,11 @@
 #!/usr/bin/python3
 
 """Platform for light integration."""
-import asyncio
 import logging
 # Import the device class from the component that you want to support
 from datetime import timedelta
 from typing import Any, Callable, List
+from aiohttp.client_exceptions import ClientConnectionError
 
 import homeassistant.util.color as color_util
 from homeassistant.components.light import (
@@ -21,7 +21,9 @@ from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import ATTR_ATTRIBUTION
 from homeassistant.core import HomeAssistant, callback
 from homeassistant.helpers import device_registry as dr
+from homeassistant.exceptions import HomeAssistantError
 from wyzeapy import Wyzeapy, BulbService, CameraService
+from wyzeapy.exceptions import AccessTokenError, ParameterError, UnknownApiError
 from wyzeapy.services.bulb_service import Bulb
 from wyzeapy.types import DeviceTypes, PropertyIDs
 from wyzeapy.utils import create_pid_pair
@@ -62,9 +64,18 @@ async def async_setup_entry(hass: HomeAssistant, config_entry: ConfigEntry,
 
 
     for camera in await camera_service.get_cameras():
-        # Only model that I know of that has a floodlight
-        if camera.product_model == "WYZE_CAKP2JFUS":
-            lights.append(WyzeCamerafloodlight(camera, camera_service))
+        if (
+            (camera.product_model == "WYZE_CAKP2JFUS" and camera.device_params['dongle_product_model'] == "HL_CFL") or # Cam v3 with floodlight accessory
+            (camera.product_model == "LD_CFP") or # Floodlight Pro
+            (camera.product_model == "HL_CFL2") # Floodlight v2
+            ):
+            lights.append(WyzeCamerafloodlight(camera, camera_service, "floodlight"))
+        
+        elif ((camera.product_model == "WYZE_CAKP2JFUS" or camera.product_model == "HL_CAM4") and camera.device_params['dongle_product_model'] == "HL_CAM3SS"): # Cam v3 with lamp socket accessory
+            lights.append(WyzeCamerafloodlight(camera, camera_service, "lampsocket"))
+        
+        elif (camera.product_model == "AN_RSCW"): # Battery cam pro (integrated spotlight)
+            lights.append(WyzeCamerafloodlight(camera, camera_service, "spotlight"))
 
     async_add_entities(lights, True)
 
@@ -90,12 +101,6 @@ class WyzeLight(LightEntity):
             raise AttributeError("Device type not supported")
 
         self._bulb_service = bulb_service
-
-    def turn_on(self, **kwargs: Any) -> None:
-        raise NotImplementedError
-
-    def turn_off(self, **kwargs: Any) -> None:
-        raise NotImplementedError
 
     @property
     def device_info(self):
@@ -196,22 +201,30 @@ class WyzeLight(LightEntity):
                     self._bulb.effects = "3"
 
         _LOGGER.debug("Turning on light")
-        loop = asyncio.get_event_loop()
-        loop.create_task(self._bulb_service.turn_on(self._bulb, self._local_control, options))
-
-        self._bulb.on = True
-        self._just_updated = True
-        self.async_schedule_update_ha_state()
+        try:
+            await self._bulb_service.turn_on(self._bulb, self._local_control, options)
+        except (AccessTokenError, ParameterError, UnknownApiError) as err:
+            raise HomeAssistantError(f"Wyze returned an error: {err.args}") from err
+        except ClientConnectionError as err:
+            raise HomeAssistantError(err) from err
+        else:
+            self._bulb.on = True
+            self._just_updated = True
+            self.async_schedule_update_ha_state()
 
     @token_exception_handler
     async def async_turn_off(self, **kwargs: Any) -> None:
         self._local_control = self._config_entry.options.get(BULB_LOCAL_CONTROL)
-        loop = asyncio.get_event_loop()
-        loop.create_task(self._bulb_service.turn_off(self._bulb, self._local_control))
-
-        self._bulb.on = False
-        self._just_updated = True
-        self.async_schedule_update_ha_state()
+        try:
+            await self._bulb_service.turn_off(self._bulb, self._local_control)
+        except (AccessTokenError, ParameterError, UnknownApiError) as err:
+            raise HomeAssistantError(f"Wyze returned an error: {err.args}") from err
+        except ClientConnectionError as err:
+            raise HomeAssistantError(err) from err
+        else:
+            self._bulb.on = False
+            self._just_updated = True
+            self.async_schedule_update_ha_state()
 
     @property
     def supported_color_modes(self):
@@ -363,28 +376,38 @@ class WyzeCamerafloodlight(LightEntity):
     _available: bool
     _just_updated = False
 
-    def __init__(self, camera: Camera, camera_service: CameraService) -> None:
+    def __init__(self, camera: Camera, camera_service: CameraService, light_type: str) -> None:
         self._device = camera
         self._service = camera_service
-        self._is_on = False
+        self._light_type = light_type
 
     @token_exception_handler
     async def async_turn_on(self, **kwargs) -> None:
         """Turn the floodlight on."""
-        await self._service.floodlight_on(self._device)
-
-        self._is_on = True
-        self._just_updated = True
-        self.async_schedule_update_ha_state()
+        try:
+            await self._service.floodlight_on(self._device)
+        except (AccessTokenError, ParameterError, UnknownApiError) as err:
+            raise HomeAssistantError(f"Wyze returned an error: {err.args}") from err
+        except ClientConnectionError as err:
+            raise HomeAssistantError(err) from err
+        else:
+            self._is_on = True
+            self._just_updated = True
+            self.async_schedule_update_ha_state()
 
     @token_exception_handler
     async def async_turn_off(self, **kwargs):
         """Turn the floodlight off."""
-        await self._service.floodlight_off(self._device)
-
-        self._is_on = False
-        self._just_updated = True
-        self.async_schedule_update_ha_state()
+        try:
+            await self._service.floodlight_off(self._device)
+        except (AccessTokenError, ParameterError, UnknownApiError) as err:
+            raise HomeAssistantError(f"Wyze returned an error: {err.args}") from err
+        except ClientConnectionError as err:
+            raise HomeAssistantError(err) from err
+        else:
+            self._is_on = False
+            self._just_updated = True
+            self.async_schedule_update_ha_state()
 
     @property
     def should_poll(self) -> bool:
@@ -398,11 +421,11 @@ class WyzeCamerafloodlight(LightEntity):
 
     @property
     def name(self) -> str:
-        return f"{self._device.nickname} floodlight"
+        return f"{self._device.nickname} {"Lamp Socket" if self._light_type == "lampsocket" else ("Floodlight" if self._light_type == "floodlight" else "Spotlight")}"
 
     @property
     def unique_id(self):
-        return f"{self._device.mac}-floodlight"
+        return f"{self._device.mac}-{self._light_type}"
 
     @property
     def device_info(self):
@@ -439,7 +462,8 @@ class WyzeCamerafloodlight(LightEntity):
     @property
     def icon(self):
         """Return the icon to use in the frontend."""
-        return "mdi:track-light"
+        
+        return "mdi:lightbulb" if self._light_type == "lampsocket" else ("mdi:track-light" if self._light_type == "floodlight" else "mdi:spotlight")
 
     @property
     def color_mode(self):

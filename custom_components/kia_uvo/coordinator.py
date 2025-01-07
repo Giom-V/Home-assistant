@@ -1,16 +1,17 @@
 """Coordinator for Hyundai / Kia Connect integration."""
+
 from __future__ import annotations
 
 from datetime import timedelta
-
+import traceback
 import logging
-from site import venv
 
 from hyundai_kia_connect_api import (
     VehicleManager,
     ClimateRequestOptions,
+    ScheduleChargingClimateRequestOptions,
 )
-from hyundai_kia_connect_api.exceptions import *
+from hyundai_kia_connect_api.exceptions import AuthenticationError
 
 from homeassistant.exceptions import ConfigEntryAuthFailed
 
@@ -22,7 +23,6 @@ from homeassistant.const import (
     CONF_SCAN_INTERVAL,
     CONF_USERNAME,
 )
-from homeassistant.exceptions import ConfigEntryAuthFailed
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 from homeassistant.util import dt as dt_util
@@ -127,16 +127,19 @@ class HyundaiKiaConnectDataUpdateCoordinator(DataUpdateCoordinator):
                     self.vehicle_manager.check_and_force_update_vehicles,
                     self.force_refresh_interval,
                 )
-            except Exception as err:
+            except Exception:
                 try:
+                    _LOGGER.exception(
+                        f"Force update failed, falling back to cached: {traceback.format_exc()}"
+                    )
                     await self.hass.async_add_executor_job(
                         self.vehicle_manager.update_all_vehicles_with_cached_state
                     )
-                    _LOGGER.exception(
-                        f"Force update failed, falling back to cached: {err}"
+                except Exception:
+                    _LOGGER.exception(f"Cached update failed: {traceback.format_exc()}")
+                    raise UpdateFailed(
+                        f"Error communicating with API: {traceback.format_exc()}"
                     )
-                except Exception as err_nested:
-                    raise UpdateFailed(f"Error communicating with API: {err_nested}")
 
         else:
             await self.hass.async_add_executor_job(
@@ -167,63 +170,157 @@ class HyundaiKiaConnectDataUpdateCoordinator(DataUpdateCoordinator):
             self.vehicle_manager.check_and_refresh_token
         )
 
+    async def async_await_action_and_refresh(self, vehicle_id, action_id):
+        try:
+            await self.hass.async_add_executor_job(
+                self.vehicle_manager.check_action_status,
+                vehicle_id,
+                action_id,
+                True,
+                60,
+            )
+        finally:
+            await self.async_refresh()
+
     async def async_lock_vehicle(self, vehicle_id: str):
         await self.async_check_and_refresh_token()
-        await self.hass.async_add_executor_job(self.vehicle_manager.lock, vehicle_id)
-        await self.async_request_refresh()
+        action_id = await self.hass.async_add_executor_job(
+            self.vehicle_manager.lock, vehicle_id
+        )
+        self.hass.async_create_task(
+            self.async_await_action_and_refresh(vehicle_id, action_id)
+        )
 
     async def async_unlock_vehicle(self, vehicle_id: str):
         await self.async_check_and_refresh_token()
-        await self.hass.async_add_executor_job(self.vehicle_manager.unlock, vehicle_id)
-        await self.async_request_refresh()
+        action_id = await self.hass.async_add_executor_job(
+            self.vehicle_manager.unlock, vehicle_id
+        )
+        self.hass.async_create_task(
+            self.async_await_action_and_refresh(vehicle_id, action_id)
+        )
 
     async def async_open_charge_port(self, vehicle_id: str):
         await self.async_check_and_refresh_token()
-        await self.hass.async_add_executor_job(
+        action_id = await self.hass.async_add_executor_job(
             self.vehicle_manager.open_charge_port, vehicle_id
         )
-        await self.async_request_refresh()
+        self.hass.async_create_task(
+            self.async_await_action_and_refresh(vehicle_id, action_id)
+        )
 
     async def async_close_charge_port(self, vehicle_id: str):
         await self.async_check_and_refresh_token()
-        await self.hass.async_add_executor_job(
+        action_id = await self.hass.async_add_executor_job(
             self.vehicle_manager.close_charge_port, vehicle_id
         )
-        await self.async_request_refresh()
+        self.hass.async_create_task(
+            self.async_await_action_and_refresh(vehicle_id, action_id)
+        )
 
     async def async_start_climate(
         self, vehicle_id: str, climate_options: ClimateRequestOptions
     ):
         await self.async_check_and_refresh_token()
-        await self.hass.async_add_executor_job(
+        action_id = await self.hass.async_add_executor_job(
             self.vehicle_manager.start_climate, vehicle_id, climate_options
         )
-        await self.async_request_refresh()
+        self.hass.async_create_task(
+            self.async_await_action_and_refresh(vehicle_id, action_id)
+        )
 
     async def async_stop_climate(self, vehicle_id: str):
         await self.async_check_and_refresh_token()
-        await self.hass.async_add_executor_job(
+        action_id = await self.hass.async_add_executor_job(
             self.vehicle_manager.stop_climate, vehicle_id
         )
-        await self.async_request_refresh()
+        self.hass.async_create_task(
+            self.async_await_action_and_refresh(vehicle_id, action_id)
+        )
 
     async def async_start_charge(self, vehicle_id: str):
         await self.async_check_and_refresh_token()
-        await self.hass.async_add_executor_job(
+        action_id = await self.hass.async_add_executor_job(
             self.vehicle_manager.start_charge, vehicle_id
         )
-        await self.async_request_refresh()
+        self.hass.async_create_task(
+            self.async_await_action_and_refresh(vehicle_id, action_id)
+        )
 
     async def async_stop_charge(self, vehicle_id: str):
         await self.async_check_and_refresh_token()
-        await self.hass.async_add_executor_job(
+        action_id = await self.hass.async_add_executor_job(
             self.vehicle_manager.stop_charge, vehicle_id
         )
-        await self.async_request_refresh()
+        self.hass.async_create_task(
+            self.async_await_action_and_refresh(vehicle_id, action_id)
+        )
 
     async def set_charge_limits(self, vehicle_id: str, ac: int, dc: int):
         await self.async_check_and_refresh_token()
-        await self.hass.async_add_executor_job(
+        action_id = await self.hass.async_add_executor_job(
             self.vehicle_manager.set_charge_limits, vehicle_id, ac, dc
         )
-        await self.async_request_refresh()
+        self.hass.async_create_task(
+            self.async_await_action_and_refresh(vehicle_id, action_id)
+        )
+
+    async def set_charging_current(self, vehicle_id: str, level: int):
+        await self.async_check_and_refresh_token()
+        action_id = await self.hass.async_add_executor_job(
+            self.vehicle_manager.set_charging_current, vehicle_id, level
+        )
+        self.hass.async_create_task(
+            self.async_await_action_and_refresh(vehicle_id, action_id)
+        )
+
+    async def async_schedule_charging_and_climate(
+        self, vehicle_id: str, schedule_options: ScheduleChargingClimateRequestOptions
+    ):
+        await self.async_check_and_refresh_token()
+        action_id = await self.hass.async_add_executor_job(
+            self.vehicle_manager.schedule_charging_and_climate,
+            vehicle_id,
+            schedule_options,
+        )
+        self.hass.async_create_task(
+            self.async_await_action_and_refresh(vehicle_id, action_id)
+        )
+
+    async def async_start_hazard_lights(self, vehicle_id: str):
+        await self.async_check_and_refresh_token()
+        action_id = await self.hass.async_add_executor_job(
+            self.vehicle_manager.start_hazard_lights, vehicle_id
+        )
+        self.hass.async_create_task(
+            self.async_await_action_and_refresh(vehicle_id, action_id)
+        )
+
+    async def async_start_hazard_lights_and_horn(self, vehicle_id: str):
+        await self.async_check_and_refresh_token()
+        action_id = await self.hass.async_add_executor_job(
+            self.vehicle_manager.start_hazard_lights_and_horn,
+            vehicle_id,
+        )
+        self.hass.async_create_task(
+            self.async_await_action_and_refresh(vehicle_id, action_id)
+        )
+
+    async def async_start_valet_mode(self, vehicle_id: str):
+        await self.async_check_and_refresh_token()
+        action_id = await self.hass.async_add_executor_job(
+            self.vehicle_manager.start_valet_mode, vehicle_id
+        )
+        self.hass.async_create_task(
+            self.async_await_action_and_refresh(vehicle_id, action_id)
+        )
+
+    async def async_stop_valet_mode(self, vehicle_id: str):
+        await self.async_check_and_refresh_token()
+        action_id = await self.hass.async_add_executor_job(
+            self.vehicle_manager.stop_valet_mode,
+            vehicle_id,
+        )
+        self.hass.async_create_task(
+            self.async_await_action_and_refresh(vehicle_id, action_id)
+        )

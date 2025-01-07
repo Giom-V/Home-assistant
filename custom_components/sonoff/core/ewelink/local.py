@@ -3,6 +3,7 @@ For non DIY devices data will be encrypted with devicekey. The registry cannot
 decode such messages by itself because it does not manage the list of known
 devices and their devicekey.
 """
+
 import asyncio
 import base64
 import errno
@@ -14,6 +15,7 @@ import aiohttp
 from Crypto.Cipher import AES
 from Crypto.Hash import MD5
 from Crypto.Random import get_random_bytes
+from aiohttp.hdrs import CONTENT_TYPE
 from zeroconf import Zeroconf, ServiceStateChange
 from zeroconf.asyncio import AsyncServiceBrowser, AsyncServiceInfo
 
@@ -97,7 +99,9 @@ class XRegistryLocal(XRegistryBase):
         state_change: ServiceStateChange,
     ):
         """Step 1. Receive change event from zeroconf."""
-        if state_change == ServiceStateChange.Removed:
+        # accept: eWeLink_1000xxxxxx.local.
+        # skip: ihost-1001xxxxxx.local.
+        if state_change == ServiceStateChange.Removed or not name.startswith("eWeLink"):
             return
 
         asyncio.create_task(self._handler2(zeroconf, service_type, name))
@@ -199,6 +203,11 @@ class XRegistryLocal(XRegistryBase):
             )
 
             try:
+                # some devices don't support getState command
+                # https://github.com/AlexxIT/SonoffLAN/issues/1442
+                if command == "getState" and r.headers.get(CONTENT_TYPE) == "text/html":
+                    return "online"
+
                 resp: dict = await r.json()
                 if resp["error"] == 0:
                     _LOGGER.debug(f"{log} <= {resp}")

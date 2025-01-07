@@ -4,26 +4,26 @@ import json
 import logging
 import os
 import re
-from typing import NamedTuple, Protocol
-
-from awesomeversion.awesomeversion import AwesomeVersion
-from homeassistant.const import __version__ as HA_VERSION  # noqa
-
-if AwesomeVersion(HA_VERSION) >= AwesomeVersion("2023.8.0"):
-    from enum import StrEnum
-else:
-    from homeassistant.backports.enum import StrEnum  # pragma: no cover
+from collections import defaultdict
+from enum import StrEnum
+from typing import NamedTuple, Protocol, cast
 
 from homeassistant.components.binary_sensor import DOMAIN as BINARY_SENSOR_DOMAIN
 from homeassistant.components.camera import DOMAIN as CAMERA_DOMAIN
+from homeassistant.components.cover import DOMAIN as COVER_DOMAIN
 from homeassistant.components.light import DOMAIN as LIGHT_DOMAIN
 from homeassistant.components.media_player import DOMAIN as MEDIA_PLAYER_DOMAIN
+from homeassistant.components.sensor import DOMAIN as SENSOR_DOMAIN
 from homeassistant.components.switch import DOMAIN as SWITCH_DOMAIN
+from homeassistant.components.vacuum import DOMAIN as VACUUM_DOMAIN
+from homeassistant.const import __version__ as HA_VERSION  # noqa
 from homeassistant.core import HomeAssistant, State
+from homeassistant.helpers import translation
+from homeassistant.helpers.entity_registry import RegistryEntry
 from homeassistant.helpers.typing import ConfigType
 
 from custom_components.powercalc.common import SourceEntity
-from custom_components.powercalc.const import CONF_POWER, CalculationStrategy
+from custom_components.powercalc.const import CONF_MAX_POWER, CONF_MIN_POWER, CONF_POWER, DOMAIN, CalculationStrategy
 from custom_components.powercalc.errors import (
     ModelNotSupportedError,
     PowercalcSetupError,
@@ -35,10 +35,15 @@ _LOGGER = logging.getLogger(__name__)
 
 class DeviceType(StrEnum):
     CAMERA = "camera"
+    COVER = "cover"
     LIGHT = "light"
+    POWER_METER = "power_meter"
+    PRINTER = "printer"
+    SMART_DIMMER = "smart_dimmer"
     SMART_SWITCH = "smart_switch"
     SMART_SPEAKER = "smart_speaker"
     NETWORK = "network"
+    VACUUM_ROBOT = "vacuum_robot"
 
 
 class SubProfileMatcherType(StrEnum):
@@ -48,13 +53,28 @@ class SubProfileMatcherType(StrEnum):
     INTEGRATION = "integration"
 
 
-DEVICE_DOMAINS = {
+DEVICE_TYPE_DOMAIN = {
     DeviceType.CAMERA: CAMERA_DOMAIN,
+    DeviceType.COVER: COVER_DOMAIN,
     DeviceType.LIGHT: LIGHT_DOMAIN,
+    DeviceType.POWER_METER: SENSOR_DOMAIN,
+    DeviceType.SMART_DIMMER: LIGHT_DOMAIN,
     DeviceType.SMART_SWITCH: SWITCH_DOMAIN,
     DeviceType.SMART_SPEAKER: MEDIA_PLAYER_DOMAIN,
     DeviceType.NETWORK: BINARY_SENSOR_DOMAIN,
+    DeviceType.PRINTER: SENSOR_DOMAIN,
+    DeviceType.VACUUM_ROBOT: VACUUM_DOMAIN,
 }
+
+DOMAIN_TO_DEVICE_TYPE = {domain: device_type for device_type, domain in DEVICE_TYPE_DOMAIN.items()}
+
+DOMAIN_TO_DEVICE_TYPES = defaultdict(set)
+for device_type, domain in DEVICE_TYPE_DOMAIN.items():
+    DOMAIN_TO_DEVICE_TYPES[domain].add(device_type)
+
+
+def get_device_types_from_domain(search_domain: str) -> set[DeviceType]:
+    return set(DOMAIN_TO_DEVICE_TYPES.get(search_domain, {}))
 
 
 class PowerProfile:
@@ -73,36 +93,14 @@ class PowerProfile:
         self._json_data = json_data
         self.sub_profile: str | None = None
         self._sub_profile_dir: str | None = None
+        self._sub_profiles: list[str] | None = None
 
     def get_model_directory(self, root_only: bool = False) -> str:
         """Get the model directory containing the data files."""
-        if self.linked_lut:
-            return os.path.join(os.path.dirname(__file__), "../data", self.linked_lut)
-
         if root_only:
             return self._directory
 
         return self._sub_profile_dir or self._directory
-
-    def supports(self, model: str) -> bool:
-        """Check whether this power profile supports a given model ID.
-        Also looks at possible aliases.
-        """
-        model = model.lower().replace("#slash#", "/")
-
-        if self._model.lower() == model:
-            return True
-
-        # @todo implement Regex/Json path
-        for alias in self.aliases:
-            if alias.lower() == model:
-                return True
-
-        # Also try to match model ID between parentheses.
-        if match := re.search(r"\(([^\(\)]+)\)$", model):
-            return self.supports(match.group(1))
-
-        return False
 
     @property
     def manufacturer(self) -> str:
@@ -113,8 +111,16 @@ class PowerProfile:
         return self._model
 
     @property
+    def unique_id(self) -> str:
+        return self._json_data.get("unique_id") or f"{self._manufacturer}_{self._model}"
+
+    @property
     def name(self) -> str:
         return self._json_data.get("name") or ""
+
+    @property
+    def json_data(self) -> ConfigType:
+        return self._json_data
 
     @property
     def standby_power(self) -> float:
@@ -146,25 +152,42 @@ class PowerProfile:
         return self._json_data.get("aliases") or []
 
     @property
-    def linear_mode_config(self) -> ConfigType | None:
+    def linear_config(self) -> ConfigType | None:
         """Get configuration to setup linear strategy."""
-        if not self.is_strategy_supported(CalculationStrategy.LINEAR):
-            raise UnsupportedStrategyError(
-                f"Strategy linear is not supported by model: {self._model}",
-            )
-        return self._json_data.get("linear_config")
+        config = self.get_strategy_config(CalculationStrategy.LINEAR)
+        if config is None:
+            return {CONF_MIN_POWER: 0, CONF_MAX_POWER: 0}
+        return config
 
     @property
-    def fixed_mode_config(self) -> ConfigType | None:
+    def multi_switch_config(self) -> ConfigType | None:
+        """Get configuration to setup linear strategy."""
+        return self.get_strategy_config(CalculationStrategy.MULTI_SWITCH)
+
+    @property
+    def fixed_config(self) -> ConfigType | None:
         """Get configuration to setup fixed strategy."""
-        if not self.is_strategy_supported(CalculationStrategy.FIXED):
+        config = self.get_strategy_config(CalculationStrategy.FIXED)
+        if config is None and self.standby_power_on:
+            return {CONF_POWER: 0}
+        return config
+
+    @property
+    def composite_config(self) -> list | None:
+        """Get configuration to setup composite strategy."""
+        return cast(list, self._json_data.get("composite_config"))
+
+    @property
+    def playbook_config(self) -> ConfigType | None:
+        """Get configuration to setup playbook strategy."""
+        return self.get_strategy_config(CalculationStrategy.PLAYBOOK)
+
+    def get_strategy_config(self, strategy: CalculationStrategy) -> ConfigType | None:
+        if not self.is_strategy_supported(strategy):
             raise UnsupportedStrategyError(
-                f"Strategy fixed is not supported by model: {self._model}",
+                f"Strategy {strategy} is not supported by model: {self._model}",
             )
-        fixed_config = self._json_data.get("fixed_config")
-        if fixed_config is None and self.standby_power_on:
-            fixed_config = {CONF_POWER: 0}
-        return fixed_config
+        return self._json_data.get(f"{strategy}_config")
 
     @property
     def sensor_config(self) -> ConfigType:
@@ -185,23 +208,55 @@ class PowerProfile:
         ) and not self._json_data.get("fixed_config")
 
     @property
-    def device_type(self) -> DeviceType:
+    def needs_linear_config(self) -> bool:
+        """
+        Used for smart dimmers. This indicates the user must supply the power values in the config flow.
+        """
+        return self.is_strategy_supported(
+            CalculationStrategy.LINEAR,
+        ) and not self._json_data.get("linear_config")
+
+    @property
+    def device_type(self) -> DeviceType | None:
         device_type = self._json_data.get("device_type")
         if not device_type:
             return DeviceType.LIGHT
-        return DeviceType(device_type)
+        try:
+            return DeviceType(device_type)
+        except ValueError:
+            _LOGGER.warning("Unknown device type: %s", device_type)
+            return None
 
     @property
     def config_flow_discovery_remarks(self) -> str | None:
-        return self._json_data.get("config_flow_discovery_remarks")
+        remarks = self._json_data.get("config_flow_discovery_remarks")
+        if not remarks and self.device_type == DeviceType.SMART_SWITCH:
+            translations = translation.async_get_cached_translations(
+                self._hass,
+                self._hass.config.language,
+                "common",
+                DOMAIN,
+            )
+            translation_key = f"component.{DOMAIN}.common.remarks_smart_switch"
+            return translations.get(translation_key)
 
-    def get_sub_profiles(self) -> list[str]:
+        return remarks
+
+    async def get_sub_profiles(self) -> list[str]:
         """Get listing of possible sub profiles."""
-        return sorted(next(os.walk(self.get_model_directory(True)))[1])
+
+        if self._sub_profiles:
+            return self._sub_profiles
+
+        def _get_sub_dirs() -> list[str]:
+            return next(os.walk(self.get_model_directory(True)))[1]
+
+        self._sub_profiles = sorted(await self._hass.async_add_executor_job(_get_sub_dirs))  # type: ignore
+        return self._sub_profiles
 
     @property
-    def has_sub_profiles(self) -> bool:
-        return len(self.get_sub_profiles()) > 0
+    async def has_sub_profiles(self) -> bool:
+        return len(await self.get_sub_profiles()) > 0
 
     @property
     def sub_profile_select(self) -> SubProfileSelectConfig | None:
@@ -211,9 +266,9 @@ class PowerProfile:
             return None
         return SubProfileSelectConfig(**select_dict)
 
-    def select_sub_profile(self, sub_profile: str) -> None:
+    async def select_sub_profile(self, sub_profile: str) -> None:
         """Select a sub profile. Only applicable when to profile actually supports sub profiles."""
-        if not self.has_sub_profiles:
+        if not await self.has_sub_profiles:
             return
 
         # Sub profile already selected, no need to load it again
@@ -224,30 +279,39 @@ class PowerProfile:
         _LOGGER.debug("Loading sub profile directory %s", sub_profile)
         if not os.path.exists(self._sub_profile_dir):
             raise ModelNotSupportedError(
-                f"Sub profile not found (manufacturer: {self._manufacturer}, model: {self._model}, "
-                f"sub_profile: {sub_profile})",
+                f"Sub profile not found (manufacturer: {self._manufacturer}, model: {self._model}, sub_profile: {sub_profile})",
             )
 
         # When the sub LUT directory also has a model.json (not required),
         # merge this json into the main model.json data.
         file_path = os.path.join(self._sub_profile_dir, "model.json")
         if os.path.exists(file_path):
-            with open(file_path) as json_file:
-                self._json_data = {**self._json_data, **json.load(json_file)}
+
+            def _load_json() -> None:
+                """Load LUT profile json data."""
+                with open(file_path) as json_file:
+                    self._json_data = {**self._json_data, **json.load(json_file)}
+
+            await self._hass.async_add_executor_job(_load_json)  # type: ignore
 
         self.sub_profile = sub_profile
 
-    def is_entity_domain_supported(self, source_entity: SourceEntity) -> bool:
+    def is_entity_domain_supported(self, entity_entry: RegistryEntry) -> bool:
         """Check whether this power profile supports a given entity domain."""
-        entity_entry = source_entity.entity_entry
-        if (
-            self.device_type == DeviceType.SMART_SWITCH
-            and entity_entry
-            and entity_entry.platform in ["hue"]
-            and source_entity.domain == LIGHT_DOMAIN
-        ):  # see https://github.com/bramstroker/homeassistant-powercalc/issues/1491
+        if self.device_type is None:
+            return False
+
+        domain = entity_entry.domain
+
+        # see https://github.com/bramstroker/homeassistant-powercalc/issues/2529
+        if self.device_type == DeviceType.PRINTER and entity_entry.unit_of_measurement:
+            return False
+
+        # see https://github.com/bramstroker/homeassistant-powercalc/issues/1491
+        if self.device_type == DeviceType.SMART_SWITCH and entity_entry.platform in ["hue"] and domain == LIGHT_DOMAIN:
             return True
-        return DEVICE_DOMAINS[self.device_type] == source_entity.domain
+
+        return DEVICE_TYPE_DOMAIN.get(self.device_type) == domain
 
 
 class SubProfileSelector:
@@ -263,10 +327,8 @@ class SubProfileSelector:
         self._matchers: list[SubProfileMatcher] = self._build_matchers()
 
     def _build_matchers(self) -> list[SubProfileMatcher]:
-        matchers: list[SubProfileMatcher] = []
-        for matcher_config in self._config.matchers:
-            matchers.append(self._create_matcher(matcher_config))
-        return matchers
+        """Create matchers from json config."""
+        return [self._create_matcher(matcher_config) for matcher_config in self._config.matchers]
 
     def select_sub_profile(self, entity_state: State) -> str:
         """Dynamically tries to select a sub profile depending on the entity state.
@@ -281,11 +343,7 @@ class SubProfileSelector:
 
     def get_tracking_entities(self) -> list[str]:
         """Get additional list of entities to track for state changes."""
-        return [
-            entity_id
-            for matcher in self._matchers
-            for entity_id in matcher.get_tracking_entities()
-        ]
+        return [entity_id for matcher in self._matchers for entity_id in matcher.get_tracking_entities()]
 
     def _create_matcher(self, matcher_config: dict) -> SubProfileMatcher:
         """Create a matcher from json config. Can be extended for more matchers in the future."""

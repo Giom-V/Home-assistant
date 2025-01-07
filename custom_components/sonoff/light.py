@@ -36,6 +36,11 @@ def conv(value: int, a1: int, a2: int, b1: int, b2: int) -> int:
 ###############################################################################
 
 
+class XOnOffLight(XEntity, LightEntity):
+    _attr_color_mode = ColorMode.ONOFF
+    _attr_supported_color_modes = {ColorMode.ONOFF}
+
+
 # https://developers.home-assistant.io/docs/core/entity/light/
 # noinspection PyAbstractClass
 class XLight(XEntity, LightEntity):
@@ -747,6 +752,14 @@ class XLightL3(XLightL1):
                 None,
             )
 
+    def get_params(self, brightness, color_temp, rgb_color, effect) -> dict:
+        # fix https://github.com/AlexxIT/SonoffLAN/issues/1394
+        if brightness is not None and rgb_color is None:
+            rgb_color = self.rgb_color
+        if brightness is None and rgb_color is not None:
+            brightness = self.brightness
+        return super().get_params(brightness, color_temp, rgb_color, effect)
+
 
 B02_MODE_PAYLOADS = {
     "nightLight": {"br": 5, "ct": 0},
@@ -1036,7 +1049,7 @@ class XLightGroup(XEntity, LightEntity):
 
 
 # noinspection PyAbstractClass, UIID22
-class XFanLight(XEntity, LightEntity):
+class XFanLight(XOnOffLight):
     params = {"switches", "light"}
     uid = "1"  # backward compatibility
 
@@ -1065,7 +1078,7 @@ class XFanLight(XEntity, LightEntity):
 
 
 # noinspection PyAbstractClass, UIID25
-class XDiffuserLight(XEntity, LightEntity):
+class XDiffuserLight(XOnOffLight):
     params = {"lightswitch", "lightbright", "lightmode", "lightRcolor"}
 
     _attr_effect_list = ["Color Light", "RGB Color", "Night Light"]
@@ -1132,19 +1145,24 @@ class XDiffuserLight(XEntity, LightEntity):
         await self.ewelink.send(self.device, {"lightswitch": 0})
 
 
-class XT5Light(XEntity, LightEntity):
+T5_EFFECTS = {
+    "Night Light": 0,
+    "Party": 1,
+    "Leisure": 2,
+    "Color": 3,
+    "Childhood": 4,
+    "Wiper": 5,
+    "Fairy": 6,
+    "Starburst": 7,
+    "DIY 1": 101,
+    "DIY 2": 102,
+}
+
+
+class XT5Light(XOnOffLight):
     params = {"lightSwitch", "lightMode"}
 
-    _attr_effect_list = [
-        "Night Light",
-        "Party",
-        "Leisure",
-        "Color",
-        "Childhood",
-        "Wiper",
-        "Fairy",
-        "Starburst",
-    ]
+    _attr_effect_list = list(T5_EFFECTS.keys())
     _attr_supported_features = LightEntityFeature.EFFECT
 
     def set_state(self, params: dict):
@@ -1152,15 +1170,17 @@ class XT5Light(XEntity, LightEntity):
             self._attr_is_on = params["lightSwitch"] == "on"
 
         if "lightMode" in params:
-            self._attr_effect = self._attr_effect_list[int(params["lightMode"])]
+            self._attr_effect = next(
+                (k for k, v in T5_EFFECTS.items() if v == params["lightMode"]), None
+            )
 
     async def async_turn_on(
         self, brightness: int = None, effect: str = None, **kwargs
     ) -> None:
         params = {}
 
-        if effect:
-            params["lightMode"] = self._attr_effect_list.index(effect)
+        if effect and effect in T5_EFFECTS:
+            params["lightMode"] = T5_EFFECTS[effect]
 
         if not params:
             params["lightSwitch"] = "on"

@@ -3,7 +3,7 @@ import logging
 
 import voluptuous as vol
 from homeassistant.components import zeroconf
-from homeassistant.config_entries import SOURCE_IMPORT, ConfigEntry, ConfigEntryState
+from homeassistant.config_entries import SOURCE_IMPORT, ConfigEntry
 from homeassistant.const import (
     CONF_DEVICE_CLASS,
     CONF_DEVICES,
@@ -30,6 +30,7 @@ from .core import devices as core_devices
 from .core.const import (
     CONF_APPID,
     CONF_APPSECRET,
+    CONF_COUNTRY_CODE,
     CONF_DEFAULT_CLASS,
     CONF_DEVICEKEY,
     CONF_RFBRIDGE,
@@ -96,7 +97,7 @@ UNIQUE_DEVICES = {}
 
 
 async def async_setup(hass: HomeAssistant, config: dict) -> bool:
-    if (MAJOR_VERSION, MINOR_VERSION) < (2023, 1):
+    if (MAJOR_VERSION, MINOR_VERSION) < (2023, 2):
         raise Exception("unsupported hass version")
 
     # init storage for registries
@@ -108,10 +109,10 @@ async def async_setup(hass: HomeAssistant, config: dict) -> bool:
         if CONF_APPID in conf and CONF_APPSECRET in conf:
             APP[0] = (conf[CONF_APPID], conf[CONF_APPSECRET])
         if CONF_DEFAULT_CLASS in conf:
-            core_devices.set_default_class(conf.pop(CONF_DEFAULT_CLASS))
+            core_devices.set_default_class(conf.get(CONF_DEFAULT_CLASS))
         if CONF_SENSORS in conf:
             core_devices.get_spec = core_devices.get_spec_wrapper(
-                core_devices.get_spec, conf.pop(CONF_SENSORS)
+                core_devices.get_spec, conf.get(CONF_SENSORS)
             )
 
     # cameras starts only on first command to it
@@ -165,139 +166,82 @@ async def async_setup(hass: HomeAssistant, config: dict) -> bool:
     return True
 
 
-async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
-    """
-    AUTO mode. If there is a login error to the cloud - it starts in LOCAL
-    mode with devices list from cache. Trying to reconnect to the cloud.
-
-    CLOUD mode. If there is a login error to the cloud - trying to reconnect to
-    the cloud.
-
-    LOCAL mode. If there is a login error to the cloud - it starts  with
-    devices list from cache.
-    """
-    registry = hass.data[DOMAIN].get(entry.entry_id)
-    if not registry:
-        session = async_get_clientsession(hass)
-        hass.data[DOMAIN][entry.entry_id] = registry = XRegistry(session)
-
-    if entry.options.get("debug") and not _LOGGER.handlers:
+async def async_setup_entry(hass: HomeAssistant, config_entry: ConfigEntry) -> bool:
+    if config_entry.options.get("debug") and not _LOGGER.handlers:
         await system_health.setup_debug(hass, _LOGGER)
 
-    username = entry.data.get(CONF_USERNAME)
-    password = entry.data.get(CONF_PASSWORD)
-    mode = entry.options.get(CONF_MODE, "auto")
+    registry: XRegistry = hass.data[DOMAIN].get(config_entry.entry_id)
+    if not registry:
+        session = async_get_clientsession(hass)
+        hass.data[DOMAIN][config_entry.entry_id] = registry = XRegistry(session)
 
-    # retry only when can't login first time
-    if entry.state == ConfigEntryState.SETUP_RETRY:
-        assert mode in ("auto", "cloud")
-        try:
-            await registry.cloud.login(username, password)
-        except Exception as e:
-            _LOGGER.warning(f"Can't login with mode: {mode}", exc_info=e)
-            raise ConfigEntryNotReady(e)
-        if mode == "auto":
-            registry.cloud.start()
-        elif mode == "cloud":
-            hass.async_create_task(internal_normal_setup(hass, entry))
-        return True
+    mode = config_entry.options.get(CONF_MODE, "auto")
+    data = config_entry.data
 
-    if registry.cloud.auth is None and username and password:
+    # if has cloud password and not auth
+    if not registry.cloud.auth and data.get(CONF_PASSWORD):
         try:
-            await registry.cloud.login(username, password)
+            await registry.cloud.login(**data)
+            # store country_code for future requests optimisation
+            if not data.get(CONF_COUNTRY_CODE):
+                hass.config_entries.async_update_entry(
+                    config_entry,
+                    data={**data, CONF_COUNTRY_CODE: registry.cloud.country_code},
+                )
         except Exception as e:
-            _LOGGER.warning(f"Can't login with mode: {mode}", exc_info=e)
-            if mode in ("auto", "local"):
-                hass.async_create_task(internal_cache_setup(hass, entry))
-            if mode in ("auto", "cloud"):
+            _LOGGER.warning(f"Can't login in {mode} mode: {repr(e)}")
+            if mode == "cloud":
+                # can't continue in cloud mode
                 if isinstance(e, AuthError):
                     raise ConfigEntryAuthFailed(e)
                 raise ConfigEntryNotReady(e)
-            assert mode == "local"
-            return True
 
-    hass.async_create_task(internal_normal_setup(hass, entry))
-    return True
+    if not config_entry.update_listeners:
+        config_entry.add_update_listener(async_update_options)
 
+    config_entry.async_on_unload(
+        hass.bus.async_listen_once(EVENT_HOMEASSISTANT_STOP, registry.stop)
+    )
 
-async def async_update_options(hass: HomeAssistant, entry: ConfigEntry):
-    await hass.config_entries.async_reload(entry.entry_id)
+    # important to run before registry.setup_devices (for remote childs)
+    await hass.config_entries.async_forward_entry_setups(config_entry, PLATFORMS)
 
+    devices: list[dict] | None = None
+    store = Store(hass, 1, f"{DOMAIN}/{config_entry.data['username']}.json")
 
-async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry):
-    await hass.config_entries.async_unload_platforms(entry, PLATFORMS)
-
-    registry: XRegistry = hass.data[DOMAIN][entry.entry_id]
-    await registry.stop()
-
-    return True
-
-
-async def internal_normal_setup(hass: HomeAssistant, entry: ConfigEntry):
-    devices = None
-
-    try:
-        registry: XRegistry = hass.data[DOMAIN][entry.entry_id]
-        if registry.cloud.auth:
-            homes = entry.options.get("homes")
+    # if auth OK - load devices from cloud
+    if registry.cloud.auth:
+        try:
+            homes = config_entry.options.get("homes")
             devices = await registry.cloud.get_devices(homes)
             _LOGGER.debug(f"{len(devices)} devices loaded from Cloud")
 
-            store = Store(hass, 1, f"{DOMAIN}/{entry.data['username']}.json")
+            # store devices to cache
             await store.async_save(devices)
 
-    except Exception as e:
-        _LOGGER.warning("Can't load devices", exc_info=e)
+        except Exception as e:
+            _LOGGER.warning("Can't load devices", exc_info=e)
 
-    await internal_cache_setup(hass, entry, devices)
-
-
-async def internal_cache_setup(
-    hass: HomeAssistant, entry: ConfigEntry, devices: list = None
-):
-    registry: XRegistry = hass.data[DOMAIN][entry.entry_id]
-
-    # this may only happen if async_setup_entry will fail
-    if registry.online:
-        await async_unload_entry(hass, entry)
-
-    await asyncio.gather(
-        *[
-            hass.config_entries.async_forward_entry_setup(entry, domain)
-            for domain in PLATFORMS
-        ]
-    )
-
-    if devices is None:
-        store = Store(hass, 1, f"{DOMAIN}/{entry.data['username']}.json")
-        devices = await store.async_load()
-        if devices:
-            # 16 devices loaded from the Cloud Server
+    if not devices:
+        if devices := await store.async_load():
             _LOGGER.debug(f"{len(devices)} devices loaded from Cache")
 
     if devices:
-        devices = internal_unique_devices(entry.entry_id, devices)
+        # we need to setup_devices before local.start
+        devices = internal_unique_devices(config_entry.entry_id, devices)
         entities = registry.setup_devices(devices)
     else:
         entities = None
 
-    if not entry.update_listeners:
-        entry.add_update_listener(async_update_options)
+    if mode in ("auto", "cloud") and config_entry.data.get(CONF_PASSWORD):
+        registry.cloud.start(**config_entry.data)
 
-    entry.async_on_unload(
-        hass.bus.async_listen_once(EVENT_HOMEASSISTANT_STOP, registry.stop)
-    )
-
-    mode = entry.options.get(CONF_MODE, "auto")
-    if mode != "local" and registry.cloud.auth:
-        registry.cloud.start()
-    if mode != "cloud":
+    if mode in ("auto", "local"):
         registry.local.start(await zeroconf.async_get_instance(hass))
 
     _LOGGER.debug(mode.upper() + " mode start")
 
-    # at this moment we hold EVENT_HOMEASSISTANT_START event, because run this
-    # coro with `hass.async_create_task` from `async_setup_entry`
+    # at this moment we hold EVENT_HOMEASSISTANT_START event
     if registry.cloud.task:
         # we get cloud connected signal even with a cloud error, so we won't
         # hold Hass start event forever
@@ -313,6 +257,21 @@ async def internal_cache_setup(
     if entities:
         _LOGGER.debug(f"Add {len(entities)} entities")
         registry.dispatcher_send(SIGNAL_ADD_ENTITIES, entities)
+
+    return True
+
+
+async def async_update_options(hass: HomeAssistant, entry: ConfigEntry):
+    await hass.config_entries.async_reload(entry.entry_id)
+
+
+async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry):
+    ok = await hass.config_entries.async_unload_platforms(entry, PLATFORMS)
+
+    registry: XRegistry = hass.data[DOMAIN][entry.entry_id]
+    await registry.stop()
+
+    return ok
 
 
 def internal_unique_devices(uid: str, devices: list) -> list:
