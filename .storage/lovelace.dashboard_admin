@@ -674,6 +674,427 @@
               ]
             }
           ]
+        },
+        {
+          "title": "Test pièces",
+          "path": "test-pieces",
+          "icon": "mdi:home-modern",
+          "type": "sections",
+          "sections": [
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "camera_view": "auto",
+                  "alert_classes": [
+                    "motion",
+                    "moisture"
+                  ],
+                  "sensor_classes": [
+                    "temperature",
+                    "humidity",
+                    "energy",
+                    "power"
+                  ],
+                  "type": "area",
+                  "area": "jardin_de_devant",
+                  "show_camera": true
+                },
+                {
+                  "alert_classes": [
+                    "motion",
+                    "moisture"
+                  ],
+                  "sensor_classes": [
+                    "temperature",
+                    "humidity",
+                    "precipitation",
+                    "aqi"
+                  ],
+                  "type": "area",
+                  "area": "garden",
+                  "show_camera": false
+                },
+                {
+                  "alert_classes": [
+                    "motion",
+                    "moisture"
+                  ],
+                  "sensor_classes": [
+                    "temperature",
+                    "humidity",
+                    "aqi",
+                    "atmospheric_pressure",
+                    "precipitation",
+                    "pressure",
+                    "wind_speed"
+                  ],
+                  "type": "area",
+                  "area": "alentours"
+                }
+              ],
+              "title": "Extérieur",
+              "column_span": 3
+            },
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "alert_classes": [
+                    "motion",
+                    "moisture"
+                  ],
+                  "sensor_classes": [
+                    "temperature",
+                    "humidity"
+                  ],
+                  "type": "area",
+                  "area": "attic"
+                }
+              ],
+              "title": "Toit",
+              "column_span": 1
+            },
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "alert_classes": [
+                    "motion",
+                    "moisture"
+                  ],
+                  "sensor_classes": [
+                    "temperature",
+                    "humidity"
+                  ],
+                  "type": "area",
+                  "area": "bedroom"
+                },
+                {
+                  "alert_classes": [
+                    "moisture"
+                  ],
+                  "sensor_classes": [
+                    "temperature",
+                    "humidity"
+                  ],
+                  "type": "area",
+                  "area": "aurore_s_bedroom"
+                },
+                {
+                  "alert_classes": [
+                    "motion",
+                    "moisture"
+                  ],
+                  "sensor_classes": [
+                    "temperature",
+                    "energy",
+                    "pm25"
+                  ],
+                  "type": "area",
+                  "area": "office"
+                },
+                {
+                  "alert_classes": [
+                    "motion",
+                    "moisture"
+                  ],
+                  "sensor_classes": [
+                    "temperature",
+                    "humidity"
+                  ],
+                  "type": "area",
+                  "area": "bathroom"
+                },
+                {
+                  "alert_classes": [
+                    "motion",
+                    "moisture"
+                  ],
+                  "sensor_classes": [
+                    "temperature",
+                    "humidity"
+                  ],
+                  "type": "area",
+                  "area": "shower_room"
+                },
+                {
+                  "alert_classes": [
+                    "motion",
+                    "moisture"
+                  ],
+                  "sensor_classes": [
+                    "temperature",
+                    "humidity"
+                  ],
+                  "type": "area",
+                  "area": "mezzanine"
+                }
+              ],
+              "title": "Étage",
+              "column_span": 4
+            },
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "camera_view": "auto",
+                  "alert_classes": [
+                    "motion",
+                    "moisture"
+                  ],
+                  "sensor_classes": [
+                    "temperature",
+                    "humidity",
+                    "energy",
+                    "power"
+                  ],
+                  "type": "area",
+                  "area": "dinning_room",
+                  "show_camera": true
+                },
+                {
+                  "alert_classes": [
+                    "motion",
+                    "moisture"
+                  ],
+                  "sensor_classes": [
+                    "temperature",
+                    "humidity",
+                    "carbon_dioxide",
+                    "power",
+                    "pm25",
+                    "volatile_organic_compounds",
+                    "energy"
+                  ],
+                  "type": "area",
+                  "area": "kitchen"
+                },
+                {
+                  "alert_classes": [
+                    "motion",
+                    "moisture"
+                  ],
+                  "sensor_classes": [
+                    "temperature",
+                    "humidity",
+                    "energy",
+                    "power"
+                  ],
+                  "type": "area",
+                  "area": "back_kitchen"
+                },
+                {
+                  "alert_classes": [
+                    "motion",
+                    "moisture",
+                    "occupancy"
+                  ],
+                  "sensor_classes": [
+                    "temperature",
+                    "humidity",
+                    "sound_pressure",
+                    "atmospheric_pressure",
+                    "carbon_dioxide",
+                    "illuminance",
+                    "energy",
+                    "power",
+                    "voltage",
+                    "current"
+                  ],
+                  "type": "area",
+                  "area": "living_room"
+                },
+                {
+                  "alert_classes": [
+                    "motion",
+                    "moisture",
+                    "opening"
+                  ],
+                  "sensor_classes": [
+                    "temperature",
+                    "humidity"
+                  ],
+                  "type": "area",
+                  "area": "hallway"
+                },
+                {
+                  "alert_classes": [
+                    "motion",
+                    "moisture"
+                  ],
+                  "sensor_classes": [
+                    "temperature",
+                    "humidity"
+                  ],
+                  "type": "area",
+                  "area": "kids_room"
+                }
+              ],
+              "column_span": 4,
+              "title": "RDC"
+            },
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "camera_view": "auto",
+                  "alert_classes": [
+                    "motion",
+                    "moisture"
+                  ],
+                  "sensor_classes": [
+                    "temperature",
+                    "humidity",
+                    "energy",
+                    "power",
+                    "current",
+                    "voltage"
+                  ],
+                  "type": "area",
+                  "area": "basement",
+                  "show_camera": true
+                }
+              ],
+              "column_span": 4,
+              "title": "Sous-sol"
+            }
+          ],
+          "badges": [
+            {
+              "type": "entity",
+              "show_name": true,
+              "show_state": false,
+              "show_icon": true,
+              "entity": "cover.volets_chambre",
+              "name": "Ouvrir volets étage",
+              "tap_action": {
+                "action": "perform-action",
+                "perform_action": "script.open_all_first_floor_shutters",
+                "target": {}
+              },
+              "icon": "mdi:window-shutter",
+              "visibility": [
+                {
+                  "condition": "state",
+                  "entity": "cover.volets_chambre",
+                  "state": "closed"
+                }
+              ],
+              "color": "pink"
+            },
+            {
+              "type": "entity",
+              "show_name": true,
+              "show_state": false,
+              "show_icon": true,
+              "entity": "cover.volets_chambre",
+              "name": "Fermer volets étage",
+              "tap_action": {
+                "action": "perform-action",
+                "perform_action": "script.close_all_first_floor_shutters",
+                "target": {}
+              },
+              "icon": "mdi:window-shutter-open",
+              "visibility": [
+                {
+                  "condition": "state",
+                  "entity": "cover.volets_chambre",
+                  "state_not": "closed"
+                }
+              ],
+              "color": "pink"
+            },
+            {
+              "type": "entity",
+              "show_name": true,
+              "show_state": false,
+              "show_icon": true,
+              "entity": "cover.legrand_shutter_sw_with_level_control_cover",
+              "name": "Ouvrir volets RDC",
+              "tap_action": {
+                "action": "perform-action",
+                "perform_action": "script.open_all_ground_floor_shutters",
+                "target": {}
+              },
+              "icon": "mdi:window-shutter",
+              "visibility": [
+                {
+                  "condition": "state",
+                  "entity": "cover.legrand_shutter_sw_with_level_control_cover",
+                  "state": "closed"
+                }
+              ],
+              "color": "cyan"
+            },
+            {
+              "type": "entity",
+              "show_name": true,
+              "show_state": false,
+              "show_icon": true,
+              "entity": "cover.legrand_shutter_sw_with_level_control_cover",
+              "name": "Fermer volets RDC",
+              "tap_action": {
+                "action": "perform-action",
+                "perform_action": "script.close_all_group_floor_shutters",
+                "target": {}
+              },
+              "icon": "mdi:window-shutter-open",
+              "visibility": [
+                {
+                  "condition": "state",
+                  "entity": "cover.legrand_shutter_sw_with_level_control_cover",
+                  "state_not": "closed"
+                }
+              ],
+              "color": "cyan"
+            },
+            {
+              "type": "entity",
+              "show_name": true,
+              "show_state": false,
+              "show_icon": true,
+              "entity": "cover.legrand_shutter_sw_with_level_control_cover",
+              "name": "Ouvrir tous les volets",
+              "tap_action": {
+                "action": "perform-action",
+                "perform_action": "script.open_all_shutters",
+                "target": {}
+              },
+              "icon": "mdi:window-shutter",
+              "visibility": [
+                {
+                  "condition": "state",
+                  "entity": "cover.legrand_shutter_sw_with_level_control_cover",
+                  "state": "closed"
+                }
+              ],
+              "color": "black"
+            },
+            {
+              "type": "entity",
+              "show_name": true,
+              "show_state": false,
+              "show_icon": true,
+              "entity": "cover.legrand_shutter_sw_with_level_control_cover",
+              "name": "Fermer tous les volets",
+              "tap_action": {
+                "action": "perform-action",
+                "perform_action": "script.close_all_shutters",
+                "target": {}
+              },
+              "icon": "mdi:window-shutter-open",
+              "visibility": [
+                {
+                  "condition": "state",
+                  "entity": "cover.legrand_shutter_sw_with_level_control_cover",
+                  "state_not": "closed"
+                }
+              ],
+              "color": "black"
+            }
+          ],
+          "cards": []
         }
       ]
     }
