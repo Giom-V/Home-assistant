@@ -955,3 +955,36 @@
     target:
       entity_id: light.lumiere_chambre_aurore
   mode: single
+- id: '1719994191328'
+  alias: Control Aurore's velux curtains
+  description: ''
+  trigger:
+  - device_id: e059cad12f0a2c750a56719a911dc8e6
+    domain: zha
+    platform: device
+    type: remote_button_short_press
+    subtype: left
+  - device_id: e059cad12f0a2c750a56719a911dc8e6
+    domain: zha
+    platform: device
+    type: remote_button_long_press
+    subtype: right
+  condition: []
+  action:
+  - if:
+    - condition: device
+      device_id: 8f16b93c4fae1055fc21ef57afca5b0f
+      domain: cover
+      entity_id: 5159b1462f01722c359983c04fea0e28
+      type: is_closed
+    then:
+    - device_id: 8f16b93c4fae1055fc21ef57afca5b0f
+      domain: cover
+      entity_id: 5159b1462f01722c359983c04fea0e28
+      type: open
+    else:
+    - device_id: 8f16b93c4fae1055fc21ef57afca5b0f
+      domain: cover
+      entity_id: 5159b1462f01722c359983c04fea0e28
+      type: close
+  mode: single
