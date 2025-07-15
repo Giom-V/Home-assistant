@@ -96,16 +96,10 @@ automations. I'm still keeping them all here as reference.
   them all in each automation
 - Leak detection
 
-### [Away mode](away_mode.yaml)
+### [Alarms](alarms.md)
 
-Those automations are also related to something unexpected happening at home,
-but the caveat with the [alerts](#alerts) is that those ones should not trigger
-if somebody is at home. They are mostly related to multiple ways of detecting
-presence, from the using cameras or motion sensors to lights being switched on.
-
-There are also some tentative for presence simulation.
-
-All those automations are using the 3 helpers
+This is a more detailed documentation of my presence detection and simulation
+automations.
 
 - `binary_sensor.people_home` indicates if someone who's tracked (my wife and I)
   are home. The issue is that it doesn't take into account that my daughter
