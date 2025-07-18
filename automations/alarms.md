@@ -14,25 +14,25 @@ The following helpers are used to control the state of the alarm and presence si
 
 ### Away Mode
 
-*   **Switch Away mode on when we are away for more than an hour**: This automation automatically arms the alarm by turning on `input_boolean.away_mode` when all tracked people have been away from home for at least 60 minutes and the `input_boolean.visitors` is `off`.
-*   **Switch Away mode off when we come back**: This automation disarms the alarm by turning off `input_boolean.away_mode` as soon as a tracked person returns home. It also resets the volume of all media players to a normal level.
+*   [**Switch Away mode on when we are away for more than an hour**](away_mode.yaml#L58): This automation automatically arms the alarm by turning on `input_boolean.away_mode` when all tracked people have been away from home for at least 60 minutes and the `input_boolean.visitors` is `off`.
+*   [**Switch Away mode off when we come back**](away_mode.yaml#L82): This automation disarms the alarm by turning off `input_boolean.away_mode` as soon as a tracked person returns home. It also resets the volume of all media players to a normal level.
 
 ### Alarm Triggers
 
 When the alarm is armed (`input_boolean.away_mode` is `on`), the following events will trigger an alert:
 
-*   **Motion detected**: If any of the motion sensors detect movement, an alert is sent via Google Chat, and a warning message is broadcasted through all media players.
-*   **Door opened while away**: If any of the door sensors are triggered, a similar alert is sent.
-*   **Movement detected while away**: This is a more general motion detection that also triggers an alert.
-*   **Lights switched on while away**: If any lights are turned on while the alarm is armed, an alert is triggered. This automation excludes lights that are used for presence simulation.
+*   [**Motion detected**](away_mode.yaml#L107): If any of the motion sensors detect movement, an alert is sent via Google Chat, and a warning message is broadcasted through all media players.
+*   [**Door opened while away**](away_mode.yaml#L182): If any of the door sensors are triggered, a similar alert is sent.
+*   [**Movement detected while away**](away_mode.yaml#L254): This is a more general motion detection that also triggers an alert.
+*   [**Lights switched on while away**](away_mode.yaml#L305): If any lights are turned on while the alarm is armed, an alert is triggered. This automation excludes lights that are used for presence simulation.
 
 ### Presence Simulation
 
 The presence simulation is designed to make the house appear occupied when no one is home. This is achieved by turning lights on and off at random intervals.
 
-*   **Presence simulation Bureau**: This automation simulates presence in the office. It randomly turns on a light in the office between 30 minutes before sunset and 15 minutes after, and then turns it off between 11:00 PM and 11:15 PM.
-*   **Presence simulation Aurore's bedroom**: This automation performs a similar function in Aurore's bedroom, but with slightly different timings to create a more realistic effect.
+*   [**Presence simulation Bureau**](away_mode.yaml#L338): This automation simulates presence in the office. It randomly turns on a light in the office between 30 minutes before sunset and 15 minutes after, and then turns it off between 11:00 PM and 11:15 PM.
+*   [**Presence simulation Aurore's bedroom**](away_mode.yaml#L365): This automation performs a similar function in Aurore's bedroom, but with slightly different timings to create a more realistic effect.
 
 ### Other Automations
 
-*   **Reboot HA every week when we are away**: As a failsafe measure, this automation reboots Home Assistant once a week if the alarm has been armed for more than 24 hours. This helps to ensure that the system remains stable and responsive, especially during long absences.
+*   [**Reboot HA every week when we are away**](away_mode.yaml#L392): As a failsafe measure, this automation reboots Home Assistant once a week if the alarm has been armed for more than 24 hours. This helps to ensure that the system remains stable and responsive, especially during long absences.
