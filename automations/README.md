@@ -96,10 +96,16 @@ automations. I'm still keeping them all here as reference.
   them all in each automation
 - Leak detection
 
-### [Alarms](alarms.md)
+### [Away mode](away_mode.yaml)
 
-This is a more detailed documentation of my presence detection and simulation
-automations.
+Those automations are also related to something unexpected happening at home,
+but the caveat with the [alerts](#alerts) is that those ones should not trigger
+if somebody is at home. They are mostly related to multiple ways of detecting
+presence, from the using cameras or motion sensors to lights being switched on.
+
+There are also some tentative for presence simulation.
+
+All those automations are using the 3 helpers
 
 - `binary_sensor.people_home` indicates if someone who's tracked (my wife and I)
   are home. The issue is that it doesn't take into account that my daughter
@@ -162,6 +168,9 @@ motion detection off when the away mode is off`: These used to switch the motion
   for a long time I want to be certain HA is not frozen, so I like to reboot it
   at least once a week. I also have a Shelly plug that I program to reboot the
   modem every week for the same reason.
+
+A more detailed documentation of those automations can be found in the
+[`alarms.md`](alarms.md) file.
 
 #### Future improvements for the away mode
 
