@@ -160,7 +160,7 @@
                   "background": "#79B473",
                   "entities": [
                     {
-                      "entity": "binary_sensor.aurora_visibility",
+                      "entity": "binary_sensor.aurora_aurora_visibility_visibility_alert",
                       "name": "Aurore boréales visibles !!",
                       "size": 4,
                       "value": "🌈",
@@ -351,10 +351,10 @@
                 },
                 {
                   "entity": "light.govee_tv",
-                  "name": "Presence",
+                  "name": "Backlight",
                   "map_state": {
-                    "off": "mdi:sofa-outline",
-                    "on": "mdi:popcorn"
+                    "off": "mdi:lightbulb-off-outline",
+                    "on": "mdi:lightbulb-on"
                   }
                 },
                 {
@@ -1508,6 +1508,11 @@
                 "perform_action": "script.open_all_first_floor_shutters",
                 "target": {}
               },
+              "hold_action": {
+                "action": "perform-action",
+                "perform_action": "script.close_all_first_floor_shutters",
+                "target": {}
+              },
               "icon": "mdi:window-shutter",
               "visibility": [
                 {
@@ -1528,6 +1533,11 @@
               "tap_action": {
                 "action": "perform-action",
                 "perform_action": "script.close_all_first_floor_shutters",
+                "target": {}
+              },
+              "hold_action": {
+                "action": "perform-action",
+                "perform_action": "script.open_all_first_floor_shutters",
                 "target": {}
               },
               "icon": "mdi:window-shutter-open",
@@ -1552,6 +1562,11 @@
                 "perform_action": "script.open_all_ground_floor_shutters",
                 "target": {}
               },
+              "hold_action": {
+                "action": "perform-action",
+                "perform_action": "script.close_all_ground_floor_shutters",
+                "target": {}
+              },
               "icon": "mdi:window-shutter",
               "visibility": [
                 {
@@ -1572,6 +1587,11 @@
               "tap_action": {
                 "action": "perform-action",
                 "perform_action": "script.close_all_group_floor_shutters",
+                "target": {}
+              },
+              "hold_action": {
+                "action": "perform-action",
+                "perform_action": "script.open_all_ground_floor_shutters",
                 "target": {}
               },
               "icon": "mdi:window-shutter-open",
@@ -1596,6 +1616,11 @@
                 "perform_action": "script.open_all_shutters",
                 "target": {}
               },
+              "hold_action": {
+                "action": "perform-action",
+                "perform_action": "script.close_all_shutters",
+                "target": {}
+              },
               "icon": "mdi:window-shutter",
               "visibility": [
                 {
@@ -1618,6 +1643,11 @@
                 "perform_action": "script.close_all_shutters",
                 "target": {}
               },
+              "hold_action": {
+                "action": "perform-action",
+                "perform_action": "script.open_all_shutters",
+                "target": {}
+              },
               "icon": "mdi:window-shutter-open",
               "visibility": [
                 {
@@ -1627,6 +1657,13 @@
                 }
               ],
               "color": "black"
+            },
+            {
+              "type": "entity",
+              "show_name": false,
+              "show_state": true,
+              "show_icon": true,
+              "entity": "input_boolean.visitors"
             }
           ]
         },
@@ -1728,10 +1765,10 @@
                   "entity": "person.guillaume"
                 },
                 {
-                  "entity": "device_tracker.pixel_7_pro_8"
+                  "entity": "device_tracker.pixel_9_pro_xl_4"
                 },
                 {
-                  "entity": "device_tracker.pixel_7_pro_7"
+                  "entity": "device_tracker.pixel_watch_3"
                 }
               ],
               "title": "Giom",
@@ -1772,6 +1809,9 @@
                 },
                 {
                   "entity": "device_tracker.cellclaire"
+                },
+                {
+                  "entity": "device_tracker.pixel_3"
                 }
               ],
               "title": "Claire",
@@ -3636,6 +3676,25 @@
                   "color": "orange"
                 }
               ]
+            },
+            {
+              "type": "history-graph",
+              "entities": [
+                {
+                  "entity": "sensor.efficacite_solaire_daily"
+                }
+              ],
+              "hours_to_show": 168,
+              "title": "Efficacité journalière"
+            },
+            {
+              "type": "history-graph",
+              "entities": [
+                {
+                  "entity": "sensor.conso_pac_energy_daily"
+                }
+              ],
+              "hours_to_show": 168
             }
           ]
         },
