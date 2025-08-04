@@ -167,10 +167,15 @@
   action:
     - service: script.turn_on
       data:
-        entity_id: script.vacuum_kitchen_and_diningroom
-    - service: script.turn_on
-      data:
-        entity_id: script.vacuum_bathroom
+        entity_id: script.vacuum_ground_floor
+    - if:
+        - condition: state
+          entity_id: binary_sensor.porte_bureau_contact
+          state: "on"
+      then:
+        - service: script.turn_on
+          data:
+            entity_id: script.vacuum_first_floor
 - id: vacuum_kitchen_and_dining_room_when_we_are_away_covid_version
   alias: vacuum Kitchen and dining room when we are away (Covid version)
   trigger:
@@ -230,10 +235,15 @@
   action:
     - service: script.turn_on
       data:
-        entity_id: script.vacuum_kitchen_and_diningroom
-    - service: script.turn_on
-      data:
-        entity_id: script.vacuum_bathroom
+        entity_id: script.vacuum_ground_floor
+    - if:
+        - condition: state
+          entity_id: binary_sensor.porte_bureau_contact
+          state: "on"
+      then:
+        - service: script.turn_on
+          data:
+            entity_id: script.vacuum_first_floor
 - id: last_vacuum_clean_time_update
   alias: Update the time of the last cleaning
   trigger:
