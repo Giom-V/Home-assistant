@@ -12,7 +12,7 @@ logs
 
 # Ignore Folders
 .cloud
-.vscode
+#.vscode
 .Trash-*
 deps/
 Share/
@@ -72,12 +72,8 @@ node-red
 #www/community/*
 
 # ignore all json and txt files in Enedis sub-directories
-custom_components/archive/myEnedis/14476845147777/*.json
-custom_components/archive/myEnedis/19677423985708/*.json
-custom_components/archive/myEnedis/14415629518280/*.json
-custom_components/archive/myEnedis/14476845147777/*.txt
-custom_components/archive/myEnedis/19677423985708/*.txt
-custom_components/archive/myEnedis/14415629518280/*.txt
+custom_components/archive/myEnedis/**/*.json
+custom_components/archive/myEnedis/**/*.txt
 custom_components/myEnedis/myEnedis/test_data/*.txt
 
 # Ignore wyze cam image and auth files
@@ -94,6 +90,7 @@ zigbee2mqtt/configuration.yaml
 zigbee2mqtt/state.json
 zigbee2mqtt/database.db.*
 zigbee2mqtt/configuration_backup_v*.yaml
+zigbee2mqtt/coordinator_backup.json
 
 # Watchman
 watchman_report.txt

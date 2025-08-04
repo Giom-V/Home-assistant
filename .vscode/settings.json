@@ -1,0 +1,65 @@
+{
+  // ===================================================================
+  // YOUR PERSONAL CONFIGURATION
+  // ===================================================================
+  "files.associations": {
+    "*.yaml": "home-assistant"
+  },
+
+  // ===================================================================
+  // CUSTOM PERFORMANCE OPTIMIZATIONS
+  // ===================================================================
+
+  // --- Git settings to reduce load ---
+  "git.autorefresh": false,
+  "git.scanRepositories": false,
+
+  // --- Python Extension Exclusions ---
+  "python.analysis.exclude": [
+    "**/deps/**",
+    // Exclude everything in custom_components EXCEPT for 'solisart' and 'dlight' folders
+    "custom_components/!(solisart|dlight)/"
+  ],
+
+  // --- File Watcher Exclusions (most important for global performance) ---
+  "files.watcherExclude": {
+    "**/.git/objects/**": true,
+    "**/.git/subtree-cache/**": true,
+    "**/node_modules/*/**": true,
+    "**/__pycache__/**": true,
+    "**/deps/**": true,
+    "**/.storage/**": true,
+    "**/tts/**": true,
+    "**/backups/**": true,
+    "**/blueprints/**": true,
+    "**/node-red/**": true,
+    "**/zigbee2mqtt/**": true
+  },
+
+  // --- Global Search Exclusions ---
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/bower_components": true,
+    "**/deps": true,
+    "**/.storage": true,
+    "**/tts": true,
+    "**/backups": true,
+    "**/blueprints": true,
+    "**/node-red": true,
+    "**/zigbee2mqtt": true
+  },
+
+  // --- Hide useless folders from the file explorer ---
+  "files.exclude": {
+    "**/.git": true,
+    "**/.github": true,
+    "**/.vscode": true,
+    "**/__pycache__": true,
+    "**/deps": true,
+    "**/.storage": true,
+    "**/tts": true,
+    "**/backups": true,
+    "home-assistant.log*": true,
+    "**/blueprints": true
+  }
+}
