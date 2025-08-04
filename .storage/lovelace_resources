@@ -32,7 +32,7 @@
       {
         "id": "fb992f36db3b4980a7633deea1fb54ff",
         "type": "module",
-        "url": "/hacsfiles/lovelace-xiaomi-vacuum-map-card/xiaomi-vacuum-map-card.js?hacstag=193372044222"
+        "url": "/hacsfiles/lovelace-xiaomi-vacuum-map-card/xiaomi-vacuum-map-card.js?hacstag=193372044231"
       },
       {
         "id": "e776e37e51e44b20b7af4b3c43cb79c1",
@@ -52,7 +52,7 @@
       {
         "id": "36d93ed25e7440d683d37fc342776549",
         "type": "module",
-        "url": "/hacsfiles/mini-graph-card/mini-graph-card-bundle.js?hacstag=1512800620110"
+        "url": "/hacsfiles/mini-graph-card/mini-graph-card-bundle.js?hacstag=1512800620130"
       },
       {
         "id": "4656b9b6d85a455b81b097efa13222c6",
@@ -70,7 +70,7 @@
         "id": "d28e66a6787e467bb458928f35ac7f8b"
       },
       {
-        "url": "/hacsfiles/lovelace-mushroom/mushroom.js?hacstag=444350375421",
+        "url": "/hacsfiles/lovelace-mushroom/mushroom.js?hacstag=444350375450",
         "type": "module",
         "id": "4d8157ab9ecf48ef9c386323825634fd"
       },
@@ -90,13 +90,13 @@
         "id": "9220d014765148dca79c0d6c76f87938"
       },
       {
-        "url": "/hacsfiles/lovelace-card-mod/card-mod.js?hacstag=190927524344",
+        "url": "/hacsfiles/lovelace-card-mod/card-mod.js?hacstag=190927524345",
         "type": "module",
         "id": "bf4535f789c148acb2c00e56cec42c92"
       },
       {
         "id": "280b89194d154db8bfc43cfe849c11e9",
-        "url": "/hacsfiles/ha-floorplan/floorplan.js?hacstag=1883234941047",
+        "url": "/hacsfiles/ha-floorplan/floorplan.js?hacstag=188323494113",
         "type": "module"
       },
       {
@@ -111,7 +111,7 @@
       },
       {
         "id": "1a4f26f1443d48639261f4f06841a563",
-        "url": "/hacsfiles/compass-card/compass-card.js?hacstag=286038496200",
+        "url": "/hacsfiles/compass-card/compass-card.js?hacstag=286038496202",
         "type": "module"
       },
       {
@@ -131,12 +131,12 @@
       },
       {
         "id": "7fedf22f26b54ca9844c5a4306baf370",
-        "url": "/hacsfiles/lovelace-wallpanel/wallpanel.js?hacstag=3095064164330",
+        "url": "/hacsfiles/lovelace-wallpanel/wallpanel.js?hacstag=3095064164542",
         "type": "module"
       },
       {
         "id": "cc6749cd27b34485b40069a7d1215150",
-        "url": "/hacsfiles/lovelace-layout-card/layout-card.js?hacstag=156434866245",
+        "url": "/hacsfiles/lovelace-layout-card/layout-card.js?hacstag=156434866246",
         "type": "module"
       },
       {
