@@ -1030,3 +1030,23 @@
     data:
       message: Chauffe-eau trop froid
   mode: single
+- id: '1736867866654'
+  alias: Turn off water pump when it's freezing
+  description: ''
+  triggers:
+  - trigger: numeric_state
+    entity_id:
+    - sensor.module_exterieur_netatmo_temperature
+    for:
+      hours: 0
+      minutes: 5
+      seconds: 0
+    below: 0
+  conditions: []
+  actions:
+  - action: switch.turn_off
+    metadata: {}
+    data: {}
+    target:
+      entity_id: switch.pompe_failsafe
+  mode: single
