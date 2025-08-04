@@ -843,6 +843,28 @@
       domain: cover
       entity_id: ad9bb28acca59679697828aaba529647
       type: close
+  - action: cover.close_cover
+    metadata: {}
+    data: {}
+    target:
+      entity_id: cover.volets_chambre
+  - if:
+    - condition: state
+      entity_id: input_boolean.away_mode
+      state: 'on'
+      for:
+        hours: 24
+        minutes: 0
+        seconds: 0
+    then:
+    - action: cover.close_cover
+      metadata: {}
+      data: {}
+      target:
+        entity_id:
+        - cover.volets_salle_de_jeux
+        - cover.legrand_shutter_sw_with_level_control_cover
+        - cover.volets_cuisine
   mode: single
 - id: '1713465676198'
   alias: Turn on water pump for 5mn to scare animals
@@ -1049,4 +1071,46 @@
     data: {}
     target:
       entity_id: switch.pompe_failsafe
+  mode: single
+- id: '1737370119461'
+  alias: Open covers when it's sunny
+  description: ''
+  triggers:
+  - trigger: numeric_state
+    entity_id:
+    - sensor.efficacite_panneaux_solaires
+    above: 0
+  conditions:
+  - condition: numeric_state
+    entity_id: sensor.temperature_exterieure_solisart
+    below: 10
+  actions:
+  - action: script.turn_on
+    metadata: {}
+    data: {}
+    target:
+      entity_id: script.open_all_first_floor_shutters
+  - if:
+    - condition: or
+      conditions:
+      - condition: state
+        entity_id: input_boolean.visitors
+        state: 'on'
+      - condition: not
+        conditions:
+        - condition: state
+          entity_id: binary_sensor.people_home
+          state: 'off'
+          for:
+            hours: 0
+            minutes: 30
+            seconds: 0
+    then:
+    - action: cover.open_cover
+      metadata: {}
+      data: {}
+      target:
+        device_id:
+        - 3f356462bb4d8107cea10c05f3c0637e
+        - 98ca57dc34f30913565109817baf591f
   mode: single
