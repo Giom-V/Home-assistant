@@ -160,6 +160,7 @@ async def _create_virtual_energy_sensor(
     )
 
     return VirtualEnergySensor(
+        hass=hass,
         source_entity=power_sensor.entity_id,
         unique_id=unique_id,
         entity_id=entity_id,
@@ -236,6 +237,7 @@ class VirtualEnergySensor(IntegrationSensor, EnergySensor):
 
     def __init__(
         self,
+        hass: HomeAssistant,
         source_entity: str,
         entity_id: str,
         sensor_config: ConfigType,
@@ -251,6 +253,7 @@ class VirtualEnergySensor(IntegrationSensor, EnergySensor):
         integration_method: str = sensor_config.get(CONF_ENERGY_INTEGRATION_METHOD, DEFAULT_ENERGY_INTEGRATION_METHOD)
 
         params = {
+            "hass": hass,
             "source_entity": source_entity,
             "name": name,
             "round_digits": round_digits,
@@ -259,11 +262,12 @@ class VirtualEnergySensor(IntegrationSensor, EnergySensor):
             "integration_method": integration_method,
             "unique_id": unique_id,
             "device_info": device_info,
+            "max_sub_interval": sensor_config.get(CONF_FORCE_UPDATE_FREQUENCY),
         }
 
         signature = inspect.signature(IntegrationSensor.__init__)
-        if "max_sub_interval" in signature.parameters:
-            params["max_sub_interval"] = sensor_config.get(CONF_FORCE_UPDATE_FREQUENCY)
+
+        params = {key: val for key, val in params.items() if key in signature.parameters}
 
         super().__init__(**params)  # type: ignore[arg-type]
 
@@ -276,7 +280,7 @@ class VirtualEnergySensor(IntegrationSensor, EnergySensor):
             self._attr_entity_category = EntityCategory(entity_category)
 
     @property
-    def extra_state_attributes(self) -> dict[str, str] | None:  # type: ignore[override]
+    def extra_state_attributes(self) -> dict[str, str] | None:
         """Return the state attributes of the energy sensor."""
         if self._sensor_config.get(CONF_DISABLE_EXTENDED_ATTRIBUTES):
             return super().extra_state_attributes
@@ -294,13 +298,13 @@ class VirtualEnergySensor(IntegrationSensor, EnergySensor):
         return attrs
 
     @property
-    def icon(self) -> str:  # type: ignore[override]
+    def icon(self) -> str:
         return ENERGY_ICON
 
     @callback
     def async_reset(self) -> None:
         _LOGGER.debug("%s: Reset energy sensor", self.entity_id)
-        self._state = 0
+        self._state = Decimal(0)
         self.async_write_ha_state()
 
     async def async_calibrate(self, value: str) -> None:
@@ -323,11 +327,11 @@ class RealEnergySensor(EnergySensor):
         self._unique_id = unique_id
 
     @property
-    def name(self) -> str | None:  # type: ignore[override]
+    def name(self) -> str | None:
         """Return the name of the sensor."""
         return self._name
 
     @property
-    def unique_id(self) -> str | None:  # type: ignore[override]
+    def unique_id(self) -> str | None:
         """Return the unique_id of the sensor."""
         return self._unique_id

@@ -11,10 +11,8 @@ from homeassistant.helpers.typing import ConfigType
 
 from custom_components.powercalc.const import (
     CONF_CREATE_ENERGY_SENSORS,
-    CONF_POWER_SENSOR_PRECISION,
     CONF_SUBTRACT_ENTITIES,
     CONF_UTILITY_METER_NET_CONSUMPTION,
-    DEFAULT_POWER_SENSOR_PRECISION,
     GroupType,
 )
 from custom_components.powercalc.errors import SensorConfigurationError
@@ -51,7 +49,7 @@ async def create_subtract_group_sensors(
     sensors: list[Entity] = []
     power_sensor = SubtractGroupSensor(
         hass,
-        group_name,
+        name,
         config,
         entity_id,
         base_entity_id,
@@ -115,7 +113,6 @@ class SubtractGroupSensor(GroupedPowerSensor):
             entities=all_entities,
             entity_id=entity_id,
             sensor_config=sensor_config,
-            rounding_digits=int(sensor_config.get(CONF_POWER_SENSOR_PRECISION, DEFAULT_POWER_SENSOR_PRECISION)),
             group_type=GroupType.SUBTRACT,
             unique_id=unique_id,
             device_id=None,

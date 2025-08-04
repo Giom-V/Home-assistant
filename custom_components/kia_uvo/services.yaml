@@ -59,12 +59,25 @@ start_climate:
           options:
             - label: "Off"
               value: "0"
-            - label: "Steering Wheel, Side and Back Defroster"
+            - label: "Steering Wheel(not EU), Side and Back Defroster"
               value: "4"
             - label: "Rear Window Only"
               value: "2"
-            - label: "Steering Wheel Only"
+            - label: "Steering Wheel Only(None EU only)"
               value: "3"
+    steering_wheel:
+      required: false
+      example: 1
+      default: 0
+      selector:
+        select:
+          options:
+            - label: "Off"
+              value: "0"
+            - label: "Low"
+              value: "1"
+            - label: "High"
+              value: "2"
     flseat:
       required: false
       selector:
@@ -244,6 +257,57 @@ set_charging_current:
               value: "2"
             - label: "60%"
               value: "3"
+set_windows:
+  fields:
+    device_id:
+      required: false
+      selector:
+        device:
+          integration: kia_uvo
+    flwindow:
+      required: true
+      selector:
+        select:
+          options:
+            - label: "Close"
+              value: "0"
+            - label: "Open"
+              value: "1"
+            - label: "Ventilation"
+              value: "2"
+    frwindow:
+      required: true
+      selector:
+        select:
+          options:
+            - label: "Close"
+              value: "0"
+            - label: "Open"
+              value: "1"
+            - label: "Ventilation"
+              value: "2"
+    rrwindow:
+      required: true
+      selector:
+        select:
+          options:
+            - label: "Close"
+              value: "0"
+            - label: "Open"
+              value: "1"
+            - label: "Ventilation"
+              value: "2"
+    rlwindow:
+      required: true
+      selector:
+        select:
+          options:
+            - label: "Close"
+              value: "0"
+            - label: "Open"
+              value: "1"
+            - label: "Ventilation"
+              value: "2"
 schedule_charging_and_climate:
   fields:
     device_id:

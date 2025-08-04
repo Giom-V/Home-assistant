@@ -8,6 +8,7 @@ from typing import cast
 import homeassistant.helpers.entity_registry as er
 from homeassistant.components.select import DOMAIN as SELECT_DOMAIN
 from homeassistant.components.sensor import DOMAIN as SENSOR_DOMAIN
+from homeassistant.components.utility_meter import DEFAULT_OFFSET
 from homeassistant.components.utility_meter.const import (
     DATA_TARIFF_SENSORS,
     DATA_UTILITY,
@@ -55,7 +56,7 @@ async def create_utility_meters(
 
     utility_meters = []
     for meter_type in meter_types:
-        unique_id = f"{energy_sensor.unique_id}_{meter_type}" if energy_sensor.unique_id else None  # type: ignore
+        unique_id = f"{energy_sensor.unique_id}_{meter_type}" if energy_sensor.unique_id else None
         if should_create_utility_meter(hass, unique_id, energy_sensor):
             utility_meters.extend(
                 await create_meters_for_type(
@@ -111,6 +112,7 @@ async def create_meters_for_type(
     # Create generic utility meter
     if not tariffs or GENERAL_TARIFF in tariffs:
         utility_meter = await create_utility_meter(
+            hass,
             energy_sensor.entity_id,
             entity_id,
             name,
@@ -158,6 +160,7 @@ async def create_tariff_meters(
     tariff_sensors = []
     for tariff in filtered_tariffs:
         utility_meter = await create_utility_meter(
+            hass,
             energy_sensor.entity_id,
             entity_id,
             name,
@@ -198,6 +201,7 @@ async def create_tariff_select(
 
 
 async def create_utility_meter(
+    hass: HomeAssistant,
     source_entity: str,
     entity_id: str,
     name: str,
@@ -218,28 +222,25 @@ async def create_utility_meter(
     _LOGGER.debug("Creating utility_meter sensor: %s (entity_id=%s)", name, entity_id)
 
     params = {
+        "hass": hass,
         "source_entity": source_entity,
         "name": name,
         "meter_type": meter_type,
-        "meter_offset": sensor_config.get(CONF_UTILITY_METER_OFFSET),
+        "meter_offset": sensor_config.get(CONF_UTILITY_METER_OFFSET, DEFAULT_OFFSET),
         "net_consumption": bool(sensor_config.get(CONF_UTILITY_METER_NET_CONSUMPTION, False)),
         "tariff": tariff,
         "tariff_entity": tariff_entity,
+        "parent_meter": parent_meter,
+        "delta_values": False,
+        "cron_pattern": None,
+        "periodically_resetting": False,
+        "sensor_always_available": sensor_config.get(CONF_IGNORE_UNAVAILABLE_STATE) or False,
+        "unique_id": unique_id,
     }
 
     signature = inspect.signature(UtilityMeterSensor.__init__)
-    if "parent_meter" in signature.parameters:
-        params["parent_meter"] = parent_meter
-    if "delta_values" in signature.parameters:
-        params["delta_values"] = False
-    if "unique_id" in signature.parameters:
-        params["unique_id"] = unique_id
-    if "cron_pattern" in signature.parameters:
-        params["cron_pattern"] = None
-    if "periodically_resetting" in signature.parameters:
-        params["periodically_resetting"] = False
-    if "sensor_always_available" in signature.parameters:
-        params["sensor_always_available"] = sensor_config.get(CONF_IGNORE_UNAVAILABLE_STATE) or False
+
+    params = {key: value for key, value in params.items() if key in signature.parameters}
 
     utility_meter = VirtualUtilityMeter(**params)  # type: ignore[no-untyped-call]
     utility_meter.rounding_digits = int(sensor_config.get(CONF_ENERGY_SENSOR_PRECISION, DEFAULT_ENERGY_SENSOR_PRECISION))
@@ -252,12 +253,12 @@ class VirtualUtilityMeter(UtilityMeterSensor, BaseEntity):
     rounding_digits: int = DEFAULT_ENERGY_SENSOR_PRECISION
 
     @property
-    def unique_id(self) -> str | None:  # type: ignore[override]
+    def unique_id(self) -> str | None:
         """Return the unique id."""
         return self._attr_unique_id
 
     @property
-    def native_value(self) -> StateType | Decimal:  # type: ignore[override]
+    def native_value(self) -> StateType | Decimal:
         """Return the state of the sensor."""
         value = self._state if hasattr(self, "_state") else self._attr_native_value  # pre HA 2024.12 value was stored in _state
         if self.rounding_digits and value is not None:

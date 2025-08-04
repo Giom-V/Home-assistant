@@ -197,6 +197,7 @@ class TeamTrackerScoresSensor(CoordinatorEntity):
         self._sport = None
         self._league = None
         self._league_logo = None
+        self._season = None
         self._team_abbr = None
         self._opponent_abbr = None
 
@@ -212,6 +213,7 @@ class TeamTrackerScoresSensor(CoordinatorEntity):
         self._overunder = None
 
         self._team_name = None
+        self._team_long_name = None
         self._team_id = None
         self._team_record = None
         self._team_rank = None
@@ -225,6 +227,7 @@ class TeamTrackerScoresSensor(CoordinatorEntity):
         self._team_timeouts = None
 
         self._opponent_name = None
+        self._opponent_long_name = None
         self._opponent_id = None
         self._opponent_record = None
         self._opponent_rank = None
@@ -302,6 +305,7 @@ class TeamTrackerScoresSensor(CoordinatorEntity):
         attrs["sport"] = self.coordinator.data["sport"]
         attrs["league"] = self.coordinator.data["league"]
         attrs["league_logo"] = self.coordinator.data["league_logo"]
+        attrs["season"] = self.coordinator.data["season"]
         attrs["team_abbr"] = self.coordinator.data["team_abbr"]
         attrs["opponent_abbr"] = self.coordinator.data["opponent_abbr"]
 
@@ -317,6 +321,7 @@ class TeamTrackerScoresSensor(CoordinatorEntity):
         attrs["overunder"] = self.coordinator.data["overunder"]
 
         attrs["team_name"] = self.coordinator.data["team_name"]
+        attrs["team_long_name"] = self.coordinator.data["team_long_name"]
         attrs["team_id"] = self.coordinator.data["team_id"]
         attrs["team_record"] = self.coordinator.data["team_record"]
         attrs["team_rank"] = self.coordinator.data["team_rank"]
@@ -331,6 +336,7 @@ class TeamTrackerScoresSensor(CoordinatorEntity):
         attrs["team_timeouts"] = self.coordinator.data["team_timeouts"]
 
         attrs["opponent_name"] = self.coordinator.data["opponent_name"]
+        attrs["opponent_long_name"] = self.coordinator.data["opponent_long_name"]
         attrs["opponent_id"] = self.coordinator.data["opponent_id"]
         attrs["opponent_record"] = self.coordinator.data["opponent_record"]
         attrs["opponent_rank"] = self.coordinator.data["opponent_rank"]

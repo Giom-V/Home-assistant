@@ -11,6 +11,7 @@ from homeassistant.helpers import device_registry
 from hyundai_kia_connect_api import (
     ClimateRequestOptions,
     ScheduleChargingClimateRequestOptions,
+    WindowRequestOptions,
 )
 
 from .const import DOMAIN
@@ -32,6 +33,7 @@ SERVICE_START_HAZARD_LIGHTS = "start_hazard_lights"
 SERVICE_START_HAZARD_LIGHTS_AND_HORN = "start_hazard_lights_and_horn"
 SERVICE_START_VALET_MODE = "start_valet_mode"
 SERVICE_STOP_VALET_MODE = "stop_valet_mode"
+SERVICE_SET_WINDOWS = "set_windows"
 
 SUPPORTED_SERVICES = (
     SERVICE_UPDATE,
@@ -51,6 +53,7 @@ SUPPORTED_SERVICES = (
     SERVICE_START_HAZARD_LIGHTS_AND_HORN,
     SERVICE_START_VALET_MODE,
     SERVICE_STOP_VALET_MODE,
+    SERVICE_SET_WINDOWS,
 )
 
 _LOGGER = logging.getLogger(__name__)
@@ -81,6 +84,7 @@ def async_setup_services(hass: HomeAssistant) -> bool:
         front_right_seat = call.data.get("frseat")
         rear_left_seat = call.data.get("rlseat")
         rear_right_seat = call.data.get("rrseat")
+        steering_wheel = call.data.get("steering_wheel")
 
         # Confirm values are correct datatype
         if front_left_seat is not None:
@@ -91,6 +95,8 @@ def async_setup_services(hass: HomeAssistant) -> bool:
             rear_left_seat = int(rear_left_seat)
         if rear_right_seat is not None:
             rear_right_seat = int(rear_right_seat)
+        if steering_wheel is not None:
+            steering_wheel = int(steering_wheel)
 
         climate_request_options = ClimateRequestOptions(
             duration=duration,
@@ -102,6 +108,7 @@ def async_setup_services(hass: HomeAssistant) -> bool:
             front_right_seat=front_right_seat,
             rear_left_seat=rear_left_seat,
             rear_right_seat=rear_right_seat,
+            steering_wheel=steering_wheel,
         )
         await coordinator.async_start_climate(vehicle_id, climate_request_options)
 
@@ -147,11 +154,31 @@ def async_setup_services(hass: HomeAssistant) -> bool:
         dc = call.data.get("dc_limit")
 
         if ac is not None and dc is not None:
-            await coordinator.set_charge_limits(vehicle_id, int(ac), int(dc))
+            await coordinator.async_set_charge_limits(vehicle_id, int(ac), int(dc))
         else:
             _LOGGER.error(
                 f"{DOMAIN} - Enable to set charge limits.  Both AC and DC value required, but not provided."
             )
+
+    async def async_handle_set_windows(call):
+        coordinator = _get_coordinator_from_device(hass, call)
+        vehicle_id = _get_vehicle_id_from_device(hass, call)
+        window_options = WindowRequestOptions(
+            front_left=call.data.get("flwindow"),
+            front_right=call.data.get("frwindow"),
+            back_left=call.data.get("rlwindow"),
+            back_right=call.data.get("rrwindow"),
+        )
+
+        if (
+            window_options.front_left is not None
+            and window_options.front_right is not None
+            and window_options.back_left is not None
+            and window_options.back_right is not None
+        ):
+            await coordinator.async_set_windows(vehicle_id, window_options)
+        else:
+            _LOGGER.error(f"{DOMAIN} -  All windows value required, but not provided.")
 
     async def async_handle_set_charging_current(call):
         coordinator = _get_coordinator_from_device(hass, call)
@@ -159,7 +186,7 @@ def async_setup_services(hass: HomeAssistant) -> bool:
         current_level = call.data.get("level")
 
         if current_level is not None:
-            await coordinator.set_charging_current(vehicle_id, int(current_level))
+            await coordinator.async_set_charging_current(vehicle_id, int(current_level))
         else:
             _LOGGER.error(
                 f"{DOMAIN} - Enable to set charging current.  Level required, but not provided."
@@ -276,6 +303,7 @@ def async_setup_services(hass: HomeAssistant) -> bool:
         SERVICE_START_HAZARD_LIGHTS_AND_HORN: async_handle_start_hazard_lights_and_horn,
         SERVICE_START_VALET_MODE: async_handle_start_valet_mode,
         SERVICE_STOP_VALET_MODE: async_handle_stop_valet_mode,
+        SERVICE_SET_WINDOWS: async_handle_set_windows,
     }
 
     for service in SUPPORTED_SERVICES:

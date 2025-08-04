@@ -5,10 +5,12 @@ from __future__ import annotations
 from datetime import timedelta
 import traceback
 import logging
+import asyncio
 
 from hyundai_kia_connect_api import (
     VehicleManager,
     ClimateRequestOptions,
+    WindowRequestOptions,
     ScheduleChargingClimateRequestOptions,
 )
 from hyundai_kia_connect_api.exceptions import AuthenticationError
@@ -172,6 +174,7 @@ class HyundaiKiaConnectDataUpdateCoordinator(DataUpdateCoordinator):
 
     async def async_await_action_and_refresh(self, vehicle_id, action_id):
         try:
+            await asyncio.sleep(5)
             await self.hass.async_add_executor_job(
                 self.vehicle_manager.check_action_status,
                 vehicle_id,
@@ -256,7 +259,7 @@ class HyundaiKiaConnectDataUpdateCoordinator(DataUpdateCoordinator):
             self.async_await_action_and_refresh(vehicle_id, action_id)
         )
 
-    async def set_charge_limits(self, vehicle_id: str, ac: int, dc: int):
+    async def async_set_charge_limits(self, vehicle_id: str, ac: int, dc: int):
         await self.async_check_and_refresh_token()
         action_id = await self.hass.async_add_executor_job(
             self.vehicle_manager.set_charge_limits, vehicle_id, ac, dc
@@ -265,7 +268,7 @@ class HyundaiKiaConnectDataUpdateCoordinator(DataUpdateCoordinator):
             self.async_await_action_and_refresh(vehicle_id, action_id)
         )
 
-    async def set_charging_current(self, vehicle_id: str, level: int):
+    async def async_set_charging_current(self, vehicle_id: str, level: int):
         await self.async_check_and_refresh_token()
         action_id = await self.hass.async_add_executor_job(
             self.vehicle_manager.set_charging_current, vehicle_id, level
@@ -320,6 +323,26 @@ class HyundaiKiaConnectDataUpdateCoordinator(DataUpdateCoordinator):
         action_id = await self.hass.async_add_executor_job(
             self.vehicle_manager.stop_valet_mode,
             vehicle_id,
+        )
+        self.hass.async_create_task(
+            self.async_await_action_and_refresh(vehicle_id, action_id)
+        )
+
+    async def async_set_v2l_limit(self, vehicle_id: str, limit: int):
+        await self.async_check_and_refresh_token()
+        action_id = await self.hass.async_add_executor_job(
+            self.vehicle_manager.set_vehicle_to_load_discharge_limit, vehicle_id, limit
+        )
+        self.hass.async_create_task(
+            self.async_await_action_and_refresh(vehicle_id, action_id)
+        )
+
+    async def async_set_windows(
+        self, vehicle_id: str, windowOptions: WindowRequestOptions
+    ):
+        await self.async_check_and_refresh_token()
+        action_id = await self.hass.async_add_executor_job(
+            self.vehicle_manager.set_windows_state, vehicle_id, windowOptions
         )
         self.hass.async_create_task(
             self.async_await_action_and_refresh(vehicle_id, action_id)

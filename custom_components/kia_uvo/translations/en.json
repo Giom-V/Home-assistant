@@ -88,7 +88,11 @@
         },
         "heating": {
           "name": "Heating",
-          "description": "Heated features like the steering wheel and rear window"
+          "description": "Heated features like front/rear windows and side mirrors. EU uses seperate steering wheel setting."
+        },
+        "steering_wheel": {
+          "name": "Steering Wheel Heat",
+          "description": "Heating level for the steering wheel. EU only, other regions use a heating setting."
         },
         "flseat": {
           "name": "Front Left Seat",
@@ -313,6 +317,32 @@
         "device_id": {
           "name": "Vehicle",
           "description": "Target vehicle"
+        }
+      }
+    },
+    "set_windows": {
+      "name": "Set Windows",
+      "description": "Control the windows of the vehicle. Open or close windows as needed.",
+      "fields": {
+        "device_id": {
+          "name": "Vehicle",
+          "description": "Target vehicle"
+        },
+        "flwindow": {
+          "name": "Front Left Window",
+          "description": "Action for the front left window"
+        },
+        "frwindow": {
+          "name": "Front Right Window",
+          "description": "Action for the front right window"
+        },
+        "rlwindow": {
+          "name": "Rear Left Window",
+          "description": "Action for the rear left window"
+        },
+        "rrwindow": {
+          "name": "Rear Right Window",
+          "description": "Action for the rear right window"
         }
       }
     }

@@ -169,7 +169,18 @@ vacuum_ground_floor:
       target:
         entity_id: vacuum.rondelle
       data:
-        segments: [17, 16, 19, 20, 21, 22, 18]
+        segments: [22, 20, 19, 21, 17, 16, 18]
+vacuum_first_floor:
+  alias: "Vacuum First Floor"
+  sequence:
+    - service: vacuum.stop
+      data:
+        entity_id: vacuum.robbie
+    - service: xiaomi_miio.vacuum_clean_segment
+      target:
+        entity_id: vacuum.robbie
+      data:
+        segments: [19, 18, 23, 1]
 vacuum_diningroom:
   alias: "Vacuum Dining Room"
   sequence:
