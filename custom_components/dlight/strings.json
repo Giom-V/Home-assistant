@@ -1,13 +1,25 @@
 {
   "config": {
+    "flow_title": "dLight {device_id}",
     "step": {
-      "confirm": {
-        "description": "[%key:common::config_flow::description::confirm_setup%]"
+      "user": {
+        "description": "Add your dLight to integrate with Home Assistant.",
+        "data": {
+          "host": "Host or IP",
+          "device_id": "Device ID",
+          "discovered_lights": "Discovered dLights"
+        },
+        "data_description": {
+          "host": "The hostname or IP address of your dLight."
+        }
       }
     },
+    "error": {
+      "cannot_connect": "Failed to connect"
+    },
     "abort": {
-      "single_instance_allowed": "[%key:common::config_flow::abort::single_instance_allowed%]",
-      "no_devices_found": "[%key:common::config_flow::abort::no_devices_found%]"
+      "already_configured": "Device is already configured",
+      "cannot_connect": "Failed to connect"
     }
   }
 }

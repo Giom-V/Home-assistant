@@ -1,8 +1,9 @@
 {
   "domain": "dlight",
-  "name": "dlight",
+  "name": "dLight",
   "config_flow": true,
-  "documentation": "https: //www.home-assistant.io/integrations/dlight",
+  "documentation": "https://www.home-assistant.io/integrations/dlight",
+  "integration_type": "device",
   "requirements": [],
   "ssdp": [],
   "zeroconf": [],

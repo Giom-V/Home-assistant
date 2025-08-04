@@ -1,28 +1,22 @@
-import asyncio
-import logging
-
 from typing import Any
 
-from datetime import timedelta
-from homeassistant.core import HomeAssistant
-from homeassistant.config_entries import ConfigEntry
-from homeassistant.helpers.entity import DeviceInfo
-from homeassistant.helpers.entity_platform import AddEntitiesCallback
-import homeassistant.util.color as color_util
 from homeassistant.components.light import (
     ATTR_BRIGHTNESS,
-    ATTR_COLOR_TEMP,
+    ATTR_COLOR_TEMP_KELVIN,
     ColorMode,
     LightEntity,
 )
+from homeassistant.config_entries import ConfigEntry
+from homeassistant.const import CONF_DEVICE_ID, CONF_HOST
+from homeassistant.core import HomeAssistant
+from homeassistant.helpers.entity import DeviceInfo
+from homeassistant.helpers.entity_platform import AddEntitiesCallback
+from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
-from .const import DOMAIN
-from . import dlight
+from .const import DOMAIN, LOGGER
+from .coordinator import DLightDataUpdateCoordinator
 
-_LOGGER = logging.getLogger(__name__)
-
-
-SCAN_INTERVAL = timedelta(seconds=5)
+PARALLEL_UPDATES = 1
 
 
 async def async_setup_entry(
@@ -30,35 +24,46 @@ async def async_setup_entry(
     config_entry: ConfigEntry,
     async_add_entities: AddEntitiesCallback,
 ) -> None:
-    """Set up dlights dynamically through discovery."""
+    """Set up dlights for coordinator."""
 
-    devices = await dlight.discover_devices(hass)
-    entities: list[DLight] = [DLight(device) for device in devices]
-    # for device in devices:
-    #     entities.append(DLight(device))
+    LOGGER.debug(
+        "Setup dLight: %s for %s (%s)",
+        config_entry.entry_id,
+        config_entry.data[CONF_HOST],
+        config_entry.data[CONF_DEVICE_ID],
+    )
 
-    async_add_entities(entities)
+    coordinator: DLightDataUpdateCoordinator = hass.data[DOMAIN][config_entry.entry_id]
+    async_add_entities([DLight(coordinator)])
 
 
-class DLight(LightEntity):
+class DLight(LightEntity, CoordinatorEntity[DLightDataUpdateCoordinator]):
     """Representation of a dLight."""
 
-    def __init__(self, discovery: dlight.DLightDiscovery) -> None:
-        """Initialize a dLight."""
-        self._discovery = discovery
-        self._attr_unique_id = self._discovery.deviceId
-        self._attr_name = self._discovery.deviceModel + " " + self._discovery.deviceId
-        self._available = True
+    _attr_name = None
+    _attr_has_entity_name = True
 
-    @property
-    def device_info(self) -> DeviceInfo:
-        """Information about this entity/device."""
-        return DeviceInfo(
-            identifiers={(DOMAIN, str(self._discovery.deviceId))},
-            name=self.name,
-            sw_version=self._discovery.swVersion,
-            hw_version=self._discovery.hwVersion,
-            model=self._discovery.deviceModel,
+    def __init__(self, coordinator: DLightDataUpdateCoordinator) -> None:
+        """Initialize a dLight."""
+        super().__init__(coordinator=coordinator)
+        LOGGER.debug("light.__init__: %s", coordinator.device_id)
+
+        self._attr_min_color_temp_kelvin = 2600
+        self._attr_max_color_temp_kelvin = 6000
+
+        self._attr_unique_id = coordinator.device_id
+        self._attr_name = coordinator.name
+        self._attr_supported_color_modes = {ColorMode.COLOR_TEMP}
+        self._attr_color_mode = ColorMode.COLOR_TEMP
+
+        self._attr_device_info = DeviceInfo(
+            identifiers={(DOMAIN, coordinator.device_id)},
+            serial_number=coordinator.device_id,
+            manufacturer="dLight",
+            model=coordinator.discovery["device_model"],
+            name=coordinator.name,
+            sw_version=coordinator.discovery["sw_version"],
+            hw_version=coordinator.discovery["hw_version"],
         )
 
     @property
@@ -67,80 +72,34 @@ class DLight(LightEntity):
         return "mdi:desk-lamp"
 
     @property
-    def supported_color_modes(self):
-        """Flag supported color modes."""
-        return {ColorMode.BRIGHTNESS, ColorMode.COLOR_TEMP}
+    def brightness(self) -> int | None:
+        """Return the brightness of this light between 1..255."""
+        return round((self.coordinator.data.brightness * 255) / 100, 0)
 
     @property
-    def min_color_temp_kelvin(self) -> int:
-        """Return the warmest color_temp_kelvin that this light supports."""
-        return 2600
+    def color_temp_kelvin(self) -> int | None:
+        """Return the CT color value in Kelvin."""
+        return self.coordinator.data.temperature
 
     @property
-    def max_color_temp_kelvin(self) -> int:
-        """Return the coldest color_temp_kelvin that this light supports."""
-        return 6000
+    def is_on(self) -> bool:
+        """Return the state of the light."""
+        return self.coordinator.data.on
 
-    @property
-    def available(self) -> bool:
-        return self._available
+    async def async_turn_on(self, **kwargs: Any) -> None:
+        """Turn on the light."""
+        LOGGER.debug("async_turn_on(%s)", kwargs)
 
-    def _update_state(self, states: dict[str, Any]) -> None:
-        """Update internal state based on response from lamp"""
-        self._available = True
+        temperature = kwargs.get(ATTR_COLOR_TEMP_KELVIN)
 
-        if "on" in states:
-            self._attr_is_on = states["on"]
-        if "brightness" in states:
-            self._attr_brightness = int(
-                round(255 * (int(states["brightness"]) / 100), 0)
-            )
-        if "color" in states:
-            self._attr_color_temp_kelvin = states["color"]["temperature"]
-
-    def _mark_state_as_unavailable(self) -> None:
-        self._attr_is_on = None
-        self._attr_brightness = None
-        self._attr_color_temp_kelvin = None
-        self._available = False
-
-    async def async_update(self):
-        """Poll device state"""
-        try:
-            result = await dlight.get_state(self._discovery)
-            self._update_state(result["states"])
-        except dlight.DLightRequestUnsuccessfulException:
-            _LOGGER.warning("Async Update Failed: %s\n%s", self._discovery, result)
-            self._mark_state_as_unavailable()
-        except (asyncio.TimeoutError, OSError):
-            # Device is unavailable
-            # TODO - schedule a new device discovery in case the IP has changed.
-            self._mark_state_as_unavailable()
-
-    async def async_turn_on(self, **kwargs):
-        """Turn the device on."""
-        dlight_config: dict[str, Any] = {"on": True}
+        brightness = None
         if ATTR_BRIGHTNESS in kwargs:
-            brightness = int(float(kwargs[ATTR_BRIGHTNESS]) / 255 * 100)
-            dlight_config[ATTR_BRIGHTNESS] = brightness
-        if ATTR_COLOR_TEMP in kwargs:
-            temp = color_util.color_temperature_kelvin_to_mired(
-                float(kwargs[ATTR_COLOR_TEMP])
-            )
-            dlight_config["color"] = {"temperature": temp}
+            brightness = round((kwargs[ATTR_BRIGHTNESS] / 255) * 100)
 
-        try:
-            result = await dlight.set_values(self._discovery, dlight_config)
-            self._update_state(result)
-        except Exception as e:
-            _LOGGER.warning("Async Turn On Failed: %s\n%s", self._discovery, e)
+        await self.coordinator.async_turn_on(temperature, brightness)
 
-    async def async_turn_off(self, **kwargs):
+    async def async_turn_off(self, **kwargs: Any) -> None:
         """Turn device off."""
-        dlight_config: dict[str, Any] = {"on": False}
+        LOGGER.debug("async_turn_off(%s)", kwargs)
 
-        try:
-            result = await dlight.set_values(self._discovery, dlight_config)
-            self._update_state(result)
-        except Exception as e:
-            _LOGGER.warning("Async Turn Off Failed: %s\n%s", self._discovery, e)
+        await self.coordinator.async_turn_off()
