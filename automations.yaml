@@ -304,13 +304,16 @@
 - id: '1679262865155'
   alias: Turn on the pond's pump during off-peak hours
   description: ''
-  trigger:
-  - platform: state
-    entity_id:
+  triggers:
+  - entity_id:
     - binary_sensor.heure_creuse
     to: 'on'
-  condition: []
-  action:
+    trigger: state
+  conditions:
+  - condition: numeric_state
+    entity_id: sensor.module_exterieur_netatmo_temperature
+    above: 0
+  actions:
   - type: turn_on
     device_id: a48ab46ddad605396107125f1515f518
     entity_id: light.pompe_failsafe_light
