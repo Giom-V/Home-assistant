@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "minor_version": 7,
+  "minor_version": 8,
   "key": "core.area_registry",
   "data": {
     "areas": [
@@ -13,7 +13,9 @@
         "name": "Salon",
         "picture": "/api/image/serve/76bf87cb4e3e7ad45c87f0c6967d0ba1/512x512",
         "created_at": "1970-01-01T00:00:00+00:00",
-        "modified_at": "1970-01-01T00:00:00+00:00"
+        "modified_at": "1970-01-01T00:00:00+00:00",
+        "humidity_entity_id": null,
+        "temperature_entity_id": null
       },
       {
         "aliases": [],
@@ -24,7 +26,9 @@
         "name": "Cuisine",
         "picture": "/api/image/serve/697c6f96a163b4e1a81c09346c5df57e/512x512",
         "created_at": "1970-01-01T00:00:00+00:00",
-        "modified_at": "1970-01-01T00:00:00+00:00"
+        "modified_at": "1970-01-01T00:00:00+00:00",
+        "humidity_entity_id": null,
+        "temperature_entity_id": null
       },
       {
         "aliases": [
@@ -37,7 +41,9 @@
         "name": "Chambre parentale",
         "picture": "/api/image/serve/c95bb4b5d6fdf6d0e76028887c4a1612/512x512",
         "created_at": "1970-01-01T00:00:00+00:00",
-        "modified_at": "1970-01-01T00:00:00+00:00"
+        "modified_at": "1970-01-01T00:00:00+00:00",
+        "humidity_entity_id": null,
+        "temperature_entity_id": null
       },
       {
         "aliases": [],
@@ -48,7 +54,9 @@
         "name": "Bureau",
         "picture": "/api/image/serve/3bc0cc230621640400616eb6b46642c9/512x512",
         "created_at": "1970-01-01T00:00:00+00:00",
-        "modified_at": "1970-01-01T00:00:00+00:00"
+        "modified_at": "1970-01-01T00:00:00+00:00",
+        "humidity_entity_id": null,
+        "temperature_entity_id": null
       },
       {
         "aliases": [],
@@ -59,7 +67,9 @@
         "name": "Sous-sol",
         "picture": "/api/image/serve/ba14fba854eba76cd141cb15d55340ff/512x512",
         "created_at": "1970-01-01T00:00:00+00:00",
-        "modified_at": "1970-01-01T00:00:00+00:00"
+        "modified_at": "1970-01-01T00:00:00+00:00",
+        "humidity_entity_id": null,
+        "temperature_entity_id": null
       },
       {
         "aliases": [],
@@ -70,7 +80,9 @@
         "name": "Jardin",
         "picture": "/api/image/serve/ea290d04c9ebd4c50dafc5a63073f62c/512x512",
         "created_at": "1970-01-01T00:00:00+00:00",
-        "modified_at": "1970-01-01T00:00:00+00:00"
+        "modified_at": "1970-01-01T00:00:00+00:00",
+        "humidity_entity_id": null,
+        "temperature_entity_id": null
       },
       {
         "aliases": [],
@@ -81,7 +93,9 @@
         "name": "Terrasse",
         "picture": "/api/image/serve/2b4b8714c4d116cac3d74d1356d67988/512x512",
         "created_at": "1970-01-01T00:00:00+00:00",
-        "modified_at": "1970-01-01T00:00:00+00:00"
+        "modified_at": "1970-01-01T00:00:00+00:00",
+        "humidity_entity_id": null,
+        "temperature_entity_id": null
       },
       {
         "aliases": [],
@@ -92,7 +106,9 @@
         "name": "Salle de bain",
         "picture": "/api/image/serve/ea277f366bb29069febed6e09181b901/512x512",
         "created_at": "1970-01-01T00:00:00+00:00",
-        "modified_at": "1970-01-01T00:00:00+00:00"
+        "modified_at": "1970-01-01T00:00:00+00:00",
+        "humidity_entity_id": null,
+        "temperature_entity_id": null
       },
       {
         "aliases": [],
@@ -103,7 +119,9 @@
         "name": "Chambre d'Aurore",
         "picture": null,
         "created_at": "1970-01-01T00:00:00+00:00",
-        "modified_at": "1970-01-01T00:00:00+00:00"
+        "modified_at": "1970-01-01T00:00:00+00:00",
+        "humidity_entity_id": null,
+        "temperature_entity_id": null
       },
       {
         "aliases": [
@@ -119,7 +137,9 @@
         "name": "EV6",
         "picture": "/api/image/serve/fb4d7616cb5ab1d00c2fb15595b33b97/512x512",
         "created_at": "1970-01-01T00:00:00+00:00",
-        "modified_at": "1970-01-01T00:00:00+00:00"
+        "modified_at": "1970-01-01T00:00:00+00:00",
+        "humidity_entity_id": null,
+        "temperature_entity_id": null
       },
       {
         "aliases": [
@@ -132,7 +152,9 @@
         "name": "Salle de douche",
         "picture": null,
         "created_at": "1970-01-01T00:00:00+00:00",
-        "modified_at": "1970-01-01T00:00:00+00:00"
+        "modified_at": "1970-01-01T00:00:00+00:00",
+        "humidity_entity_id": null,
+        "temperature_entity_id": null
       },
       {
         "aliases": [],
@@ -143,7 +165,9 @@
         "name": "Salle de jeux",
         "picture": "/api/image/serve/7d494c47d7c10c81986e8f45fe0faf66/512x512",
         "created_at": "1970-01-01T00:00:00+00:00",
-        "modified_at": "1970-01-01T00:00:00+00:00"
+        "modified_at": "1970-01-01T00:00:00+00:00",
+        "humidity_entity_id": null,
+        "temperature_entity_id": null
       },
       {
         "aliases": [],
@@ -154,7 +178,9 @@
         "name": "Combles",
         "picture": "/api/image/serve/d2cefbddc6a3e3c5a2e1e878a2f3027d/512x512",
         "created_at": "1970-01-01T00:00:00+00:00",
-        "modified_at": "1970-01-01T00:00:00+00:00"
+        "modified_at": "1970-01-01T00:00:00+00:00",
+        "humidity_entity_id": null,
+        "temperature_entity_id": null
       },
       {
         "aliases": [
@@ -167,7 +193,9 @@
         "name": "Arrière cuisine",
         "picture": "/api/image/serve/46f0064e148e8f363553903e1a860c39/512x512",
         "created_at": "1970-01-01T00:00:00+00:00",
-        "modified_at": "2024-08-31T07:31:31.709081+00:00"
+        "modified_at": "2024-08-31T07:31:31.709081+00:00",
+        "humidity_entity_id": null,
+        "temperature_entity_id": null
       },
       {
         "aliases": [],
@@ -178,7 +206,9 @@
         "name": "Cannes",
         "picture": null,
         "created_at": "1970-01-01T00:00:00+00:00",
-        "modified_at": "1970-01-01T00:00:00+00:00"
+        "modified_at": "1970-01-01T00:00:00+00:00",
+        "humidity_entity_id": null,
+        "temperature_entity_id": null
       },
       {
         "aliases": [],
@@ -189,7 +219,9 @@
         "name": "Giom",
         "picture": null,
         "created_at": "1970-01-01T00:00:00+00:00",
-        "modified_at": "1970-01-01T00:00:00+00:00"
+        "modified_at": "1970-01-01T00:00:00+00:00",
+        "humidity_entity_id": null,
+        "temperature_entity_id": null
       },
       {
         "aliases": [
@@ -202,7 +234,9 @@
         "name": "Entrée",
         "picture": "/api/image/serve/a344747454d6610c0c38e13690456755/512x512",
         "created_at": "1970-01-01T00:00:00+00:00",
-        "modified_at": "2024-08-31T07:30:54.179562+00:00"
+        "modified_at": "2024-08-31T07:30:54.179562+00:00",
+        "humidity_entity_id": null,
+        "temperature_entity_id": null
       },
       {
         "aliases": [],
@@ -213,7 +247,9 @@
         "name": "Tests",
         "picture": null,
         "created_at": "1970-01-01T00:00:00+00:00",
-        "modified_at": "1970-01-01T00:00:00+00:00"
+        "modified_at": "1970-01-01T00:00:00+00:00",
+        "humidity_entity_id": null,
+        "temperature_entity_id": null
       },
       {
         "aliases": [],
@@ -224,7 +260,9 @@
         "name": "Salle à manger",
         "picture": null,
         "created_at": "1970-01-01T00:00:00+00:00",
-        "modified_at": "1970-01-01T00:00:00+00:00"
+        "modified_at": "1970-01-01T00:00:00+00:00",
+        "humidity_entity_id": null,
+        "temperature_entity_id": null
       },
       {
         "aliases": [],
@@ -235,7 +273,9 @@
         "name": "Coublevie",
         "picture": null,
         "created_at": "1970-01-01T00:00:00+00:00",
-        "modified_at": "1970-01-01T00:00:00+00:00"
+        "modified_at": "1970-01-01T00:00:00+00:00",
+        "humidity_entity_id": null,
+        "temperature_entity_id": null
       },
       {
         "aliases": [],
@@ -246,7 +286,9 @@
         "name": "Guest's room",
         "picture": "/api/image/serve/7937b0623dc17bc7277482892431781e/512x512",
         "created_at": "1970-01-01T00:00:00+00:00",
-        "modified_at": "1970-01-01T00:00:00+00:00"
+        "modified_at": "1970-01-01T00:00:00+00:00",
+        "humidity_entity_id": null,
+        "temperature_entity_id": null
       },
       {
         "aliases": [],
@@ -257,7 +299,9 @@
         "name": "Mezzanine",
         "picture": null,
         "created_at": "1970-01-01T00:00:00+00:00",
-        "modified_at": "1970-01-01T00:00:00+00:00"
+        "modified_at": "1970-01-01T00:00:00+00:00",
+        "humidity_entity_id": null,
+        "temperature_entity_id": null
       },
       {
         "aliases": [],
@@ -268,7 +312,9 @@
         "name": "Alentours",
         "picture": null,
         "created_at": "1970-01-01T00:00:00+00:00",
-        "modified_at": "1970-01-01T00:00:00+00:00"
+        "modified_at": "1970-01-01T00:00:00+00:00",
+        "humidity_entity_id": null,
+        "temperature_entity_id": null
       },
       {
         "aliases": [],
@@ -276,14 +322,29 @@
         "icon": "mdi:server",
         "id": "local_technique",
         "labels": [
-          "controle",
           "energie",
-          "appareils"
+          "appareils",
+          "controle"
         ],
         "name": "Local Technique",
         "picture": null,
         "created_at": "1970-01-01T00:00:00+00:00",
-        "modified_at": "1970-01-01T00:00:00+00:00"
+        "modified_at": "1970-01-01T00:00:00+00:00",
+        "humidity_entity_id": null,
+        "temperature_entity_id": null
+      },
+      {
+        "aliases": [],
+        "floor_id": null,
+        "icon": null,
+        "id": "mezza",
+        "labels": [],
+        "name": "Mezza",
+        "picture": null,
+        "created_at": "2025-01-07T19:44:53.966300+00:00",
+        "modified_at": "2025-01-07T19:44:53.966306+00:00",
+        "humidity_entity_id": null,
+        "temperature_entity_id": null
       }
     ]
   }
