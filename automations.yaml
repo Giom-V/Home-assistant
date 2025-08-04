@@ -440,12 +440,12 @@
 - id: '1687101568970'
   alias: Turn on Govee LED strip when we switch on the TV during the evening
   description: ''
-  trigger:
-  - platform: state
-    entity_id:
+  triggers:
+  - entity_id:
     - binary_sensor.tv_is_in_use
     to: 'on'
-  condition:
+    trigger: state
+  conditions:
   - condition: or
     conditions:
     - condition: time
@@ -454,7 +454,12 @@
       after: sunset
     - condition: sun
       before: sunrise
-  action:
+  - condition: not
+    conditions:
+    - condition: state
+      entity_id: sensor.rte_tempo_couleur_actuelle
+      state: Rouge
+  actions:
   - type: turn_on
     device_id: 58be483dcfdf57ea1c31a2fb4c329411
     entity_id: light.govee_tv
