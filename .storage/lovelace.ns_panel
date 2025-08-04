@@ -33,11 +33,19 @@
                       "condition": "state",
                       "entity": "sensor.rte_tempo_prochaine_couleur",
                       "state": "Rouge"
+                    },
+                    {
+                      "condition": "state",
+                      "entity": "sensor.rte_tempo_couleur_actuelle",
+                      "state_not": "Rouge"
                     }
                   ],
                   "card": {
                     "type": "custom:mushroom-title-card",
-                    "title": "Journée rouge Tempo demain !"
+                    "title": "Journée rouge Tempo demain !",
+                    "card_mod": {
+                      "style": "ha-card {\n  background-color: coral !important;\n  font-family: fantasy;\n  text-align: center;\n  padding-top: 8px !important;\n}\n"
+                    }
                   }
                 },
                 {
@@ -47,11 +55,41 @@
                       "condition": "state",
                       "entity": "sensor.rte_tempo_couleur_actuelle",
                       "state": "Rouge"
+                    },
+                    {
+                      "condition": "state",
+                      "entity": "sensor.rte_tempo_prochaine_couleur",
+                      "state_not": "Rouge"
                     }
                   ],
                   "card": {
                     "type": "custom:mushroom-title-card",
-                    "title": "Journée rouge Tempo !!!"
+                    "title": "Journée rouge Tempo !!!",
+                    "card_mod": {
+                      "style": "ha-card {\n  background-color: crimson !important;\n  font-family: fantasy;\n  text-align: center;\n  padding-top: 8px !important;\n}\n"
+                    }
+                  }
+                },
+                {
+                  "type": "conditional",
+                  "conditions": [
+                    {
+                      "condition": "state",
+                      "entity": "sensor.rte_tempo_couleur_actuelle",
+                      "state": "Rouge"
+                    },
+                    {
+                      "condition": "state",
+                      "entity": "sensor.rte_tempo_prochaine_couleur",
+                      "state": "Rouge"
+                    }
+                  ],
+                  "card": {
+                    "type": "custom:mushroom-title-card",
+                    "title": "Rouge Tempo aujourd'hui et demain !!!",
+                    "card_mod": {
+                      "style": "ha-card {\n  background-color: red !important;\n  font-family: fantasy;\n  text-align: center;\n  padding-top: 8px !important;\n}\n"
+                    }
                   }
                 },
                 {
@@ -65,7 +103,10 @@
                   ],
                   "card": {
                     "type": "custom:mushroom-title-card",
-                    "title": "Aurores visibles !!!!!"
+                    "title": "Aurores visibles !!!!!",
+                    "card_mod": {
+                      "style": "ha-card {\n  background-color: #00ea8d !important;\n  font-family: fantasy;\n  text-align: center;\n  padding-top: 8px !important;\n}\n"
+                    }
                   }
                 },
                 {
@@ -294,6 +335,22 @@
                           "target": {}
                         }
                       }
+                    },
+                    {
+                      "type": "action",
+                      "tap_action": {
+                        "action": "perform-action",
+                        "perform_action": "script.vacuum_first_floor",
+                        "target": {}
+                      },
+                      "icon": "mdi:robot-vacuum",
+                      "hold_action": {
+                        "action": "perform-action",
+                        "perform_action": "vacuum.return_to_base",
+                        "target": {
+                          "device_id": "3bd7ea9094dacdcb707f482264f08014"
+                        }
+                      }
                     }
                   ],
                   "card_mod": {
@@ -374,6 +431,22 @@
                           "target": {}
                         }
                       }
+                    },
+                    {
+                      "type": "action",
+                      "tap_action": {
+                        "action": "perform-action",
+                        "perform_action": "script.vacuum_ground_floor",
+                        "target": {}
+                      },
+                      "icon": "mdi:robot-vacuum",
+                      "hold_action": {
+                        "action": "perform-action",
+                        "perform_action": "vacuum.return_to_base",
+                        "target": {
+                          "device_id": "5cf729ccf4531403f3cbe23e4a80fecc"
+                        }
+                      }
                     }
                   ],
                   "card_mod": {
@@ -398,7 +471,7 @@
                     },
                     {
                       "type": "entity",
-                      "entity": "sensor.basement_temperature",
+                      "entity": "sensor.airthings_wave_001282_temperature",
                       "icon_color": "accent",
                       "hold_action": {
                         "action": "navigate",
@@ -424,6 +497,10 @@
                         "action": "more-info"
                       },
                       "icon": "mdi:car-electric"
+                    },
+                    {
+                      "type": "entity",
+                      "entity": "sensor.airthings_wave_001282_radon_1_day_average"
                     }
                   ],
                   "card_mod": {
