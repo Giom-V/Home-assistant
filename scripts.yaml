@@ -62,9 +62,11 @@ close_all_first_floor_shutters:
     entity_id: 5159b1462f01722c359983c04fea0e28
     type: close
   - if:
-    - condition: state
-      entity_id: binary_sensor.velux_bureau_contact
-      state: 'off'
+    - condition: not
+      conditions:
+      - condition: state
+        entity_id: binary_sensor.velux_bureau_contact
+        state: 'on'
     then:
     - device_id: 733eb70641efac866005440f0d764623
       domain: cover
