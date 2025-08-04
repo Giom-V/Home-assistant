@@ -50,32 +50,16 @@
     ],
     "device_consumption": [
       {
+        "stat_consumption": "sensor.conso_pac_energy_b",
+        "name": "Solisart"
+      },
+      {
         "stat_consumption": "sensor.lave_linge_energy",
         "name": "Lave-Linge"
       },
       {
         "stat_consumption": "sensor.chauffage_sdb_energy",
         "name": "Chauffage SDB"
-      },
-      {
-        "stat_consumption": "sensor.chargeur_voiture_energy",
-        "name": "Recharge EV6"
-      },
-      {
-        "stat_consumption": "sensor.pc_bureau_energy",
-        "name": "PC Bureau"
-      },
-      {
-        "stat_consumption": "sensor.owon_technology_inc_pc321_summation_delivered",
-        "name": "Cuisine"
-      },
-      {
-        "stat_consumption": "sensor.tv_summation_delivered",
-        "name": "TV"
-      },
-      {
-        "stat_consumption": "sensor.chargeur_velo_summation_delivered",
-        "name": "Recharge vélo"
       },
       {
         "stat_consumption": "sensor.prise_camera_salle_a_manger_energy",
@@ -86,16 +70,32 @@
         "name": "Local technique"
       },
       {
-        "stat_consumption": "sensor.porte_garage_switch_0_energy",
-        "name": "Porte garage"
+        "stat_consumption": "sensor.pc_bureau_energy",
+        "name": "PC Bureau"
+      },
+      {
+        "stat_consumption": "sensor.owon_technology_inc_pc321_summation_delivered",
+        "name": "Cuisine"
+      },
+      {
+        "stat_consumption": "sensor.chargeur_voiture_energy",
+        "name": "Recharge EV6"
+      },
+      {
+        "stat_consumption": "sensor.tv_summation_delivered",
+        "name": "TV"
+      },
+      {
+        "stat_consumption": "sensor.chargeur_velo_summation_delivered",
+        "name": "Recharge vélo"
       },
       {
         "stat_consumption": "sensor.conso_pac_energy_a",
         "name": "VMC"
       },
       {
-        "stat_consumption": "sensor.conso_pac_energy_b",
-        "name": "Solisart"
+        "stat_consumption": "sensor.porte_garage_switch_0_energy",
+        "name": "Porte garage"
       },
       {
         "stat_consumption": "sensor.frigo_energy",
