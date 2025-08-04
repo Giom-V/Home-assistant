@@ -1052,6 +1052,19 @@
     data:
       message: Chauffe-eau trop froid
   mode: single
+- id: '1736757328634'
+  alias: Turn on wardrobe light at 10
+  description: ''
+  triggers:
+  - trigger: time_pattern
+    hours: '10'
+  conditions: []
+  actions:
+  - type: turn_on
+    device_id: 666e5e5e5b375483d4ec9748bbbd0119
+    entity_id: 7c13b027a97873a0b48a21d06ae2d630
+    domain: light
+  mode: single
 - id: '1736867866654'
   alias: Turn off water pump when it's freezing
   description: ''
