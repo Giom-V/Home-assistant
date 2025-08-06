@@ -34,7 +34,8 @@
     "**/blueprints/**": true,
     "**/node-red/**": true,
     "**/zigbee2mqtt/**": true,
-    "custom_components/**.js.map", true
+    "custom_components/**.js.map": true,
+    "custom_components/!(solisart|dlight)/**": true
   },
 
   // --- Global Search Exclusions ---
