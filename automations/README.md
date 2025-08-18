@@ -113,8 +113,9 @@ All those automations are using the 3 helpers
   doesn not happen often since she's still young or that we may have visitors
   (my parents or my in-laws for ex.), which is a case that happen quite often.
 
-- `input_boolean.visitors` is meant to solve that problem. It indicates that we
-  have someone visiting and prevents the different automations from triggering.
+- [`input_boolean.visitors`](visitors.md) is meant to solve that problem. It
+  indicates that we have someone visiting and prevents the different
+  automations from triggering.
 
 - `input_boolean.away_mode` indicates that the "alarm/alerts" are set. Using
   such a helper lets us clearly see the status and also let us overwrite it if
@@ -125,49 +126,55 @@ switch/overwrite them.
 
 The different automations are:
 
-- `Switch Away mode on when we are away for more than an hour`: This is the
-  automation that switches the `input_boolean.away_mode` value to on when we are
-  away, this then enables all the other automations. There's a slight delay to
-  prevent the alarm to switch too often, to cover for when we leave our daughter
-  for a short while, or if the geofencing becomes flaky and our home/away
-  presence switches.
+- [`Switch Away mode on when we are away for more than an hour`](away_mode.yaml#L58):
+  This is the automation that switches the `input_boolean.away_mode` value to
+  on when we are away, this then enables all the other automations. There's a
+  slight delay to prevent the alarm to switch too often, to cover for when we
+  leave our daughter for a short while, or if the geofencing becomes flaky and
+  our home/away presence switches.
 
-- `Switch Away mode off when we come back`: This is the reverse automation,
-  setting off `input_boolean.away_mode` and the alerts. It also sets the media
-  players volumes back to normal since the alerts are raising them to the
-  maximum.
+- [`Switch Away mode off when we come back`](away_mode.yaml#L82): This is the
+  reverse automation, setting off `input_boolean.away_mode` and the alerts. It
+  also sets the media players volumes back to normal since the alerts are
+  raising them to the maximum.
 
 - `Switch motion detection and alarms on when the away mode is on` and `Switch
-motion detection off when the away mode is off`: These used to switch the motion
-  detection of my Dafang camera on and off when we were home/away, but that's
-  not possible with my new Reolink cameras so I disabled the automations.
+  motion detection off when the away mode is off`: These used to switch the
+  motion detection of my Dafang camera on and off when we were home/away, but
+  that's not possible with my new Reolink cameras so I disabled the
+  automations.
 
-- `Motion detected`: Sends an alert (via Google Chat), and shout through all the
-  media players if motion is detected by one of the cameras. Mode is `single`
-  because I don't want the script to restart if motion is continuously detected.
+- [`Motion detected`](away_mode.yaml#L107): Sends an alert (via Google Chat),
+  and shout through all the media players if motion is detected by one of the
+  cameras. Mode is `single` because I don't want the script to restart if
+  motion is continuously detected.
 
-- `Door openned while away`: Does the same thing but if a door is opened.
+- [`Door openned while away`](away_mode.yaml#L182): Does the same thing but if a
+  door is opened.
 
-- `Mouvement detected while away`: Same again but if one of the motion sensors
-  sees something.
+- [`Mouvement detected while away`](away_mode.yaml#L254): Same again but if one
+  of the motion sensors sees something.
 
-- `Lights switched on while away`: Same with lights being switched on, the
-  problem being that we also want to switch on the lights for presence
-  detection, so for now the lights used for the presence are not in this
-  automation.
+- [`Lights switched on while away`](away_mode.yaml#L305): Same with lights being
+  switched on, the problem being that we also want to switch on the lights for
+  presence detection, so for now the lights used for the presence are not in
+  this automation.
 
-- `Presence simulation Bureau`: Presence detection in my office. It uses
-  randomness for more realness. Starts at a random time between 30 before sunset
-  and 15mn after and ends between 11PM and 11:15PM.
+- [`Presence simulation Bureau`](away_mode.yaml#L338): Presence detection in my
+  office. It uses randomness for more realness. Starts at a random time between
+  30 before sunset and 15mn after and ends between 11PM and 11:15PM.
 
-- `Presence simulation Aurore's bedroom`: Same thing but with slightly different
-  times (the worst that could happen would be to have all lights switching on
-  and off at the same time).
+- [`Presence simulation Aurore's bedroom`](away_mode.yaml#L365): Same thing but
+  with slightly different times (the worst that could happen would be to have
+  all lights switching on and off at the same time).
 
-- `Reboot HA every week when we are away`: This one is a failsafe. When I'm away
-  for a long time I want to be certain HA is not frozen, so I like to reboot it
-  at least once a week. I also have a Shelly plug that I program to reboot the
-  modem every week for the same reason.
+- [`Reboot HA every week when we are away`](away_mode.yaml#L392): This one is a
+  failsafe. When I'm away for a long time I want to be certain HA is not
+  frozen, so I like to reboot it at least once a week. I also have a Shelly
+  plug that I program to reboot the modem every week for the same reason.
+
+A more detailed documentation of those automations can be found in the
+[`alarms.md`](alarms.md) file.
 
 #### Future improvements for the away mode
 
@@ -195,8 +202,8 @@ The automations are:
   plug controlling the car charger depending on the off-peak hours. I'm quite
   satisfied to have managed to do that in one automation instead of two.
 
-- `Preheat the car`: In winter, on school days, and if we are home, if the temperature is low,
-  preheat the car just before when we have to go to school.
+- `Preheat the car`: In winter, on school days, and if we are home, if the
+  temperature is low, preheat the car just before when we have to go to school.
 
 - `Lock car when at home for at least an hour`: I very often forget to close my
   car's door so this is a failsafe.
@@ -235,7 +242,7 @@ fitting anywhere else.
 These are:
 
 - `Switch off lights 30mn after sunrise` and `Switch off lights 60mn after
-sunrise`: Except maybe for my office, all lights should be switched off during
+  sunrise`: Except maybe for my office, all lights should be switched off during
   the day so this is what those automations do (just slightly later during the
   Canadian winter).
 
@@ -308,7 +315,7 @@ The remaining automations are:
 - Find a way to be able to tell the vacuum not to vaccum right now but to do it
   later
 - Use "And/Or" instead of multiple ifs to make the `Update xiaomi map extractor`
-automation easier to read
+  automation easier to read
 - Prevent/Delay the vacuum from starting if I'm at home and in a call
 
 ### [Working](working.yaml)
