@@ -11,11 +11,13 @@
         "hide_toolbar_action_icons": false,
         "idle_time": 0,
         "fullscreen": false,
-        "user.giom": {
-          "enabled": false,
-          "hide_toolbar": false,
-          "hide_sidebar": false,
-          "fullscreen": false
+        "profiles": {
+          "user.guillaume": {
+            "enabled": true,
+            "hide_toolbar": false,
+            "hide_sidebar": false,
+            "fullscreen": false
+          }
         }
       },
       "views": [
