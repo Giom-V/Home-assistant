@@ -1,0 +1,43 @@
+# Automations for night time
+- id: '1678555471570'
+  alias: Extinction des feux
+  description: ''
+  trigger:
+  - platform: time
+    at: '23:00:00'
+  condition: []
+  action:
+  - type: turn_off
+    device_id: 5e75d15e67ac1988a925403412f6cd1a
+    entity_id: light.lumiere_exterieure_1_forceonlight
+    domain: light
+  - type: turn_off
+    device_id: c2eedf7108fcbb4f944ae4b273d0227b
+    entity_id: light.lumiere_exterieure_2_forceonlight
+    domain: light
+  - type: turn_off
+    device_id: e310bad303788f20ec0ac63b758667f1
+    entity_id: light.lumiere_exterieure_3_forceonlight
+    domain: light
+  - service: select.select_option
+    data:
+      option: 'Off'
+    target:
+      entity_id: select.aurores_light_bulb_start_up_behavior
+  - type: turn_off
+    device_id: cef49caed9c762db670b6d2a85a15832
+    entity_id: switch.aurore_bed_light_switch
+    domain: switch
+  - type: turn_off
+    device_id: d437e500bc37e2cbd9119d9ae51214bf
+    entity_id: switch.hdr_monitor
+    domain: switch
+  - type: turn_off
+    device_id: d437e500bc37e2cbd9119d9ae51214bf
+    entity_id: switch.vertical_monitor
+    domain: switch
+  - type: turn_off
+    device_id: 93b4f42fad374b6536e6a0602f1708b0
+    entity_id: 0f22d93bb08479d66e2679f5bb3cd0aa
+    domain: switch
+  mode: single

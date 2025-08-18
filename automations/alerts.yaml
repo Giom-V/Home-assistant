@@ -92,6 +92,237 @@
 #     - service: rest_command.gchatalert
 #       data:
 #         text: Attention, le congélateur est resté ouvert !
+- id: '1666186950016'
+  alias: Test Nest sonnette
+  description: ''
+  trigger:
+  - platform: device
+    device_id: 033b8589dd583f9142b48bd463dcccd0
+    domain: nest
+    type: doorbell_chime
+  - platform: device
+    device_id: 033b8589dd583f9142b48bd463dcccd0
+    domain: nest
+    type: camera_person
+    enabled: false
+  - platform: device
+    device_id: 033b8589dd583f9142b48bd463dcccd0
+    domain: nest
+    type: camera_motion
+    enabled: false
+  condition: []
+  action:
+  - service: rest_command.gchat
+    data:
+      text: Sonette pressée!
+  mode: single
+- id: '1687949528073'
+  alias: Close water if a leak is detected
+  description: ''
+  trigger:
+  - type: moist
+    platform: device
+    device_id: dd451c8daffe059f22ccc2209342cbc2
+    entity_id: binary_sensor.flood_detector_basement_flood
+    domain: binary_sensor
+  condition: []
+  action:
+  - type: turn_off
+    device_id: 95c85383ea986cdfab0a3fe9c33f7a49
+    entity_id: light.vanne_light
+    domain: light
+  mode: single
+- id: '1688126732710'
+  alias: 'Sécurité: couper l''eau si une fuite est détectée (pour l''instant dans
+    le jardin)'
+  description: ''
+  trigger:
+  - type: humidity
+    platform: device
+    device_id: cad5fd413dbabbb36bdee8579c03dab8
+    entity_id: sensor.potager_soil_moisture
+    domain: sensor
+    above: 95
+    for:
+      hours: 0
+      minutes: 15
+      seconds: 0
+  condition:
+  - condition: state
+    entity_id: binary_sensor.people_home
+    state: 'off'
+  action:
+  - type: turn_off
+    device_id: 95c85383ea986cdfab0a3fe9c33f7a49
+    entity_id: light.vanne_light
+    domain: light
+  mode: single
+- id: '1689543800532'
+  alias: Flood detected
+  description: ''
+  trigger:
+  - type: moist
+    platform: device
+    device_id: 2a230f2371c0d65ab5cc143dbd0b7df3
+    entity_id: 4b6d3f99a99a0d92c0de91ac66d99384
+    domain: binary_sensor
+    id: flood_in_kitchen
+  - type: moist
+    platform: device
+    device_id: dd451c8daffe059f22ccc2209342cbc2
+    entity_id: 915a11f853df87ec87528861360129e7
+    domain: binary_sensor
+    id: flood_in_basement
+  condition: []
+  action:
+  - choose:
+    - conditions:
+      - condition: trigger
+        id:
+        - flood_in_kitchen
+      sequence:
+      - service: rest_command.gchatalert
+        data:
+          text: Fuite dans la cuisine !
+    - conditions:
+      - condition: trigger
+        id:
+        - flood_in_basement
+      sequence:
+      - service: rest_command.gchatalert
+        data:
+          text: Fuite dans le sous-sol !
+  - type: turn_off
+    device_id: 95c85383ea986cdfab0a3fe9c33f7a49
+    entity_id: light.vanne_light
+    domain: light
+  mode: single
+- id: '1689544847933'
+  alias: Conso anormale à La Plagne
+  description: Alert if the heating still works while the resort should be closed
+    and we're not there.
+  trigger:
+  - platform: numeric_state
+    entity_id: sensor.myenedis_19677423985708
+    for:
+      hours: 1
+      minutes: 0
+      seconds: 0
+    above: 2
+  condition:
+  - condition: not
+    conditions:
+    - condition: zone
+      entity_id: person.guillaume
+      zone: zone.la_plagne
+    - condition: template
+      value_template: '{% set n = now() %}
+
+        {{ n.month < 12 and ( n.month > 5 or ( n.month == 5 and n.day <= 15 ) ) }}'
+  action:
+  - service: rest_command.gchat
+    data:
+      text: Chauffage en fonctionnement à La Plagne.
+  mode: single
+- id: '1697917560752'
+  alias: 'Fuite au sous-sol '
+  description: ''
+  trigger:
+  - type: moist
+    platform: device
+    device_id: 1182ddc99c6d86a6f5f82b0e05170b3f
+    entity_id: 5cff1292faeb8ba8417017b5a3440c65
+    domain: binary_sensor
+    for:
+      hours: 0
+      minutes: 2
+      seconds: 0
+  - type: moist
+    platform: device
+    device_id: 2904f86b89a60a20afcf47e53bec80a8
+    entity_id: 2c5888e5f268ec1d2ffc9720e0eb5849
+    domain: binary_sensor
+    for:
+      hours: 0
+      minutes: 2
+      seconds: 0
+  condition: []
+  action:
+  - service: rest_command.gchatalert
+    data:
+      text: Fuite au sous-sol !!!
+  - service: tts.google_say
+    entity_id: all
+    data:
+      message: Fuite détectée !
+  - service: notify.mobile_app_pixel_7_pro
+    data:
+      message: 'Fuite détectée '
+      title: Fuite
+  mode: single
+- id: '1704463513006'
+  alias: Alert when RPi power isn't enough
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - binary_sensor.rpi_power_status
+    to: 'on'
+  condition: []
+  action:
+  - service: notify.mobile_app_pixel_7_pro
+    metadata: {}
+    data:
+      message: Problème d'alimentaiton de la RPi
+      title: ⚠️Alim
+  - service: notify.slack
+    metadata: {}
+    data:
+      title: ⚠️Alim
+      message: Problème d'alimentaiton de la RPi
+  - service: rest_command.gchatalert
+    data:
+      text: Problème d'alimentaiton de la RPi
+  mode: single
+- id: '1727272545121'
+  alias: Office window opened while it rains
+  description: ''
+  trigger:
+  - type: precipitation
+    platform: device
+    device_id: 67e35c5459774ea782ecdaa971168280
+    entity_id: b77fbbed5b6243550d7e1547d1915a32
+    domain: sensor
+    above: 0.1
+  condition:
+  - condition: state
+    entity_id: binary_sensor.velux_bureau_contact
+    state: 'on'
+  action:
+  - action: notify.mobile_app_pixel_8_pro
+    data:
+      title: "\U0001F327️ Pluie dans le bureau"
+      message: "Le velux est ouvert alors qu'il pleut \U0001F631"
+  mode: single
+- id: '1727285569924'
+  alias: Alert when the water tank is too cold
+  description: ''
+  trigger:
+  - platform: numeric_state
+    entity_id:
+    - sensor.temperature_ballon_haut
+    for:
+      hours: 1
+      minutes: 0
+      seconds: 0
+    below: 40
+  condition: []
+  action:
+  - action: notify.mobile_app_pixel_8_pro
+    metadata: {}
+    data:
+      message: Chauffe-eau trop froid
+  mode: single
 # - id: FreezerAlreayOpenWhenBasementLightSwitchesOn
 #   alias: Freezer opened for more than 10mn when light switches on
 #   trigger:

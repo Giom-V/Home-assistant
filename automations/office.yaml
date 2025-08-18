@@ -1,0 +1,16 @@
+# Automations for office
+- id: '1669999603054'
+  alias: Turn on D-Light when I am in a meeting
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - binary_sensor.in_meeting
+    to: 'on'
+  condition: []
+  action:
+  - service: light.turn_on
+    data: {}
+    target:
+      entity_id: light.dlight
+  mode: single

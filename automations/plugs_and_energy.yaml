@@ -1,0 +1,90 @@
+# Automations for plugs and energy management
+- id: '1683644818608'
+  alias: Switch off bike's chargeur after some time to save the battery
+  description: ''
+  trigger:
+  - type: power
+    platform: device
+    device_id: f88fc7c7685911a6f527510503647b60
+    entity_id: sensor.chargeur_velo_active_power
+    domain: sensor
+    above: 100
+    for:
+      hours: 6
+      minutes: 0
+      seconds: 0
+  condition: []
+  action:
+  - type: turn_off
+    device_id: f88fc7c7685911a6f527510503647b60
+    entity_id: switch.chargeur_velo_switch
+    domain: switch
+  mode: single
+- id: '1686121963583'
+  alias: Turn off bike's charger during peak hours
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - binary_sensor.heure_creuse
+    to: 'off'
+  condition: []
+  action:
+  - action: switch.turn_off
+    target:
+      entity_id:
+      - switch.chargeur_velo_switch
+    data: {}
+  mode: single
+- id: '1686122015021'
+  alias: Turn on the bike's charger during off-peak hours
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - binary_sensor.heure_creuse
+    to: 'on'
+  condition: []
+  action:
+  - action: switch.turn_on
+    metadata: {}
+    data: {}
+    target:
+      entity_id: switch.chargeur_velo_switch
+  mode: single
+- id: '1703071835981'
+  alias: Conso heures pleines/creuses
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - binary_sensor.heure_creuse
+  condition: []
+  action:
+  - if:
+    - condition: state
+      entity_id: binary_sensor.heure_creuse
+      state: 'on'
+    then:
+    - device_id: 1a214649b9b77e47ee787c2109d1e2e2
+      domain: select
+      entity_id: 476a709158fbee446d7c0eee2661975d
+      type: select_option
+      option: Heures Creuses
+    - device_id: 1a214649b9b77e47ee787c2109d1e2e2
+      domain: select
+      entity_id: f6d4a900e165cafd27e94fbd4e7b3f15
+      type: select_option
+      option: Heures creuses
+    else:
+    - device_id: 1a214649b9b77e47ee787c2109d1e2e2
+      domain: select
+      entity_id: 476a709158fbee446d7c0eee2661975d
+      type: select_option
+      option: Heures pleines
+    - device_id: 1a214649b9b77e47ee787c2109d1e2e2
+      domain: select
+      entity_id: f6d4a900e165cafd27e94fbd4e7b3f15
+      type: select_option
+      option: Heures pleines
+  mode: single

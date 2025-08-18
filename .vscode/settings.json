@@ -33,7 +33,9 @@
     "**/backups/**": true,
     "**/blueprints/**": true,
     "**/node-red/**": true,
-    "**/zigbee2mqtt/**": true
+    "**/zigbee2mqtt/**": true,
+    "custom_components/**.js.map": true,
+    "custom_components/!(solisart|dlight)/**": true
   },
 
   // --- Global Search Exclusions ---
@@ -53,13 +55,13 @@
   "files.exclude": {
     "**/.git": true,
     "**/.github": true,
-    "**/.vscode": true,
+    "**/.vscode": false,
     "**/__pycache__": true,
     "**/deps": true,
     "**/.storage": true,
     "**/tts": true,
     "**/backups": true,
-    "home-assistant.log*": true,
+    "home-assistant.log*": false,
     "**/blueprints": true
   }
 }

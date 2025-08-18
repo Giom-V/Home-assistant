@@ -1,0 +1,342 @@
+# Automations for remotes
+- id: '1669906661965'
+  alias: Long-press office button
+  description: ''
+  trigger:
+  - device_id: bd42176d16a1d12f6fde55c147476465
+    domain: zha
+    platform: device
+    type: remote_button_long_press
+    subtype: remote_button_long_press
+  condition: []
+  action:
+  - service: script.turn_on
+    data: {}
+    target:
+      entity_id: script.preheat_car
+  mode: single
+- id: '1669906783150'
+  alias: Press office button
+  description: ''
+  trigger:
+  - device_id: bd42176d16a1d12f6fde55c147476465
+    domain: zha
+    platform: device
+    type: remote_button_short_press
+    subtype: remote_button_short_press
+  condition: []
+  action:
+  - type: toggle
+    device_id: d437e500bc37e2cbd9119d9ae51214bf
+    entity_id: switch.vertical_monitor
+    domain: switch
+  - type: toggle
+    device_id: d437e500bc37e2cbd9119d9ae51214bf
+    entity_id: switch.hdr_monitor
+    domain: switch
+  mode: single
+- id: '1676633819245'
+  alias: Testing led strip
+  description: ''
+  trigger:
+  - device_id: bd42176d16a1d12f6fde55c147476465
+    domain: zha
+    platform: device
+    type: remote_button_double_press
+    subtype: remote_button_double_press
+  condition: []
+  action:
+  - type: toggle
+    device_id: f1e7b29bd824ec88bdf7a3b1a2f58916
+    entity_id: light.led_strip_light
+    domain: light
+  mode: single
+- id: '1677099297248'
+  alias: Aurore's bed lights
+  description: ''
+  trigger:
+  - device_id: 40e2c9d25a557a13b74303960127118d
+    domain: zha
+    platform: device
+    type: remote_button_short_press
+    subtype: turn_off
+  - device_id: e059cad12f0a2c750a56719a911dc8e6
+    domain: zha
+    platform: device
+    type: remote_button_short_press
+    subtype: turn_off
+  condition: []
+  action:
+  - type: toggle
+    device_id: cef49caed9c762db670b6d2a85a15832
+    entity_id: switch.aurore_bed_light_switch
+    domain: switch
+  mode: single
+- id: '1677698797768'
+  alias: Aurore's room main light bulb
+  description: ''
+  trigger:
+  - device_id: 40e2c9d25a557a13b74303960127118d
+    domain: zha
+    platform: device
+    type: remote_button_short_press
+    subtype: turn_on
+  - device_id: e059cad12f0a2c750a56719a911dc8e6
+    domain: zha
+    platform: device
+    type: remote_button_short_press
+    subtype: turn_on
+  condition: []
+  action:
+  - type: toggle
+    device_id: e87ea47d487bcb4708a442aa8ebacfb1
+    entity_id: light.aurores_light_bulb
+    domain: light
+  - service: light.toggle
+    metadata: {}
+    data: {}
+    target:
+      entity_id: light.lumiere_chambre_aurore
+  mode: single
+- id: '1677701807876'
+  alias: Aurore's Light color temperature up
+  description: ''
+  trigger:
+  - device_id: e059cad12f0a2c750a56719a911dc8e6
+    domain: zha
+    platform: device
+    type: remote_button_short_press
+    subtype: right
+  condition:
+  - condition: device
+    type: is_on
+    device_id: e87ea47d487bcb4708a442aa8ebacfb1
+    entity_id: light.aurores_light_bulb
+    domain: light
+  action:
+  - device_id: e87ea47d487bcb4708a442aa8ebacfb1
+    domain: number
+    entity_id: number.aurores_light_bulb_start_up_color_temperature
+    type: set_value
+    value: '{{ [states(''number.aurores_light_bulb_start_up_color_temperature'') |
+      int + 40 , 255] | min | float }}'
+  mode: single
+- id: '1677701807877'
+  alias: Aurore's Light color temperature down
+  description: ''
+  trigger:
+  - device_id: e059cad12f0a2c750a56719a911dc8e6
+    domain: zha
+    platform: device
+    type: remote_button_short_press
+    subtype: left
+  condition:
+  - condition: device
+    type: is_on
+    device_id: e87ea47d487bcb4708a442aa8ebacfb1
+    entity_id: light.aurores_light_bulb
+    domain: light
+  action:
+  - device_id: e87ea47d487bcb4708a442aa8ebacfb1
+    domain: number
+    entity_id: number.aurores_light_bulb_start_up_color_temperature
+    type: set_value
+    value: '{{ [states(''number.aurores_light_bulb_start_up_color_temperature'') |
+      int - 40 , 255] | min | float }}'
+  mode: single
+- id: '1678917872103'
+  alias: Toggle Bathroom heating
+  description: ''
+  trigger:
+  - platform: device
+    domain: mqtt
+    device_id: 8b0c8128d37ebeb5d404e45e40e1e9f3
+    type: action
+    subtype: single
+  - platform: state
+    entity_id:
+    - sensor.bouton_sdb_action
+    to: single
+    enabled: false
+  condition: []
+  action:
+  - type: toggle
+    device_id: 4a6b0aa18628bded0b46b3928ad3ba2d
+    entity_id: 19ea51cc7b009ea53ab8f936806ba6ed
+    domain: switch
+  mode: single
+- id: '1678959025833'
+  alias: Turn off bathroom heating
+  description: ''
+  trigger:
+  - platform: device
+    domain: mqtt
+    device_id: 8b0c8128d37ebeb5d404e45e40e1e9f3
+    type: action
+    subtype: double
+  condition: []
+  action:
+  - type: turn_off
+    device_id: 4a6b0aa18628bded0b46b3928ad3ba2d
+    entity_id: switch.chauffage_sdb
+    domain: switch
+  mode: single
+- id: '1719993857867'
+  alias: Dim up Aurore's light
+  description: ''
+  trigger:
+  - device_id: e059cad12f0a2c750a56719a911dc8e6
+    domain: zha
+    platform: device
+    type: remote_button_long_press
+    subtype: dim_up
+  - device_id: 40e2c9d25a557a13b74303960127118d
+    domain: zha
+    platform: device
+    type: remote_button_long_press
+    subtype: dim_up
+  condition: []
+  action:
+  - service: light.turn_on
+    metadata: {}
+    data:
+      brightness_step_pct: 25
+    target:
+      entity_id: light.lumiere_chambre_aurore
+  mode: single
+- id: '1719993909448'
+  alias: Dim down Aurore's light
+  description: ''
+  trigger:
+  - device_id: e059cad12f0a2c750a56719a911dc8e6
+    domain: zha
+    platform: device
+    type: remote_button_long_press
+    subtype: dim_down
+  - device_id: 40e2c9d25a557a13b74303960127118d
+    domain: zha
+    platform: device
+    type: remote_button_long_press
+    subtype: dim_down
+  condition: []
+  action:
+  - service: light.turn_on
+    metadata: {}
+    data:
+      brightness_step_pct: -20
+    target:
+      entity_id: light.lumiere_chambre_aurore
+  mode: single
+- id: '1719994191328'
+  alias: Control Aurore's velux curtains
+  description: ''
+  trigger:
+  - device_id: e059cad12f0a2c750a56719a911dc8e6
+    domain: zha
+    platform: device
+    type: remote_button_short_press
+    subtype: left
+  - device_id: e059cad12f0a2c750a56719a911dc8e6
+    domain: zha
+    platform: device
+    type: remote_button_long_press
+    subtype: right
+  condition: []
+  action:
+  - if:
+    - condition: device
+      device_id: 8f16b93c4fae1055fc21ef57afca5b0f
+      domain: cover
+      entity_id: 5159b1462f01722c359983c04fea0e28
+      type: is_closed
+    then:
+    - device_id: 8f16b93c4fae1055fc21ef57afca5b0f
+      domain: cover
+      entity_id: 5159b1462f01722c359983c04fea0e28
+      type: open
+    else:
+    - device_id: 8f16b93c4fae1055fc21ef57afca5b0f
+      domain: cover
+      entity_id: 5159b1462f01722c359983c04fea0e28
+      type: close
+  mode: single
+- id: '1736756974252'
+  alias: 'Bedroom remote: LEDs'
+  description: ''
+  triggers:
+  - domain: mqtt
+    device_id: a7995daf6b00103a726e7417cf4e5b9b
+    type: action
+    subtype: arm_all_zones
+    metadata: {}
+    trigger: device
+  conditions: []
+  actions:
+  - type: toggle
+    device_id: 80fbbf7d7f0606c4dc0731332c33e4c0
+    entity_id: 9d794747df6e33f51d6a02d194d88d70
+    domain: light
+  mode: single
+- id: '1736757260832'
+  alias: 'Bedroom remote: covers '
+  description: ''
+  triggers:
+  - domain: mqtt
+    device_id: a7995daf6b00103a726e7417cf4e5b9b
+    type: action
+    subtype: arm_day_zones
+    trigger: device
+  conditions: []
+  actions:
+  - choose:
+    - conditions:
+      - condition: or
+        conditions:
+        - condition: device
+          device_id: 22b77f8ecce501db1f53c1b19a852202
+          domain: cover
+          entity_id: 3c329cfad3629946c940a2f6999b69ab
+          type: is_closing
+        - condition: device
+          device_id: 22b77f8ecce501db1f53c1b19a852202
+          domain: cover
+          entity_id: 3c329cfad3629946c940a2f6999b69ab
+          type: is_opening
+      sequence:
+      - device_id: 22b77f8ecce501db1f53c1b19a852202
+        domain: cover
+        entity_id: 3c329cfad3629946c940a2f6999b69ab
+        type: stop
+    - conditions:
+      - condition: device
+        device_id: 22b77f8ecce501db1f53c1b19a852202
+        domain: cover
+        entity_id: 3c329cfad3629946c940a2f6999b69ab
+        type: is_open
+      sequence:
+      - device_id: 22b77f8ecce501db1f53c1b19a852202
+        domain: cover
+        entity_id: 3c329cfad3629946c940a2f6999b69ab
+        type: close
+    default:
+    - device_id: 22b77f8ecce501db1f53c1b19a852202
+      domain: cover
+      entity_id: 3c329cfad3629946c940a2f6999b69ab
+      type: open
+  mode: single
+- id: '1736757407681'
+  alias: 'Bedroom remote: wardrobe'
+  description: ''
+  triggers:
+  - domain: mqtt
+    device_id: a7995daf6b00103a726e7417cf4e5b9b
+    type: action
+    subtype: disarm
+    trigger: device
+  conditions: []
+  actions:
+  - type: toggle
+    device_id: 666e5e5e5b375483d4ec9748bbbd0119
+    entity_id: 7c13b027a97873a0b48a21d06ae2d630
+    domain: light
+  mode: single

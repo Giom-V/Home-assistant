@@ -1,0 +1,200 @@
+# Automations for lights
+- id: '1679085142205'
+  alias: During the day Aurore's light bulb default behavior is On
+  description: ''
+  trigger:
+  - platform: time
+    at: 07:00:00
+  condition: []
+  action:
+  - service: select.select_option
+    data:
+      option: 'On'
+    target:
+      entity_id: select.aurores_light_bulb_start_up_behavior
+  mode: single
+- id: '1678555411746'
+  alias: Allumer les lumières de la terrasse au coucher du soleil
+  description: ''
+  trigger:
+  - platform: sun
+    event: sunset
+    offset: 00:30
+  condition:
+  - condition: state
+    entity_id: binary_sensor.people_home
+    state: 'on'
+  action:
+  - type: turn_on
+    device_id: 5e75d15e67ac1988a925403412f6cd1a
+    entity_id: light.lumiere_exterieure_1_forceonlight
+    domain: light
+    enabled: false
+  - type: turn_on
+    device_id: c2eedf7108fcbb4f944ae4b273d0227b
+    entity_id: light.lumiere_exterieure_2_forceonlight
+    domain: light
+  - type: turn_on
+    device_id: e310bad303788f20ec0ac63b758667f1
+    entity_id: light.lumiere_exterieure_3_forceonlight
+    domain: light
+  mode: single
+- id: '1687101568970'
+  alias: Turn on Govee LED strip when we switch on the TV during the evening
+  description: ''
+  triggers:
+  - entity_id:
+    - binary_sensor.tv_is_in_use
+    to: 'on'
+    trigger: state
+  conditions:
+  - condition: or
+    conditions:
+    - condition: time
+      after: '21:00:00'
+    - condition: sun
+      after: sunset
+    - condition: sun
+      before: sunrise
+  - condition: not
+    conditions:
+    - condition: state
+      entity_id: sensor.rte_tempo_couleur_actuelle
+      state: Rouge
+  actions:
+  - type: turn_on
+    device_id: 58be483dcfdf57ea1c31a2fb4c329411
+    entity_id: light.govee_tv
+    domain: light
+  mode: single
+- id: '1687101610893'
+  alias: Turn off Govee LED strip when we switch off the TV
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - binary_sensor.tv_is_in_use
+    to: 'off'
+  condition: []
+  action:
+  - type: turn_off
+    device_id: 58be483dcfdf57ea1c31a2fb4c329411
+    entity_id: light.govee_tv
+    domain: light
+  mode: single
+- id: '1688200212515'
+  alias: Basement stairs light when motion detected
+  description: ''
+  trigger:
+  - type: motion
+    platform: device
+    device_id: 9c37dc10f4cbe78c564574ef700d2689
+    entity_id: binary_sensor.motion_sensor_basement_stairs_motion
+    domain: binary_sensor
+  condition: []
+  action:
+  - type: turn_on
+    device_id: 697f0a9d8354bee483e0058a6e8b5410
+    entity_id: light.basement_stairs_light_light
+    domain: light
+  - wait_for_trigger:
+    - type: no_motion
+      platform: device
+      device_id: 9c37dc10f4cbe78c564574ef700d2689
+      entity_id: 2247856e02bf3556557c139acc6bb72e
+      domain: binary_sensor
+      for:
+        hours: 0
+        minutes: 1
+        seconds: 0
+    enabled: true
+  - type: turn_off
+    device_id: 697f0a9d8354bee483e0058a6e8b5410
+    entity_id: ad28d0c88258e744ab5a720291522f3b
+    domain: light
+    enabled: true
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 15
+      milliseconds: 0
+  mode: single
+- id: '1688200466384'
+  alias: Basement stairs lights off when motion stopped
+  description: ''
+  trigger:
+  - type: no_motion
+    platform: device
+    device_id: 9c37dc10f4cbe78c564574ef700d2689
+    entity_id: binary_sensor.motion_sensor_basement_stairs_motion
+    domain: binary_sensor
+    for:
+      hours: 0
+      minutes: 1
+      seconds: 0
+  condition: []
+  action:
+  - type: turn_off
+    device_id: 697f0a9d8354bee483e0058a6e8b5410
+    entity_id: ad28d0c88258e744ab5a720291522f3b
+    domain: light
+  mode: restart
+- id: '1701885267125'
+  alias: 'Turn on Guirlande '
+  description: ''
+  trigger:
+  - platform: sun
+    event: sunset
+    offset: 0
+  condition: []
+  action:
+  - type: turn_on
+    device_id: 93b4f42fad374b6536e6a0602f1708b0
+    entity_id: 0f22d93bb08479d66e2679f5bb3cd0aa
+    domain: switch
+  mode: single
+- id: '1701885292744'
+  alias: 'Turn off Guirlande '
+  description: ''
+  trigger:
+  - platform: device
+    device_id: 98ca57dc34f30913565109817baf591f
+    domain: cover
+    entity_id: ed1cfca6e4f23b27177bdff5b92dd33b
+    type: closed
+    for:
+      hours: 0
+      minutes: 10
+      seconds: 0
+  condition: []
+  action:
+  - type: turn_off
+    device_id: 93b4f42fad374b6536e6a0602f1708b0
+    entity_id: 0f22d93bb08479d66e2679f5bb3cd0aa
+    domain: switch
+  - type: turn_off
+    device_id: 5e75d15e67ac1988a925403412f6cd1a
+    entity_id: bb8311f3e6def79849d52135f7f1dc0c
+    domain: light
+  - type: turn_off
+    device_id: c2eedf7108fcbb4f944ae4b273d0227b
+    entity_id: d57a58e9d09d56214d1fa00eda9917b9
+    domain: light
+  - type: turn_off
+    device_id: e310bad303788f20ec0ac63b758667f1
+    entity_id: eac3459946c00fb182e1aa26687ec3ed
+    domain: light
+  mode: single
+- id: '1736757328634'
+  alias: Turn on wardrobe light at 10
+  description: ''
+  triggers:
+  - trigger: time_pattern
+    hours: '10'
+  conditions: []
+  actions:
+  - type: turn_on
+    device_id: 666e5e5e5b375483d4ec9748bbbd0119
+    entity_id: 7c13b027a97873a0b48a21d06ae2d630
+    domain: light
+  mode: single

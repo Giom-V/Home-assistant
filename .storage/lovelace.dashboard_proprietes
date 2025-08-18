@@ -1,0 +1,444 @@
+{
+  "version": 1,
+  "minor_version": 1,
+  "key": "lovelace.dashboard_proprietes",
+  "data": {
+    "config": {
+      "wallpanel": {
+        "enabled": true,
+        "hide_toolbar": true,
+        "hide_sidebar": true,
+        "hide_toolbar_action_icons": false,
+        "idle_time": 0,
+        "fullscreen": false,
+        "profiles": {
+          "user.guillaume": {
+            "enabled": true,
+            "hide_toolbar": false,
+            "hide_sidebar": false,
+            "fullscreen": false
+          }
+        }
+      },
+      "views": [
+        {
+          "title": "Cannes",
+          "type": "sections",
+          "max_columns": 2,
+          "icon": "mdi:beach",
+          "path": "cannes",
+          "visible": [
+            {
+              "user": "c8df84d1ca1e4988b84f25c91d70d56e"
+            },
+            {
+              "user": "2a54ceccc9d74a409021b53d9ff4a71a"
+            },
+            {
+              "user": "33c6cfd4334b4053bff1a32f38dfbb7f"
+            },
+            {
+              "user": "ed6639a084374d17b33c32e44d0dc72d"
+            },
+            {
+              "user": "af99d6d0cbde45808ab5167be3d29d7d"
+            }
+          ],
+          "sections": [
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "custom:banner-card",
+                  "background": "red",
+                  "heading_style": "title",
+                  "badges": [],
+                  "heading": "⚠️ Placard Ouvert !",
+                  "visibility": [
+                    {
+                      "condition": "state",
+                      "entity": "binary_sensor.placard_prive_door",
+                      "state": "on"
+                    }
+                  ],
+                  "grid_options": {
+                    "columns": "full"
+                  }
+                },
+                {
+                  "type": "custom:banner-card",
+                  "background": "orange",
+                  "heading_style": "title",
+                  "badges": [],
+                  "heading": "🪫 Capteur d'ouverture du placard à recharger.",
+                  "visibility": [
+                    {
+                      "condition": "numeric_state",
+                      "entity": "sensor.placard_prive_battery",
+                      "below": 25
+                    }
+                  ],
+                  "grid_options": {
+                    "columns": "full"
+                  }
+                }
+              ],
+              "column_span": 2
+            },
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "iframe",
+                  "url": "https://www.youtube.com/embed/8QKBmrb-r8g?si=toMaXf68aHFuC1a3",
+                  "aspect_ratio": "50%"
+                }
+              ],
+              "visibility": [
+                {
+                  "condition": "user",
+                  "users": [
+                    "2a54ceccc9d74a409021b53d9ff4a71a"
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "custom:weather-card",
+                  "entity": "weather.cannes",
+                  "grid_options": {
+                    "columns": "full"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "custom:apexcharts-card",
+                  "header": {
+                    "show": true,
+                    "title": "Températures",
+                    "show_states": true,
+                    "colorize_states": true
+                  },
+                  "series": [
+                    {
+                      "entity": "sensor.cannes_temperature",
+                      "name": "Extérieur",
+                      "color": "orange"
+                    },
+                    {
+                      "entity": "sensor.cannes_netatmo_temperature",
+                      "name": "Intérieur",
+                      "color": "DeepSkyBlue"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "custom:apexcharts-card",
+                  "header": {
+                    "show": true,
+                    "title": "Bruit",
+                    "show_states": false,
+                    "colorize_states": true
+                  },
+                  "series": [
+                    {
+                      "entity": "sensor.cannes_netatmo_noise",
+                      "name": "Bruit",
+                      "color": "grey"
+                    }
+                  ],
+                  "yaxis": [
+                    {
+                      "min": 30,
+                      "max": 70
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "heading",
+                  "heading": "Capteurs",
+                  "heading_style": "title",
+                  "badges": [
+                    {
+                      "type": "entity",
+                      "show_state": true,
+                      "show_icon": true,
+                      "entity": "binary_sensor.cannes_netatmo_connectivity",
+                      "icon": ""
+                    }
+                  ],
+                  "icon": "mdi:home-thermometer"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.cannes_netatmo_temperature",
+                  "features_position": "bottom",
+                  "vertical": false,
+                  "name": "Temperature"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.cannes_netatmo_humidity",
+                  "features_position": "bottom",
+                  "vertical": false,
+                  "name": "Humidité",
+                  "show_entity_picture": false
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.cannes_netatmo_atmospheric_pressure",
+                  "features_position": "bottom",
+                  "vertical": false,
+                  "name": "Pression"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.cannes_netatmo_carbon_dioxide",
+                  "features_position": "bottom",
+                  "vertical": false,
+                  "name": "CO2"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.cannes_netatmo_noise",
+                  "features_position": "bottom",
+                  "vertical": false,
+                  "name": "Bruit"
+                }
+              ]
+            },
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "heading",
+                  "icon": "mdi:cloud-question",
+                  "heading": "Meteo détaillée",
+                  "heading_style": "title"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.06_weather_alert",
+                  "features_position": "bottom",
+                  "vertical": false,
+                  "visibility": [
+                    {
+                      "condition": "state",
+                      "entity": "sensor.06_weather_alert",
+                      "state_not": "Vert"
+                    }
+                  ],
+                  "name": "Alerte",
+                  "grid_options": {
+                    "columns": "full"
+                  }
+                },
+                {
+                  "type": "tile",
+                  "entity": "weather.cannes",
+                  "features_position": "bottom",
+                  "vertical": false,
+                  "name": "Météo"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.cannes_uv"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.cannes_temperature",
+                  "features_position": "bottom",
+                  "vertical": false,
+                  "name": "Température"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.cannes_humidity",
+                  "features_position": "bottom",
+                  "vertical": false,
+                  "name": "Humidité"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.cannes_cloud_cover",
+                  "features_position": "bottom",
+                  "vertical": false,
+                  "name": "Couverture nuageuse"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.cannes_daily_precipitation",
+                  "features_position": "bottom",
+                  "vertical": false,
+                  "name": "Précipitations journalières"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.cannes_rain_chance",
+                  "features_position": "bottom",
+                  "vertical": false,
+                  "name": "Chances de pluie",
+                  "visibility": [
+                    {
+                      "condition": "numeric_state",
+                      "entity": "sensor.cannes_rain_chance",
+                      "above": 1
+                    }
+                  ]
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.cannes_next_rain",
+                  "features_position": "bottom",
+                  "vertical": false,
+                  "visibility": [
+                    {
+                      "condition": "state",
+                      "entity": "sensor.cannes_next_rain",
+                      "state_not": "unknown"
+                    }
+                  ],
+                  "name": "Prochaine pluie"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.cannes_freeze_chance",
+                  "features_position": "bottom",
+                  "vertical": false,
+                  "visibility": [
+                    {
+                      "condition": "numeric_state",
+                      "entity": "sensor.cannes_freeze_chance",
+                      "above": 1
+                    }
+                  ],
+                  "name": "Chances de gel"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.cannes_snow_chance",
+                  "features_position": "bottom",
+                  "vertical": false,
+                  "name": "Chances de neige",
+                  "visibility": [
+                    {
+                      "condition": "numeric_state",
+                      "entity": "sensor.cannes_snow_chance",
+                      "above": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "heading",
+                  "heading": "Placard",
+                  "heading_style": "title"
+                },
+                {
+                  "type": "tile",
+                  "entity": "binary_sensor.placard_prive_door",
+                  "features_position": "bottom",
+                  "vertical": true,
+                  "name": " "
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.placard_prive_battery",
+                  "features_position": "bottom",
+                  "vertical": true,
+                  "name": "Battery"
+                }
+              ]
+            },
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "heading",
+                  "heading": "Robo-Cop-1",
+                  "heading_style": "title",
+                  "icon": "mdi:robot-vacuum",
+                  "badges": [
+                    {
+                      "type": "entity",
+                      "entity": "vacuum.roborock_s8"
+                    }
+                  ]
+                },
+                {
+                  "type": "custom:xiaomi-vacuum-map-card",
+                  "vacuum_platform": "Roborock",
+                  "entity": "vacuum.roborock_s8",
+                  "map_source": {
+                    "camera": "image.robo_cop_1_cannes"
+                  },
+                  "map_locked": true,
+                  "two_finger_pan": false,
+                  "calibration_source": {
+                    "camera": true
+                  }
+                }
+              ],
+              "visibility": [
+                {
+                  "condition": "user",
+                  "users": [
+                    "2a54ceccc9d74a409021b53d9ff4a71a"
+                  ]
+                }
+              ]
+            }
+          ],
+          "header": {
+            "card": {
+              "type": "markdown",
+              "content": "# Cannes"
+            }
+          },
+          "badges": [],
+          "dense_section_placement": false,
+          "cards": []
+        },
+        {
+          "type": "sections",
+          "max_columns": 4,
+          "title": "Domerat",
+          "path": "domerat",
+          "icon": "mdi:seat-outline",
+          "sections": [
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "heading",
+                  "heading": "New section"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

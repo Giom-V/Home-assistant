@@ -2052,6 +2052,20 @@
                 }
               }
             }
+          ],
+          "visible": [
+            {
+              "user": "c8df84d1ca1e4988b84f25c91d70d56e"
+            },
+            {
+              "user": "2a54ceccc9d74a409021b53d9ff4a71a"
+            },
+            {
+              "user": "33c6cfd4334b4053bff1a32f38dfbb7f"
+            },
+            {
+              "user": "716cc60d5a8e45fb982dd35f43988a0a"
+            }
           ]
         },
         {
@@ -2160,6 +2174,20 @@
                   }
                 }
               }
+            }
+          ],
+          "visible": [
+            {
+              "user": "c8df84d1ca1e4988b84f25c91d70d56e"
+            },
+            {
+              "user": "2a54ceccc9d74a409021b53d9ff4a71a"
+            },
+            {
+              "user": "33c6cfd4334b4053bff1a32f38dfbb7f"
+            },
+            {
+              "user": "716cc60d5a8e45fb982dd35f43988a0a"
             }
           ]
         },
