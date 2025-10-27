@@ -10,7 +10,7 @@
         "hide_sidebar": true,
         "hide_toolbar_action_icons": false,
         "idle_time": 0,
-        "fullscreen": false,
+        "fullscreen": true,
         "profiles": {
           "user.guillaume": {
             "enabled": true,
@@ -295,7 +295,7 @@
                       "conditions": [
                         {
                           "condition": "state",
-                          "entity": "cover.volets_chambre",
+                          "entity": "cover.volets_chambre_rose",
                           "state_not": "open"
                         }
                       ],
@@ -319,7 +319,7 @@
                       "conditions": [
                         {
                           "condition": "state",
-                          "entity": "cover.volets_chambre",
+                          "entity": "cover.volets_chambre_rose",
                           "state": "open"
                         }
                       ],

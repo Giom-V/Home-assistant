@@ -49,10 +49,6 @@ close_all_group_floor_shutters:
 close_all_first_floor_shutters:
   alias: Close all first floor shutters
   sequence:
-  - device_id: 22b77f8ecce501db1f53c1b19a852202
-    domain: cover
-    entity_id: 3c329cfad3629946c940a2f6999b69ab
-    type: close
   - device_id: dfe890255b2aec25d04652bf3f562bcb
     domain: cover
     entity_id: 9d96788bbf491daa38a43974d3af81fd
@@ -72,6 +68,11 @@ close_all_first_floor_shutters:
       domain: cover
       entity_id: ad9bb28acca59679697828aaba529647
       type: close
+  - action: cover.close_cover
+    metadata: {}
+    data: {}
+    target:
+      entity_id: cover.volets_chambre_rose
   description: ''
   icon: mdi:window-shutter
 open_all_ground_floor_shutters:
@@ -94,10 +95,6 @@ open_all_ground_floor_shutters:
 open_all_first_floor_shutters:
   alias: Open all first floor shutters
   sequence:
-  - device_id: 22b77f8ecce501db1f53c1b19a852202
-    domain: cover
-    entity_id: 3c329cfad3629946c940a2f6999b69ab
-    type: open
   - device_id: dfe890255b2aec25d04652bf3f562bcb
     domain: cover
     entity_id: 9d96788bbf491daa38a43974d3af81fd
@@ -110,5 +107,10 @@ open_all_first_floor_shutters:
     domain: cover
     entity_id: ad9bb28acca59679697828aaba529647
     type: open
+  - action: cover.open_cover
+    metadata: {}
+    data: {}
+    target:
+      entity_id: cover.volets_chambre_rose
   description: ''
   icon: mdi:window-shutter-open

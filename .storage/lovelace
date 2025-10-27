@@ -1167,7 +1167,7 @@
                     },
                     {
                       "type": "state-label",
-                      "entity": "sensor.bleuette_geocoded_location",
+                      "entity": "device_tracker.bleuette_location",
                       "style": {
                         "top": "97%",
                         "left": "0%",
@@ -1501,7 +1501,7 @@
               "show_name": true,
               "show_state": false,
               "show_icon": true,
-              "entity": "cover.volets_chambre",
+              "entity": "cover.volets_chambre_rose",
               "name": "Ouvrir volets étage",
               "tap_action": {
                 "action": "perform-action",
@@ -1517,7 +1517,7 @@
               "visibility": [
                 {
                   "condition": "state",
-                  "entity": "cover.volets_chambre",
+                  "entity": "cover.volets_chambre_rose",
                   "state": "closed"
                 }
               ],
@@ -1528,7 +1528,7 @@
               "show_name": true,
               "show_state": false,
               "show_icon": true,
-              "entity": "cover.volets_chambre",
+              "entity": "cover.volets_chambre_rose",
               "name": "Fermer volets étage",
               "tap_action": {
                 "action": "perform-action",
@@ -1544,7 +1544,7 @@
               "visibility": [
                 {
                   "condition": "state",
-                  "entity": "cover.volets_chambre",
+                  "entity": "cover.volets_chambre_rose",
                   "state_not": "closed"
                 }
               ],
