@@ -1286,3 +1286,105 @@
       text: Un locataire a ouvert le placard de Cannes.
     action: rest_command.gchat
   mode: single
+- id: '1758443142653'
+  alias: Switch off Aurore bed light when she sleeps
+  description: ''
+  triggers:
+  - trigger: time
+    at: '23:00:00'
+  - trigger: time
+    at: '23:30:00'
+  - trigger: time
+    at: 00:00:00
+  - trigger: time
+    at: 01:00:00
+  conditions: []
+  actions:
+  - action: switch.turn_off
+    metadata: {}
+    data: {}
+    target:
+      entity_id: switch.aurore_bed_light_switch
+  mode: single
+- id: '1758443383959'
+  alias: Aurore's main light
+  description: ''
+  triggers:
+  - device_id: e059cad12f0a2c750a56719a911dc8e6
+    domain: zha
+    type: remote_button_short_press
+    subtype: turn_on
+    trigger: device
+  - domain: mqtt
+    device_id: f646eba37247f6ffa88f1d1c3b59ef76
+    type: action
+    subtype: 'on'
+    trigger: device
+  conditions: []
+  actions:
+  - type: toggle
+    device_id: 7a0af38e25d8a8afb66dba181b664f33
+    entity_id: c3acfa362782538431339214f251a5db
+    domain: light
+  mode: single
+- id: '1759210471445'
+  alias: Fermer les volets d'Aurore à minuit
+  description: ''
+  triggers:
+  - trigger: time
+    at: 00:00:00
+  conditions:
+  - condition: not
+    conditions:
+    - condition: state
+      entity_id: sensor.season
+      state: summer
+  actions:
+  - action: cover.close_cover
+    metadata: {}
+    data: {}
+    target:
+      entity_id: cover.velux_external_cover_roller_shutter
+  mode: single
+- id: '1761596762891'
+  alias: Restart netatmo when it's disconnected
+  description: ''
+  triggers:
+  - trigger: state
+    entity_id:
+    - binary_sensor.station_interieure_netatmo_connectivity
+    for:
+      hours: 0
+      minutes: 15
+      seconds: 0
+    to: unavailable
+  - trigger: state
+    entity_id:
+    - binary_sensor.station_interieure_netatmo_connectivity
+    for:
+      hours: 0
+      minutes: 30
+      seconds: 0
+    to: unavailable
+  - trigger: state
+    entity_id:
+    - binary_sensor.station_interieure_netatmo_connectivity
+    for:
+      hours: 1
+      minutes: 0
+      seconds: 0
+    to: unavailable
+  - trigger: homeassistant
+    event: start
+  conditions: []
+  actions:
+  - delay:
+      hours: 0
+      minutes: 5
+      seconds: 0
+      milliseconds: 0
+  - action: homeassistant.reload_config_entry
+    metadata: {}
+    data:
+      entry_id: f1f448f8d8857c66d176b02e2d6b5217
+  mode: single
