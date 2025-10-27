@@ -70,7 +70,7 @@
         "id": "d28e66a6787e467bb458928f35ac7f8b"
       },
       {
-        "url": "/hacsfiles/lovelace-mushroom/mushroom.js?hacstag=444350375450",
+        "url": "/hacsfiles/lovelace-mushroom/mushroom.js?hacstag=444350375506",
         "type": "module",
         "id": "4d8157ab9ecf48ef9c386323825634fd"
       },
@@ -106,17 +106,17 @@
       },
       {
         "id": "7109f08ace634f11ae19d6198c97a732",
-        "url": "/hacsfiles/button-card/button-card.js?hacstag=146194325411",
+        "url": "/hacsfiles/button-card/button-card.js?hacstag=146194325430",
         "type": "module"
       },
       {
         "id": "1a4f26f1443d48639261f4f06841a563",
-        "url": "/hacsfiles/compass-card/compass-card.js?hacstag=286038496202",
+        "url": "/hacsfiles/compass-card/compass-card.js?hacstag=286038496210",
         "type": "module"
       },
       {
         "id": "afdbe4f6c71f4ac89273ef1a275a2e11",
-        "url": "/hacsfiles/apexcharts-card/apexcharts-card.js?hacstag=331701152204",
+        "url": "/hacsfiles/apexcharts-card/apexcharts-card.js?hacstag=331701152223",
         "type": "module"
       },
       {
@@ -131,7 +131,7 @@
       },
       {
         "id": "7fedf22f26b54ca9844c5a4306baf370",
-        "url": "/hacsfiles/lovelace-wallpanel/wallpanel.js?hacstag=3095064164550",
+        "url": "/hacsfiles/lovelace-wallpanel/wallpanel.js?hacstag=3095064164581",
         "type": "module"
       },
       {
