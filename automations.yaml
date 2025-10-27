@@ -23,40 +23,39 @@
       text: Sonette pressée!
   mode: single
 - id: '1669906661965'
-  alias: Long-press office button
+  alias: Long-press office button (preheat car)
   description: ''
-  trigger:
-  - device_id: bd42176d16a1d12f6fde55c147476465
-    domain: zha
-    platform: device
-    type: remote_button_long_press
-    subtype: remote_button_long_press
-  condition: []
-  action:
-  - service: script.turn_on
-    data: {}
+  triggers:
+  - domain: mqtt
+    device_id: 09d4ba3dded13922cf5b606b4bfd261b
+    type: action
+    subtype: hold
+    trigger: device
+  conditions: []
+  actions:
+  - data: {}
     target:
       entity_id: script.preheat_car
+    action: script.turn_on
   mode: single
 - id: '1669906783150'
-  alias: Press office button
+  alias: Press office button (switch on/off screens)
   description: ''
-  trigger:
-  - device_id: bd42176d16a1d12f6fde55c147476465
-    domain: zha
-    platform: device
-    type: remote_button_short_press
-    subtype: remote_button_short_press
-  condition: []
-  action:
-  - type: toggle
-    device_id: d437e500bc37e2cbd9119d9ae51214bf
-    entity_id: switch.vertical_monitor
-    domain: switch
-  - type: toggle
-    device_id: d437e500bc37e2cbd9119d9ae51214bf
-    entity_id: switch.hdr_monitor
-    domain: switch
+  triggers:
+  - domain: mqtt
+    device_id: 09d4ba3dded13922cf5b606b4bfd261b
+    type: action
+    subtype: single
+    trigger: device
+  conditions: []
+  actions:
+  - action: switch.toggle
+    metadata: {}
+    data: {}
+    target:
+      entity_id:
+      - switch.multiprise_bureau_l2
+      - switch.multiprise_bureau_l1
   mode: single
 - id: '1669999603054'
   alias: Turn on D-Light when I am in a meeting
@@ -74,16 +73,17 @@
       entity_id: light.dlight
   mode: single
 - id: '1676633819245'
-  alias: Testing led strip
+  alias: Testing led strip (not working)
   description: ''
-  trigger:
-  - device_id: bd42176d16a1d12f6fde55c147476465
-    domain: zha
-    platform: device
-    type: remote_button_double_press
-    subtype: remote_button_double_press
-  condition: []
-  action:
+  triggers:
+  - domain: mqtt
+    device_id: 09d4ba3dded13922cf5b606b4bfd261b
+    type: action
+    subtype: single
+    trigger: device
+    enabled: false
+  conditions: []
+  actions:
   - type: toggle
     device_id: f1e7b29bd824ec88bdf7a3b1a2f58916
     entity_id: light.led_strip_light
@@ -92,19 +92,20 @@
 - id: '1677099297248'
   alias: Aurore's bed lights
   description: ''
-  trigger:
-  - device_id: 40e2c9d25a557a13b74303960127118d
-    domain: zha
-    platform: device
-    type: remote_button_short_press
-    subtype: turn_off
+  triggers:
   - device_id: e059cad12f0a2c750a56719a911dc8e6
     domain: zha
-    platform: device
     type: remote_button_short_press
     subtype: turn_off
-  condition: []
-  action:
+    trigger: device
+  - domain: mqtt
+    device_id: f646eba37247f6ffa88f1d1c3b59ef76
+    type: action
+    subtype: 'off'
+    metadata: {}
+    trigger: device
+  conditions: []
+  actions:
   - type: toggle
     device_id: cef49caed9c762db670b6d2a85a15832
     entity_id: switch.aurore_bed_light_switch
@@ -113,28 +114,29 @@
 - id: '1677698797768'
   alias: Aurore's room main light bulb
   description: ''
-  trigger:
-  - device_id: 40e2c9d25a557a13b74303960127118d
-    domain: zha
-    platform: device
-    type: remote_button_short_press
-    subtype: turn_on
+  triggers:
+  - domain: mqtt
+    device_id: f646eba37247f6ffa88f1d1c3b59ef76
+    type: action
+    subtype: 'on'
+    metadata: {}
+    trigger: device
   - device_id: e059cad12f0a2c750a56719a911dc8e6
     domain: zha
-    platform: device
     type: remote_button_short_press
     subtype: turn_on
-  condition: []
-  action:
+    trigger: device
+  conditions: []
+  actions:
   - type: toggle
     device_id: e87ea47d487bcb4708a442aa8ebacfb1
     entity_id: light.aurores_light_bulb
     domain: light
-  - service: light.toggle
-    metadata: {}
+  - metadata: {}
     data: {}
     target:
       entity_id: light.lumiere_chambre_aurore
+    action: light.toggle
   mode: single
 - id: '1677701807876'
   alias: Aurore's Light color temperature up
@@ -949,60 +951,60 @@
 - id: '1719993857867'
   alias: Dim up Aurore's light
   description: ''
-  trigger:
+  triggers:
   - device_id: e059cad12f0a2c750a56719a911dc8e6
     domain: zha
-    platform: device
     type: remote_button_long_press
     subtype: dim_up
-  - device_id: 40e2c9d25a557a13b74303960127118d
-    domain: zha
-    platform: device
-    type: remote_button_long_press
-    subtype: dim_up
-  condition: []
-  action:
-  - service: light.turn_on
-    metadata: {}
+    trigger: device
+  - domain: mqtt
+    device_id: f646eba37247f6ffa88f1d1c3b59ef76
+    type: action
+    subtype: brightness_move_up
+    trigger: device
+  conditions: []
+  actions:
+  - metadata: {}
     data:
       brightness_step_pct: 66
     target:
       entity_id: light.lumiere_chambre_aurore
     enabled: false
+    action: light.turn_on
   - device_id: 7a0af38e25d8a8afb66dba181b664f33
     domain: light
     entity_id: c3acfa362782538431339214f251a5db
     type: brightness_increase
     enabled: false
-  - service: light.turn_on
-    metadata: {}
+  - metadata: {}
     data:
       brightness_step_pct: 25
     target:
       entity_id: light.lumiere_chambre_aurore
+    action: light.turn_on
   mode: single
 - id: '1719993909448'
   alias: Dim down Aurore's light
   description: ''
-  trigger:
+  triggers:
   - device_id: e059cad12f0a2c750a56719a911dc8e6
     domain: zha
-    platform: device
     type: remote_button_long_press
     subtype: dim_down
-  - device_id: 40e2c9d25a557a13b74303960127118d
-    domain: zha
-    platform: device
-    type: remote_button_long_press
-    subtype: dim_down
-  condition: []
-  action:
-  - service: light.turn_on
-    metadata: {}
+    trigger: device
+  - domain: mqtt
+    device_id: f646eba37247f6ffa88f1d1c3b59ef76
+    type: action
+    subtype: brightness_move_down
+    trigger: device
+  conditions: []
+  actions:
+  - metadata: {}
     data:
       brightness_step_pct: -20
     target:
       entity_id: light.lumiere_chambre_aurore
+    action: light.turn_on
   mode: single
 - id: '1719994191328'
   alias: Control Aurore's velux curtains
