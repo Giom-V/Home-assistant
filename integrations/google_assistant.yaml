@@ -105,7 +105,7 @@ google_assistant:
       name: Lumière extérieure laurier -thym
       expose: true
       room: Jardin de devant
-    light.lumiere_exterieure_3_forceonlight:
+    light.lampe_exterieure_3:
       name: Lumière extérieure magnolia
       expose: true
       room: Jardin de devant

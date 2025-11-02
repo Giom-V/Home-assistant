@@ -152,7 +152,7 @@ OutsideLamps:
   entities:
     - light.lumiere_exterieure_1_forceonlight
     - light.lumiere_exterieure_2_forceonlight
-    - light.lumiere_exterieure_3_forceonlight
+    - light.lampe_exterieure_3
 
 LampesEvier:
   name: Lumières évier
