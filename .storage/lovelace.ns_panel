@@ -542,7 +542,7 @@
                       "conditions": [
                         {
                           "condition": "state",
-                          "entity": "light.pompe_failsafe_light",
+                          "entity": "switch.fontaine_bassin",
                           "state": "on"
                         }
                       ],
@@ -550,9 +550,9 @@
                         "type": "action",
                         "tap_action": {
                           "action": "perform-action",
-                          "perform_action": "light.turn_off",
+                          "perform_action": "switch.turn_off",
                           "target": {
-                            "entity_id": "light.pompe_failsafe_light"
+                            "entity_id": "switch.fontaine_bassin"
                           },
                           "data": {}
                         },
@@ -565,7 +565,7 @@
                       "conditions": [
                         {
                           "condition": "state",
-                          "entity": "light.pompe_failsafe_light",
+                          "entity": "switch.fontaine_bassin",
                           "state": "off"
                         }
                       ],
@@ -573,9 +573,9 @@
                         "type": "action",
                         "tap_action": {
                           "action": "perform-action",
-                          "perform_action": "light.turn_on",
+                          "perform_action": "switch.turn_on",
                           "target": {
-                            "entity_id": "light.pompe_failsafe_light"
+                            "entity_id": "switch.fontaine_bassin"
                           }
                         },
                         "icon": "mdi:fountain",
