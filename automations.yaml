@@ -313,9 +313,9 @@
       entity_id: sensor.module_exterieur_netatmo_temperature
       above: 0
   actions:
-  - type: turn_on
-    entity_id: switch.fontaine_bassin
-    domain: switch
+  - service: switch.turn_on
+    target:
+      entity_id: switch.fontaine_bassin
   mode: single
 - id: "1679262911117"
   alias: Turn off the pond's pump during peak hours
@@ -332,9 +332,9 @@
       entity_id: binary_sensor.heure_creuse
       state: "off"
   action:
-  - type: turn_off
-    entity_id: switch.fontaine_bassin
-    domain: switch
+  - service: switch.turn_off
+    target:
+      entity_id: switch.fontaine_bassin
   mode: single
 - id: "1685014375600"
   alias: Turn on pond's pump when we are here during lunch time
