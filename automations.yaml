@@ -317,9 +317,8 @@
     above: 0
   actions:
   - type: turn_on
-    device_id: a48ab46ddad605396107125f1515f518
-    entity_id: light.pompe_failsafe_light
-    domain: light
+    entity_id: switch.fontaine_bassin
+    domain: switch
   mode: single
 - id: '1679262911117'
   alias: Turn off the pond's pump during peak hours
@@ -337,9 +336,8 @@
     state: 'off'
   action:
   - type: turn_off
-    device_id: a48ab46ddad605396107125f1515f518
-    entity_id: light.pompe_failsafe_light
-    domain: light
+    entity_id: switch.fontaine_bassin
+    domain: switch
   mode: single
 - id: '1685014375600'
   alias: Turn on pond's pump when we are here during lunch time
@@ -1195,7 +1193,7 @@
     metadata: {}
     data: {}
     target:
-      entity_id: switch.pompe_failsafe
+      entity_id: switch.fontaine_bassin
   mode: single
 - id: '1737370119461'
   alias: Open covers when it's sunny

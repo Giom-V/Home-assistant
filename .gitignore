@@ -57,7 +57,7 @@ node-red
 # Storage
 .storage/*
 
-# Do not ignore dashbaord files
+# Do not ignore dashboard files
 !/.storage/energy
 !/.storage/lovelace
 !/.storage/lovelace.*

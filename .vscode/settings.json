@@ -53,15 +53,14 @@
 
   // --- Hide useless folders from the file explorer ---
   "files.exclude": {
+    "**/__pycache__": true,
     "**/.git": true,
     "**/.github": true,
     "**/.vscode": false,
-    "**/__pycache__": true,
-    "**/deps": true,
-    "**/.storage": true,
-    "**/tts": true,
     "**/backups": true,
-    "home-assistant.log*": false,
-    "**/blueprints": true
+    "**/blueprints": true,
+    "**/deps": true,
+    "**/tts": true,
+    "home-assistant.log*": false
   }
 }

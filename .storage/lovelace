@@ -221,9 +221,9 @@
                     },
                     {
                       "action": {
-                        "service": "light.toggle"
+                        "service": "switch.toggle"
                       },
-                      "entity": "light.pompe_failsafe_light",
+                      "entity": "switch.fontaine_bassin",
                       "name": "Pompe",
                       "size": 2,
                       "map_state": {
@@ -2624,7 +2624,7 @@
                     "cards": [
                       {
                         "type": "custom:mushroom-entity-card",
-                        "entity": "light.pompe_failsafe_light",
+                        "entity": "switch.fontaine_bassin",
                         "icon": "mdi:fountain",
                         "fill_container": false,
                         "tap_action": {
@@ -3017,7 +3017,7 @@
                   "cards": [
                     {
                       "type": "custom:mushroom-entity-card",
-                      "entity": "light.pompe_failsafe_light",
+                      "entity": "switch.fontaine_bassin",
                       "icon": "mdi:fountain",
                       "fill_container": false,
                       "tap_action": {
