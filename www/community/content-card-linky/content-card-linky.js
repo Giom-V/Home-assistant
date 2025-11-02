@@ -693,6 +693,13 @@ class ContentCardLinky extends LitElement {
     return [tempoDate, tempoValues.get(tempoValue), tempoValue];
   } 
   
+  getTempoRemainingDays(tempoEntity) {
+	let tempoRemainingRed = tempoEntity.attributes["days_red"];
+	let tempoRemainingWhite = tempoEntity.attributes["days_white"];
+	let tempoRemainingBlue = tempoEntity.attributes["days_blue"];
+    return [tempoRemainingRed, tempoRemainingWhite, tempoRemainingBlue];
+  } 
+  
   renderTempo(attributes, config) {
 	if (attributes.serviceEnedis === undefined ){
 	  return html ``;
@@ -703,23 +710,36 @@ class ContentCardLinky extends LitElement {
 	if (this.config.showTempo === false ){
 	  return html ``;
 	}
+	let sensorName = this.config.tempoEntityInfo;
+    const tempoInfo = this.hass.states[sensorName];
 	let sensorNameJ0 = this.config.tempoEntityJ0;
     const tempoJ0 = this.hass.states[sensorNameJ0];
 	let sensorNameJ1 = this.config.tempoEntityJ1;
     const tempoJ1 = this.hass.states[sensorNameJ1];
 
     if (!tempoJ0 || tempoJ0.length === 0 || !tempoJ1 || tempoJ1.length === 0) {
-      return html `Tempo: sensor(s) indisponible ou incorrecte`;
+      return html `Tempo: sensor(s) J0 et/ou J1 indisponible ou incorrecte`;
+    }
+	if (!tempoInfo || tempoInfo.length === 0) {
+      return html `Tempo: sensor 'info' indisponible ou incorrecte`;
     }
 
     let [dateJ0, valueJ0, stateJ0] = this.getTempoDateValue(tempoJ0);
 	let [dateJ1, valueJ1, stateJ1] = this.getTempoDateValue(tempoJ1);
+	let [remainingRed, remainingWhite, remainingBlue] = this.getTempoRemainingDays(tempoInfo);
 
     return html`
-	  <table style="width:100%">
+	  <table class="tempo-color">
 	  <tr>
 		<td class="tempo-${valueJ0}" style="width:50%">${ (new Date(dateJ0)).toLocaleDateString('fr-FR', {weekday: 'long', day: 'numeric'})}</td>
 		<td class="tempo-${valueJ1}" style="width:50%">${ (new Date(dateJ1)).toLocaleDateString('fr-FR', {weekday: 'long', day: 'numeric'})}</td>
+	  </tr>
+	  </table>
+	  <table class="tempo-days">
+	  <tr>
+	  	<td class="tempo-blue" style="width:33.33%">${remainingBlue}</td>
+		<td class="tempo-white" style="width:33.33%">${remainingWhite}</td>
+		<td class="tempo-red" style="width:33.33%">${remainingRed}</td>
 	  </tr>
 	  </table>
 		
@@ -1006,7 +1026,7 @@ class ContentCardLinky extends LitElement {
       .ecowatt-08, .ecowatt-09, .ecowatt-10, .ecowatt-11, .ecowatt-12, .ecowatt-13, .ecowatt-14, .ecowatt-15 {
         flex: 2 1 0;
       }
-	  .ecowatt-16, .ecowatt-17, .ecowatt-18, .ecowatt-19, .ecowatt-20, .ecowatt-21, .ecowatt-22, .ecowatt-23 {
+      .ecowatt-16, .ecowatt-17, .ecowatt-18, .ecowatt-19, .ecowatt-20, .ecowatt-21, .ecowatt-22, .ecowatt-23 {
         flex: 2 1 0;
       }
 	  
@@ -1024,25 +1044,45 @@ class ContentCardLinky extends LitElement {
       .oneHourHeader li:last-child {
         text-align: right;
       }
-	  .tempo-blue {
+      .tempo-days {
+       	width:100%;
+	border-spacing: 2px;
+      }
+      .tempo-color {
+        width:100%;
+	border-spacing: 2px;
+      }
+      .tempo-blue {
         color: white;
-		text-align: center;
+	text-align: center;
         background: #009dfa;
+    	border: 2px solid var(--divider-color);
+    	box-shadow: var(--ha-card-box-shadow,none);
+	
       }
-	  .tempo-white {
+      .tempo-white {
         color: #002654;
-		text-align: center;
-        background: silver;
+	text-align: center;
+        background: white;
+    	border: 2px solid var(--divider-color);
+    	box-shadow: var(--ha-card-box-shadow,none);
+	
       }
-	  .tempo-red {
+      .tempo-red {
         color: white;
-		text-align: center;
+	text-align: center;
         background: #ff2700;
+    	border: 2px solid var(--divider-color);
+    	box-shadow: var(--ha-card-box-shadow,none);
       }
-	  .tempo-grey {
+      .tempo-grey {
         color: white;
-		text-align: center;
+	text-align: center;
         background: grey;
+	border: 2px solid var(--divider-color);
+	box-shadow: var(--ha-card-box-shadow,none);
+	background-image: linear-gradient(45deg, #d6d6d6 25%, #dedede 25%, #dedede 50%, #d6d6d6 50%, #d6d6d6 75%, #dedede 75%, #dedede 100%);
+	background-size: 28.28px 28.28px;
       }	  
       `;
   }
