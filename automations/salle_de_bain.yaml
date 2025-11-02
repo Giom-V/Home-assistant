@@ -1,0 +1,37 @@
+- id: "1678917872103"
+  alias: Toggle Bathroom heating
+  description: ""
+  trigger:
+    - platform: device
+      domain: mqtt
+      device_id: 8b0c8128d37ebeb5d404e45e40e1e9f3
+      type: action
+      subtype: single
+    - platform: state
+      entity_id:
+        - sensor.bouton_sdb_action
+      to: single
+      enabled: false
+  condition: []
+  action:
+    - type: toggle
+      device_id: 4a6b0aa18628bded0b46b3928ad3ba2d
+      entity_id: 19ea51cc7b009ea53ab8f936806ba6ed
+      domain: switch
+  mode: single
+- id: "1678959025833"
+  alias: Turn off bathroom heating
+  description: ""
+  trigger:
+    - platform: device
+      domain: mqtt
+      device_id: 8b0c8128d37ebeb5d404e45e40e1e9f3
+      type: action
+      subtype: double
+  condition: []
+  action:
+    - type: turn_off
+      device_id: 4a6b0aa18628bded0b46b3928ad3ba2d
+      entity_id: switch.chauffage_sdb
+      domain: switch
+  mode: single

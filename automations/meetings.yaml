@@ -22,6 +22,21 @@
       target:
         device_id: d46e18f81ffadbf162f2d7d4ec0491a3
   mode: single
+- id: "1669999603054"
+  alias: Turn on D-Light when I am in a meeting
+  description: ""
+  trigger:
+    - platform: state
+      entity_id:
+        - binary_sensor.in_meeting
+      to: "on"
+  condition: []
+  action:
+    - service: light.turn_on
+      data: {}
+      target:
+        entity_id: light.dlight
+  mode: single
 - alias: Light red when in a meeting
   description: ""
   trigger:

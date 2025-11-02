@@ -1,0 +1,262 @@
+- id: "1677099297248"
+  alias: Aurore's bed lights
+  description: ""
+  triggers:
+    - device_id: e059cad12f0a2c750a56719a911dc8e6
+      domain: zha
+      type: remote_button_short_press
+      subtype: turn_off
+      trigger: device
+    - domain: mqtt
+      device_id: f646eba37247f6ffa88f1d1c3b59ef76
+      type: action
+      subtype: "off"
+      metadata: {}
+      trigger: device
+  conditions: []
+  actions:
+    - type: toggle
+      device_id: cef49caed9c762db670b6d2a85a15832
+      entity_id: switch.aurore_bed_light_switch
+      domain: switch
+  mode: single
+- id: "1677698797768"
+  alias: Aurore's room main light bulb
+  description: ""
+  triggers:
+    - domain: mqtt
+      device_id: f646eba37247f6ffa88f1d1c3b59ef76
+      type: action
+      subtype: "on"
+      metadata: {}
+      trigger: device
+    - device_id: e059cad12f0a2c750a56719a911dc8e6
+      domain: zha
+      type: remote_button_short_press
+      subtype: turn_on
+      trigger: device
+  conditions: []
+  actions:
+    - type: toggle
+      device_id: e87ea47d487bcb4708a442aa8ebacfb1
+      entity_id: light.aurores_light_bulb
+      domain: light
+    - metadata: {}
+      data: {}
+      target:
+        entity_id: light.lumiere_chambre_aurore
+      action: light.toggle
+  mode: single
+- id: "1677701807876"
+  alias: Aurore's Light color temperature up
+  description: ""
+  trigger:
+    - device_id: e059cad12f0a2c750a56719a911dc8e6
+      domain: zha
+      platform: device
+      type: remote_button_short_press
+      subtype: right
+  condition:
+    - condition: device
+      type: is_on
+      device_id: e87ea47d487bcb4708a442aa8ebacfb1
+      entity_id: light.aurores_light_bulb
+      domain: light
+  action:
+    - device_id: e87ea47d487bcb4708a442aa8ebacfb1
+      domain: number
+      entity_id: number.aurores_light_bulb_start_up_color_temperature
+      type: set_value
+      value:
+        "{{ [states('number.aurores_light_bulb_start_up_color_temperature') |
+        int + 40 , 255] | min | float }}"
+  mode: single
+- id: "1677701807876"
+  alias: Aurore's Light color temperature down
+  description: ""
+  trigger:
+    - device_id: e059cad12f0a2c750a56719a911dc8e6
+      domain: zha
+      platform: device
+      type: remote_button_short_press
+      subtype: left
+  condition:
+    - condition: device
+      type: is_on
+      device_id: e87ea47d487bcb4708a442aa8ebacfb1
+      entity_id: light.aurores_light_bulb
+      domain: light
+  action:
+    - device_id: e87ea47d487bcb4708a442aa8ebacfb1
+      domain: number
+      entity_id: number.aurores_light_bulb_start_up_color_temperature
+      type: set_value
+      value:
+        "{{ [states('number.aurores_light_bulb_start_up_color_temperature') |
+        int - 40 , 255] | min | float }}"
+  mode: single
+- id: "1679085142205"
+  alias: During the day Aurore's light bulb default behavior is On
+  description: ""
+  trigger:
+    - platform: time
+      at: 07:00:00
+  condition: []
+  action:
+    - service: select.select_option
+      data:
+        option: "On"
+      target:
+        entity_id: select.aurores_light_bulb_start_up_behavior
+  mode: single
+- id: "1719993857867"
+  alias: Dim up Aurore's light
+  description: ""
+  triggers:
+    - device_id: e059cad12f0a2c750a56719a911dc8e6
+      domain: zha
+      type: remote_button_long_press
+      subtype: dim_up
+      trigger: device
+    - domain: mqtt
+      device_id: f646eba37247f6ffa88f1d1c3b59ef76
+      type: action
+      subtype: brightness_move_up
+      trigger: device
+  conditions: []
+  actions:
+    - metadata: {}
+      data:
+        brightness_step_pct: 66
+      target:
+        entity_id: light.lumiere_chambre_aurore
+      enabled: false
+      action: light.turn_on
+    - device_id: 7a0af38e25d8a8afb66dba181b664f33
+      domain: light
+      entity_id: c3acfa362782538431339214f251a5db
+      type: brightness_increase
+      enabled: false
+    - metadata: {}
+      data:
+        brightness_step_pct: 25
+      target:
+        entity_id: light.lumiere_chambre_aurore
+      action: light.turn_on
+  mode: single
+- id: "1719993909448"
+  alias: Dim down Aurore's light
+  description: ""
+  triggers:
+    - device_id: e059cad12f0a2c750a56719a911dc8e6
+      domain: zha
+      type: remote_button_long_press
+      subtype: dim_down
+      trigger: device
+    - domain: mqtt
+      device_id: f646eba37247f6ffa88f1d1c3b59ef76
+      type: action
+      subtype: brightness_move_down
+      trigger: device
+  conditions: []
+  actions:
+    - metadata: {}
+      data:
+        brightness_step_pct: -20
+      target:
+        entity_id: light.lumiere_chambre_aurore
+      action: light.turn_on
+  mode: single
+- id: "1719994191328"
+  alias: Control Aurore's velux curtains
+  description: ""
+  trigger:
+    - device_id: e059cad12f0a2c750a56719a911dc8e6
+      domain: zha
+      platform: device
+      type: remote_button_short_press
+      subtype: left
+    - device_id: e059cad12f0a2c750a56719a911dc8e6
+      domain: zha
+      platform: device
+      type: remote_button_long_press
+      subtype: right
+  condition: []
+  action:
+    - if:
+        - condition: device
+          device_id: 8f16b93c4fae1055fc21ef57afca5b0f
+          domain: cover
+          entity_id: 5159b1462f01722c359983c04fea0e28
+          type: is_closed
+      then:
+        - device_id: 8f16b93c4fae1055fc21ef57afca5b0f
+          domain: cover
+          entity_id: 5159b1462f01722c359983c04fea0e28
+          type: open
+      else:
+        - device_id: 8f16b93c4fae1055fc21ef57afca5b0f
+          domain: cover
+          entity_id: 5159b1462f01722c359983c04fea0e28
+          type: close
+  mode: single
+- id: "1758443142653"
+  alias: Switch off Aurore bed light when she sleeps
+  description: ""
+  triggers:
+    - trigger: time
+      at: "23:00:00"
+    - trigger: time
+      at: "23:30:00"
+    - trigger: time
+      at: 00:00:00
+    - trigger: time
+      at: 01:00:00
+  conditions: []
+  actions:
+    - action: switch.turn_off
+      metadata: {}
+      data: {}
+      target:
+        entity_id: switch.aurore_bed_light_switch
+  mode: single
+- id: "1758443383959"
+  alias: Aurore's main light
+  description: ""
+  triggers:
+    - device_id: e059cad12f0a2c750a56719a911dc8e6
+      domain: zha
+      type: remote_button_short_press
+      subtype: turn_on
+      trigger: device
+    - domain: mqtt
+      device_id: f646eba37247f6ffa88f1d1c3b59ef76
+      type: action
+      subtype: "on"
+      trigger: device
+  conditions: []
+  actions:
+    - type: toggle
+      device_id: 7a0af38e25d8a8afb66dba181b664f33
+      entity_id: c3acfa362782538431339214f251a5db
+      domain: light
+  mode: single
+- id: "1759210471445"
+  alias: Fermer les volets d'Aurore à minuit
+  description: ""
+  triggers:
+    - trigger: time
+      at: 00:00:00
+  conditions:
+    - condition: not
+      conditions:
+        - condition: state
+          entity_id: sensor.season
+          state: summer
+  actions:
+    - action: cover.close_cover
+      metadata: {}
+      data: {}
+      target:
+        entity_id: cover.velux_external_cover_roller_shutter
+  mode: single

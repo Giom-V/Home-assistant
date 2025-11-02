@@ -1,0 +1,28 @@
+- id: "1689544847933"
+  alias: Conso anormale à La Plagne
+  description:
+    Alert if the heating still works while the resort should be closed
+    and we're not there.
+  trigger:
+    - platform: numeric_state
+      entity_id: sensor.myenedis_19677423985708
+      for:
+        hours: 1
+        minutes: 0
+        seconds: 0
+      above: 2
+  condition:
+    - condition: not
+      conditions:
+        - condition: zone
+          entity_id: person.guillaume
+          zone: zone.la_plagne
+        - condition: template
+          value_template: "{% set n = now() %}
+
+            {{ n.month < 12 and ( n.month > 5 or ( n.month == 5 and n.day <= 15 ) ) }}"
+  action:
+    - service: rest_command.gchat
+      data:
+        text: Chauffage en fonctionnement à La Plagne.
+  mode: single

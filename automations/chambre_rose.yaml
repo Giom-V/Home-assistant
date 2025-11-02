@@ -1,0 +1,99 @@
+- id: "1736756974252"
+  alias: "Bedroom remote: LEDs"
+  description: ""
+  triggers:
+    - domain: mqtt
+      device_id: a7995daf6b00103a726e7417cf4e5b9b
+      type: action
+      subtype: arm_all_zones
+      metadata: {}
+      trigger: device
+  conditions: []
+  actions:
+    - type: toggle
+      device_id: 80fbbf7d7f0606c4dc0731332c33e4c0
+      entity_id: 9d794747df6e33f51d6a02d194d88d70
+      domain: light
+  mode: single
+- id: "1736757260832"
+  alias: "Bedroom remote: covers "
+  description: ""
+  triggers:
+    - domain: mqtt
+      device_id: a7995daf6b00103a726e7417cf4e5b9b
+      type: action
+      subtype: arm_day_zones
+      trigger: device
+  conditions: []
+  actions:
+    - if: []
+      then:
+        - device_id: 22b77f8ecce501db1f53c1b19a852202
+          domain: cover
+          entity_id: 3c329cfad3629946c940a2f6999b69ab
+          type: open
+    - choose:
+        - conditions:
+            - condition: or
+              conditions:
+                - condition: device
+                  device_id: 22b77f8ecce501db1f53c1b19a852202
+                  domain: cover
+                  entity_id: 3c329cfad3629946c940a2f6999b69ab
+                  type: is_closing
+                - condition: device
+                  device_id: 22b77f8ecce501db1f53c1b19a852202
+                  domain: cover
+                  entity_id: 3c329cfad3629946c940a2f6999b69ab
+                  type: is_opening
+          sequence:
+            - device_id: 22b77f8ecce501db1f53c1b19a852202
+              domain: cover
+              entity_id: 3c329cfad3629946c940a2f6999b69ab
+              type: stop
+        - conditions:
+            - condition: device
+              device_id: 22b77f8ecce501db1f53c1b19a852202
+              domain: cover
+              entity_id: 3c329cfad3629946c940a2f6999b69ab
+              type: is_open
+          sequence:
+            - device_id: 22b77f8ecce501db1f53c1b19a852202
+              domain: cover
+              entity_id: 3c329cfad3629946c940a2f6999b69ab
+              type: close
+      default:
+        - device_id: 22b77f8ecce501db1f53c1b19a852202
+          domain: cover
+          entity_id: 3c329cfad3629946c940a2f6999b69ab
+          type: open
+  mode: single
+- id: "1736757328634"
+  alias: Turn on wardrobe light at 10
+  description: ""
+  triggers:
+    - trigger: time_pattern
+      hours: "10"
+  conditions: []
+  actions:
+    - type: turn_on
+      device_id: 666e5e5e5b375483d4ec9748bbbd0119
+      entity_id: 7c13b027a97873a0b48a21d06ae2d630
+      domain: light
+  mode: single
+- id: "1736757407681"
+  alias: "Bedroom remote: wardrobe"
+  description: ""
+  triggers:
+    - domain: mqtt
+      device_id: a7995daf6b00103a726e7417cf4e5b9b
+      type: action
+      subtype: disarm
+      trigger: device
+  conditions: []
+  actions:
+    - type: toggle
+      device_id: 666e5e5e5b375483d4ec9748bbbd0119
+      entity_id: 7c13b027a97873a0b48a21d06ae2d630
+      domain: light
+  mode: single

@@ -5,8 +5,8 @@ explanations of what I do and why.
 
 Please note that automations are not the only way to automate things in Home
 Assistant. Some of the magic is also managed through [scripts](../scripts),
-[template sensors](../configuration.yaml?l=60), [custom
-integrations](../custom_components) or add-ons.
+[template sensors](../configuration.yaml?l=60),
+[custom integrations](../custom_components) or add-ons.
 
 Also, I used to have more automations when I was in Canada but since I'm moved
 mutiple times during the last 2 years I did not had time to bring them all back
@@ -32,9 +32,9 @@ The way I'm managing having this folder with different files who contains
 automations, and on top of that keeping the root
 [automations.yaml](../automations.yaml) file is that way:
 
-- in the main [configuration.yaml](../configuration.yaml), this line `packages:
-  !include_dir_named integrations` makes it so each integration has its own file
-  in the [integrations/](../integrations/) folder.
+- in the main [configuration.yaml](../configuration.yaml), this line
+  `packages: !include_dir_named integrations` makes it so each integration has
+  its own file in the [integrations/](../integrations/) folder.
 
 - in the [integrations/](../integrations/) folder we have a
   [automations.yaml](../integrations/automations.yaml) file.
@@ -74,8 +74,8 @@ abnormal temperature.
 
 There are currently only 2 automations:
 
-- `Alert me if the temperature is too low`: In case the temperature in any of
-  the indoor rooms (including the basement) goes below 10 degrees, alert me
+- `Alert me if the temperature is too low`: In case the temperature in any
+  of the indoor rooms (including the basement) goes below 10 degrees, alert me
   through Google Chat and my Google Homes.
 
 - `Alert me if the temperature is too high`: Same if the temperature goes over
@@ -107,11 +107,12 @@ There are also some tentative for presence simulation.
 
 All those automations are using the 3 helpers
 
-- `binary_sensor.people_home` indicates if someone who's tracked (my wife and I)
-  are home. The issue is that it doesn't take into account that my daughter
-  could be [home alone](https://en.wikipedia.org/wiki/Home_Alone), which for now
-  doesn not happen often since she's still young or that we may have visitors
-  (my parents or my in-laws for ex.), which is a case that happen quite often.
+- `binary_sensor.people_home` indicates if someone who's tracked (my wife
+  and I) are home. The issue is that it doesn't take into account that my
+  daughter could be [home alone](https://en.wikipedia.org/wiki/Home_Alone),
+  which for now doesn not happen often since she's still young or that we may
+  have visitors (my parents or my in-laws for ex.), which is a case that
+  happen quite often.
 
 - [`input_boolean.visitors`](visitors.md) is meant to solve that problem. It
   indicates that we have someone visiting and prevents the different
@@ -126,22 +127,22 @@ switch/overwrite them.
 
 The different automations are:
 
-- [`Switch Away mode on when we are away for more than an hour`](away_mode.yaml#L58):
-  This is the automation that switches the `input_boolean.away_mode` value to
-  on when we are away, this then enables all the other automations. There's a
-  slight delay to prevent the alarm to switch too often, to cover for when we
-  leave our daughter for a short while, or if the geofencing becomes flaky and
-  our home/away presence switches.
+- [`Switch Away mode on when we are away for more than an hour`
+  ](away_mode.yaml#L58): This is the automation that switches the
+  `input_boolean.away_mode` value to on when we are away, this then enables all
+  the other automations. There's a slight delay to prevent the alarm to switch
+  too often, to cover for when we leave our daughter for a short while, or if
+  the geofencing becomes flaky and our home/away presence switches.
 
 - [`Switch Away mode off when we come back`](away_mode.yaml#L82): This is the
   reverse automation, setting off `input_boolean.away_mode` and the alerts. It
   also sets the media players volumes back to normal since the alerts are
   raising them to the maximum.
 
-- `Switch motion detection and alarms on when the away mode is on` and `Switch
-  motion detection off when the away mode is off`: These used to switch the
-  motion detection of my Dafang camera on and off when we were home/away, but
-  that's not possible with my new Reolink cameras so I disabled the
+- `Switch motion detection and alarms on when the away mode is on` and
+  `Switch motion detection off when the away mode is off`: These used to switch
+  the motion detection of my Dafang camera on and off when we were home/away,
+  but that's not possible with my new Reolink cameras so I disabled the
   automations.
 
 - [`Motion detected`](away_mode.yaml#L107): Sends an alert (via Google Chat),
@@ -160,16 +161,16 @@ The different automations are:
   presence detection, so for now the lights used for the presence are not in
   this automation.
 
-- [`Presence simulation Bureau`](away_mode.yaml#L338): Presence detection in my
-  office. It uses randomness for more realness. Starts at a random time between
-  30 before sunset and 15mn after and ends between 11PM and 11:15PM.
+- [`Presence simulation Bureau`](away_mode.yaml#L338): Presence detection in
+  my office. It uses randomness for more realness. Starts at a random time
+  between 30 before sunset and 15mn after and ends between 11PM and 11:15PM.
 
-- [`Presence simulation Aurore's bedroom`](away_mode.yaml#L365): Same thing but
-  with slightly different times (the worst that could happen would be to have
-  all lights switching on and off at the same time).
+- [`Presence simulation Aurore's bedroom`](away_mode.yaml#L365): Same thing
+  but with slightly different times (the worst that could happen would be to
+  have all lights switching on and off at the same time).
 
-- [`Reboot HA every week when we are away`](away_mode.yaml#L392): This one is a
-  failsafe. When I'm away for a long time I want to be certain HA is not
+- [`Reboot HA every week when we are away`](away_mode.yaml#L392): This one is
+  a failsafe. When I'm away for a long time I want to be certain HA is not
   frozen, so I like to reboot it at least once a week. I also have a Shelly
   plug that I program to reboot the modem every week for the same reason.
 
@@ -190,17 +191,29 @@ A more detailed documentation of those automations can be found in the
 - Continue to improve presence simulation (TV, or rando; colars in the living
   room to simulate it)
 
+### [Bassin](bassin.yaml)
+
+Automatisations liées au bassin.
+
+### [Bureau](bureau.yaml)
+
+Automatisations liées au bureau.
+
+### [Cannes](cannes.yaml)
+
+Automatisations liées à l'appartement de Cannes.
+
 ### [Car](car.yaml)
 
-These are all the automations related to my car and its charger since I only
-want to charge it during off-peak hours (and later on when producing a surplus
-of electricity with panels).
+- These are all the automations related to my car and its charger since I
+  only wanna charge it during off-peak hours (and later on when producing a
+  surplus of electricity with panels).
 
 The automations are:
 
-- `Turn on the car's chargeur only during off-peak hours`: Switches on/off the
-  plug controlling the car charger depending on the off-peak hours. I'm quite
-  satisfied to have managed to do that in one automation instead of two.
+- `Turn on the car's chargeur only during off-peak hours`: Switches on/off
+  the plug controlling the car charger depending on the off-peak hours. I'm
+  quite satisfied to have managed to do that in one automation instead of two.
 
 - `Preheat the car`: In winter, on school days, and if we are home, if the
   temperature is low, preheat the car just before when we have to go to school.
@@ -220,19 +233,40 @@ since they don't work at the moment you should just ignore them.
   charger status accordingly
 - Only preheat the car if it's not a holiday (using the calendar integration)
 
+### [Chambre Aurore](chambre_aurore.yaml)
+
+Automatisations liées à la chambre d'Aurore.
+
+### [Chambre Rose](chambre_rose.yaml)
+
+Automatisations liées à la chambre rose.
+
+### [Chauffage](chauffage.yaml)
+
+Automatisations liées au chauffage.
+
+### [La Plagne](la_plagne.yaml)
+
+Automatisations liées à l'appartement de La Plagne.
+
+### [Maison](maison.yaml)
+
+Automatisations générales liées à la maison.
+
 ### [Meetings](meetings.yaml)
 
-Theses automations are meant to switch a light colors depending on if I'm in a
-meeting and if I'm talking (using the [Mutesync](mutesync.com) device and
-integration), but since I have set it up since my last move I'm not going to
-comment on it. It's quite straightforward so it shouldn't be hard to understand.
+- Theses automations are meant to switch a light colors depending on if I'm
+  in a meeting and if I'm talking (using the [Mutesync](mutesync.com) device
+  and integration), but since I have set it up since my last move I'm not
+  going to comment on it. It's quite straightforward so it shouldn't be hard
+  to understand.
 
 ### [Night Time](nightTime.yaml)
 
 These are old automations that I'm not using anymore and just keeping for
-reference. There were all meant to switch on some lights and changing thjeir
-colors to give a hint to my daughter on whether it was time for the night
-routine or to go to bed.
+  reference. There were all meant to switch on some lights and changing thjeir
+  colors to give a hint to my daughter on whether it was time for the night
+  routine or to go to bed.
 
 ### [Others](others.yaml)
 
@@ -241,10 +275,10 @@ fitting anywhere else.
 
 These are:
 
-- `Switch off lights 30mn after sunrise` and `Switch off lights 60mn after
-  sunrise`: Except maybe for my office, all lights should be switched off during
-  the day so this is what those automations do (just slightly later during the
-  Canadian winter).
+- `Switch off lights 30mn after sunrise` and
+  `Switch off lights 60mn after sunrise`: Except maybe for my office, all
+  lights should be switched off during the day so this is what those
+  automations do (just slightly later during the Canadian winter).
 
 - `Switch off all lights when we go to bed`: Switches off all lights when it's
   time to go to bed (time set up in the `input_datetime.nighttime_end` helper)
@@ -258,6 +292,22 @@ These are:
 
 - Not switching off lights if we have visitors
 
+### [Salle de bain](salle_de_bain.yaml)
+
+Automatisations liées à la salle de bain.
+
+### [Technique](technique.yaml)
+
+Automatisations techniques / failsafes.
+
+### [Terrasse](terrasse.yaml)
+
+Automatisations liées à la terrasse.
+
+### [TV](tv.yaml)
+
+Automatisations liées à la télévision.
+
 ### [Vaccum cleaner](vacuumCleaner.yaml)
 
 Here are all the automations related to my vacuum cleaner.
@@ -265,13 +315,13 @@ Here are all the automations related to my vacuum cleaner.
 Note that some of the logic is managed in [scripts](../scripts/), in the
 [`vacuum.yaml`](../scripts/vacuum.yaml) file.
 
-Some automations were related to the IFTT integration but since [Google removed
-the option for IFTTT to parce custom
-commands](https://ifttt.com/explore/google-assistant-changes), I had to get rid
-of them. Initially they were letting me say "OK Google, Clean the bedroom 3
-times", and the string "the betroom 3 times" was passed down to HA, parsed (cf.
-[scripts](../scripts/vacuum.yaml)) and then the right command was sent to the
-vaccum.
+- Some automations were related to the IFTT integration but since [Google
+  removed the option for IFTTT to parce custom commands]
+  (https://ifttt.com/explore/google-assistant-changes), I had to get rid of
+  them. Initially they were letting me say "OK Google, Clean the bedroom 3
+  times", and the string "the betroom 3 times" was passed down to HA, parsed
+  (cf. [scripts](../scripts/vacuum.yaml)) and then the right command was sent
+  to the vaccum.
 
 The remaining automations are:
 
@@ -284,29 +334,30 @@ The remaining automations are:
   used anymore but kept as a reference. It was good enough when we were both
   working at the office but not anymore.
 
-- `vacuum Kitchen and dining room when we are away (Covid version)`: It's the
-  advanced version, named "Covid" because I started to work home during the
-  pandemic. It waits for us to be away for 5mn (the timer is short because I was
-  it to start while I'm bringin my daughter to school in the morning). Then if
-  we do not have visitors, or if its' not too late or too early, if it's a
-  worked day (in which case only 1 of us needs to be away) or not (in which case
-  we need to be both away), and finally if it had not done any cleaning in the
-  last 12h, it starts vaccuming the kitchen, the dining room and the bathroom.
-  This is my most complicated automation, at least in regard to conditions.
+- `vacuum Kitchen and dining room when we are away (Covid version)`: It's
+  the advanced version, named "Covid" because I started to work home during
+  the pandemic. It waits for us to be away for 5mn (the timer is short
+  because I was it to start while I'm bringin my daughter to school in the
+  morning). Then if we do not have visitors, or if its' not too late or too
+  early, if it's a worked day (in which case only 1 of us needs to be away)
+  or not (in which case we need to be both away), and finally if it had not
+  done any cleaning in the last 12h, it starts vaccuming the kitchen, the
+  dining room and the bathroom. This is my most complicated automation, at
+  least in regard to conditions.
 
 - `Update the time of the last cleaning`: I'm tracking in
   `input_datetime.last_vacuum` the last time the vaccum cleaner has been doing
   its job, so taht I'm not triggering it more than every 12h. That automation
   save the time whenever the vaccum is used.
 
-- `Start/stop xiaomi fast scan interval` and `Update xiaomi map extractor`: The
-  [Xiaomi
-  integration](https://www.home-assistant.io/integrations/xiaomi_miio/#xiaomi-mi-robot-vacuum)
-  stops working if it receives too many calls per day and the [map
-  extractor](https://github.com/PiotrMachowski/Home-Assistant-custom-components-Xiaomi-Cloud-Map-Extractor)
-  one is making a lot of calls if we want to be able to follow the vacuum on the
-  map in real time. So that two automations work together to only update the map
-  when one of the vacuum is in use.
+- `Start/stop xiaomi fast scan interval` and `Update xiaomi map extractor`:
+  The [Xiaomi integration]
+  (https://www.home-assistant.io/integrations/xiaomi_miio/#xiaomi-mi-robot-vacuum)
+  stops working if it receives too many calls per day and the [map extractor]
+  (https://github.com/PiotrMachowski/Home-Assistant-custom-components-Xiaomi-Cloud-Map-Extractor)
+  one is making a lot of calls if we want to be able to follow the vacuum on
+  the map in real time. So that two automations work together to only update
+  the map when one of the vacuum is in use.
 
 #### Future improvements for the vaccum cleaner
 
@@ -320,9 +371,9 @@ The remaining automations are:
 
 ### [Working](working.yaml)
 
-These automations goal is to set the value of `input_boolean.working` depending
-on different signals to indicate if I'm working or not and impact other
-automations accordinly.
+- These automations goal is to set the value of `input_boolean.working`
+  depending on different signals to indicate if I'm working or not and impact
+  other automations accordinly.
 
 `input_datetime.work_start` and `input_datetime.work_end` indicate my usual
 working hours.
@@ -352,8 +403,7 @@ Some ideas of automations I want to add later on:
 - Good night routine which switches off lights, close curtains, and tell me if a
   door is open
 - good morning routine, with also a summary of my day (do I have a lunch
-  planned, is it me or my wife who's in charge of my daughters activities,
-  etc...)
+  planned, is it me or my wife who's in charge of my daughters activities, etc...)
 - Detect if a car approches the house (I want to be able to say "I'm waiting for
   someone, tell me when they arrive")
 - Circadian lights
@@ -362,12 +412,13 @@ Some ideas of automations I want to add later on:
   school
 - "You have mail" notification using a sensor in my mailbox
 - Smart heating
-- More proactive notifications with CTA like receiving a chat messages that says
-  "According to your calendar, your visitors should have left, should I
+- More proactive notifications with CTA like receiving a chat messages that
+  says "According to your calendar, your visitors should have left, should I
   deactivate the visitor mode?".
 - Redo what I was doing in Canada with a remote that was switching between
-  different scenes in my living-room (for ref.
-  [automations](https://github.com/Giom-V/Home-assistant/blob/620sapins-rpi3b-hassbian/automations/ikeaController.yaml),
-  [scripts](https://github.com/Giom-V/Home-assistant/blob/620sapins-rpi3b-hassbian/scripts/livingroom.yaml)
-  and
-  [scenes](https://github.com/Giom-V/Home-assistant/blob/620sapins-rpi3b-hassbian/scenes/LivingRoom.yaml))
+  different scenes in my living-room (for ref. [automations]
+  (https://github.com/Giom-V/Home-assistant/blob/620sapins-rpi3b-hassbian/automations/ikeaController.yaml),
+  [scripts]
+  (https://github.com/Giom-V/Home-assistant/blob/620sapins-rpi3b-hassbian/scripts/livingroom.yaml)
+  and [scenes]
+  (https://github.com/Giom-V/Home-assistant/blob/620sapins-rpi3b-hassbian/scenes/LivingRoom.yaml))
