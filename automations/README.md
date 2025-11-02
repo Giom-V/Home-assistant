@@ -11,7 +11,7 @@ Assistant. Some of the magic is also managed through [scripts](../scripts),
 Also, I used to have more automations when I was in Canada but since I'm moved
 mutiple times during the last 2 years I did not had time to bring them all back
 (some also don't make sense anymore). They are still in a
-[branch](https://github.com/Giom-V/Home-assistant/tree/620sapins-rpi3b-hassbian/automations)
+[branch](<https://github.com/Giom-V/Home-assistant/tree/620sapins-rpi3b-hassbian/automations>)
 I created when I moved.
 
 Since I'm usually documenting way after writting the automations I also
@@ -82,7 +82,7 @@ There are currently only 2 automations:
   30 (to be tweaked since I think it happens quite frequently in summer)
 
 I also used to have automations related to noise and moisture but they were
-using my [Minut Point](minut.com) devices but since I can't inteface them with
+using my [Minut Point](<minut.com>) devices but since I can't inteface them with
 HA I had to get rid of the automations. I also used to have 2 automations
 related to my freezer, using a door sensor because my daughter used to forget to
 close it, but I now have a new freezer which beeps so I also disabled the
@@ -109,7 +109,7 @@ All those automations are using the 3 helpers
 
 - `binary_sensor.people_home` indicates if someone who's tracked (my wife
   and I) are home. The issue is that it doesn't take into account that my
-  daughter could be [home alone](https://en.wikipedia.org/wiki/Home_Alone),
+  daughter could be [home alone](<https://en.wikipedia.org/wiki/Home_Alone>),
   which for now doesn not happen often since she's still young or that we may
   have visitors (my parents or my in-laws for ex.), which is a case that
   happen quite often.
@@ -256,7 +256,7 @@ Automatisations générales liées à la maison.
 ### [Meetings](meetings.yaml)
 
 - Theses automations are meant to switch a light colors depending on if I'm
-  in a meeting and if I'm talking (using the [Mutesync](mutesync.com) device
+  in a meeting and if I'm talking (using the [Mutesync](<mutesync.com>) device
   and integration), but since I have set it up since my last move I'm not
   going to comment on it. It's quite straightforward so it shouldn't be hard
   to understand.
@@ -316,8 +316,7 @@ Note that some of the logic is managed in [scripts](../scripts/), in the
 [`vacuum.yaml`](../scripts/vacuum.yaml) file.
 
 - Some automations were related to the IFTT integration but since [Google
-  removed the option for IFTTT to parce custom commands]
-  (https://ifttt.com/explore/google-assistant-changes), I had to get rid of
+  removed the option for IFTTT to parce custom commands](<https://ifttt.com/explore/google-assistant-changes>), I had to get rid of
   them. Initially they were letting me say "OK Google, Clean the bedroom 3
   times", and the string "the betroom 3 times" was passed down to HA, parsed
   (cf. [scripts](../scripts/vacuum.yaml)) and then the right command was sent
@@ -351,10 +350,8 @@ The remaining automations are:
   save the time whenever the vaccum is used.
 
 - `Start/stop xiaomi fast scan interval` and `Update xiaomi map extractor`:
-  The [Xiaomi integration]
-  (https://www.home-assistant.io/integrations/xiaomi_miio/#xiaomi-mi-robot-vacuum)
-  stops working if it receives too many calls per day and the [map extractor]
-  (https://github.com/PiotrMachowski/Home-Assistant-custom-components-Xiaomi-Cloud-Map-Extractor)
+  The [Xiaomi integration](<https://www.home-assistant.io/integrations/xiaomi_miio/#xiaomi-mi-robot-vacuum>)
+  stops working if it receives too many calls per day and the [map extractor](<https://github.com/PiotrMachowski/Home-Assistant-custom-components-Xiaomi-Cloud-Map-Extractor>)
   one is making a lot of calls if we want to be able to follow the vacuum on
   the map in real time. So that two automations work together to only update
   the map when one of the vacuum is in use.
@@ -416,9 +413,6 @@ Some ideas of automations I want to add later on:
   says "According to your calendar, your visitors should have left, should I
   deactivate the visitor mode?".
 - Redo what I was doing in Canada with a remote that was switching between
-  different scenes in my living-room (for ref. [automations]
-  (https://github.com/Giom-V/Home-assistant/blob/620sapins-rpi3b-hassbian/automations/ikeaController.yaml),
-  [scripts]
-  (https://github.com/Giom-V/Home-assistant/blob/620sapins-rpi3b-hassbian/scripts/livingroom.yaml)
-  and [scenes]
-  (https://github.com/Giom-V/Home-assistant/blob/620sapins-rpi3b-hassbian/scenes/LivingRoom.yaml))
+  different scenes in my living-room (for ref. [automations](<https://github.com/Giom-V/Home-assistant/blob/620sapins-rpi3b-hassbian/automations/ikeaController.yaml>),
+  [scripts](<https://github.com/Giom-V/Home-assistant/blob/620sapins-rpi3b-hassbian/scripts/livingroom.yaml>)
+  and [scenes](<https://github.com/Giom-V/Home-assistant/blob/620sapins-rpi3b-hassbian/scenes/LivingRoom.yaml>))
