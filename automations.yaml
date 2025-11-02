@@ -915,8 +915,8 @@
       domain: binary_sensor
   action:
     - service: switch.turn_on
-    target:
-      entity_id: switch.fontaine_bassin
+      target:
+        entity_id: switch.fontaine_bassin
     - delay:
         hours: 0
         minutes: 5
@@ -928,8 +928,8 @@
           state: "off"
       then:
         - service: switch.turn_off
-        target:
-          entity_id: switch.fontaine_bassin
+          target:
+            entity_id: switch.fontaine_bassin
   mode: restart
 - id: "1718127656389"
   alias: Gemini vision
