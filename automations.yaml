@@ -914,10 +914,9 @@
       entity_id: 6228501c1464ed300a010500d31ecdd3
       domain: binary_sensor
   action:
-    - type: turn_on
-      device_id: a48ab46ddad605396107125f1515f518
-      entity_id: 8f72079da6828e4508dc22828595f3bf
-      domain: light
+    - service: switch.turn_on
+    target:
+      entity_id: switch.fontaine_bassin
     - delay:
         hours: 0
         minutes: 5
@@ -928,10 +927,9 @@
           entity_id: binary_sensor.heure_creuse
           state: "off"
       then:
-        - type: turn_off
-          device_id: a48ab46ddad605396107125f1515f518
-          entity_id: 8f72079da6828e4508dc22828595f3bf
-          domain: light
+        - service: switch.turn_off
+        target:
+          entity_id: switch.fontaine_bassin
   mode: restart
 - id: "1718127656389"
   alias: Gemini vision
