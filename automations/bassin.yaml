@@ -17,15 +17,15 @@
 - id: pond_pump_on_off_peak
   alias: Turn on the pond's pump during off-peak hours
   description: Turns on the pump when off-peak hours start, if not freezing.
-  trigger:
+  triggers:
     - platform: state
       entity_id: binary_sensor.heure_creuse
       to: "on"
-  condition:
+  conditions:
     - condition: numeric_state
       entity_id: sensor.module_exterieur_netatmo_temperature
       above: 0
-  action:
+  actions:
     - service: switch.turn_on
       target:
         entity_id: switch.fontaine_bassin
@@ -33,17 +33,17 @@
 - id: pond_pump_off_peak
   alias: Turn off the pond's pump during peak hours
   description: Turns off the pump when peak hours start, or at 2 PM.
-  trigger:
+  triggers:
     - platform: state
       entity_id: binary_sensor.heure_creuse
       to: "off"
     - platform: time
       at: "14:00:00"
-  condition:
+  conditions:
     - condition: state
       entity_id: binary_sensor.heure_creuse
       state: "off"
-  action:
+  actions:
     - service: switch.turn_off
       target:
         entity_id: switch.fontaine_bassin
@@ -51,14 +51,14 @@
 - id: pond_pump_off_freezing
   alias: Turn off water pump when it's freezing
   description: Turns off the pump if the temperature drops below 0°C for 5 minutes.
-  trigger:
+  triggers:
     - platform: numeric_state
       entity_id: sensor.module_exterieur_netatmo_temperature
       below: 0
       for:
         minutes: 5
-  condition: []
-  action:
+  conditions: []
+  actions:
     - service: switch.turn_off
       target:
         entity_id: switch.fontaine_bassin
@@ -66,10 +66,10 @@
 - id: pond_pump_on_lunchtime
   alias: Turn on pond's pump when we are here during lunch time
   description: Turns on the pump at noon if someone is home or visiting.
-  trigger:
+  triggers:
     - platform: time
       at: "12:00:00"
-  condition:
+  conditions:
     - condition: or
       conditions:
         - condition: state
@@ -78,7 +78,7 @@
         - condition: state
           entity_id: binary_sensor.people_home
           state: "on"
-  action:
+  actions:
     - service: switch.turn_on
       target:
         entity_id: switch.fontaine_bassin
@@ -86,13 +86,13 @@
 - id: pond_pump_scare_animals
   alias: Turn on water pump for 5mn to scare animals
   description: Turns on the pump for 5 minutes to scare animals if presence is detected.
-  trigger:
+  triggers:
     - platform: state
       entity_id: binary_sensor.terrasse_animal
       to: "on"
       for:
         seconds: 10
-  condition:
+  conditions:
     - condition: not
       conditions:
         - condition: state
@@ -101,7 +101,7 @@
     - condition: state
       entity_id: binary_sensor.terrasse_person
       state: "off"
-  action:
+  actions:
     - service: switch.turn_on
       target:
         entity_id: switch.fontaine_bassin
