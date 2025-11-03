@@ -45,6 +45,21 @@
       target:
         entity_id: switch.fontaine_bassin
   mode: single
+- id: pond_pump_off_freezing
+  alias: Turn off water pump when it's freezing
+  description: Turns off the pump if the temperature drops below 0°C for 5 minutes.
+  trigger:
+    - platform: numeric_state
+      entity_id: sensor.module_exterieur_netatmo_temperature
+      below: 0
+      for:
+        minutes: 5
+  condition: []
+  action:
+    - service: switch.turn_off
+      target:
+        entity_id: switch.fontaine_bassin
+  mode: single
 - id: pond_pump_on_lunchtime
   alias: Turn on pond's pump when we are here during lunch time
   description: Turns on the pump at noon if someone is home or visiting.
@@ -69,7 +84,7 @@
   description: Turns on the pump for 5 minutes to scare animals if presence is detected.
   trigger:
     - platform: state
-      entity_id: binary_sensor.presence_bassin
+      entity_id: binary_sensor.terrasse_animal
       to: "on"
       for:
         seconds: 10
@@ -80,7 +95,7 @@
           entity_id: sensor.rte_tempo_couleur_actuelle
           state: Rouge
     - condition: state
-      entity_id: binary_sensor.portail_bassin
+      entity_id: binary_sensor.terrasse_person
       state: "off"
   action:
     - service: switch.turn_on
@@ -97,18 +112,3 @@
           target:
             entity_id: switch.fontaine_bassin
   mode: restart
-- id: pond_pump_off_freezing
-  alias: Turn off water pump when it's freezing
-  description: Turns off the pump if the temperature drops below 0°C for 5 minutes.
-  trigger:
-    - platform: numeric_state
-      entity_id: sensor.module_exterieur_netatmo_temperature
-      below: 0
-      for:
-        minutes: 5
-  condition: []
-  action:
-    - service: switch.turn_off
-      target:
-        entity_id: switch.fontaine_bassin
-  mode: single
