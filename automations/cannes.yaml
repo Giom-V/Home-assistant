@@ -30,20 +30,22 @@
               zone: zone.cannes
       enabled: true
   actions:
+    - variables:
+        message_text: "Un locataire est en train de jouer avec les lumières de Cannes."
     - service: rest_command.gchat
       data:
-        text: Un locataire est en train de jouer avec les lumières de Cannes.
+        text: "{{ message_text }}"
     - service: notify.mobile_app_pixel_9_xl
       data:
-        message: Un locataire est en train de jouer avec les lumières de Cannes.
+        message: "{{ message_text }}"
         title: Cannes
     - service: notify.mobile_app_pixel_7q_pascal
       data:
-        message: Un locataire est en train de jouer avec les lumières de Cannes.
+        message: "{{ message_text }}"
         title: Cannes
     - service: notify.mobile_app_pixel_8a_jacqueline
       data:
-        message: Un locataire est en train de jouer avec les lumières de Cannes.
+        message: "{{ message_text }}"
         title: Cannes
   mode: single
 - id: "cannes_private_closet_opened"
@@ -70,24 +72,27 @@
               zone: zone.cannes
       enabled: true
   actions:
+    - variables:
+        message_text: "Porte placard Cannes ouverte !"
+        gchat_message_text: "Un locataire a ouvert le placard de Cannes."
     - service: notify.mobile_app_pixel_9_pro_xl
       data:
-        message: Porte placard Cannes ouverte !
+        message: "{{ message_text }}"
         title: Cannes
     - service: notify.mobile_app_pixel_7a_pascal
       data:
-        message: Porte placard Cannes ouverte !
+        message: "{{ message_text }}"
         title: Cannes
     - service: notify.mobile_app_pixel_8a_jacqueline
       data:
-        message: Porte placard Cannes ouverte !
+        message: "{{ message_text }}"
         title: Cannes
     - service: notify.notify
       data:
-        message: Porte placard Cannes ouverte !
+        message: "{{ message_text }}"
         title: Cannes
       enabled: false
     - service: rest_command.gchat
       data:
-        text: Un locataire a ouvert le placard de Cannes.
+        text: "{{ gchat_message_text }}"
   mode: single
