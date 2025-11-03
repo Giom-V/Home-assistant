@@ -9,12 +9,12 @@ Assistant. Some of the magic is also managed through [scripts](../scripts),
 [custom integrations](../custom_components) or add-ons.
 
 Also, I used to have more automations when I was in Canada but since I'm moved
-mutiple times during the last 2 years I did not had time to bring them all back
+multiple times during the last 2 years I did not had time to bring them all back
 (some also don't make sense anymore). They are still in a
 [branch](<https://github.com/Giom-V/Home-assistant/tree/620sapins-rpi3b-hassbian/automations>)
 I created when I moved.
 
-Since I'm usually documenting way after writting the automations I also
+Since I'm usually documenting way after writing the automations I also
 sometimes add ideas on how I could have made them better.
 
 ## WIP/Prototypes
@@ -110,9 +110,9 @@ All those automations are using the 3 helpers
 - `binary_sensor.people_home` indicates if someone who's tracked (my wife
   and I) are home. The issue is that it doesn't take into account that my
   daughter could be [home alone](<https://en.wikipedia.org/wiki/Home_Alone>),
-  which for now doesn not happen often since she's still young or that we may
+  which for now does not happen often since she's still young or that we may
   have visitors (my parents or my in-laws for ex.), which is a case that
-  happen quite often.
+  happens quite often.
 
 - [`input_boolean.visitors`](visitors.md) is meant to solve that problem. It
   indicates that we have someone visiting and prevents the different
@@ -150,10 +150,10 @@ The different automations are:
   cameras. Mode is `single` because I don't want the script to restart if
   motion is continuously detected.
 
-- [`Door openned while away`](away_mode.yaml#L182): Does the same thing but if a
+- [`Door opened while away`](away_mode.yaml#L182): Does the same thing but if a
   door is opened.
 
-- [`Mouvement detected while away`](away_mode.yaml#L254): Same again but if one
+- [`Movement detected while away`](away_mode.yaml#L254): Same again but if one
   of the motion sensors sees something.
 
 - [`Lights switched on while away`](away_mode.yaml#L305): Same with lights being
@@ -188,20 +188,20 @@ A more detailed documentation of those automations can be found in the
 - Send pictures alongside the notifications when something is detected by the
   cameras
 - Find a way to have both the lights alert and presence detection
-- Continue to improve presence simulation (TV, or random colors in the living
+- Continue to improve presence simulation (TV, or rando; colars in the living
   room to simulate it)
 
 ### [Bassin](bassin.yaml)
 
-Automatisations liées au bassin.
+Automations related to the pond.
 
 ### [Bureau](bureau.yaml)
 
-Automatisations liées au bureau.
+Automations related to the office.
 
 ### [Cannes](cannes.yaml)
 
-Automatisations liées à l'appartement de Cannes.
+Automations related to the Cannes apartment.
 
 ### [Car](car.yaml)
 
@@ -235,23 +235,23 @@ since they don't work at the moment you should just ignore them.
 
 ### [Chambre Aurore](chambre_aurore.yaml)
 
-Automatisations liées à la chambre d'Aurore.
+Automations related to Aurore's bedroom.
 
 ### [Chambre Rose](chambre_rose.yaml)
 
-Automatisations liées à la chambre rose.
+Automations related to the pink bedroom.
 
 ### [Chauffage](chauffage.yaml)
 
-Automatisations liées au chauffage.
+Automations related to heating.
 
 ### [La Plagne](la_plagne.yaml)
 
-Automatisations liées à l'appartement de La Plagne.
+Automations related to the La Plagne apartment.
 
 ### [Maison](maison.yaml)
 
-Automatisations générales liées à la maison.
+General automations related to the house.
 
 ### [Meetings](meetings.yaml)
 
@@ -294,19 +294,23 @@ These are:
 
 ### [Salle de bain](salle_de_bain.yaml)
 
-Automatisations liées à la salle de bain.
+Automations related to the bathroom.
 
 ### [Technique](technique.yaml)
 
-Automatisations techniques / failsafes.
+Technical automations / failsafes.
 
 ### [Terrasse](terrasse.yaml)
 
-Automatisations liées à la terrasse.
+Automations related to the terrace.
 
 ### [TV](tv.yaml)
 
-Automatisations liées à la télévision.
+Automations related to the television.
+
+### [Velo](velo.yaml)
+
+Automations related to my bike
 
 ### [Vaccum cleaner](vacuumCleaner.yaml)
 
@@ -336,7 +340,7 @@ The remaining automations are:
 - `vacuum Kitchen and dining room when we are away (Covid version)`: It's
   the advanced version, named "Covid" because I started to work home during
   the pandemic. It waits for us to be away for 5mn (the timer is short
-  because I want it to start while I'm bringing my daughter to school in the
+  because I was it to start while I'm bringin my daughter to school in the
   morning). Then if we do not have visitors, or if its' not too late or too
   early, if it's a worked day (in which case only 1 of us needs to be away)
   or not (in which case we need to be both away), and finally if it had not
@@ -366,15 +370,11 @@ The remaining automations are:
   automation easier to read
 - Prevent/Delay the vacuum from starting if I'm at home and in a call
 
-### [Velo](velo.yaml)
-
-Automations related to my bike
-
 ### [Working](working.yaml)
 
 - These automations goal is to set the value of `input_boolean.working`
   depending on different signals to indicate if I'm working or not and impact
-  other automations accordinly.
+  other automations accordingly.
 
 `input_datetime.work_start` and `input_datetime.work_end` indicate my usual
 working hours.
