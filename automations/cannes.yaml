@@ -12,8 +12,8 @@
   trigger:
     - platform: state
       entity_id:
-        - light.cannes_lumiere_cuisine
-        - light.cannes_lumiere_salle_a_manger
+        - light.salon
+        - light.salle_a_manger
   conditions:
     - condition: not
       conditions:
