@@ -1,4 +1,12 @@
-- id: "1669906783150"
+# Automations related to my office.
+#
+# There are 2 automations:
+# * `Press office button (switch on/off screens)`: Toggles my screens on/off
+#   when I press the button on my desk.
+# * `Office window opened while it rains`: Sends me a notification if the
+#   office window is open while it's raining.
+
+- id: "office_button_toggle_screens"
   alias: Press office button (switch on/off screens)
   description: ""
   triggers:
@@ -6,34 +14,29 @@
       device_id: 09d4ba3dded13922cf5b606b4bfd261b
       type: action
       subtype: single
-      trigger: device
   conditions: []
   actions:
-    - action: switch.toggle
-      metadata: {}
-      data: {}
+    - service: switch.toggle
       target:
         entity_id:
           - switch.multiprise_bureau_l2
           - switch.multiprise_bureau_l1
   mode: single
-- id: "1727272545121"
+
+- id: "office_window_rain_notification"
   alias: Office window opened while it rains
-  description: ""
-  trigger:
-    - type: precipitation
-      platform: device
-      device_id: 67e35c5459774ea782ecdaa971168280
-      entity_id: b77fbbed5b6243550d7e1547d1915a32
-      domain: sensor
+  description: "Sends me a notification if the office window is open while it's raining."
+  triggers:
+    - platform: numeric_state
+      entity_id: sensor.pluviometre_netatmo_rain
       above: 0.1
-  condition:
+  conditions:
     - condition: state
       entity_id: binary_sensor.velux_bureau_contact
       state: "on"
-  action:
-    - action: notify.mobile_app_pixel_8_pro
+  actions:
+    - service: notify.mobile_app_pixel_8_pro
       data:
-        title: "\U0001F327️ Pluie dans le bureau"
-        message: "Le velux est ouvert alors qu'il pleut \U0001F631"
+        title: "🌧️ Pluie dans le bureau"
+        message: "Le velux est ouvert alors qu'il pleut 😱"
   mode: single
