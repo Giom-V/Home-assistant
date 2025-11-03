@@ -128,7 +128,7 @@ switch/overwrite them.
 The different automations are:
 
 - [`Switch Away mode on when we are away for more than an hour`
-  ](away_mode.yaml#L58): This is the automation that switches the
+](away_mode.yaml#L58): This is the automation that switches the
   `input_boolean.away_mode` value to on when we are away, this then enables all
   the other automations. There's a slight delay to prevent the alarm to switch
   too often, to cover for when we leave our daughter for a short while, or if
@@ -319,8 +319,9 @@ Here are all the automations related to my vacuum cleaner.
 Note that some of the logic is managed in [scripts](../scripts/), in the
 [`vacuum.yaml`](../scripts/vacuum.yaml) file.
 
-- Some automations were related to the IFTT integration but since [Google
-  removed the option for IFTTT to parse custom commands](<https://ifttt.com/explore/google-assistant-changes>), I had to get rid of
+- Some automations were related to the IFTT integration but since
+  [Google removed the option for IFTTT to parse custom commands](<https://ifttt.com/explore/google-assistant-changes>),
+  I had to get rid of
   them. Initially they were letting me say "OK Google, Clean the bedroom 3
   times", and the string "the bedroom 3 times" was passed down to HA, parsed
   (cf. [scripts](../scripts/vacuum.yaml)) and then the right command was sent
@@ -354,8 +355,10 @@ The remaining automations are:
   save the time whenever the vaccum is used.
 
 - `Start/stop xiaomi fast scan interval` and `Update xiaomi map extractor`:
-  The [Xiaomi integration](<https://www.home-assistant.io/integrations/xiaomi_miio/#xiaomi-mi-robot-vacuum>)
-  stops working if it receives too many calls per day and the [map extractor](<https://github.com/PiotrMachowski/Home-Assistant-custom-components-Xiaomi-Cloud-Map-Extractor>)
+  The
+  [Xiaomi integration](<https://www.home-assistant.io/integrations/xiaomi_miio/#xiaomi-mi-robot-vacuum>)
+  stops working if it receives too many calls per day and the
+  [map extractor](<https://github.com/PiotrMachowski/Home-Assistant-custom-components-Xiaomi-Cloud-Map-Extractor>)
   one is making a lot of calls if we want to be able to follow the vacuum on
   the map in real time. So that two automations work together to only update
   the map when one of the vacuum is in use.
@@ -417,6 +420,8 @@ Some ideas of automations I want to add later on:
   says "According to your calendar, your visitors should have left, should I
   deactivate the visitor mode?".
 - Redo what I was doing in Canada with a remote that was switching between
-  different scenes in my living-room (for ref. [automations](<https://github.com/Giom-V/Home-assistant/blob/620sapins-rpi3b-hassbian/automations/ikeaController.yaml>),
+  different scenes in my living-room (for ref.
+  [automations](<https://github.com/Giom-V/Home-assistant/blob/620sapins-rpi3b-hassbian/automations/ikeaController.yaml>),
   [scripts](<https://github.com/Giom-V/Home-assistant/blob/620sapins-rpi3b-hassbian/scripts/livingroom.yaml>)
-  and [scenes](<https://github.com/Giom-V/Home-assistant/blob/620sapins-rpi3b-hassbian/scenes/LivingRoom.yaml>))
+  and
+  [scenes](<https://github.com/Giom-V/Home-assistant/blob/620sapins-rpi3b-hassbian/scenes/LivingRoom.yaml>))
