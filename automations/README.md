@@ -188,7 +188,7 @@ A more detailed documentation of those automations can be found in the
 - Send pictures alongside the notifications when something is detected by the
   cameras
 - Find a way to have both the lights alert and presence detection
-- Continue to improve presence simulation (TV, or rando; colars in the living
+- Continue to improve presence simulation (TV, or random colors in the living
   room to simulate it)
 
 ### [Bassin](bassin.yaml)
@@ -255,7 +255,7 @@ Automatisations générales liées à la maison.
 
 ### [Meetings](meetings.yaml)
 
-- Theses automations are meant to switch a light colors depending on if I'm
+- These automations are meant to switch a light colors depending on if I'm
   in a meeting and if I'm talking (using the [Mutesync](<mutesync.com>) device
   and integration), but since I have set it up since my last move I'm not
   going to comment on it. It's quite straightforward so it shouldn't be hard
@@ -264,7 +264,7 @@ Automatisations générales liées à la maison.
 ### [Night Time](nightTime.yaml)
 
 These are old automations that I'm not using anymore and just keeping for
-  reference. There were all meant to switch on some lights and changing thjeir
+  reference. There were all meant to switch on some lights and changing their
   colors to give a hint to my daughter on whether it was time for the night
   routine or to go to bed.
 
@@ -316,11 +316,11 @@ Note that some of the logic is managed in [scripts](../scripts/), in the
 [`vacuum.yaml`](../scripts/vacuum.yaml) file.
 
 - Some automations were related to the IFTT integration but since [Google
-  removed the option for IFTTT to parce custom commands](<https://ifttt.com/explore/google-assistant-changes>), I had to get rid of
+  removed the option for IFTTT to parse custom commands](<https://ifttt.com/explore/google-assistant-changes>), I had to get rid of
   them. Initially they were letting me say "OK Google, Clean the bedroom 3
-  times", and the string "the betroom 3 times" was passed down to HA, parsed
+  times", and the string "the bedroom 3 times" was passed down to HA, parsed
   (cf. [scripts](../scripts/vacuum.yaml)) and then the right command was sent
-  to the vaccum.
+  to the vacuum.
 
 The remaining automations are:
 
@@ -336,7 +336,7 @@ The remaining automations are:
 - `vacuum Kitchen and dining room when we are away (Covid version)`: It's
   the advanced version, named "Covid" because I started to work home during
   the pandemic. It waits for us to be away for 5mn (the timer is short
-  because I was it to start while I'm bringin my daughter to school in the
+  because I want it to start while I'm bringing my daughter to school in the
   morning). Then if we do not have visitors, or if its' not too late or too
   early, if it's a worked day (in which case only 1 of us needs to be away)
   or not (in which case we need to be both away), and finally if it had not
@@ -346,7 +346,7 @@ The remaining automations are:
 
 - `Update the time of the last cleaning`: I'm tracking in
   `input_datetime.last_vacuum` the last time the vaccum cleaner has been doing
-  its job, so taht I'm not triggering it more than every 12h. That automation
+  its job, so that I'm not triggering it more than every 12h. That automation
   save the time whenever the vaccum is used.
 
 - `Start/stop xiaomi fast scan interval` and `Update xiaomi map extractor`:
@@ -365,6 +365,10 @@ The remaining automations are:
 - Use "And/Or" instead of multiple ifs to make the `Update xiaomi map extractor`
   automation easier to read
 - Prevent/Delay the vacuum from starting if I'm at home and in a call
+
+### [Velo](velo.yaml)
+
+Automations related to my bike
 
 ### [Working](working.yaml)
 

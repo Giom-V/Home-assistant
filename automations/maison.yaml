@@ -210,8 +210,7 @@
         seconds: 15
         milliseconds: 0
   mode: single
-- &id001
-  id: "1688200466384"
+- id: "1688200466384"
   alias: Basement stairs lights off when motion stopped
   description: ""
   trigger:
@@ -231,7 +230,6 @@
       entity_id: ad28d0c88258e744ab5a720291522f3b
       domain: light
   mode: restart
-- *id001
 - id: "1689543800532"
   alias: Flood detected
   description: ""

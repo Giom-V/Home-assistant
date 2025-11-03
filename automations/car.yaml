@@ -231,55 +231,6 @@
       entity_id: switch.chargeur_velo_switch
       domain: switch
   mode: single
-- id: toggle_bike_charger_peak_hours
-  alias: Turn on the bike's chargeur only during off-peak hours
-  description: ""
-  trigger:
-    - platform: state
-      entity_id:
-        - binary_sensor.heure_creuse
-      to: "on"
-  condition: []
-  action:
-    - type:
-        "{% if binary_sensor.heure_creuse.state = true %}\n  turn_on\n{% else %}\n
-        \ turn_off\n{% endif %}\n"
-      device_id: f88fc7c7685911a6f527510503647b60
-      entity_id: switch.chargeur_velo_switch
-      domain: switch
-  mode: single
-- id: "1686121963583"
-  alias: Turn off bike's charger during peak hours
-  description: ""
-  trigger:
-    - platform: state
-      entity_id:
-        - binary_sensor.heure_creuse
-      to: "off"
-  condition: []
-  action:
-    - action: switch.turn_off
-      target:
-        entity_id:
-          - switch.chargeur_velo_switch
-      data: {}
-  mode: single
-- id: "1686122015021"
-  alias: Turn on the bike's charger during off-peak hours
-  description: ""
-  trigger:
-    - platform: state
-      entity_id:
-        - binary_sensor.heure_creuse
-      to: "on"
-  condition: []
-  action:
-    - action: switch.turn_on
-      metadata: {}
-      data: {}
-      target:
-        entity_id: switch.chargeur_velo_switch
-  mode: single
 - id: "SaveCarBatteryLevelAtNozayFailsafe"
   alias: Save car's battery Level when at Nozay (Failsafe)
   description: ""

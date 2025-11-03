@@ -71,7 +71,7 @@
         "{{ [states('number.aurores_light_bulb_start_up_color_temperature') |
         int + 40 , 255] | min | float }}"
   mode: single
-- id: "1677701807876"
+- id: "1677701807877"
   alias: Aurore's Light color temperature down
   description: ""
   trigger:

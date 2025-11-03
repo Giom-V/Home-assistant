@@ -1,0 +1,12 @@
+- id: toggle_bike_charger_peak_hours
+  alias: Turn on/off the bike's charger based on peak hours
+  description: ""
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.heure_creuse
+  condition: []
+  action:
+    - service: "switch.{{ 'turn_on' if is_state('binary_sensor.heure_creuse', 'on') else 'turn_off' }}"
+      target:
+        entity_id: switch.chargeur_velo_switch
+  mode: single
