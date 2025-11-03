@@ -6,9 +6,9 @@
 # * `Porte placard privé Cannes ouverte`: Notifies us if the private closet door
 #   is opened while we are not there.
 
-- id: "1689544234632"
+- id: "cannes_lights_on_when_absent"
   alias: "Cannes: Someone using the lights"
-  description: ""
+  description: "Notifies us if the lights in Cannes are turned on when we are not there."
   trigger:
     - platform: state
       entity_id:
@@ -46,9 +46,9 @@
         message: Un locataire est en train de jouer avec les lumières de Cannes.
         title: Cannes
   mode: single
-- id: "1754825985448"
+- id: "cannes_private_closet_opened"
   alias: Porte placard privé Cannes ouverte
-  description: ""
+  description: "Notifies us if the private closet door in Cannes is opened when we are not there."
   trigger:
     - platform: state
       entity_id:
