@@ -39,7 +39,10 @@
       to: "off"
     - platform: time
       at: "14:00:00"
-  condition: []
+  condition:
+    - condition: state
+      entity_id: binary_sensor.heure_creuse
+      state: "off"
   action:
     - service: switch.turn_off
       target:
@@ -77,7 +80,8 @@
           state: "on"
   action:
     - service: switch.turn_on
-      entity_id: switch.pompe_switch
+      target:
+        entity_id: switch.fontaine_bassin
   mode: single
 - id: pond_pump_scare_animals
   alias: Turn on water pump for 5mn to scare animals
