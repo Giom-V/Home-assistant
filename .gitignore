@@ -22,6 +22,7 @@ __pycache__
 blueprints
 
 # Ignored Files
+.ha_run.lock
 .pip_progress
 ip_bans.yaml
 known_devices.yaml
