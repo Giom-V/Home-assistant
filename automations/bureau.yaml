@@ -2,15 +2,15 @@
 #
 # It toggles my screens on/off when I press the button on my desk.
 
-- id: "office_button_toggle_screens"
+- id: "1669906783150"
   alias: Press office button (switch on/off screens)
-  description: "Toggles my screens on/off when I press the button on my desk."
+  description: ""
   trigger:
-    - platform: state
-      entity_id: sensor.bouton_bureau_action
-  condition:
-    - condition: template
-      value_template: "{{ trigger.to_state.state == 'single' }}"
+    - domain: mqtt
+      device_id: 09d4ba3dded13922cf5b606b4bfd261b
+      type: action
+      subtype: single
+  condition: []
   action:
     - service: switch.toggle
       target:
