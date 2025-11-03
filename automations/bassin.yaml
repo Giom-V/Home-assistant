@@ -5,14 +5,14 @@
 #   off-peak hours start, but only if the temperature is above 0°C.
 # * `Turn off the pond's pump during peak hours`: Turns off the pump when
 #   peak hours start, or at 2 PM.
+# * `Turn off water pump when it's freezing`: Turns off the pump if the
+#   temperature is below 0°C for 5 minutes.
 # * `Turn on pond's pump when we are here during lunch time`: Turns on the
 #   pump at noon if someone is at home or if there are visitors.
 # * `Turn on water pump for 5mn to scare animals`: If the presence sensor
 #   detects something for 10s, and if we are not in a "red" day for electricity
 #   and the gate is closed, then turn on the pump for 5 minutes. If we are in
 #   peak hours, turn it off after 5 minutes.
-# * `Turn off water pump when it's freezing`: Turns off the pump if the
-#   temperature is below 0°C for 5 minutes.
 
 - id: pond_pump_on_off_peak
   alias: Turn on the pond's pump during off-peak hours
