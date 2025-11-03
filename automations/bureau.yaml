@@ -6,14 +6,15 @@
 # * `Office window opened while it rains`: Sends me a notification if the
 #   office window is open while it's raining.
 
-- id: "1669906783150"
+- id: "office_button_toggle_screens"
   alias: Press office button (switch on/off screens)
-  description: ""
+  description: "Toggles my screens on/off when I press the button on my desk."
   trigger:
     - platform: state
       entity_id: sensor.bouton_bureau_action
-      to: "single"
-  condition: []
+  condition:
+    - condition: template
+      value_template: "{{ trigger.to_state.state == 'single' }}"
   action:
     - service: switch.toggle
       target:
@@ -22,9 +23,9 @@
           - switch.multiprise_bureau_l1
   mode: single
 
-- id: "1727272545121"
+- id: "office_window_rain_notification"
   alias: Office window opened while it rains
-  description: ""
+  description: "Sends me a notification if the office window is open while it's raining."
   trigger:
     - platform: numeric_state
       entity_id: sensor.rain_quantity
