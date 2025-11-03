@@ -1,0 +1,56 @@
+- id: "1687101568970"
+  alias: Turn on Govee LED strip when we switch on the TV during the evening
+  description: ""
+  triggers:
+    - entity_id:
+        - binary_sensor.tv_is_in_use
+      to: "on"
+      trigger: state
+  conditions:
+    - condition: or
+      conditions:
+        - condition: time
+          after: "21:00:00"
+        - condition: sun
+          after: sunset
+        - condition: sun
+          before: sunrise
+    - condition: not
+      conditions:
+        - condition: state
+          entity_id: sensor.rte_tempo_couleur_actuelle
+          state: Rouge
+  actions:
+    - type: turn_on
+      device_id: 58be483dcfdf57ea1c31a2fb4c329411
+      entity_id: light.govee_tv
+      domain: light
+  mode: single
+- id: "1687101610893"
+  alias: Turn off Govee LED strip when we switch off the TV
+  description: ""
+  trigger:
+    - platform: state
+      entity_id:
+        - binary_sensor.tv_is_in_use
+      to: "off"
+  condition: []
+  action:
+    - type: turn_off
+      device_id: 58be483dcfdf57ea1c31a2fb4c329411
+      entity_id: light.govee_tv
+      domain: light
+  mode: single
+- id: "1718127656389"
+  alias: Gemini vision
+  description: ""
+  trigger: []
+  condition: []
+  action:
+    - service: google_generative_ai_conversation.generate_content
+      data:
+        prompt:
+          is there a cat or a human is this image ? if there's a cat, simply answer
+          "cat", if a human, answer "human", if both answer "both", otherwise answer
+          "none".
+  mode: single

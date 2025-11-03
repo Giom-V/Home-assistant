@@ -194,6 +194,43 @@
       target:
         entity_id: input_datetime.last_time_bleuette_left_nozay
   mode: single
+- id: '1669906661965'
+  alias: Long-press office button (preheat car)
+  description: ''
+  triggers:
+  - domain: mqtt
+    device_id: 09d4ba3dded13922cf5b606b4bfd261b
+    type: action
+    subtype: hold
+    trigger: device
+  conditions: []
+  actions:
+  - data: {}
+    target:
+      entity_id: script.preheat_car
+    action: script.turn_on
+  mode: single
+- id: "1683644818608"
+  alias: Switch off bike's chargeur after some time to save the battery
+  description: ""
+  trigger:
+    - type: power
+      platform: device
+      device_id: f88fc7c7685911a6f527510503647b60
+      entity_id: sensor.chargeur_velo_active_power
+      domain: sensor
+      above: 100
+      for:
+        hours: 6
+        minutes: 0
+        seconds: 0
+  condition: []
+  action:
+    - type: turn_off
+      device_id: f88fc7c7685911a6f527510503647b60
+      entity_id: switch.chargeur_velo_switch
+      domain: switch
+  mode: single
 - id: "SaveCarBatteryLevelAtNozayFailsafe"
   alias: Save car's battery Level when at Nozay (Failsafe)
   description: ""

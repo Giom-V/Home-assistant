@@ -1,0 +1,66 @@
+- id: "1704463513006"
+  alias: Alert when RPi power isn't enough
+  description: ""
+  trigger:
+    - platform: state
+      entity_id:
+        - binary_sensor.rpi_power_status
+      to: "on"
+  condition: []
+  action:
+    - service: notify.mobile_app_pixel_7_pro
+      metadata: {}
+      data:
+        message: Problème d'alimentaiton de la RPi
+        title: ⚠️Alim
+    - service: notify.slack
+      metadata: {}
+      data:
+        title: ⚠️Alim
+        message: Problème d'alimentaiton de la RPi
+    - service: rest_command.gchatalert
+      data:
+        text: Problème d'alimentaiton de la RPi
+  mode: single
+- id: "1761596762891"
+  alias: Restart netatmo when it's disconnected
+  description: ""
+  triggers:
+    - trigger: state
+      entity_id:
+        - binary_sensor.station_interieure_netatmo_connectivity
+      for:
+        hours: 0
+        minutes: 15
+        seconds: 0
+      to: unavailable
+    - trigger: state
+      entity_id:
+        - binary_sensor.station_interieure_netatmo_connectivity
+      for:
+        hours: 0
+        minutes: 30
+        seconds: 0
+      to: unavailable
+    - trigger: state
+      entity_id:
+        - binary_sensor.station_interieure_netatmo_connectivity
+      for:
+        hours: 1
+        minutes: 0
+        seconds: 0
+      to: unavailable
+    - trigger: homeassistant
+      event: start
+  conditions: []
+  actions:
+    - delay:
+        hours: 0
+        minutes: 5
+        seconds: 0
+        milliseconds: 0
+    - action: homeassistant.reload_config_entry
+      metadata: {}
+      data:
+        entry_id: f1f448f8d8857c66d176b02e2d6b5217
+  mode: single
