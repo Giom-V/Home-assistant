@@ -1,38 +1,49 @@
+# Automations related to the pond's pump.
+#
+# There are 5 automations:
+# * `Turn on the pond's pump during off-peak hours`: Turns on the pump when
+#   off-peak hours start, but only if the temperature is above 0°C.
+# * `Turn off the pond's pump during peak hours`: Turns off the pump when
+#   peak hours start, or at 2 PM.
+# * `Turn on pond's pump when we are here during lunch time`: Turns on the
+#   pump at noon if someone is at home or if there are visitors.
+# * `Turn on water pump for 5mn to scare animals`: If the presence sensor
+#   detects something for 10s, and if we are not in a "red" day for electricity
+#   and the gate is closed, then turn on the pump for 5 minutes. If we are in
+#   peak hours, turn it off after 5 minutes.
+# * `Turn off water pump when it's freezing`: Turns off the pump if the
+#   temperature is below 0°C for 5 minutes.
+
 - id: "1679262865155"
   alias: Turn on the pond's pump during off-peak hours
   description: ""
-  triggers:
-    - entity_id:
-        - binary_sensor.heure_creuse
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.heure_creuse
       to: "on"
-      trigger: state
-  conditions:
+  condition:
     - condition: numeric_state
       entity_id: sensor.module_exterieur_netatmo_temperature
       above: 0
-  actions:
-  - service: switch.turn_on
-    target:
-      entity_id: switch.fontaine_bassin
+  action:
+    - service: switch.turn_on
+      target:
+        entity_id: switch.fontaine_bassin
   mode: single
 - id: "1679262911117"
   alias: Turn off the pond's pump during peak hours
   description: ""
   trigger:
     - platform: state
-      entity_id:
-        - binary_sensor.heure_creuse
+      entity_id: binary_sensor.heure_creuse
       to: "off"
     - platform: time
       at: "14:00:00"
-  condition:
-    - condition: state
-      entity_id: binary_sensor.heure_creuse
-      state: "off"
+  condition: []
   action:
-  - service: switch.turn_off
-    target:
-      entity_id: switch.fontaine_bassin
+    - service: switch.turn_off
+      target:
+        entity_id: switch.fontaine_bassin
   mode: single
 - id: "1685014375600"
   alias: Turn on pond's pump when we are here during lunch time
@@ -50,22 +61,17 @@
           entity_id: binary_sensor.people_home
           state: "on"
   action:
-  - service: switch.turn_on
-    target:
+    - service: switch.turn_on
       entity_id: switch.pompe_switch
   mode: single
 - id: "1713465676198"
   alias: Turn on water pump for 5mn to scare animals
   description: ""
   trigger:
-    - type: turned_on
-      platform: device
-      device_id: 57baf06b6e5d461829e557034a4f91e9
-      entity_id: 3190902f15a62a454819df62970f1adb
-      domain: binary_sensor
+    - platform: state
+      entity_id: binary_sensor.presence_bassin
+      to: "on"
       for:
-        hours: 0
-        minutes: 0
         seconds: 10
   condition:
     - condition: not
@@ -73,11 +79,9 @@
         - condition: state
           entity_id: sensor.rte_tempo_couleur_actuelle
           state: Rouge
-    - type: is_off
-      condition: device
-      device_id: 57baf06b6e5d461829e557034a4f91e9
-      entity_id: 6228501c1464ed300a010500d31ecdd3
-      domain: binary_sensor
+    - condition: state
+      entity_id: binary_sensor.portail_bassin
+      state: "off"
   action:
     - service: switch.turn_on
       target:
@@ -99,20 +103,15 @@
 - id: "1736867866654"
   alias: Turn off water pump when it's freezing
   description: ""
-  triggers:
-    - trigger: numeric_state
-      entity_id:
-        - sensor.module_exterieur_netatmo_temperature
-      for:
-        hours: 0
-        minutes: 5
-        seconds: 0
+  trigger:
+    - platform: numeric_state
+      entity_id: sensor.module_exterieur_netatmo_temperature
       below: 0
-  conditions: []
-  actions:
-  - action: switch.turn_off
-    metadata: {}
-    data: {}
-    target:
-      entity_id: switch.fontaine_bassin
+      for:
+        minutes: 5
+  condition: []
+  action:
+    - service: switch.turn_off
+      target:
+        entity_id: switch.fontaine_bassin
   mode: single
