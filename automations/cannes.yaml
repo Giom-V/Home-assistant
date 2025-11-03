@@ -1,17 +1,19 @@
+# Automations related to our apartment in Cannes.
+#
+# There are 2 automations:
+# * `Cannes: Someone using the lights`: Notifies us if the lights are being used
+#   while we are not there.
+# * `Porte placard privé Cannes ouverte`: Notifies us if the private closet door
+#   is opened while we are not there.
+
 - id: "1689544234632"
   alias: "Cannes: Someone using the lights"
   description: ""
-  triggers:
-    - type: changed_states
-      device_id: 67d10f5272ba4b86c29ef8b634bcf038
-      entity_id: c942d0966f6cc63a038dee34afa3685b
-      domain: light
-      trigger: device
-    - type: changed_states
-      device_id: a075d0a16f2087a9d7f39d20a01cd8df
-      entity_id: a2304866e16ea00e44a9547079696d8f
-      domain: light
-      trigger: device
+  trigger:
+    - platform: state
+      entity_id:
+        - light.cannes_lumiere_cuisine
+        - light.cannes_lumiere_salle_a_manger
   conditions:
     - condition: not
       conditions:
@@ -28,21 +30,18 @@
               zone: zone.cannes
       enabled: true
   actions:
-    - data:
+    - service: rest_command.gchat
+      data:
         text: Un locataire est en train de jouer avec les lumières de Cannes.
-      action: rest_command.gchat
-    - action: notify.mobile_app_pixel_9_xl
-      metadata: {}
+    - service: notify.mobile_app_pixel_9_xl
       data:
         message: Un locataire est en train de jouer avec les lumières de Cannes.
         title: Cannes
-    - action: notify.mobile_app_pixel_7q_pascal
-      metadata: {}
+    - service: notify.mobile_app_pixel_7q_pascal
       data:
         message: Un locataire est en train de jouer avec les lumières de Cannes.
         title: Cannes
-    - action: notify.mobile_app_pixel_8a_jacqueline
-      metadata: {}
+    - service: notify.mobile_app_pixel_8a_jacqueline
       data:
         message: Un locataire est en train de jouer avec les lumières de Cannes.
         title: Cannes
@@ -50,8 +49,8 @@
 - id: "1754825985448"
   alias: Porte placard privé Cannes ouverte
   description: ""
-  triggers:
-    - trigger: state
+  trigger:
+    - platform: state
       entity_id:
         - binary_sensor.placard_prive_door
       to: "on"
@@ -71,28 +70,24 @@
               zone: zone.cannes
       enabled: true
   actions:
-    - action: notify.mobile_app_pixel_9_pro_xl
-      metadata: {}
+    - service: notify.mobile_app_pixel_9_pro_xl
       data:
         message: Porte placard Cannes ouverte !
         title: Cannes
-    - action: notify.mobile_app_pixel_7a_pascal
-      metadata: {}
+    - service: notify.mobile_app_pixel_7a_pascal
       data:
         message: Porte placard Cannes ouverte !
         title: Cannes
-    - action: notify.mobile_app_pixel_8a_jacqueline
-      metadata: {}
+    - service: notify.mobile_app_pixel_8a_jacqueline
       data:
         message: Porte placard Cannes ouverte !
         title: Cannes
-    - action: notify.notify
-      metadata: {}
+    - service: notify.notify
       data:
         message: Porte placard Cannes ouverte !
         title: Cannes
       enabled: false
-    - data:
+    - service: rest_command.gchat
+      data:
         text: Un locataire a ouvert le placard de Cannes.
-      action: rest_command.gchat
   mode: single
