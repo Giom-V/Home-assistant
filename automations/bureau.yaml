@@ -6,7 +6,7 @@
 # * `Office window opened while it rains`: Sends me a notification if the
 #   office window is open while it's raining.
 
-- id: "1669906783150"
+- id: "office_button_toggle_screens"
   alias: Press office button (switch on/off screens)
   description: ""
   triggers:
@@ -14,8 +14,8 @@
       device_id: 09d4ba3dded13922cf5b606b4bfd261b
       type: action
       subtype: single
-  condition: []
-  action:
+  conditions: []
+  actions:
     - service: switch.toggle
       target:
         entity_id:
@@ -26,15 +26,15 @@
 - id: "office_window_rain_notification"
   alias: Office window opened while it rains
   description: "Sends me a notification if the office window is open while it's raining."
-  trigger:
+  triggers:
     - platform: numeric_state
       entity_id: sensor.pluviometre_netatmo_rain
       above: 0.1
-  condition:
+  conditions:
     - condition: state
       entity_id: binary_sensor.velux_bureau_contact
       state: "on"
-  action:
+  actions:
     - service: notify.mobile_app_pixel_8_pro
       data:
         title: "🌧️ Pluie dans le bureau"
