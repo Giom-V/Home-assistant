@@ -14,6 +14,7 @@
       device_id: 09d4ba3dded13922cf5b606b4bfd261b
       type: action
       subtype: single
+      trigger: device
   conditions: []
   actions:
     - service: switch.toggle
