@@ -14,7 +14,7 @@
 
 - id: "1667896446367"
   alias: Turn off Air purifier for a while if the air quality is good
-  description: ""
+  description: "Éteint le purificateur d'air si la qualité de l'air est bonne"
   trigger:
     - type: pm25
       platform: device
@@ -54,7 +54,7 @@
   mode: single
 - id: "1669377084491"
   alias: Turn off Air Purifier when I'm off
-  description: ""
+  description: "Éteint le purificateur d'air quand je ne suis plus au bureau"
   trigger:
     - platform: state
       entity_id:
@@ -78,7 +78,7 @@
   mode: single
 - id: "1669377272682"
   alias: Turn on Air Purifier when I start working
-  description: ""
+  description: "Allume le purificateur d'air quand je commence à travailler"
   trigger:
     - platform: state
       entity_id:
@@ -93,7 +93,7 @@
   mode: single
 - id: "1669378742486"
   alias: Turn off Air purifier when I stop working
-  description: ""
+  description: "Éteint le purificateur d'air quand je finis de travailler"
   trigger:
     - platform: state
       entity_id:

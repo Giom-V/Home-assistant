@@ -17,6 +17,7 @@
 
 - id: alert_temperature_low
   alias: Alert me if the temperature is too low
+  description: "M'alerte si la température est trop basse"
   trigger:
     - platform: numeric_state
       entity_id: sensor.backkitchen_temperature, sensor.flood_sensor_basement_temperature, sensor.flood_sensor_kitchen_temperature, sensor.office_button_temperature, sensor.temperature_sous_sol, sensor.aurore_bedroom_temperature, sensor.bathroom_temperature, sensor.shower_temperature, sensor.playroom_temperature, sensor.basement_temperature, sensor.valve_salon_current_temperature
@@ -31,6 +32,7 @@
         message: La température est trop basse
 - id: alert_temperature_high
   alias: Alert me if the temperature is too high
+  description: "M'alerte si la température est trop haute"
   trigger:
     - platform: numeric_state
       entity_id: sensor.backkitchen_temperature, sensor.flood_sensor_basement_temperature, sensor.flood_sensor_kitchen_temperature, sensor.office_button_temperature, sensor.temperature_sous_sol, sensor.aurore_bedroom_temperature, sensor.bathroom_temperature, sensor.shower_temperature, sensor.playroom_temperature, sensor.basement_temperature, sensor.valve_salon_current_temperature

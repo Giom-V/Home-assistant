@@ -18,7 +18,7 @@
 
 - id: toggle_car_charger_peak_hours
   alias: Turn on the car's chargeur only during off-peak hours
-  description: ""
+  description: "Allume le chargeur de la voiture uniquement pendant les heures creuses"
   trigger:
     - platform: state
       entity_id:
@@ -35,7 +35,7 @@
   mode: single
 - id: "1669558090658"
   alias: Preheat the car
-  description: ""
+  description: "Préchauffe la voiture les matins d'école en hiver"
   trigger:
     - platform: time
       at: 08:20:00
@@ -62,7 +62,7 @@
   mode: single
 - id: "1679429109960"
   alias: Lock car when at home for at least an hour
-  description: ""
+  description: "Verrouille la voiture si elle est à la maison et déverrouillée depuis plus d'une heure"
   trigger:
     - platform: state
       entity_id:
@@ -103,7 +103,7 @@
   mode: single
 - id: "1698006992086"
   alias: Reload Kia integration when it's down
-  description: ""
+  description: "Recharge l'intégration Kia si elle ne répond plus"
   trigger:
     - platform: state
       entity_id:
@@ -122,7 +122,7 @@
   mode: single
 - id: "SaveCarBatteryLevelAtHome"
   alias: Save car's battery Level when at home
-  description: ""
+  description: "Enregistre le niveau de la batterie de la voiture à la maison"
   trigger:
     - platform: state
       entity_id:
@@ -149,7 +149,7 @@
   mode: single
 - id: "SaveCarBatteryLevelAtHomeFailsafe"
   alias: Save car's battery Level when at home (Failsafe)
-  description: ""
+  description: "Enregistre l'heure de départ de la voiture de la maison (sécurité)"
   trigger:
     - platform: zone
       entity_id: device_tracker.bleuette_location
@@ -169,7 +169,7 @@
   mode: single
 - id: "SaveCarBatteryLevelAtNozay"
   alias: Save car's battery Level when at Nozay
-  description: ""
+  description: "Enregistre le niveau de la batterie de la voiture à Nozay"
   trigger:
     - platform: state
       entity_id:
@@ -196,7 +196,7 @@
   mode: single
 - id: '1669906661965'
   alias: Long-press office button (preheat car)
-  description: ''
+  description: "Préchauffe la voiture avec un appui long sur le bouton du bureau"
   triggers:
   - domain: mqtt
     device_id: 09d4ba3dded13922cf5b606b4bfd261b
@@ -212,7 +212,7 @@
   mode: single
 - id: "1683644818608"
   alias: Switch off bike's chargeur after some time to save the battery
-  description: ""
+  description: "Éteint le chargeur du vélo après un certain temps pour économiser la batterie"
   trigger:
     - type: power
       platform: device
@@ -233,7 +233,7 @@
   mode: single
 - id: "SaveCarBatteryLevelAtNozayFailsafe"
   alias: Save car's battery Level when at Nozay (Failsafe)
-  description: ""
+  description: "Enregistre l'heure de départ de la voiture de Nozay (sécurité)"
   trigger:
     - platform: zone
       entity_id: device_tracker.bleuette_location
@@ -253,6 +253,7 @@
   mode: single
 - id: "SaveCarConsumptionWhenArrivingInNozay"
   alias: Save car's consumption when arriving in Nozay
+  description: "Enregistre la consommation de la voiture en arrivant à Nozay"
   trigger:
     - platform: zone
       entity_id: device_tracker.bleuette_location
@@ -285,6 +286,7 @@
   mode: single
 - id: "SaveCarConsumptionWhenComingBackFromNozay"
   alias: Save car's consumption when coming back from Nozay
+  description: "Enregistre la consommation de la voiture en revenant de Nozay"
   trigger:
     - platform: zone
       entity_id: device_tracker.bleuette_location
