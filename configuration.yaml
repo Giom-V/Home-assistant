@@ -460,3 +460,15 @@ rest_command:
       "loop": false, "palette": [], "colorType": "HSB"}
       }
     content_type: "application/json"
+
+zha:
+  zigpy_config:
+    ota:
+      otau_directory: /config/zha_ota
+      ikea_provider: false
+      inovelli_provider: false
+      ledvance_provider: false
+      salus_provider: false
+      sonoff_provider: false
+      thirdreality_provider: true
+zha_toolkit:
