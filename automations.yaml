@@ -597,3 +597,71 @@
       metadata: {}
       data: {}
   mode: single
+
+- id: '1767646575900'
+  alias: 'Tempo Rouge: Everything only sun during red days'
+  description: ''
+  triggers:
+  - trigger: state
+    entity_id:
+    - sensor.rte_tempo_couleur_actuelle
+    to:
+    - Rouge
+  - trigger: state
+    entity_id:
+    - binary_sensor.heure_creuse
+    to:
+    - 'off'
+  conditions:
+  - condition: state
+    entity_id: sensor.rte_tempo_couleur_actuelle
+    state:
+    - Rouge
+  actions:
+  - action: select.select_option
+    metadata: {}
+    target:
+      entity_id:
+      - select.mode_eau_chaude
+      - select.mode_etage
+      - select.mode_rdc
+    data:
+      option: Solaire seul
+  mode: single
+- id: '1767646748330'
+  alias: 'Tempo Rouge: Reactivate heat pump during off-peak hours'
+  description: ''
+  triggers:
+  - trigger: state
+    entity_id:
+    - sensor.rte_tempo_couleur_actuelle
+    from:
+    - Rouge
+  - trigger: state
+    entity_id:
+    - binary_sensor.heure_creuse
+    to:
+    - 'on'
+  conditions:
+  - condition: not
+    conditions:
+    - condition: state
+      entity_id: sensor.rte_tempo_couleur_actuelle
+      state:
+      - inconnu
+      - unavailable
+      - unknown
+    - condition: state
+      entity_id: input_boolean.away_mode
+      state: []
+  actions:
+  - action: select.select_option
+    metadata: {}
+    target:
+      entity_id:
+      - select.mode_eau_chaude
+      - select.mode_etage
+      - select.mode_rdc
+    data:
+      option: Solaire+PAC
+  mode: single

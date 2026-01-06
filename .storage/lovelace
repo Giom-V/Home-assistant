@@ -3390,6 +3390,13 @@
                   "show_points": false,
                   "show_legend": false,
                   "color": "#DAA520"
+                },
+                {
+                  "entity": "sensor.temperature_cible_eau_chaude_sanitaire",
+                  "name": "T° cible",
+                  "color": "grey",
+                  "stroke_width": 2,
+                  "show_fill": false
                 }
               ],
               "show": {
@@ -3430,17 +3437,17 @@
                     "show_fill": false
                   },
                   {
-                    "entity": "sensor.bedroom_temperature",
+                    "entity": "sensor.station_netatmo_chambre_temperature",
                     "name": "T° chambre",
                     "stroke_width": 2,
                     "color": "green",
                     "show_fill": false
                   },
                   {
-                    "entity": "sensor.aurore_bedroom_temperature",
-                    "name": "T° chb Aurore",
+                    "entity": "sensor.office_button_temperature",
+                    "name": "T° bureau",
                     "stroke_width": 2,
-                    "color": "pink",
+                    "color": "blue",
                     "show_fill": false
                   },
                   {
@@ -3499,17 +3506,17 @@
                     "show_fill": false
                   },
                   {
-                    "entity": "sensor.bedroom_temperature",
+                    "entity": "sensor.station_netatmo_chambre_temperature",
                     "name": "T° chambre",
                     "stroke_width": 2,
                     "color": "green",
                     "show_fill": false
                   },
                   {
-                    "entity": "sensor.aurore_bedroom_temperature",
-                    "name": "T° chb Aurore",
+                    "entity": "sensor.office_button_temperature",
+                    "name": "T° bureau",
                     "stroke_width": 2,
-                    "color": "pink",
+                    "color": "blue",
                     "show_fill": false
                   },
                   {
@@ -3572,13 +3579,6 @@
                     "name": "T° cuisine",
                     "color": "aquamarine",
                     "stroke_width": 2,
-                    "show_fill": false
-                  },
-                  {
-                    "entity": "sensor.backkitchen_temperature",
-                    "name": "T° arrière-cuisine",
-                    "stroke_width": 2,
-                    "color": "green",
                     "show_fill": false
                   },
                   {
@@ -3640,13 +3640,6 @@
                     "name": "T° cuisine",
                     "color": "aquamarine",
                     "stroke_width": 2,
-                    "show_fill": false
-                  },
-                  {
-                    "entity": "sensor.backkitchen_temperature",
-                    "name": "T° arrière-cuisine",
-                    "stroke_width": 2,
-                    "color": "green",
                     "show_fill": false
                   },
                   {
