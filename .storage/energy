@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "minor_version": 1,
+  "minor_version": 2,
   "key": "energy",
   "data": {
     "energy_sources": [
@@ -54,65 +54,70 @@
         "name": "Solisart"
       },
       {
-        "stat_consumption": "sensor.lave_linge_energy",
-        "name": "Lave-Linge"
-      },
-      {
         "stat_consumption": "sensor.chauffage_sdb_energy",
-        "name": "Chauffage SDB"
+        "name": "Chauffage SDB",
+        "stat_rate": "sensor.chauffage_sdb_power"
       },
       {
         "stat_consumption": "sensor.prise_camera_salle_a_manger_energy",
-        "name": "Caméra salle à manger"
+        "name": "Caméra salle à manger",
+        "stat_rate": "sensor.prise_camera_salle_a_manger_power"
       },
       {
         "stat_consumption": "sensor.local_technique_energy",
-        "name": "Local technique"
+        "name": "Local technique",
+        "stat_rate": "sensor.local_technique_power"
       },
       {
         "stat_consumption": "sensor.pc_bureau_energy",
-        "name": "PC Bureau"
+        "name": "PC Bureau",
+        "stat_rate": "sensor.pc_bureau_power"
       },
       {
         "stat_consumption": "sensor.owon_technology_inc_pc321_summation_delivered",
-        "name": "Cuisine"
+        "name": "Cuisine",
+        "stat_rate": "sensor.owon_technology_inc_pc321_instantaneous_demand"
       },
       {
         "stat_consumption": "sensor.chargeur_voiture_energy",
-        "name": "Recharge EV6"
+        "name": "Recharge EV6",
+        "stat_rate": "sensor.chargeur_voiture_power"
       },
       {
         "stat_consumption": "sensor.tv_summation_delivered",
-        "name": "TV"
+        "name": "TV",
+        "stat_rate": "sensor.tv_active_power"
       },
       {
         "stat_consumption": "sensor.chargeur_velo_summation_delivered",
-        "name": "Recharge vélo"
+        "name": "Recharge vélo",
+        "stat_rate": "sensor.chargeur_velo_power"
       },
       {
         "stat_consumption": "sensor.conso_pac_energy_a",
         "name": "VMC"
       },
       {
-        "stat_consumption": "sensor.porte_garage_switch_0_energy",
-        "name": "Porte garage"
-      },
-      {
-        "stat_consumption": "sensor.frigo_energy",
-        "name": "Frigo"
-      },
-      {
-        "stat_consumption": "sensor.congelateur_energy",
-        "name": "Congel"
-      },
-      {
         "stat_consumption": "sensor.conso_totale_pompe_bassin_energy",
-        "name": "Fontaine bassin"
+        "name": "Fontaine bassin",
+        "stat_rate": "sensor.pompe_active_power"
       },
       {
         "stat_consumption": "sensor.lave_vaisselle_energy",
-        "name": "Lave-vaisselle "
+        "name": "Lave-vaisselle ",
+        "stat_rate": "sensor.lave_vaisselle_power"
+      },
+      {
+        "stat_consumption": "sensor.porte_garage_energy",
+        "stat_rate": "sensor.porte_garage_power",
+        "name": "Porte Garage"
+      },
+      {
+        "stat_consumption": "sensor.lave_linge_energy",
+        "stat_rate": "sensor.lave_linge_power",
+        "name": "Lave-linge"
       }
-    ]
+    ],
+    "device_consumption_water": []
   }
 }
