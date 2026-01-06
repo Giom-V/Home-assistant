@@ -6,10 +6,15 @@ http:
     - 192.168.86.0/24 #TODO: secret?
     - 192.168.1.0/24 #TODO: secret?
     - 192.168.86.254
+    - 172.30.32.0/24 # Cloudflare
+    - 172.30.33.0/24 # Cloudflare
   use_x_forwarded_for: true
   login_attempts_threshold: 100
-  ssl_certificate: !secret SSLCertificate #TODO: reactivate
-  ssl_key: !secret SSLKey
+  #ssl_certificate: !secret SSLCertificate # Deactivated for Cloudflare
+  #ssl_key: !secret SSLKey # Deactivated for Cloudflare
   cors_allowed_origins:
     - 192.168.86.0/24 #TODO: secret?
     - 192.168.1.0/24 #TODO: secret?
+    - 192.168.10.0/24 #TODO: secret?
+    - 192.168.40.0/24 #TODO: secret?
+    - 192.168.0.0/24 #TODO: secret?
