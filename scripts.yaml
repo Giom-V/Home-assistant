@@ -44,6 +44,13 @@ close_all_group_floor_shutters:
     domain: cover
     entity_id: ad12001d58596dc60f78948e8068a9c6
     type: close
+  - action: switch.turn_off
+    metadata: {}
+    target:
+      entity_id:
+      - switch.guirlande_switch
+      - switch.guirlande_terrasse
+    data: {}
   description: ''
   icon: mdi:window-shutter
 close_all_first_floor_shutters:
@@ -114,3 +121,27 @@ open_all_first_floor_shutters:
       entity_id: cover.volets_chambre_rose
   description: ''
   icon: mdi:window-shutter-open
+set_solisart_as_sun_pac:
+  sequence:
+  - action: select.select_option
+    target:
+      entity_id:
+      - select.mode_rdc
+      - select.mode_etage
+    data:
+      option: Solaire+PAC
+  alias: Set Solisart as Sun+PAC
+  description: ''
+  icon: mdi:heat-pump-outline
+set_solisart_as_sun_only:
+  sequence:
+  - action: select.select_option
+    target:
+      entity_id:
+      - select.mode_rdc
+      - select.mode_etage
+    data:
+      option: Solaire seul
+  alias: Set Solisart as Sun only
+  description: ''
+  icon: mdi:sun-wireless

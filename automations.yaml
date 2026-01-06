@@ -1,41 +1,78 @@
-- id: '1666186950016'
+- id: "1666186950016"
   alias: Test Nest sonnette
-  description: ''
+  description: ""
   trigger:
-  - platform: device
-    device_id: 033b8589dd583f9142b48bd463dcccd0
-    domain: nest
-    type: doorbell_chime
-  - platform: device
-    device_id: 033b8589dd583f9142b48bd463dcccd0
-    domain: nest
-    type: camera_person
-    enabled: false
-  - platform: device
-    device_id: 033b8589dd583f9142b48bd463dcccd0
-    domain: nest
-    type: camera_motion
-    enabled: false
+    - platform: device
+      device_id: 033b8589dd583f9142b48bd463dcccd0
+      domain: nest
+      type: doorbell_chime
+    - platform: device
+      device_id: 033b8589dd583f9142b48bd463dcccd0
+      domain: nest
+      type: camera_person
+      enabled: false
+    - platform: device
+      device_id: 033b8589dd583f9142b48bd463dcccd0
+      domain: nest
+      type: camera_motion
+      enabled: false
   condition: []
   action:
-  - service: rest_command.gchat
-    data:
-      text: Sonette pressée!
+    - service: rest_command.gchat
+      data:
+        text: Sonette pressée!
   mode: single
-- id: '1676633819245'
+- id: "1676633819245"
   alias: Testing led strip (not working)
-  description: ''
+  description: ""
   triggers:
-  - domain: mqtt
-    device_id: 09d4ba3dded13922cf5b606b4bfd261b
-    type: action
-    subtype: single
-    trigger: device
-    enabled: false
+    - domain: mqtt
+      device_id: 09d4ba3dded13922cf5b606b4bfd261b
+      type: action
+      subtype: single
+      trigger: device
+      enabled: false
   conditions: []
   actions:
-  - type: toggle
-    device_id: f1e7b29bd824ec88bdf7a3b1a2f58916
-    entity_id: light.led_strip_light
-    domain: light
+    - type: toggle
+      device_id: f1e7b29bd824ec88bdf7a3b1a2f58916
+      entity_id: light.led_strip_light
+      domain: light
+  mode: single
+- id: "1765725748183"
+  alias: Guirlande on before sunset
+  description: ""
+  triggers:
+    - trigger: sun
+      event: sunset
+      offset: -00:10:00
+  conditions:
+    - condition: state
+      entity_id: sensor.rte_tempo_couleur_actuelle
+      state:
+        - Bleu
+        - Blanc
+  actions:
+    - action: switch.turn_on
+      target:
+        entity_id:
+          - switch.guirlande_switch
+          - switch.guirlande_terrasse
+      data: {}
+  mode: single
+- id: "1765725839404"
+  alias: Guirlandes off
+  description: ""
+  triggers:
+    - trigger: time
+      at: "22:00:00"
+  conditions: []
+  actions:
+    - action: switch.turn_off
+      metadata: {}
+      data: {}
+      target:
+        entity_id:
+          - switch.guirlande_switch
+          - switch.guirlande_terrasse
   mode: single
