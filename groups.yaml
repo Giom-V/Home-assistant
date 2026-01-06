@@ -151,7 +151,7 @@ OutsideLamps:
   name: Lampe extérieures
   entities:
     - light.lumiere_exterieure_1_forceonlight
-    - light.lumiere_exterieure_2_forceonlight
+    - light.lampe_exterieure_2
     - light.lampe_exterieure_3
 
 LampesEvier:

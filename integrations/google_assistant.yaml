@@ -93,6 +93,17 @@ google_assistant:
         - Guirlande
         - Lit d'Aurore
       room: Chambre d'Aurore
+    light.lumiere_chambre:
+      name: Lumière chambre
+      expose: true
+      aliases:
+        - Lumière chambre rose
+        - Lumière chambre parentale
+      room: Chambre principale
+    light.interrupteur_bureau:
+      name: Lumière bureau
+      expose: true
+      room: Bureau
     light.basement_stairs_light_light:
       name: Lampe escalier sous-sol
       expose: true
@@ -101,7 +112,7 @@ google_assistant:
       name: Lumière extérieure mur
       expose: true
       room: Jardin de devant
-    light.lumiere_exterieure_2_forceonlight:
+    light.lampe_exterieure_2:
       name: Lumière extérieure laurier -thym
       expose: true
       room: Jardin de devant
@@ -111,6 +122,10 @@ google_assistant:
       room: Jardin de devant
     switch.guirlande_switch:
       name: Guirlande extérieure de Noël
+      expose: true
+      room: Jardin de devant
+    switch.guirlande_terrasse:
+      name: Guirlande terrasse
       expose: true
       room: Jardin de devant
 
@@ -137,7 +152,7 @@ google_assistant:
       name: Volets salle de jeux
       expose: true
       room: Salle de jeux
-    cover.volets_chambre:
+    cover.volets_chambre_rose:
       name: Volets chambre
       expose: true
       room: Chambre principale

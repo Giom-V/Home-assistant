@@ -10,8 +10,7 @@
       entity_id: light.lumiere_exterieure_1_forceonlight
       domain: light
     - type: turn_off
-      device_id: c2eedf7108fcbb4f944ae4b273d0227
-      entity_id: light.lumiere_exterieure_2_forceonlight
+      entity_id: light.lampe_exterieure_2
       domain: light
     - type: turn_off
       entity_id: light.lampe_exterieure_3

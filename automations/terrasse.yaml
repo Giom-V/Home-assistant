@@ -15,7 +15,7 @@
       domain: light
       enabled: false
     - type: turn_on
-      entity_id: light.lumiere_exterieure_2_forceonlight
+      entity_id: light.lampe_exterieure_2
       domain: light
     - type: turn_on
       entity_id: light.lampe_exterieure_3
