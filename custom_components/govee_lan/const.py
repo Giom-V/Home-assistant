@@ -1,1 +1,0 @@
-DOMAIN = "govee_lan"

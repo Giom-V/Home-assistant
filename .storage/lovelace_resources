@@ -70,7 +70,7 @@
         "id": "d28e66a6787e467bb458928f35ac7f8b"
       },
       {
-        "url": "/hacsfiles/lovelace-mushroom/mushroom.js?hacstag=444350375508",
+        "url": "/hacsfiles/lovelace-mushroom/mushroom.js?hacstag=444350375509",
         "type": "module",
         "id": "4d8157ab9ecf48ef9c386323825634fd"
       },
@@ -90,7 +90,7 @@
         "id": "9220d014765148dca79c0d6c76f87938"
       },
       {
-        "url": "/hacsfiles/lovelace-card-mod/card-mod.js?hacstag=190927524345",
+        "url": "/hacsfiles/lovelace-card-mod/card-mod.js?hacstag=190927524410",
         "type": "module",
         "id": "bf4535f789c148acb2c00e56cec42c92"
       },
@@ -106,12 +106,12 @@
       },
       {
         "id": "7109f08ace634f11ae19d6198c97a732",
-        "url": "/hacsfiles/button-card/button-card.js?hacstag=146194325600",
+        "url": "/hacsfiles/button-card/button-card.js?hacstag=146194325701",
         "type": "module"
       },
       {
         "id": "1a4f26f1443d48639261f4f06841a563",
-        "url": "/hacsfiles/compass-card/compass-card.js?hacstag=286038496320",
+        "url": "/hacsfiles/compass-card/compass-card.js?hacstag=286038496340",
         "type": "module"
       },
       {
@@ -131,7 +131,7 @@
       },
       {
         "id": "7fedf22f26b54ca9844c5a4306baf370",
-        "url": "/hacsfiles/lovelace-wallpanel/wallpanel.js?hacstag=3095064164581",
+        "url": "/hacsfiles/lovelace-wallpanel/wallpanel.js?hacstag=3095064164601",
         "type": "module"
       },
       {
@@ -142,6 +142,11 @@
       {
         "id": "b2c0e5c06d314f23b8a5507d74590767",
         "url": "/hacsfiles/fitbit-card/fitbit-card.js?hacstag=168570875111",
+        "type": "module"
+      },
+      {
+        "id": "00270e33c9574529ad80bce7041ae368",
+        "url": "/hacsfiles/EcoleDirecteHACards/EcoleDirecteHACards.js?hacstag=1079222835006",
         "type": "module"
       }
     ]

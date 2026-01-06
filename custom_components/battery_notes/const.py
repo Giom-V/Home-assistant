@@ -6,12 +6,13 @@ from pathlib import Path
 from typing import Final
 
 import voluptuous as vol
+
 from homeassistant.const import Platform
 from homeassistant.helpers import config_validation as cv
 
 LOGGER: Logger = getLogger(__package__)
 
-MIN_HA_VERSION = "2025.4.0"
+MIN_HA_VERSION = "2025.9.0"
 
 manifestfile = Path(__file__).parent / "manifest.json"
 with open(file=manifestfile, encoding="UTF-8") as json_file:
@@ -26,12 +27,12 @@ LAST_REPLACED = "battery_last_replaced"
 LAST_REPORTED = "battery_last_reported"
 LAST_REPORTED_LEVEL = "battery_last_reported_level"
 
-DOMAIN_CONFIG = "config"
-
 DEFAULT_BATTERY_LOW_THRESHOLD = 10
 DEFAULT_BATTERY_INCREASE_THRESHOLD = 25
 DEFAULT_LIBRARY_URL = "https://battery-notes-data.codechimp.org/library.json"
 DEFAULT_SCHEMA_URL = "https://battery-notes-data.codechimp.org/schema.json"
+FALLBACK_LIBRARY_URL = "https://raw.githubusercontent.com/andrew-codechimp/HA-Battery-Notes/main/library/library.json"  # pylint: disable=line-too-long
+FALLBACK_SCHEMA_URL = "https://raw.githubusercontent.com/andrew-codechimp/HA-Battery-Notes/main/library/schema.json"  # pylint: disable=line-too-long
 
 CONF_SOURCE_ENTITY_ID = "source_entity_id"
 CONF_BATTERY_TYPE = "battery_type"
@@ -42,10 +43,10 @@ CONF_ENABLE_AUTODISCOVERY = "enable_autodiscovery"
 CONF_USER_LIBRARY = "user_library"
 CONF_MODEL = "model"
 CONF_MODEL_ID = "model_id"
+CONF_HW_VERSION = "hw_version"
 CONF_MANUFACTURER = "manufacturer"
 CONF_DEVICE_NAME = "device_name"
-CONF_LIBRARY_URL = "library_url"
-CONF_SCHEMA_URL = "schema_url"
+CONF_INTEGRATION_NAME = "integration_name"
 CONF_SHOW_ALL_DEVICES = "show_all_devices"
 CONF_ENABLE_REPLACED = "enable_replaced"
 CONF_DEFAULT_BATTERY_LOW_THRESHOLD = "default_battery_low_threshold"
@@ -53,7 +54,9 @@ CONF_BATTERY_INCREASE_THRESHOLD = "battery_increase_threshold"
 CONF_HIDE_BATTERY = "hide_battery"
 CONF_ROUND_BATTERY = "round_battery"
 CONF_BATTERY_LOW_TEMPLATE = "battery_low_template"
+CONF_BATTERY_PERCENTAGE_TEMPLATE = "battery_percentage_template"
 CONF_FILTER_OUTLIERS = "filter_outliers"
+CONF_ADVANCED_SETTINGS = "advanced_settings"
 
 DATA_CONFIGURED_ENTITIES = "configured_entities"
 DATA_DISCOVERED_ENTITIES = "discovered_entities"
@@ -93,6 +96,8 @@ ATTR_BATTERY_THRESHOLD_REMINDER = "reminder"
 WINDOW_SIZE_UNIT_NUMBER_EVENTS = 1
 WINDOW_SIZE_UNIT_TIME = 2
 
+ISSUE_DEPRECATED_YAML = "deprecated_yaml"
+
 SERVICE_BATTERY_REPLACED_SCHEMA = vol.Schema(
     {
         vol.Optional(ATTR_DEVICE_ID): cv.string,
@@ -108,7 +113,9 @@ SERVICE_CHECK_BATTERY_LAST_REPORTED_SCHEMA = vol.Schema(
 )
 
 PLATFORMS: Final = [
+    Platform.BINARY_SENSOR,
     Platform.BUTTON,
     Platform.SENSOR,
-    Platform.BINARY_SENSOR,
 ]
+
+SUBENTRY_BATTERY_NOTE = "battery_note"

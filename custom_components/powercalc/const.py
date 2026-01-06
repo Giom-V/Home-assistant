@@ -2,9 +2,10 @@
 
 from __future__ import annotations
 
-from datetime import timedelta
 from enum import StrEnum
+from typing import Literal
 
+from homeassistant.components import cover, device_tracker
 from homeassistant.components.utility_meter.const import DAILY, MONTHLY, WEEKLY
 from homeassistant.const import (
     STATE_CLOSED,
@@ -16,7 +17,7 @@ from homeassistant.const import (
     EntityCategory,
 )
 
-MIN_HA_VERSION = "2024.4"
+MIN_HA_VERSION = "2025.1"
 
 DOMAIN = "powercalc"
 DOMAIN_CONFIG = "config"
@@ -28,6 +29,17 @@ DATA_ENTITIES = "entities"
 DATA_GROUP_ENTITIES = "group_entities"
 DATA_USED_UNIQUE_IDS = "used_unique_ids"
 DATA_STANDBY_POWER_SENSORS = "standby_power_sensors"
+DATA_ANALYTICS = "analytics"
+DATA_ANALYTICS_SEEN_ENTRIES = "analytics_seen_entries"
+DATA_POWER_PROFILES: Literal["power_profiles"] = "power_profiles"
+DATA_SENSOR_TYPES: Literal["sensor_types"] = "sensor_types"
+DATA_CONFIG_TYPES: Literal["config_types"] = "config_types"
+DATA_SOURCE_DOMAINS: Literal["source_domains"] = "source_domains"
+DATA_GROUP_TYPES: Literal["group_types"] = "group_types"
+DATA_ENTITY_TYPES: Literal["entity_types"] = "entity_types"
+DATA_STRATEGIES: Literal["strategies"] = "strategies"
+DATA_GROUP_SIZES: Literal["group_sizes"] = "group_sizes"
+DATA_HAS_GROUP_INCLUDE: Literal["has_group_include"] = "has_group_include"
 
 ENTRY_DATA_ENERGY_ENTITY = "_energy_entity"
 ENTRY_DATA_POWER_ENTITY = "_power_entity"
@@ -37,16 +49,19 @@ DUMMY_ENTITY_ID = "sensor.dummy"
 
 CONF_ALL = "all"
 CONF_AND = "and"
+CONF_ENABLE_ANALYTICS = "enable_analytics"
 CONF_AREA = "area"
 CONF_AUTOSTART = "autostart"
 CONF_AVAILABILITY_ENTITY = "availability_entity"
 CONF_CALCULATION_ENABLED_CONDITION = "calculation_enabled_condition"
 CONF_CALIBRATE = "calibrate"
+CONF_CATEGORY = "category"
 CONF_COMPOSITE = "composite"
 CONF_CREATE_DOMAIN_GROUPS = "create_domain_groups"
 CONF_CREATE_ENERGY_SENSOR = "create_energy_sensor"
 CONF_CREATE_ENERGY_SENSORS = "create_energy_sensors"
 CONF_CREATE_GROUP = "create_group"
+CONF_CREATE_STANDBY_GROUP = "create_standby_group"
 CONF_CREATE_UTILITY_METERS = "create_utility_meters"
 CONF_CUSTOM_MODEL_DIRECTORY = "custom_model_directory"
 CONF_DAILY_FIXED_ENERGY = "daily_fixed_energy"
@@ -54,9 +69,17 @@ CONF_DELAY = "delay"
 CONF_DISABLE_EXTENDED_ATTRIBUTES = "disable_extended_attributes"
 CONF_DISABLE_LIBRARY_DOWNLOAD = "disable_library_download"
 CONF_DISABLE_STANDBY_POWER = "disable_standby_power"
-CONF_DISCOVERY_EXCLUDE_DEVICE_TYPES = "discovery_exclude_device_types"
-CONF_DISCOVERY_EXCLUDE_SELF_USAGE = "discovery_exclude_self_usage"
-CONF_ENABLE_AUTODISCOVERY = "enable_autodiscovery"
+CONF_DISCOVERY: str = "discovery"
+CONF_EXCLUDE_DEVICE_TYPES = "exclude_device_types"
+CONF_EXCLUDE_SELF_USAGE = "exclude_self_usage"
+
+# Deprecated configuration keys
+CONF_DISCOVERY_EXCLUDE_DEVICE_TYPES_DEPRECATED = "discovery_exclude_device_types"
+CONF_DISCOVERY_EXCLUDE_SELF_USAGE_DEPRECATED = "discovery_exclude_self_usage"
+CONF_ENABLE_AUTODISCOVERY_DEPRECATED = "enable_autodiscovery"
+CONF_GROUP_UPDATE_INTERVAL_DEPRECATED = "group_update_interval"
+CONF_FORCE_UPDATE_FREQUENCY_DEPRECATED = "force_update_frequency"
+
 CONF_ENERGY_INTEGRATION_METHOD = "energy_integration_method"
 CONF_ENERGY_SENSOR_CATEGORY = "energy_sensor_category"
 CONF_ENERGY_SENSOR_FRIENDLY_NAMING = "energy_sensor_friendly_naming"
@@ -64,23 +87,27 @@ CONF_ENERGY_SENSOR_ID = "energy_sensor_id"
 CONF_ENERGY_SENSOR_NAMING = "energy_sensor_naming"
 CONF_ENERGY_SENSOR_PRECISION = "energy_sensor_precision"
 CONF_ENERGY_SENSOR_UNIT_PREFIX = "energy_sensor_unit_prefix"
+CONF_ENERGY_UPDATE_INTERVAL = "energy_update_interval"
+CONF_ENERGY_FILTER_OUTLIER_ENABLED = "energy_filter_outlier_enabled"
+CONF_ENERGY_FILTER_OUTLIER_MAX = "energy_filter_outlier_max_step"
 CONF_EXCLUDE_ENTITIES = "exclude_entities"
 CONF_FILTER = "filter"
 CONF_FIXED = "fixed"
+CONF_FLOOR = "floor"
 CONF_FORCE_CALCULATE_GROUP_ENERGY = "force_calculate_group_energy"
 CONF_FORCE_ENERGY_SENSOR_CREATION = "force_energy_sensor_creation"
-CONF_FORCE_UPDATE_FREQUENCY = "force_update_frequency"
 CONF_GAMMA_CURVE = "gamma_curve"
 CONF_GROUP = "group"
 CONF_GROUP_ENERGY_ENTITIES = "group_energy_entities"
 CONF_GROUP_ENERGY_START_AT_ZERO = "group_energy_start_at_zero"
+CONF_GROUP_ENERGY_UPDATE_INTERVAL = "group_energy_update_interval"
 CONF_GROUP_MEMBER_DEVICES = "group_member_devices"
 CONF_GROUP_MEMBER_SENSORS = "group_member_sensors"
 CONF_GROUP_POWER_ENTITIES = "group_power_entities"
+CONF_GROUP_POWER_UPDATE_INTERVAL = "group_power_update_interval"
 CONF_GROUP_TRACKED_AUTO = "group_tracked_auto"
 CONF_GROUP_TRACKED_POWER_ENTITIES = "group_tracked_entities"
 CONF_GROUP_TYPE = "group_type"
-CONF_GROUP_UPDATE_INTERVAL = "group_update_interval"
 CONF_HIDE_MEMBERS = "hide_members"
 CONF_IGNORE_UNAVAILABLE_STATE = "ignore_unavailable_state"
 CONF_INCLUDE = "include"
@@ -97,6 +124,7 @@ CONF_MULTI_SWITCH = "multi_switch"
 CONF_MULTIPLY_FACTOR = "multiply_factor"
 CONF_MULTIPLY_FACTOR_STANDBY = "multiply_factor_standby"
 CONF_NEW_GROUP = "new_group"
+CONF_NOT = "not"
 CONF_ON_TIME = "on_time"
 CONF_OR = "or"
 CONF_PLAYBOOK = "playbook"
@@ -166,10 +194,11 @@ ENTITY_CATEGORIES = [
     None,
 ]
 
-DEFAULT_GROUP_UPDATE_INTERVAL = 60
-DEFAULT_UPDATE_FREQUENCY = timedelta(minutes=10)
+DEFAULT_GROUP_POWER_UPDATE_INTERVAL = 2
+DEFAULT_GROUP_ENERGY_UPDATE_INTERVAL = 60
 DEFAULT_POWER_NAME_PATTERN = "{} power"
 DEFAULT_POWER_SENSOR_PRECISION = 2
+DEFAULT_ENERGY_UPDATE_INTERVAL = 600
 DEFAULT_ENERGY_INTEGRATION_METHOD = ENERGY_INTEGRATION_METHOD_LEFT
 DEFAULT_ENERGY_NAME_PATTERN = "{} energy"
 DEFAULT_ENERGY_SENSOR_PRECISION = 4
@@ -180,6 +209,9 @@ DEFAULT_UTILITY_METER_TYPES = [DAILY, WEEKLY, MONTHLY]
 DISCOVERY_SOURCE_ENTITY = "source_entity"
 DISCOVERY_POWER_PROFILES = "power_profiles"
 DISCOVERY_TYPE = "discovery_type"
+
+LIBRARY_URL = "https://library.powercalc.nl"
+API_URL = "https://api.powercalc.nl"
 
 MANUFACTURER_WLED = "WLED"
 
@@ -206,7 +238,11 @@ SERVICE_RELOAD = "reload"
 
 SIGNAL_POWER_SENSOR_STATE_CHANGE = "powercalc_power_sensor_state_change"
 
-OFF_STATES = (STATE_OFF, STATE_NOT_HOME, STATE_STANDBY, STATE_UNAVAILABLE, STATE_OPEN, STATE_CLOSED)
+OFF_STATES = {STATE_OFF, STATE_STANDBY, STATE_UNAVAILABLE}
+OFF_STATES_BY_DOMAIN: dict[str, set[str]] = {
+    cover.DOMAIN: {STATE_CLOSED, STATE_OPEN},
+    device_tracker.DOMAIN: {STATE_NOT_HOME},
+}
 
 
 class CalculationStrategy(StrEnum):
@@ -248,3 +284,13 @@ class GroupType(StrEnum):
     STANDBY = "standby"
     SUBTRACT = "subtract"
     TRACKED_UNTRACKED = "tracked_untracked"
+
+
+class EntityType(StrEnum):
+    """Possible powercalc entity types."""
+
+    POWER_SENSOR = "power_sensor"
+    ENERGY_SENSOR = "energy_sensor"
+    UTILITY_METER = "utility_meter"
+    TARIFF_SELECT = "tariff_select"
+    UNKNOWN = "unknown"
