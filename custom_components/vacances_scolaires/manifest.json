@@ -1,0 +1,14 @@
+{
+  "domain": "vacances_scolaires",
+  "name": "Vacances Scolaires Integration",
+  "codeowners": [
+    "@Master13011"
+  ],
+  "config_flow": true,
+  "dependencies": [],
+  "documentation": "https://github.com/Master13011/vacances-scolaire-HA",
+  "iot_class": "cloud_polling",
+  "issue_tracker": "https://github.com/Master13011/vacances-scolaire-HA/issues",
+  "requirements": [],
+  "version": "2.1.6"
+}

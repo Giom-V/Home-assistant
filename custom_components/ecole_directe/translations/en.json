@@ -1,0 +1,38 @@
+{
+    "title": "Ecole Directe",
+    "config": {
+        "flow_title": "Ecole Directe configuration",
+        "abort": {
+            "already_configured": "Device is already configured"
+        },
+        "error": {
+            "cannot_connect": "Failed to connect",
+            "invalid_auth": "Invalid authentication",
+            "double_auth": "Check the file qcm.json",
+            "unknown": "Unexpected error"
+        },
+        "step": {
+            "user": {
+                "data": {
+                    "password": "Password",
+                    "username": "Username",
+                    "qcm_filename": "File name of qcm",
+                    "allow_notification": "Allow notifications"
+                }
+            }
+        }
+    },
+    "options": {
+        "step": {
+            "init": {
+                "description": "Customize the way the integration works",
+                "data": {
+                    "refresh_interval": "Data refresh interval (in minutes)",
+                    "lunch_break_time": "Lunch break time",
+                    "decode_html": "Decode HTML for homeworks - Warning it will delete all HTML (style, links, iFrame, etc.)",
+                    "notes_affichees": "Maximum grades to display"
+                }
+            }
+        }
+    }
+}

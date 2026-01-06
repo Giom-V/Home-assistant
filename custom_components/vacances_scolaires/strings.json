@@ -1,0 +1,35 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "School Holidays Configuration",
+        "description": "Set up the parameters for school holidays",
+        "data": {
+          "type": "Type",
+          "location": "Ville",
+          "zone": "Zone",
+          "update_interval": "Update interval (in hours)"
+        }
+      }
+    },
+    "abort": {
+      "already_configured": "Device is already configured"
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "data": {
+          "verify_ssl": "Check SSL certificate of API server"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Failed to connect",
+      "invalid_auth": "Invalid authentication",
+      "unknown": "Unexpected error",
+      "location_required": "Location is required when type is Location",
+      "zone_required": "Zone is required when type is Zone"
+    }
+  }
+}

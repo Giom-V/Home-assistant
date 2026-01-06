@@ -20,6 +20,7 @@ certificate/
 tts/
 __pycache__
 blueprints
+zha_ota/
 
 # Ignored Files
 .ha_run.lock
@@ -44,6 +45,7 @@ secrets.yaml
 secrets/*.json
 !/secrets/*.fake.json
 secrets/home-assistant.json
+ecoledirecte_qcm.json
 
 # Google temp files
 .google*
