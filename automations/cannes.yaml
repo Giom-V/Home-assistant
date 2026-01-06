@@ -8,7 +8,7 @@
 
 - id: "cannes_lights_on_when_absent"
   alias: "Cannes: Someone using the lights"
-  description: "Nous notifie si les lumières de Cannes sont allumées lorsque nous ne sommes pas là."
+  description: "Notifie si les lumières de Cannes sont allumées lorsque personne n'est sur place."
   trigger:
     - platform: state
       entity_id:
@@ -50,7 +50,7 @@
   mode: single
 - id: "cannes_private_closet_opened"
   alias: Porte placard privé Cannes ouverte
-  description: "Nous notifie si la porte du placard privé de Cannes est ouverte lorsque nous ne sommes pas là."
+  description: "Notifie si la porte du placard privé de Cannes est ouverte lorsque personne n'est sur place."
   trigger:
     - platform: state
       entity_id:

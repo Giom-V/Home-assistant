@@ -1,8 +1,6 @@
 - id: "1689544847933"
   alias: Conso anormale à La Plagne
-  description:
-    Alert if the heating still works while the resort should be closed
-    and we're not there.
+  description: "Alerte si le chauffage fonctionne alors que la station devrait être fermée et que nous ne sommes pas là."
   trigger:
     - platform: numeric_state
       entity_id: sensor.myenedis_19677423985708

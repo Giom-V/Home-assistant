@@ -2,7 +2,7 @@
 
 google_assistant:
   project_id: !secret googleProject
-  service_account: !include ../secrets/home-assistant.json
+  # service_account: !include ../secrets/home-assistant.json
   report_state: true
   # exposed_domains:
   #   - light

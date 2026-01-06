@@ -84,7 +84,12 @@
       entity_id:
         - input_boolean.working
       to: "on"
-  condition: []
+  condition:
+    - condition: not
+      conditions:
+        - condition: state
+          entity_id: sensor.rte_tempo_couleur_actuelle_visuel
+          state: rouge
   action:
     - type: turn_on
       device_id: d289257ebfadb61abab25485734acc18

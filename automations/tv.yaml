@@ -1,6 +1,6 @@
 - id: "1687101568970"
   alias: Turn on Govee LED strip when we switch on the TV during the evening
-  description: ""
+  description: "Allume la bande LED Govee lorsque nous allumons la télévision le soir"
   triggers:
     - entity_id:
         - binary_sensor.tv_is_in_use
@@ -28,7 +28,7 @@
   mode: single
 - id: "1687101610893"
   alias: Turn off Govee LED strip when we switch off the TV
-  description: ""
+  description: "Éteint la bande LED Govee lorsque nous éteignons la télévision"
   trigger:
     - platform: state
       entity_id:
@@ -43,7 +43,7 @@
   mode: single
 - id: "1718127656389"
   alias: Gemini vision
-  description: ""
+  description: "Vision Gemini"
   trigger: []
   condition: []
   action:

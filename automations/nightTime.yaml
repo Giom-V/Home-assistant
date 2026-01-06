@@ -5,6 +5,7 @@
 
 - id: NightTime
   alias: Night time
+  description: "Passe en mode nuit à l'heure définie"
   trigger:
     - platform: template
       value_template: "{{ states('sensor.time') == states('input_datetime.nighttime_start')[0:5] }}"
@@ -37,6 +38,7 @@
       entity_id: scene.NightTimeLivingRoom
 - id: SleepingTime
   alias: Sleeping time
+  description: "Passe en mode sommeil à l'heure définie"
   trigger:
     - platform: template
       value_template: "{{ states('sensor.time') == states('input_datetime.sleepingtime_start')[0:5] }}"
@@ -75,6 +77,7 @@
       entity_id: scene.minbrightnesslivingroom
 - id: SwitchNightLightOff
   alias: Night light off
+  description: "Éteint la veilleuse le matin"
   trigger:
     - platform: template
       value_template: "{{ states('sensor.time') == states('input_datetime.morning_week')[0:5] }}"
@@ -107,6 +110,7 @@
       entity_id: switch.veilleuse
 - id: SwitchNightLightOnStartsTimer
   alias: Night light on, start timer
+  description: "Démarre la minuterie de la veilleuse"
   trigger:
     - entity_id: switch.veilleuse
       from: "off"
@@ -117,6 +121,7 @@
       entity_id: timer.night_light
 - id: SwitchNightLightOffWhenTimerEnds
   alias: Night light off when timer ends
+  description: "Éteint la veilleuse à la fin de la minuterie"
   trigger:
     - platform: event
       event_type: timer.finished

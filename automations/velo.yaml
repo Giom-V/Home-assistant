@@ -1,6 +1,6 @@
 - id: toggle_bike_charger_peak_hours
   alias: Turn on/off the bike's charger based on peak hours
-  description: ""
+  description: "Allume/éteint le chargeur du vélo en fonction des heures creuses"
   trigger:
     - platform: state
       entity_id: binary_sensor.heure_creuse

@@ -1,6 +1,6 @@
 - id: "1727285569924"
   alias: Alert when the water tank is too cold
-  description: ""
+  description: "Alerte quand le ballon d'eau chaude est trop froid"
   trigger:
     - platform: numeric_state
       entity_id:
