@@ -1,6 +1,6 @@
 - id: "1736756974252"
   alias: "Bedroom remote: LEDs"
-  description: "Télécommande de la chambre : LEDs"
+  description: "Controle les LEDs de la chambre avec la télécommande"
   triggers:
     - domain: mqtt
       device_id: a7995daf6b00103a726e7417cf4e5b9b

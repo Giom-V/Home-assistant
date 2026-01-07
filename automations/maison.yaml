@@ -231,7 +231,7 @@
   mode: restart
 - id: "1689543800532"
   alias: Flood detected
-  description: "Détecte une inondation"
+  description: "Notifie quand une inondation est détectée"
   trigger:
     - type: moist
       platform: device

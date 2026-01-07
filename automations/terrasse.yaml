@@ -23,7 +23,7 @@
   mode: single
 - id: "1701885267125"
   alias: "Turn on Guirlande "
-  description: "Allume la guirlande"
+  description: "Allume la guirlande au coucher du soleil"
   trigger:
     - platform: sun
       event: sunset
