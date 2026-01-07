@@ -1,0 +1,83 @@
+# Previsions Tempo by Open DPE
+#
+# Source: https://community.home-assistant.io/t/previsions-tempo/476532
+#
+multiscrape:
+  - resource: https://open-dpe.fr/assets/tempo_days_lite.json
+    name: OpenDPE Forecast
+    scan_interval: 21600 # 6 hours
+    sensor:
+      - unique_id: rte_tempo_forecast_opendpe_j2
+        name: "RTE Tempo forecast OpenDPE J2"
+        value_template: >
+          {% set target_date = (now() + timedelta(days=2)).strftime('%Y-%m-%d') %}
+          {{ value_json | selectattr('date', 'eq', target_date) | map(attribute='couleur') | first | default('unknown') }}
+        attributes:
+          - name: "date"
+            value_template: >
+              {% set target_date = (now() + timedelta(days=2)).strftime('%Y-%m-%d') %}
+              {{ target_date }}
+          - name: "probability"
+            value_template: >
+              {% set target_date = (now() + timedelta(days=2)).strftime('%Y-%m-%d') %}
+              {{ value_json | selectattr('date', 'eq', target_date) | map(attribute='probability') | first | default('unknown') }}
+
+      - unique_id: rte_tempo_forecast_opendpe_j3
+        name: "RTE Tempo forecast OpenDPE J3"
+        value_template: >
+          {% set target_date = (now() + timedelta(days=3)).strftime('%Y-%m-%d') %}
+          {{ value_json | selectattr('date', 'eq', target_date) | map(attribute='couleur') | first | default('unknown') }}
+        attributes:
+          - name: "date"
+            value_template: >
+              {% set target_date = (now() + timedelta(days=3)).strftime('%Y-%m-%d') %}
+              {{ target_date }}
+          - name: "probability"
+            value_template: >
+              {% set target_date = (now() + timedelta(days=3)).strftime('%Y-%m-%d') %}
+              {{ value_json | selectattr('date', 'eq', target_date) | map(attribute='probability') | first | default('unknown') }}
+
+      - unique_id: rte_tempo_forecast_opendpe_j4
+        name: "RTE Tempo forecast OpenDPE J4"
+        value_template: >
+          {% set target_date = (now() + timedelta(days=4)).strftime('%Y-%m-%d') %}
+          {{ value_json | selectattr('date', 'eq', target_date) | map(attribute='couleur') | first | default('unknown') }}
+        attributes:
+          - name: "date"
+            value_template: >
+              {% set target_date = (now() + timedelta(days=4)).strftime('%Y-%m-%d') %}
+              {{ target_date }}
+          - name: "probability"
+            value_template: >
+              {% set target_date = (now() + timedelta(days=4)).strftime('%Y-%m-%d') %}
+              {{ value_json | selectattr('date', 'eq', target_date) | map(attribute='probability') | first | default('unknown') }}
+
+      - unique_id: rte_tempo_forecast_opendpe_j5
+        name: "RTE Tempo forecast OpenDPE J5"
+        value_template: >
+          {% set target_date = (now() + timedelta(days=5)).strftime('%Y-%m-%d') %}
+          {{ value_json | selectattr('date', 'eq', target_date) | map(attribute='couleur') | first | default('unknown') }}
+        attributes:
+          - name: "date"
+            value_template: >
+              {% set target_date = (now() + timedelta(days=5)).strftime('%Y-%m-%d') %}
+              {{ target_date }}
+          - name: "probability"
+            value_template: >
+              {% set target_date = (now() + timedelta(days=5)).strftime('%Y-%m-%d') %}
+              {{ value_json | selectattr('date', 'eq', target_date) | map(attribute='probability') | first | default('unknown') }}
+
+      - unique_id: rte_tempo_forecast_opendpe_j6
+        name: "RTE Tempo forecast OpenDPE J6"
+        value_template: >
+          {% set target_date = (now() + timedelta(days=6)).strftime('%Y-%m-%d') %}
+          {{ value_json | selectattr('date', 'eq', target_date) | map(attribute='couleur') | first | default('unknown') }}
+        attributes:
+          - name: "date"
+            value_template: >
+              {% set target_date = (now() + timedelta(days=6)).strftime('%Y-%m-%d') %}
+              {{ target_date }}
+          - name: "probability"
+            value_template: >
+              {% set target_date = (now() + timedelta(days=6)).strftime('%Y-%m-%d') %}
+              {{ value_json | selectattr('date', 'eq', target_date) | map(attribute='probability') | first | default('unknown') }}

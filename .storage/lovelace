@@ -3796,6 +3796,718 @@
                 }
               ],
               "title": "Tempo - Cycle"
+            },
+            {
+              "type": "custom:vertical-stack-in-card",
+              "title": "Prévisions Tempo",
+              "cards": [
+                {
+                  "type": "horizontal-stack",
+                  "cards": [
+                    {
+                      "type": "custom:button-card",
+                      "entity": "sensor.rte_tempo_couleur_actuelle",
+                      "name": "[[[\n  const days = ['Dim.', 'Lun.', 'Mar.', 'Mer.', 'Jeu.', 'Ven.', 'Sam.'];\n  const today = new Date();          // Date actuelle du navigateur\n  return days[today.getDay()];\n]]]\n",
+                      "show_state": false,
+                      "show_icon": false,
+                      "styles": {
+                        "card": [
+                          {
+                            "background-color": "transparent"
+                          },
+                          {
+                            "border": "none"
+                          },
+                          {
+                            "box-shadow": "none"
+                          },
+                          {
+                            "padding": "0px"
+                          },
+                          {
+                            "margin-top": "-20px"
+                          }
+                        ],
+                        "grid": [
+                          {
+                            "grid-template-areas": "\"n\" \"color\" \"prob\""
+                          },
+                          {
+                            "grid-template-rows": "auto 40px auto"
+                          }
+                        ],
+                        "name": [
+                          {
+                            "font-size": "14px"
+                          },
+                          {
+                            "color": "var(--primary-text-color)"
+                          },
+                          {
+                            "padding-top": "8px"
+                          },
+                          {
+                            "padding-bottom": "2px"
+                          }
+                        ],
+                        "custom_fields": {
+                          "color": [
+                            {
+                              "width": "35px"
+                            },
+                            {
+                              "height": "35px"
+                            },
+                            {
+                              "margin": "0 auto"
+                            }
+                          ],
+                          "prob": [
+                            {
+                              "display": "none"
+                            },
+                            {
+                              "font-size": "12px"
+                            },
+                            {
+                              "padding-top": "2px"
+                            },
+                            {
+                              "color": "var(--secondary-text-color)"
+                            }
+                          ]
+                        }
+                      },
+                      "custom_fields": {
+                        "color": "[[[\n  const color = (entity.state || '').toLowerCase();\n  let bgColor = '#CCCCCC';\n  if (color === 'bleu') bgColor = '#1958C4';\n  if (color === 'blanc') bgColor = '#F7F7F7';\n  if (color === 'rouge') bgColor = '#E5543A';\n  return `<div style=\"width: 100%; height: 100%; background-color: ${bgColor}; border-radius: 6px; border: 1px solid #777777; box-sizing: border-box;\"></div>`;\n]]]\n",
+                        "prob": "[[[ return ' '; ]]]\n"
+                      },
+                      "tap_action": {
+                        "action": "none"
+                      }
+                    },
+                    {
+                      "type": "custom:button-card",
+                      "entity": "sensor.rte_tempo_prochaine_couleur",
+                      "name": "[[[\n  const days = ['Dim.', 'Lun.', 'Mar.', 'Mer.', 'Jeu.', 'Ven.', 'Sam.'];\n  const date = new Date();\n  date.setDate(date.getDate() + 1);  // +1 jour\n  return days[date.getDay()];\n]]]\n",
+                      "show_state": false,
+                      "show_icon": false,
+                      "styles": {
+                        "card": [
+                          {
+                            "background-color": "transparent"
+                          },
+                          {
+                            "border": "none"
+                          },
+                          {
+                            "box-shadow": "none"
+                          },
+                          {
+                            "padding": "0px"
+                          },
+                          {
+                            "margin-top": "-20px"
+                          }
+                        ],
+                        "grid": [
+                          {
+                            "grid-template-areas": "\"n\" \"color\" \"prob\""
+                          },
+                          {
+                            "grid-template-rows": "auto 40px auto"
+                          }
+                        ],
+                        "name": [
+                          {
+                            "font-size": "14px"
+                          },
+                          {
+                            "color": "var(--primary-text-color)"
+                          },
+                          {
+                            "padding-top": "8px"
+                          },
+                          {
+                            "padding-bottom": "2px"
+                          }
+                        ],
+                        "custom_fields": {
+                          "color": [
+                            {
+                              "width": "35px"
+                            },
+                            {
+                              "height": "35px"
+                            },
+                            {
+                              "margin": "0 auto"
+                            }
+                          ],
+                          "prob": [
+                            {
+                              "display": "none"
+                            },
+                            {
+                              "font-size": "12px"
+                            },
+                            {
+                              "padding-top": "2px"
+                            },
+                            {
+                              "color": "var(--secondary-text-color)"
+                            }
+                          ]
+                        }
+                      },
+                      "custom_fields": {
+                        "color": "[[[\n  const color = (entity.state || '').toLowerCase();\n  let bgColor = '#CCCCCC';\n  if (color === 'bleu') bgColor = '#1958C4';\n  if (color === 'blanc') bgColor = '#F7F7F7';\n  if (color === 'rouge') bgColor = '#E5543A';\n  return `<div style=\"width: 100%; height: 100%; background-color: ${bgColor}; border-radius: 6px; border: 1px solid #777777; box-sizing: border-box;\"></div>`;\n]]]\n",
+                        "prob": "[[[ return ' '; ]]]\n"
+                      },
+                      "tap_action": {
+                        "action": "none"
+                      }
+                    },
+                    {
+                      "type": "custom:button-card",
+                      "entity": "sensor.rte_tempo_forecast_opendpe_j2",
+                      "name": "[[[\n  const days = ['Dim.', 'Lun.', 'Mar.', 'Mer.', 'Jeu.', 'Ven.', 'Sam.'];\n  const date = new Date(entity.attributes.date);\n  return days[date.getDay()];\n]]]\n",
+                      "show_state": false,
+                      "show_icon": false,
+                      "styles": {
+                        "card": [
+                          {
+                            "background-color": "transparent"
+                          },
+                          {
+                            "border": "none"
+                          },
+                          {
+                            "box-shadow": "none"
+                          },
+                          {
+                            "padding": "0px"
+                          },
+                          {
+                            "margin-top": "-20px"
+                          }
+                        ],
+                        "grid": [
+                          {
+                            "grid-template-areas": "\"n\" \"color\" \"prob\""
+                          },
+                          {
+                            "grid-template-rows": "auto 40px auto"
+                          }
+                        ],
+                        "name": [
+                          {
+                            "font-size": "14px"
+                          },
+                          {
+                            "color": "var(--primary-text-color)"
+                          },
+                          {
+                            "padding-top": "8px"
+                          },
+                          {
+                            "padding-bottom": "2px"
+                          }
+                        ],
+                        "custom_fields": {
+                          "color": [
+                            {
+                              "width": "35px"
+                            },
+                            {
+                              "height": "35px"
+                            },
+                            {
+                              "margin": "0 auto"
+                            }
+                          ],
+                          "prob": [
+                            {
+                              "font-size": "12px"
+                            },
+                            {
+                              "padding-top": "2px"
+                            },
+                            {
+                              "color": "var(--secondary-text-color)"
+                            }
+                          ]
+                        }
+                      },
+                      "custom_fields": {
+                        "color": "[[[\n  const color = (entity.state || '').toLowerCase();\n  let bgColor = '#CCCCCC';\n  if (color === 'bleu') bgColor = '#1958C4';\n  if (color === 'blanc') bgColor = '#F7F7F7';\n  if (color === 'rouge') bgColor = '#E5543A';\n  return `<div style=\"width: 100%; height: 100%; background-color: ${bgColor}; border-radius: 6px; border: 1px solid #777777; box-sizing: border-box;\"></div>`;\n]]]\n",
+                        "prob": "[[[ \n  const p = entity.attributes.probability;\n  if (p === null || p === undefined || p === \"\") {\n    return \"?\";\n  }\n  return Math.round(p * 100) + \"%\";\n]]]\n"
+                      },
+                      "tap_action": {
+                        "action": "none"
+                      }
+                    },
+                    {
+                      "type": "custom:button-card",
+                      "entity": "sensor.rte_tempo_forecast_opendpe_j3",
+                      "name": "[[[\n  const days = ['Dim.', 'Lun.', 'Mar.', 'Mer.', 'Jeu.', 'Ven.', 'Sam.'];\n  const date = new Date(entity.attributes.date);\n  return days[date.getDay()];\n]]]\n",
+                      "show_state": false,
+                      "show_icon": false,
+                      "styles": {
+                        "card": [
+                          {
+                            "background-color": "transparent"
+                          },
+                          {
+                            "border": "none"
+                          },
+                          {
+                            "box-shadow": "none"
+                          },
+                          {
+                            "padding": "0px"
+                          },
+                          {
+                            "margin-top": "-20px"
+                          }
+                        ],
+                        "grid": [
+                          {
+                            "grid-template-areas": "\"n\" \"color\" \"prob\""
+                          },
+                          {
+                            "grid-template-rows": "auto 40px auto"
+                          }
+                        ],
+                        "name": [
+                          {
+                            "font-size": "14px"
+                          },
+                          {
+                            "color": "var(--primary-text-color)"
+                          },
+                          {
+                            "padding-top": "8px"
+                          },
+                          {
+                            "padding-bottom": "2px"
+                          }
+                        ],
+                        "custom_fields": {
+                          "color": [
+                            {
+                              "width": "35px"
+                            },
+                            {
+                              "height": "35px"
+                            },
+                            {
+                              "margin": "0 auto"
+                            }
+                          ],
+                          "prob": [
+                            {
+                              "font-size": "12px"
+                            },
+                            {
+                              "padding-top": "2px"
+                            },
+                            {
+                              "color": "var(--secondary-text-color)"
+                            }
+                          ]
+                        }
+                      },
+                      "custom_fields": {
+                        "color": "[[[\n  const color = (entity.state || '').toLowerCase();\n  let bgColor = '#CCCCCC';\n  if (color === 'bleu') bgColor = '#1958C4';\n  if (color === 'blanc') bgColor = '#F7F7F7';\n  if (color === 'rouge') bgColor = '#E5543A';\n  return `<div style=\"width: 100%; height: 100%; background-color: ${bgColor}; border-radius: 6px; border: 1px solid #777777; box-sizing: border-box;\"></div>`;\n]]]\n",
+                        "prob": "[[[ \n  const p = entity.attributes.probability;\n  if (p === null || p === undefined || p === \"\") {\n    return \"?\";\n  }\n  return Math.round(p * 100) + \"%\";\n]]]\n"
+                      },
+                      "tap_action": {
+                        "action": "none"
+                      }
+                    },
+                    {
+                      "type": "custom:button-card",
+                      "entity": "sensor.rte_tempo_forecast_opendpe_j4",
+                      "name": "[[[\n  const days = ['Dim.', 'Lun.', 'Mar.', 'Mer.', 'Jeu.', 'Ven.', 'Sam.'];\n  const date = new Date(entity.attributes.date);\n  return days[date.getDay()];\n]]]\n",
+                      "show_state": false,
+                      "show_icon": false,
+                      "styles": {
+                        "card": [
+                          {
+                            "background-color": "transparent"
+                          },
+                          {
+                            "border": "none"
+                          },
+                          {
+                            "box-shadow": "none"
+                          },
+                          {
+                            "padding": "0px"
+                          },
+                          {
+                            "margin-top": "-20px"
+                          }
+                        ],
+                        "grid": [
+                          {
+                            "grid-template-areas": "\"n\" \"color\" \"prob\""
+                          },
+                          {
+                            "grid-template-rows": "auto 40px auto"
+                          }
+                        ],
+                        "name": [
+                          {
+                            "font-size": "14px"
+                          },
+                          {
+                            "color": "var(--primary-text-color)"
+                          },
+                          {
+                            "padding-top": "8px"
+                          },
+                          {
+                            "padding-bottom": "2px"
+                          }
+                        ],
+                        "custom_fields": {
+                          "color": [
+                            {
+                              "width": "35px"
+                            },
+                            {
+                              "height": "35px"
+                            },
+                            {
+                              "margin": "0 auto"
+                            }
+                          ],
+                          "prob": [
+                            {
+                              "font-size": "12px"
+                            },
+                            {
+                              "padding-top": "2px"
+                            },
+                            {
+                              "color": "var(--secondary-text-color)"
+                            }
+                          ]
+                        }
+                      },
+                      "custom_fields": {
+                        "color": "[[[\n  const color = (entity.state || '').toLowerCase();\n  let bgColor = '#CCCCCC';\n  if (color === 'bleu') bgColor = '#1958C4';\n  if (color === 'blanc') bgColor = '#F7F7F7';\n  if (color === 'rouge') bgColor = '#E5543A';\n  return `<div style=\"width: 100%; height: 100%; background-color: ${bgColor}; border-radius: 6px; border: 1px solid #777777; box-sizing: border-box;\"></div>`;\n]]]\n",
+                        "prob": "[[[ \n  const p = entity.attributes.probability;\n  if (p === null || p === undefined || p === \"\") {\n    return \"?\";\n  }\n  return Math.round(p * 100) + \"%\";\n]]]\n"
+                      },
+                      "tap_action": {
+                        "action": "none"
+                      }
+                    },
+                    {
+                      "type": "custom:button-card",
+                      "entity": "sensor.rte_tempo_forecast_opendpe_j5",
+                      "name": "[[[\n  const days = ['Dim.', 'Lun.', 'Mar.', 'Mer.', 'Jeu.', 'Ven.', 'Sam.'];\n  const date = new Date(entity.attributes.date);\n  return days[date.getDay()];\n]]]\n",
+                      "show_state": false,
+                      "show_icon": false,
+                      "styles": {
+                        "card": [
+                          {
+                            "background-color": "transparent"
+                          },
+                          {
+                            "border": "none"
+                          },
+                          {
+                            "box-shadow": "none"
+                          },
+                          {
+                            "padding": "0px"
+                          },
+                          {
+                            "margin-top": "-20px"
+                          }
+                        ],
+                        "grid": [
+                          {
+                            "grid-template-areas": "\"n\" \"color\" \"prob\""
+                          },
+                          {
+                            "grid-template-rows": "auto 40px auto"
+                          }
+                        ],
+                        "name": [
+                          {
+                            "font-size": "14px"
+                          },
+                          {
+                            "color": "var(--primary-text-color)"
+                          },
+                          {
+                            "padding-top": "8px"
+                          },
+                          {
+                            "padding-bottom": "2px"
+                          }
+                        ],
+                        "custom_fields": {
+                          "color": [
+                            {
+                              "width": "35px"
+                            },
+                            {
+                              "height": "35px"
+                            },
+                            {
+                              "margin": "0 auto"
+                            }
+                          ],
+                          "prob": [
+                            {
+                              "font-size": "12px"
+                            },
+                            {
+                              "padding-top": "2px"
+                            },
+                            {
+                              "color": "var(--secondary-text-color)"
+                            }
+                          ]
+                        }
+                      },
+                      "custom_fields": {
+                        "color": "[[[\n  const color = (entity.state || '').toLowerCase();\n  let bgColor = '#CCCCCC';\n  if (color === 'bleu') bgColor = '#1958C4';\n  if (color === 'blanc') bgColor = '#F7F7F7';\n  if (color === 'rouge') bgColor = '#E5543A';\n  return `<div style=\"width: 100%; height: 100%; background-color: ${bgColor}; border-radius: 6px; border: 1px solid #777777; box-sizing: border-box;\"></div>`;\n]]]\n",
+                        "prob": "[[[ \n  const p = entity.attributes.probability;\n  if (p === null || p === undefined || p === \"\") {\n    return \"?\";\n  }\n  return Math.round(p * 100) + \"%\";\n]]]\n"
+                      },
+                      "tap_action": {
+                        "action": "none"
+                      }
+                    },
+                    {
+                      "type": "custom:button-card",
+                      "entity": "sensor.rte_tempo_forecast_opendpe_j6",
+                      "name": "[[[\n  const days = ['Dim.', 'Lun.', 'Mar.', 'Mer.', 'Jeu.', 'Ven.', 'Sam.'];\n  const date = new Date(entity.attributes.date);\n  return days[date.getDay()];\n]]]\n",
+                      "show_state": false,
+                      "show_icon": false,
+                      "styles": {
+                        "card": [
+                          {
+                            "background-color": "transparent"
+                          },
+                          {
+                            "border": "none"
+                          },
+                          {
+                            "box-shadow": "none"
+                          },
+                          {
+                            "padding": "0px"
+                          },
+                          {
+                            "margin-top": "-20px"
+                          }
+                        ],
+                        "grid": [
+                          {
+                            "grid-template-areas": "\"n\" \"color\" \"prob\""
+                          },
+                          {
+                            "grid-template-rows": "auto 40px auto"
+                          }
+                        ],
+                        "name": [
+                          {
+                            "font-size": "14px"
+                          },
+                          {
+                            "color": "var(--primary-text-color)"
+                          },
+                          {
+                            "padding-top": "8px"
+                          },
+                          {
+                            "padding-bottom": "2px"
+                          }
+                        ],
+                        "custom_fields": {
+                          "color": [
+                            {
+                              "width": "35px"
+                            },
+                            {
+                              "height": "35px"
+                            },
+                            {
+                              "margin": "0 auto"
+                            }
+                          ],
+                          "prob": [
+                            {
+                              "font-size": "12px"
+                            },
+                            {
+                              "padding-top": "2px"
+                            },
+                            {
+                              "color": "var(--secondary-text-color)"
+                            }
+                          ]
+                        }
+                      },
+                      "custom_fields": {
+                        "color": "[[[\n  const color = (entity.state || '').toLowerCase();\n  let bgColor = '#CCCCCC';\n  if (color === 'bleu') bgColor = '#1958C4';\n  if (color === 'blanc') bgColor = '#F7F7F7';\n  if (color === 'rouge') bgColor = '#E5543A';\n  return `<div style=\"width: 100%; height: 100%; background-color: ${bgColor}; border-radius: 6px; border: 1px solid #777777; box-sizing: border-box;\"></div>`;\n]]]\n",
+                        "prob": "[[[ \n  const p = entity.attributes.probability;\n  if (p === null || p === undefined || p === \"\") {\n    return \"?\";\n  }\n  return Math.round(p * 100) + \"%\";\n]]]\n"
+                      },
+                      "tap_action": {
+                        "action": "none"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "custom:button-card",
+                  "show_name": false,
+                  "show_state": false,
+                  "show_icon": false,
+                  "styles": {
+                    "card": [
+                      {
+                        "background-color": "transparent"
+                      },
+                      {
+                        "border": "none"
+                      },
+                      {
+                        "box-shadow": "none"
+                      },
+                      {
+                        "padding": "18px 2px 12px 12px"
+                      }
+                    ],
+                    "grid": [
+                      {
+                        "grid-template-areas": "\"label bleu bleu_color blanc blanc_color rouge rouge_color \""
+                      },
+                      {
+                        "grid-template-columns": "auto auto 30px auto 30px"
+                      },
+                      {
+                        "column-gap": "8px"
+                      },
+                      {
+                        "justify-content": "start"
+                      }
+                    ],
+                    "custom_fields": {
+                      "label": [
+                        {
+                          "font-size": "12px"
+                        },
+                        {
+                          "color": "var(--secondary-text-color)"
+                        },
+                        {
+                          "white-space": "nowrap"
+                        },
+                        {
+                          "align-self": "center"
+                        }
+                      ],
+                      "bleu": [
+                        {
+                          "font-size": "12px"
+                        },
+                        {
+                          "color": "var(--secondary-text-color)"
+                        },
+                        {
+                          "text-align": "right"
+                        },
+                        {
+                          "align-self": "center"
+                        }
+                      ],
+                      "bleu_color": [
+                        {
+                          "width": "22px"
+                        },
+                        {
+                          "height": "22px"
+                        },
+                        {
+                          "align-self": "center"
+                        }
+                      ],
+                      "blanc": [
+                        {
+                          "font-size": "12px"
+                        },
+                        {
+                          "color": "var(--secondary-text-color)"
+                        },
+                        {
+                          "text-align": "right"
+                        },
+                        {
+                          "align-self": "center"
+                        }
+                      ],
+                      "blanc_color": [
+                        {
+                          "width": "22px"
+                        },
+                        {
+                          "height": "22px"
+                        },
+                        {
+                          "align-self": "center"
+                        }
+                      ],
+                      "rouge": [
+                        {
+                          "font-size": "12px"
+                        },
+                        {
+                          "color": "var(--secondary-text-color)"
+                        },
+                        {
+                          "text-align": "right"
+                        },
+                        {
+                          "align-self": "center"
+                        }
+                      ],
+                      "rouge_color": [
+                        {
+                          "width": "22px"
+                        },
+                        {
+                          "height": "22px"
+                        },
+                        {
+                          "align-self": "center"
+                        }
+                      ]
+                    }
+                  },
+                  "custom_fields": {
+                    "label": "[[[\n  return 'Nombre de jours restants :';\n]]]\n",
+                    "bleu": "[[[\n  const ent = states['sensor.rte_tempo_cycle_jours_restants_bleu'];\n  if (!ent || !ent.state || ent.state === 'unknown') return '?';\n  return ent.state;\n]]]\n",
+                    "bleu_color": "[[[\n  return `<div style=\"width: 20px; height: 20px; background-color: blue; border-radius: 4px; border: 1px solid #777777;\"></div>`;\n]]]\n",
+                    "blanc": "[[[\n  const ent = states['sensor.rte_tempo_cycle_jours_restants_blanc'];\n  if (!ent || !ent.state || ent.state === 'unknown') return '?';\n  return ent.state;\n]]]\n",
+                    "blanc_color": "[[[\n  return `<div style=\"width: 20px; height: 20px; background-color: #F7F7F7; border-radius: 4px; border: 1px solid #777777;\"></div>`;\n]]]\n",
+                    "rouge": "[[[\n  const ent = states['sensor.rte_tempo_cycle_jours_restants_rouge'];\n  if (!ent || !ent.state || ent.state === 'unknown') return '?';\n  return ent.state;\n]]]\n",
+                    "rouge_color": "[[[\n  return `<div style=\"width: 20px; height: 20px; background-color: #E5543A; border-radius: 4px; border: 1px solid #777777;\"></div>`;\n]]]\n"
+                  },
+                  "tap_action": {
+                    "action": "none"
+                  }
+                }
+              ],
+              "card_mod": {
+                "style": ".card-header {\n  padding-bottom: -40px !important;\n}\n"
+              }
             }
           ]
         }

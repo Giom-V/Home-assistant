@@ -148,6 +148,11 @@
         "id": "00270e33c9574529ad80bce7041ae368",
         "url": "/hacsfiles/EcoleDirecteHACards/EcoleDirecteHACards.js?hacstag=1079222835006",
         "type": "module"
+      },
+      {
+        "id": "45cedd35039a4be6961387aad0643596",
+        "url": "/hacsfiles/vertical-stack-in-card/vertical-stack-in-card.js?hacstag=142051833101",
+        "type": "module"
       }
     ]
   }
