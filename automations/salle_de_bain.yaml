@@ -1,6 +1,6 @@
 - id: "1678917872103"
   alias: Toggle Bathroom heating
-  description: ""
+  description: "Bascule le chauffage de la salle de bain"
   trigger:
     - platform: device
       domain: mqtt
@@ -21,7 +21,7 @@
   mode: single
 - id: "1678959025833"
   alias: Turn off bathroom heating
-  description: ""
+  description: "Éteint le chauffage de la salle de bain"
   trigger:
     - platform: device
       domain: mqtt

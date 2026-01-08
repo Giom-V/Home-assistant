@@ -1,6 +1,6 @@
 - id: "1704463513006"
   alias: Alert when RPi power isn't enough
-  description: ""
+  description: "Alerte lorsque l'alimentation du RPi n'est pas suffisante"
   trigger:
     - platform: state
       entity_id:
@@ -24,7 +24,7 @@
   mode: single
 - id: "1761596762891"
   alias: Restart netatmo when it's disconnected
-  description: ""
+  description: "Redémarre Netatmo lorsqu'il est déconnecté"
   triggers:
     - trigger: state
       entity_id:

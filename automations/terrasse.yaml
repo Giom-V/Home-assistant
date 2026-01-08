@@ -1,6 +1,6 @@
 - id: "1678555411746"
   alias: Allumer les lumières de la terrasse au coucher du soleil
-  description: ""
+  description: "Allume les lumières de la terrasse au coucher du soleil"
   trigger:
     - platform: sun
       event: sunset
@@ -23,7 +23,7 @@
   mode: single
 - id: "1701885267125"
   alias: "Turn on Guirlande "
-  description: ""
+  description: "Allume la guirlande au coucher du soleil"
   trigger:
     - platform: sun
       event: sunset
@@ -37,7 +37,7 @@
   mode: single
 - id: "1701885292744"
   alias: "Turn off Guirlande "
-  description: ""
+  description: "Éteint la guirlande"
   trigger:
     - platform: device
       device_id: 98ca57dc34f30913565109817baf591f

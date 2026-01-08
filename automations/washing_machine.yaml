@@ -2,7 +2,7 @@
 
 - id: "1698686228058"
   alias: Washing machine has finished while I work
-  description: ""
+  description: "La machine à laver a fini pendant que je travaille"
   trigger:
     - platform: state
       entity_id:

@@ -15,7 +15,7 @@
 
 - id: SwitchOffLightsInTheSummerMornings
   alias: Switch off lights 30mn after sunrise
-  description: ""
+  description: "Éteint les lumières 30 minutes après le lever du soleil"
   trigger:
     - event: sunrise
       offset: 00:30
@@ -31,7 +31,7 @@
       entity_id: scene.LightsOff
 - id: SwitchOffLightsInTheWinterMornings
   alias: Switch off lights 60mn after sunrise
-  description: ""
+  description: "Éteint les lumières 60 minutes après le lever du soleil"
   trigger:
     - at: "08:00:00"
       platform: time
@@ -46,7 +46,7 @@
       entity_id: scene.LightsOff
 - id: SwitchOffLightsWhenWeGoToBed
   alias: Switch off all lights when we go to bed
-  description: ""
+  description: "Éteint toutes les lumières au coucher"
   trigger:
     platform: template
     value_template: "{{ states('sensor.time') == states('input_datetime.nighttime_end')[0:5] }}"
@@ -56,7 +56,7 @@
       entity_id: scene.LightsOff
 - id: SwitchOffLightsWhenNobodysHome
   alias: Switch off all lights when nobody's home for 30mn
-  description: Switch off all lights when nobody's home for 30mn
+  description: "Éteint toutes les lumières quand personne n'est à la maison depuis 30 minutes"
   trigger:
     - entity_id: binary_sensor.people_home
       for: 30m

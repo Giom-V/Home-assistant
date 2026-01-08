@@ -1,6 +1,6 @@
 - id: "1736756974252"
   alias: "Bedroom remote: LEDs"
-  description: ""
+  description: "Controle les LEDs de la chambre avec la télécommande"
   triggers:
     - domain: mqtt
       device_id: a7995daf6b00103a726e7417cf4e5b9b
@@ -17,7 +17,7 @@
   mode: single
 - id: "1736757260832"
   alias: "Bedroom remote: covers "
-  description: ""
+  description: "Télécommande de la chambre : volets"
   triggers:
     - domain: mqtt
       device_id: a7995daf6b00103a726e7417cf4e5b9b
@@ -70,7 +70,7 @@
   mode: single
 - id: "1736757328634"
   alias: Turn on wardrobe light at 10
-  description: ""
+  description: "Allume la lumière de l'armoire à 10h"
   triggers:
     - trigger: time_pattern
       hours: "10"
@@ -83,7 +83,7 @@
   mode: single
 - id: "1736757407681"
   alias: "Bedroom remote: wardrobe"
-  description: ""
+  description: "Télécommande de la chambre : armoire"
   triggers:
     - domain: mqtt
       device_id: a7995daf6b00103a726e7417cf4e5b9b

@@ -16,7 +16,7 @@
 
 - id: pond_pump_on_off_peak
   alias: Turn on the pond's pump during off-peak hours
-  description: Turns on the pump when off-peak hours start, if not freezing.
+  description: "Allume la pompe du bassin pendant les heures creuses, s'il ne gèle pas."
   triggers:
     - platform: state
       entity_id: binary_sensor.heure_creuse
@@ -32,7 +32,7 @@
   mode: single
 - id: pond_pump_off_peak
   alias: Turn off the pond's pump during peak hours
-  description: Turns off the pump when peak hours start, or at 2 PM.
+  description: "Éteint la pompe du bassin pendant les heures pleines, ou à 14h."
   triggers:
     - platform: state
       entity_id: binary_sensor.heure_creuse
@@ -50,7 +50,7 @@
   mode: single
 - id: pond_pump_off_freezing
   alias: Turn off water pump when it's freezing
-  description: Turns off the pump if the temperature drops below 0°C for 5 minutes.
+  description: "Éteint la pompe si la température descend en dessous de 0°C pendant 5 minutes."
   triggers:
     - platform: numeric_state
       entity_id: sensor.module_exterieur_netatmo_temperature
@@ -65,7 +65,7 @@
   mode: single
 - id: pond_pump_on_lunchtime
   alias: Turn on pond's pump when we are here during lunch time
-  description: Turns on the pump at noon if someone is home or visiting.
+  description: "Allume la pompe à midi si quelqu'un est à la maison ou en visite."
   triggers:
     - platform: time
       at: "12:00:00"
@@ -85,7 +85,7 @@
   mode: single
 - id: pond_pump_scare_animals
   alias: Turn on water pump for 5mn to scare animals
-  description: Turns on the pump for 5 minutes to scare animals if presence is detected.
+  description: "Allume la pompe pendant 5 minutes pour effrayer les animaux si une présence est détectée."
   triggers:
     - platform: state
       entity_id: binary_sensor.terrasse_animal

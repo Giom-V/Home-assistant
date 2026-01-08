@@ -1,6 +1,6 @@
 - id: "1677099297248"
   alias: Aurore's bed lights
-  description: ""
+  description: "Allume/éteint les lumières du lit d'Aurore"
   triggers:
     - device_id: e059cad12f0a2c750a56719a911dc8e6
       domain: zha
@@ -22,7 +22,7 @@
   mode: single
 - id: "1677698797768"
   alias: Aurore's room main light bulb
-  description: ""
+  description: "Allume/éteint l'ampoule principale de la chambre d'Aurore"
   triggers:
     - domain: mqtt
       device_id: f646eba37247f6ffa88f1d1c3b59ef76
@@ -49,7 +49,7 @@
   mode: single
 - id: "1677701807876"
   alias: Aurore's Light color temperature up
-  description: ""
+  description: "Augmente la température de couleur de la lumière d'Aurore"
   trigger:
     - device_id: e059cad12f0a2c750a56719a911dc8e6
       domain: zha
@@ -73,7 +73,7 @@
   mode: single
 - id: "1677701807877"
   alias: Aurore's Light color temperature down
-  description: ""
+  description: "Diminue la température de couleur de la lumière d'Aurore"
   trigger:
     - device_id: e059cad12f0a2c750a56719a911dc8e6
       domain: zha
@@ -97,7 +97,7 @@
   mode: single
 - id: "1679085142205"
   alias: During the day Aurore's light bulb default behavior is On
-  description: ""
+  description: "Pendant la journée, le comportement par défaut de l'ampoule d'Aurore est 'On'"
   trigger:
     - platform: time
       at: 07:00:00
@@ -111,7 +111,7 @@
   mode: single
 - id: "1719993857867"
   alias: Dim up Aurore's light
-  description: ""
+  description: "Augmente la luminosité de la lumière d'Aurore"
   triggers:
     - device_id: e059cad12f0a2c750a56719a911dc8e6
       domain: zha
@@ -146,7 +146,7 @@
   mode: single
 - id: "1719993909448"
   alias: Dim down Aurore's light
-  description: ""
+  description: "Diminue la luminosité de la lumière d'Aurore"
   triggers:
     - device_id: e059cad12f0a2c750a56719a911dc8e6
       domain: zha
@@ -169,7 +169,7 @@
   mode: single
 - id: "1719994191328"
   alias: Control Aurore's velux curtains
-  description: ""
+  description: "Contrôle les rideaux du velux d'Aurore"
   trigger:
     - device_id: e059cad12f0a2c750a56719a911dc8e6
       domain: zha
@@ -202,7 +202,7 @@
   mode: single
 - id: "1758443142653"
   alias: Switch off Aurore bed light when she sleeps
-  description: ""
+  description: "Éteint la lumière du lit d'Aurore quand elle dort"
   triggers:
     - trigger: time
       at: "23:00:00"
@@ -222,7 +222,7 @@
   mode: single
 - id: "1758443383959"
   alias: Aurore's main light
-  description: ""
+  description: "Lumière principale d'Aurore"
   triggers:
     - device_id: e059cad12f0a2c750a56719a911dc8e6
       domain: zha
@@ -243,7 +243,7 @@
   mode: single
 - id: "1759210471445"
   alias: Fermer les volets d'Aurore à minuit
-  description: ""
+  description: "Ferme les volets d'Aurore à minuit"
   triggers:
     - trigger: time
       at: 00:00:00

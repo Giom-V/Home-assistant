@@ -63,6 +63,7 @@
 
 - id: auto_switch_away_mode_on
   alias: Switch Away mode on when we are away for more than an hour
+  description: "Active le mode absence quand nous sommes absents pour plus d'une heure"
   trigger:
     - platform: state
       entity_id: person.guillaume, person.claire
@@ -100,6 +101,7 @@
         entity_id: input_boolean.away_mode
 - id: auto_switch_away_mode_off
   alias: Switch Away mode off when we come back
+  description: "Désactive le mode absence quand nous rentrons"
   trigger:
     - platform: state
       entity_id: person.guillaume, person.claire
@@ -147,6 +149,7 @@
 #         entity_id: alarm_control_panel.home
 - id: motion_detected
   alias: Motion detected
+  description: "M'alerte si un mouvement est détecté quand le mode absence est activé"
   trigger:
     - payload: "ON"
       platform: mqtt
@@ -263,6 +266,7 @@
         message: Vidéo transférée, c'est votre dernier avertissement !!!
 - id: door_opened_while_away
   alias: Door openned while away
+  description: "M'alerte si une ouverture de porte est détectée quand le mode absence est activé"
   trigger:
     - platform: state
       entity_id:
@@ -355,6 +359,7 @@
         message: Ouverture de porte détectée ! Dernier avertissement avant appel de la police !
 - id: movement_while_away
   alias: Mouvement detected while away
+  description: "M'alerte si un mouvement est détecté quand le mode absence est activé"
   trigger:
     - platform: state
       entity_id: binary_sensor.motion_sensor_basement_stairs_motion
@@ -426,6 +431,7 @@
                 message: Présence détectée dans la salon ! Vous n'avez rien à faire ici, merci de partir immédiatement !
 - id: lights_while_away
   alias: Lights switched on while away
+  description: "M'alerte si une lumière est allumée quand le mode absence est activé"
   trigger:
     - platform: state
       entity_id: light.basement_stairs_light_light #, lights_switched_on_while_away
@@ -480,7 +486,7 @@
 #         message: Je vous entend!
 - id: "1689540989633"
   alias: Presence simulation Bureau
-  description: ""
+  description: "Simule une présence dans le bureau quand le mode absence est activé"
   trigger:
     - platform: sun
       event: sunrise
@@ -518,7 +524,7 @@
   mode: single
 - id: "1689541214168"
   alias: Presence simulation Aurore's bedroom
-  description: ""
+  description: "Simule une présence dans la chambre d'Aurore quand le mode absence est activé"
   trigger:
     - platform: sun
       event: sunrise
@@ -556,7 +562,7 @@
   mode: single
 - id: "1687266007380"
   alias: Reboot HA every week when we are away
-  description: ""
+  description: "Redémarre Home Assistant chaque semaine quand nous sommes absents"
   trigger:
     - platform: time
       at: 04:05:06

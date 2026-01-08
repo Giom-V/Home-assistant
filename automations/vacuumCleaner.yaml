@@ -44,6 +44,7 @@
 
 - id: zone_cleaning
   alias: Start Cleaning Room
+  description: "Démarre le nettoyage d'une pièce"
   trigger:
     - platform: state
       entity_id: input_select.vacuum_room
@@ -157,6 +158,7 @@
 #         entity_id: vacuum.xiaomi_vacuum_cleaner
 - id: vacuum_kitchen_and_dining_room_when_we_are_away
   alias: vacuum Kitchen and dining room when we are away
+  description: "Passe l'aspirateur dans la cuisine et la salle à manger quand nous sommes absents"
   trigger:
     - at: "14:00"
       platform: time
@@ -178,6 +180,7 @@
             entity_id: script.vacuum_first_floor
 - id: vacuum_kitchen_and_dining_room_when_we_are_away_covid_version
   alias: vacuum Kitchen and dining room when we are away (Covid version)
+  description: "Passe l'aspirateur dans la cuisine et la salle à manger quand nous sommes absents (version Covid)"
   trigger:
     - platform: state
       entity_id: person.guillaume, person.claire
@@ -246,6 +249,7 @@
             entity_id: script.vacuum_first_floor
 - id: last_vacuum_clean_time_update
   alias: Update the time of the last cleaning
+  description: "Met à jour l'heure du dernier nettoyage"
   trigger:
     - platform: state
       entity_id: vacuum.rondelle
@@ -259,7 +263,7 @@
         datetime: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
 - id: vacuum_fast_scan_auto_start_stop
   alias: Start/stop xiaomi fast scan interval
-  description: ""
+  description: "Démarre/arrête l'intervalle de scan rapide de Xiaomi"
   trigger:
     - platform: state
       entity_id:
@@ -297,7 +301,7 @@
 
 - id: vacuum_fast_scan
   alias: Update xiaomi map extractor
-  description: ""
+  description: "Met à jour l'extracteur de carte Xiaomi"
   trigger:
     - platform: time_pattern
       seconds: "10"

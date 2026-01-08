@@ -8,7 +8,7 @@
 
 - id: "office_button_toggle_screens"
   alias: Press office button (switch on/off screens)
-  description: ""
+  description: "Bascule l'alimentation des écrans en appuyant sur le bouton du bureau"
   triggers:
     - domain: mqtt
       device_id: 09d4ba3dded13922cf5b606b4bfd261b
@@ -26,7 +26,7 @@
 
 - id: "office_window_rain_notification"
   alias: Office window opened while it rains
-  description: "Sends me a notification if the office window is open while it's raining."
+  description: "M'envoie une notification si la fenêtre du bureau est ouverte alors qu'il pleut."
   triggers:
     - platform: numeric_state
       entity_id: sensor.pluviometre_netatmo_rain

@@ -1,6 +1,6 @@
 - id: "1678555471570"
   alias: Extinction des feux
-  description: ""
+  description: "Éteint toutes les lumières et appareils à 23h"
   trigger:
     - platform: time
       at: "23:00:00"
@@ -39,7 +39,7 @@
   mode: single
 - id: "1707984261282"
   alias: Close covers at sunset
-  description: ""
+  description: "Ferme les volets au coucher du soleil"
   triggers:
     - event: sunset
       offset: 15
@@ -91,7 +91,7 @@
   mode: single
 - id: "1737370119461"
   alias: Open covers when it's sunny
-  description: ""
+  description: "Ouvre les volets quand il y a du soleil"
   triggers:
     - trigger: numeric_state
       entity_id:
@@ -133,7 +133,7 @@
   mode: single
 - id: "1687949528073"
   alias: Close water if a leak is detected
-  description: ""
+  description: "Coupe l'eau si une fuite est détectée"
   trigger:
     - type: moist
       platform: device
@@ -150,7 +150,7 @@
 - id: "1688126732710"
   alias: "Sécurité: couper l'eau si une fuite est détectée (pour l'instant dans
     le jardin)"
-  description: ""
+  description: "Sécurité: coupe l'eau si une fuite est détectée (jardin)"
   trigger:
     - type: humidity
       platform: device
@@ -174,7 +174,7 @@
   mode: single
 - id: "1688200212515"
   alias: Basement stairs light when motion detected
-  description: ""
+  description: "Allume la lumière de l'escalier du sous-sol lors de la détection de mouvement"
   trigger:
     - type: motion
       platform: device
@@ -211,7 +211,7 @@
   mode: single
 - id: "1688200466384"
   alias: Basement stairs lights off when motion stopped
-  description: ""
+  description: "Éteint la lumière de l'escalier du sous-sol lorsque le mouvement s'arrête"
   trigger:
     - type: no_motion
       platform: device
@@ -231,7 +231,7 @@
   mode: restart
 - id: "1689543800532"
   alias: Flood detected
-  description: ""
+  description: "Notifie quand une inondation est détectée"
   trigger:
     - type: moist
       platform: device
@@ -271,7 +271,7 @@
   mode: single
 - id: "1697917560752"
   alias: "Fuite au sous-sol "
-  description: ""
+  description: "Détecte une fuite au sous-sol"
   trigger:
     - type: moist
       platform: device
@@ -307,7 +307,7 @@
   mode: single
 - id: "1703071835981"
   alias: Conso heures pleines/creuses
-  description: ""
+  description: "Gère la consommation en heures pleines/creuses"
   trigger:
     - platform: state
       entity_id:
