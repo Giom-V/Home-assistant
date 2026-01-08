@@ -5,7 +5,6 @@ This folder contains custom themes to style the Home Assistant user interface.
 **Documentation:** <https://www.home-assistant.io/integrations/frontend/>
 
 ## Available Themes
-
 *   **google_theme:** A theme that mimics the look and feel of Google's
     Material Design.
 *   **metro:** A theme inspired by the Microsoft Metro design language,
