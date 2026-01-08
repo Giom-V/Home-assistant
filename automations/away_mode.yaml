@@ -583,3 +583,100 @@
     - service: hassio.host_reboot
       data: {}
   mode: single
+# --- Garage Automations ---
+# Turns the garage door power on when approaching home to avoid GPS latency.
+
+- id: "garage_pre_arrival_power_restore"
+  alias: "Garage: Pre-arrival Power Restore"
+  description: "Allume le garage en approchant de la maison ou en se connectant au Wi-Fi"
+  mode: single
+  trigger:
+    # Triggers for Guillaume
+    - platform: numeric_state
+      entity_id: proximity.home_guillaume
+      below: 2
+      for: "00:01:00"
+      id: "guillaume_proximity"
+    - platform: state
+      entity_id: device_tracker.giom_pixel_9_pro_xl
+      to: "home"
+      id: "guillaume_wifi"
+
+    # Triggers for Claire
+    - platform: numeric_state
+      entity_id: proximity.home_claire
+      below: 2
+      for: "00:01:00"
+      id: "claire_proximity"
+    - platform: state
+      entity_id: device_tracker.claire_pixel_8_pro
+      to: "home"
+      id: "claire_wifi"
+
+  condition:
+    - condition: state
+      entity_id: switch.porte_garage
+      state: "off"
+    - condition: template
+      value_template: >
+        {% if trigger.id == 'guillaume_proximity' %}
+          {{ states.proximity.home_guillaume.attributes.dir_of_travel == 'towards' }}
+        {% elif trigger.id == 'claire_proximity' %}
+          {{ states.proximity.home_claire.attributes.dir_of_travel == 'towards' }}
+        {% elif trigger.id in ['guillaume_wifi', 'claire_wifi'] %}
+          true
+        {% else %}
+          false
+        {% endif %}
+  action:
+    - service: switch.turn_on
+      target:
+        entity_id: switch.porte_garage
+    - choose:
+        - conditions:
+            - condition: trigger
+              id:
+                - "guillaume_proximity"
+                - "guillaume_wifi"
+          sequence:
+            - service: notify.mobile_app_pixel_9_pro_xl
+              data:
+                title: "Garage Prêt"
+                message: "L'alimentation de la porte de garage a été rétablie à votre approche."
+        - conditions:
+            - condition: trigger
+              id:
+                - "claire_proximity"
+                - "claire_wifi"
+          sequence:
+            - service: notify.mobile_app_pixel_8_pro
+              data:
+                title: "Garage Prêt"
+                message: "L'alimentation de la porte de garage a été rétablie à votre approche."
+
+- id: "garage_power_off_after_pre_arrival"
+  alias: "Garage: Turn off power if user moves away after pre-arrival"
+  description: "Éteint le garage si l'utilisateur s'éloigne après avoir déclenché l'automatisation de pré-arrivée."
+  mode: single
+  trigger:
+    - platform: time_pattern
+      minutes: "/15"
+  condition:
+    - condition: state
+      entity_id: switch.porte_garage
+      state: "on"
+    - condition: state
+      entity_id: input_boolean.away_mode
+      state: "on"
+    - condition: and
+      conditions:
+        - condition: numeric_state
+          entity_id: proximity.home_guillaume
+          above: 2
+        - condition: numeric_state
+          entity_id: proximity.home_claire
+          above: 2
+  action:
+    - service: switch.turn_off
+      target:
+        entity_id: switch.porte_garage
