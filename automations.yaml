@@ -665,3 +665,71 @@
     data:
       option: Solaire+PAC
   mode: single
+# --- Garage Automations ---
+# Turns the garage door power on when approaching home to avoid GPS latency.
+
+- id: "garage_pre_arrival_power_restore"
+  alias: "Garage: Pre-arrival Power Restore"
+  description: "Turn on garage power when approaching home or connecting to Wi-Fi"
+  mode: single
+  trigger:
+    # Triggers for Guillaume
+    - platform: numeric_state
+      entity_id: proximity.guillaume
+      below: 2000 # meters
+      id: "guillaume_proximity"
+    - platform: state
+      entity_id: device_tracker.guillaume_unifi
+      to: "home"
+      id: "guillaume_wifi"
+
+    # Triggers for Claire
+    - platform: numeric_state
+      entity_id: proximity.claire
+      below: 2000 # meters
+      id: "claire_proximity"
+    - platform: state
+      entity_id: device_tracker.claire_unifi
+      to: "home"
+      id: "claire_wifi"
+
+  condition:
+    - condition: state
+      entity_id: switch.porte_garage
+      state: "off"
+    - condition: template
+      value_template: >
+        {% if trigger.id == 'guillaume_proximity' %}
+          {{ states.proximity.guillaume.attributes.dir_of_travel == 'towards' }}
+        {% elif trigger.id == 'claire_proximity' %}
+          {{ states.proximity.claire.attributes.dir_of_travel == 'towards' }}
+        {% elif trigger.id in ['guillaume_wifi', 'claire_wifi'] %}
+          true
+        {% else %}
+          false
+        {% endif %}
+  action:
+    - service: switch.turn_on
+      target:
+        entity_id: switch.porte_garage
+    - choose:
+        - conditions:
+            - condition: trigger
+              id:
+                - "guillaume_proximity"
+                - "guillaume_wifi"
+          sequence:
+            - service: notify.mobile_app_pixel_7_pro
+              data:
+                title: "Garage Prêt"
+                message: "L'alimentation de la porte de garage a été rétablie à votre approche."
+        - conditions:
+            - condition: trigger
+              id:
+                - "claire_proximity"
+                - "claire_wifi"
+          sequence:
+            - service: notify.mobile_app_pixel_8_pro
+              data:
+                title: "Garage Prêt"
+                message: "L'alimentation de la porte de garage a été rétablie à votre approche."
