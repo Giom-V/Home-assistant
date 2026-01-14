@@ -341,3 +341,15 @@
           type: select_option
           option: Heures pleines
   mode: single
+- id: "171402400000"
+  alias: Switch off all lights at midnight
+  description: "Turns off all lights at midnight"
+  trigger:
+    - platform: time
+      at: "00:00:00"
+  condition: []
+  action:
+    - service: light.turn_off
+      data:
+        entity_id: all
+  mode: single
