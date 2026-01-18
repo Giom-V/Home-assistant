@@ -1,6 +1,5 @@
 # Automations for the terrace and front yard lights.
 # Includes logic for turning lights on/off based on sun and cover position.
-# Style guide: air_purifier.yaml
 
 - id: "1678555411746"
   alias: Allumer les lumières de la terrasse au coucher du soleil
@@ -87,4 +86,5 @@
           - group.outsidelamps
           - switch.guirlande_switch
           - switch.guirlande_terrasse
+          - switch.guirlande_escalier_ext_power_switch
   mode: single
