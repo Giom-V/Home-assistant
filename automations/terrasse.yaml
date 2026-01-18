@@ -1,3 +1,7 @@
+# Automations for the terrace and front yard lights.
+# Includes logic for turning lights on/off based on sun and cover position.
+# Style guide: air_purifier.yaml
+
 - id: "1678555411746"
   alias: Allumer les lumières de la terrasse au coucher du soleil
   description: "Allume les lumières de la terrasse au coucher du soleil"
@@ -66,4 +70,21 @@
       device_id: e310bad303788f20ec0ac63b758667f1
       entity_id: eac3459946c00fb182e1aa26687ec3ed
       domain: light
+  mode: single
+
+- id: "turn_off_front_yard_lights_when_dining_room_cover_closed"
+  alias: "Éteindre lumières jardin avant quand volet SAM fermé"
+  description: "Éteint toutes les lumières du jardin avant (lampes et guirlandes) lorsque le volet de la salle à manger est fermé."
+  trigger:
+    - platform: state
+      entity_id: cover.legrand_shutter_sw_with_level_control_cover
+      to: "closed"
+  condition: []
+  action:
+    - service: homeassistant.turn_off
+      target:
+        entity_id:
+          - group.outsidelamps
+          - switch.guirlande_switch
+          - switch.guirlande_terrasse
   mode: single
