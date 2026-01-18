@@ -48,6 +48,10 @@
     - condition: numeric_state
       entity_id: sensor.temperature_exterieure_solisart
       below: 10
+    - condition: template
+      value_template: >-
+        {{ this.attributes.last_triggered is none or (now() -
+        this.attributes.last_triggered).total_seconds() > 43200 }}
   actions:
     - device_id: dfe890255b2aec25d04652bf3f562bcb
       domain: cover
