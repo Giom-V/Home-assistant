@@ -76,7 +76,7 @@
   description: "Éteint toutes les lumières du jardin avant (lampes et guirlandes) lorsque le volet de la salle à manger est fermé."
   trigger:
     - platform: state
-      entity_id: cover.legrand_shutter_sw_with_level_control_cover
+      entity_id: cover.volet_salle_a_manger
       to: "closed"
   condition: []
   action:
