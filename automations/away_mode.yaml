@@ -594,7 +594,7 @@
     # Triggers for Guillaume
     - platform: numeric_state
       entity_id: proximity.home_guillaume
-      below: 2
+      below: 2 # in km
       for: "00:01:00"
       id: "guillaume_proximity"
     - platform: state
@@ -605,7 +605,7 @@
     # Triggers for Claire
     - platform: numeric_state
       entity_id: proximity.home_claire
-      below: 2
+      below: 2 # in km
       for: "00:01:00"
       id: "claire_proximity"
     - platform: state
@@ -673,9 +673,11 @@
         - condition: numeric_state
           entity_id: proximity.home_guillaume
           above: 2
+          for: "00:05:00"
         - condition: numeric_state
           entity_id: proximity.home_claire
           above: 2
+          for: "00:05:00"
   action:
     - service: switch.turn_off
       target:
