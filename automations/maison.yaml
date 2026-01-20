@@ -48,6 +48,10 @@
     - condition: numeric_state
       entity_id: sensor.temperature_exterieure_solisart
       below: 10
+    - condition: template
+      value_template: >-
+        {{ this.attributes.last_triggered is none or (now() -
+        this.attributes.last_triggered).total_seconds() > 43200 }}
   actions:
     - device_id: dfe890255b2aec25d04652bf3f562bcb
       domain: cover
@@ -86,7 +90,7 @@
           target:
             entity_id:
               - cover.volets_salle_de_jeux
-              - cover.legrand_shutter_sw_with_level_control_cover
+              - cover.volet_salle_a_manger
               - cover.volets_cuisine
   mode: single
 - id: "1737370119461"

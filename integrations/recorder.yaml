@@ -3,163 +3,151 @@
 recorder:
   purge_keep_days: 30
   commit_interval: 30
-  exclude:
-    domains:
-      # All domains can be optained by running this template:
-      # {%- for d in states | groupby('domain') %}
-      #      - {{ d[0] }}
-      # {%- endfor %}
-      - cover
-      - group
-      - input_boolean
-      - input_select
-      - todo
-      - scene
-      - sun
-      - switch
-      - weblink
-      - zone
-    entities:
-      # All entities, grouped by domain can be optained like this:
-      # {%- for d in states | groupby('domain') %}
-      # {{ d[0] }}
-      # {% for e in d[1] %}
-      # {{ '- ' + e.entity_id }}
-      # {%- endfor %}
-      # {{ '' }}
-      # {%- endfor %}
-      - binary_sensor.living_room_battery
-      - binary_sensor.living_room_battery_2
-      - binary_sensor.living_room_button_press
-      - binary_sensor.living_room_button_press_2
-      - binary_sensor.living_room_connectivity
-      - binary_sensor.living_room_connectivity_2
-      - binary_sensor.solarium_battery
-      - binary_sensor.solarium_button_press
-      - binary_sensor.solarium_connectivity
-      - binary_sensor.updater
-      - binary_sensor.workday_sensor
-      - sensor.date_time
-      - sensor.date_time_utc
-      - sensor.disk_use
-      - sensor.disk_use_percent
-      - sensor.load_15m
-      - sensor.load_1m
-      - sensor.load_5m
-      - sensor.memory_free
-      - sensor.memory_use_percent
-      - sensor.onhub_bytes_received
-      - sensor.onhub_bytes_sent
-      - sensor.onhub_kbyte_sec_received
-      - sensor.onhub_kbyte_sec_sent
-      - sensor.onhub_packets_received
-      - sensor.onhub_packets_sec_received
-      - sensor.onhub_packets_sec_sent
-      - sensor.onhub_packets_sent
-      - sensor.packets_in_wlan0
-      - sensor.packets_out_wlan0
-      - sensor.process_hass
-      - sensor.swap_free
-      - sensor.swap_use
-      - sensor.swap_use_percent
-      - sensor.time
-    event_types:
-      - time_changed
-    entity_globs:
-      - device_tracker.unnamed_device_*
-      - sensor.conso_solisart_*
-      - sensor.conso_*
+  # Temporary recording everything to make stats
+  # exclude:
+  #   domains:
+  #     # All domains can be optained by running this template:
+  #     # {%- for d in states | groupby('domain') %}
+  #     #      - {{ d[0] }}
+  #     # {%- endfor %}
+  #     - cover
+  #     - group
+  #     - input_boolean
+  #     - input_select
+  #     - todo
+  #     - scene
+  #     - sun
+  #     - switch
+  #     - weblink
+  #     - zone
+  #   entities:
+  #     # All entities, grouped by domain can be optained like this:
+  #     # {%- for d in states | groupby('domain') %}
+  #     # {{ d[0] }}
+  #     # {% for e in d[1] %}
+  #     # {{ '- ' + e.entity_id }}
+  #     # {%- endfor %}
+  #     # {{ '' }}
+  #     # {%- endfor %}
+  #     - binary_sensor.updater
+  #     - binary_sensor.workday_sensor
+  #     - camera.dafang_camera_motion_snapshot
+  #     - sensor.date_time
+  #     - sensor.date_time_utc
+  #     - sensor.disk_use
+  #     - sensor.disk_use_percent
+  #     - sensor.load_15m
+  #     - sensor.load_1m
+  #     - sensor.load_5m
+  #     - sensor.memory_free
+  #     - sensor.memory_use_percent
+  #     - sensor.packets_in_wlan0
+  #     - sensor.packets_out_wlan0
+  #     - sensor.process_hass
+  #     - sensor.swap_free
+  #     - sensor.swap_use
+  #     - sensor.swap_use_percent
+  #     - sensor.time
+  #   event_types:
+  #     - time_changed
+  #   entity_globs:
+  #     - device_tracker.unnamed_device_*
+  #     - sensor.conso_solisart_*
+  #     - sensor.conso_*
 
-  include:
-    domains:
-      - alarm_control_panel
-      - automation
-      - binary_sensor
-      - device_tracker
-      - light
-      - media_player
-      - persistent_notification
-      - person
-      - script
-      - sensor
-      - vacuum
-      - weather
-      - fan
-      - kia_uvo
-      - lock
-      - climate
-    entity_globs:
-      - sensor.*_humidity
-      - sensor.*_humidity_*
-      - sensor.*_temperature
-      - sensor.*_temperature_*
-      - sensor.cannes_*
-      - sensor.coublevie_*
-      - sensor.environment_canada_*
-      - sensor.macot_la_plagne_*
-      - sensor.saint_martinien_*
-      - sensor.withings_*
-      - sensor.bleuette_*
-      - binary_sensor.bleuette_*
-      - number.bleuette_*
-    entities:
-      - automation.clean_room_as_asked_through_ifttt
-      - automation.create_the_daily_gif
-      - automation.mop_room_as_asked_through_ifttt
-      - automation.motion_detected
-      - automation.send_sunrise_picture_to_slack
-      - automation.solarium_door_opened
-      - automation.switch_off_all_lights_when_nobody_s_home_for_30mn
-      - automation.switch_off_lights_30mn_after_sunrise
-      - automation.swith_light_off_at_6_30pm_on_weekdays
-      - automation.swith_light_on_at_4_30_on_weekdays
-      - automation.swith_light_on_at_sunset_on_weekdays
-      - automation.swith_light_on_when_we_arrive
-      - automation.swith_living_room_lights_on_when_we_arrive
-      - automation.test_freezer
-      - automation.test_withings
-      - automation.timelapse_night_if_snowing
-      - automation.turn_motion_detection_off_when_somebody_s_at_home
-      - automation.turn_motion_detection_on_when_nobody_s_at_home
-      - automation.turn_off_light_10_minutes_after_we_arrived
-      - automation.turn_off_solarium_light_10_minutes_after_we_arrived_if_after_6_30pm
-      - automation.vaccum_kitchen_and_dining_room_when_we_are_away
-      - binary_sensor.aurora_visibility
-      - binary_sensor.freezer_door
-      - binary_sensor.leak_detector
-      - binary_sensor.leak_detector_tampered
-      - binary_sensor.office_motion_sensor
-      - binary_sensor.oneplus_a6000_is_charging
-      - binary_sensor.people_home
-      - binary_sensor.reserve_door
-      - binary_sensor.rpi_power_status
-      - binary_sensor.updater
-      - binary_sensor.workday_sensor
-      - camera.raspberry_pi_camera
-      - input_boolean.away_mode
-      - input_boolean.visitors
-      - input_boolean.working
-      - input_boolean.in_meet_meeting
-      - input_select.living_room_color
-      - input_select.vacuum_room
-      - input_datetime.last_time_bleuette_left_home
-      - input_datetime.last_time_bleuette_left_nozay
-      - lock.ev6_door_lock
-      - script.1542490337256
-      - script.create_daily_gif
-      - script.living_room_color
-      - script.switch_living_room_color
-      - script.vaccum_reset_fan_speed_after_mopping
-      - script.vacuum_dispatch
-      - switch.lumiere_cuisine
-      - switch.veilleuse
-      - switch.aurore_bed_light_switch
-      - switch.chauffage_sdb
-      - switch.pompe_switch
-      - switch.chargeur_velo_switch
-      - switch.chargeur_voiture
-      - switch.pc_bureau
-      - sensor.electricity_price
-      - sensor.conso_pac_energy_b
-      - sensor.conso_pac_energy_a
-      - sensor.conso_totale_pompe_bassin_energy
+  # include:
+  #   domains:
+  #     - alarm_control_panel
+  #     - automation
+  #     - binary_sensor
+  #     - device_tracker
+  #     - light
+  #     - media_player
+  #     - persistent_notification
+  #     - person
+  #     - script
+  #     - sensor
+  #     - vacuum
+  #     - weather
+  #     - fan
+  #     - kia_uvo
+  #     - lock
+  #     - climate
+  #   entity_globs:
+  #     - sensor.*_humidity
+  #     - sensor.*_humidity_*
+  #     - sensor.*_temperature
+  #     - sensor.*_temperature_*
+  #     - sensor.cannes_*
+  #     - sensor.coublevie_*
+  #     - sensor.environment_canada_*
+  #     - sensor.macot_la_plagne_*
+  #     - sensor.saint_martinien_*
+  #     - sensor.withings_*
+  #     - sensor.bleuette_*
+  #     - binary_sensor.bleuette_*
+  #     - number.bleuette_*
+  #   entities:
+  #     - automation.clean_room_as_asked_through_ifttt
+  #     - automation.create_the_daily_gif
+  #     - automation.mop_room_as_asked_through_ifttt
+  #     - automation.motion_detected
+  #     - automation.send_sunrise_picture_to_slack
+  #     - automation.solarium_door_opened
+  #     - automation.switch_off_all_lights_when_nobody_s_home_for_30mn
+  #     - automation.switch_off_lights_30mn_after_sunrise
+  #     - automation.swith_light_off_at_6_30pm_on_weekdays
+  #     - automation.swith_light_on_at_4_30_on_weekdays
+  #     - automation.swith_light_on_at_sunset_on_weekdays
+  #     - automation.swith_light_on_when_we_arrive
+  #     - automation.swith_living_room_lights_on_when_we_arrive
+  #     - automation.test_freezer
+  #     - automation.test_withings
+  #     - automation.timelapse_night_if_snowing
+  #     - automation.turn_motion_detection_off_when_somebody_s_at_home
+  #     - automation.turn_motion_detection_on_when_nobody_s_at_home
+  #     - automation.turn_off_light_10_minutes_after_we_arrived
+  #     - automation.turn_off_solarium_light_10_minutes_after_we_arrived_if_after_6_30pm
+  #     - automation.vaccum_kitchen_and_dining_room_when_we_are_away
+  #     - binary_sensor.aurora_visibility
+  #     - binary_sensor.freezer_door
+  #     - binary_sensor.leak_detector
+  #     - binary_sensor.leak_detector_tampered
+  #     - binary_sensor.office_motion_sensor
+  #     - binary_sensor.oneplus_a6000_is_charging
+  #     - binary_sensor.people_home
+  #     - binary_sensor.reserve_door
+  #     - binary_sensor.rpi_power_status
+  #     - binary_sensor.updater
+  #     - binary_sensor.workday_sensor
+  #     - binary_sensor.dafang_camera_motion_sensor
+  #     - camera.dafang_camera
+  #     - camera.raspberry_pi_camera
+  #     - input_boolean.away_mode
+  #     - input_boolean.visitors
+  #     - input_boolean.working
+  #     - input_boolean.in_meet_meeting
+  #     - input_select.living_room_color
+  #     - input_select.vacuum_room
+  #     - input_datetime.last_time_bleuette_left_home
+  #     - input_datetime.last_time_bleuette_left_nozay
+  #     - lock.ev6_door_lock
+  #     - script.1542490337256
+  #     - script.create_daily_gif
+  #     - script.living_room_color
+  #     - script.switch_living_room_color
+  #     - script.vaccum_reset_fan_speed_after_mopping
+  #     - script.vacuum_dispatch
+  #     - switch.dafang_camera_motion_detection
+  #     - switch.lumiere_cuisine
+  #     - switch.veilleuse
+  #     - switch.aurore_bed_light_switch
+  #     - switch.chauffage_sdb
+  #     - switch.pompe_switch
+  #     - switch.chargeur_velo_switch
+  #     - switch.chargeur_voiture
+  #     - switch.pc_bureau
+  #     - sensor.electricity_price
+  #     - sensor.conso_pac_energy_b
+  #     - sensor.conso_pac_energy_a
+  #     - sensor.conso_totale_pompe_bassin_energy
