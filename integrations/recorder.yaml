@@ -39,7 +39,6 @@ recorder:
       - binary_sensor.solarium_connectivity
       - binary_sensor.updater
       - binary_sensor.workday_sensor
-      - camera.dafang_camera_motion_snapshot
       - sensor.date_time
       - sensor.date_time_utc
       - sensor.disk_use
@@ -136,8 +135,6 @@ recorder:
       - binary_sensor.rpi_power_status
       - binary_sensor.updater
       - binary_sensor.workday_sensor
-      - binary_sensor.dafang_camera_motion_sensor
-      - camera.dafang_camera
       - camera.raspberry_pi_camera
       - input_boolean.away_mode
       - input_boolean.visitors
@@ -154,7 +151,6 @@ recorder:
       - script.switch_living_room_color
       - script.vaccum_reset_fan_speed_after_mopping
       - script.vacuum_dispatch
-      - switch.dafang_camera_motion_detection
       - switch.lumiere_cuisine
       - switch.veilleuse
       - switch.aurore_bed_light_switch
