@@ -5,11 +5,6 @@
 Here are the cameras I was using (but not currently), with each their
 specificities.
 
-## [Dafang](dafang.yaml)
-
-An old Xiaomi camera that I was using with an open-source [custom
-firmware](https://github.com/EliasKotlyar/Xiaomi-Dafang-Hacks).
-
 ## [Raspberry Camera](rpi_camera.yaml)
 
 I used this integration to control a camera plugged into my Raspberry pi and
