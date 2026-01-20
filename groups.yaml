@@ -1,12 +1,3 @@
-google_wifi:
-  name: Google Wifi
-  entities:
-    - sensor.google_wifi_current_version
-    - sensor.google_wifi_last_restart
-    - sensor.google_wifi_local_ip
-    - sensor.google_wifi_new_version
-    - sensor.google_wifi_status
-    - sensor.google_wifi_uptime
 media_players:
   name: Media Players
   entities:
