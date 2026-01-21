@@ -11,7 +11,6 @@ influxdb:
   # include:
   #   entities:
   #     - sensor.ev6_car_battery
-  #     - sensor.dark_sky_temperature
   # entity_globs:
   #   - binary_sensor.ev6*
   #   - sensor.ev6*

@@ -2,604 +2,593 @@
 # Automations are then meant to be moved in their dedicated folders in automations/ afterwards.
 - id: "1666186950016"
   alias: Test Nest sonnette
-  description: ""
+  description: ''
   trigger:
-    - platform: device
-      device_id: 033b8589dd583f9142b48bd463dcccd0
-      domain: nest
-      type: doorbell_chime
-    - platform: device
-      device_id: 033b8589dd583f9142b48bd463dcccd0
-      domain: nest
-      type: camera_person
-      enabled: false
-    - platform: device
-      device_id: 033b8589dd583f9142b48bd463dcccd0
-      domain: nest
-      type: camera_motion
-      enabled: false
+  - platform: device
+    device_id: 033b8589dd583f9142b48bd463dcccd0
+    domain: nest
+    type: doorbell_chime
+  - platform: device
+    device_id: 033b8589dd583f9142b48bd463dcccd0
+    domain: nest
+    type: camera_person
+    enabled: false
+  - platform: device
+    device_id: 033b8589dd583f9142b48bd463dcccd0
+    domain: nest
+    type: camera_motion
+    enabled: false
   condition: []
   action:
-    - service: rest_command.gchat
-      data:
-        text: Sonette pressée!
+  - service: rest_command.gchat
+    data:
+      text: Sonette pressée!
   mode: single
-- id: "1676633819245"
+- id: '1676633819245'
   alias: Testing led strip (not working)
-  description: ""
+  description: ''
   triggers:
-    - domain: mqtt
-      device_id: 09d4ba3dded13922cf5b606b4bfd261b
-      type: action
-      subtype: single
-      trigger: device
-      enabled: false
+  - domain: mqtt
+    device_id: 09d4ba3dded13922cf5b606b4bfd261b
+    type: action
+    subtype: single
+    trigger: device
+    enabled: false
   conditions: []
   actions:
-    - type: toggle
-      device_id: f1e7b29bd824ec88bdf7a3b1a2f58916
-      entity_id: light.led_strip_light
-      domain: light
+  - type: toggle
+    device_id: f1e7b29bd824ec88bdf7a3b1a2f58916
+    entity_id: light.led_strip_light
+    domain: light
   mode: single
-- id: "1765725748183"
+- id: '1765725748183'
   alias: Guirlande on before sunset
-  description: ""
+  description: ''
   triggers:
-    - trigger: sun
-      event: sunset
-      offset: -00:10:00
+  - trigger: sun
+    event: sunset
+    offset: -00:10:00
   conditions:
-    - condition: state
-      entity_id: sensor.rte_tempo_couleur_actuelle
-      state:
-        - Bleu
-        - Blanc
+  - condition: state
+    entity_id: sensor.rte_tempo_couleur_actuelle
+    state:
+    - Bleu
+    - Blanc
   actions:
-    - action: switch.turn_on
-      target:
-        entity_id:
-          - switch.guirlande_switch
-          - switch.guirlande_terrasse
-      data: {}
+  - action: switch.turn_on
+    target:
+      entity_id:
+      - switch.guirlande_switch
+      - switch.guirlande_terrasse
+    data: {}
   mode: single
-- id: "1765725839404"
+- id: '1765725839404'
   alias: Guirlandes off
-  description: ""
+  description: ''
   triggers:
-    - trigger: time
-      at: "22:00:00"
+  - trigger: time
+    at: '22:00:00'
   conditions: []
   actions:
-    - action: switch.turn_off
-      metadata: {}
-      data: {}
-      target:
-        entity_id:
-          - switch.guirlande_switch
-          - switch.guirlande_terrasse
+  - action: switch.turn_off
+    metadata: {}
+    data: {}
+    target:
+      entity_id:
+      - switch.guirlande_switch
+      - switch.guirlande_terrasse
   mode: single
-
-- id: "1766420297824"
+- id: '1766420297824'
   alias: Alarme - Intrusion détectée (Away Mode)
-  description: ""
+  description: ''
   triggers:
-    - entity_id:
-        - binary_sensor.porte_bureau_contact
-        - binary_sensor.porte_arriere_cuisine_contact
-        - binary_sensor.porte_sous_sol_contact
-        - binary_sensor.porte_de_derriere_contact
-        - binary_sensor.porte_chambre_opening
-      to:
-        - "on"
-      trigger: state
-      from:
-        - "off"
+  - entity_id:
+    - binary_sensor.porte_bureau_contact
+    - binary_sensor.porte_arriere_cuisine_contact
+    - binary_sensor.porte_sous_sol_contact
+    - binary_sensor.porte_de_derriere_contact
+    - binary_sensor.porte_chambre_opening
+    to:
+    - 'on'
+    trigger: state
+    from:
+    - 'off'
   conditions:
+  - condition: state
+    entity_id: input_boolean.away_mode
+    state: 'on'
+    enabled: true
+  - condition: state
+    entity_id: input_boolean.visitors
+    state: 'off'
+  - condition: state
+    entity_id: binary_sensor.people_home
+    state: 'off'
+    enabled: true
+  - condition: not
+    conditions:
     - condition: state
-      entity_id: input_boolean.away_mode
-      state: "on"
+      entity_id: person.claire
+      state:
+      - home
+    - condition: state
+      entity_id: person.guillaume
+      state:
+      - home
       enabled: true
-    - condition: state
-      entity_id: input_boolean.visitors
-      state: "off"
-    - condition: state
-      entity_id: binary_sensor.people_home
-      state: "off"
-      enabled: true
-    - condition: not
-      conditions:
-        - condition: state
-          entity_id: person.claire
-          state:
-            - home
-        - condition: state
-          entity_id: person.guillaume
-          state:
-            - home
-          enabled: true
   actions:
-    - data:
-        text:
-          "ALERTE INTRUSION : {{ trigger.to_state.attributes.friendly_name }} ouverte
-          !"
-      action: rest_command.gchatalert
-    - data:
-        volume_level: 1
-      target:
-        entity_id: media_player.tous_les_google_home
-      action: media_player.volume_set
-    - delay: 00:00:02
-    - data:
-        message:
-          "Ouverture de porte détectée : {{ trigger.to_state.attributes.friendly_name
-          }} !  Vous n'avez rien à faire ici, merci de partir immédiatement !"
-      target:
-        entity_id: media_player.tous_les_google_home
-      action: tts.google_say
-    - delay: 00:02:00
-    - condition: state
-      entity_id: input_boolean.away_mode
-      state: "on"
-    - data:
-        message:
-          Intrusion confirmée ! Dernier avertissement avant appel de la police
-          !
-      target:
-        entity_id: media_player.tous_les_google_home
-      action: tts.google_say
+  - data:
+      text: 'ALERTE INTRUSION : {{ trigger.to_state.attributes.friendly_name }} ouverte
+        !'
+    action: rest_command.gchatalert
+  - data:
+      volume_level: 1
+    target:
+      entity_id: media_player.tous_les_google_home
+    action: media_player.volume_set
+  - delay: 00:00:02
+  - data:
+      message: 'Ouverture de porte détectée : {{ trigger.to_state.attributes.friendly_name
+        }} !  Vous n''avez rien à faire ici, merci de partir immédiatement !'
+    target:
+      entity_id: media_player.tous_les_google_home
+    action: tts.google_say
+  - delay: 00:02:00
+  - condition: state
+    entity_id: input_boolean.away_mode
+    state: 'on'
+  - data:
+      message: Intrusion confirmée ! Dernier avertissement avant appel de la police
+        !
+    target:
+      entity_id: media_player.tous_les_google_home
+    action: tts.google_say
   mode: restart
-- id: "1766421828510"
+- id: '1766421828510'
   alias: Alarme - Mouvement détectée (Away Mode)
-  description: ""
+  description: ''
   triggers:
-    - entity_id:
-        - binary_sensor.motion_sensor_basement_stairs_motion
-      to:
-        - "on"
-      trigger: state
-      from:
-        - "off"
-    - trigger: state
-      entity_id:
-        - binary_sensor.tze204_ztc6ggyl_ts0601_occupancy
-      from:
-        - "off"
-      to:
-        - "on"
+  - entity_id:
+    - binary_sensor.motion_sensor_basement_stairs_motion
+    to:
+    - 'on'
+    trigger: state
+    from:
+    - 'off'
+  - trigger: state
+    entity_id:
+    - binary_sensor.tze204_ztc6ggyl_ts0601_occupancy
+    from:
+    - 'off'
+    to:
+    - 'on'
   conditions:
+  - condition: state
+    entity_id: input_boolean.away_mode
+    state: 'on'
+    enabled: true
+  - condition: state
+    entity_id: input_boolean.visitors
+    state: 'off'
+  - condition: state
+    entity_id: binary_sensor.people_home
+    state: 'off'
+    enabled: true
+  - condition: not
+    conditions:
     - condition: state
-      entity_id: input_boolean.away_mode
-      state: "on"
+      entity_id: person.claire
+      state:
+      - home
+    - condition: state
+      entity_id: person.guillaume
+      state:
+      - home
       enabled: true
-    - condition: state
-      entity_id: input_boolean.visitors
-      state: "off"
-    - condition: state
-      entity_id: binary_sensor.people_home
-      state: "off"
-      enabled: true
-    - condition: not
-      conditions:
-        - condition: state
-          entity_id: person.claire
-          state:
-            - home
-        - condition: state
-          entity_id: person.guillaume
-          state:
-            - home
-          enabled: true
   actions:
-    - data:
-        text:
-          "ALERTE INTRUSION : {{ trigger.to_state.attributes.friendly_name }} a
-          detecté quelque chose !"
-      action: rest_command.gchatalert
-    - data:
-        volume_level: 1
-      target:
-        entity_id: media_player.tous_les_google_home
-      action: media_player.volume_set
-    - delay: 00:00:02
-    - data:
-        message:
-          "Ouverture de porte détectée : {{ trigger.to_state.attributes.friendly_name
-          }} !  Vous n'avez rien à faire ici, merci de partir immédiatement !"
-      target:
-        entity_id: media_player.tous_les_google_home
-      action: tts.google_say
-    - delay: 00:02:00
-    - condition: state
-      entity_id: input_boolean.away_mode
-      state: "on"
-    - data:
-        message:
-          Intrusion confirmée ! Dernier avertissement avant appel de la police
-          !
-      target:
-        entity_id: media_player.tous_les_google_home
-      action: tts.google_say
+  - data:
+      text: 'ALERTE INTRUSION : {{ trigger.to_state.attributes.friendly_name }} a
+        detecté quelque chose !'
+    action: rest_command.gchatalert
+  - data:
+      volume_level: 1
+    target:
+      entity_id: media_player.tous_les_google_home
+    action: media_player.volume_set
+  - delay: 00:00:02
+  - data:
+      message: 'Ouverture de porte détectée : {{ trigger.to_state.attributes.friendly_name
+        }} !  Vous n''avez rien à faire ici, merci de partir immédiatement !'
+    target:
+      entity_id: media_player.tous_les_google_home
+    action: tts.google_say
+  - delay: 00:02:00
+  - condition: state
+    entity_id: input_boolean.away_mode
+    state: 'on'
+  - data:
+      message: Intrusion confirmée ! Dernier avertissement avant appel de la police
+        !
+    target:
+      entity_id: media_player.tous_les_google_home
+    action: tts.google_say
   mode: restart
-- id: "1766423618632"
+- id: '1766423618632'
   alias: Alarme - Lumière allumée détectée (Away Mode)
-  description: ""
+  description: ''
   triggers:
-    - entity_id:
-        - light.ciel_a1
-        - light.lampe_evier_gauche
-      to:
-        - "on"
-      trigger: state
-      from:
-    - trigger: state
-      entity_id:
-        - light.lumiere_chambre_aurore
-        - light.lumiere_chambre
-        - light.interrupteur_bureau
-        - light.sous_sol_canape
-        - light.sous_sol_dancefloor
-      from:
-        - "off"
-      to:
-        - "on"
+  - entity_id:
+    - light.ciel_a1
+    - light.lampe_evier_gauche
+    to:
+    - 'on'
+    trigger: state
+    from:
+  - trigger: state
+    entity_id:
+    - light.lumiere_chambre_aurore
+    - light.lumiere_chambre
+    - light.interrupteur_bureau
+    - light.sous_sol_canape
+    - light.sous_sol_dancefloor
+    from:
+    - 'off'
+    to:
+    - 'on'
   conditions:
+  - condition: state
+    entity_id: input_boolean.away_mode
+    state: 'on'
+    enabled: true
+  - condition: state
+    entity_id: input_boolean.visitors
+    state: 'off'
+  - condition: state
+    entity_id: binary_sensor.people_home
+    state: 'off'
+    enabled: true
+  - condition: not
+    conditions:
     - condition: state
-      entity_id: input_boolean.away_mode
-      state: "on"
-      enabled: true
+      entity_id: person.claire
+      state:
+      - home
     - condition: state
-      entity_id: input_boolean.visitors
-      state: "off"
-    - condition: state
-      entity_id: binary_sensor.people_home
-      state: "off"
+      entity_id: person.guillaume
+      state:
+      - home
       enabled: true
-    - condition: not
-      conditions:
-        - condition: state
-          entity_id: person.claire
-          state:
-            - home
-        - condition: state
-          entity_id: person.guillaume
-          state:
-            - home
-          enabled: true
-      enabled: true
+    enabled: true
   actions:
-    - data:
-        text:
-          'ALERTE INTRUSION : {{ trigger.to_state.attributes.friendly_name }} s\''est
-          allumée !'
-      action: rest_command.gchatalert
-    - data:
-        volume_level: 1
-      target:
-        entity_id: media_player.tous_les_google_home
-      action: media_player.volume_set
-    - delay: 00:00:02
-    - data:
-        message:
-          "Ouverture de porte détectée : {{ trigger.to_state.attributes.friendly_name
-          }} !  Vous n'avez rien à faire ici, merci de partir immédiatement !"
-      target:
-        entity_id: media_player.tous_les_google_home
-      action: tts.google_say
-    - delay: 00:02:00
-    - condition: state
-      entity_id: input_boolean.away_mode
-      state: "on"
-    - data:
-        message:
-          Intrusion confirmée ! Dernier avertissement avant appel de la police
-          !
-      target:
-        entity_id: media_player.tous_les_google_home
-      action: tts.google_say
+  - data:
+      text: 'ALERTE INTRUSION : {{ trigger.to_state.attributes.friendly_name }} s\''est
+        allumée !'
+    action: rest_command.gchatalert
+  - data:
+      volume_level: 1
+    target:
+      entity_id: media_player.tous_les_google_home
+    action: media_player.volume_set
+  - delay: 00:00:02
+  - data:
+      message: 'Ouverture de porte détectée : {{ trigger.to_state.attributes.friendly_name
+        }} !  Vous n''avez rien à faire ici, merci de partir immédiatement !'
+    target:
+      entity_id: media_player.tous_les_google_home
+    action: tts.google_say
+  - delay: 00:02:00
+  - condition: state
+    entity_id: input_boolean.away_mode
+    state: 'on'
+  - data:
+      message: Intrusion confirmée ! Dernier avertissement avant appel de la police
+        !
+    target:
+      entity_id: media_player.tous_les_google_home
+    action: tts.google_say
   mode: restart
-- id: "1766581857231"
+- id: '1766581857231'
   alias: Presence simulation Bureau (Away mode)
-  description: ""
+  description: ''
   triggers:
-    - event: sunrise
-      offset: "- 01:00:00"
-      trigger: sun
+  - event: sunrise
+    offset: '- 01:00:00'
+    trigger: sun
   conditions:
-    - condition: state
-      entity_id: input_boolean.away_mode
-      state: "on"
-    - condition: state
-      entity_id: person.guillaume
-      state: not_home
-    - condition: state
-      entity_id: person.claire
-      state: not_home
-    - condition: state
-      entity_id: input_boolean.visitors
-      state: "off"
-    - condition: state
-      entity_id: binary_sensor.people_home
-      state: "off"
+  - condition: state
+    entity_id: input_boolean.away_mode
+    state: 'on'
+  - condition: state
+    entity_id: person.guillaume
+    state: not_home
+  - condition: state
+    entity_id: person.claire
+    state: not_home
+  - condition: state
+    entity_id: input_boolean.visitors
+    state: 'off'
+  - condition: state
+    entity_id: binary_sensor.people_home
+    state: 'off'
   actions:
-    - delay: "{{ range(0, 45*60)+1 | random }}"
-    - type: turn_on
-      device_id: 0a6824f55b50cd544737383fedcb096d
-      entity_id: 67b730781c4061abd48a082c52434181
-      domain: switch
-    - wait_for_trigger:
-        - at: "22:30:00"
-          trigger: time
-    - delay: "{{ range(0, 45*60)+1 | random }}"
-    - type: turn_off
-      device_id: 0a6824f55b50cd544737383fedcb096d
-      entity_id: 67b730781c4061abd48a082c52434181
-      domain: switch
-    - delay: "{{ range(0, 15*60)+1 | random }}"
-    - action: cover.close_cover
-      metadata: {}
-      target:
-        entity_id: cover.velux_bureau_roller_shutter
-      data: {}
+  - delay: '{{ range(0, 45*60)+1 | random }}'
+  - type: turn_on
+    device_id: 0a6824f55b50cd544737383fedcb096d
+    entity_id: 67b730781c4061abd48a082c52434181
+    domain: switch
+  - wait_for_trigger:
+    - at: '22:30:00'
+      trigger: time
+  - delay: '{{ range(0, 45*60)+1 | random }}'
+  - type: turn_off
+    device_id: 0a6824f55b50cd544737383fedcb096d
+    entity_id: 67b730781c4061abd48a082c52434181
+    domain: switch
+  - delay: '{{ range(0, 15*60)+1 | random }}'
+  - action: cover.close_cover
+    metadata: {}
+    target:
+      entity_id: cover.velux_bureau_roller_shutter
+    data: {}
   mode: single
-- id: "1766582013297"
+- id: '1766582013297'
   alias: Presence simulation Livingroom (Away mode)
-  description: ""
+  description: ''
   triggers:
-    - trigger: time
-      at: "18:45:00"
+  - trigger: time
+    at: '18:45:00'
   conditions:
-    - condition: state
-      entity_id: input_boolean.away_mode
-      state: "on"
-    - condition: state
-      entity_id: person.guillaume
-      state: not_home
-    - condition: state
-      entity_id: person.claire
-      state: not_home
-    - condition: state
-      entity_id: input_boolean.visitors
-      state: "off"
-    - condition: state
-      entity_id: binary_sensor.people_home
-      state: "off"
+  - condition: state
+    entity_id: input_boolean.away_mode
+    state: 'on'
+  - condition: state
+    entity_id: person.guillaume
+    state: not_home
+  - condition: state
+    entity_id: person.claire
+    state: not_home
+  - condition: state
+    entity_id: input_boolean.visitors
+    state: 'off'
+  - condition: state
+    entity_id: binary_sensor.people_home
+    state: 'off'
   actions:
-    - delay: "{{ range(0, 45*60)+1 | random }}"
-    - action: light.turn_on
-      metadata: {}
-      target:
-        entity_id: light.govee_tv_2
-      data: {}
-    - wait_for_trigger:
-        - at: "22:30:00"
-          trigger: time
-    - delay: "{{ range(0, 75*60)+1 | random }}"
-    - action: light.turn_off
-      metadata: {}
-      target:
-        entity_id: light.govee_tv_2
-      data: {}
+  - delay: '{{ range(0, 45*60)+1 | random }}'
+  - action: light.turn_on
+    metadata: {}
+    target:
+      entity_id: light.govee_tv_2
+    data: {}
+  - wait_for_trigger:
+    - at: '22:30:00'
+      trigger: time
+  - delay: '{{ range(0, 75*60)+1 | random }}'
+  - action: light.turn_off
+    metadata: {}
+    target:
+      entity_id: light.govee_tv_2
+    data: {}
   mode: single
-- id: "1766582197231"
+- id: '1766582197231'
   alias: Presence simulation morning (Away mode)
-  description: ""
+  description: ''
   triggers:
-    - trigger: sun
-      event: sunrise
-      offset: "1:00:00"
+  - trigger: sun
+    event: sunrise
+    offset: '1:00:00'
   conditions:
+  - condition: state
+    entity_id: input_boolean.away_mode
+    state: 'on'
+  - condition: state
+    entity_id: person.guillaume
+    state: not_home
+  - condition: state
+    entity_id: person.claire
+    state: not_home
+  - condition: state
+    entity_id: input_boolean.visitors
+    state: 'off'
+  - condition: state
+    entity_id: binary_sensor.people_home
+    state: 'off'
+  actions:
+  - delay: '{{ range(0, 60*60)+1 | random }}'
+  - action: cover.open_cover
+    metadata: {}
+    target:
+      entity_id: cover.velux_bureau_roller_shutter
+    data: {}
+  mode: single
+- id: '1766582732714'
+  alias: New automation
+  description: ''
+  triggers:
+  - trigger: numeric_state
+    entity_id:
+    - sensor.efficacite_panneaux_solaires
+    above: 100
+  conditions:
+  - condition: state
+    entity_id: cover.volets_chambre_rose
+    state:
+    - closed
+  - condition: state
+    entity_id: sensor.season
+    state:
+    - winter
+    - autumn
+  - condition: numeric_state
+    entity_id: sensor.temperature_exterieure_solisart
+    below: 20
+  - condition: time
+    after: 09:00:00
+  actions:
+  - action: script.open_all_first_floor_shutters
+    metadata: {}
+    data: {}
+  - if:
     - condition: state
       entity_id: input_boolean.away_mode
-      state: "on"
-    - condition: state
-      entity_id: person.guillaume
-      state: not_home
-    - condition: state
-      entity_id: person.claire
-      state: not_home
+      state:
+      - 'off'
     - condition: state
       entity_id: input_boolean.visitors
-      state: "off"
-    - condition: state
-      entity_id: binary_sensor.people_home
-      state: "off"
-  actions:
-    - delay: "{{ range(0, 60*60)+1 | random }}"
-    - action: cover.open_cover
+      state:
+      - 'off'
+    then:
+    - action: script.open_all_ground_floor_shutters
       metadata: {}
-      target:
-        entity_id: cover.velux_bureau_roller_shutter
       data: {}
   mode: single
-- id: "1766582732714"
-  alias: New automation
-  description: ""
+- id: '1766583263343'
+  alias: Close covers at sunset
+  description: ''
   triggers:
-    - trigger: numeric_state
-      entity_id:
-        - sensor.efficacite_panneaux_solaires
-      above: 100
+  - event: sunset
+    offset: -0:15:00
+    trigger: sun
   conditions:
-    - condition: state
-      entity_id: cover.volets_chambre_rose
-      state:
-        - closed
-    - condition: state
-      entity_id: sensor.season
-      state:
-        - winter
-        - autumn
+  - condition: or
+    conditions:
     - condition: numeric_state
       entity_id: sensor.temperature_exterieure_solisart
-      below: 20
-    - condition: time
-      after: 09:00:00
-  actions:
-    - action: script.open_all_first_floor_shutters
-      metadata: {}
-      data: {}
-    - if:
-        - condition: state
-          entity_id: input_boolean.away_mode
-          state:
-            - "off"
-        - condition: state
-          entity_id: input_boolean.visitors
-          state:
-            - "off"
-      then:
-        - action: script.open_all_ground_floor_shutters
-          metadata: {}
-          data: {}
-  mode: single
-- id: "1766583263343"
-  alias: Close covers at sunset
-  description: ""
-  triggers:
-    - event: sunset
-      offset: -0:15:00
-      trigger: sun
-  conditions:
-    - condition: or
-      conditions:
-        - condition: numeric_state
-          entity_id: sensor.temperature_exterieure_solisart
-          below: 10
-        - condition: state
-          entity_id: input_boolean.away_mode
-          state:
-            - "on"
-  actions:
-    - action: script.close_all_first_floor_shutters
-      metadata: {}
-      data: {}
-    - if:
-        - condition: state
-          entity_id: input_boolean.away_mode
-          state:
-            - "on"
-          for:
-            hours: 2
-            minutes: 0
-            seconds: 0
-      then:
-        - action: script.close_all_group_floor_shutters
-          metadata: {}
-          data: {}
-  mode: single
-- id: "1766583635602"
-  alias: Block the garage door when we are away
-  description: ""
-  triggers:
-    - trigger: state
-      entity_id:
-        - input_boolean.away_mode
-  conditions: []
-  actions:
-    - if:
-        - condition: state
-          entity_id: input_boolean.away_mode
-          state:
-            - "on"
-      then:
-        - action: switch.turn_off
-          metadata: {}
-          target:
-            entity_id: switch.porte_garage
-          data: {}
-      else:
-        - action: switch.turn_on
-          metadata: {}
-          target:
-            entity_id: switch.porte_garage
-          data: {}
-  mode: single
-- id: "1766674593503"
-  alias: Turn on/off camera when we are away
-  description: ""
-  triggers:
-    - trigger: state
-      entity_id:
-        - input_boolean.away_mode
-  conditions: []
-  actions:
-    - if:
-        - condition: state
-          entity_id: input_boolean.away_mode
-          state:
-            - "on"
-      then:
-        - action: switch.turn_on
-          metadata: {}
-          target:
-            entity_id:
-              - switch.terrasse_push_notifications
-              - switch.terrasse_siren_on_event
-              - switch.salle_a_manger_push_notifications
-              - switch.salle_a_manger_siren_on_event
-              - switch.sous_sol_push_notifications
-              - switch.sous_sol_siren_on_event
-          data: {}
-      else:
-        - action: switch.turn_off
-          metadata: {}
-          target:
-            entity_id:
-              - switch.terrasse_push_notifications
-              - switch.terrasse_siren_on_event
-              - switch.salle_a_manger_push_notifications
-              - switch.salle_a_manger_siren_on_event
-              - switch.sous_sol_push_notifications
-              - switch.sous_sol_siren_on_event
-          data: {}
-  mode: single
-- id: "1766928990060"
-  alias: Close covers when away
-  description: ""
-  triggers:
-    - trigger: sun
-      event: sunset
-      offset: "-1:00:00"
-    - trigger: sun
-      event: sunset
-      offset: "-2:00:00"
-    - trigger: numeric_state
-      entity_id:
-        - sensor.temperature_exterieure_solisart
-      below: 5
-  conditions:
+      below: 10
     - condition: state
       entity_id: input_boolean.away_mode
-      state: "on"
-    - condition: state
-      entity_id: person.guillaume
-      state: not_home
-    - condition: state
-      entity_id: person.claire
-      state: not_home
-    - condition: state
-      entity_id: input_boolean.visitors
-      state: "off"
-    - condition: state
-      entity_id: binary_sensor.people_home
-      state: "off"
-    - condition: or
-      conditions:
-        - condition: numeric_state
-          entity_id: sensor.temperature_exterieure_solisart
-          below: 5
-        - condition: sun
-          after: sunset
-          after_offset: "-1:00:00"
+      state:
+      - 'on'
   actions:
+  - action: script.close_all_first_floor_shutters
+    metadata: {}
+    data: {}
+  - if:
+    - condition: state
+      entity_id: input_boolean.away_mode
+      state:
+      - 'on'
+      for:
+        hours: 2
+        minutes: 0
+        seconds: 0
+    then:
     - action: script.close_all_group_floor_shutters
       metadata: {}
       data: {}
-    - action: script.close_all_shutters
+  mode: single
+- id: '1766583635602'
+  alias: Block the garage door when we are away
+  description: ''
+  triggers:
+  - trigger: state
+    entity_id:
+    - input_boolean.away_mode
+  conditions: []
+  actions:
+  - if:
+    - condition: state
+      entity_id: input_boolean.away_mode
+      state:
+      - 'on'
+    then:
+    - action: switch.turn_off
       metadata: {}
+      target:
+        entity_id: switch.porte_garage
+      data: {}
+    else:
+    - action: switch.turn_on
+      metadata: {}
+      target:
+        entity_id: switch.porte_garage
       data: {}
   mode: single
-
+- id: '1766674593503'
+  alias: Turn on/off camera when we are away
+  description: ''
+  triggers:
+  - trigger: state
+    entity_id:
+    - input_boolean.away_mode
+  conditions: []
+  actions:
+  - if:
+    - condition: state
+      entity_id: input_boolean.away_mode
+      state:
+      - 'on'
+    then:
+    - action: switch.turn_on
+      metadata: {}
+      target:
+        entity_id:
+        - switch.terrasse_push_notifications
+        - switch.terrasse_siren_on_event
+        - switch.salle_a_manger_push_notifications
+        - switch.salle_a_manger_siren_on_event
+        - switch.sous_sol_push_notifications
+        - switch.sous_sol_siren_on_event
+      data: {}
+    else:
+    - action: switch.turn_off
+      metadata: {}
+      target:
+        entity_id:
+        - switch.terrasse_push_notifications
+        - switch.terrasse_siren_on_event
+        - switch.salle_a_manger_push_notifications
+        - switch.salle_a_manger_siren_on_event
+        - switch.sous_sol_push_notifications
+        - switch.sous_sol_siren_on_event
+      data: {}
+  mode: single
+- id: '1766928990060'
+  alias: Close covers when away
+  description: ''
+  triggers:
+  - trigger: sun
+    event: sunset
+    offset: '-1:00:00'
+  - trigger: sun
+    event: sunset
+    offset: '-2:00:00'
+  - trigger: numeric_state
+    entity_id:
+    - sensor.temperature_exterieure_solisart
+    below: 5
+  conditions:
+  - condition: state
+    entity_id: input_boolean.away_mode
+    state: 'on'
+  - condition: state
+    entity_id: person.guillaume
+    state: not_home
+  - condition: state
+    entity_id: person.claire
+    state: not_home
+  - condition: state
+    entity_id: input_boolean.visitors
+    state: 'off'
+  - condition: state
+    entity_id: binary_sensor.people_home
+    state: 'off'
+  - condition: or
+    conditions:
+    - condition: numeric_state
+      entity_id: sensor.temperature_exterieure_solisart
+      below: 5
+    - condition: sun
+      after: sunset
+      after_offset: '-1:00:00'
+  actions:
+  - action: script.close_all_group_floor_shutters
+    metadata: {}
+    data: {}
+  - action: script.close_all_shutters
+    metadata: {}
+    data: {}
+  mode: single
 - id: '1767646575900'
   alias: 'Tempo Rouge: Everything only sun during red days'
   description: ''
@@ -655,7 +644,8 @@
       - unknown
     - condition: state
       entity_id: input_boolean.away_mode
-      state: []
+      state:
+      - 'on'
   actions:
   - action: select.select_option
     metadata: {}

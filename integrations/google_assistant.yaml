@@ -144,7 +144,7 @@ google_assistant:
       room: Salle à manger
 
     ## Covers
-    cover.legrand_shutter_sw_with_level_control_cover:
+    cover.volet_salle_a_manger:
       name: Volets baie salle à manger
       expose: true
       room: Salle à manger

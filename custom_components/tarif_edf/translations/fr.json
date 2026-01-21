@@ -1,0 +1,31 @@
+{
+    "config": {
+        "abort": {
+            "already_configured": "L'appareil est déjà configuré"
+        },
+        "error": {
+            "cannot_connect": "Échec de connexion",
+            "invalid_auth": "Authentification invalide",
+            "unknown": "Erreur inattendue"
+        },
+        "step": {
+            "user": {
+                "data": {
+                    "contract_type": "Option",
+                    "contract_power": "Puissance (kVA)"
+                }
+            }
+        }
+    },
+    "options": {
+        "step": {
+            "init": {
+                "data": {
+                    "refresh_interval": "Intervalle de mise à jour (en jours)",
+                    "off_peak_hours_ranges": "Créneaux heures creuses (HH:MM-HH:MM,HH:MM-HH:MM,...)"
+                },
+                "description": "Personnalisez le fonctionnement de l'intégration"
+            }
+        }
+    }
+}
