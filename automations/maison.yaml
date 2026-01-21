@@ -180,58 +180,55 @@
   alias: Basement stairs light when motion detected
   description: "Allume la lumière de l'escalier du sous-sol lors de la détection de mouvement"
   trigger:
-    - type: motion
-      platform: device
-      device_id: 9c37dc10f4cbe78c564574ef700d2689
+    - platform: state
       entity_id: binary_sensor.motion_sensor_basement_stairs_motion
-      domain: binary_sensor
-  condition: []
+      to: "on"
+      id: motion_detected
+    # Trigger on startup to catch if light was left on (event fires when HA is fully ready)
+    - platform: homeassistant
+      event: start
+      id: startup
+  condition:
+    - condition: or
+      conditions:
+        - condition: and
+          conditions:
+            - condition: trigger
+              id: startup
+            - condition: or
+              conditions:
+                - condition: state
+                  entity_id: light.basement_stairs_light_light
+                  state: "on"
+                - condition: state
+                  entity_id: binary_sensor.motion_sensor_basement_stairs_motion
+                  state: "on"
+        - condition: and
+          conditions:
+            - condition: trigger
+              id: motion_detected
+            - condition: template
+              value_template: >
+                {{ is_state('light.basement_stairs_light_light', 'on')
+                   or (now() - states.light.basement_stairs_light_light.last_changed).total_seconds() > 5 }}
   action:
-    - type: turn_on
-      device_id: 697f0a9d8354bee483e0058a6e8b5410
-      entity_id: light.basement_stairs_light_light
-      domain: light
+    - service: light.turn_on
+      target:
+        entity_id: light.basement_stairs_light_light
     - wait_for_trigger:
-        - type: no_motion
-          platform: device
-          device_id: 9c37dc10f4cbe78c564574ef700d2689
-          entity_id: 2247856e02bf3556557c139acc6bb72e
-          domain: binary_sensor
+        - platform: state
+          entity_id: binary_sensor.motion_sensor_basement_stairs_motion
+          to: "off"
           for:
             hours: 0
             minutes: 1
             seconds: 0
+      timeout: "00:10:00"
+      continue_on_timeout: true
       enabled: true
-    - type: turn_off
-      device_id: 697f0a9d8354bee483e0058a6e8b5410
-      entity_id: ad28d0c88258e744ab5a720291522f3b
-      domain: light
-      enabled: true
-    - delay:
-        hours: 0
-        minutes: 0
-        seconds: 15
-        milliseconds: 0
-  mode: single
-- id: "1688200466384"
-  alias: Basement stairs lights off when motion stopped
-  description: "Éteint la lumière de l'escalier du sous-sol lorsque le mouvement s'arrête"
-  trigger:
-    - type: no_motion
-      platform: device
-      device_id: 9c37dc10f4cbe78c564574ef700d2689
-      entity_id: binary_sensor.motion_sensor_basement_stairs_motion
-      domain: binary_sensor
-      for:
-        hours: 0
-        minutes: 1
-        seconds: 0
-  condition: []
-  action:
-    - type: turn_off
-      device_id: 697f0a9d8354bee483e0058a6e8b5410
-      entity_id: ad28d0c88258e744ab5a720291522f3b
-      domain: light
+    - service: light.turn_off
+      target:
+        entity_id: light.basement_stairs_light_light
   mode: restart
 - id: "1689543800532"
   alias: Flood detected
