@@ -179,6 +179,7 @@
     - platform: state
       entity_id: binary_sensor.motion_sensor_basement_stairs_motion
       to: "on"
+    # Trigger on startup to catch if light was left on (event fires when HA is fully ready)
     - platform: homeassistant
       event: start
   condition:
