@@ -1,0 +1,24 @@
+set_solisart_as_sun_pac:
+  sequence:
+  - action: select.select_option
+    target:
+      entity_id:
+      - select.mode_rdc
+      - select.mode_etage
+    data:
+      option: Solaire+PAC
+  alias: Set Solisart as Sun+PAC
+  description: ''
+  icon: mdi:heat-pump-outline
+set_solisart_as_sun_only:
+  sequence:
+  - action: select.select_option
+    target:
+      entity_id:
+      - select.mode_rdc
+      - select.mode_etage
+    data:
+      option: Solaire seul
+  alias: Set Solisart as Sun only
+  description: ''
+  icon: mdi:sun-wireless
