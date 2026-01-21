@@ -588,7 +588,7 @@
 
 - id: "garage_pre_arrival_power_restore"
   alias: "Garage: Pre-arrival Power Restore"
-  description: "Allume le garage en approchant de la maison ou en se connectant au Wi-Fi"
+  description: "Rétablit le courant de la porte du garage lorsqu'un utilisateur approche de la maison. Cela permet d'éviter la latence GPS et de pouvoir ouvrir la porte du garage sans attendre."
   mode: single
   trigger:
     # Triggers for Guillaume
