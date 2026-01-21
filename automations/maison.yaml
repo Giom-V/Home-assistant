@@ -179,14 +179,34 @@
     - platform: state
       entity_id: binary_sensor.motion_sensor_basement_stairs_motion
       to: "on"
+      id: motion_detected
     # Trigger on startup to catch if light was left on (event fires when HA is fully ready)
     - platform: homeassistant
       event: start
+      id: startup
   condition:
-    - condition: template
-      value_template: >
-        {{ is_state('light.basement_stairs_light_light', 'on')
-           or (now() - states.light.basement_stairs_light_light.last_changed).total_seconds() > 5 }}
+    - condition: or
+      conditions:
+        - condition: and
+          conditions:
+            - condition: trigger
+              id: startup
+            - condition: or
+              conditions:
+                - condition: state
+                  entity_id: light.basement_stairs_light_light
+                  state: "on"
+                - condition: state
+                  entity_id: binary_sensor.motion_sensor_basement_stairs_motion
+                  state: "on"
+        - condition: and
+          conditions:
+            - condition: trigger
+              id: motion_detected
+            - condition: template
+              value_template: >
+                {{ is_state('light.basement_stairs_light_light', 'on')
+                   or (now() - states.light.basement_stairs_light_light.last_changed).total_seconds() > 5 }}
   action:
     - service: light.turn_on
       target:
