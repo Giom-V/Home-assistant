@@ -1,3 +1,5 @@
+# This file is used for WIP and tests.
+# Automations are then meant to be moved in their dedicated folders in automations/ afterwards.
 - id: "1666186950016"
   alias: Test Nest sonnette
   description: ""
