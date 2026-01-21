@@ -1,12 +1,3 @@
-google_wifi:
-  name: Google Wifi
-  entities:
-    - sensor.google_wifi_current_version
-    - sensor.google_wifi_last_restart
-    - sensor.google_wifi_local_ip
-    - sensor.google_wifi_new_version
-    - sensor.google_wifi_status
-    - sensor.google_wifi_uptime
 media_players:
   name: Media Players
   entities:
@@ -80,28 +71,6 @@ living_room_lights:
     - light.Color
     - light.canape_gauche
     - light.canape_droite
-
-Dafang3:
-  name: Dafang Camera
-  entities:
-    - camera.dafang3
-    - switch.dafang3_h264_rtsp_server
-    - switch.dafang3_mjpeg_rtsp_server
-    - sensor.dafang3
-    - device_tracker.dafang3
-    - sensor.dafang3_light_sensor
-    - switch.dafang3_ir_filter
-    - switch.dafang3_ir_led
-    - switch.dafang3_night_mode
-    - switch.dafang3_night_mode_auto
-    - switch.dafang3_blue_led
-    - switch.dafang3_yellow_led
-    - switch.dafang3_motion_detection
-    - switch.dafang3_motion_tracking
-    - camera.dafang3_motion_snapshot
-    - binary_sensor.dafang3_motion_sensor
-    - cover.dafang3_move_left_right
-    - cover.dafang3_move_up_down
 
 SchoolAtHome:
   name: School at home time keeper
