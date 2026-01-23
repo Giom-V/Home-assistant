@@ -133,7 +133,7 @@
                       "conditions": [
                         {
                           "condition": "state",
-                          "entity": "cover.legrand_shutter_sw_with_level_control_cover",
+                          "entity": "cover.volet_salle_a_manger",
                           "state_not": "open"
                         }
                       ],
@@ -157,7 +157,7 @@
                       "conditions": [
                         {
                           "condition": "state",
-                          "entity": "cover.legrand_shutter_sw_with_level_control_cover",
+                          "entity": "cover.volet_salle_a_manger",
                           "state": "open"
                         }
                       ],
@@ -391,7 +391,7 @@
                       "conditions": [
                         {
                           "condition": "state",
-                          "entity": "cover.legrand_shutter_sw_with_level_control_cover",
+                          "entity": "cover.volet_salle_a_manger",
                           "state_not": "open"
                         }
                       ],
@@ -415,7 +415,7 @@
                       "conditions": [
                         {
                           "condition": "state",
-                          "entity": "cover.legrand_shutter_sw_with_level_control_cover",
+                          "entity": "cover.volet_salle_a_manger",
                           "state": "open"
                         }
                       ],
