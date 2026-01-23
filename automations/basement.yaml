@@ -1,0 +1,32 @@
+# Automation to switch off basement lights if they are on for too long while the car is charging.
+# This is a failsafe to avoid overloading the system or wasting energy.
+
+- id: basement_lights_failsafe
+  alias: Basement lights power saver
+  description: "Éteint les lumières du sous-sol si on a oublié de les éteindre."
+  variables:
+    notification_message: "Je pense que vous aviez oublié d'éteindre les lumières du sous-sol, je les ai éteintes."
+  trigger:
+    - platform: state
+      entity_id:
+        - light.sous_sol_garage
+        - light.sous_sol_canape
+        - light.sous_sol_dancefloor
+      to: "on"
+      for: "01:00:00"
+      id: lights_on_too_long
+  condition:
+    - condition: numeric_state
+      entity_id: sensor.chargeur_voiture_power
+      above: 200
+  action:
+    - service: light.turn_off
+      target:
+        entity_id:
+          - light.sous_sol_garage
+          - light.sous_sol_canape
+          - light.sous_sol_dancefloor
+    - service: rest_command.gchat
+      data:
+        text: "{{ notification_message }}"
+  mode: single

@@ -191,6 +191,12 @@ A more detailed documentation of those automations can be found in the
 - Continue to improve presence simulation (TV, or rando; colars in the living
   room to simulate it)
 
+### [Basement](basement.yaml)
+
+Automations related to the basement.
+
+- `Basement lights power saver`: Switch off basement lights if they were left on.
+
 ### [Bassin](bassin.yaml)
 
 Automations related to the pond.
