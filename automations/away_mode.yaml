@@ -593,7 +593,7 @@
   trigger:
     # Triggers for Guillaume
     - platform: numeric_state
-      entity_id: proximity.home_guillaume
+      entity_id: sensor.home_guillaume_distance
       below: 2 # in km
       for: "00:01:00"
       id: "guillaume_proximity"
@@ -620,7 +620,7 @@
     - condition: template
       value_template: >
         {% if trigger.id == 'guillaume_proximity' %}
-          {{ states.proximity.home_guillaume.attributes.dir_of_travel == 'towards' }}
+          {{ states.sensor.home_guillaume_distance.attributes.dir_of_travel == 'towards' }}
         {% elif trigger.id == 'claire_proximity' %}
           {{ states.proximity.home_claire.attributes.dir_of_travel == 'towards' }}
         {% elif trigger.id in ['guillaume_wifi', 'claire_wifi'] %}
@@ -671,7 +671,7 @@
     - condition: and
       conditions:
         - condition: numeric_state
-          entity_id: proximity.home_guillaume
+          entity_id: sensor.home_guillaume_distance
           above: 2
           for: "00:05:00"
         - condition: numeric_state
