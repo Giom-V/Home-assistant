@@ -195,7 +195,8 @@ A more detailed documentation of those automations can be found in the
 
 Automations related to the basement.
 
-- `Basement lights failsafe`: Switch off basement lights if they are on for an hour and the car is charging.
+- `Basement lights power saver`: Switch off basement lights if they are on for
+  an hour and the car is charging.
 
 ### [Bassin](bassin.yaml)
 

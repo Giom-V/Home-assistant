@@ -2,21 +2,19 @@
 # This is a failsafe to avoid overloading the system or wasting energy.
 
 - id: basement_lights_failsafe
-  alias: Basement lights failsafe
-  description: "Éteint les lumières du sous-sol si elles sont allumées depuis une heure et que la voiture charge."
+  alias: Basement lights power saver
+  description: "Éteint les lumières du sous-sol si on a oublié de les éteindre et que la voiture charge."
   variables:
-    notification_message: "Les lumières du sous-sol ont été éteintes car la voiture charge."
+    notification_message: "Je pense que vous aviez oublié d'éteindre les lumières du sous-sol, je les ai éteintes."
   trigger:
     - platform: state
-      entity_id: light.basement
+      entity_id:
+        - light.sous_sol_garage
+        - light.sous_sol_canape
+        - light.sous_sol_dancefloor
       to: "on"
       for: "01:00:00"
-      id: basement_light
-    - platform: state
-      entity_id: light.basement_stairs_light_light
-      to: "on"
-      for: "01:00:00"
-      id: stairs_light
+      id: lights_on_too_long
     - platform: numeric_state
       entity_id: sensor.chargeur_voiture_power
       above: 200
@@ -25,17 +23,28 @@
     - condition: numeric_state
       entity_id: sensor.chargeur_voiture_power
       above: 200
-    - condition: template
-      value_template: >
-        {{ (is_state('light.basement', 'on') and (now() - states.light.basement.last_changed).total_seconds() >= 3600)
-           or (is_state('light.basement_stairs_light_light', 'on') and (now() - states.light.basement_stairs_light_light.last_changed).total_seconds() >= 3600) }}
+    - condition: or
+      conditions:
+        - condition: state
+          entity_id: light.sous_sol_garage
+          state: "on"
+          for: "01:00:00"
+        - condition: state
+          entity_id: light.sous_sol_canape
+          state: "on"
+          for: "01:00:00"
+        - condition: state
+          entity_id: light.sous_sol_dancefloor
+          state: "on"
+          for: "01:00:00"
   action:
     - service: light.turn_off
       target:
         entity_id:
-          - light.basement
-          - light.basement_stairs_light_light
-    - service: notify.mobile_app_pixel_7_pro
+          - light.sous_sol_garage
+          - light.sous_sol_canape
+          - light.sous_sol_dancefloor
+    - service: rest_command.gchat
       data:
-        message: "{{ notification_message }}"
+        text: "{{ notification_message }}"
   mode: single
