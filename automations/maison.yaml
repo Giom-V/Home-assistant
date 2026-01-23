@@ -205,8 +205,8 @@
               id: motion_detected
             - condition: template
               value_template: >
-                {{ is_state('light.basement_stairs_light_light', 'on')
-                   or (now() - states.light.basement_stairs_light_light.last_changed).total_seconds() > 5 }}
+                {% set light = states.light.basement_stairs_light_light %}
+                {{ light is not none and (light.state == 'on' or (now() - light.last_changed).total_seconds() > 5) }}
   action:
     - service: light.turn_on
       target:
