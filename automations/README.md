@@ -191,6 +191,12 @@ A more detailed documentation of those automations can be found in the
 - Continue to improve presence simulation (TV, or rando; colars in the living
   room to simulate it)
 
+### [Basement](basement.yaml)
+
+Automations related to the basement.
+
+- `Basement lights failsafe`: Switch off basement lights if they are on for an hour and the car is charging.
+
 ### [Bassin](bassin.yaml)
 
 Automations related to the pond.

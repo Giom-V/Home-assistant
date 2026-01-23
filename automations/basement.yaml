@@ -1,0 +1,41 @@
+# Automation to switch off basement lights if they are on for too long while the car is charging.
+# This is a failsafe to avoid overloading the system or wasting energy.
+
+- id: basement_lights_failsafe
+  alias: Basement lights failsafe
+  description: "Éteint les lumières du sous-sol si elles sont allumées depuis une heure et que la voiture charge."
+  variables:
+    notification_message: "Les lumières du sous-sol ont été éteintes car la voiture charge."
+  trigger:
+    - platform: state
+      entity_id: light.basement
+      to: "on"
+      for: "01:00:00"
+      id: basement_light
+    - platform: state
+      entity_id: light.basement_stairs_light_light
+      to: "on"
+      for: "01:00:00"
+      id: stairs_light
+    - platform: numeric_state
+      entity_id: sensor.chargeur_voiture_power
+      above: 200
+      id: car_charging
+  condition:
+    - condition: numeric_state
+      entity_id: sensor.chargeur_voiture_power
+      above: 200
+    - condition: template
+      value_template: >
+        {{ (is_state('light.basement', 'on') and (now() - states.light.basement.last_changed).total_seconds() >= 3600)
+           or (is_state('light.basement_stairs_light_light', 'on') and (now() - states.light.basement_stairs_light_light.last_changed).total_seconds() >= 3600) }}
+  action:
+    - service: light.turn_off
+      target:
+        entity_id:
+          - light.basement
+          - light.basement_stairs_light_light
+    - service: notify.mobile_app_pixel_7_pro
+      data:
+        message: "{{ notification_message }}"
+  mode: single
