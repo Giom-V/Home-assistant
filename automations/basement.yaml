@@ -3,7 +3,7 @@
 
 - id: basement_lights_failsafe
   alias: Basement lights power saver
-  description: "Éteint les lumières du sous-sol si on a oublié de les éteindre et que la voiture charge."
+  description: "Éteint les lumières du sous-sol si on a oublié de les éteindre."
   variables:
     notification_message: "Je pense que vous aviez oublié d'éteindre les lumières du sous-sol, je les ai éteintes."
   trigger:
@@ -15,28 +15,10 @@
       to: "on"
       for: "01:00:00"
       id: lights_on_too_long
-    - platform: numeric_state
-      entity_id: sensor.chargeur_voiture_power
-      above: 200
-      id: car_charging
   condition:
     - condition: numeric_state
       entity_id: sensor.chargeur_voiture_power
       above: 200
-    - condition: or
-      conditions:
-        - condition: state
-          entity_id: light.sous_sol_garage
-          state: "on"
-          for: "01:00:00"
-        - condition: state
-          entity_id: light.sous_sol_canape
-          state: "on"
-          for: "01:00:00"
-        - condition: state
-          entity_id: light.sous_sol_dancefloor
-          state: "on"
-          for: "01:00:00"
   action:
     - service: light.turn_off
       target:
