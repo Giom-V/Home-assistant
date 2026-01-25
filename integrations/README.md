@@ -69,6 +69,12 @@ Binary sensor that checks daily for new releases of Home Assistant.
 Point to the [cameras](../entities/cameras) folder where each of the cameras are
 set-up.
 
+### [Entity_tracking.yaml](entity_tracking.yaml)
+
+**Documentation:** <https://www.home-assistant.io/integrations/template/>
+
+Tracks the number of entities and their changes (added/removed) over time.
+
 ### [Google_assistant.yaml](google_assistant.yaml)
 
 **Documentation:**

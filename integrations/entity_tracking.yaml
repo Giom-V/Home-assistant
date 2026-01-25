@@ -1,0 +1,46 @@
+# Automations and sensors related to tracking entities in Home Assistant.
+#
+# This file tracks the number of entities in Home Assistant and their changes.
+# It helps monitoring the system growth and detecting new or removed entities.
+# Note: Storing the full list of entities in attributes may exceed database limits
+# for large installations (>1000 entities).
+
+template:
+  - trigger:
+      - platform: time_pattern
+        minutes: "/5"
+      - platform: homeassistant
+        event: start
+    sensor:
+      - name: "Home Assistant Entity Count"
+        unique_id: "ha_entity_count"
+        icon: "mdi:counter"
+        state: "{{ states | count }}"
+        attributes:
+          known_entities: >
+            {{ states | map(attribute='entity_id') | list }}
+          recent_changes: >
+            {% set current = states | map(attribute='entity_id') | list %}
+            {% if this is defined and this is not none %}
+              {% set previous = this.attributes.known_entities | default(current) %}
+              {% set history = this.attributes.recent_changes | default([]) %}
+            {% else %}
+              {% set previous = current %}
+              {% set history = [] %}
+            {% endif %}
+
+            {% set now_ts = now().timestamp() %}
+
+            {% set added = current | reject('in', previous) | list %}
+            {% set removed = previous | reject('in', current) | list %}
+
+            {% set new_entries = [] %}
+            {% for e in added %}
+              {% set _ = new_entries.append({'action': 'added', 'entity_id': e, 'timestamp': now_ts}) %}
+            {% endfor %}
+            {% for e in removed %}
+              {% set _ = new_entries.append({'action': 'removed', 'entity_id': e, 'timestamp': now_ts}) %}
+            {% endfor %}
+
+            {# Merge and Filter > 24h #}
+            {{ (history + new_entries) | selectattr('timestamp', '>', now_ts - 86400) | list }}
