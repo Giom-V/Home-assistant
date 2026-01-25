@@ -1,0 +1,5 @@
+notify:
+  - name: log_nouvelles_entites
+    platform: file
+    filename: nouvelles_entites.log
+    timestamp: true # Cela ajoutera automatiquement la date et l'heure devant chaque ligne
