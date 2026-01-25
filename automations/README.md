@@ -247,6 +247,8 @@ Automations related to Aurore's bedroom.
 
 Automations related to the pink bedroom.
 
+- `Switch off wardrobe light during sleep hours`: Prevents the wardrobe light from being on during the night.
+
 ### [Chauffage](chauffage.yaml)
 
 Automations related to heating.
