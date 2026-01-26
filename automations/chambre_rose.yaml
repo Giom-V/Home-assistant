@@ -19,10 +19,6 @@
   alias: Switch off wardrobe light during sleep hours
   description: "Éteint la lumière de la penderie entre minuit et 8h en semaine, et 9h le weekend et mercredi"
   triggers:
-    - trigger: state
-      entity_id: light.lumiere_penderie
-      to: "on"
-      id: light_on
     - trigger: time
       at: "00:00:01"
       id: midnight_sweep
