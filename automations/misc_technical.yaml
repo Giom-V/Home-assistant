@@ -64,3 +64,17 @@
       data:
         entry_id: f1f448f8d8857c66d176b02e2d6b5217
   mode: single
+
+- id: "new_entity_tracking_log"
+  alias: "Système : Archivage nouvelles entités dans fichier log"
+  description: "Enregistre l'ID de chaque nouvelle entité dans nouvelles_entites.log"
+  trigger:
+    - platform: event
+      event_type: entity_registry_updated
+      event_data:
+        action: create
+  action:
+    - service: notify.log_nouvelles_entites
+      data:
+        message: "Nouvelle entité détectée : {{ trigger.event.data.entity_id }}"
+  mode: single
