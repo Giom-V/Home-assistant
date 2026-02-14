@@ -71,6 +71,11 @@ close_all_first_floor_shutters:
     data: {}
     target:
       entity_id: cover.volets_chambre_rose
+  - action: cover.close_cover
+    metadata: {}
+    data: {}
+    target:
+      entity_id: cover.store_salle_de_bain
   description: ''
   icon: mdi:window-shutter
 open_all_ground_floor_shutters:
@@ -110,5 +115,10 @@ open_all_first_floor_shutters:
     data: {}
     target:
       entity_id: cover.volets_chambre_rose
+  - action: cover.open_cover
+    metadata: {}
+    data: {}
+    target:
+      entity_id: cover.store_salle_de_bain
   description: ''
   icon: mdi:window-shutter-open

@@ -6,6 +6,11 @@ Here are all the scenes for my lights. They are grouped by function and more or 
 
 ## Detailled description
 
+### [Covers.yaml](covers.yaml)
+
+Those scripts are used to open or close all the covers at once, either for the whole house or just for one floor.
+They are notably used in the [Away mode](../automations/away_mode.yaml) automations.
+
 ### [Livingroom.yaml](livingroom.yaml)
 
 There are two scripts there. One to change the [scene](../scenes/LivingRoom.yaml) depending of the value in the `input_select.living_room_color` select in Lovelace.
