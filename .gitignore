@@ -27,6 +27,7 @@ zha_ota/
 .pip_progress
 ip_bans.yaml
 known_devices.yaml
+devices.md
 customize.yaml
 *.conf
 *.db

@@ -1,0 +1,2 @@
+shell_command:
+  generate_devices_md: "python3 /config/scripts/generate_devices_md.py"

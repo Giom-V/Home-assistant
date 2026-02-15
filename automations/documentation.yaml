@@ -1,0 +1,19 @@
+# Documentation related automations
+
+- id: "generate_devices_md_automation"
+  alias: "System: Generate Devices Markdown"
+  description: "Génère le fichier devices.md toutes les nuits et lors de l'ajout d'entités."
+  trigger:
+    - platform: time
+      at: "03:00:00"
+    - platform: event
+      event_type: entity_registry_updated
+      event_data:
+        action: create
+    - platform: event
+      event_type: device_registry_updated
+      event_data:
+        action: create
+  action:
+    - service: shell_command.generate_devices_md
+  mode: restart

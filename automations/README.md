@@ -239,6 +239,12 @@ since they don't work at the moment you should just ignore them.
   charger status accordingly
 - Only preheat the car if it's not a holiday (using the calendar integration)
 
+### [Documentation](documentation.yaml)
+
+- `Generate Devices Markdown`: Generates a `devices.md` file listing all
+  devices and entities, organized by floor and room. This runs every night
+  and when new entities are added.
+
 ### [Chambre Aurore](chambre_aurore.yaml)
 
 Automations related to Aurore's bedroom.
