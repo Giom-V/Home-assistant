@@ -251,6 +251,12 @@ Automations related to the pink bedroom.
 
 Automations related to heating.
 
+### [Documentation](documentation.yaml)
+
+- `Generate Devices Markdown`: Generates a `devices.md` file listing all
+  devices and entities, organized by floor and room. This runs every night
+  and when new entities are added.
+
 ### [La Plagne](la_plagne.yaml)
 
 Automations related to the La Plagne apartment.
