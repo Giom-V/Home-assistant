@@ -25,17 +25,10 @@ close_all_group_floor_shutters:
   sequence:
   - action: cover.close_cover
     target:
-      entity_id: cover.volet_salle_a_manger
-    metadata: {}
-    data: {}
-  - action: cover.close_cover
-    target:
-      entity_id: cover.volets_cuisine
-    metadata: {}
-    data: {}
-  - action: cover.close_cover
-    target:
-      entity_id: cover.volets_salle_de_jeux
+      entity_id:
+      - cover.volet_salle_a_manger
+      - cover.volets_cuisine
+      - cover.volets_salle_de_jeux
     metadata: {}
     data: {}
   - action: switch.turn_off
@@ -52,12 +45,11 @@ close_all_first_floor_shutters:
   sequence:
   - action: cover.close_cover
     target:
-      entity_id: cover.velux_mezza_cover_roller_shutter
-    metadata: {}
-    data: {}
-  - action: cover.close_cover
-    target:
-      entity_id: cover.velux_external_cover_roller_shutter
+      entity_id:
+      - cover.velux_mezza_cover_roller_shutter
+      - cover.velux_external_cover_roller_shutter
+      - cover.volets_chambre_rose
+      - cover.store_salle_de_bain
     metadata: {}
     data: {}
   - if:
@@ -72,16 +64,6 @@ close_all_first_floor_shutters:
         entity_id: cover.velux_bureau_roller_shutter
       metadata: {}
       data: {}
-  - action: cover.close_cover
-    metadata: {}
-    data: {}
-    target:
-      entity_id: cover.volets_chambre_rose
-  - action: cover.close_cover
-    metadata: {}
-    data: {}
-    target:
-      entity_id: cover.store_salle_de_bain
   description: ''
   icon: mdi:window-shutter
 open_all_ground_floor_shutters:
@@ -89,17 +71,10 @@ open_all_ground_floor_shutters:
   sequence:
   - action: cover.open_cover
     target:
-      entity_id: cover.volet_salle_a_manger
-    metadata: {}
-    data: {}
-  - action: cover.open_cover
-    target:
-      entity_id: cover.volets_cuisine
-    metadata: {}
-    data: {}
-  - action: cover.open_cover
-    target:
-      entity_id: cover.volets_salle_de_jeux
+      entity_id:
+      - cover.volet_salle_a_manger
+      - cover.volets_cuisine
+      - cover.volets_salle_de_jeux
     metadata: {}
     data: {}
   description: ''
@@ -109,28 +84,13 @@ open_all_first_floor_shutters:
   sequence:
   - action: cover.open_cover
     target:
-      entity_id: cover.velux_mezza_cover_roller_shutter
+      entity_id:
+      - cover.velux_mezza_cover_roller_shutter
+      - cover.velux_external_cover_roller_shutter
+      - cover.velux_bureau_roller_shutter
+      - cover.volets_chambre_rose
+      - cover.store_salle_de_bain
     metadata: {}
     data: {}
-  - action: cover.open_cover
-    target:
-      entity_id: cover.velux_external_cover_roller_shutter
-    metadata: {}
-    data: {}
-  - action: cover.open_cover
-    target:
-      entity_id: cover.velux_bureau_roller_shutter
-    metadata: {}
-    data: {}
-  - action: cover.open_cover
-    metadata: {}
-    data: {}
-    target:
-      entity_id: cover.volets_chambre_rose
-  - action: cover.open_cover
-    metadata: {}
-    data: {}
-    target:
-      entity_id: cover.store_salle_de_bain
   description: ''
   icon: mdi:window-shutter-open
