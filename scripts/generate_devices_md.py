@@ -18,11 +18,11 @@ def load_json(filepath):
     try:
         with open(filepath, 'r', encoding='utf-8') as f:
             return json.load(f)
-    except FileNotFoundError:
-        print(f"Error: File not found: {filepath}", file=sys.stderr)
+    except OSError as e:
+        print(f"Error reading file {filepath}: {e}", file=sys.stderr)
         return None
-    except json.JSONDecodeError:
-        print(f"Error: JSON decode error in file: {filepath}", file=sys.stderr)
+    except json.JSONDecodeError as e:
+        print(f"Error decoding JSON from {filepath}: {e}", file=sys.stderr)
         return None
 
 def get_entity_status(entity):
