@@ -1,6 +1,7 @@
 import json
 import os
 import sys
+from collections import defaultdict
 
 # Define paths
 CONFIG_DIR = "/config"
@@ -17,11 +18,49 @@ def load_json(filepath):
         with open(filepath, 'r', encoding='utf-8') as f:
             return json.load(f)
     except FileNotFoundError:
-        print(f"Error: File not found: {filepath}")
+        print(f"Error: File not found: {filepath}", file=sys.stderr)
         return None
     except json.JSONDecodeError:
-        print(f"Error: JSON decode error in file: {filepath}")
+        print(f"Error: JSON decode error in file: {filepath}", file=sys.stderr)
         return None
+
+def get_entity_status(entity):
+    if entity.get('disabled_by'):
+        return ' (Disabled)'
+    if entity.get('hidden_by'):
+        return ' (Hidden)'
+    return ''
+
+def write_area_details(f, area, area_devices, device_entities, area_entities):
+    f.write(f"### Area: {area['name']} ({area['id']})\n\n")
+
+    # List devices in this area
+    if area['id'] in area_devices:
+        sorted_devices = sorted(area_devices[area['id']], key=lambda x: x['name'] or x['name_by_user'] or "Unknown")
+        for device in sorted_devices:
+            name = device['name_by_user'] or device['name'] or "Unknown Device"
+            manufacturer = device.get('manufacturer', 'Unknown')
+            model = device.get('model', 'Unknown')
+            f.write(f"- **Device:** {name} ({manufacturer} {model})\n")
+
+            # List entities for this device
+            if device['id'] in device_entities:
+                for entity in sorted(device_entities[device['id']], key=lambda x: x['id']):
+                    status = get_entity_status(entity)
+                    f.write(f"  - Entity: `{entity['id']}` ({entity['name']}){status}\n")
+            else:
+                    f.write("  - *No entities*\n")
+    else:
+        f.write("- *No devices in this area*\n")
+
+    # List standalone entities in this area (no device)
+    if area['id'] in area_entities:
+        f.write("- **Standalone Entities:**\n")
+        for entity in sorted(area_entities[area['id']], key=lambda x: x['id']):
+                status = get_entity_status(entity)
+                f.write(f"  - Entity: `{entity['id']}` ({entity['name']}){status}\n")
+
+    f.write("\n")
 
 def main():
     areas_data = load_json(AREA_REGISTRY_FILE)
@@ -29,7 +68,7 @@ def main():
     entities_data = load_json(ENTITY_REGISTRY_FILE)
 
     if not areas_data or not devices_data or not entities_data:
-        print("Error: Could not load one or more registry files.")
+        print("Error: Could not load one or more registry files.", file=sys.stderr)
         sys.exit(1)
 
     # Process Areas
@@ -39,23 +78,21 @@ def main():
 
     # Process Devices
     devices = {} # id -> device object
-    area_devices = {} # area_id -> list of devices
+    area_devices = defaultdict(list) # area_id -> list of devices
     orphan_devices = []
 
     for device in devices_data['data']['devices']:
         devices[device['id']] = device
         area_id = device.get('area_id')
         if area_id:
-            if area_id not in area_devices:
-                area_devices[area_id] = []
             area_devices[area_id].append(device)
         else:
             orphan_devices.append(device)
 
     # Process Entities
-    device_entities = {} # device_id -> list of entities
+    device_entities = defaultdict(list) # device_id -> list of entities
     orphan_entities = [] # entities without device (and potentially without area, or area overrides)
-    area_entities = {} # area_id -> list of entities (that have area but no device, or override)
+    area_entities = defaultdict(list) # area_id -> list of entities (that have area but no device, or override)
 
     for entity in entities_data['data']['entities']:
         device_id = entity.get('device_id')
@@ -71,19 +108,15 @@ def main():
         }
 
         if device_id:
-            if device_id not in device_entities:
-                device_entities[device_id] = []
             device_entities[device_id].append(entity_obj)
         elif area_id:
-             if area_id not in area_entities:
-                area_entities[area_id] = []
              area_entities[area_id].append(entity_obj)
         else:
             orphan_entities.append(entity_obj)
 
     # Structure for output: Floor -> Area -> Device -> Entities
     # We need to group areas by floor first.
-    floors = {} # floor_id -> list of areas
+    floors = defaultdict(list) # floor_id -> list of areas
     # Get unique floor IDs from areas
     # Note: 'floor_id' is a string in area object.
 
@@ -93,8 +126,6 @@ def main():
     for area_id, area in areas.items():
         floor_id = area.get('floor_id')
         if floor_id:
-            if floor_id not in floors:
-                floors[floor_id] = []
             floors[floor_id].append(area)
         else:
             no_floor_areas.append(area)
@@ -114,82 +145,14 @@ def main():
             sorted_areas = sorted(floors[floor_id], key=lambda x: x['name'])
 
             for area in sorted_areas:
-                f.write(f"### Area: {area['name']} ({area['id']})\n\n")
-
-                # List devices in this area
-                if area['id'] in area_devices:
-                    sorted_devices = sorted(area_devices[area['id']], key=lambda x: x['name'] or x['name_by_user'] or "Unknown")
-                    for device in sorted_devices:
-                        name = device['name_by_user'] or device['name'] or "Unknown Device"
-                        manufacturer = device.get('manufacturer', 'Unknown')
-                        model = device.get('model', 'Unknown')
-                        f.write(f"- **Device:** {name} ({manufacturer} {model})\n")
-
-                        # List entities for this device
-                        if device['id'] in device_entities:
-                            for entity in sorted(device_entities[device['id']], key=lambda x: x['id']):
-                                status = ""
-                                if entity['disabled_by']:
-                                    status = " (Disabled)"
-                                elif entity['hidden_by']:
-                                    status = " (Hidden)"
-                                f.write(f"  - Entity: `{entity['id']}` ({entity['name']}){status}\n")
-                        else:
-                             f.write("  - *No entities*\n")
-                else:
-                    f.write("- *No devices in this area*\n")
-
-                # List standalone entities in this area (no device)
-                if area['id'] in area_entities:
-                    f.write("- **Standalone Entities:**\n")
-                    for entity in sorted(area_entities[area['id']], key=lambda x: x['id']):
-                         status = ""
-                         if entity['disabled_by']:
-                             status = " (Disabled)"
-                         elif entity['hidden_by']:
-                             status = " (Hidden)"
-                         f.write(f"  - Entity: `{entity['id']}` ({entity['name']}){status}\n")
-
-                f.write("\n")
+                write_area_details(f, area, area_devices, device_entities, area_entities)
 
         # Handle areas with no floor
         if no_floor_areas:
             f.write("## No Floor Assigned\n\n")
             sorted_areas = sorted(no_floor_areas, key=lambda x: x['name'])
             for area in sorted_areas:
-                f.write(f"### Area: {area['name']} ({area['id']})\n\n")
-                # Same logic as above for devices and entities...
-                if area['id'] in area_devices:
-                    sorted_devices = sorted(area_devices[area['id']], key=lambda x: x['name'] or x['name_by_user'] or "Unknown")
-                    for device in sorted_devices:
-                        name = device['name_by_user'] or device['name'] or "Unknown Device"
-                        manufacturer = device.get('manufacturer', 'Unknown')
-                        model = device.get('model', 'Unknown')
-                        f.write(f"- **Device:** {name} ({manufacturer} {model})\n")
-
-                        if device['id'] in device_entities:
-                            for entity in sorted(device_entities[device['id']], key=lambda x: x['id']):
-                                status = ""
-                                if entity['disabled_by']:
-                                    status = " (Disabled)"
-                                elif entity['hidden_by']:
-                                    status = " (Hidden)"
-                                f.write(f"  - Entity: `{entity['id']}` ({entity['name']}){status}\n")
-                        else:
-                             f.write("  - *No entities*\n")
-                else:
-                    f.write("- *No devices in this area*\n")
-
-                if area['id'] in area_entities:
-                    f.write("- **Standalone Entities:**\n")
-                    for entity in sorted(area_entities[area['id']], key=lambda x: x['id']):
-                         status = ""
-                         if entity['disabled_by']:
-                             status = " (Disabled)"
-                         elif entity['hidden_by']:
-                             status = " (Hidden)"
-                         f.write(f"  - Entity: `{entity['id']}` ({entity['name']}){status}\n")
-                f.write("\n")
+                write_area_details(f, area, area_devices, device_entities, area_entities)
 
         # Handle Orphan Devices (no area)
         if orphan_devices:
@@ -203,11 +166,7 @@ def main():
 
                 if device['id'] in device_entities:
                     for entity in sorted(device_entities[device['id']], key=lambda x: x['id']):
-                        status = ""
-                        if entity['disabled_by']:
-                            status = " (Disabled)"
-                        elif entity['hidden_by']:
-                            status = " (Hidden)"
+                        status = get_entity_status(entity)
                         f.write(f"  - Entity: `{entity['id']}` ({entity['name']}){status}\n")
                 else:
                         f.write("  - *No entities*\n")
@@ -216,11 +175,7 @@ def main():
         if orphan_entities:
             f.write("\n## Orphan Entities (No Device, No Area)\n\n")
             for entity in sorted(orphan_entities, key=lambda x: x['id']):
-                status = ""
-                if entity['disabled_by']:
-                    status = " (Disabled)"
-                elif entity['hidden_by']:
-                    status = " (Hidden)"
+                status = get_entity_status(entity)
                 f.write(f"- Entity: `{entity['id']}` ({entity['name']}){status}\n")
 
 if __name__ == "__main__":

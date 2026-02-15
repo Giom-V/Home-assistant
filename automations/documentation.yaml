@@ -15,5 +15,6 @@
       event_data:
         action: create
   action:
+    - delay: "00:15:00"
     - service: shell_command.generate_devices_md
   mode: restart
