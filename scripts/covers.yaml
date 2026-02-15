@@ -23,18 +23,21 @@ open_all_shutters:
 close_all_group_floor_shutters:
   alias: Close all ground floor shutters
   sequence:
-  - device_id: 98ca57dc34f30913565109817baf591f
-    domain: cover
-    entity_id: ed1cfca6e4f23b27177bdff5b92dd33b
-    type: close
-  - device_id: 9997d59bda4455c9a3c8077d1ef2f6c1
-    domain: cover
-    entity_id: d31c54169fb30d28db04d8025a5b97a9
-    type: close
-  - device_id: 3f356462bb4d8107cea10c05f3c0637e
-    domain: cover
-    entity_id: ad12001d58596dc60f78948e8068a9c6
-    type: close
+  - action: cover.close_cover
+    target:
+      entity_id: cover.volet_salle_a_manger
+    metadata: {}
+    data: {}
+  - action: cover.close_cover
+    target:
+      entity_id: cover.volets_cuisine
+    metadata: {}
+    data: {}
+  - action: cover.close_cover
+    target:
+      entity_id: cover.volets_salle_de_jeux
+    metadata: {}
+    data: {}
   - action: switch.turn_off
     metadata: {}
     target:
@@ -47,14 +50,16 @@ close_all_group_floor_shutters:
 close_all_first_floor_shutters:
   alias: Close all first floor shutters
   sequence:
-  - device_id: dfe890255b2aec25d04652bf3f562bcb
-    domain: cover
-    entity_id: 9d96788bbf491daa38a43974d3af81fd
-    type: close
-  - device_id: 8f16b93c4fae1055fc21ef57afca5b0f
-    domain: cover
-    entity_id: 5159b1462f01722c359983c04fea0e28
-    type: close
+  - action: cover.close_cover
+    target:
+      entity_id: cover.velux_mezza_cover_roller_shutter
+    metadata: {}
+    data: {}
+  - action: cover.close_cover
+    target:
+      entity_id: cover.velux_external_cover_roller_shutter
+    metadata: {}
+    data: {}
   - if:
     - condition: not
       conditions:
@@ -62,10 +67,11 @@ close_all_first_floor_shutters:
         entity_id: binary_sensor.velux_bureau_contact
         state: 'on'
     then:
-    - device_id: 733eb70641efac866005440f0d764623
-      domain: cover
-      entity_id: ad9bb28acca59679697828aaba529647
-      type: close
+    - action: cover.close_cover
+      target:
+        entity_id: cover.velux_bureau_roller_shutter
+      metadata: {}
+      data: {}
   - action: cover.close_cover
     metadata: {}
     data: {}
@@ -81,35 +87,41 @@ close_all_first_floor_shutters:
 open_all_ground_floor_shutters:
   alias: Open all ground floor shutters
   sequence:
-  - device_id: 98ca57dc34f30913565109817baf591f
-    domain: cover
-    entity_id: ed1cfca6e4f23b27177bdff5b92dd33b
-    type: open
-  - device_id: 9997d59bda4455c9a3c8077d1ef2f6c1
-    domain: cover
-    entity_id: d31c54169fb30d28db04d8025a5b97a9
-    type: open
-  - device_id: 3f356462bb4d8107cea10c05f3c0637e
-    domain: cover
-    entity_id: ad12001d58596dc60f78948e8068a9c6
-    type: open
+  - action: cover.open_cover
+    target:
+      entity_id: cover.volet_salle_a_manger
+    metadata: {}
+    data: {}
+  - action: cover.open_cover
+    target:
+      entity_id: cover.volets_cuisine
+    metadata: {}
+    data: {}
+  - action: cover.open_cover
+    target:
+      entity_id: cover.volets_salle_de_jeux
+    metadata: {}
+    data: {}
   description: ''
   icon: mdi:window-shutter-open
 open_all_first_floor_shutters:
   alias: Open all first floor shutters
   sequence:
-  - device_id: dfe890255b2aec25d04652bf3f562bcb
-    domain: cover
-    entity_id: 9d96788bbf491daa38a43974d3af81fd
-    type: open
-  - device_id: 8f16b93c4fae1055fc21ef57afca5b0f
-    domain: cover
-    entity_id: 5159b1462f01722c359983c04fea0e28
-    type: open
-  - device_id: 733eb70641efac866005440f0d764623
-    domain: cover
-    entity_id: ad9bb28acca59679697828aaba529647
-    type: open
+  - action: cover.open_cover
+    target:
+      entity_id: cover.velux_mezza_cover_roller_shutter
+    metadata: {}
+    data: {}
+  - action: cover.open_cover
+    target:
+      entity_id: cover.velux_external_cover_roller_shutter
+    metadata: {}
+    data: {}
+  - action: cover.open_cover
+    target:
+      entity_id: cover.velux_bureau_roller_shutter
+    metadata: {}
+    data: {}
   - action: cover.open_cover
     metadata: {}
     data: {}
