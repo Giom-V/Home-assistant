@@ -49,12 +49,12 @@ def get_source(statistic_id: str) -> str:
 
     """
     if valid_entity_id(statistic_id):
-        source = statistic_id.split(".")[0]
+        source = statistic_id.split(".", maxsplit=1)[0]
         if source == "recorder":
             handle_error(f"Invalid statistic_id {statistic_id}. DOMAIN 'recorder' is not allowed.")
         source = "recorder"
     elif valid_statistic_id(statistic_id):
-        source = statistic_id.split(":")[0]
+        source = statistic_id.split(":", maxsplit=1)[0]
         if len(source) == 0:
             handle_error(f"Implementation error, this must not happen. Invalid statistic_id. (must not start with ':'): {statistic_id}")
         if source == "recorder":
@@ -79,21 +79,23 @@ def get_mean_stat(row: pd.Series, timezone: zoneinfo.ZoneInfo, datetime_format: 
     -------
         dict: A dictionary containing the extracted mean statistics.
 
+    Raises:
+    ------
+        HomeAssistantError: If validation fails (invalid timestamp, float values, or min/max/mean constraint).
+
     """
-    if (
-        is_full_hour(row["start"], datetime_format)
-        and is_valid_float(row["min"])
-        and is_valid_float(row["max"])
-        and is_valid_float(row["mean"])
-        and min_max_mean_are_valid(row["min"], row["max"], row["mean"])
-    ):
-        return {
-            "start": dt.datetime.strptime(row["start"], datetime_format).replace(tzinfo=timezone),
-            "min": row["min"],
-            "max": row["max"],
-            "mean": row["mean"],
-        }
-    return {}
+    is_full_hour(row["start"], datetime_format)
+    is_valid_float(row["min"])
+    is_valid_float(row["max"])
+    is_valid_float(row["mean"])
+    min_max_mean_are_valid(row["min"], row["max"], row["mean"])
+
+    return {
+        "start": dt.datetime.strptime(row["start"], datetime_format).replace(tzinfo=timezone),
+        "min": row["min"],
+        "max": row["max"],
+        "mean": row["mean"],
+    }
 
 
 def get_sum_stat(row: pd.Series, timezone: zoneinfo.ZoneInfo, datetime_format: str = DATETIME_DEFAULT_FORMAT) -> dict:
@@ -110,22 +112,26 @@ def get_sum_stat(row: pd.Series, timezone: zoneinfo.ZoneInfo, datetime_format: s
     -------
         dict: A dictionary containing the extracted sum statistics.
 
-    """
-    if is_full_hour(row["start"], datetime_format) and is_valid_float(row["sum"]):
-        if "state" in row.index:
-            if is_valid_float(row["state"]):
-                return {
-                    "start": dt.datetime.strptime(row["start"], datetime_format).replace(tzinfo=timezone),
-                    "sum": row["sum"],
-                    "state": row["state"],
-                }
-        else:
-            return {
-                "start": dt.datetime.strptime(row["start"], datetime_format).replace(tzinfo=timezone),
-                "sum": row["sum"],
-            }
+    Raises:
+    ------
+        HomeAssistantError: If validation fails (invalid timestamp or float values).
 
-    return {}
+    """
+    is_full_hour(row["start"], datetime_format)
+    is_valid_float(row["sum"])
+
+    if "state" in row.index:
+        is_valid_float(row["state"])
+        return {
+            "start": dt.datetime.strptime(row["start"], datetime_format).replace(tzinfo=timezone),
+            "sum": row["sum"],
+            "state": row["state"],
+        }
+
+    return {
+        "start": dt.datetime.strptime(row["start"], datetime_format).replace(tzinfo=timezone),
+        "sum": row["sum"],
+    }
 
 
 def get_delta_stat(row: pd.Series, timezone: zoneinfo.ZoneInfo, datetime_format: str = DATETIME_DEFAULT_FORMAT) -> dict:
@@ -141,19 +147,19 @@ def get_delta_stat(row: pd.Series, timezone: zoneinfo.ZoneInfo, datetime_format:
     Returns:
     -------
         dict: A dictionary containing 'start' (datetime with timezone) and 'delta' (float).
-        dict: Empty dict {} if validation fails (silent failure pattern).
+
+    Raises:
+    ------
+        HomeAssistantError: If validation fails (invalid timestamp or delta value).
 
     """
-    try:
-        if is_full_hour(row["start"], datetime_format) and is_valid_float(row["delta"]):
-            return {
-                "start": dt.datetime.strptime(row["start"], datetime_format).replace(tzinfo=timezone),
-                "delta": float(row["delta"]),
-            }
-    except HomeAssistantError:
-        # Silent failure pattern - return empty dict on validation error
-        pass
-    return {}
+    is_full_hour(row["start"], datetime_format)
+    is_valid_float(row["delta"])
+
+    return {
+        "start": dt.datetime.strptime(row["start"], datetime_format).replace(tzinfo=timezone),
+        "delta": float(row["delta"]),
+    }
 
 
 def is_not_in_future(newest_timestamp: dt.datetime) -> bool:
@@ -240,7 +246,11 @@ def is_valid_float(value: str) -> bool:
 
     """
     try:
-        float(value)
+        float_value = float(value)
+        # Reject NaN values explicitly
+        if pd.isna(float_value):
+            msg = f"Invalid float value: {value} (NaN/empty value not allowed). Check for missing or empty values in your data."
+            raise HomeAssistantError(msg)
     except ValueError as exc:
         msg = f"Invalid float value: {value}. Check the decimal separator."
         raise HomeAssistantError(msg) from exc
@@ -290,9 +300,13 @@ def are_columns_valid(df: pd.DataFrame, unit_from_where: UnitFrom) -> bool:
     has_delta = "delta" in columns
 
     if not ("statistic_id" in columns and "start" in columns and ("unit" in columns or unit_from_where == UnitFrom.ENTITY)):
-        handle_error(
-            "The file must contain the columns 'statistic_id', 'start' and 'unit' ('unit' is needed only if unit_from_entity is false) (check delimiter)"
-        )
+        found_columns_num = len(columns)
+        # embrace each column name with quotes for clarity
+        found_columns_quoted = [f"'{col}'" for col in columns]
+        found_columns_str = ", ".join(sorted(found_columns_quoted))
+        error_str = "The file must contain the columns 'statistic_id', 'start' and 'unit' ('unit' is needed only if unit_from_entity is false)"
+        error_str += f" (check delimiter). Number of found columns: {found_columns_num}. Found columns: {found_columns_str}"
+        handle_error(error_str)
 
     # Check for value column requirements and incompatible combinations
     has_mean_min_max = "mean" in columns or "min" in columns or "max" in columns
@@ -301,10 +315,10 @@ def are_columns_valid(df: pd.DataFrame, unit_from_where: UnitFrom) -> bool:
     if has_delta:
         # Delta cannot coexist with sum, state, mean, min, or max - check each individually to match test expectations
         if "sum" in columns or "state" in columns or has_mean_min_max:
-            handle_error("Delta column cannot be used with 'sum', 'state', 'mean', 'min', or 'max' columns (check delimiter)")
+            handle_error("Delta column cannot be used with 'sum', 'state', 'mean', 'min', or 'max' columns")
     # Non-delta: cannot mix mean/min/max with sum/state
     elif has_mean_min_max and has_sum_state:
-        handle_error("The file must not contain the columns 'sum/state' together with 'mean'/'min'/'max' (check delimiter)")
+        handle_error("The file must not contain the columns 'sum/state' together with 'mean'/'min'/'max'")
 
     # Define allowed columns based on data type and unit source
     allowed_columns = {"statistic_id", "start", "delta"} if has_delta else {"statistic_id", "start", "mean", "min", "max", "sum", "state"}
@@ -410,6 +424,66 @@ def validate_delimiter(delimiter: str | None) -> str:
     return delimiter
 
 
+def validate_file_encoding(file_path: str, expected_encoding: str = "utf-8") -> bool:
+    """
+    Validate that a file can be read with the expected encoding.
+
+    Checks if the file contains valid UTF-8 (or other specified encoding) and
+    detects common encoding issues that could cause problems with special characters
+    like ° (degree) or ³ (superscript).
+
+    Args:
+    ----
+        file_path: Path to the file to validate
+        expected_encoding: Expected encoding (default: "utf-8")
+
+    Returns:
+    -------
+        bool: True if the file is valid
+
+    Raises:
+    ------
+        HomeAssistantError: If the file has encoding issues
+
+    """
+    try:
+        with Path(file_path).open(encoding=expected_encoding, errors="strict") as f:
+            # Read the entire file to detect any encoding errors
+            content = f.read()
+
+            # Check for common problematic characters that might indicate wrong encoding
+            # These are replacement characters or mojibake patterns
+            problematic_patterns = [
+                "\ufffd",  # Unicode replacement character (�)
+                "Â°",  # Common mojibake for ° when UTF-8 read as Latin-1
+                "Â³",  # Common mojibake for ³ when UTF-8 read as Latin-1
+            ]
+
+            for pattern in problematic_patterns:
+                if pattern in content:
+                    handle_error(
+                        f"File '{file_path}' contains invalid characters ('{pattern}'). "
+                        f"This usually indicates the file was saved with incorrect encoding. "
+                        f"Please ensure the file is saved as UTF-8 encoding. "
+                        f"Common issues: degree symbol (°), superscript (³), or other special characters."
+                    )
+
+            _LOGGER.debug("File encoding validation passed for: %s", file_path)
+            return True
+
+    except UnicodeDecodeError as e:
+        handle_error(
+            f"File '{file_path}' has encoding errors and cannot be read as {expected_encoding}. "
+            f"Error at position {e.start}: {e.reason}. "
+            f"Please ensure the file is saved with UTF-8 encoding, especially if it contains "
+            f"special characters like ° (degree), ³ (superscript), or other non-ASCII characters."
+        )
+    except OSError as e:
+        handle_error(f"Cannot read file '{file_path}': {e}")
+
+    return False
+
+
 def validate_filename(filename: str, config_dir: str) -> str:
     """
     Validate and normalize a filename to prevent directory traversal attacks.
@@ -466,7 +540,7 @@ def format_datetime(dt_obj: dt.datetime | float, timezone: zoneinfo.ZoneInfo, fo
     Format a datetime object to string in specified timezone and format.
 
     Args:
-         dt_obj: Datetime object (may be UTC or already localized) or Unix timestamp (float)
+         dt_obj: Datetime object (may be UTC or already localized) or Unix timestamp (float/int)
          timezone: Target timezone
          format_str: Format string
 
@@ -474,10 +548,17 @@ def format_datetime(dt_obj: dt.datetime | float, timezone: zoneinfo.ZoneInfo, fo
          str: Formatted datetime string
 
     """
-    # Handle Unix timestamp (float) from recorder API
-    if isinstance(dt_obj, float):
+    # Handle Unix timestamp (float or int) from recorder API
+    if isinstance(dt_obj, (float, int)):
         dt_obj = dt_module.datetime.fromtimestamp(dt_obj, tz=dt.UTC)
-    elif dt_obj.tzinfo is None:
+
+    # At this point, dt_obj is guaranteed to be a datetime
+    if not isinstance(dt_obj, dt.datetime):
+        # This should never happen, but satisfies type checker
+        msg = f"Expected datetime object, got {type(dt_obj)}"
+        raise HomeAssistantError(msg)
+
+    if dt_obj.tzinfo is None:
         # Assume UTC if naive
         dt_obj = dt_obj.replace(tzinfo=zoneinfo.ZoneInfo("UTC"))
 

@@ -32,7 +32,7 @@
       {
         "id": "fb992f36db3b4980a7633deea1fb54ff",
         "type": "module",
-        "url": "/hacsfiles/lovelace-xiaomi-vacuum-map-card/xiaomi-vacuum-map-card.js?hacstag=193372044231"
+        "url": "/hacsfiles/lovelace-xiaomi-vacuum-map-card/xiaomi-vacuum-map-card.js?hacstag=193372044232"
       },
       {
         "id": "e776e37e51e44b20b7af4b3c43cb79c1",
@@ -70,7 +70,7 @@
         "id": "d28e66a6787e467bb458928f35ac7f8b"
       },
       {
-        "url": "/hacsfiles/lovelace-mushroom/mushroom.js?hacstag=444350375509",
+        "url": "/hacsfiles/lovelace-mushroom/mushroom.js?hacstag=4443503755011",
         "type": "module",
         "id": "4d8157ab9ecf48ef9c386323825634fd"
       },
@@ -90,7 +90,7 @@
         "id": "9220d014765148dca79c0d6c76f87938"
       },
       {
-        "url": "/hacsfiles/lovelace-card-mod/card-mod.js?hacstag=190927524410",
+        "url": "/hacsfiles/lovelace-card-mod/card-mod.js?hacstag=190927524421",
         "type": "module",
         "id": "bf4535f789c148acb2c00e56cec42c92"
       },
@@ -131,7 +131,7 @@
       },
       {
         "id": "7fedf22f26b54ca9844c5a4306baf370",
-        "url": "/hacsfiles/lovelace-wallpanel/wallpanel.js?hacstag=3095064164601",
+        "url": "/hacsfiles/lovelace-wallpanel/wallpanel.js?hacstag=3095064164622",
         "type": "module"
       },
       {

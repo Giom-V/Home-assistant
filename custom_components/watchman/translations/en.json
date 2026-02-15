@@ -20,15 +20,21 @@
                     "included_folders": "Folders to watch:",
                     "ignored_items": "Ignored entities and actions:",
                     "ignored_states": "Exclude entities with the states below from the report:",
-                    "ignored_files": "Ignored files (comma-separated):",
+                    "exclude_disabled_automation": "Exclude disabled automations",
+                    "ignored_files": "Ignored files:",
+                    "ignored_labels": "Ignored labels:",
                     "check_lovelace": "Parse UI controlled dashboards",
-                    "startup_delay": "Startup delay for watchman sensors initialization"
+                    "startup_delay": "Startup delay for watchman sensors initialization",
+                    "log_obfuscate": "Obfuscate sensitive data in logs"
                 },
                 "data_description": {
                     "included_folders": "Comma-separated list of folders where watchman should look for config files",
                     "ignored_items": "Comma-separated list of entities and actions excluded from tracking",
                     "ignored_states": "Comma-separated list of the states excluded from tracking",
-                    "ignored_files": "Comma-separated list of config files excluded from tracking"
+                    "ignored_files": "Comma-separated list of config files excluded from tracking",
+                    "ignored_labels": "Use labels to exclude entities from tracking",
+                    "log_obfuscate": "Whether to mask entity and action names in debug logs for privacy",
+                    "exclude_disabled_automation": "Exclude entities used only by disabled automations"
                 },
                 "sections": {
                     "appearance_location_options": {
@@ -41,7 +47,7 @@
                         }
                     }
                 },
-                "description": "[Help on settings](https://github.com/dummylabs/thewatchman#configuration)"
+                "description": "[Help on settings]({url})"
             }
         }
     },
@@ -75,6 +81,65 @@
                 "advanced_options": {
                     "name": "Advanced options"
                 }
+            }
+        },
+        "set_ignored_labels": {
+            "name": "Set ignored labels",
+            "description": "Overwrite the list of labels to ignore.",
+            "fields": {
+                "labels": {
+                    "name": "Labels",
+                    "description": "List of labels to ignore."
+                }
+            }
+        }
+    },
+    "issues": {
+        "deprecated_text_entity": {
+            "title": "Entity {entity_id} is deprecated",
+            "description": "The use of `{entity_id}` is deprecated and will be removed in a future version of Watchman. Please reconfigure your automations to use the `watchman.set_ignored_labels` action."
+        }
+    },
+    "entity": {
+        "sensor": {
+            "last_updated": {
+                "name": "Last Update"
+            },
+            "missing_entities": {
+                "name": "Missing Entities"
+            },
+            "missing_actions": {
+                "name": "Missing Actions"
+            },
+            "status": {
+                "name": "Status",
+                "state": {
+                    "waiting_for_ha": "Waiting for HA Start",
+                    "parsing": "Parsing Configuration",
+                    "idle": "Idle"
+                }
+            },
+            "parse_duration": {
+                "name": "Parse Duration"
+            },
+            "last_parse": {
+                "name": "Last Parse"
+            },
+            "processed_files": {
+                "name": "Processed Files"
+            },
+            "ignored_files": {
+                "name": "Ignored Files"
+            }
+        },
+        "button": {
+            "create_report_file": {
+                "name": "Create Report File"
+            }
+        },
+        "text": {
+            "ignored_labels": {
+                "name": "Ignored Labels"
             }
         }
     }

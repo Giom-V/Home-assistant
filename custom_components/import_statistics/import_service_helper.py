@@ -7,6 +7,7 @@ No hass object needed.
 import datetime as dt
 import zoneinfo
 from pathlib import Path
+from typing import cast
 
 import pandas as pd
 import pytz
@@ -53,7 +54,7 @@ def _validate_and_detect_delta(df: "pd.DataFrame", unit_from_entity: UnitFrom) -
     return "delta" in df.columns
 
 
-def prepare_data_to_import(file_path: str, call: ServiceCall) -> tuple:
+def prepare_data_to_import(file_path: str, call: ServiceCall, ha_timezone: str) -> tuple:
     """
     Load and prepare data from CSV/TSV file for import.
 
@@ -61,6 +62,7 @@ def prepare_data_to_import(file_path: str, call: ServiceCall) -> tuple:
     ----
         file_path: Path to the file with the data to be imported.
         call: The call data containing the necessary information.
+        ha_timezone: Home Assistant's configured timezone identifier.
 
     Returns:
     -------
@@ -72,26 +74,34 @@ def prepare_data_to_import(file_path: str, call: ServiceCall) -> tuple:
         HomeAssistantError: If there is a validation error.
 
     """
-    decimal, timezone_identifier, delimiter, datetime_format, unit_from_entity = handle_arguments(call)
+    file_suffix = Path(file_path).suffix.lower()
+    if file_suffix not in {".csv", ".tsv"}:
+        helpers.handle_error(f"Unsupported filename extension for {Path(file_path).name!r}. Supported extensions: .csv, .tsv")
+
+    decimal, timezone_identifier, delimiter, datetime_format, unit_from_entity = handle_arguments(call, ha_timezone, filename=Path(file_path).name)
 
     _LOGGER.info("Importing statistics from file: %s", file_path)
     if not Path(file_path).exists():
         helpers.handle_error(f"path {file_path} does not exist.")
 
-    my_df = pd.read_csv(file_path, sep=delimiter, decimal=decimal, engine="python")
+    # Validate file encoding before attempting to read
+    helpers.validate_file_encoding(file_path)
+
+    my_df = pd.read_csv(file_path, sep=delimiter, decimal=decimal, engine="python", encoding="utf-8")
 
     is_delta = _validate_and_detect_delta(my_df, unit_from_entity)
 
     return my_df, timezone_identifier, datetime_format, unit_from_entity, is_delta
 
 
-def prepare_json_data_to_import(call: ServiceCall) -> tuple:
+def prepare_json_data_to_import(call: ServiceCall, ha_timezone: str) -> tuple:
     """
     Prepare data from JSON service call for import.
 
     Args:
     ----
         call: The service call data containing entities.
+        ha_timezone: Home Assistant's configured timezone identifier.
 
     Returns:
     -------
@@ -102,7 +112,7 @@ def prepare_json_data_to_import(call: ServiceCall) -> tuple:
         HomeAssistantError: If there is a validation error.
 
     """
-    _, timezone_identifier, _, datetime_format, unit_from_entity = handle_arguments(call)
+    _, timezone_identifier, _, datetime_format, unit_from_entity = handle_arguments(call, ha_timezone, filename=None)
 
     valid_columns = ["state", "sum", "min", "max", "mean"]
     columns = ["statistic_id", "unit", "start"]
@@ -134,13 +144,15 @@ def prepare_json_data_to_import(call: ServiceCall) -> tuple:
     return my_df, timezone_identifier, datetime_format, unit_from_entity, is_delta
 
 
-def handle_arguments(call: ServiceCall) -> tuple:
+def handle_arguments(call: ServiceCall, ha_timezone: str, *, filename: str | None = None) -> tuple:
     """
     Handle the arguments for importing statistics from a file.
 
     Args:
     ----
         call (ServiceCall): The service call object containing additional data.
+        ha_timezone: Home Assistant's configured timezone identifier.
+        filename: Filename used to infer delimiter when ATTR_DELIMITER is omitted.
 
     Returns:
     -------
@@ -151,19 +163,45 @@ def handle_arguments(call: ServiceCall) -> tuple:
         HomeAssistantError: If the timezone identifier is invalid.
 
     """
-    decimal = "," if call.data.get(ATTR_DECIMAL, True) else "."
+    # Get decimal separator from service call (default is "dot ('.')")
+    decimal_input = call.data.get(ATTR_DECIMAL, "dot ('.')")
+
+    # Map UI-friendly values to actual separators
+    decimal_map = {
+        "dot ('.')": ".",
+        "comma (',')": ",",
+        ".": ".",  # Support old format for backward compatibility
+        ",": ",",  # Support old format for backward compatibility
+    }
+
+    decimal = decimal_map.get(decimal_input)
+    if decimal is None:
+        helpers.handle_error(f"Invalid decimal separator: {decimal_input}. Must be \"dot ('.')\" or \"comma (',')\"")
 
     datetime_format = call.data.get(ATTR_DATETIME_FORMAT) if ATTR_DATETIME_FORMAT in call.data else DATETIME_DEFAULT_FORMAT
 
     unit_from_entity = UnitFrom.ENTITY if call.data.get(ATTR_UNIT_FROM_ENTITY) is True else UnitFrom.TABLE
 
-    timezone_identifier = call.data.get(ATTR_TIMEZONE_IDENTIFIER)
+    # Use HA's configured timezone as default, allow override
+    timezone_identifier = call.data.get(ATTR_TIMEZONE_IDENTIFIER, ha_timezone)
 
     if timezone_identifier not in pytz.all_timezones:
         helpers.handle_error(f"Invalid timezone_identifier: {timezone_identifier}")
 
-    delimiter = call.data.get(ATTR_DELIMITER)
-    delimiter = helpers.validate_delimiter(delimiter)
+    delimiter_raw = call.data.get(ATTR_DELIMITER)
+    if delimiter_raw is None:
+        if filename is None:
+            delimiter_raw = "\t"
+        else:
+            suffix = Path(filename).suffix.lower()
+            if suffix == ".csv":
+                delimiter_raw = ","
+            elif suffix == ".tsv":
+                delimiter_raw = "\t"
+            else:
+                helpers.handle_error(f"Unsupported filename extension for {filename!r}. Supported extensions: .csv, .tsv")
+
+    delimiter = helpers.validate_delimiter(delimiter_raw)
 
     _LOGGER.debug("Timezone_identifier: %s", timezone_identifier)
     _LOGGER.debug("Delimiter: %s", delimiter)
@@ -207,7 +245,7 @@ def handle_dataframe_no_delta(
     # Validate that newest timestamp is not too recent
     # Parse all timestamps first to find true newest chronologically
     # Using string max would give alphabetical order, not chronological
-    newest_dt = None
+    newest_dt: dt.datetime | None = None
     for timestamp_str in df["start"]:
         try:
             dt_obj = dt.datetime.strptime(timestamp_str, datetime_format).replace(tzinfo=timezone)
@@ -219,7 +257,9 @@ def handle_dataframe_no_delta(
     if newest_dt is None:
         helpers.handle_error("No valid timestamps found in import data")
 
-    helpers.is_not_in_future(newest_dt)
+    # At this point, newest_dt is guaranteed to be a datetime (not None)
+    # Cast to satisfy type checker after the None check above
+    helpers.is_not_in_future(cast("dt.datetime", newest_dt))
 
     has_mean = "mean" in columns
     has_sum = "sum" in columns
@@ -239,12 +279,14 @@ def handle_dataframe_no_delta(
             }
             stats[statistic_id] = (metadata, [])
 
-        new_stat = {}
         if has_mean:
             new_stat = helpers.get_mean_stat(row, timezone, datetime_format)
         elif has_sum:
             new_stat = helpers.get_sum_stat(row, timezone, datetime_format)
-        if new_stat:
-            stats[statistic_id][1].append(new_stat)
+        else:
+            # This should never happen due to column validation, but defensive check
+            helpers.handle_error("Implementation error: neither mean nor sum columns found")
+
+        stats[statistic_id][1].append(new_stat)
 
     return stats

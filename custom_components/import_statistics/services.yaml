@@ -7,49 +7,59 @@ import_from_file:
       example: "statisticdata.tsv"
       selector:
         text:
-    timezone_identifier:
-      required: true
-      example: "Europe/Vienna"
-      default: "Europe/Vienna"
-      selector:
-        text:
-    delimiter:
-      required: false
-      example: \t
-      default: \t
-      selector:
-        select:
-          custom_value: true
-          options:
-            - '\t'
-            - ";"
-            - ","
-            - "|"
-    decimal:
-      required: true
-      example: false
-      default: false
-      selector:
-        boolean:
-    datetime_format:
-      required: false
-      example: "%d.%m.%Y %H:%M"
-      default: "%d.%m.%Y %H:%M"
-      selector:
-        select:
-          custom_value: true
-          options:
-            - "%d.%m.%Y %H:%M"
-            - "%Y.%m.%d %H:%M"
-            - "%Y-%m-%d %H:%M"
-            - "%m/%d/%Y %H:%M"
-            - "%d/%m/%Y %H:%M"
-    unit_from_entity:
-      required: false
-      example: true
-      default: true
-      selector:
-        boolean:
+
+    define_import_format:
+      collapsed: false
+      fields:
+        delimiter:
+          required: false
+          example: \t
+          selector:
+            select:
+              custom_value: true
+              options:
+                - '\t'
+                - ";"
+                - ","
+                - "|"
+        decimal:
+          required: true
+          default: "dot ('.')"
+          example: "dot ('.')"
+          selector:
+            select:
+              mode: dropdown
+              options:
+                - "dot ('.')"
+                - "comma (',')"
+        datetime_format:
+          required: false
+          example: "%d.%m.%Y %H:%M"
+          default: "%d.%m.%Y %H:%M"
+          selector:
+            select:
+              custom_value: true
+              options:
+                - "%d.%m.%Y %H:%M"
+                - "%Y.%m.%d %H:%M"
+                - "%Y-%m-%d %H:%M"
+                - "%m/%d/%Y %H:%M"
+                - "%d/%m/%Y %H:%M"
+        unit_from_entity:
+          required: false
+          example: true
+          default: true
+          selector:
+            boolean:
+
+    use_different_timezone_than_home_assistant:
+      collapsed: true
+      fields:
+        timezone_identifier:
+          required: false
+          example: "Europe/Vienna"
+          selector:
+            text:
 
 export_statistics:
   fields:
@@ -59,36 +69,100 @@ export_statistics:
       selector:
         text:
 
-    entities:
-      required: true
-      example: |
-        - sensor.temperature
-        - sensor:external_stat
-      selector:
-        object:
+    filter_exported_data:
+      collapsed: false
+      fields:
+        entities:
+          required: false
+          example: |
+            - sensor.temperature
+            - sensor.*_temperature
+            - sensor:external_stat
+          selector:
+            object:
 
-    start_time:
-      required: true
-      example: "2025-12-22 12:00:00"
-      selector:
-        datetime:
+        start_time:
+          required: false
+          example: "2025-12-22 12:00:00"
+          selector:
+            datetime:
 
-    end_time:
-      required: true
-      example: "2025-12-25 12:00:00"
-      selector:
-        datetime:
+        end_time:
+          required: false
+          example: "2025-12-25 12:00:00"
+          selector:
+            datetime:
 
-    timezone_identifier:
-      required: false
-      default: "Europe/Vienna"
-      example: "Europe/Vienna"
+        split_by:
+          required: false
+          default: "none"
+          example: "both"
+          selector:
+            select:
+              custom_value: true
+              options:
+                - "none"
+                - "measurement"
+                - "counter"
+                - "both"
+    define_export_format:
+      collapsed: true
+      fields:
+        delimiter:
+          required: false
+          example: "\t"
+          selector:
+            select:
+              custom_value: true
+              options:
+                - '\t'
+                - ";"
+                - ","
+                - "|"
+        decimal:
+          required: true
+          default: "dot ('.')"
+          example: "dot ('.')"
+          selector:
+            select:
+              mode: dropdown
+              options:
+                - "dot ('.')"
+                - "comma (',')"
+
+        datetime_format:
+          required: false
+          default: "%d.%m.%Y %H:%M"
+          example: "%d.%m.%Y %H:%M"
+          selector:
+            select:
+              custom_value: true
+              options:
+                - "%d.%m.%Y %H:%M"
+                - "%Y.%m.%d %H:%M"
+                - "%Y-%m-%d %H:%M"
+                - "%m/%d/%Y %H:%M"
+                - "%d/%m/%Y %H:%M"
+
+    use_different_timezone_than_home_assistant:
+      collapsed: true
+      fields:
+        timezone_identifier:
+          required: false
+          example: "Europe/Vienna"
+          selector:
+            text:
+
+export_inventory:
+  fields:
+    filename:
+      required: true
+      example: "statistics_inventory.tsv"
       selector:
         text:
 
     delimiter:
       required: false
-      default: \t
       example: \t
       selector:
         select:
@@ -99,23 +173,11 @@ export_statistics:
             - ","
             - "|"
 
-    decimal:
-      required: false
-      default: false
-      example: false
-      selector:
-        boolean:
-
-    datetime_format:
-      required: false
-      default: "%d.%m.%Y %H:%M"
-      example: "%d.%m.%Y %H:%M"
-      selector:
-        select:
-          custom_value: true
-          options:
-            - "%d.%m.%Y %H:%M"
-            - "%Y.%m.%d %H:%M"
-            - "%Y-%m-%d %H:%M"
-            - "%m/%d/%Y %H:%M"
-            - "%d/%m/%Y %H:%M"
+    use_different_timezone_than_home_assistant:
+      collapsed: true
+      fields:
+        timezone_identifier:
+          required: false
+          example: "Europe/Vienna"
+          selector:
+            text:
