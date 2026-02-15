@@ -11,6 +11,7 @@ if not os.path.exists(CONFIG_DIR):
 AREA_REGISTRY_FILE = os.path.join(CONFIG_DIR, ".storage/core.area_registry")
 DEVICE_REGISTRY_FILE = os.path.join(CONFIG_DIR, ".storage/core.device_registry")
 ENTITY_REGISTRY_FILE = os.path.join(CONFIG_DIR, ".storage/core.entity_registry")
+FLOOR_REGISTRY_FILE = os.path.join(CONFIG_DIR, ".storage/core.floor_registry")
 OUTPUT_FILE = os.path.join(CONFIG_DIR, "devices.md")
 
 def load_json(filepath):
@@ -36,7 +37,7 @@ def write_area_details(f, area, area_devices, device_entities, area_entities):
 
     # List devices in this area
     if area['id'] in area_devices:
-        sorted_devices = sorted(area_devices[area['id']], key=lambda x: x['name'] or x['name_by_user'] or "Unknown")
+        sorted_devices = sorted(area_devices[area['id']], key=lambda x: x['name_by_user'] or x['name'] or "Unknown")
         for device in sorted_devices:
             name = device['name_by_user'] or device['name'] or "Unknown Device"
             manufacturer = device.get('manufacturer', 'Unknown')
@@ -47,9 +48,9 @@ def write_area_details(f, area, area_devices, device_entities, area_entities):
             if device['id'] in device_entities:
                 for entity in sorted(device_entities[device['id']], key=lambda x: x['id']):
                     status = get_entity_status(entity)
-                    f.write(f"  - Entity: `{entity['id']}` ({entity['name']}){status}\n")
+                    f.write(f"    - Entity: `{entity['id']}` ({entity['name']}){status}\n")
             else:
-                    f.write("  - *No entities*\n")
+                f.write("    - *No entities*\n")
     else:
         f.write("- *No devices in this area*\n")
 
@@ -57,8 +58,8 @@ def write_area_details(f, area, area_devices, device_entities, area_entities):
     if area['id'] in area_entities:
         f.write("- **Standalone Entities:**\n")
         for entity in sorted(area_entities[area['id']], key=lambda x: x['id']):
-                status = get_entity_status(entity)
-                f.write(f"  - Entity: `{entity['id']}` ({entity['name']}){status}\n")
+            status = get_entity_status(entity)
+            f.write(f"    - Entity: `{entity['id']}` ({entity['name']}){status}\n")
 
     f.write("\n")
 
@@ -66,10 +67,17 @@ def main():
     areas_data = load_json(AREA_REGISTRY_FILE)
     devices_data = load_json(DEVICE_REGISTRY_FILE)
     entities_data = load_json(ENTITY_REGISTRY_FILE)
+    floors_data = load_json(FLOOR_REGISTRY_FILE)
 
     if not areas_data or not devices_data or not entities_data:
         print("Error: Could not load one or more registry files.", file=sys.stderr)
         sys.exit(1)
+
+    # Process Floors
+    floors_map = {} # floor_id -> floor_name
+    if floors_data:
+        for floor in floors_data['data']['floors']:
+            floors_map[floor['floor_id']] = floor['name']
 
     # Process Areas
     areas = {} # id -> area object
@@ -101,7 +109,7 @@ def main():
         # Helper to simplify entity processing
         entity_obj = {
             'id': entity['entity_id'],
-            'name': entity.get('name') or entity.get('original_name'),
+            'name': entity.get('name') or entity.get('original_name') or entity['entity_id'],
             'disabled_by': entity.get('disabled_by'),
             'hidden_by': entity.get('hidden_by'),
             'platform': entity.get('platform')
@@ -110,7 +118,7 @@ def main():
         if device_id:
             device_entities[device_id].append(entity_obj)
         elif area_id:
-             area_entities[area_id].append(entity_obj)
+            area_entities[area_id].append(entity_obj)
         else:
             orphan_entities.append(entity_obj)
 
@@ -139,7 +147,8 @@ def main():
         sorted_floors = sorted(floors.keys())
 
         for floor_id in sorted_floors:
-            f.write(f"## Floor: {floor_id.capitalize()}\n\n")
+            floor_name = floors_map.get(floor_id, floor_id.capitalize())
+            f.write(f"## Floor: {floor_name}\n\n")
 
             # Sort areas in this floor
             sorted_areas = sorted(floors[floor_id], key=lambda x: x['name'])
@@ -156,9 +165,9 @@ def main():
 
         # Handle Orphan Devices (no area)
         if orphan_devices:
-             f.write("## Orphan Devices (No Area)\n\n")
-             sorted_devices = sorted(orphan_devices, key=lambda x: x['name'] or x['name_by_user'] or "Unknown")
-             for device in sorted_devices:
+            f.write("## Orphan Devices (No Area)\n\n")
+            sorted_devices = sorted(orphan_devices, key=lambda x: x['name_by_user'] or x['name'] or "Unknown")
+            for device in sorted_devices:
                 name = device['name_by_user'] or device['name'] or "Unknown Device"
                 manufacturer = device.get('manufacturer', 'Unknown')
                 model = device.get('model', 'Unknown')
@@ -167,9 +176,9 @@ def main():
                 if device['id'] in device_entities:
                     for entity in sorted(device_entities[device['id']], key=lambda x: x['id']):
                         status = get_entity_status(entity)
-                        f.write(f"  - Entity: `{entity['id']}` ({entity['name']}){status}\n")
+                        f.write(f"    - Entity: `{entity['id']}` ({entity['name']}){status}\n")
                 else:
-                        f.write("  - *No entities*\n")
+                    f.write("    - *No entities*\n")
 
         # Handle Orphan Entities (no device, no area)
         if orphan_entities:
