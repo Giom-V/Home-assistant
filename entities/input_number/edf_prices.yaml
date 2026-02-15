@@ -3,7 +3,7 @@
 # EDF Tarif Bleu Option Base
 tarif_edf_base:
   name: EDF Base
-  initial: 0.1952
+  initial: 0.1927
   min: 0
   max: 1
   step: 0.0001
@@ -13,7 +13,7 @@ tarif_edf_base:
 # EDF Tarif Bleu Option HP/HC
 tarif_edf_base_hc:
   name: EDF Base HC
-  initial: 0.1635
+  initial: 0.1579
   min: 0
   max: 1
   step: 0.0001
@@ -22,7 +22,7 @@ tarif_edf_base_hc:
   icon: mdi:cash-lock
 tarif_edf_base_hp:
   name: EDF Base HP
-  initial: 0.2081
+  initial: 0.2065
   min: 0
   max: 1
   step: 0.0001
@@ -32,7 +32,7 @@ tarif_edf_base_hp:
 # EDF Tarif Bleu Option Tempo
 tarif_edf_tempo_bleu_hc:
   name: EDF Tempo Bleu HC
-  initial: 0.1232
+  initial: 0.1325
   min: 0
   max: 1
   step: 0.0001
@@ -41,7 +41,7 @@ tarif_edf_tempo_bleu_hc:
   icon: mdi:cash-lock
 tarif_edf_tempo_bleu_hp:
   name: EDF Tempo Bleu HP
-  initial: 0.1494
+  initial: 0.1612
   min: 0
   max: 1
   step: 0.0001
@@ -50,7 +50,7 @@ tarif_edf_tempo_bleu_hp:
   icon: mdi:cash-lock
 tarif_edf_tempo_blanc_hc:
   name: EDF Tempo Blanc HC
-  initial: 0.1391
+  initial: 0.1499
   min: 0
   max: 1
   step: 0.0001
@@ -59,7 +59,7 @@ tarif_edf_tempo_blanc_hc:
   icon: mdi:cash-lock
 tarif_edf_tempo_blanc_hp:
   name: EDF Tempo Blanc HP
-  initial: 0.1730
+  initial: 0.1871
   min: 0
   max: 1
   step: 0.0001
@@ -68,7 +68,7 @@ tarif_edf_tempo_blanc_hp:
   icon: mdi:cash-lock
 tarif_edf_tempo_rouge_hc:
   name: EDF Tempo Rouge HC
-  initial: 0.1440
+  initial: 0.1575
   min: 0
   max: 1
   step: 0.0001
@@ -77,7 +77,7 @@ tarif_edf_tempo_rouge_hc:
   icon: mdi:cash-lock
 tarif_edf_tempo_rouge_hp:
   name: EDF Tempo Rouge HP
-  initial: 0.6468
+  initial: 0.7060
   min: 0
   max: 1
   step: 0.0001
