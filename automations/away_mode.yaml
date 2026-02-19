@@ -622,6 +622,9 @@
     - condition: state
       entity_id: input_boolean.away_mode
       state: "on"
+    - condition: state
+      entity_id: input_boolean.visitors
+      state: "off"
     - condition: and
       conditions:
         - condition: numeric_state
