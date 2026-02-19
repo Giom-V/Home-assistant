@@ -484,6 +484,9 @@
   - trigger: state
     entity_id:
     - input_boolean.away_mode
+  - trigger: state
+    entity_id:
+    - input_boolean.visitors
   conditions: []
   actions:
   - if:
@@ -491,6 +494,10 @@
       entity_id: input_boolean.away_mode
       state:
       - 'on'
+    - condition: state
+      entity_id: input_boolean.visitors
+      state:
+      - 'off'
     then:
     - action: switch.turn_off
       metadata: {}
@@ -511,6 +518,9 @@
   - trigger: state
     entity_id:
     - input_boolean.away_mode
+  - trigger: state
+    entity_id:
+    - input_boolean.visitors
   conditions: []
   actions:
   - if:
@@ -518,6 +528,10 @@
       entity_id: input_boolean.away_mode
       state:
       - 'on'
+    - condition: state
+      entity_id: input_boolean.visitors
+      state:
+      - 'off'
     then:
     - action: switch.turn_on
       metadata: {}

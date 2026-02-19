@@ -32,6 +32,16 @@ impacted by the `input_boolean.visitors` value:
   not run if `input_boolean.visitors` is `on`.
 * [**Presence simulation Aurore's bedroom**](away_mode.yaml#L411): This
   automation will not run if `input_boolean.visitors` is `on`.
+* [**Garage: Turn off power if user moves away after pre-arrival**](away_mode.yaml#L611):
+  This automation will not run if `input_boolean.visitors` is `on`.
+
+The following automations from the [`automations.yaml`](../automations.yaml) file are
+impacted by the `input_boolean.visitors` value:
+
+* [**Block the garage door when we are away**](../automations.yaml): This automation
+  will keep the garage power ON if `input_boolean.visitors` is `on`.
+* [**Turn on/off camera when we are away**](../automations.yaml): This automation
+  will keep the camera sirens and notifications OFF if `input_boolean.visitors` is `on`.
 
 ## Vacuum Cleaner Automations
 
