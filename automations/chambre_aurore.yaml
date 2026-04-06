@@ -268,7 +268,7 @@
       at: "22:00:00"
   condition: []
   action:
-    - service: mass.play_media
+    - action: mass.play_media
       target:
         entity_id: media_player.enceinte_aurore_2
       data:
