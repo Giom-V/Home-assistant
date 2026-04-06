@@ -260,3 +260,23 @@
       target:
         entity_id: cover.velux_external_cover_roller_shutter
   mode: single
+- id: "ha_63_aurore_meditation"
+  alias: Aurore's meditation music
+  description: "Joue un album de méditation pour Aurore"
+  trigger:
+    - platform: time
+      at: "22:00:00"
+  condition: []
+  action:
+    - service: mass.play_media
+      target:
+        entity_id: media_player.enceinte_aurore_2
+      data:
+        media_id: >
+          {{ [
+            "imagine que tu es un animal",
+            "imagine que tu as des super pouvoirs"
+          ] | random }}
+        media_type: album
+        enqueue: replace
+  mode: single

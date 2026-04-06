@@ -243,8 +243,6 @@ since they don't work at the moment you should just ignore them.
 
 Automations related to Aurore's bedroom.
 
-- `Aurore's meditation music`: Plays one of two specific meditation albums at 22:00 on Aurore's speaker using Music Assistant. (To be updated later to use a double press on her remote).
-
 ### [Chambre Rose](chambre_rose.yaml)
 
 Automations related to the pink bedroom.
