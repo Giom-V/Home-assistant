@@ -23,6 +23,11 @@ The other script cycle between the [colored scenes](../scenes/LivingRoom.yaml) w
 Those scripts are meant to send pictures of the sunset/sunrise on Slack everyday.
 There's also another script that should be creating a daily gif and send it to slack but it doesn't work at the moment.
 
+### [Bassin.yaml](bassin.yaml)
+
+These scripts provide a safe way to turn on and off the pond's fountain (`switch.fontaine_bassin`).
+They fall back to a failsafe entity (`light.pompe_failsafe_light`) if the primary switch is unavailable or fails to change state after 1 minute.
+
 ### [Vacuum.yaml](vacuum.yaml)
 
 The first script (`vacuum_dispatch`), looks for keywords in the text received from IFTTT through a webhook (managed by the [`IFTTT_zone_cleaning_webhook` automation](../automations/vacuumCleaner.yaml)) and then runs one of the other scripts depending on the rooms that we want to clean.
