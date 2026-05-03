@@ -137,6 +137,9 @@
   - condition: state
     entity_id: input_boolean.away_mode
     state: 'on'
+  - condition: state
+    entity_id: input_boolean.visitors
+    state: 'off'
   - data:
       message: Intrusion confirmée ! Dernier avertissement avant appel de la police
         !
@@ -206,6 +209,9 @@
   - condition: state
     entity_id: input_boolean.away_mode
     state: 'on'
+  - condition: state
+    entity_id: input_boolean.visitors
+    state: 'off'
   - data:
       message: Intrusion confirmée ! Dernier avertissement avant appel de la police
         !
@@ -280,6 +286,9 @@
   - condition: state
     entity_id: input_boolean.away_mode
     state: 'on'
+  - condition: state
+    entity_id: input_boolean.visitors
+    state: 'off'
   - data:
       message: Intrusion confirmée ! Dernier avertissement avant appel de la police
         !
@@ -484,6 +493,7 @@
   - trigger: state
     entity_id:
     - input_boolean.away_mode
+    - input_boolean.visitors
   conditions: []
   actions:
   - if:
@@ -491,6 +501,10 @@
       entity_id: input_boolean.away_mode
       state:
       - 'on'
+    - condition: state
+      entity_id: input_boolean.visitors
+      state:
+      - 'off'
     then:
     - action: switch.turn_off
       metadata: {}
@@ -511,6 +525,7 @@
   - trigger: state
     entity_id:
     - input_boolean.away_mode
+    - input_boolean.visitors
   conditions: []
   actions:
   - if:
@@ -518,6 +533,10 @@
       entity_id: input_boolean.away_mode
       state:
       - 'on'
+    - condition: state
+      entity_id: input_boolean.visitors
+      state:
+      - 'off'
     then:
     - action: switch.turn_on
       metadata: {}
