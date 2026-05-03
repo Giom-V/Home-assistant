@@ -277,6 +277,6 @@
             "imagine que tu es un animal",
             "imagine que tu as des super pouvoirs"
           ] | random }}
-        media_type: album
+        media_type: track
         enqueue: replace
   mode: single
