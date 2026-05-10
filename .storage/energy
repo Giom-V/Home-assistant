@@ -1,51 +1,80 @@
 {
   "version": 1,
-  "minor_version": 2,
+  "minor_version": 3,
   "key": "energy",
   "data": {
     "energy_sources": [
       {
         "type": "grid",
-        "flow_from": [
-          {
-            "stat_energy_from": "sensor.linky_tier_1_summation_delivered",
-            "stat_cost": null,
-            "entity_energy_price": "sensor.electricity_price",
-            "number_energy_price": null
-          },
-          {
-            "stat_energy_from": "sensor.linky_tier_2_summation_delivered",
-            "stat_cost": null,
-            "entity_energy_price": "sensor.electricity_price",
-            "number_energy_price": null
-          },
-          {
-            "stat_energy_from": "sensor.linky_tier_3_summation_delivered",
-            "stat_cost": null,
-            "entity_energy_price": "sensor.electricity_price",
-            "number_energy_price": null
-          },
-          {
-            "stat_energy_from": "sensor.linky_tier_4_summation_delivered",
-            "stat_cost": null,
-            "entity_energy_price": "sensor.electricity_price",
-            "number_energy_price": null
-          },
-          {
-            "stat_energy_from": "sensor.linky_tier_5_summation_delivered",
-            "stat_cost": null,
-            "entity_energy_price": "sensor.electricity_price",
-            "number_energy_price": null
-          },
-          {
-            "stat_energy_from": "sensor.linky_tier_6_summation_delivered",
-            "stat_cost": null,
-            "entity_energy_price": "sensor.electricity_price",
-            "number_energy_price": null
-          }
-        ],
-        "flow_to": [],
-        "cost_adjustment_day": 0.0
+        "cost_adjustment_day": 0.0,
+        "stat_energy_from": "sensor.linky_tier_1_summation_delivered",
+        "stat_cost": null,
+        "entity_energy_price": "sensor.electricity_price",
+        "number_energy_price": null,
+        "stat_energy_to": null,
+        "stat_compensation": null,
+        "entity_energy_price_export": null,
+        "number_energy_price_export": null
+      },
+      {
+        "type": "grid",
+        "cost_adjustment_day": 0.0,
+        "stat_energy_from": "sensor.linky_tier_2_summation_delivered",
+        "stat_cost": null,
+        "entity_energy_price": "sensor.electricity_price",
+        "number_energy_price": null,
+        "stat_energy_to": null,
+        "stat_compensation": null,
+        "entity_energy_price_export": null,
+        "number_energy_price_export": null
+      },
+      {
+        "type": "grid",
+        "cost_adjustment_day": 0.0,
+        "stat_energy_from": "sensor.linky_tier_3_summation_delivered",
+        "stat_cost": null,
+        "entity_energy_price": "sensor.electricity_price",
+        "number_energy_price": null,
+        "stat_energy_to": null,
+        "stat_compensation": null,
+        "entity_energy_price_export": null,
+        "number_energy_price_export": null
+      },
+      {
+        "type": "grid",
+        "cost_adjustment_day": 0.0,
+        "stat_energy_from": "sensor.linky_tier_4_summation_delivered",
+        "stat_cost": null,
+        "entity_energy_price": "sensor.electricity_price",
+        "number_energy_price": null,
+        "stat_energy_to": null,
+        "stat_compensation": null,
+        "entity_energy_price_export": null,
+        "number_energy_price_export": null
+      },
+      {
+        "type": "grid",
+        "cost_adjustment_day": 0.0,
+        "stat_energy_from": "sensor.linky_tier_5_summation_delivered",
+        "stat_cost": null,
+        "entity_energy_price": "sensor.electricity_price",
+        "number_energy_price": null,
+        "stat_energy_to": null,
+        "stat_compensation": null,
+        "entity_energy_price_export": null,
+        "number_energy_price_export": null
+      },
+      {
+        "type": "grid",
+        "cost_adjustment_day": 0.0,
+        "stat_energy_from": "sensor.linky_tier_6_summation_delivered",
+        "stat_cost": null,
+        "entity_energy_price": "sensor.electricity_price",
+        "number_energy_price": null,
+        "stat_energy_to": null,
+        "stat_compensation": null,
+        "entity_energy_price_export": null,
+        "number_energy_price_export": null
       }
     ],
     "device_consumption": [
