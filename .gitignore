@@ -12,6 +12,7 @@ logs
 
 # Ignore Folders
 .cloud
+.cache
 #.vscode
 .Trash-*
 deps/
@@ -101,6 +102,7 @@ watchman_report.txt
 
 # Solisart custom integration (ask me if you want it)
 custom_components/solisart/*
+solisart/*
 
 # Corrupted database
 home-assistant_v2.*.corrupt.*
