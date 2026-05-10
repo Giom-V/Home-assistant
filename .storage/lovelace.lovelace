@@ -1176,7 +1176,22 @@
                       }
                     }
                   ],
-                  "image": "https://photoref.carboatservices.fr/S0lB/RVY2/98b028a7da83541e9ba384116674a979/MQ==/0b70c77cdf60d436514f5505697aad48.png"
+                  "image": {
+                    "media_content_id": "media-source://image_upload/9ba96b8a4bec4d36d5bfe0a04a1eef21",
+                    "media_content_type": "image/png",
+                    "metadata": {
+                      "title": "Capture d'écran 2026-05-10 150428.png",
+                      "thumbnail": "/api/image/serve/9ba96b8a4bec4d36d5bfe0a04a1eef21/256x256",
+                      "media_class": "image",
+                      "navigateIds": [
+                        {},
+                        {
+                          "media_content_type": "app",
+                          "media_content_id": "media-source://image_upload"
+                        }
+                      ]
+                    }
+                  }
                 },
                 {
                   "type": "horizontal-stack",
