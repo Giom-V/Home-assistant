@@ -10,18 +10,17 @@ from typing import Any, NotRequired, TypedDict, cast
 
 import aiohttp
 from aiohttp import ClientError
-import async_timeout
 from awesomeversion import AwesomeVersion
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 from homeassistant.helpers.storage import STORAGE_DIR
 from homeassistant.loader import async_get_integration
 
-from custom_components.powercalc.const import API_URL, DOMAIN
+from custom_components.powercalc.const import API_URL, BUILT_IN_LIBRARY_DIR, DOMAIN
 from custom_components.powercalc.helpers import async_cache
 from custom_components.powercalc.power_profile.error import LibraryLoadingError, ProfileDownloadError
 from custom_components.powercalc.power_profile.loader.protocol import Loader
-from custom_components.powercalc.power_profile.power_profile import DeviceType
+from custom_components.powercalc.power_profile.power_profile import DeviceType, DiscoveryBy
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -33,9 +32,12 @@ TIMEOUT_SECONDS = 30
 
 class LibraryModel(TypedDict):
     id: str
+    name: NotRequired[str]
     aliases: NotRequired[list[str]]
+    legacy_ids: NotRequired[list[str]]
     hash: str
     device_type: NotRequired[DeviceType]
+    discovery_by: NotRequired[DiscoveryBy]
     min_version: NotRequired[str]
 
 
@@ -124,7 +126,7 @@ class RemoteLoader(Loader):
     async def load_library_json(self) -> dict[str, Any]:
         """Load library.json file"""
 
-        local_path = self.hass.config.path(STORAGE_DIR, "powercalc_profiles", "library.json")
+        local_path = self.hass.config.path(STORAGE_DIR, BUILT_IN_LIBRARY_DIR, "library.json")
 
         def _load_local_library_json() -> dict[str, Any]:
             """Load library.json file from local storage"""
@@ -143,7 +145,7 @@ class RemoteLoader(Loader):
             session = async_get_clientsession(self.hass)
 
             try:
-                async with async_timeout.timeout(TIMEOUT_SECONDS), session.get(ENDPOINT_LIBRARY) as resp:
+                async with asyncio.timeout(TIMEOUT_SECONDS), session.get(ENDPOINT_LIBRARY) as resp:
                     if resp.status != 200:
                         raise ProfileDownloadError(
                             f"Failed to download library.json, unexpected status code: {resp.status}",
@@ -170,13 +172,17 @@ class RemoteLoader(Loader):
             return await self.hass.async_add_executor_job(_load_local_library_json)
 
     @async_cache
-    async def get_manufacturer_listing(self, device_types: set[DeviceType] | None) -> set[tuple[str, str]]:
+    async def get_manufacturer_listing(
+        self,
+        device_types: set[DeviceType] | None,
+        discovery_by: DiscoveryBy | None = None,
+    ) -> set[tuple[str, str]]:
         """Get listing of available manufacturers."""
 
         return {
             (manufacturer["dir_name"], manufacturer["full_name"])
             for manufacturer in self.library_contents.get("manufacturers", [])
-            if not device_types or any(device_type in manufacturer.get("device_types", []) for device_type in device_types)
+            if any(self._model_matches_filters(model, device_types, discovery_by) for model in manufacturer.get("models", []))
         }
 
     @async_cache
@@ -185,24 +191,58 @@ class RemoteLoader(Loader):
         return self.manufacturer_lookup.get(search, set())
 
     @async_cache
-    async def get_model_listing(self, manufacturer: str, device_types: set[DeviceType] | None) -> set[str]:
-        """Get listing of available models for a given manufacturer."""
-
+    async def get_model_listing(
+        self,
+        manufacturer: str,
+        device_types: set[DeviceType] | None,
+        discovery_by: DiscoveryBy | None = None,
+    ) -> set[tuple[str, str]]:
+        """Get listing of available models and display names for a given manufacturer."""
         models = self.manufacturer_models.get(manufacturer)
         if not models:
             return set()
 
         return {
-            model["id"]
+            (model["id"], str(model.get("name") or model["id"]))
             for model in self.manufacturer_models.get(manufacturer, [])
-            if not device_types or any(device_type in model.get("device_type", [DeviceType.LIGHT]) for device_type in device_types)
+            if self._model_matches_filters(model, device_types, discovery_by)
         }
+
+    @staticmethod
+    def _model_matches_filters(
+        model: LibraryModel,
+        device_types: set[DeviceType] | None,
+        discovery_by: DiscoveryBy | None,
+    ) -> bool:
+        model_device_type = DeviceType(model.get("device_type", DeviceType.LIGHT))
+        if device_types and model_device_type not in device_types:
+            return False
+
+        model_discovery_by = DiscoveryBy(model.get("discovery_by", DiscoveryBy.ENTITY))
+        return not discovery_by or model_discovery_by == discovery_by
 
     @async_cache
     async def find_model(self, manufacturer: str, search: set[str]) -> list[str]:
         """Find matching model IDs in the library."""
         models = self.model_lookup.get(manufacturer, {})
         return [model["id"] for phrase in search if (phrase_lower := phrase.lower()) in models for model in models[phrase_lower]]
+
+    @async_cache
+    async def find_model_migration(self, manufacturer: str, model: str) -> str | None:
+        """Find the canonical model id for a legacy profile id."""
+        model_lower = model.lower()
+        matches = {
+            str(model_data.get("id"))
+            for manufacturer_data in self.library_contents.get("manufacturers", [])
+            if str(manufacturer_data.get("dir_name", "")).lower() == manufacturer
+            for model_data in manufacturer_data.get("models", []) or []
+            if model_lower in {str(legacy_id).lower() for legacy_id in model_data.get("legacy_ids", []) or []}
+        }
+
+        if len(matches) != 1:
+            return None
+
+        return next(iter(matches))
 
     @async_cache
     async def load_model(
@@ -258,7 +298,8 @@ class RemoteLoader(Loader):
             await self.hass.async_add_executor_job(self._write_profile_hashes, self.profile_hashes)
         except ProfileDownloadError as e:
             if not os.path.exists(model_path):
-                await self.hass.async_add_executor_job(shutil.rmtree, storage_path)
+                if os.path.exists(storage_path):
+                    await self.hass.async_add_executor_job(shutil.rmtree, storage_path)  # pragma: no cover
                 raise e
             _LOGGER.debug("Failed to download profile, falling back to local profile")
 
@@ -287,7 +328,7 @@ class RemoteLoader(Loader):
 
     def get_storage_path(self, manufacturer: str, model: str) -> str:
         """Retrieve the storage path for a given manufacturer and model."""
-        return str(self.hass.config.path(STORAGE_DIR, "powercalc_profiles", manufacturer, model))
+        return str(self.hass.config.path(STORAGE_DIR, BUILT_IN_LIBRARY_DIR, manufacturer, model))
 
     async def download_with_retry(self, callback: Callable[[], Coroutine[Any, Any, None | dict[str, Any]]]) -> None | dict[str, Any]:
         """Download a file from a remote endpoint with retries"""
@@ -327,7 +368,7 @@ class RemoteLoader(Loader):
         session = async_get_clientsession(self.hass)
 
         try:
-            async with async_timeout.timeout(TIMEOUT_SECONDS):
+            async with asyncio.timeout(TIMEOUT_SECONDS):
                 async with session.get(endpoint, params={"hash": model_hash}) as resp:
                     if resp.status != 200:
                         raise ProfileDownloadError(f"Failed to download profile: {manufacturer}/{model}")
@@ -350,7 +391,7 @@ class RemoteLoader(Loader):
     def _load_profile_hashes(self) -> dict[str, str]:
         """Load profile hashes from local storage"""
 
-        path = self.hass.config.path(STORAGE_DIR, "powercalc_profiles", ".profile_hashes")
+        path = self.hass.config.path(STORAGE_DIR, BUILT_IN_LIBRARY_DIR, ".profile_hashes")
         if not os.path.exists(path):
             return {}
 
@@ -360,6 +401,6 @@ class RemoteLoader(Loader):
     def _write_profile_hashes(self, hashes: dict[str, str]) -> None:
         """Write profile hashes to local storage"""
 
-        path = self.hass.config.path(STORAGE_DIR, "powercalc_profiles", ".profile_hashes")
+        path = self.hass.config.path(STORAGE_DIR, BUILT_IN_LIBRARY_DIR, ".profile_hashes")
         with open(path, "w") as json_file:
             json.dump(hashes, json_file, indent=4)

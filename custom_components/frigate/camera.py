@@ -50,6 +50,7 @@ from .const import (
     ATTR_FAVORITE,
     ATTR_INCLUDE_RECORDING,
     ATTR_LABEL,
+    ATTR_NAME,
     ATTR_PLAYBACK_FACTOR,
     ATTR_PTZ_ACTION,
     ATTR_PTZ_ARGUMENT,
@@ -113,6 +114,7 @@ async def async_setup_entry(
             vol.Required(ATTR_PLAYBACK_FACTOR, default="realtime"): str,
             vol.Required(ATTR_START_TIME): str,
             vol.Required(ATTR_END_TIME): str,
+            vol.Optional(ATTR_NAME, default=None): vol.Any(str, None),
         },
         SERVICE_EXPORT_RECORDING,
     )
@@ -219,10 +221,8 @@ class FrigateCamera(
         # from motion camera entities on selectors
         self._attr_device_class = DEVICE_CLASS_CAMERA
         self._stream_source = None
-        self._attr_is_streaming = (
-            self._cam_name
-            in self._frigate_config.get("go2rtc", {}).get("streams", {}).keys()
-        )
+        self._stream_name = self._get_stream_name()
+        self._attr_is_streaming = self._stream_name is not None
         self._attr_is_recording = self._camera_config.get("record", {}).get("enabled")
         self._attr_motion_detection_enabled = self._camera_config.get("motion", {}).get(
             "enabled"
@@ -252,8 +252,37 @@ class FrigateCamera(
                 )
             else:
                 self._stream_source = (
-                    f"rtsp://{URL(self._url).host}:8554/{self._cam_name}"
+                    f"rtsp://{URL(self._url).host}:8554/{self._stream_name}"
                 )
+
+    def _get_stream_name(self) -> str | None:
+        """Get the go2rtc stream name for this camera.
+
+        Checks live.streams from camera config first (prefer matching name,
+        fallback to first entry), then checks go2rtc.streams for camera name.
+        """
+        go2rtc_streams: dict[str, list[str]] = self._frigate_config.get(
+            "go2rtc", {}
+        ).get("streams", {})
+        live_streams: dict[str, str] = self._camera_config.get("live", {}).get(
+            "streams", {}
+        )
+
+        if live_streams:
+            # Prefer a stream matching the camera name
+            for stream in live_streams:
+                if stream in go2rtc_streams and stream == self._cam_name:
+                    return stream
+            # Otherwise use the first stream in the dict
+            first_stream = next(iter(live_streams))
+            if first_stream in go2rtc_streams:
+                return first_stream
+
+        # Fallback: check if camera name exists in go2rtc streams
+        if self._cam_name in go2rtc_streams:
+            return self._cam_name
+
+        return None
 
     @callback
     def _state_message_received(self, msg: ReceiveMessage) -> None:
@@ -273,10 +302,8 @@ class FrigateCamera(
         self._attr_is_on = decode_if_necessary(msg.payload) == "ON"
 
         if self._attr_is_on:
-            self._attr_is_streaming = (
-                self._cam_name
-                in self._frigate_config.get("go2rtc", {}).get("streams", {}).keys()
-            )
+            self._stream_name = self._get_stream_name()
+            self._attr_is_streaming = self._stream_name is not None
             self._attr_is_recording = self._camera_config.get("record", {}).get(
                 "enabled"
             )
@@ -408,7 +435,11 @@ class FrigateCamera(
         )
 
     async def export_recording(
-        self, playback_factor: str, start_time: str, end_time: str
+        self,
+        playback_factor: str,
+        start_time: str,
+        end_time: str,
+        name: str | None = None,
     ) -> None:
         """Export recording."""
         try:
@@ -417,6 +448,7 @@ class FrigateCamera(
                 playback_factor,
                 datetime.datetime.strptime(start_time, "%Y-%m-%d %H:%M:%S").timestamp(),
                 datetime.datetime.strptime(end_time, "%Y-%m-%d %H:%M:%S").timestamp(),
+                name=name,
             )
         except FrigateApiClientError as err:
             raise ServiceValidationError(

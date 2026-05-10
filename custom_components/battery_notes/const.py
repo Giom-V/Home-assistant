@@ -1,8 +1,6 @@
 """Constants for battery_notes."""
 
-import json
 from logging import Logger, getLogger
-from pathlib import Path
 from typing import Final
 
 import voluptuous as vol
@@ -12,16 +10,10 @@ from homeassistant.helpers import config_validation as cv
 
 LOGGER: Logger = getLogger(__package__)
 
-MIN_HA_VERSION = "2025.9.0"
+MIN_HA_VERSION = "2025.12.0"
 
-manifestfile = Path(__file__).parent / "manifest.json"
-with open(file=manifestfile, encoding="UTF-8") as json_file:
-    manifest_data = json.load(json_file)
-
-DOMAIN = manifest_data.get("domain")
-NAME = manifest_data.get("name")
-VERSION = manifest_data.get("version")
-ISSUEURL = manifest_data.get("issue_tracker")
+DOMAIN = "battery_notes"
+NAME = "Battery Notes"
 MANUFACTURER = "@Andrew-CodeChimp"
 LAST_REPLACED = "battery_last_replaced"
 LAST_REPORTED = "battery_last_reported"
@@ -29,6 +21,7 @@ LAST_REPORTED_LEVEL = "battery_last_reported_level"
 
 DEFAULT_BATTERY_LOW_THRESHOLD = 10
 DEFAULT_BATTERY_INCREASE_THRESHOLD = 25
+STATE_WRITE_INTERVAL_SECONDS = 60 * 60  # 1 hour
 DEFAULT_LIBRARY_URL = "https://battery-notes-data.codechimp.org/library.json"
 DEFAULT_SCHEMA_URL = "https://battery-notes-data.codechimp.org/schema.json"
 FALLBACK_LIBRARY_URL = "https://raw.githubusercontent.com/andrew-codechimp/HA-Battery-Notes/main/library/library.json"  # pylint: disable=line-too-long
@@ -37,6 +30,7 @@ FALLBACK_SCHEMA_URL = "https://raw.githubusercontent.com/andrew-codechimp/HA-Bat
 CONF_SOURCE_ENTITY_ID = "source_entity_id"
 CONF_BATTERY_TYPE = "battery_type"
 CONF_BATTERY_QUANTITY = "battery_quantity"
+CONF_NOTE = "note"
 CONF_BATTERY_LOW_THRESHOLD = "battery_low_threshold"
 CONF_SENSORS = "sensors"
 CONF_ENABLE_AUTODISCOVERY = "enable_autodiscovery"
@@ -87,6 +81,7 @@ ATTR_SOURCE_ENTITY_ID = "source_entity_id"
 ATTR_REMOVE = "remove"
 ATTR_BATTERY_QUANTITY = "battery_quantity"
 ATTR_BATTERY_TYPE = "battery_type"
+ATTR_NOTE = "note"
 ATTR_BATTERY_TYPE_AND_QUANTITY = "battery_type_and_quantity"
 ATTR_BATTERY_LAST_REPLACED = "battery_last_replaced"
 ATTR_BATTERY_LOW = "battery_low"

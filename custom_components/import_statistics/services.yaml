@@ -45,12 +45,6 @@ import_from_file:
                 - "%Y-%m-%d %H:%M"
                 - "%m/%d/%Y %H:%M"
                 - "%d/%m/%Y %H:%M"
-        unit_from_entity:
-          required: false
-          example: true
-          default: true
-          selector:
-            boolean:
 
     use_different_timezone_than_home_assistant:
       collapsed: true
@@ -105,6 +99,18 @@ export_statistics:
                 - "measurement"
                 - "counter"
                 - "both"
+        counter_fields:
+          required: false
+          default: "both"
+          example: "both"
+          selector:
+            select:
+              mode: dropdown
+              options:
+                - "both"
+                - "sum"
+                - "delta"
+
     define_export_format:
       collapsed: true
       fields:
@@ -129,7 +135,6 @@ export_statistics:
               options:
                 - "dot ('.')"
                 - "comma (',')"
-
         datetime_format:
           required: false
           default: "%d.%m.%Y %H:%M"

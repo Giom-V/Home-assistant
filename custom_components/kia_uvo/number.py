@@ -15,6 +15,7 @@ from homeassistant.components.number import (
 from homeassistant.const import PERCENTAGE
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
+from homeassistant.exceptions import HomeAssistantError
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
 from .const import DOMAIN, DYNAMIC_UNIT
@@ -30,7 +31,7 @@ V2L_LIMIT_KEY = "ev_v2l_discharge_limit"
 NUMBER_DESCRIPTIONS: Final[tuple[NumberEntityDescription, ...]] = (
     NumberEntityDescription(
         key=AC_CHARGING_LIMIT_KEY,
-        name="AC Charging Limit",
+        translation_key="ev_charge_limits_ac",
         icon="mdi:ev-plug-type2",
         native_min_value=50,
         native_max_value=100,
@@ -39,7 +40,7 @@ NUMBER_DESCRIPTIONS: Final[tuple[NumberEntityDescription, ...]] = (
     ),
     NumberEntityDescription(
         key=DC_CHARGING_LIMIT_KEY,
-        name="DC Charging Limit",
+        translation_key="ev_charge_limits_dc",
         icon="mdi:ev-plug-ccs2",
         native_min_value=50,
         native_max_value=100,
@@ -48,7 +49,7 @@ NUMBER_DESCRIPTIONS: Final[tuple[NumberEntityDescription, ...]] = (
     ),
     NumberEntityDescription(
         key=V2L_LIMIT_KEY,
-        name="V2L Limit",
+        translation_key="ev_v2l_discharge_limit",
         icon="mdi:fuel-cell",
         native_min_value=20,
         native_max_value=80,
@@ -88,46 +89,70 @@ class HyundaiKiaConnectNumber(NumberEntity, HyundaiKiaConnectEntity):
         vehicle: Vehicle,
     ) -> None:
         super().__init__(coordinator, vehicle)
-        self._description = description
-        self._key = self._description.key
+        self.entity_description = description
+        self._key = description.key
         self._attr_unique_id = f"{DOMAIN}_{vehicle.id}_{self._key}"
-        self._attr_icon = self._description.icon
+        self._attr_icon = description.icon
         self._attr_mode = NumberMode.SLIDER
-        self._attr_name = f"{vehicle.name} {self._description.name}"
-        self._attr_device_class = self._description.device_class
+        self._attr_device_class = description.device_class
 
     @property
     def native_value(self) -> float | None:
         """Return the entity value to represent the entity state."""
         return getattr(self.vehicle, self._key)
 
+    @staticmethod
+    def _is_valid_charge_limit(val) -> bool:
+        """Check if a charge limit value is a valid integer 50-100 in steps of 10."""
+        return isinstance(val, (int, float)) and int(val) in range(50, 101, 10)
+
     async def async_set_native_value(self, value: float) -> None:
         """Set new charging limit."""
-        # force refresh of state so that we can get the value for the other charging limit
-        # since we have to set both limits as compound API call.
-        # await self.coordinator.async_force_update_all()
-
         if (
-            self._description.key == AC_CHARGING_LIMIT_KEY
+            self.entity_description.key == AC_CHARGING_LIMIT_KEY
             and self.vehicle.ev_charge_limits_ac == int(value)
         ):
             return
         if (
-            self._description.key == DC_CHARGING_LIMIT_KEY
+            self.entity_description.key == DC_CHARGING_LIMIT_KEY
             and self.vehicle.ev_charge_limits_dc == int(value)
         ):
             return
 
         # set new limits
-        if self._description.key == AC_CHARGING_LIMIT_KEY:
-            ac = value
+        if self.entity_description.key == AC_CHARGING_LIMIT_KEY:
+            ac = int(value)
             dc = self.vehicle.ev_charge_limits_dc
-            await self.coordinator.async_set_charge_limits(self.vehicle.id, ac, dc)
-        elif self._description.key == DC_CHARGING_LIMIT_KEY:
+            if not self._is_valid_charge_limit(dc):
+                _LOGGER.error(
+                    "Cannot set charge limit: the DC charging limit is not "
+                    "available yet (%r). Try performing a force refresh first, "
+                    "or set the DC slider to a valid value (50-100%%).",
+                    dc,
+                )
+                raise HomeAssistantError(
+                    "Cannot set charge limit: the DC charging limit "
+                    "is not available yet. Try performing a force refresh "
+                    "first, or set the DC slider to a valid value (50-100%)."
+                )
+            await self.coordinator.async_set_charge_limits(self.vehicle.id, ac, int(dc))
+        elif self.entity_description.key == DC_CHARGING_LIMIT_KEY:
             ac = self.vehicle.ev_charge_limits_ac
-            dc = value
-            await self.coordinator.async_set_charge_limits(self.vehicle.id, ac, dc)
-        elif self._description.key == V2L_LIMIT_KEY:
+            dc = int(value)
+            if not self._is_valid_charge_limit(ac):
+                _LOGGER.error(
+                    "Cannot set charge limit: the AC charging limit is not "
+                    "available yet (%r). Try performing a force refresh first, "
+                    "or set the AC slider to a valid value (50-100%%).",
+                    ac,
+                )
+                raise HomeAssistantError(
+                    "Cannot set charge limit: the AC charging limit "
+                    "is not available yet. Try performing a force refresh "
+                    "first, or set the AC slider to a valid value (50-100%)."
+                )
+            await self.coordinator.async_set_charge_limits(self.vehicle.id, int(ac), dc)
+        elif self.entity_description.key == V2L_LIMIT_KEY:
             v2l = value
             await self.coordinator.async_set_v2l_limit(self.vehicle.id, v2l)
 
@@ -136,22 +161,22 @@ class HyundaiKiaConnectNumber(NumberEntity, HyundaiKiaConnectEntity):
     @property
     def native_min_value(self):
         """Return native_min_value as reported in by the sensor"""
-        return self._description.native_min_value
+        return self.entity_description.native_min_value
 
     @property
     def native_max_value(self):
         """Returnnative_max_value as reported in by the sensor"""
-        return self._description.native_max_value
+        return self.entity_description.native_max_value
 
     @property
     def native_step(self):
         """Return step value as reported in by the sensor"""
-        return self._description.native_step
+        return self.entity_description.native_step
 
     @property
     def native_unit_of_measurement(self):
         """Return the unit the value was reported in by the sensor"""
-        if self._description.native_unit_of_measurement == DYNAMIC_UNIT:
+        if self.entity_description.native_unit_of_measurement == DYNAMIC_UNIT:
             return getattr(self.vehicle, self._key + "_unit")
         else:
-            return self._description.native_unit_of_measurement
+            return self.entity_description.native_unit_of_measurement

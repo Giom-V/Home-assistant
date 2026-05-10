@@ -7,12 +7,12 @@ ATTR_TIMEZONE_IDENTIFIER = "timezone_identifier"
 ATTR_DELIMITER = "delimiter"
 ATTR_DECIMAL = "decimal"
 ATTR_DATETIME_FORMAT = "datetime_format"
-ATTR_UNIT_FROM_ENTITY = "unit_from_entity"
 ATTR_START_TIME = "start_time"
 ATTR_END_TIME = "end_time"
 ATTR_ENTITIES = "entities"
 ATTR_DELTA = "delta"
 ATTR_SPLIT_BY = "split_by"
+ATTR_COUNTER_FIELDS = "counter_fields"
 
 TESTFILEPATHS = "tests/testfiles/"
 

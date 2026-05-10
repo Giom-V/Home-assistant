@@ -262,6 +262,15 @@
         "description": "{source}\n\nProducent \"{manufacturer}\" i model \"{model}\" zostały automatycznie wykryte dla twojego urządzenia.{remarks}",
         "title": "Biblioteka"
       },
+      "library_custom_fields": {
+        "title": "Profile configuration",
+        "data": {
+          "power_factor": "Power Factor"
+        },
+        "data_description": {
+          "power_factor": "Ratio of real power to apparent power. Use 0.6 for computers/electronics, 0.7 for mixed loads, 1.0 for resistive loads like heaters."
+        }
+      },
       "library_multi_profile": {
         "data": {
           "model": "Wybierz model"
@@ -702,8 +711,7 @@
           "create_energy_sensor": "Czy Powercalc musi utworzyć sensor kWh",
           "create_utility_meters": "Pozwól, aby Powercalc tworzył liczniki mediów, które będą działać w cyklach dziennych, godzinowych itp."
         },
-        "description": "Utwórz sensor grupy dla wszystkich śledzonych i nieśledzonych mocy",
-        "title": "Utwórz śledzony sensor mocy"
+        "title": "Opcje grupy mocy śledzonej/nieśledzonej"
       },
       "group_tracked_untracked_manual": {
         "data": {

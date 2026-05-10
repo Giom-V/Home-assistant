@@ -2,11 +2,13 @@ from __future__ import annotations
 
 import asyncio
 import logging
+import typing
 
 from homeassistant.helpers.template import Template
 from homeassistant.util import dt as dt_util
 from zigpy import types as t
 from zigpy.exceptions import ControllerException, DeliveryError
+from zigpy.typing import UNDEFINED, UndefinedType
 from zigpy.zcl import Cluster
 from zigpy.zcl import foundation as f
 
@@ -15,6 +17,86 @@ from .params import INTERNAL_PARAMS as p
 from .params import SERVICES as S
 
 LOGGER = logging.getLogger(__name__)
+
+
+def _manufacturer_code_for_find_attribute(
+    manf: None | int | bytes,
+) -> int | None | UndefinedType:
+    """Map service MANF to zigpy `find_attribute(..., manufacturer_code=)`."""
+    if isinstance(manf, bytes):
+        return None if manf == b"" else UNDEFINED
+    if manf is None:
+        return UNDEFINED
+    return manf
+
+
+def _zcl_status_to_json(status: typing.Any) -> dict[str, typing.Any]:
+    try:
+        code = int(status)
+    except (TypeError, ValueError):
+        code = status
+    name = getattr(status, "name", None)
+    return {"status": code, "status_name": name or str(status)}
+
+
+def _serialize_configure_reporting_result(
+    result_conf: typing.Any,
+) -> list[dict[str, typing.Any]]:
+    """
+    Make configure_reporting output JSON-safe
+    for HA service responses and events.
+    """
+    rows: list[dict[str, typing.Any]] = []
+    if isinstance(result_conf, dict):
+        for attr, status in result_conf.items():
+            row = _zcl_status_to_json(status)
+            if isinstance(attr, f.ZCLAttributeDef):
+                row["attribute_id"] = int(attr.id)
+                if attr.name:
+                    row["attribute_name"] = attr.name
+                mc = getattr(attr, "manufacturer_code", None)
+                if mc is not UNDEFINED and mc is not None:
+                    row["manufacturer_code"] = int(mc)
+            else:
+                row["attribute"] = repr(attr)
+            rows.append(row)
+        return rows
+    if isinstance(result_conf, list):
+        for item in result_conf:
+            if isinstance(item, list):
+                rows.extend(_serialize_configure_reporting_result(item))
+            elif hasattr(item, "status"):
+                row = _zcl_status_to_json(item.status)
+                aid = getattr(item, "attrid", None)
+                if aid is not None:
+                    row["attribute_id"] = int(aid)
+                rows.append(row)
+    return rows
+
+
+def _configure_reporting_succeeded(
+    result_conf: object, attr_def: f.ZCLAttributeDef | None
+) -> bool:
+    """
+    Handle:
+    - dict (zigpy >= 1.2),
+    - flat record lists (zigpy 0.91–1.1.x), and
+    - legacy nested responses.
+    """
+    if isinstance(result_conf, dict):
+        if attr_def is not None:
+            return result_conf.get(attr_def) == f.Status.SUCCESS
+        for status in result_conf.values():
+            return status == f.Status.SUCCESS
+        return False
+    if isinstance(result_conf, list) and len(result_conf) > 0:
+        first = result_conf[0]
+        if isinstance(first, list) and first and hasattr(first[0], "status"):
+            return first[0].status == f.Status.SUCCESS
+        if hasattr(first, "status"):
+            return first.status == f.Status.SUCCESS
+    return False
+
 
 if not hasattr(Cluster, "_read_reporting_configuration"):
     if hasattr(f, "GeneralCommand"):
@@ -273,19 +355,41 @@ async def conf_report(
                 params[p.REPORTABLE_CHANGE],
                 params[p.MANF],
             )
-            result_conf = await cluster.configure_reporting(
-                params[p.ATTR_ID],
-                params[p.MIN_INTERVAL],
-                params[p.MAX_INTERVAL],
-                params[p.REPORTABLE_CHANGE],
-                manufacturer=params[p.MANF],
+            # zigpy >= 0.91: no `manufacturer=` on configure_reporting; resolve
+            # manufacturer via `find_attribute(..., manufacturer_code=...)`.
+            # Older zigpy: pass manufacturer through configure_reporting.
+            if u.is_zigpy_ge("0.91.0"):
+                attr_def = cluster.find_attribute(
+                    params[p.ATTR_ID],
+                    manufacturer_code=_manufacturer_code_for_find_attribute(
+                        params[p.MANF]
+                    ),
+                )
+                result_conf = await cluster.configure_reporting(
+                    attr_def,
+                    params[p.MIN_INTERVAL],
+                    params[p.MAX_INTERVAL],
+                    params[p.REPORTABLE_CHANGE],
+                )
+                event_data["success"] = _configure_reporting_succeeded(
+                    result_conf, attr_def
+                )
+            else:
+                result_conf = await cluster.configure_reporting(
+                    params[p.ATTR_ID],
+                    params[p.MIN_INTERVAL],
+                    params[p.MAX_INTERVAL],
+                    params[p.REPORTABLE_CHANGE],
+                    manufacturer=params[p.MANF],
+                )
+                event_data["success"] = _configure_reporting_succeeded(
+                    result_conf, None
+                )
+            event_data["result_conf"] = _serialize_configure_reporting_result(
+                result_conf
             )
-            event_data["result_conf"] = result_conf
             triesToGo = 0  # Stop loop
             LOGGER.info("Configure report result: %s", result_conf)
-            event_data["success"] = (
-                result_conf[0][0].status == f.Status.SUCCESS
-            )
         except (
             DeliveryError,
             ControllerException,
@@ -346,12 +450,15 @@ async def attr_write(  # noqa: C901
 
     attr_type = params[p.ATTR_TYPE]
 
-    result_read = None
+    result_read: (
+        tuple[dict[typing.Any, typing.Any], tuple[typing.Any] | tuple[()]]
+        | None
+    ) = None
     if params[p.READ_BEFORE_WRITE] or (attr_read_list and cmd == S.ATTR_READ):
         if use_cache > 0:
             # Try to get value from cache
             if attr_id in cluster._attr_cache:
-                result_read = ({attr_id: cluster._attr_cache[attr_id]}, {})
+                result_read = ({attr_id: cluster._attr_cache[attr_id]}, ())
                 LOGGER.debug(
                     f"Got attribute 0x{cluster.cluster_id:04X}/0x{attr_id:04X}"
                     f" from cache: {result_read!r}"
@@ -377,27 +484,47 @@ async def attr_write(  # noqa: C901
             LOGGER.debug(
                 "Reading attr result (attrs, status): %s", result_read
             )
-            success = (len(result_read[1]) == 0) and (len(result_read[0]) == 1)
+            if u.is_zigpy_ge("1.2.0"):
+                if len(result_read):
+                    found_attr_type = result_read[0][0].value.type
+                    result_read = (
+                        {
+                            result_read[0][0]
+                            .attrid: result_read[0][0]
+                            .value.value,
+                        },
+                        (),
+                    )
+                else:
+                    result_read = ({}, (result_read[0]["status"],))
 
-            # Try to get attribute type
-            if success and (attr_id in result_read[0]):
-                python_type = type(result_read[0][attr_id])
-                found_attr_type = f.DataType.from_python_type(
-                    python_type
-                ).type_id
-                LOGGER.debug(
-                    "Type determined from read: 0x%02x", found_attr_type
+                success = (len(result_read[1]) == 0) and (
+                    len(result_read[0]) == 1
+                )
+            else:
+                success = (len(result_read[1]) == 0) and (
+                    len(result_read[0]) == 1
                 )
 
-                if attr_type is None:
-                    attr_type = found_attr_type
-                elif attr_type != found_attr_type:
-                    LOGGER.warning(
-                        "Type determined from read "
-                        "different from requested: 0x%02X <> 0x%02X",
-                        found_attr_type,
-                        attr_id,
+                # Try to get attribute type
+                if success and (attr_id in result_read[0]):
+                    python_type = type(result_read[0][attr_id])
+                    found_attr_type = f.DataType.from_python_type(
+                        python_type
+                    ).type_id
+                    LOGGER.debug(
+                        "Type determined from read: 0x%02x", found_attr_type
                     )
+
+                    if attr_type is None:
+                        attr_type = found_attr_type
+                    elif attr_type != found_attr_type:
+                        LOGGER.warning(
+                            "Type determined from read "
+                            "different from requested: 0x%02X <> 0x%02X",
+                            found_attr_type,
+                            attr_id,
+                        )
 
     compare_val = None
 
@@ -437,16 +564,16 @@ async def attr_write(  # noqa: C901
         and (len(attr_write_list) != 0)
         and compare_val is not None
         and (
-            (attr_id in result_read[0])  # type:ignore[index]
+            (attr_id in result_read[0])  # type: ignore[index]
             and (
-                result_read[0][  # type:ignore[index]
+                result_read[0][  # type: ignore[index]
                     attr_id
-                ].serialize()  # type:ignore[union-attr]
+                ].serialize()  # type: ignore[union-attr]
                 == compare_val.serialize()
                 if use_serialize
-                else result_read[0][  # type:ignore[index]
+                else result_read[0][  # type: ignore[index]
                     attr_id
-                ]  # type:ignore[union-attr]
+                ]  # type: ignore[union-attr]
                 == compare_val
             )
         )
@@ -477,11 +604,17 @@ async def attr_write(  # noqa: C901
             manufacturer=params[p.MANF],
             tries=params[p.TRIES],
         )
-        LOGGER.debug("Write attr status: %s", result_write)
+
         event_data["result_write"] = result_write
+
+        LOGGER.debug("Write attr status: %s", result_write)
+
         success = False
         try:
             # LOGGER.debug("Write attr status: %s", result_write[0][0].status)
+            event_data["result_write_status_str"] = u.get_status_string(
+                result_write[0][0].status
+            )
             success = result_write[0][0].status == f.Status.SUCCESS
             LOGGER.debug(f"Write success: {success}")
         except Exception as e:
@@ -503,9 +636,25 @@ async def attr_write(  # noqa: C901
                 f"Reading attr result (attrs, status): {result_read!r}"
             )
             # read_is_equal = (result_read[0][attr_id] == compare_val)
-            success = success and (
-                len(result_read[1]) == 0 and len(result_read[0]) == 1
-            )
+            if u.is_zigpy_ge("1.2.0"):
+                if len(result_read):
+                    found_attr_type = result_read[0][0].value.type
+                    result_read = (
+                        {
+                            result_read[0][0]
+                            .attrid: result_read[0][0]
+                            .value.value,
+                        },
+                        (),
+                    )
+                else:
+                    result_read = ({}, (result_read[0]["status"],))
+
+                success = success and (len(result_read[0]) == 1)
+            else:
+                success = success and (
+                    len(result_read[1]) == 0 and len(result_read[0]) == 1
+                )
             if success and compare_val is not None:
                 if (
                     result_read[0][attr_id].serialize()
@@ -515,17 +664,23 @@ async def attr_write(  # noqa: C901
                 ):
                     success = False
                     msg = "Read does not match expected: {!r} <> {!r}".format(
-                        result_read[0][attr_id].serialize()
-                        if use_serialize
-                        else result_read[0][attr_id],
-                        compare_val.serialize()
-                        if use_serialize
-                        else compare_val,
+                        (
+                            result_read[0][attr_id].serialize()
+                            if use_serialize
+                            else result_read[0][attr_id]
+                        ),
+                        (
+                            compare_val.serialize()
+                            if use_serialize
+                            else compare_val
+                        ),
                     )
                     LOGGER.warning(msg)
                     if "warnings" not in event_data:
                         event_data["warnings"] = []
                     event_data["warnings"].append(msg)
+
+    read_val = None  # Ensure this value looks initialised in all cases
 
     if result_read is not None:
         event_data["result_read"] = result_read
@@ -541,19 +696,17 @@ async def attr_write(  # noqa: C901
                 event_data["warnings"] = []
             event_data["warnings"].append(msg)
             success = False
-    else:
-        read_val = None
 
     event_data["success"] = success
 
     # Write value to provided state or state attribute
     if params[p.STATE_ID] is not None:
         if (
-            len(result_read[1]) == 0  # type:ignore[index]
-            and len(result_read[0]) == 1  # type:ignore[index]
+            len(result_read[1]) == 0  # type: ignore[index]
+            and len(result_read[0]) == 1  # type: ignore[index]
         ):
             # No error and one result
-            for attr_id, val in result_read[0].items():  # type:ignore[index]
+            for attr_id, val in result_read[0].items():  # type: ignore[index]
                 if state_template_str is not None:
                     if val is None:
                         LOGGER.debug(

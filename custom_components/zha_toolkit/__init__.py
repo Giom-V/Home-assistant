@@ -1,5 +1,6 @@
 import importlib
 import logging
+import os
 from typing import Any, Optional
 
 import homeassistant.helpers.config_validation as cv
@@ -31,14 +32,16 @@ DATA_ZHATK = "zha_toolkit"
 LOGGER = logging.getLogger(__name__)
 
 try:
-    LOADED_VERSION  # type:ignore[used-before-def] # pylint: disable=used-before-assignment
+    LOADED_VERSION  # type: ignore[used-before-def] # pylint: disable=used-before-assignment
 except NameError:
     LOADED_VERSION = ""
 
 try:
-    DEFAULT_OTAU  # type:ignore[used-before-def] # pylint: disable=used-before-assignment
+    DEFAULT_OTAU  # type: ignore[used-before-def] # pylint: disable=used-before-assignment
 except NameError:
-    DEFAULT_OTAU = "/config/zigpy_ota"
+    DEFAULT_OTAU = (
+        ""  # Initialize as empty string or default path (initialized later)
+    )
 
 
 importlib.reload(PARDEFS)
@@ -630,6 +633,9 @@ async def async_setup(hass, config):
 
     try:
         global DEFAULT_OTAU  # pylint: disable=global-statement
+        DEFAULT_OTAU = os.path.join(
+            hass.config.config_dir, "zigpy_ota"
+        )  # Next statement might fail
         DEFAULT_OTAU = config[ZHA_DOMAIN]["zigpy_config"]["ota"][
             "otau_directory"
         ]
@@ -672,7 +678,7 @@ async def register_services(hass):  # noqa: C901
     async def toolkit_service(service):
         """Run command from toolkit module."""
         LOGGER.info("Running ZHA Toolkit service: %s", service)
-        global LOADED_VERSION  # pylint: disable=global-variable-not-assigned
+        global LOADED_VERSION  # noqa: F824 pylint: disable=global-variable-not-assigned
 
         zha = hass_ref.data["zha"]
         zha_gw: Optional[ZHAGateway] = u.get_zha_gateway(hass)
@@ -843,7 +849,7 @@ async def register_services(hass):  # noqa: C901
                 key,
                 toolkit_service,
                 schema=value,
-                supports_response=SupportsResponse.OPTIONAL,  # type:ignore[undefined-variable]
+                supports_response=SupportsResponse.OPTIONAL,  # type: ignore[undefined-variable]
             )
         else:
             hass.services.async_register(
@@ -857,7 +863,7 @@ async def register_services(hass):  # noqa: C901
 
 
 async def _reload_module(hass, module):
-    global LOADED_VERSION  # pylint: disable=global-statement,global-variable-not-assigned
+    global LOADED_VERSION  # noqa: F824  pylint: disable=global-statement,global-variable-not-assigned
 
     # Reload ourselves
     importlib.reload(module)
@@ -909,8 +915,6 @@ async def command_handler_default(
 
 
 def reload_services_yaml(hass):
-    import os
-
     from homeassistant.const import CONF_DESCRIPTION, CONF_NAME
     from homeassistant.helpers.service import async_set_service_schema
     from homeassistant.util.yaml.loader import load_yaml

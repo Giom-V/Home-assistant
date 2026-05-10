@@ -262,6 +262,15 @@
         "description": "{source}\n\nProducătorul \"{manufacturer}\" și modelul \"{model}\" au fost detectate automat pentru dispozitivul dvs.{remarks}",
         "title": "Bibliotecă"
       },
+      "library_custom_fields": {
+        "title": "Profile configuration",
+        "data": {
+          "power_factor": "Power Factor"
+        },
+        "data_description": {
+          "power_factor": "Ratio of real power to apparent power. Use 0.6 for computers/electronics, 0.7 for mixed loads, 1.0 for resistive loads like heaters."
+        }
+      },
       "library_multi_profile": {
         "data": {
           "model": "Select model"
@@ -702,8 +711,7 @@
           "create_energy_sensor": "Whether powercalc needs to create a kWh sensor",
           "create_utility_meters": "Let powercalc create utility meters, which cycle daily, hourly etc."
         },
-        "description": "Create a group sensor for all tracked and untracked power",
-        "title": "Create a tracked power sensor"
+        "title": "Opțiuni grup monitorizat/nemonitorizat"
       },
       "group_tracked_untracked_manual": {
         "data": {

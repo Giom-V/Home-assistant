@@ -39,26 +39,6 @@ async def remove_power_sensor_from_associated_groups(
     return group_entries
 
 
-async def remove_group_from_power_sensor_entry(
-    hass: HomeAssistant,
-    config_entry: ConfigEntry,
-) -> list[ConfigEntry]:
-    """When the user removes a group config entry we need to update all the virtual power sensors which reference this group."""
-    entries_to_update = [
-        entry
-        for entry in hass.config_entries.async_entries(DOMAIN)
-        if entry.data.get(CONF_SENSOR_TYPE) == SensorType.VIRTUAL_POWER and entry.data.get(CONF_GROUP) == config_entry.entry_id
-    ]
-
-    for group_entry in entries_to_update:
-        hass.config_entries.async_update_entry(
-            group_entry,
-            data={**group_entry.data, CONF_GROUP: None},
-        )
-
-    return entries_to_update
-
-
 async def add_to_associated_groups(hass: HomeAssistant, config_entry: ConfigEntry) -> ConfigEntry | None:  # type: ignore
     """
     When the user has set a group on a virtual power config entry,
@@ -68,14 +48,12 @@ async def add_to_associated_groups(hass: HomeAssistant, config_entry: ConfigEntr
     if sensor_type not in [SensorType.VIRTUAL_POWER, SensorType.DAILY_ENERGY]:
         return None
 
-    if CONF_GROUP not in config_entry.data or not config_entry.data.get(CONF_GROUP):
+    raw_groups = config_entry.data.get(CONF_GROUP)
+    if not raw_groups:
         return None
 
-    groups: list[str] | str = config_entry.data.get(CONF_GROUP)  # type: ignore
-    if not isinstance(groups, list):
-        groups = [groups]
-
-    for group_entry_id in groups:
+    group_ids = raw_groups if isinstance(raw_groups, list) else [raw_groups]
+    for group_entry_id in group_ids:
         group_entry = await add_to_associated_group(hass, config_entry, group_entry_id)
         if group_entry:
             _LOGGER.debug(
@@ -83,6 +61,10 @@ async def add_to_associated_groups(hass: HomeAssistant, config_entry: ConfigEntr
                 config_entry.title,
                 group_entry.title,
             )
+
+    # After processed correctly we can want to unset the group, to prevent is being processed again
+    new_data = {k: v for k, v in config_entry.data.items() if k != CONF_GROUP}
+    hass.config_entries.async_update_entry(config_entry, data=new_data)
 
 
 async def add_to_associated_group(

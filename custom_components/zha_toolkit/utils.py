@@ -363,11 +363,15 @@ async def get_ieee(app, listener, ref):
                 listener
             ).helpers.entity_registry.async_get_registry()
             if not is_ha_ge("2022.6")
-            else get_hass(listener).helpers.entity_registry.async_get(
-                get_hass(listener)
+            else (
+                get_hass(listener).helpers.entity_registry.async_get(
+                    get_hass(listener)
+                )
+                if not is_ha_ge("2024.6")
+                else er.async_get(  # noqa: E0606,E501 pylint: disable=possibly-used-before-assignment
+                    get_hass(listener)
+                )
             )
-            if not is_ha_ge("2024.6")
-            else er.async_get(get_hass(listener))
         )
 
         device_registry = (
@@ -376,11 +380,15 @@ async def get_ieee(app, listener, ref):
                 listener
             ).helpers.device_registry.async_get_registry()
             if not is_ha_ge("2022.6")
-            else get_hass(listener).helpers.device_registry.async_get(
-                get_hass(listener)
+            else (
+                get_hass(listener).helpers.device_registry.async_get(
+                    get_hass(listener)
+                )
+                if not is_ha_ge("2024.6")
+                else dr.async_get(  # noqa: E0606,E501 pylint: disable=possibly-used-before-assignment
+                    get_hass(listener)
+                )
             )
-            if not is_ha_ge("2024.6")
-            else dr.async_get(get_hass(listener))
         )
         registry_device = device_registry.async_get(ref)
 
@@ -671,6 +679,7 @@ async def record_read_data(
         return
 
     date_str = dt_util.utcnow().isoformat()
+    attr_type = None
 
     for attr_id, read_val in read_resp[0].items():
         fields = []
@@ -1108,8 +1117,9 @@ def extractParams(  # noqa: C901
 #
 async def retry(
     func: typing.Callable[[], typing.Awaitable[typing.Any]],
-    retry_exceptions: typing.Iterable[typing.Any]
-    | None = None,  # typing.Iterable[BaseException],
+    retry_exceptions: (
+        typing.Iterable[typing.Any] | None
+    ) = None,  # typing.Iterable[BaseException],
     tries: int = 3,
     delay: int | float = 0.1,
 ) -> typing.Any:
@@ -1131,7 +1141,7 @@ async def retry(
         try:
             return await func()
             # pylint: disable-next=catching-non-exception
-        except retry_exceptions:  # type:ignore[misc]
+        except retry_exceptions:  # type: ignore[misc]
             if tries <= 1:
                 raise
             tries -= 1
@@ -1141,8 +1151,9 @@ async def retry(
 async def retry_wrapper(
     func: typing.Callable,
     *args,
-    retry_exceptions: typing.Iterable[typing.Any]
-    | None = None,  # typing.Iterable[BaseException],
+    retry_exceptions: (
+        typing.Iterable[typing.Any] | None
+    ) = None,  # typing.Iterable[BaseException],
     tries: int = 3,
     delay: int | float = 0.1,
     **kwargs,
@@ -1157,8 +1168,9 @@ async def retry_wrapper(
 
 
 def retryable(
-    retry_exceptions: None
-    | typing.Iterable[typing.Any] = None,  # typing.Iterable[BaseException]
+    retry_exceptions: (
+        None | typing.Iterable[typing.Any]
+    ) = None,  # typing.Iterable[BaseException]
     tries: int = 1,
     delay: float = 0.1,
 ) -> typing.Callable:
@@ -1169,7 +1181,7 @@ def retryable(
     """
 
     def decorator(func: typing.Callable) -> typing.Callable:
-        nonlocal tries, delay
+        nonlocal tries, delay  # noqa: F824
 
         @functools.wraps(func)
         def wrapper(*args, tries=tries, delay=delay, **kwargs):
@@ -1205,16 +1217,24 @@ async def cluster_read_attributes(
     cluster, attrs, manufacturer=None
 ) -> tuple[list, list]:
     """Read attributes from cluster, retryable"""
+    if is_zigpy_ge("1.2.0"):
+        return await cluster.read_attributes_raw(
+            attrs, manufacturer=manufacturer
+        )
     return await cluster.read_attributes(attrs, manufacturer=manufacturer)
 
 
-# The zigpy library does not offer retryable on read_attributes.
+# The zigpy library does not offer retryable on write_attributes.
 # Add it ourselves
 @retryable(
     (DeliveryError, asyncio.CancelledError, asyncio.TimeoutError), tries=1
 )
 async def cluster__write_attributes(cluster, attrs, manufacturer=None):
     """Write cluster attributes from cluster, retryable"""
+    if is_zigpy_ge("1.2.0"):
+        return await cluster.write_attributes_raw(
+            attrs, manufacturer_code=manufacturer
+        )
     return await cluster._write_attributes(attrs, manufacturer=manufacturer)
 
 
@@ -1248,3 +1268,50 @@ def get_hass(gateway: ZHAGateway):
             msg += f"Attributes available {dir(gateway)}."
         raise ValueError(msg)
     return hass
+
+
+STATUS_ENUMERATIONS = {
+    0x00: "SUCCESS",
+    0x01: "FAILURE",
+    0x70: "REQUEST_DENIED",
+    0x71: "MULTIPLE_REQUEST_NOT_ALLOWED",
+    0x72: "INDICATION_REDIRECTION_TO_AP",
+    0x73: "PREFERENCE_DENIED",
+    0x74: "PREFERENCE_IGNORED",
+    0x7E: "NOT_AUTHORIZED",
+    0x7F: "RESERVED_FIELD_NOT_ZERO",
+    0x80: "MALFORMED_COMMAND",
+    0x81: "UNSUP_CLUSTER_COMMAND",
+    0x85: "INVALID_FIELD",
+    0x86: "UNSUPPORTED_ATTRIBUTE",
+    0x87: "INVALID_VALUE",
+    0x88: "READ_ONLY",
+    0x89: "INSUFFICIENT_SPACE",
+    0x8A: "DUPLICATE_EXISTS",
+    0x8B: "NOT_FOUND",
+    0x8C: "UNREPORTABLE_ATTRIBUTE",
+    0x8D: "INVALID_DATA_TYPE",
+    0x8E: "INVALID_SELECTOR",
+    0x8F: "WRITE_ONLY",
+    0x90: "INCONSISTENT_STARTUP_STATE",
+    0x91: "DEFINED_OUT_OF_BAND",
+    0x92: "INCONSISTENT",
+    0x93: "ACTION_DENIED",
+    0x94: "TIMEOUT",
+    0x95: "ABORT",
+    0x96: "INVALID_IMAGE",
+    0x97: "WAIT_FOR_DATA",
+    0x98: "NO_IMAGE_AVAILABLE",
+    0x99: "REQUIRE_MORE_IMAGE",
+    0x9A: "NOTIFICATION_PENDING",
+    0xC0: "HARDWARE_FAILURE",
+    0xC1: "SOFTWARE_FAILURE",
+    0xC2: "CALIBRATION_ERROR",
+    0xC3: "UNSUPPORTED_CLUSTER",
+    0xC4: "LIMIT_REACHED",
+}
+
+
+def get_status_string(status_code: int) -> str:
+    """Returns the string representation of a Zigbee status code."""
+    return STATUS_ENUMERATIONS.get(status_code, "UNKNOWN_STATUS")

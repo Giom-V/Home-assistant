@@ -8,7 +8,7 @@ from homeassistant.core import HomeAssistant
 
 from custom_components.powercalc.power_profile.error import LibraryLoadingError
 from custom_components.powercalc.power_profile.loader.protocol import Loader
-from custom_components.powercalc.power_profile.power_profile import DeviceType, PowerProfile
+from custom_components.powercalc.power_profile.power_profile import DeviceType, DiscoveryBy, PowerProfile
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -25,14 +25,24 @@ class LocalLoader(Loader):
         if not self._is_custom_directory:
             await self._hass.async_add_executor_job(self._load_custom_library)
 
-    async def get_manufacturer_listing(self, device_types: set[DeviceType] | None) -> set[tuple[str, str]]:
+    async def get_manufacturer_listing(
+        self,
+        device_types: set[DeviceType] | None,
+        discovery_by: DiscoveryBy | None = None,
+    ) -> set[tuple[str, str]]:
         """Get listing of all available manufacturers or filtered by model device_type."""
         if device_types is None:
-            return {(manufacturer, manufacturer) for manufacturer in self._manufacturer_model_listing}
+            if discovery_by is None:
+                return {(manufacturer, manufacturer) for manufacturer in self._manufacturer_model_listing}
+            return {
+                (manufacturer, manufacturer)
+                for manufacturer, profiles in self._manufacturer_model_listing.items()
+                if any(profile.discovery_by == discovery_by for profile in profiles.values())
+            }
 
         manufacturers: set[tuple[str, str]] = set()
         for manufacturer in self._manufacturer_model_listing:
-            models = await self.get_model_listing(manufacturer, device_types)
+            models = await self.get_model_listing(manufacturer, device_types, discovery_by)
             if not models:
                 continue
             manufacturers.add((manufacturer, manufacturer))
@@ -49,17 +59,22 @@ class LocalLoader(Loader):
 
         return set()
 
-    async def get_model_listing(self, manufacturer: str, device_types: set[DeviceType] | None) -> set[str]:
+    async def get_model_listing(
+        self,
+        manufacturer: str,
+        device_types: set[DeviceType] | None,
+        discovery_by: DiscoveryBy | None = None,
+    ) -> set[tuple[str, str]]:
         """Get listing of available models for a given manufacturer.
 
         param manufacturer: manufacturer always handled in lower case
         param device_type:  models of the manufacturer will be filtered by DeviceType, models
                             without assigned device_type will be handled as DeviceType.LIGHT.
                             None will return all models of a manufacturer.
-        returns:            Set[str] of models
+        returns:            Set[tuple[str, str]] of (model_id, model_name)
         """
 
-        found_models: set[str] = set()
+        found_models: set[tuple[str, str]] = set()
         models = self._manufacturer_model_listing.get(manufacturer.lower())
         if not models:
             return found_models
@@ -67,7 +82,9 @@ class LocalLoader(Loader):
         for profile in models.values():
             if device_types and profile.device_type not in device_types:
                 continue
-            found_models.add(profile.model)
+            if discovery_by and profile.discovery_by != discovery_by:
+                continue
+            found_models.add((profile.model, profile.name or profile.model))
 
         return found_models
 
@@ -116,6 +133,10 @@ class LocalLoader(Loader):
 
         profile = next((models[model] for model in models if model.lower() in search_lower), None)
         return [profile.model] if profile else []
+
+    async def find_model_migration(self, manufacturer: str, model: str) -> str | None:
+        """Local custom libraries do not support metadata-driven legacy profile migrations."""
+        return None
 
     def _load_custom_library(self) -> None:
         """Loading custom models and aliases from file system.

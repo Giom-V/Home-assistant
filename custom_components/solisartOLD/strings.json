@@ -1,0 +1,22 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "description": "Dummy Garage",
+        "data": {
+          "entity": "Input sensor",
+          "name": "Dummy Sensor"
+        }
+      }
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "data": {
+          "entity": "test"
+        }
+      }
+    }
+  }
+}

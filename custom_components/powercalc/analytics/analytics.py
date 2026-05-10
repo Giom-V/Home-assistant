@@ -28,6 +28,7 @@ from custom_components.powercalc.const import (
     DATA_GROUP_SIZES,
     DATA_GROUP_TYPES,
     DATA_HAS_GROUP_INCLUDE,
+    DATA_POWER_PROFILE_SOURCES,
     DATA_POWER_PROFILES,
     DATA_SENSOR_TYPES,
     DATA_SOURCE_DOMAINS,
@@ -38,6 +39,7 @@ from custom_components.powercalc.const import (
     CalculationStrategy,
     EntityType,
     GroupType,
+    PowerProfileSource,
     SensorType,
 )
 from custom_components.powercalc.power_profile.library import ProfileLibrary
@@ -62,6 +64,7 @@ class RuntimeAnalyticsData(TypedDict, total=False):
     source_domains: Counter[str]
     group_types: Counter[GroupType]
     group_sizes: list[int]
+    power_profile_sources: Counter[PowerProfileSource]
     entity_types: Counter[EntityType]
     uses_include: bool
     _seen: dict[str, set[str]]
@@ -153,6 +156,7 @@ class Analytics:
         powercalc_integration = await async_get_integration(self.hass, DOMAIN)
         runtime_data: RuntimeAnalyticsData = self.hass.data[DOMAIN][DATA_ANALYTICS]
         power_profiles: list[PowerProfile] = runtime_data.get(DATA_POWER_PROFILES, [])
+        non_custom_profiles = [profile for profile in power_profiles if not profile.is_custom_profile]
         group_sizes: list[int] = runtime_data.get(DATA_GROUP_SIZES, [])
         global_config_entry = self.hass.config_entries.async_entry_for_domain_unique_id(
             DOMAIN,
@@ -173,12 +177,13 @@ class Analytics:
                 "by_config_type": runtime_data.setdefault(DATA_CONFIG_TYPES, Counter()),
                 "by_device_type": Counter(profile.device_type for profile in power_profiles),
                 "by_sensor_type": runtime_data.setdefault(DATA_SENSOR_TYPES, Counter()),
-                "by_manufacturer": Counter(profile.manufacturer for profile in power_profiles),
-                "by_model": Counter(f"{profile.manufacturer}:{profile.model}" for profile in power_profiles),
+                "by_manufacturer": Counter(profile.manufacturer for profile in non_custom_profiles),
+                "by_model": Counter(f"{profile.manufacturer}:{profile.model}" for profile in non_custom_profiles),
                 "by_strategy": runtime_data.setdefault(DATA_STRATEGIES, Counter()),
                 "by_source_domain": runtime_data.setdefault(DATA_SOURCE_DOMAINS, Counter()),
                 "by_group_type": runtime_data.setdefault(DATA_GROUP_TYPES, Counter()),
                 "by_entity_type": runtime_data.setdefault(DATA_ENTITY_TYPES, Counter()),
+                "by_power_profile_source": runtime_data.setdefault(DATA_POWER_PROFILE_SOURCES, Counter()),
             },
         }
 

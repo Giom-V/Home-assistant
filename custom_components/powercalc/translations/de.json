@@ -262,6 +262,15 @@
         "description": "{source}\n\nHersteller \"{manufacturer}\" und Modell \"{model}\" wurden für Ihre Gerät automatisch erkannt.{remarks}",
         "title": "Bibliothek"
       },
+      "library_custom_fields": {
+        "title": "Profile configuration",
+        "data": {
+          "power_factor": "Power Factor"
+        },
+        "data_description": {
+          "power_factor": "Ratio of real power to apparent power. Use 0.6 for computers/electronics, 0.7 for mixed loads, 1.0 for resistive loads like heaters."
+        }
+      },
       "library_multi_profile": {
         "data": {
           "model": "Modell wählen"
@@ -702,8 +711,7 @@
           "create_energy_sensor": "Ob Powercalc einen kWh Sensor erstellen soll",
           "create_utility_meters": "Powercalc soll Utility-Meter erstellen, die den Verbrauch täglich, stündlich usw. festhalten."
         },
-        "description": "Erstellen Sie einen Gruppensensor für alle verfolgten und nicht verfolgten Leistungen",
-        "title": "Erstellen Sie einen verfolgten Leistungssensor"
+        "title": "Verfolgte/nicht verfolgte Gruppeneinstellungen"
       },
       "group_tracked_untracked_manual": {
         "data": {
