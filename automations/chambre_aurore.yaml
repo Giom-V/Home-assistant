@@ -128,24 +128,56 @@
       platform: device
       type: remote_button_short_press
       subtype: left
+      id: "short"
+    - device_id: e059cad12f0a2c750a56719a911dc8e6
+      domain: zha
+      platform: device
+      type: remote_button_long_press
+      subtype: left
+      id: "long"
   condition: []
   action:
-    - if:
-        - condition: device
-          device_id: 8f16b93c4fae1055fc21ef57afca5b0f
-          domain: cover
-          entity_id: 5159b1462f01722c359983c04fea0e28
-          type: is_closed
-      then:
-        - device_id: 8f16b93c4fae1055fc21ef57afca5b0f
-          domain: cover
-          entity_id: 5159b1462f01722c359983c04fea0e28
-          type: open
-      else:
-        - device_id: 8f16b93c4fae1055fc21ef57afca5b0f
-          domain: cover
-          entity_id: 5159b1462f01722c359983c04fea0e28
-          type: close
+    - choose:
+        - conditions:
+            - condition: trigger
+              id: "short"
+          sequence:
+            - if:
+                - condition: device
+                  device_id: 8f16b93c4fae1055fc21ef57afca5b0f
+                  domain: cover
+                  entity_id: 5159b1462f01722c359983c04fea0e28
+                  type: is_closed
+              then:
+                - device_id: 8f16b93c4fae1055fc21ef57afca5b0f
+                  domain: cover
+                  entity_id: 5159b1462f01722c359983c04fea0e28
+                  type: open
+              else:
+                - device_id: 8f16b93c4fae1055fc21ef57afca5b0f
+                  domain: cover
+                  entity_id: 5159b1462f01722c359983c04fea0e28
+                  type: close
+        - conditions:
+            - condition: trigger
+              id: "long"
+          sequence:
+            - if:
+                - condition: device
+                  device_id: 8f16b93c4fae1055fc21ef57afca5b0f
+                  domain: cover
+                  entity_id: 5159b1462f01722c359983c04fea0e28
+                  type: is_closed
+              then:
+                - device_id: 8f16b93c4fae1055fc21ef57afca5b0f
+                  domain: cover
+                  entity_id: 5159b1462f01722c359983c04fea0e28
+                  type: close
+              else:
+                - device_id: 8f16b93c4fae1055fc21ef57afca5b0f
+                  domain: cover
+                  entity_id: 5159b1462f01722c359983c04fea0e28
+                  type: open
   mode: single
 - id: "1758443142653"
   alias: Switch off Aurore bed light when she sleeps
@@ -208,8 +240,8 @@
         entity_id: cover.velux_external_cover_roller_shutter
   mode: single
 - id: "1769000000001"
-  alias: "Aurore - Histoire aléatoire du soir"
-  description: "Joue une histoire aléatoire choisie par Aurore sur son enceinte à 22h00"
+  alias: "Aurore - Meditation aléatoire du soir"
+  description: "Joue une meditation aléatoire choisie par Aurore sur son enceinte à 22h00"
   mode: single
   trigger:
     - device_id: e059cad12f0a2c750a56719a911dc8e6
