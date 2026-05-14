@@ -260,3 +260,56 @@
       target:
         entity_id: cover.velux_external_cover_roller_shutter
   mode: single
+- id: "1769000000001"
+  alias: "Aurore - Histoire aléatoire du soir"
+  description: "Joue une histoire aléatoire choisie par Aurore sur son enceinte à 22h00"
+  mode: single
+  trigger:
+    - platform: time
+      at: "22:00:00"
+  action:
+    - action: media_player.volume_set
+      target:
+        entity_id: media_player.enceinte_aurore_2
+      data:
+        volume_level: 0.2
+    - action: music_assistant.play_media
+      target:
+        entity_id: media_player.enceinte_aurore_2
+      data:
+        media_type: track
+        enqueue: replace
+        radio_mode: false
+        media_id: >
+          {{ [
+            "Imagine que tu es un super héro - Quand on a besoin de courage",
+            "Imagine que tu es un super héro - Quand on a besoin de courage",
+            "Imagine que tu as le pouvoir de te transformer en animal - Quand on a besoin de force",
+            "Imagine queque tu as des lunettes à émotions - Quand on a envie d'aider les autres",
+            "Imagine queque tu as des lunettes à émotions - Quand on a envie d'aider les autres",
+            "Imagine que tu as le pouvoir d'être invisible - Quand on a envie d'assouvir sa curiosité",
+            "Imagine que tu as le pouvoir d'être invisible - Quand on a envie d'assouvir sa curiosité",
+            "Imagine que tu peux respirer sous l'eau - Quand on a besoin de s'évader",
+            "Imagine que tu peux voir dans le noir - Quand on a peur du noir",
+            "Imagine que tu peux voir dans le noir - Quand on a peur du noir",
+            "Imagine que tu es loup",
+            "Imagine que tu es une étoile de mer",
+            "Imagine que tu es une étoile de mer",
+            "Imagine que tu es un éléphant",
+            "Imagine que tu es un éléphant",
+            "Imagine que tu es dinosaure",
+            "Imagine que tu es un oiseau",
+            "Imagine que tu es un oiseau",
+            "Imagine que tu es une chenille",
+            "Imagine que tu es une chenille",
+            "Imagine que tu es un nuage - Traverser des épreuves grâce à l'amitié et l'entraide",
+            "Imagine que tu traverses le feu - Faire preuve de courage",
+            "Imagine que tu es un arbre - Adopter la nature comme refuge",
+            "Imagine que tu rêves d'espace - Quand on a besoin de temps pour rêver",
+            "Imagine que tu es une étoile perdue - Quand on se sent un peu perdu",
+            "Imagine que tu es une étoile perdue - Quand on se sent un peu perdu",
+            "Imagine que tu es le soleil - Quand on déborde d'énergie",
+            "Imagine que tu passes près d'un trou noir - Quand on a besoin de force",
+            "Imagine que tu passes près d'un trou noir - Quand on a besoin de force",
+            "Imagine que tu te transforme en Pluton - Quand on a besoin de se retrouver"
+          ] | random }}
