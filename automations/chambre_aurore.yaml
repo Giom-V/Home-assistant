@@ -47,54 +47,6 @@
         entity_id: light.lumiere_chambre_aurore
       action: light.toggle
   mode: single
-- id: "1677701807876"
-  alias: Aurore's Light color temperature up
-  description: "Augmente la température de couleur de la lumière d'Aurore"
-  trigger:
-    - device_id: e059cad12f0a2c750a56719a911dc8e6
-      domain: zha
-      platform: device
-      type: remote_button_short_press
-      subtype: right
-  condition:
-    - condition: device
-      type: is_on
-      device_id: e87ea47d487bcb4708a442aa8ebacfb1
-      entity_id: light.aurores_light_bulb
-      domain: light
-  action:
-    - device_id: e87ea47d487bcb4708a442aa8ebacfb1
-      domain: number
-      entity_id: number.aurores_light_bulb_start_up_color_temperature
-      type: set_value
-      value:
-        "{{ [states('number.aurores_light_bulb_start_up_color_temperature') |
-        int + 40 , 255] | min | float }}"
-  mode: single
-- id: "1677701807877"
-  alias: Aurore's Light color temperature down
-  description: "Diminue la température de couleur de la lumière d'Aurore"
-  trigger:
-    - device_id: e059cad12f0a2c750a56719a911dc8e6
-      domain: zha
-      platform: device
-      type: remote_button_short_press
-      subtype: left
-  condition:
-    - condition: device
-      type: is_on
-      device_id: e87ea47d487bcb4708a442aa8ebacfb1
-      entity_id: light.aurores_light_bulb
-      domain: light
-  action:
-    - device_id: e87ea47d487bcb4708a442aa8ebacfb1
-      domain: number
-      entity_id: number.aurores_light_bulb_start_up_color_temperature
-      type: set_value
-      value:
-        "{{ [states('number.aurores_light_bulb_start_up_color_temperature') |
-        int - 40 , 255] | min | float }}"
-  mode: single
 - id: "1679085142205"
   alias: During the day Aurore's light bulb default behavior is On
   description: "Pendant la journée, le comportement par défaut de l'ampoule d'Aurore est 'On'"
@@ -176,29 +128,56 @@
       platform: device
       type: remote_button_short_press
       subtype: left
+      id: "short"
     - device_id: e059cad12f0a2c750a56719a911dc8e6
       domain: zha
       platform: device
       type: remote_button_long_press
-      subtype: right
+      subtype: left
+      id: "long"
   condition: []
   action:
-    - if:
-        - condition: device
-          device_id: 8f16b93c4fae1055fc21ef57afca5b0f
-          domain: cover
-          entity_id: 5159b1462f01722c359983c04fea0e28
-          type: is_closed
-      then:
-        - device_id: 8f16b93c4fae1055fc21ef57afca5b0f
-          domain: cover
-          entity_id: 5159b1462f01722c359983c04fea0e28
-          type: open
-      else:
-        - device_id: 8f16b93c4fae1055fc21ef57afca5b0f
-          domain: cover
-          entity_id: 5159b1462f01722c359983c04fea0e28
-          type: close
+    - choose:
+        - conditions:
+            - condition: trigger
+              id: "short"
+          sequence:
+            - if:
+                - condition: device
+                  device_id: 8f16b93c4fae1055fc21ef57afca5b0f
+                  domain: cover
+                  entity_id: 5159b1462f01722c359983c04fea0e28
+                  type: is_closed
+              then:
+                - device_id: 8f16b93c4fae1055fc21ef57afca5b0f
+                  domain: cover
+                  entity_id: 5159b1462f01722c359983c04fea0e28
+                  type: open
+              else:
+                - device_id: 8f16b93c4fae1055fc21ef57afca5b0f
+                  domain: cover
+                  entity_id: 5159b1462f01722c359983c04fea0e28
+                  type: close
+        - conditions:
+            - condition: trigger
+              id: "long"
+          sequence:
+            - if:
+                - condition: device
+                  device_id: 8f16b93c4fae1055fc21ef57afca5b0f
+                  domain: cover
+                  entity_id: 5159b1462f01722c359983c04fea0e28
+                  type: is_closed
+              then:
+                - device_id: 8f16b93c4fae1055fc21ef57afca5b0f
+                  domain: cover
+                  entity_id: 5159b1462f01722c359983c04fea0e28
+                  type: close
+              else:
+                - device_id: 8f16b93c4fae1055fc21ef57afca5b0f
+                  domain: cover
+                  entity_id: 5159b1462f01722c359983c04fea0e28
+                  type: open
   mode: single
 - id: "1758443142653"
   alias: Switch off Aurore bed light when she sleeps
@@ -261,12 +240,15 @@
         entity_id: cover.velux_external_cover_roller_shutter
   mode: single
 - id: "1769000000001"
-  alias: "Aurore - Histoire aléatoire du soir"
-  description: "Joue une histoire aléatoire choisie par Aurore sur son enceinte à 22h00"
+  alias: "Aurore - Meditation aléatoire du soir"
+  description: "Joue une meditation aléatoire choisie par Aurore sur son enceinte à 22h00"
   mode: single
   trigger:
-    - platform: time
-      at: "22:00:00"
+    - device_id: e059cad12f0a2c750a56719a911dc8e6
+      domain: zha
+      platform: device
+      type: remote_button_short_press
+      subtype: right
   action:
     - action: media_player.volume_set
       target:
@@ -313,3 +295,17 @@
             "Imagine que tu passes près d'un trou noir - Quand on a besoin de force",
             "Imagine que tu te transforme en Pluton - Quand on a besoin de se retrouver"
           ] | random }}
+- id: "1769000000002"
+  alias: "Stop Aurore music"
+  description: "Arrête la musique d'Aurore"
+  mode: single
+  trigger:
+    - device_id: e059cad12f0a2c750a56719a911dc8e6
+      domain: zha
+      platform: device
+      type: remote_button_long_press
+      subtype: right
+  action:
+    - action: media_player.media_stop
+      target:
+        entity_id: media_player.enceinte_aurore_2
