@@ -47,54 +47,6 @@
         entity_id: light.lumiere_chambre_aurore
       action: light.toggle
   mode: single
-- id: "1677701807876"
-  alias: Aurore's Light color temperature up
-  description: "Augmente la température de couleur de la lumière d'Aurore"
-  trigger:
-    - device_id: e059cad12f0a2c750a56719a911dc8e6
-      domain: zha
-      platform: device
-      type: remote_button_short_press
-      subtype: right
-  condition:
-    - condition: device
-      type: is_on
-      device_id: e87ea47d487bcb4708a442aa8ebacfb1
-      entity_id: light.aurores_light_bulb
-      domain: light
-  action:
-    - device_id: e87ea47d487bcb4708a442aa8ebacfb1
-      domain: number
-      entity_id: number.aurores_light_bulb_start_up_color_temperature
-      type: set_value
-      value:
-        "{{ [states('number.aurores_light_bulb_start_up_color_temperature') |
-        int + 40 , 255] | min | float }}"
-  mode: single
-- id: "1677701807877"
-  alias: Aurore's Light color temperature down
-  description: "Diminue la température de couleur de la lumière d'Aurore"
-  trigger:
-    - device_id: e059cad12f0a2c750a56719a911dc8e6
-      domain: zha
-      platform: device
-      type: remote_button_short_press
-      subtype: left
-  condition:
-    - condition: device
-      type: is_on
-      device_id: e87ea47d487bcb4708a442aa8ebacfb1
-      entity_id: light.aurores_light_bulb
-      domain: light
-  action:
-    - device_id: e87ea47d487bcb4708a442aa8ebacfb1
-      domain: number
-      entity_id: number.aurores_light_bulb_start_up_color_temperature
-      type: set_value
-      value:
-        "{{ [states('number.aurores_light_bulb_start_up_color_temperature') |
-        int - 40 , 255] | min | float }}"
-  mode: single
 - id: "1679085142205"
   alias: During the day Aurore's light bulb default behavior is On
   description: "Pendant la journée, le comportement par défaut de l'ampoule d'Aurore est 'On'"
@@ -176,11 +128,6 @@
       platform: device
       type: remote_button_short_press
       subtype: left
-    - device_id: e059cad12f0a2c750a56719a911dc8e6
-      domain: zha
-      platform: device
-      type: remote_button_long_press
-      subtype: right
   condition: []
   action:
     - if:
@@ -265,8 +212,11 @@
   description: "Joue une histoire aléatoire choisie par Aurore sur son enceinte à 22h00"
   mode: single
   trigger:
-    - platform: time
-      at: "22:00:00"
+    - device_id: e059cad12f0a2c750a56719a911dc8e6
+      domain: zha
+      platform: device
+      type: remote_button_short_press
+      subtype: right
   action:
     - action: media_player.volume_set
       target:
@@ -313,3 +263,17 @@
             "Imagine que tu passes près d'un trou noir - Quand on a besoin de force",
             "Imagine que tu te transforme en Pluton - Quand on a besoin de se retrouver"
           ] | random }}
+- id: "1769000000002"
+  alias: "Stop Aurore music"
+  description: "Arrête la musique d'Aurore"
+  mode: single
+  trigger:
+    - device_id: e059cad12f0a2c750a56719a911dc8e6
+      domain: zha
+      platform: device
+      type: remote_button_long_press
+      subtype: right
+  action:
+    - action: media_player.media_stop
+      target:
+        entity_id: media_player.enceinte_aurore_2
