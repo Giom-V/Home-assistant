@@ -28,8 +28,11 @@ ICONS = {
 }
 
 NAMES = {
+    "co2": "CO2",
     "led": "LED",
     "rssi": "RSSI",
+    "pm25": "PM2.5",
+    "pm10": "PM10",
     "pulse": "INCHING",
     "pulseWidth": "INCHING Duration",
 }
@@ -68,15 +71,16 @@ class XEntity(Entity):
             self._attr_name = device["name"]
             self._attr_unique_id = device["deviceid"]
 
-        # domain will be replaced in entity_registry.async_generate_entity_id
-        self.entity_id = f"{DOMAIN}.{DOMAIN}_{self._attr_unique_id.lower()}"
-
         deviceid: str = device["deviceid"]
         params: dict = device["params"]
 
         connections = (
             {(CONNECTION_NETWORK_MAC, params["staMac"])} if "staMac" in params else None
         )
+
+        hw_version = device.get("extra", {}).get("uiid")
+        if hw_version is not None:
+            hw_version = str(hw_version)
 
         self._attr_device_info = DeviceInfo(
             connections=connections,
@@ -85,7 +89,7 @@ class XEntity(Entity):
             model=device.get("productModel"),
             name=device["name"],
             sw_version=params.get("fwVersion"),
-            hw_version=device.get("extra", {}).get("uiid"),
+            hw_version=hw_version,
         )
 
         try:
@@ -98,6 +102,15 @@ class XEntity(Entity):
         if parent := device.get("parent"):
             self._attr_device_info["via_device"] = (DOMAIN, parent["deviceid"])
             ewelink.dispatcher_connect(parent["deviceid"], self.internal_parent_update)
+
+    @property
+    def suggested_object_id(self) -> str | None:
+        # Preserve historical "sonoff_<unique_id>" naming. HA prepends the
+        # platform domain (e.g. sensor., switch.) to build the entity_id.
+        # https://github.com/AlexxIT/SonoffLAN/issues/1787
+        if self._attr_unique_id:
+            return f"{DOMAIN}_{self._attr_unique_id.lower()}"
+        return None
 
     def set_state(self, params: dict):
         pass

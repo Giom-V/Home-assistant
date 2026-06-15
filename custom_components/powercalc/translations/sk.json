@@ -48,6 +48,7 @@
       "daily_energy": {
         "data": {
           "create_utility_meters": "Vytvorenie meracích prístrojov",
+          "daily_energy_value": "Daily energy value",
           "name": "Názov",
           "on_time": "V čase",
           "start_time": "Štart čas",
@@ -87,14 +88,10 @@
       },
       "fixed": {
         "data": {
-          "power": "Výkon",
-          "power_template": "Šablóna výkonu",
-          "states_power": "Stavy výkonu"
+          "fixed_value": "Fixed value"
         },
         "data_description": {
-          "power": "Pevná hodnota výkonu vo wattoch, keď je entita ZAPNUTÁ",
-          "power_template": "Šablóna sa vyhodnotí, aby sa získala hodnota výkonu vo W",
-          "states_power": "Jeden pár „stav: výkon“ v každom riadku, pozri príklad vyššie"
+          "fixed_value": "Fixed value in Watts when the entity is ON"
         },
         "description": "Definujte pevnú hodnotu výkonu pre vašu entitu. Prípadne môžete definovať hodnotu výkonu pre každý stav. Napríklad:\n\n`prehrávanie: 8.3`\n`pozastavené: 2.25`",
         "title": "Opravená konfigurácia"
@@ -290,6 +287,7 @@
           "attribute": "Zadajte atribút. Keď zostane prázdne, bude jas pre svetlá a percento pre ventilátory",
           "calibrate": "Na každý riadok uveďte kalibračnú hodnotu. Príklad\n\n1: 20"
         },
+        "description": "Define the linear power calculation options. See the [documentation]({docs_uri}) for more information. Use either min/max power or calibration values which allows for more points of control.",
         "title": "Lineárna konfigurácia"
       },
       "manufacturer": {
@@ -327,6 +325,7 @@
           "power": "Napájanie jedným vypínačom pri zapnutí",
           "power_off": "Napájanie na jeden vypínač pri vypnutí"
         },
+        "description": "Define the Multi switch power calculation options. See the [documentation]({docs_uri}) for more information.",
         "title": "Konfigurácia viacerých prepínačov"
       },
       "playbook": {
@@ -341,6 +340,7 @@
           "repeat": "Prepínač, keď chcete pokračovať v opakovaní príručky po jej dokončení",
           "states_trigger": "Spustite playbook na základe zmeny stavu. Príklad\n\nprehrávanie: program1"
         },
+        "description": "Define the playbook options. See the [documentation]({docs_uri}) for more information.",
         "title": "Playbook konfigurácia"
       },
       "power_advanced": {
@@ -542,6 +542,7 @@
       "daily_energy": {
         "title": "Denné energetické možnosti",
         "data": {
+          "daily_energy_value": "Daily energy value",
           "name": "Názov",
           "on_time": "V čase",
           "start_time": "Čas začiatku",
@@ -571,16 +572,11 @@
       "fixed": {
         "title": "Pevné možnosti",
         "data": {
-          "power": "Výkon",
-          "power_template": "Výkon šablóna",
-          "self_usage_included": "Samostatné použitie v cene",
-          "states_power": "Výkonové stavy"
+          "fixed_value": "Fixed value",
+          "self_usage_included": "Samostatné použitie v cene"
         },
         "data_description": {
-          "power": "Pevná hodnota výkonu vo wattoch, keď je entita ZAPNUTÁ",
-          "power_template": "Šablóna sa vyhodnotí, aby sa získala hodnota výkonu vo W",
-          "self_usage_included": "Či hodnota výkonu zahŕňa výkon spotrebovaný samotným inteligentným prepínačom.",
-          "states_power": "Jeden pár „stav: výkon“ v každom riadku, pozri príklad vyššie"
+          "self_usage_included": "Či hodnota výkonu zahŕňa výkon spotrebovaný samotným inteligentným prepínačom."
         }
       },
       "global_configuration": {
@@ -815,6 +811,21 @@
       }
     }
   },
+  "selector": {
+    "daily_energy_value": {
+      "choices": {
+        "value": "Value",
+        "value_template": "Value template"
+      }
+    },
+    "fixed_value": {
+      "choices": {
+        "power": "Power",
+        "power_template": "Power template",
+        "states_power": "States power"
+      }
+    }
+  },
   "services": {
     "activate_playbook": {
       "description": "Spustenie vykonávania playbooku.",
@@ -859,6 +870,10 @@
         }
       },
       "name": "Zmeniť GUI nastavenie"
+    },
+    "debug_group": {
+      "description": "Get a debug overview of a group power or energy sensor including current member values.",
+      "name": "Debug group"
     },
     "get_active_playbook": {
       "description": "Získajte aktuálny playbook",

@@ -1,7 +1,7 @@
 {
   "common": {
-    "source_entity": "Source entity",
-    "source_device": "Source device",
+    "source_entity": "Zdrojová entita",
+    "source_device": "Zdrojové zařízení",
     "remarks_smart_switch": "Tento profil poskytuje pouze hodnoty napájení v pohotovostním režimu. \n Pokud máte spotřebič, který zapnutí spotřebovává pevně dané množství energie, můžete zadat tuto hodnotu v dalším kroku v nastavení",
     "remarks_smart_dimmer": "Tento profil poskytuje pouze hodnoty spotřeby energie v pohotovostním režimu. \n V dalším kroku můžete volitelně zadat hodnoty připojeného světla"
   },
@@ -10,9 +10,9 @@
       "already_configured": "Senzor je již nastaven, zadejte unikátní ID"
     },
     "error": {
-      "daily_energy_mandatory": "You must supply at least one of Value or Value template",
-      "entity_mandatory": "Selecting an entity is required for any strategy other than playbook",
-      "fixed_mandatory": "You must supply at least one of Power, Power template or States power",
+      "daily_energy_mandatory": "Musíte zadat alespoň jednu z možností „Hodnota“ nebo „Šablona hodnoty“",
+      "entity_mandatory": "Pro všechny strategie kromě playbook je nutné vybrat entitu",
+      "fixed_mandatory": "Musíte zadat alespoň jednu z následujících možností: Power, šablonu Power nebo States power",
       "fixed_states_power_only": "This entity can only work with 'states_power' not 'power'",
       "group_mandatory": "You must define at least subgroups or power and energy-entities",
       "linear_mandatory": "You must supply at least one of max_power or calibrate",
@@ -48,6 +48,7 @@
       "daily_energy": {
         "data": {
           "create_utility_meters": "Create utility meters",
+          "daily_energy_value": "Daily energy value",
           "name": "Název",
           "on_time": "V čase",
           "start_time": "Start time",
@@ -87,14 +88,10 @@
       },
       "fixed": {
         "data": {
-          "power": "Power",
-          "power_template": "Power template",
-          "states_power": "States power"
+          "fixed_value": "Fixed value"
         },
         "data_description": {
-          "power": "Pevná hodnota příkonu ve wattech, když je entita zapnutá",
-          "power_template": "Šablona bude vyhodnocena pro získání hodnoty příkonu ve wattech",
-          "states_power": "One 'state: power' pair on each row"
+          "fixed_value": "Fixed value in Watts when the entity is ON"
         },
         "description": "Definujte fixní hodnotu příkonu pro vaši entitu. Případně můžete definovat hodnotu příkonu pro jednotlivé stavy. Například:\n\n`playing: 8.3`\n`paused: 2.25`",
         "title": "Fixed config"
@@ -290,6 +287,7 @@
           "attribute": "Specify the attribute. When left empty will be brightness for lights and percentage for fans",
           "calibrate": "Put a calibration value on each line. Example\n\n1: 20"
         },
+        "description": "Define the linear power calculation options. See the [documentation]({docs_uri}) for more information. Use either min/max power or calibration values which allows for more points of control.",
         "title": "Lineární konfigurace"
       },
       "manufacturer": {
@@ -327,6 +325,7 @@
           "power": "Power for a single switch when turned on",
           "power_off": "Power for a single switch when turned off"
         },
+        "description": "Define the Multi switch power calculation options. See the [documentation]({docs_uri}) for more information.",
         "title": "Multi switch config"
       },
       "playbook": {
@@ -341,6 +340,7 @@
           "repeat": "Toggle when you want to keep repeating the playbook after it completes",
           "states_trigger": "Trigger a playbook based on a state change. Example\n\nplaying: program1"
         },
+        "description": "Define the playbook options. See the [documentation]({docs_uri}) for more information.",
         "title": "Playbook config"
       },
       "power_advanced": {
@@ -542,6 +542,7 @@
       "daily_energy": {
         "title": "Daily energy options",
         "data": {
+          "daily_energy_value": "Daily energy value",
           "name": "Name",
           "on_time": "On time",
           "start_time": "Start time",
@@ -571,16 +572,11 @@
       "fixed": {
         "title": "Fixed options",
         "data": {
-          "power": "Power",
-          "power_template": "Power template",
-          "self_usage_included": "Self usage included",
-          "states_power": "States power"
+          "fixed_value": "Fixed value",
+          "self_usage_included": "Self usage included"
         },
         "data_description": {
-          "power": "A fixed power value in Watts when the entity is ON",
-          "power_template": "Template will be evaluated to get the power value in W",
-          "self_usage_included": "Whether the power value includes the power consumed by the smart switch itself.",
-          "states_power": "One 'state: power' pair on each row, see example above"
+          "self_usage_included": "Whether the power value includes the power consumed by the smart switch itself."
         }
       },
       "global_configuration": {
@@ -815,6 +811,21 @@
       }
     }
   },
+  "selector": {
+    "daily_energy_value": {
+      "choices": {
+        "value": "Value",
+        "value_template": "Value template"
+      }
+    },
+    "fixed_value": {
+      "choices": {
+        "power": "Power",
+        "power_template": "Power template",
+        "states_power": "States power"
+      }
+    }
+  },
   "services": {
     "activate_playbook": {
       "description": "Start execution of a playbook.",
@@ -859,6 +870,10 @@
         }
       },
       "name": "Change GUI config"
+    },
+    "debug_group": {
+      "description": "Get a debug overview of a group power or energy sensor including current member values.",
+      "name": "Debug group"
     },
     "get_active_playbook": {
       "description": "Get current running playbook",

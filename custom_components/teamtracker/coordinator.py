@@ -1,0 +1,121 @@
+""" TeamTracker Data Coordinator """
+import locale
+import logging
+
+from async_timeout import timeout
+
+from homeassistant.config_entries import ConfigEntry
+from homeassistant.const import CONF_NAME
+from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
+
+from .const import (
+    CONF_API_LANGUAGE,
+    CONF_CONFERENCE_ID,
+    CONF_LEAGUE_ID,
+    CONF_LEAGUE_PATH,
+    CONF_SPORT_PATH,
+    CONF_TEAM_ID,
+    DEFAULT_TIMEOUT,
+)
+from .parser_factory import get_parser
+from .provider_factory import get_provider
+
+_LOGGER = logging.getLogger(__name__)
+
+
+class TeamTrackerCoordinator(DataUpdateCoordinator):
+    """Class to manage fetching TeamTracker data."""
+
+    def __init__(self, hass, config, entry: ConfigEntry=None):
+        """Initialize."""
+        self.name = config[CONF_NAME]
+        self.team_id = config[CONF_TEAM_ID]
+        self.league_id = config[CONF_LEAGUE_ID]
+        self.league_path = config[CONF_LEAGUE_PATH]
+        self.sport_path = config[CONF_SPORT_PATH]
+        self.conference_id = ""
+        if CONF_CONFERENCE_ID in config.keys():
+            if len(config[CONF_CONFERENCE_ID]) > 0:
+                self.conference_id = config[CONF_CONFERENCE_ID]
+        self.config = config
+        self.hass = hass
+        self.entry = entry #None if setup from YAML
+
+        self.provider = get_provider(self.sport_path, self.league_path, self.team_id, self)
+        self.parser = get_parser(self.provider.data_format, self)
+        self.parser.setup(self.name, self.sport_path, self.league_path, self.league_id, self.team_id)
+
+        self.update_interval = self.provider.DEFAULT_REFRESH_RATE
+
+
+        super().__init__(hass, _LOGGER, name=self.name, update_interval=self.provider.DEFAULT_REFRESH_RATE)
+        _LOGGER.debug(
+            "%s: Using default refresh rate (%s)", self.name, self.update_interval
+        )
+
+
+    #
+    #  Return the language to use for the API
+    #
+    def get_lang(self):
+        """Return language to use for API."""
+
+        try:
+            lang = self.hass.config.language
+        except:
+            lang, _ = locale.getlocale()
+            lang = lang or "en_US"
+
+        # Override language if is set in the configuration or options
+
+        if CONF_API_LANGUAGE in self.config.keys():
+            lang = self.config[CONF_API_LANGUAGE].lower()
+        if self.entry and self.entry.options and CONF_API_LANGUAGE in self.entry.options and len(self.entry.options[CONF_API_LANGUAGE])>=2:
+                lang = self.entry.options[CONF_API_LANGUAGE].lower()
+
+        return lang
+
+
+    #
+    #  Set team info from service call
+    #
+    def update_team_info(self, sport_path, league_path, team_id, conference_id=""):
+        """update team information when call_api service is called."""
+
+        self.sport_path = sport_path
+        self.league_path = league_path
+        self.league_id = "XXX"
+        self.team_id = team_id
+        self.conference_id = conference_id
+
+        self.parser.setup(self.name, self.sport_path, self.league_path, self.league_id, self.team_id)
+
+
+    #
+    #  DataUpdateCoordinator Call Tree
+    #
+    #  _async_update_data() - Top-level method called from HA to update sensor
+    #    Gets response from provider, parses it, and updates the refresh rate if appropriate
+    #
+    async def _async_update_data(self):
+        """Top-level method called from HA to update sensor, controls refresh rate."""
+        async with timeout(DEFAULT_TIMEOUT):
+            try:
+                response = await self.provider.async_update_sport_data()
+                values = self.parser.parse_response(response, self.get_lang())
+
+                # update the interval based on flag
+                if values.private_fast_refresh:
+                    refresh_rate = self.provider.RAPID_REFRESH_RATE
+                else:
+                    refresh_rate = self.provider.DEFAULT_REFRESH_RATE
+
+                if self.update_interval != refresh_rate:
+                    self.update_interval = refresh_rate
+                    _LOGGER.debug(
+                        "%s: Updating to refresh rate (%s)", self.name, self.update_interval
+                    )
+            except Exception as error:
+                _LOGGER.exception("%s: Error updating data", self.name)
+                raise UpdateFailed(error) from error
+            return values

@@ -48,6 +48,7 @@
       "daily_energy": {
         "data": {
           "create_utility_meters": "Skapa bruksmätare",
+          "daily_energy_value": "Daily energy value",
           "name": "Namn",
           "on_time": "Igång tid",
           "start_time": "Starttid",
@@ -87,14 +88,10 @@
       },
       "fixed": {
         "data": {
-          "power": "Effekt",
-          "power_template": "Effektmall",
-          "states_power": "Effekttillstånd"
+          "fixed_value": "Fixed value"
         },
         "data_description": {
-          "power": "Ett fast värde i Watt när entiteten är igång",
-          "power_template": "Mall för att beräkna effekten i W",
-          "states_power": "En 'tillstånd:effekt' par per rad, se exempel ovan"
+          "fixed_value": "Fixed value in Watts when the entity is ON"
         },
         "description": "Definiera ett fast värde för din entitet. Alternativt kan du definiera ett värde per tillstånd. Till exempel: \n\n`spelar: 8.3`\n`pausad: 2.25`",
         "title": "Fast konfig"
@@ -290,6 +287,7 @@
           "attribute": "Ange attributet. Om tomt används ljusstyrka för lampor och procent för fläktar",
           "calibrate": "Skriv ett kalibreringsvärde per rad. Exempel\n\n1: 20"
         },
+        "description": "Define the linear power calculation options. See the [documentation]({docs_uri}) for more information. Use either min/max power or calibration values which allows for more points of control.",
         "title": "Linjär konfiguration"
       },
       "manufacturer": {
@@ -327,6 +325,7 @@
           "power": "Effekt för enstaka enhet när påslagen",
           "power_off": "Effekt för enstaka enhet när avslagen"
         },
+        "description": "Define the Multi switch power calculation options. See the [documentation]({docs_uri}) for more information.",
         "title": "Multi-enhetskonfiguration"
       },
       "playbook": {
@@ -341,6 +340,7 @@
           "repeat": "Växla om du vill att playbooken ska repeteras när den är färdig",
           "states_trigger": "Utlösa en spelbok baserad på en tillståndsändring. Exempel\n\nspelar: program1"
         },
+        "description": "Define the playbook options. See the [documentation]({docs_uri}) for more information.",
         "title": "Spelbok konfiguration"
       },
       "power_advanced": {
@@ -542,6 +542,7 @@
       "daily_energy": {
         "title": "Daily energy options",
         "data": {
+          "daily_energy_value": "Daily energy value",
           "name": "Namn",
           "on_time": "Igång tid",
           "start_time": "Starttid",
@@ -571,16 +572,11 @@
       "fixed": {
         "title": "Fixed options",
         "data": {
-          "power": "effekt",
-          "power_template": "Effektmall",
-          "self_usage_included": "Self usage included",
-          "states_power": "Effekttillstånd"
+          "fixed_value": "Fixed value",
+          "self_usage_included": "Self usage included"
         },
         "data_description": {
-          "power": "A fixed power value in Watts when the entity is ON",
-          "power_template": "Mall för att beräkna effekten i W",
-          "self_usage_included": "Whether the power value includes the power consumed by the smart switch itself.",
-          "states_power": "En 'tillstånd:effekt' par per rad, se exempel ovan"
+          "self_usage_included": "Whether the power value includes the power consumed by the smart switch itself."
         }
       },
       "global_configuration": {
@@ -815,6 +811,21 @@
       }
     }
   },
+  "selector": {
+    "daily_energy_value": {
+      "choices": {
+        "value": "Value",
+        "value_template": "Value template"
+      }
+    },
+    "fixed_value": {
+      "choices": {
+        "power": "Power",
+        "power_template": "Power template",
+        "states_power": "States power"
+      }
+    }
+  },
   "services": {
     "activate_playbook": {
       "description": "Starts körningen sv en playbook.",
@@ -859,6 +870,10 @@
         }
       },
       "name": "Ändra GUI-konfiguration"
+    },
+    "debug_group": {
+      "description": "Get a debug overview of a group power or energy sensor including current member values.",
+      "name": "Debug group"
     },
     "get_active_playbook": {
       "description": "Get current running playbook",

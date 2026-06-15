@@ -269,20 +269,6 @@ SENSOR_DESCRIPTIONS: Final[tuple[HyundaiKiaBinarySensorEntityDescription, ...]] 
         entity_category=EntityCategory.DIAGNOSTIC,
     ),
     HyundaiKiaBinarySensorEntityDescription(
-        key="ev_first_departure_enabled",
-        translation_key="ev_first_departure_enabled",
-        is_on=lambda vehicle: vehicle.ev_first_departure_enabled,
-        on_icon="mdi:clock-outline",
-        off_icon="mdi:clock-outline",
-    ),
-    HyundaiKiaBinarySensorEntityDescription(
-        key="ev_second_departure_enabled",
-        translation_key="ev_second_departure_enabled",
-        is_on=lambda vehicle: vehicle.ev_second_departure_enabled,
-        on_icon="mdi:clock-outline",
-        off_icon="mdi:clock-outline",
-    ),
-    HyundaiKiaBinarySensorEntityDescription(
         key="brake_fluid_warning_is_on",
         translation_key="brake_fluid_warning_is_on",
         is_on=lambda vehicle: vehicle.brake_fluid_warning_is_on,
@@ -493,6 +479,32 @@ SENSOR_DESCRIPTIONS: Final[tuple[HyundaiKiaBinarySensorEntityDescription, ...]] 
         translation_key="ev_battery_winter_mode",
         icon="mdi:snowflake-thermometer",
         is_on=lambda vehicle: vehicle.ev_battery_winter_mode,
+    ),
+    HyundaiKiaBinarySensorEntityDescription(
+        key="ev_battery_precondition_enabled",
+        translation_key="ev_battery_precondition_enabled",
+        icon="mdi:battery-charging-high",
+        is_on=lambda vehicle: vehicle.ev_battery_precondition_enabled,
+        entity_category=EntityCategory.DIAGNOSTIC,
+    ),
+    HyundaiKiaBinarySensorEntityDescription(
+        key="ev_battery_heating_state",
+        translation_key="ev_battery_heating_state",
+        icon="mdi:fire",
+        is_on=lambda vehicle: vehicle.ev_battery_heating_state,
+        entity_category=EntityCategory.DIAGNOSTIC,
+    ),
+    HyundaiKiaBinarySensorEntityDescription(
+        key="ev_v2l_status",
+        translation_key="ev_v2l_status",
+        icon="mdi:ev-station",
+        is_on=lambda vehicle: vehicle.ev_v2l_status,
+    ),
+    HyundaiKiaBinarySensorEntityDescription(
+        key="ev_v2x_status",
+        translation_key="ev_v2x_status",
+        icon="mdi:ev-station",
+        is_on=lambda vehicle: vehicle.ev_v2x_status,
     ),
 )
 

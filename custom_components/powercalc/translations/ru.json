@@ -48,6 +48,7 @@
       "daily_energy": {
         "data": {
           "create_utility_meters": "Создать счётчики",
+          "daily_energy_value": "Daily energy value",
           "name": "Название",
           "on_time": "Время работы",
           "start_time": "Время начала",
@@ -87,14 +88,10 @@
       },
       "fixed": {
         "data": {
-          "power": "Мощность",
-          "power_template": "Шаблон мощности",
-          "states_power": "Мощность по состояниям"
+          "fixed_value": "Fixed value"
         },
         "data_description": {
-          "power": "Фиксированное значение мощности в ваттах, когда объект включён",
-          "power_template": "Шаблон для вычисления значения мощности в ваттах",
-          "states_power": "Пара 'состояние: мощность' на каждой строке, см. [документацию](https://docs.powercalc.nl/strategies/fixed/#power-per-state)"
+          "fixed_value": "Fixed value in Watts when the entity is ON"
         },
         "description": "Определите фиксированное значение мощности для вашего объекта. Альтернативно можно указать мощность для каждого состояния. Например:\n\n`playing: 8.3`\n`paused: 2.25`",
         "title": "Фиксированная конфигурация"
@@ -290,6 +287,7 @@
           "attribute": "Укажите атрибут. Если оставить пустым, будет использоваться яркость для светильников, громкость для колонок и процент для вентиляторов",
           "calibrate": "Укажите калибровочное значение на каждой строке. Пример\n\n1: 20"
         },
+        "description": "Define the linear power calculation options. See the [documentation]({docs_uri}) for more information. Use either min/max power or calibration values which allows for more points of control.",
         "title": "Линейная конфигурация"
       },
       "manufacturer": {
@@ -327,6 +325,7 @@
           "power": "Мощность одного выключателя во включённом состоянии",
           "power_off": "Мощность одного выключателя в выключенном состоянии"
         },
+        "description": "Define the Multi switch power calculation options. See the [documentation]({docs_uri}) for more information.",
         "title": "Конфигурация мультивыключателя"
       },
       "playbook": {
@@ -341,6 +340,7 @@
           "repeat": "Включите, если хотите повторять сценарий после его завершения",
           "states_trigger": "Запуск сценария по изменению состояния. Пример\n\nplaying: program1"
         },
+        "description": "Define the playbook options. See the [documentation]({docs_uri}) for more information.",
         "title": "Конфигурация сценариев"
       },
       "power_advanced": {
@@ -542,6 +542,7 @@
       "daily_energy": {
         "title": "Параметры суточной энергии",
         "data": {
+          "daily_energy_value": "Daily energy value",
           "name": "Название",
           "on_time": "Время работы",
           "start_time": "Время начала",
@@ -571,16 +572,11 @@
       "fixed": {
         "title": "Фиксированные параметры",
         "data": {
-          "power": "Мощность",
-          "power_template": "Шаблон мощности",
-          "self_usage_included": "Включено собственное потребление",
-          "states_power": "Мощность по состояниям"
+          "fixed_value": "Fixed value",
+          "self_usage_included": "Включено собственное потребление"
         },
         "data_description": {
-          "power": "Фиксированное значение мощности в ваттах, когда объект включён",
-          "power_template": "Шаблон для вычисления значения мощности в ваттах",
-          "self_usage_included": "Включено ли в значение мощности потребление самого умного выключателя",
-          "states_power": "Пара 'состояние: мощность' на каждой строке, см. [документацию](https://docs.powercalc.nl/strategies/fixed/#power-per-state)"
+          "self_usage_included": "Включено ли в значение мощности потребление самого умного выключателя"
         }
       },
       "global_configuration": {
@@ -815,6 +811,21 @@
       }
     }
   },
+  "selector": {
+    "daily_energy_value": {
+      "choices": {
+        "value": "Value",
+        "value_template": "Value template"
+      }
+    },
+    "fixed_value": {
+      "choices": {
+        "power": "Power",
+        "power_template": "Power template",
+        "states_power": "States power"
+      }
+    }
+  },
   "services": {
     "activate_playbook": {
       "description": "Запустить выполнение сценария.",
@@ -859,6 +870,10 @@
         }
       },
       "name": "Изменить конфигурацию GUI"
+    },
+    "debug_group": {
+      "description": "Get a debug overview of a group power or energy sensor including current member values.",
+      "name": "Debug group"
     },
     "get_active_playbook": {
       "description": "Получить текущий запущенный сценарий",

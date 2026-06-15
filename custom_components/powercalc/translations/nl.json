@@ -48,6 +48,7 @@
       "daily_energy": {
         "data": {
           "create_utility_meters": "Creëer utiliteit meters",
+          "daily_energy_value": "Daily energy value",
           "name": "Naam",
           "on_time": "Tijd aan per dag",
           "start_time": "Begintijd",
@@ -87,14 +88,10 @@
       },
       "fixed": {
         "data": {
-          "power": "Vermogen",
-          "power_template": "Vermogen template",
-          "states_power": "Vermogen per status"
+          "fixed_value": "Fixed value"
         },
         "data_description": {
-          "power": "Een vastgestelde vermogen in Watt wanneer de gekoppelde entiteit AAN is",
-          "power_template": "Template die geëvalueerd wordt om het vermogen (W) te bepalen",
-          "states_power": "Eén 'status: vermogen' paar op elke rij"
+          "fixed_value": "Fixed value in Watts when the entity is ON"
         },
         "description": "Definieer een vast vermogen (in W) voor je entiteit. Eventueel kan je ook een vermogen per status instellen. Bijvoorbeeld:\n\n`playing: 8.3`\n`paused: 2.25`",
         "title": "Gefixeerde configuratie"
@@ -290,6 +287,7 @@
           "attribute": "Specificeer een attribuut. Wanneer je dit leeg laat dan wordt helderheid gebruikt voor verlichting en percentage voor ventilatoren",
           "calibrate": "Kalibratiewaarde op iedere regel. Voorbeeld\n\n1: 20"
         },
+        "description": "Define the linear power calculation options. See the [documentation]({docs_uri}) for more information. Use either min/max power or calibration values which allows for more points of control.",
         "title": "Lineaire configuratie"
       },
       "manufacturer": {
@@ -327,6 +325,7 @@
           "power": "Vermogen voor één schakelaar wanneer ingeschakeld",
           "power_off": "Vermogen voor één enkele schakelaar wanneer uitgeschakeld"
         },
+        "description": "Define the Multi switch power calculation options. See the [documentation]({docs_uri}) for more information.",
         "title": "Multi switch configuratie"
       },
       "playbook": {
@@ -341,6 +340,7 @@
           "repeat": "Zet aan wanneer je wilt dat het playbook opnieuw wordt afgespeeld nadat het is beëindigd",
           "states_trigger": "Start een bepaald playbook gebaseerd op status. Voorbeeld\n\nplaying: program1"
         },
+        "description": "Define the playbook options. See the [documentation]({docs_uri}) for more information.",
         "title": "Playbook configuratie"
       },
       "power_advanced": {
@@ -542,6 +542,7 @@
       "daily_energy": {
         "title": "Dagelijkse energie opties",
         "data": {
+          "daily_energy_value": "Daily energy value",
           "name": "Naam",
           "on_time": "Tijd aan per dag",
           "start_time": "Begintijd",
@@ -571,16 +572,11 @@
       "fixed": {
         "title": "Fixed opties",
         "data": {
-          "power": "Vermogen",
-          "power_template": "Vermogen template",
-          "self_usage_included": "Eigen verbruik inbegrepen",
-          "states_power": "Vermogen per status"
+          "fixed_value": "Fixed value",
+          "self_usage_included": "Eigen verbruik inbegrepen"
         },
         "data_description": {
-          "power": "Een vastgestelde vermogen in Watt wanneer de gekoppelde entiteit AAN is",
-          "power_template": "Template die geëvalueerd wordt om het vermogen (W) te bepalen",
-          "self_usage_included": "Of het opgegeven vermogen ook het energieverbruik omvat dat door de slimme schakelaar zelf wordt verbruikt.",
-          "states_power": "Eén 'status: vermogen' paar op elke rij"
+          "self_usage_included": "Of het opgegeven vermogen ook het energieverbruik omvat dat door de slimme schakelaar zelf wordt verbruikt."
         }
       },
       "global_configuration": {
@@ -815,6 +811,21 @@
       }
     }
   },
+  "selector": {
+    "daily_energy_value": {
+      "choices": {
+        "value": "Value",
+        "value_template": "Value template"
+      }
+    },
+    "fixed_value": {
+      "choices": {
+        "power": "Power",
+        "power_template": "Power template",
+        "states_power": "States power"
+      }
+    }
+  },
   "services": {
     "activate_playbook": {
       "description": "Start verwerking van een playbook.",
@@ -859,6 +870,10 @@
         }
       },
       "name": "GUI configuratie wijzigen"
+    },
+    "debug_group": {
+      "description": "Get a debug overview of a group power or energy sensor including current member values.",
+      "name": "Debug group"
     },
     "get_active_playbook": {
       "description": "Laad huidige actieve playbook",

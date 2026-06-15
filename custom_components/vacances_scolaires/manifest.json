@@ -10,5 +10,5 @@
   "iot_class": "cloud_polling",
   "issue_tracker": "https://github.com/Master13011/vacances-scolaire-HA/issues",
   "requirements": [],
-  "version": "2.1.7"
+  "version": "2.1.9"
 }

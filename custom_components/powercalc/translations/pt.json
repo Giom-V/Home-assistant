@@ -48,6 +48,7 @@
       "daily_energy": {
         "data": {
           "create_utility_meters": "Create utility meters",
+          "daily_energy_value": "Daily energy value",
           "name": "Nome",
           "on_time": "Na hora",
           "start_time": "Hora de início",
@@ -87,14 +88,10 @@
       },
       "fixed": {
         "data": {
-          "power": "Potência",
-          "power_template": "Modelo de potência",
-          "states_power": "Potência dos Estados"
+          "fixed_value": "Fixed value"
         },
         "data_description": {
-          "power": "Um valor de potência fixo em Watts quando a entidade está LIGADA",
-          "power_template": "O modelo será avaliado para obter o valor da potência em W",
-          "states_power": "Um par 'estado: potência' em cada linha, veja o exemplo acima"
+          "fixed_value": "Fixed value in Watts when the entity is ON"
         },
         "description": "Defina um valor de potência fixo para sua entidade. Alternativamente, você pode definir um valor de energia por estado. Por exemplo:\n\n`reproduzindo: 8.3`\n`pausado: 2.25`",
         "title": "Configuração fixa"
@@ -290,6 +287,7 @@
           "attribute": "Especifique o atributo. Quando deixado vazio, haverá brilho para luzes e percentagem para ventoinhas",
           "calibrate": "Coloque um valor de calibração em cada linha. Exemplo\n\n1: 20"
         },
+        "description": "Define the linear power calculation options. See the [documentation]({docs_uri}) for more information. Use either min/max power or calibration values which allows for more points of control.",
         "title": "Configuração linear"
       },
       "manufacturer": {
@@ -327,6 +325,7 @@
           "power": "Power for a single switch when turned on",
           "power_off": "Power for a single switch when turned off"
         },
+        "description": "Define the Multi switch power calculation options. See the [documentation]({docs_uri}) for more information.",
         "title": "Multi switch config"
       },
       "playbook": {
@@ -341,6 +340,7 @@
           "repeat": "Alternar se pretende que a sequência reinicie e repita após terminar",
           "states_trigger": "Trigger a playbook based on a state change. Example\n\nplaying: program1"
         },
+        "description": "Define the playbook options. See the [documentation]({docs_uri}) for more information.",
         "title": "Configuração de Sequência"
       },
       "power_advanced": {
@@ -542,6 +542,7 @@
       "daily_energy": {
         "title": "Daily energy options",
         "data": {
+          "daily_energy_value": "Daily energy value",
           "name": "Nome",
           "on_time": "Na hora",
           "start_time": "Start time",
@@ -571,16 +572,11 @@
       "fixed": {
         "title": "Fixed options",
         "data": {
-          "power": "Potência",
-          "power_template": "Modelo de energia",
-          "self_usage_included": "Self usage included",
-          "states_power": "Potência dos Estados"
+          "fixed_value": "Fixed value",
+          "self_usage_included": "Self usage included"
         },
         "data_description": {
-          "power": "A fixed power value in Watts when the entity is ON",
-          "power_template": "O modelo será avaliado para obter o valor da potência em W",
-          "self_usage_included": "Whether the power value includes the power consumed by the smart switch itself.",
-          "states_power": "Um par 'estado: ptência' em cada linha, veja o exemplo acima"
+          "self_usage_included": "Whether the power value includes the power consumed by the smart switch itself."
         }
       },
       "global_configuration": {
@@ -815,6 +811,21 @@
       }
     }
   },
+  "selector": {
+    "daily_energy_value": {
+      "choices": {
+        "value": "Value",
+        "value_template": "Value template"
+      }
+    },
+    "fixed_value": {
+      "choices": {
+        "power": "Power",
+        "power_template": "Power template",
+        "states_power": "States power"
+      }
+    }
+  },
   "services": {
     "activate_playbook": {
       "description": "Iniciar execução de uma Sequência.",
@@ -859,6 +870,10 @@
         }
       },
       "name": "Calibrate utility meter"
+    },
+    "debug_group": {
+      "description": "Get a debug overview of a group power or energy sensor including current member values.",
+      "name": "Debug group"
     },
     "get_active_playbook": {
       "description": "Get current running playbook",

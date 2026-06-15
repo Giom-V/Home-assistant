@@ -1,27 +1,43 @@
 """ Miscellaneous Utilities """
 import json
-import aiofiles
-import aiohttp
-import os
 import logging
-from yarl import URL
+import os
+import re
 
-from homeassistant.helpers.aiohttp_client import async_get_clientsession
+from homeassistant.core import HomeAssistant
 
-from .const import (
-    USER_AGENT,
-)
+from .const import DEFAULT_OVERRIDE_FILE, LOCAL_OVERRIDE_FILE
 
 _LOGGER = logging.getLogger(__name__)
 
+#
+# deep_merge()
+#
+def deep_merge(base: dict, override: dict) -> dict:
+    """Recursively merge override into base."""
+    result = base.copy()
+
+    for key, value in override.items():
+        if (
+            key in result
+            and isinstance(result[key], dict)
+            and isinstance(value, dict)
+        ):
+            result[key] = deep_merge(result[key], value)
+        else:
+            result[key] = value
+
+    return result
+
 
 #
-# Traverse json and return the value at the end of the chain of keys.
+# get_value()
+#   Traverse json and return the value at the end of the chain of keys.
 #    json - json to be traversed
 #    *keys - list of keys to use to retrieve the value
 #    default - default value to be returned if a key is missing
 #
-async def async_get_value(json_input, *keys, default=None):
+def get_value(json_input, *keys, default=None):
     """Traverse the json using keys to return the associated value, or default if invalid keys"""
 
     j = json_input
@@ -33,6 +49,23 @@ async def async_get_value(json_input, *keys, default=None):
         return default
 
 
+#
+#  has_team()
+#
+def has_team(data, target_team_id):
+    """Search for team in json data"""
+
+    for event in data.get("events", []):
+        for comp in event.get("competitions", []):
+            for competitor in comp.get("competitors", []):
+                if competitor.get("team", {}).get("id") == target_team_id:
+                    return True
+    return False
+
+
+#
+#  is_integer()
+#
 def is_integer(val):
     """Check if a value is an integer"""
 
@@ -43,103 +76,100 @@ def is_integer(val):
         return False
 
 
-def has_team(data, target_team_id):
-    """Search for team in json data"""
-
-    for event in data.get("events", []):
-        for comp in event.get("competitions", []):
-            for competitor in comp.get("competitors", []):
-                if competitor.get("team", {}).get("id") == target_team_id:
-                    return True
-    return False
-    
 #
-#  Call an ESPN API (or file use the appropriate file override) and get the data returned by it
-#    This utility will eventually replace/wrap all API calls
+#  load_file_overrides()
 #
-async def async_call_espn_api(hass, base_url, params, sensor_name, team_id, file_override=False) -> dict:
-    """Call the specified ESPN API."""
+def load_file_overrides(hass: HomeAssistant) -> dict:
+    """Thread-safe file loading utility."""
 
-    url = str(URL(base_url).with_query(params))
-    _LOGGER.debug(
-        "%s: Calling ESPN API for '%s': %s",
-        sensor_name,
-        team_id,
-        url,
-    )
+    component_dir = os.path.dirname(__file__)
+    default_file = os.path.join(component_dir, "overrides", DEFAULT_OVERRIDE_FILE)
+    custom_file = hass.config.path(LOCAL_OVERRIDE_FILE)
 
-    if file_override:
-        data = await async_override_espn_api(sensor_name, team_id, base_url)
-    else:
-        headers = {"User-Agent": USER_AGENT, "Accept": "application/ld+json"}
-        session = async_get_clientsession(hass)
+    base_data = {}
+    if os.path.exists(default_file):
         try:
-            async with session.get(url, headers=headers) as r:
-                if r.status == 200:
-                    try:
-                        data = await r.json()
-                    except json.JSONDecodeError as e:
-                        _LOGGER.debug("%s: HockeyTech response not JSON: %s", sensor_name, e)
-                        return {"data": None, "url": url}
-                else:
-                    _LOGGER.debug(
-                        "%s: API returned status %s: %s", sensor_name, r.status, url
+            with open(default_file, "r", encoding="utf-8") as f:
+                base_data = json.load(f)
+        except json.JSONDecodeError as err:
+            _LOGGER.debug(
+                "File Override Error: Invalid JSON in %s: %s",
+                default_file,
+                err,
+            )
+        except OSError as err:
+            _LOGGER.debug(
+                "File Override Error: Unable to read %s: %s",
+                default_file,
+                err,
+            )
+
+    custom_data = {}
+    if os.path.exists(custom_file):
+        try:
+            with open(custom_file, "r", encoding="utf-8") as f:
+                custom_data = json.load(f)
+        except json.JSONDecodeError as err:
+            _LOGGER.warning(
+                "File Override Error: Invalid JSON in %s: %s",
+                custom_file,
+                err,
+            )
+        except OSError as err:
+            _LOGGER.debug(
+                "File Override Error: Unable to read %s: %s",
+                custom_file,
+                err,
+            )
+
+    override_data = deep_merge(base_data, custom_data)
+    return override_data
+
+
+#
+#  lookup_actual_team_id()
+#
+def lookup_actual_team_id(
+    sensor_name: str,
+    search_key: str, 
+    team_list: list
+) -> str:
+    """Return the integer team_id."""
+
+    if team_list:
+        try:
+            actual_team_id = next(
+                (team["id"] for team in team_list 
+                    if ((search_key.upper() == team.get("abbreviation", "").upper()) or
+                        (re.fullmatch(search_key, team.get("displayName", ""))) or
+                        (re.fullmatch(search_key, team.get("location", "")))
                     )
-                    return {"data": None, "url": url}
-        except (aiohttp.ClientError, TimeoutError) as e:
-            _LOGGER.debug("%s: API call failed: %s", sensor_name, e)
-            return {"data": None, "url": url}
-        
-    return {"data": data, "url": url}
+                ), 
+                search_key
+            )
+            return str(actual_team_id)
+        except re.error as e:
+            _LOGGER.warning(
+                "%s: Invalid regular expression '%s' in search key (exception %s)",
+                sensor_name,
+                search_key,
+                e,
+            )
+
+    return search_key
 
 
 #
-#  Call an ESPN API (or file use the appropriate file override) and get the data returned by it
-#    This utility will eventually replace/wrap all API calls
+#  season_slug_to_name()
 #
-async def async_override_espn_api(sensor_name, team_id, url) -> dict | None:
-    """Read a json file to mock the ESPN API."""
-
-    _LOGGER.debug("%s: Overriding API for '%s'", sensor_name, team_id)
-
-    if sensor_name == "api_error":
-        return None
-
-    clean_url = url.split('?')[0]
-
-    _LOGGER.debug("%s: Overriding ESPN API (%s) for '%s'", sensor_name, url, team_id)
-    if "schedule" in clean_url:
-        file_path = "/share/tt/schedule.json"
-        if not os.path.exists(file_path):
-            file_path = "tests/tt/schedule.json"
-    elif "teams" in clean_url:
-        if clean_url[-1].isdigit(): # if there is any team identifier, use team 194
-            file_path = "/share/tt/teams-194.json"
-            if not os.path.exists(file_path):
-                file_path = "tests/tt/teams-194.json"
-        elif "football" in clean_url:
-            file_path = "/share/tt/teams-ncaaf-small.json"
-            if not os.path.exists(file_path):
-                file_path = "tests/tt/teams-ncaaf-small.json"
-        else:
-            file_path = "/share/tt/teams.json"
-            if not os.path.exists(file_path):
-                file_path = "tests/tt/team.json"
-    elif "/all/" in clean_url:
-        file_path = "/share/tt/scoreboard_all_leagues.json"
-        if not os.path.exists(file_path):
-            file_path = "tests/tt/scoreboard_all_leagues.json"
-    else:
-        file_path = "/share/tt/all.json"
-        if not os.path.exists(file_path):
-            file_path = "tests/tt/all.json"
-
-    try:
-        async with aiofiles.open(file_path, mode="r") as f:
-            contents = await f.read()
-        data = json.loads(contents)
-    except Exception as e: # pylint: disable=broad-exception-caught
-        _LOGGER.debug("%s: API file read failed: %s", sensor_name, e)
-        data = None
-
-    return(data)
+def season_slug_to_name(slug: str) -> str:
+    """Convert a season slug like '2025-26-english-premier-league' to 'English Premier League'."""
+    if not slug:
+        return ""
+    body = re.sub(r"^\d{4}(-\d{2})?-", "", slug)
+    if body == slug:
+        return ""
+    def _fmt_word(w):
+        # Uppercase abbreviations (no vowels, e.g. "mls", "nfl"); title-case real words
+        return w.upper() if w.isalpha() and not re.search(r"[aeiou]", w, re.I) else w.title()
+    return " ".join(_fmt_word(w) for w in body.split("-"))

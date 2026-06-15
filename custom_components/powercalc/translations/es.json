@@ -48,6 +48,7 @@
       "daily_energy": {
         "data": {
           "create_utility_meters": "Crear contadores eléctricos",
+          "daily_energy_value": "Daily energy value",
           "name": "Nombre",
           "on_time": "Tiempo encendido",
           "start_time": "Hora de inicio",
@@ -87,14 +88,10 @@
       },
       "fixed": {
         "data": {
-          "power": "Potencia",
-          "power_template": "Plantilla de potencia",
-          "states_power": "Estados de potencia"
+          "fixed_value": "Fixed value"
         },
         "data_description": {
-          "power": "Un valor de potencia fijo en Vatios (W) cuando la entidad está ENCENDIDA",
-          "power_template": "La plantilla será evaluada para obtener el valor de potencia en Vatios (W)",
-          "states_power": "Un par (\"estado: potencia\") en cada fila"
+          "fixed_value": "Fixed value in Watts when the entity is ON"
         },
         "description": "Definir un valor de potencia fijo para tu entidad. Alternativamente, puedes definir un valor de potencia por estado. Por ejemplo: \n\n`playing: 8.3`\n`paused: 2.25`",
         "title": "Configuración fija"
@@ -290,6 +287,7 @@
           "attribute": "Especifique el atributo. Cuando se deja vacío será el brillo para las luces y porcentaje para los ventiladores",
           "calibrate": "Pon un valor de calibración en cada línea. Ejemplo\n\n1: 20"
         },
+        "description": "Define the linear power calculation options. See the [documentation]({docs_uri}) for more information. Use either min/max power or calibration values which allows for more points of control.",
         "title": "Configuración lineal"
       },
       "manufacturer": {
@@ -327,6 +325,7 @@
           "power": "Potencia para un solo interruptor cuando se enciende",
           "power_off": "Potencia para un solo interruptor cuando se apaga"
         },
+        "description": "Define the Multi switch power calculation options. See the [documentation]({docs_uri}) for more information.",
         "title": "Configuración multiinterruptor"
       },
       "playbook": {
@@ -341,6 +340,7 @@
           "repeat": "Alternar cuando quieras seguir repitiendo la reproducción una vez completada",
           "states_trigger": "Dispara una reproducción basada en un cambio de estado. Ejemplo\n\nreproduciendo: programa1"
         },
+        "description": "Define the playbook options. See the [documentation]({docs_uri}) for more information.",
         "title": "Configuración de Reproducciones"
       },
       "power_advanced": {
@@ -542,6 +542,7 @@
       "daily_energy": {
         "title": "Opciones de energía diarias",
         "data": {
+          "daily_energy_value": "Daily energy value",
           "name": "Nombre",
           "on_time": "Tiempo encendido",
           "start_time": "Hora de inicio",
@@ -571,16 +572,11 @@
       "fixed": {
         "title": "Opciones fijas",
         "data": {
-          "power": "Potencia",
-          "power_template": "Plantilla de potencia",
-          "self_usage_included": "Uso propio incluido",
-          "states_power": "Estados de potencia"
+          "fixed_value": "Fixed value",
+          "self_usage_included": "Uso propio incluido"
         },
         "data_description": {
-          "power": "Un valor de potencia fijo en Vatios (W) cuando la entidad está ENCENDIDA",
-          "power_template": "La plantilla será evaluada para obtener el valor de potencia en Vatios (W)",
-          "self_usage_included": "Si el valor de potencia incluye la energía consumida por el interruptor inteligente mismo.",
-          "states_power": "Un par \"estado: potencia\" en cada fila"
+          "self_usage_included": "Si el valor de potencia incluye la energía consumida por el interruptor inteligente mismo."
         }
       },
       "global_configuration": {
@@ -815,6 +811,21 @@
       }
     }
   },
+  "selector": {
+    "daily_energy_value": {
+      "choices": {
+        "value": "Value",
+        "value_template": "Value template"
+      }
+    },
+    "fixed_value": {
+      "choices": {
+        "power": "Power",
+        "power_template": "Power template",
+        "states_power": "States power"
+      }
+    }
+  },
   "services": {
     "activate_playbook": {
       "description": "Iniciar la ejecución de una reproducción.",
@@ -859,6 +870,10 @@
         }
       },
       "name": "Cambio configuración gráfica"
+    },
+    "debug_group": {
+      "description": "Get a debug overview of a group power or energy sensor including current member values.",
+      "name": "Debug group"
     },
     "get_active_playbook": {
       "description": "Obtener reproducción ejecutándose actualmente",
