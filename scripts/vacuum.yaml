@@ -180,7 +180,7 @@ vacuum_first_floor:
       target:
         entity_id: vacuum.robbie
       data:
-        segments: [19, 18, 23, 1]
+        segments: [22, 27, 19, 18, 23, 1]
 vacuum_diningroom:
   alias: "Vacuum Dining Room"
   sequence:
