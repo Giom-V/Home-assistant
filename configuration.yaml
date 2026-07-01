@@ -279,13 +279,13 @@ rest:
 #       use_music_mode: False #(defaults to False)
 #       save_on_change: False #(defaults to True)
 
-media_player:
-  # Google Cast
-  - platform: cast
-  #Emby
-  #- platform: emby
-  #  host: !secret NAS_IP
-  #  api_key: !secret emby_APIKey
+#media_player:
+#  # Google Cast
+#  - platform: cast
+#  #Emby
+#  #- platform: emby
+#  #  host: !secret NAS_IP
+#  #  api_key: !secret emby_APIKey
 
 device_tracker:
   # Google Map location sharing
@@ -411,9 +411,6 @@ light:
   - platform: switch
     name: Cuisine
     entity_id: switch.lumiere_cuisine
-  - platform: dlight
-    host: 192.168.1.89
-    device_id: E5b18418
 ####################################################
 #                 Work in progress                 #
 ####################################################
