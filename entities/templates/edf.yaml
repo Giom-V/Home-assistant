@@ -1,3 +1,5 @@
+# From https://gist.github.com/hekmon/c2f64f22f58b92eae007797eb1a2732e
+# Related to https://github.com/hekmon/rtetempo
 - unique_id: "tempo_time_prices"
   sensor:
     - name: "EDF Tempo Prix Actuel"
