@@ -24,23 +24,21 @@
 #     data:
 #       text: Sonette pressée!
 #   mode: single
-- id: '1676633819245'
-  alias: Testing led strip (not working)
-  description: ''
-  triggers:
-  - domain: mqtt
-    device_id: 09d4ba3dded13922cf5b606b4bfd261b
-    type: action
-    subtype: single
-    trigger: device
-    enabled: false
-  conditions: []
-  actions:
-  - type: toggle
-    device_id: f1e7b29bd824ec88bdf7a3b1a2f58916
-    entity_id: light.led_strip_light
-    domain: light
-  mode: single
+# - id: '1676633819245'
+#   alias: Testing led strip (not working)
+#   description: ''
+#   triggers:
+#   - domain: mqtt
+#     device_id: 09d4ba3dded13922cf5b606b4bfd261b
+#     type: action
+#     subtype: single
+#     trigger: device
+#     enabled: false
+#   conditions: []
+#   actions:
+#   - type: toggle
+#     device_id: f1e7b29bd824ec88bdf7a3b1a2f58916
+#   mode: single
 - id: '1765725748183'
   alias: Guirlande on before sunset
   description: ''

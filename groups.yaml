@@ -97,9 +97,9 @@ OutsideLamps:
 LampesEvier:
   name: Lumières évier
   entities:
-    - light.lampe_evier_gauche_light
-    - light.lampe_evier_centre_light
-    - light.lampe_evier_droite_light
+    - light.lampe_evier_gauche
+    - light.lampe_evier_centre
+    - light.lampe_evier_droite
 
 LampesCiel:
   name: Lumières ciel
