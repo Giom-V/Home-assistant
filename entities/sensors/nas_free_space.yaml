@@ -1,6 +1,0 @@
-platform: template
-sensors:
-  nas_free_space:
-    friendly_name: NAS free space
-    value_template: "{{ states('sensor.sonarr_disk_space')|float/14 | round(2) }}"
-    unit_of_measurement: 'TB'
