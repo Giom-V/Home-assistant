@@ -1,11 +1,11 @@
-sensor:
-  - name: "dest_address"
-    unique_id: "dest_address"
-    state: >-
-      {%- if is_state("input_select.destination", "Home") -%}
-        !secret homeGPSCoordinates
-      {%- elif is_state("input_select.destination", "Work") -%}
-        !secret giomWorkplaceGPSCoordinates
-      {%- else -%}
-        Unknown
-      {%- endif %}
+- sensor:
+    - name: "dest_address"
+      unique_id: "dest_address"
+      state: >-
+        {%- if is_state("input_select.destination", "Home") -%}
+          !secret homeGPSCoordinates
+        {%- elif is_state("input_select.destination", "Work") -%}
+          !secret giomWorkplaceGPSCoordinates
+        {%- else -%}
+          Unknown
+        {%- endif %}

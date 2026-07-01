@@ -69,12 +69,6 @@ binary_sensor:
 
 # Example configuration entry
 template:
-  - binary_sensor:
-      - name: "People Home"
-        unique_id: "people_home"
-        device_class: presence
-        state: >
-          {{ is_state('person.guillaume', 'home') or is_state('person.claire', 'home') }}
   - trigger:
       - platform: state
         entity_id: sensor.bleuette_ev_battery_level

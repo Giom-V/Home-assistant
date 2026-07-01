@@ -1,0 +1,27 @@
+# - sensor:
+#     - name: 'Mosquitos'
+#       unique_id: meteomedia_mosquitos
+#       state: '{{ states.sensor.meteomedia_json.attributes["bug"]["bug_mosquito"] }}'
+#     - name: 'Flu Level'
+#       unique_id: meteomedia_flu_level
+#       state: '{{ states.sensor.meteomedia_json.attributes["reports"]["flu_level"] }}'
+#     - name: 'Polen Level'
+#       unique_id: meteomedia_polen_level
+#       state: '{{ states.sensor.meteomedia_json.attributes["obs"]["pollen_adlevel"] }}'
+#       attributes:
+#         polen_name: '{{ states.sensor.meteomedia_json.attributes["obs"]["pollen_name"] }}'
+#     - name: 'UV Level text'
+#       unique_id: meteomedia_uv_level
+#       state: '{{ states.sensor.meteomedia_json.attributes["reports"]["uv_label"] }}'
+#       unit_of_measurement: 'UV Index'
+#       attributes:
+#         numeric_value: '{{ states.sensor.meteomedia_json.attributes["reports"]["uv_index"] }}'
+#     - name: 'UV Level max'
+#       unique_id: meteomedia_uv_level_max
+#       state: '{{ states.sensor.meteomedia_json.attributes["obs"]["uv_label"] }}'
+#       unit_of_measurement: 'UV Index'
+#       attributes:
+#         numeric_value: '{{ states.sensor.meteomedia_json.attributes["obs"]["uv_index"] }}'
+#     - name: 'UV Level current/max'
+#       unique_id: meteomedia_uv_level_current_max
+#       state: "{{ state_attr('meteomedia_uv_level','numeric value') }}/{{ state_attr('meteomedia_uv_level_max','numeric value') }}"
