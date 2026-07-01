@@ -627,11 +627,9 @@
         - condition: numeric_state
           entity_id: sensor.home_guillaume_distance
           above: 2
-          for: "00:05:00"
         - condition: numeric_state
           entity_id: sensor.home_claire_distance
           above: 2
-          for: "00:05:00"
   action:
     - service: switch.turn_off
       target:

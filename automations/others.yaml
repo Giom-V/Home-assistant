@@ -60,9 +60,9 @@
   trigger:
     - entity_id: binary_sensor.people_home
       for: 30m
-      from: Home
+      from: "on"
       platform: state
-      to: Away
+      to: "off"
   action:
     - entity_id: scene.lightsoff
       service: scene.turn_on
