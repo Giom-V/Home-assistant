@@ -1,0 +1,5 @@
+- sensor:
+    - name: "NAS free space"
+      unique_id: "nas_free_space"
+      state: "{{ states('sensor.sonarr_disk_space')|float/14 | round(2) }}"
+      unit_of_measurement: 'TB'

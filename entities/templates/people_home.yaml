@@ -1,0 +1,6 @@
+- binary_sensor:
+    - name: "People Home"
+      unique_id: "people_home"
+      device_class: presence
+      state: >
+        {{ is_state('person.guillaume', 'home') or is_state('person.claire', 'home') }}
