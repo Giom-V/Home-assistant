@@ -37,15 +37,12 @@
       trigger: device
   conditions: []
   actions:
-    - type: toggle
-      device_id: e87ea47d487bcb4708a442aa8ebacfb1
-      entity_id: light.aurores_light_bulb
-      domain: light
-    - metadata: {}
-      data: {}
+    - service: light.toggle
+      target:
+        entity_id: light.aurores_light_bulb
+    - service: light.toggle
       target:
         entity_id: light.lumiere_chambre_aurore
-      action: light.toggle
   mode: single
 - id: "1679085142205"
   alias: During the day Aurore's light bulb default behavior is On

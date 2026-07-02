@@ -1,20 +1,20 @@
-'1542490337256':
-  alias: Notif slack (test)
-  sequence:
-  - service: camera.snapshot
-    data:
-      entity_id: camera.raspberry_pi_camera
-      filename: '/home/homeassistant/.homeassistant/Share/last_sunrise.jpg'
-  - service: shell_command.resize_sunrise_pic
-  - service: notify.slack
-    data:
-      data:
-        file:
-          path: /home/homeassistant/.homeassistant/Share/last_sunrise.jpg
-      message: Good morning!
-      target:
-      - '#hass'
-      title: Sunrise
+# '1542490337256':
+#   alias: Notif slack (test)
+#   sequence:
+#   - service: camera.snapshot
+#     data:
+#       entity_id: camera.raspberry_pi_camera
+#       filename: '/home/homeassistant/.homeassistant/Share/last_sunrise.jpg'
+#   - service: shell_command.resize_sunrise_pic
+#   - service: notify.slack
+#     data:
+#       data:
+#         file:
+#           path: /home/homeassistant/.homeassistant/Share/last_sunrise.jpg
+#       message: Good morning!
+#       target:
+#       - '#hass'
+#       title: Sunrise
 create_daily_gif:
   alias: Create Daily Gif
   sequence:

@@ -26,12 +26,9 @@
       to: "on"
   condition: []
   action:
-    - type:
-        "{% if binary_sensor.heure_creuse.state = true %}\n  turn_on\n{% else %}\n
-        \ turn_off\n{% endif %}\n"
-      device_id: ed915ff8d67e254ac4696ba8ee133128
-      entity_id: switch.chargeur_voiture
-      domain: switch
+    - service: "switch.turn_{{ states('binary_sensor.heure_creuse') }}"
+      target:
+        entity_id: switch.chargeur_voiture
   mode: single
 - id: "1669558090658"
   alias: Preheat the car

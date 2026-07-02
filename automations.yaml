@@ -1,47 +1,45 @@
 # This file is used for WIP and tests.
 # Automations are then meant to be moved in their dedicated folders in automations/ afterwards.
-- id: "1666186950016"
-  alias: Test Nest sonnette
-  description: ""
-  trigger:
-    - platform: device
-      device_id: 033b8589dd583f9142b48bd463dcccd0
-      domain: nest
-      type: doorbell_chime
-    - platform: device
-      device_id: 033b8589dd583f9142b48bd463dcccd0
-      domain: nest
-      type: camera_person
-      enabled: false
-    - platform: device
-      device_id: 033b8589dd583f9142b48bd463dcccd0
-      domain: nest
-      type: camera_motion
-      enabled: false
-  condition: []
-  action:
-    - service: rest_command.gchat
-      data:
-        text: Sonette pressée!
-  mode: single
-- id: "1676633819245"
-  alias: Testing led strip (not working)
-  description: ""
-  triggers:
-    - domain: mqtt
-      device_id: 09d4ba3dded13922cf5b606b4bfd261b
-      type: action
-      subtype: single
-      trigger: device
-      enabled: false
-  conditions: []
-  actions:
-    - type: toggle
-      device_id: f1e7b29bd824ec88bdf7a3b1a2f58916
-      entity_id: light.led_strip_light
-      domain: light
-  mode: single
-- id: "1765725748183"
+# - id: "1666186950016"
+#   alias: Test Nest sonnette
+#   description: ''
+#   trigger:
+#   - platform: device
+#     device_id: 033b8589dd583f9142b48bd463dcccd0
+#     domain: nest
+#     type: doorbell_chime
+#   - platform: device
+#     device_id: 033b8589dd583f9142b48bd463dcccd0
+#     domain: nest
+#     type: camera_person
+#     enabled: false
+#   - platform: device
+#     device_id: 033b8589dd583f9142b48bd463dcccd0
+#     domain: nest
+#     type: camera_motion
+#     enabled: false
+#   condition: []
+#   action:
+#   - service: rest_command.gchat
+#     data:
+#       text: Sonette pressée!
+#   mode: single
+# - id: '1676633819245'
+#   alias: Testing led strip (not working)
+#   description: ''
+#   triggers:
+#   - domain: mqtt
+#     device_id: 09d4ba3dded13922cf5b606b4bfd261b
+#     type: action
+#     subtype: single
+#     trigger: device
+#     enabled: false
+#   conditions: []
+#   actions:
+#   - type: toggle
+#     device_id: f1e7b29bd824ec88bdf7a3b1a2f58916
+#   mode: single
+- id: '1765725748183'
   alias: Guirlande on before sunset
   description: ""
   triggers:

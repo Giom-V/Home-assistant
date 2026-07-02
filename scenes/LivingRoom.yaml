@@ -7,9 +7,6 @@
     light.canape_droite:
       state: on
       brightness: 1
-    light.color:
-      state: on
-      brightness: 1
 - id: MaxBrightnessLivingRoom
   name: MaxBrightnessLivingRoom
   entities:
@@ -19,17 +16,12 @@
     light.canape_droite:
       state: on
       brightness: 255
-    light.color:
-      state: on
-      brightness: 255
 - name: LivingRoomOff
   id: LivingRoomOff
   entities:
     light.canape_gauche:
       state: off
     light.canape_droite:
-      state: off
-    light.color:
       state: off
 - id: WhiteLivingRoom
   name: WhiteLivingRoom
@@ -40,18 +32,12 @@
     light.canape_droite:
       state: on
       color_temp: 200
-    light.color:
-      state: on
-      color_temp: 200
 - name: PurpleLivingRoom
   entities:
     light.canape_gauche:
       state: on
       rgb_color: [255,23,69]
     light.canape_droite:
-      state: on
-      rgb_color: [255,23,69]
-    light.color:
       state: on
       rgb_color: [255,23,69]
 - name: PinkLivingRoom
@@ -63,9 +49,6 @@
     light.canape_droite:
       state: on
       rgb_color: [255,104,179]
-    light.color:
-      state: on
-      rgb_color: [255,36,147]
 - name: BlueLivingRoom
   id: BlueLivingRoom
   entities:
@@ -75,9 +58,6 @@
     light.canape_droite:
       state: on
       rgb_color: [0,0,255]
-    light.color:
-      state: on
-      rgb_color: [63,0,255]
 - name: TurquoiseLivingRoom
   id: TurquoiseLivingRoom
   entities:
@@ -87,9 +67,6 @@
     light.canape_droite:
       state: on
       rgb_color: [72,255,236]
-    light.color:
-      state: on
-      rgb_color: [127,255,212]
 - name: OrangeLivingRoom
   id: OrangeLivingRoom
   entities:
@@ -99,9 +76,6 @@
     light.canape_droite:
       state: on
       rgb_color: [255,68,0]
-    light.color:
-      state: on
-      rgb_color: [255,117,24]
 - name: RedLivingRoom
   id: RedLivingRoom
   entities:
@@ -109,9 +83,6 @@
       state: on
       rgb_color: [255,0,0]
     light.canape_droite:
-      state: on
-      rgb_color: [255,0,0]
-    light.color:
       state: on
       rgb_color: [255,0,0]
 - name: CandleLivingRoom
@@ -123,9 +94,6 @@
     light.canape_droite:
       state: on
       rgb_color: [255,136,13]
-    light.color:
-      state: on
-      rgb_color: [255,166,87]
 - name: NightTimeLivingRoom
   id: NightTimeLivingRoom
   entities:
@@ -137,7 +105,3 @@
       state: on
       rgb_color: [255,255,255]
       brightness: 128
-    light.color:
-      state: on
-      rgb_color: [255,36,147]
-      brightness: 256
