@@ -162,7 +162,7 @@
                     {
                       "entity": "binary_sensor.aurora_aurora_visibility_visibility_alert",
                       "name": "Aurore boréales visibles !!",
-                      "size": 4,
+                      "size": 3,
                       "value": "🌈",
                       "when": "on"
                     },
@@ -225,7 +225,7 @@
                       },
                       "entity": "switch.fontaine_bassin",
                       "name": "Pompe",
-                      "size": 2,
+                      "size": 1,
                       "map_state": {
                         "off": "mdi:wave",
                         "on": "mdi:fountain"
@@ -236,7 +236,7 @@
                         "service": "light.toggle"
                       },
                       "entity": "group.outsidelamps",
-                      "size": 2,
+                      "size": 1,
                       "map_state": {
                         "off": "mdi:lightbulb-off-outline",
                         "on": "mdi:lightbulb-on"
@@ -252,10 +252,22 @@
                           "unavailable"
                         ]
                       }
+                    },
+                    {
+                      "action": {
+                        "service": "switch.toggle"
+                      },
+                      "entity": "switch.arrosage",
+                      "name": "Arrosage",
+                      "size": 1,
+                      "map_state": {
+                        "off": "mdi:water-pump-off",
+                        "on": "mdi:water-pump"
+                      }
                     }
                   ],
                   "heading": "🏞 Extérieur",
-                  "row_size": 4,
+                  "row_size": 3,
                   "type": "custom:banner-card"
                 }
               ],

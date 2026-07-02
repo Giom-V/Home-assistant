@@ -147,6 +147,12 @@
         "name": "Lave-linge"
       }
     ],
-    "device_consumption_water": []
+    "device_consumption_water": [
+      {
+        "stat_consumption": "sensor.arrosage_volume",
+        "stat_rate": "sensor.arrosage_flow",
+        "name": "Arrosage"
+      }
+    ]
   }
 }

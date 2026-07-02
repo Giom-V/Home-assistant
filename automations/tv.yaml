@@ -22,7 +22,6 @@
           state: Rouge
   actions:
     - type: turn_on
-      device_id: 58be483dcfdf57ea1c31a2fb4c329411
       entity_id: light.govee_tv
       domain: light
   mode: single
@@ -37,7 +36,6 @@
   condition: []
   action:
     - type: turn_off
-      device_id: 58be483dcfdf57ea1c31a2fb4c329411
       entity_id: light.govee_tv
       domain: light
   mode: single

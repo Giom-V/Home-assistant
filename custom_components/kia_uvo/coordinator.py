@@ -19,6 +19,7 @@ from hyundai_kia_connect_api import (
     POIInfo,
     Token,
 )
+from hyundai_kia_connect_api.const import WINDOW_STATE
 from hyundai_kia_connect_api.exceptions import (
     AuthenticationError,
     UnsupportedControlError,
@@ -113,6 +114,17 @@ class HyundaiKiaConnectDataUpdateCoordinator(DataUpdateCoordinator):
                 seconds=min(self.scan_interval, self.force_refresh_interval)
             ),
         )
+        _LOGGER.debug(
+            "%s - Polling configured: scan_interval=%ds, "
+            "force_refresh_interval=%ds, update_interval=%ds, "
+            "no_force_refresh_hours=%d-%d",
+            DOMAIN,
+            self.scan_interval,
+            self.force_refresh_interval,
+            min(self.scan_interval, self.force_refresh_interval),
+            self.no_force_refresh_hour_start,
+            self.no_force_refresh_hour_finish,
+        )
 
     async def _async_update_data(self):
         """Update data via library. Called by update_coordinator periodically.
@@ -120,6 +132,12 @@ class HyundaiKiaConnectDataUpdateCoordinator(DataUpdateCoordinator):
         Allow to update for the first time without further checking
         Allow force update, if time diff between latest update and `now` is greater than force refresh delta
         """
+        _LOGGER.debug(
+            "%s - _async_update_data called, scan_interval=%ds, force_refresh_interval=%ds",
+            DOMAIN,
+            self.scan_interval,
+            self.force_refresh_interval,
+        )
         try:
             await self.async_check_and_refresh_token()
         except AuthenticationError as AuthError:
@@ -517,6 +535,45 @@ class HyundaiKiaConnectDataUpdateCoordinator(DataUpdateCoordinator):
             vehicle_id,
             lambda: self.vehicle_manager.set_navigation(vehicle_id, poi_list),
             "set navigation",
+        )
+
+    async def async_open_all_windows(self, vehicle_id: str):
+        options = WindowRequestOptions(
+            front_left=WINDOW_STATE.OPEN,
+            front_right=WINDOW_STATE.OPEN,
+            back_left=WINDOW_STATE.OPEN,
+            back_right=WINDOW_STATE.OPEN,
+        )
+        await self._async_send_action(
+            vehicle_id,
+            lambda: self.vehicle_manager.set_windows_state(vehicle_id, options),
+            "open all windows",
+        )
+
+    async def async_close_all_windows(self, vehicle_id: str):
+        options = WindowRequestOptions(
+            front_left=WINDOW_STATE.CLOSED,
+            front_right=WINDOW_STATE.CLOSED,
+            back_left=WINDOW_STATE.CLOSED,
+            back_right=WINDOW_STATE.CLOSED,
+        )
+        await self._async_send_action(
+            vehicle_id,
+            lambda: self.vehicle_manager.set_windows_state(vehicle_id, options),
+            "close all windows",
+        )
+
+    async def async_vent_all_windows(self, vehicle_id: str):
+        options = WindowRequestOptions(
+            front_left=WINDOW_STATE.VENTILATION,
+            front_right=WINDOW_STATE.VENTILATION,
+            back_left=WINDOW_STATE.VENTILATION,
+            back_right=WINDOW_STATE.VENTILATION,
+        )
+        await self._async_send_action(
+            vehicle_id,
+            lambda: self.vehicle_manager.set_windows_state(vehicle_id, options),
+            "vent all windows",
         )
 
     async def _async_save_token(self):

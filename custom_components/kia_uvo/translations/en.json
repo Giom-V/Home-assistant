@@ -493,6 +493,9 @@
       "last_updated_at": {
         "name": "Last Updated At"
       },
+      "last_scanned_at": {
+        "name": "Last Scanned At"
+      },
       "next_service_distance": {
         "name": "Next Service"
       },
@@ -651,6 +654,18 @@
       "headlamp_right_low": {
         "name": "Front Right Lamp Fault"
       },
+      "headlamp_left_high": {
+        "name": "Headlamp Left High Fault"
+      },
+      "headlamp_right_high": {
+        "name": "Headlamp Right High Fault"
+      },
+      "headlamp_left_bifunc": {
+        "name": "Headlamp Left Bifunctional Fault"
+      },
+      "headlamp_right_bifunc": {
+        "name": "Headlamp Right Bifunctional Fault"
+      },
       "headlamp_status": {
         "name": "Headlamp Status"
       },
@@ -762,6 +777,21 @@
     "button": {
       "force_refresh": {
         "name": "Force Refresh"
+      },
+      "start_hazard_lights": {
+        "name": "Start Hazard Lights"
+      },
+      "start_hazard_lights_and_horn": {
+        "name": "Start Hazard Lights and Horn"
+      },
+      "open_all_windows": {
+        "name": "Open All Windows"
+      },
+      "close_all_windows": {
+        "name": "Close All Windows"
+      },
+      "vent_all_windows": {
+        "name": "Vent All Windows"
       }
     },
     "cover": {
@@ -808,6 +838,12 @@
       },
       "ev_schedule_charge_enabled": {
         "name": "Scheduled charging"
+      },
+      "ev_charge_port_door": {
+        "name": "Charge Port"
+      },
+      "valet_mode_control": {
+        "name": "Valet Mode"
       }
     },
     "climate": {
