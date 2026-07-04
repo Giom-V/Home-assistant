@@ -41,3 +41,12 @@ The following vacuum cleaner automation is impacted by the
 * [**vacuum Kitchen and dining room when we are away (Covid version)**](vacuumCleaner.yaml#L143):
   This automation will not run if `input_boolean.visitors` is `on`. This is to
   prevent the vacuum cleaner from disturbing guests.
+
+## Cleaning Lady Automations
+
+The following automations control the `input_boolean.visitors` value:
+
+* [**Activate/Deactivate visitors mode for cleaning lady**](cleaning_lady.yaml):
+  These automations automatically toggle `input_boolean.visitors` on and off
+  based on the cleaning lady's schedule, ensuring that alarms and other
+  presence-based automations do not trigger during her shift.

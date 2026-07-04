@@ -1,0 +1,11 @@
+cleaning_lady_start:
+  name: Heure d'arrivée de la femme de ménage
+  has_date: true
+  has_time: true
+  icon: mdi:clock-start
+
+cleaning_lady_end:
+  name: Heure de départ de la femme de ménage
+  has_date: true
+  has_time: true
+  icon: mdi:clock-end

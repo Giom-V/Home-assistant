@@ -1,0 +1,30 @@
+# These automations trigger when the cleaning lady arrives and leaves.
+# We set `input_boolean.visitors` to `on` during her shift, to avoid the alarm
+# from going off and suppress other presence-related behaviors.
+#
+# * `Activate visitors mode for cleaning lady`: Turns on visitors when the shift starts.
+# * `Deactivate visitors mode for cleaning lady`: Turns off visitors when the shift ends.
+
+- id: "automation_cleaning_lady_start"
+  alias: Activate visitors mode for cleaning lady
+  description: Active le mode visiteurs pour la femme de ménage
+  trigger:
+    - platform: time
+      at: input_datetime.cleaning_lady_start
+  action:
+    - service: input_boolean.turn_on
+      target:
+        entity_id: input_boolean.visitors
+  mode: single
+
+- id: "automation_cleaning_lady_end"
+  alias: Deactivate visitors mode for cleaning lady
+  description: Désactive le mode visiteurs pour la femme de ménage
+  trigger:
+    - platform: time
+      at: input_datetime.cleaning_lady_end
+  action:
+    - service: input_boolean.turn_off
+      target:
+        entity_id: input_boolean.visitors
+  mode: single
