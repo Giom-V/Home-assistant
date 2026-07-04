@@ -1,0 +1,7 @@
+- binary_sensor:
+    - name: "Cleaning Lady Present"
+      unique_id: "cleaning_lady_present"
+      state: >-
+        {% set start = states('input_datetime.cleaning_lady_start') | as_datetime %}
+        {% set end = states('input_datetime.cleaning_lady_end') | as_datetime %}
+        {{ start is not none and end is not none and start | as_local <= now() < end | as_local }}
