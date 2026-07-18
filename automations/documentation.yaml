@@ -5,7 +5,7 @@
   description: "Génère le fichier devices.md toutes les nuits et lors de l'ajout d'entités."
   trigger:
     - platform: time
-      at: "03:00:00"
+      at: input_datetime.generate_devices_md_time
     - platform: event
       event_type: entity_registry_updated
       event_data:

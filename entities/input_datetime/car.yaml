@@ -6,3 +6,7 @@ last_time_bleuette_left_nozay:
   name: Saves the last time Bleuette left Nozay
   has_date: true
   has_time: true
+preheat_car_morning:
+  name: Preheat car morning
+  has_date: false
+  has_time: true

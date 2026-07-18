@@ -35,7 +35,7 @@
   description: "Préchauffe la voiture les matins d'école en hiver"
   trigger:
     - platform: time
-      at: 08:20:00
+      at: input_datetime.preheat_car_morning
   condition:
     - condition: time
       weekday:

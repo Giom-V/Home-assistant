@@ -1,0 +1,24 @@
+aurore_light_bulb_day_behavior:
+  name: Aurore light bulb day behavior
+  has_date: false
+  has_time: true
+aurore_bed_light_off_1:
+  name: Switch off Aurore bed light 1
+  has_date: false
+  has_time: true
+aurore_bed_light_off_2:
+  name: Switch off Aurore bed light 2
+  has_date: false
+  has_time: true
+aurore_bed_light_off_3:
+  name: Switch off Aurore bed light 3
+  has_date: false
+  has_time: true
+aurore_bed_light_off_4:
+  name: Switch off Aurore bed light 4
+  has_date: false
+  has_time: true
+fermer_volets_aurore:
+  name: Fermer les volets d'Aurore
+  has_date: false
+  has_time: true

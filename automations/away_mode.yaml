@@ -463,7 +463,7 @@
       domain: switch
     - wait_for_trigger:
         - platform: time
-          at: "23:00:00"
+          at: input_datetime.presence_simulation_dining_room_off
     - delay: "{{ range(0, 15*60)+1 | random }}"
     - type: turn_off
       device_id: 0a6824f55b50cd544737383fedcb096d
@@ -501,7 +501,7 @@
       domain: switch
     - wait_for_trigger:
         - platform: time
-          at: "22:15:00"
+          at: input_datetime.presence_simulation_aurore_bedroom_off
     - delay: "{{ range(0, 15*60)+1 | random }}"
     - type: turn_off
       device_id: cef49caed9c762db670b6d2a85a15832
@@ -513,7 +513,7 @@
   description: "Redémarre Home Assistant chaque semaine quand nous sommes absents"
   trigger:
     - platform: time
-      at: 04:05:06
+      at: input_datetime.reboot_ha_away
   condition:
     - condition: state
       entity_id: binary_sensor.people_home

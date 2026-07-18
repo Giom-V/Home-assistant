@@ -160,7 +160,7 @@
   alias: vacuum Kitchen and dining room when we are away
   description: "Passe l'aspirateur dans la cuisine et la salle à manger quand nous sommes absents"
   trigger:
-    - at: "14:00"
+    - at: input_datetime.vacuum_kitchen_dining_room
       platform: time
   condition:
     - condition: state

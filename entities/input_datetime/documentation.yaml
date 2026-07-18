@@ -1,0 +1,4 @@
+generate_devices_md_time:
+  name: Generate devices markdown time
+  has_date: false
+  has_time: true
