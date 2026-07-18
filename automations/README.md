@@ -251,6 +251,10 @@ Automations related to the pink bedroom.
 
 Automations related to heating.
 
+### [Cleaning Lady](cleaning_lady.yaml)
+
+Automations to handle the cleaning lady shift and toggle visitors mode.
+
 ### [Documentation](documentation.yaml)
 
 - `Generate Devices Markdown`: Generates a `devices.md` file listing all
