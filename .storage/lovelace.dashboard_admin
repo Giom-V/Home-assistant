@@ -225,6 +225,16 @@
                   }
                 }
               ]
+            },
+            {
+              "type": "entities",
+              "title": "Présence et Femme de ménage",
+              "entities": [
+                "input_boolean.away_mode",
+                "input_boolean.visitors",
+                "input_datetime.cleaning_lady_start",
+                "input_datetime.cleaning_lady_end"
+              ]
             }
           ]
         },
