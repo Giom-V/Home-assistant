@@ -188,7 +188,7 @@ class LutRegistry:
             _LOGGER.debug("Loading LUT data file: %s", path)
             return open(path)
 
-        raise LutFileNotFoundError("Data file not found: %s")
+        raise LutFileNotFoundError(f"Data file not found: {path}")
 
 
 class LutStrategy(PowerCalculationStrategyInterface):
@@ -312,7 +312,7 @@ class LutStrategy(PowerCalculationStrategyInterface):
                 )
                 light_setting.hue = int(hs[0] / 360 * 65535)
                 light_setting.saturation = int(hs[1] / 100 * 255)
-            except (KeyError, TypeError, ValueError):
+            except KeyError, TypeError, ValueError:
                 _LOGGER.error(
                     "%s: Could not calculate power. no hue/sat set. "
                     "Please check the attributes of your light in the developer tools.",
