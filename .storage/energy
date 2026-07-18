@@ -152,6 +152,16 @@
         "stat_consumption": "sensor.arrosage_volume",
         "stat_rate": "sensor.arrosage_flow",
         "name": "Arrosage"
+      },
+      {
+        "stat_consumption": "sensor.arrosage_potager",
+        "stat_rate": "sensor.arrosage_potager_flow",
+        "included_in_stat": "sensor.arrosage_volume"
+      },
+      {
+        "stat_consumption": "sensor.remplissage_bassin",
+        "stat_rate": "sensor.remplissage_bassin_flow",
+        "included_in_stat": "sensor.arrosage_volume"
       }
     ]
   }
