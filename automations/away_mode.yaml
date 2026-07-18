@@ -472,7 +472,7 @@
   mode: single
 - id: "1689541214168"
   alias: Presence simulation Aurore's bedroom
-  description: "Simule une présence dans la chambre d'Aurore quand le mode absence est activé"
+  description: "Simule une présence dans la chambre d'Aurore quand le mode absence est activé (fin définie par input_datetime.presence_simulation_aurore_bedroom_off)"
   trigger:
     - platform: sun
       event: sunrise
@@ -510,7 +510,7 @@
   mode: single
 - id: "1687266007380"
   alias: Reboot HA every week when we are away
-  description: "Redémarre Home Assistant chaque semaine quand nous sommes absents"
+  description: "Redémarre Home Assistant chaque semaine quand nous sommes absents (défini par input_datetime.reboot_ha_away)"
   trigger:
     - platform: time
       at: input_datetime.reboot_ha_away

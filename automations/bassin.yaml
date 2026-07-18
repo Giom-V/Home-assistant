@@ -32,7 +32,7 @@
   mode: single
 - id: pond_pump_off_peak
   alias: Turn off the pond's pump during peak hours
-  description: "Éteint la pompe du bassin pendant les heures pleines, ou l'après-midi."
+  description: "Éteint la pompe du bassin pendant les heures pleines, ou l'après-midi (défini par input_datetime.pond_pump_off_time)"
   triggers:
     - platform: state
       entity_id: binary_sensor.heure_creuse
@@ -68,7 +68,7 @@
   description: "Allume la pompe le midi si quelqu'un est à la maison ou en visite."
   triggers:
     - platform: time
-      at: input_datetime.pond_pump_on_lunch_time
+      at: "12:00:00"
   conditions:
     - condition: or
       conditions:

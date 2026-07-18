@@ -12,7 +12,6 @@
 #   a serie.
 # * `Switch off all lights when nobody's home for 30mn`: There's no need for
 #   lights if nobody is home.
-
 - id: SwitchOffLightsInTheSummerMornings
   alias: Switch off lights 30mn after sunrise
   description: "Éteint les lumières 30 minutes après le lever du soleil"
@@ -31,10 +30,11 @@
       entity_id: scene.LightsOff
 - id: SwitchOffLightsInTheWinterMornings
   alias: Switch off lights 60mn after sunrise
-  description: "Éteint les lumières en fin de matinée d'hiver"
+  description: "Éteint les lumières 60 minutes après le lever du soleil"
   trigger:
-    - at: input_datetime.switch_off_lights_winter_mornings
-      platform: time
+    - platform: sun
+      event: sunrise
+      offset: "01:00:00"
   condition:
     - condition: state
       entity_id: season.season

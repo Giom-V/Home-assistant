@@ -2,7 +2,4 @@ extinction_des_feux:
   name: Extinction des feux
   has_date: false
   has_time: true
-switch_off_lights_winter_mornings:
-  name: Switch off lights in winter mornings
-  has_date: false
-  has_time: true
+  initial: '23:00:00'

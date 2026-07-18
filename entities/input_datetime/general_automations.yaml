@@ -2,23 +2,29 @@ guirlandes_off_time:
   name: Guirlandes off time
   has_date: false
   has_time: true
+  initial: '22:00:00'
 presence_simulation_bureau_off:
   name: Presence simulation bureau off
   has_date: false
   has_time: true
+  initial: '22:30:00'
 presence_simulation_livingroom_on:
   name: Presence simulation livingroom on
   has_date: false
   has_time: true
+  initial: '18:45:00'
 presence_simulation_livingroom_off:
   name: Presence simulation livingroom off
   has_date: false
   has_time: true
+  initial: '22:30:00'
 water_vegetable_garden_on:
   name: Water vegetable garden on
   has_date: false
   has_time: true
+  initial: '19:00:00'
 water_vegetable_garden_off:
   name: Water vegetable garden off
   has_date: false
   has_time: true
+  initial: '21:00:00'

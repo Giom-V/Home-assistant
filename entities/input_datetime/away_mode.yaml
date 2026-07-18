@@ -2,11 +2,14 @@ presence_simulation_dining_room_off:
   name: Presence simulation dining room off
   has_date: false
   has_time: true
+  initial: '23:00:00'
 presence_simulation_aurore_bedroom_off:
   name: Presence simulation Aurore bedroom off
   has_date: false
   has_time: true
+  initial: '22:15:00'
 reboot_ha_away:
   name: Reboot HA away
   has_date: false
   has_time: true
+  initial: 04:05:06

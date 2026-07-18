@@ -1,6 +1,6 @@
 - id: "1678555471570"
   alias: Extinction des feux
-  description: "Éteint toutes les lumières et appareils le soir"
+  description: "Éteint toutes les lumières et appareils le soir (défini par input_datetime.extinction_des_feux)"
   trigger:
     - platform: time
       at: input_datetime.extinction_des_feux

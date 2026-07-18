@@ -32,7 +32,7 @@
   mode: single
 - id: "1669558090658"
   alias: Preheat the car
-  description: "Préchauffe la voiture les matins d'école en hiver"
+  description: "Préchauffe la voiture les matins d'école en hiver (défini par input_datetime.preheat_car_morning)"
   trigger:
     - platform: time
       at: input_datetime.preheat_car_morning

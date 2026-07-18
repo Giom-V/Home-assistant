@@ -49,7 +49,7 @@
   description: "Pendant la journée, le comportement par défaut de l'ampoule d'Aurore est 'On'"
   trigger:
     - platform: time
-      at: input_datetime.aurore_light_bulb_day_behavior
+      at: 07:00:00
   condition: []
   action:
     - service: select.select_option
@@ -178,7 +178,7 @@
   mode: single
 - id: "1758443142653"
   alias: Switch off Aurore bed light when she sleeps
-  description: "Éteint la lumière du lit d'Aurore quand elle dort"
+  description: "Éteint la lumière du lit d'Aurore quand elle dort (défini par input_datetime.aurore_bed_light_off_1 à 4)"
   triggers:
     - trigger: time
       at: input_datetime.aurore_bed_light_off_1
@@ -219,7 +219,7 @@
   mode: single
 - id: "1759210471445"
   alias: Fermer les volets d'Aurore à minuit
-  description: "Ferme les volets d'Aurore la nuit"
+  description: "Ferme les volets d'Aurore la nuit (défini par input_datetime.fermer_volets_aurore)"
   triggers:
     - trigger: time
       at: input_datetime.fermer_volets_aurore

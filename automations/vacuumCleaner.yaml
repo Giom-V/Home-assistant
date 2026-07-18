@@ -158,9 +158,10 @@
 #         entity_id: vacuum.xiaomi_vacuum_cleaner
 - id: vacuum_kitchen_and_dining_room_when_we_are_away
   alias: vacuum Kitchen and dining room when we are away
+  enabled: false
   description: "Passe l'aspirateur dans la cuisine et la salle à manger quand nous sommes absents"
   trigger:
-    - at: input_datetime.vacuum_kitchen_dining_room
+    - at: "14:00"
       platform: time
   condition:
     - condition: state
@@ -180,6 +181,7 @@
             entity_id: script.vacuum_first_floor
 - id: vacuum_kitchen_and_dining_room_when_we_are_away_covid_version
   alias: vacuum Kitchen and dining room when we are away (Covid version)
+  enabled: false
   description: "Passe l'aspirateur dans la cuisine et la salle à manger quand nous sommes absents (version Covid)"
   trigger:
     - platform: state

@@ -1,0 +1,7 @@
+water_pond_duration:
+  name: Duration to add water to pond
+  initial: 5
+  min: 1
+  max: 60
+  step: 1
+  unit_of_measurement: min
