@@ -2,3 +2,7 @@ last_vacuum:
   name: Last time the vacuum cleaner did some cleaning
   has_date: true
   has_time: true
+vacuum_kitchen_dining_room:
+  name: Vacuum kitchen and dining room
+  has_date: false
+  has_time: true

@@ -65,7 +65,7 @@
   description: ""
   triggers:
     - trigger: time
-      at: "22:00:00"
+      at: input_datetime.guirlandes_off_time
   conditions: []
   actions:
     - action: switch.turn_off
@@ -324,7 +324,7 @@
       entity_id: 67b730781c4061abd48a082c52434181
       domain: switch
     - wait_for_trigger:
-        - at: "22:30:00"
+        - at: input_datetime.presence_simulation_bureau_off
           trigger: time
     - delay: "{{ range(0, 45*60)+1 | random }}"
     - type: turn_off
@@ -343,7 +343,7 @@
   description: ""
   triggers:
     - trigger: time
-      at: "18:45:00"
+      at: input_datetime.presence_simulation_livingroom_on
   conditions:
     - condition: state
       entity_id: input_boolean.away_mode
@@ -368,7 +368,7 @@
         entity_id: light.govee_tv
       data: {}
     - wait_for_trigger:
-        - at: "22:30:00"
+        - at: input_datetime.presence_simulation_livingroom_off
           trigger: time
     - delay: "{{ range(0, 75*60)+1 | random }}"
     - action: light.turn_off
@@ -669,7 +669,7 @@
   description: ""
   triggers:
     - trigger: time
-      at: "19:00:00"
+      at: input_datetime.water_vegetable_garden_on
   conditions: []
   actions:
     - action: switch.turn_on
@@ -683,7 +683,7 @@
   description: ""
   triggers:
     - trigger: time
-      at: "21:00:00"
+      at: input_datetime.water_vegetable_garden_off
   conditions: []
   actions:
     - action: switch.turn_off

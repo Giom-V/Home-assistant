@@ -31,9 +31,9 @@
       entity_id: scene.LightsOff
 - id: SwitchOffLightsInTheWinterMornings
   alias: Switch off lights 60mn after sunrise
-  description: "Éteint les lumières 60 minutes après le lever du soleil"
+  description: "Éteint les lumières en fin de matinée d'hiver"
   trigger:
-    - at: "08:00:00"
+    - at: input_datetime.switch_off_lights_winter_mornings
       platform: time
   condition:
     - condition: state

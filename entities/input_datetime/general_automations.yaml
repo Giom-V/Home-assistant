@@ -1,0 +1,24 @@
+guirlandes_off_time:
+  name: Guirlandes off time
+  has_date: false
+  has_time: true
+presence_simulation_bureau_off:
+  name: Presence simulation bureau off
+  has_date: false
+  has_time: true
+presence_simulation_livingroom_on:
+  name: Presence simulation livingroom on
+  has_date: false
+  has_time: true
+presence_simulation_livingroom_off:
+  name: Presence simulation livingroom off
+  has_date: false
+  has_time: true
+water_vegetable_garden_on:
+  name: Water vegetable garden on
+  has_date: false
+  has_time: true
+water_vegetable_garden_off:
+  name: Water vegetable garden off
+  has_date: false
+  has_time: true

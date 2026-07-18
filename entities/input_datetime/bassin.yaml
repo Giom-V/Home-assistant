@@ -1,0 +1,8 @@
+pond_pump_off_time:
+  name: Turn off pond pump during peak hours
+  has_date: false
+  has_time: true
+pond_pump_on_lunch_time:
+  name: Turn on pond pump lunch time
+  has_date: false
+  has_time: true
