@@ -15,6 +15,59 @@
       entity_id: 9d794747df6e33f51d6a02d194d88d70
       domain: light
   mode: single
+- id: "1759210571000"
+  alias: Switch off wardrobe light at midnight
+  description: "Éteint la lumière de la penderie à minuit"
+  triggers:
+    - trigger: time
+      at: "00:00:01"
+  conditions: []
+  actions:
+    - action: light.turn_off
+      target:
+        entity_id: light.lumiere_penderie
+  mode: restart
+
+- id: "1759210571001"
+  alias: Switch on wardrobe light in the morning
+  description: "Allume la lumière de la penderie le matin"
+  triggers:
+    - trigger: time
+      at: "08:00:00"
+      id: "morning_week"
+    - trigger: time
+      at: "09:00:00"
+      id: "morning_weekend"
+  conditions: []
+  actions:
+    - choose:
+        - conditions:
+            - condition: trigger
+              id: "morning_week"
+            - condition: state
+              entity_id: binary_sensor.workday_sensor
+              state: "on"
+            - condition: template
+              value_template: "{{ now().weekday() != 2 }}"
+          sequence:
+            - action: light.turn_on
+              target:
+                entity_id: light.lumiere_penderie
+        - conditions:
+            - condition: trigger
+              id: "morning_weekend"
+            - condition: or
+              conditions:
+                - condition: state
+                  entity_id: binary_sensor.workday_sensor
+                  state: "off"
+                - condition: template
+                  value_template: "{{ now().weekday() == 2 }}"
+          sequence:
+            - action: light.turn_on
+              target:
+                entity_id: light.lumiere_penderie
+  mode: restart
 - id: "1736757260832"
   alias: "Bedroom remote: covers "
   description: "Télécommande de la chambre : volets"
