@@ -1,7 +1,5 @@
 """The Powercalc constants."""
 
-from __future__ import annotations
-
 from enum import StrEnum
 from typing import Literal
 
@@ -18,12 +16,14 @@ from homeassistant.const import (
     EntityCategory,
 )
 
-MIN_HA_VERSION = "2026.1.0"
+MIN_HA_VERSION = "2026.4.0"
 
 BUILT_IN_LIBRARY_DIR = "powercalc_profiles"
 
 DOMAIN = "powercalc"
 DOMAIN_CONFIG = "config"
+
+ISSUE_COMPOSITE_DEVICE_ID = "composite_device_id"
 
 DATA_CONFIGURED_ENTITIES = "configured_entities"
 DATA_DISCOVERY_MANAGER = "discovery_manager"
@@ -76,6 +76,7 @@ CONF_CREATE_ENERGY_SENSOR = "create_energy_sensor"
 CONF_CREATE_ENERGY_SENSORS = "create_energy_sensors"
 CONF_CREATE_GROUP = "create_group"
 CONF_CREATE_STANDBY_GROUP = "create_standby_group"
+CONF_CREATE_STANDBY_ENERGY_SENSOR = "create_standby_energy_sensor"
 CONF_CREATE_UTILITY_METERS = "create_utility_meters"
 CONF_CUSTOM_MODEL_DIRECTORY = "custom_model_directory"
 CONF_DAILY_FIXED_ENERGY = "daily_fixed_energy"
@@ -163,6 +164,7 @@ CONF_SELF_USAGE_INCLUDED = "self_usage_included"
 CONF_SENSOR_TYPE = "sensor_type"
 CONF_SENSORS = "sensors"
 CONF_SLEEP_POWER = "sleep_power"
+CONF_STANDBY_ENERGY_SENSOR_NAMING = "standby_energy_sensor_naming"
 CONF_STANDBY_POWER = "standby_power"
 CONF_START_TIME = "start_time"
 CONF_STATE = "state"
@@ -227,6 +229,7 @@ DEFAULT_POWER_SENSOR_PRECISION = 2
 DEFAULT_ENERGY_UPDATE_INTERVAL = 600
 DEFAULT_ENERGY_INTEGRATION_METHOD = ENERGY_INTEGRATION_METHOD_LEFT
 DEFAULT_ENERGY_NAME_PATTERN = "{} energy"
+DEFAULT_STANDBY_ENERGY_NAME_PATTERN = "{} standby energy"
 DEFAULT_SELF_USAGE_ENERGY_NAME_PATTERN = "{} Device Energy"
 DEFAULT_ENERGY_SENSOR_PRECISION = 4
 DEFAULT_ENERGY_UNIT_PREFIX = UnitPrefix.KILO
@@ -237,7 +240,9 @@ DEFAULT_UTILITY_METER_TYPES = [DAILY, WEEKLY, MONTHLY]
 
 DISCOVERY_SOURCE_ENTITY = "source_entity"
 DISCOVERY_POWER_PROFILES = "power_profiles"
+DISCOVERY_INTEGRATION_NAME = "integration_name"
 DISCOVERY_TYPE = "discovery_type"
+LIBRARY_DISCOVERY_IGNORED_DOMAINS = "discovery_ignored_domains"
 
 LIBRARY_URL = "https://library.powercalc.nl"
 API_URL = "https://api.powercalc.nl"

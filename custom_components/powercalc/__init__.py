@@ -1,7 +1,5 @@
 """The PowerCalc integration."""
 
-from __future__ import annotations
-
 import asyncio
 from functools import partial
 import logging
@@ -15,6 +13,7 @@ from homeassistant.components.utility_meter import max_28_days
 from homeassistant.components.utility_meter.const import METER_TYPES
 from homeassistant.config_entries import ConfigEntry, ConfigEntryState
 from homeassistant.const import (
+    CONF_DEVICE,
     CONF_DOMAIN,
     CONF_ENABLED,
     EVENT_HOMEASSISTANT_STARTED,
@@ -22,6 +21,7 @@ from homeassistant.const import (
     __version__ as HA_VERSION,  # noqa: N812
 )
 from homeassistant.core import Event, HassJob, HomeAssistant, ServiceCall, callback
+from homeassistant.helpers import issue_registry as ir
 import homeassistant.helpers.config_validation as cv
 from homeassistant.helpers.discovery import async_load_platform
 from homeassistant.helpers.entity_platform import async_get_platforms
@@ -98,6 +98,7 @@ from .const import (
     ENERGY_INTEGRATION_METHODS,
     ENTITY_CATEGORIES,
     ENTRY_GLOBAL_CONFIG_UNIQUE_ID,
+    ISSUE_COMPOSITE_DEVICE_ID,
     MIN_HA_VERSION,
     SERVICE_CHANGE_GUI_CONFIGURATION,
     SERVICE_RELOAD,
@@ -106,6 +107,7 @@ from .const import (
     SensorType,
     UnitPrefix,
 )
+from .device_binding import is_composite_device_id
 from .discovery import DiscoveryManager, DiscoveryStatus, get_discovery_manager
 from .migrate import async_fix_legacy_profile_config_entry, async_migrate_config_entry
 from .power_profile.power_profile import DeviceType
@@ -210,7 +212,7 @@ async def async_setup(hass: HomeAssistant, config: ConfigType) -> bool:
 
     global_config = get_global_configuration(hass, config)
 
-    discovery_manager = await create_discovery_manager_instance(hass, config, global_config)
+    discovery_manager = create_discovery_manager_instance(hass, config, global_config)
     hass.data[DOMAIN] = {
         DATA_DISCOVERY_MANAGER: discovery_manager,
         DOMAIN_CONFIG: global_config,
@@ -223,6 +225,8 @@ async def async_setup(hass: HomeAssistant, config: ConfigType) -> bool:
         DATA_ANALYTICS: {},
     }
 
+    await discovery_manager.setup()
+
     register_services(hass)
 
     await async_load_platform(hass, Platform.SELECT, DOMAIN, {}, config)
@@ -233,8 +237,8 @@ async def async_setup(hass: HomeAssistant, config: ConfigType) -> bool:
 
     try:
         await repair_none_config_entries_issue(hass)
-    except Exception as e:  # pragma: no cover
-        _LOGGER.error("problem while cleaning up None entities", exc_info=e)  # pragma: no cover
+    except Exception:  # pragma: no cover
+        _LOGGER.exception("problem while cleaning up None entities")  # pragma: no cover
 
     await init_analytics(hass)
 
@@ -270,7 +274,7 @@ async def init_analytics(hass: HomeAssistant) -> None:
     hass.bus.async_listen_once(EVENT_HOMEASSISTANT_STARTED, start_schedule)
 
 
-async def create_discovery_manager_instance(
+def create_discovery_manager_instance(
     hass: HomeAssistant,
     ha_config: ConfigType,
     global_powercalc_config: ConfigType,
@@ -282,15 +286,13 @@ async def create_discovery_manager_instance(
     exclude_self_usage = discovery_config.get(CONF_EXCLUDE_SELF_USAGE, False)
     enable_autodiscovery = discovery_config.get(CONF_ENABLED, True)
 
-    manager = DiscoveryManager(
+    return DiscoveryManager(
         hass,
         ha_config,
         exclude_device_types=exclude_device_types,
         exclude_self_usage_profiles=exclude_self_usage,
         enabled=enable_autodiscovery,
     )
-    await manager.setup()
-    return manager
 
 
 def register_services(hass: HomeAssistant) -> None:
@@ -335,13 +337,7 @@ def register_services(hass: HomeAssistant) -> None:
         if DOMAIN in reload_config:
             for sensor_config in reload_config[DOMAIN].get(CONF_SENSORS, []):
                 sensor_config.update({DISCOVERY_TYPE: PowercalcDiscoveryType.USER_YAML})
-                await async_load_platform(
-                    hass,
-                    Platform.SENSOR,
-                    DOMAIN,
-                    sensor_config,
-                    reload_config,
-                )
+                await _async_load_yaml_sensor(hass, sensor_config, reload_config)
 
         # Reload all config entries
         for entry in hass.config_entries.async_entries(DOMAIN):
@@ -410,7 +406,7 @@ async def setup_yaml_sensors(
     config: ConfigType,
     domain_config: ConfigType,
 ) -> None:
-    sensors: list = domain_config.get(CONF_SENSORS, [])
+    sensors: list[ConfigType] = domain_config.get(CONF_SENSORS, [])
     primary_sensors = []
     secondary_sensors = []
 
@@ -426,15 +422,7 @@ async def setup_yaml_sensors(
         """Load secondary sensors after primary sensors."""
         await asyncio.gather(
             *(
-                hass.async_create_task(
-                    async_load_platform(
-                        hass,
-                        Platform.SENSOR,
-                        DOMAIN,
-                        sensor_config,
-                        config,
-                    ),
-                )
+                hass.async_create_task(_async_load_yaml_sensor(hass, sensor_config, config))
                 for sensor_config in secondary_sensors
             ),
         )
@@ -443,24 +431,21 @@ async def setup_yaml_sensors(
 
     await asyncio.gather(
         *(
-            hass.async_create_task(
-                async_load_platform(
-                    hass,
-                    Platform.SENSOR,
-                    DOMAIN,
-                    sensor_config,
-                    config,
-                ),
-            )
+            hass.async_create_task(_async_load_yaml_sensor(hass, sensor_config, config))
             for sensor_config in primary_sensors
         ),
     )
+
+
+async def _async_load_yaml_sensor(hass: HomeAssistant, sensor_config: ConfigType, config: ConfigType) -> None:
+    await async_load_platform(hass, Platform.SENSOR, DOMAIN, sensor_config, config)
 
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Set up Powercalc integration from a config entry."""
 
     await async_fix_legacy_profile_config_entry(hass, entry)
+    _async_handle_composite_device_issue(hass, entry)
     await hass.config_entries.async_forward_entry_setups(entry, [Platform.SENSOR, Platform.SELECT])
 
     entry.async_on_unload(entry.add_update_listener(async_update_entry))
@@ -530,6 +515,8 @@ async def async_unload_entry(hass: HomeAssistant, config_entry: ConfigEntry) -> 
 
 async def async_remove_entry(hass: HomeAssistant, config_entry: ConfigEntry) -> None:
     """Called after a config entry is removed."""
+    ir.async_delete_issue(hass, DOMAIN, _composite_device_issue_id(config_entry.entry_id))
+
     discovery_manager = get_discovery_manager(hass)
     discovery_manager.remove_initialized_flow(config_entry)
 
@@ -545,6 +532,31 @@ async def async_remove_entry(hass: HomeAssistant, config_entry: ConfigEntry) -> 
     for entry in updated_entries:
         if entry.state == ConfigEntryState.LOADED:
             await hass.config_entries.async_reload(entry.entry_id)
+
+
+def _composite_device_issue_id(config_entry_id: str) -> str:
+    """Return the repair issue ID for a config entry using a composite device ID."""
+    return f"{ISSUE_COMPOSITE_DEVICE_ID}_{config_entry_id}"
+
+
+def _async_handle_composite_device_issue(hass: HomeAssistant, entry: ConfigEntry) -> None:
+    """Report ambiguous legacy device IDs."""
+    issue_id = _composite_device_issue_id(entry.entry_id)
+    device_id = entry.data.get(CONF_DEVICE)
+    if not device_id or not is_composite_device_id(hass, str(device_id)):
+        ir.async_delete_issue(hass, DOMAIN, issue_id)
+        return
+
+    ir.async_create_issue(
+        hass,
+        DOMAIN,
+        issue_id,
+        data={"config_entry_id": entry.entry_id},
+        is_fixable=True,
+        severity=ir.IssueSeverity.WARNING,
+        translation_key=ISSUE_COMPOSITE_DEVICE_ID,
+        translation_placeholders={"name": entry.title},
+    )
 
 
 async def async_migrate_entry(hass: HomeAssistant, config_entry: ConfigEntry) -> bool:
@@ -567,8 +579,8 @@ async def repair_none_config_entries_issue(hass: HomeAssistant) -> None:
             object.__setattr__(entry, "unique_id", unique_id)
             hass.config_entries._entries._index_entry(entry)  # noqa: SLF001
             await hass.config_entries.async_remove(entry.entry_id)
-        except Exception as e:  # pragma: no cover
-            _LOGGER.error("problem while cleaning up None entities", exc_info=e)  # pragma: no cover
+        except Exception:  # pragma: no cover
+            _LOGGER.exception("problem while cleaning up None entities")  # pragma: no cover
 
 
 def _notify_message(

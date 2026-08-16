@@ -1,9 +1,7 @@
 """Config flow for Powercalc integration."""
 
-from __future__ import annotations
-
 from abc import ABC, abstractmethod
-from collections.abc import Callable
+from collections.abc import Awaitable, Callable
 from inspect import isawaitable
 import logging
 from typing import Any
@@ -31,13 +29,16 @@ import voluptuous as vol
 
 from .common import SourceEntity, create_source_entity
 from .const import (
+    CONF_CREATE_COST_SENSOR,
     CONF_CREATE_UTILITY_METERS,
+    CONF_ENERGY_PRICE_SENSOR,
     CONF_MANUFACTURER,
     CONF_MODE,
     CONF_MODEL,
     CONF_POWER,
     CONF_SENSOR_TYPE,
     CONF_STANDBY_POWER,
+    DISCOVERY_INTEGRATION_NAME,
     DISCOVERY_POWER_PROFILES,
     DISCOVERY_SOURCE_ENTITY,
     DOMAIN,
@@ -46,8 +47,9 @@ from .const import (
     CalculationStrategy,
     SensorType,
 )
+from .device_binding import attach_configured_device_entry
 from .errors import ModelNotSupportedError, StrategyConfigurationError
-from .flow_helper.common import FlowType, PowercalcFormStep, Step, fill_schema_defaults
+from .flow_helper.common import FlowType, PowercalcFormStep, Step, fill_schema_defaults, flatten_sections
 from .flow_helper.flows.cost import CostConfigFlow, CostOptionsFlow
 from .flow_helper.flows.daily_energy import (
     SCHEMA_DAILY_ENERGY_OPTIONS,
@@ -74,11 +76,14 @@ from .flow_helper.flows.virtual_power import (
 )
 from .flow_helper.profile_preview import async_setup_preview as async_setup_powercalc_preview
 from .flow_helper.schema import (
+    COST_DOCS_URI,
     SCHEMA_COST_SENSOR_TOGGLE,
     SCHEMA_ENERGY_SENSOR_TOGGLE,
     SCHEMA_SENSOR_ENERGY_OPTIONS,
+    SCHEMA_STANDBY_ENERGY_SENSOR_TOGGLE,
     SCHEMA_UTILITY_METER_OPTIONS,
     SCHEMA_UTILITY_METER_TOGGLE,
+    build_cost_pricing_schema,
 )
 from .power_profile.factory import get_power_profile
 from .power_profile.power_profile import SUPPORTED_DOMAINS, DeviceType, DiscoveryBy, PowerProfile
@@ -104,7 +109,7 @@ MENU_OPTIONS = [
 ]
 
 # Order matters: async_step() delegates to the first handler that defines the requested step.
-FLOW_HANDLERS: dict[FlowType, dict] = {
+FLOW_HANDLERS: dict[FlowType, dict[str, type[Any]]] = {
     FlowType.GLOBAL_CONFIGURATION: {
         "config": GlobalConfigurationConfigFlow,
         "options": GlobalConfigurationOptionsFlow,
@@ -176,7 +181,7 @@ class PowercalcCommonFlow(ABC, ConfigEntryBaseFlow):
     def persist_config_entry(self) -> ConfigFlowResult:
         pass  # pragma: no cover
 
-    def _async_step(self, step: Step) -> Callable:
+    def _async_step(self, step: Step) -> Callable[[dict[str, Any] | None], Awaitable[ConfigFlowResult]]:
         """Generate a step handler."""
 
         async def _async_step(
@@ -396,6 +401,7 @@ class PowercalcConfigFlow(PowercalcCommonFlow, ConfigFlow, domain=DOMAIN):
 
         self.source_entity_id = self.source_entity.entity_id
         self.name = self.source_entity.name
+        integration_name = discovery_info.pop(DISCOVERY_INTEGRATION_NAME, None)
 
         power_profiles: list[PowerProfile] = []
         if DISCOVERY_POWER_PROFILES in discovery_info:
@@ -406,7 +412,7 @@ class PowercalcConfigFlow(PowercalcCommonFlow, ConfigFlow, domain=DOMAIN):
         self.sensor_config = discovery_info.copy()
 
         self.context["title_placeholders"] = {
-            "name": self.name or "",
+            "name": f"{self.name} - {integration_name}" if integration_name else self.name or "",
             "manufacturer": str(self.sensor_config.get(CONF_MANUFACTURER)),
             "model": str(self.sensor_config.get(CONF_MODEL)),
         }
@@ -452,21 +458,21 @@ class PowercalcConfigFlow(PowercalcCommonFlow, ConfigFlow, domain=DOMAIN):
     @callback
     def persist_config_entry(self) -> ConfigFlowResult:
         """Create the config entry."""
-        self.sensor_config.update({CONF_SENSOR_TYPE: self.selected_sensor_type})
-        self.sensor_config.update({CONF_NAME: self.name})
+        entry_data: ConfigType = {
+            **self.sensor_config,
+            CONF_SENSOR_TYPE: self.selected_sensor_type,
+            CONF_NAME: self.name,
+        }
 
         if self.source_entity_id:
-            self.sensor_config.update({CONF_ENTITY_ID: self.source_entity_id})
+            entry_data[CONF_ENTITY_ID] = self.source_entity_id
 
-        if (
-            self.selected_profile
-            and self.source_entity
-            and self.source_entity.device_entry
-            and self.selected_profile.discovery_by == DiscoveryBy.DEVICE
-        ):
-            self.sensor_config.update({CONF_DEVICE: self.source_entity.device_entry.id})
+        profile = self.selected_profile
+        source_entity = self.source_entity
+        if profile and source_entity and profile.discovery_by == DiscoveryBy.DEVICE and source_entity.device_entry:
+            entry_data[CONF_DEVICE] = source_entity.device_entry.id
 
-        return self.async_create_entry(title=str(self.name), data=self.sensor_config)
+        return self.async_create_entry(title=str(self.name), data=entry_data)
 
 
 class PowercalcOptionsFlow(PowercalcCommonFlow, OptionsFlow):
@@ -504,9 +510,13 @@ class PowercalcOptionsFlow(PowercalcCommonFlow, OptionsFlow):
 
         self.sensor_config = dict(self.config_entry.data)
         if self.source_entity_id:
-            self.source_entity = create_source_entity(
-                self.source_entity_id,
+            self.source_entity = attach_configured_device_entry(
                 self.hass,
+                self.sensor_config,
+                create_source_entity(
+                    self.source_entity_id,
+                    self.hass,
+                ),
             )
             result = await self.initialize_library_profile()
             if result:
@@ -541,12 +551,7 @@ class PowercalcOptionsFlow(PowercalcCommonFlow, OptionsFlow):
 
         menu = [Step.BASIC_OPTIONS]
         if self.selected_sensor_type == SensorType.VIRTUAL_POWER:
-            if self.strategy and self.should_add_strategy_option_to_menu():
-                strategy_step = STRATEGY_STEP_MAPPING[self.strategy]
-                menu.append(strategy_step)
-            if self.selected_profile:
-                menu.append(Step.LIBRARY_OPTIONS)
-            menu.append(Step.ADVANCED_OPTIONS)
+            menu.extend(self.build_virtual_power_menu())
         if self.selected_sensor_type == SensorType.DAILY_ENERGY:
             menu.append(Step.DAILY_ENERGY)
         if self.selected_sensor_type == SensorType.REAL_POWER:
@@ -554,10 +559,39 @@ class PowercalcOptionsFlow(PowercalcCommonFlow, OptionsFlow):
         if self.selected_sensor_type == SensorType.GROUP:
             menu.extend(self.flow_handlers[FlowType.GROUP].build_group_menu())
 
+        if self.sensor_config.get(CONF_CREATE_COST_SENSOR):
+            menu.append(Step.COST_OPTIONS)
+
         if self.sensor_config.get(CONF_CREATE_UTILITY_METERS):
             menu.append(Step.UTILITY_METER_OPTIONS)
 
         return menu
+
+    def build_virtual_power_menu(self) -> list[Step]:
+        """Build the options menu entries specific to virtual power sensors."""
+        menu: list[Step] = []
+        if self.strategy and self.should_add_strategy_option_to_menu():
+            menu.append(STRATEGY_STEP_MAPPING[self.strategy])
+        if self.selected_profile:
+            menu.append(Step.LIBRARY_OPTIONS)
+        if self.should_add_select_device_to_menu():
+            menu.append(Step.SELECT_DEVICE)
+        menu.append(Step.ADVANCED_OPTIONS)
+        return menu
+
+    def should_add_select_device_to_menu(self) -> bool:
+        """Check whether the device selection should be added to the menu."""
+        if not self.selected_profile or self.selected_profile.discovery_by not in [
+            DiscoveryBy.DEVICE,
+            DiscoveryBy.CONFIG_ENTRY,
+        ]:
+            return False
+
+        if self.selected_profile.discovery_by == DiscoveryBy.CONFIG_ENTRY:
+            # Only devices of the source config entry are selectable, so there must be something to choose from.
+            return len(self.flow_handlers[FlowType.LIBRARY].get_selectable_devices()) > 1
+
+        return True
 
     def should_add_strategy_option_to_menu(self) -> bool:
         """Check whether the strategy option should be added to the menu."""
@@ -589,22 +623,37 @@ class PowercalcOptionsFlow(PowercalcCommonFlow, OptionsFlow):
             Step.UTILITY_METER_OPTIONS,
         )
 
+    async def async_step_cost_options(self, user_input: dict[str, Any] | None = None) -> ConfigFlowResult:
+        """Handle the per sensor energy price override."""
+        return await self.async_handle_options_step(
+            user_input,
+            build_cost_pricing_schema(self.hass, self.sensor_config.get(CONF_ENERGY_PRICE_SENSOR)),
+            Step.COST_OPTIONS,
+            form_kwarg={"description_placeholders": {"docs_uri": COST_DOCS_URI}},
+        )
+
     async def async_handle_options_step(
         self,
         user_input: dict[str, Any] | None,
         schema: vol.Schema,
         step: Step,
         form_kwarg: dict[str, Any] | None = None,
+        validate: Callable[[dict[str, Any]], dict[str, str] | None] | None = None,
     ) -> ConfigFlowResult:
         """
         Generic handler for all the option steps.
         processes user input against the select schema.
         And finally persist the changes on the config entry
+
+        An optional `validate` callback receives the user input with any collapsible sections
+        flattened, and returns errors to show on the form.
         """
         errors: dict[str, str] | None = {}
         schema = fill_schema_defaults(schema, self.sensor_config)
         if user_input is not None:
-            errors = await self.process_all_options(user_input, schema)
+            errors = validate(flatten_sections(user_input, schema)) if validate else None
+            if not errors:
+                errors = await self.process_all_options(user_input, schema)
             if not errors:
                 return self.persist_config_entry()
         return self.async_show_form(step_id=step, data_schema=schema, errors=errors, **(form_kwarg or {}))
@@ -710,6 +759,7 @@ class PowercalcOptionsFlow(PowercalcCommonFlow, OptionsFlow):
         return schema.extend(  # type: ignore[no-any-return]
             {
                 **SCHEMA_ENERGY_SENSOR_TOGGLE.schema,
+                **SCHEMA_STANDBY_ENERGY_SENSOR_TOGGLE.schema,
                 **SCHEMA_COST_SENSOR_TOGGLE.schema,
                 **SCHEMA_UTILITY_METER_TOGGLE.schema,
             },

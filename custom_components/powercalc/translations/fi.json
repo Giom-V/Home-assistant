@@ -1,0 +1,1227 @@
+{
+  "common": {
+    "source_entity": "Lähde-entiteetti",
+    "source_device": "Lähdelaite",
+    "remarks_smart_switch": "Tämä profiili sisältää vain valmiustilan tehoarvot. \n Jos laite kuluttaa käynnissä ollessaan kiinteän määrän tehoa, voit antaa arvon määrityksen seuraavassa vaiheessa",
+    "remarks_smart_dimmer": "Tämä profiili sisältää vain valmiustilan tehoarvot. \n Seuraavassa vaiheessa voit halutessasi antaa liitetyn valon arvot"
+  },
+  "config": {
+    "abort": {
+      "already_configured": "Anturi on jo määritetty, anna yksilöllinen tunniste (unique_id)"
+    },
+    "error": {
+      "cost_price_mandatory": "Anna joko energian hinta tai energian hintaa tarjoava anturi",
+      "daily_energy_mandatory": "Anna vähintään value tai value_template",
+      "entity_mandatory": "Entiteetti on valittava kaikille muille strategioille paitsi playbook-strategialle",
+      "fixed_mandatory": "Anna vähintään power, power_template tai states_power",
+      "fixed_states_power_only": "Tämä entiteetti toimii vain states_power-asetuksella, ei power-asetuksella",
+      "group_mandatory": "Määritä vähintään aliryhmät tai teho- ja energiaentiteetit",
+      "linear_mandatory": "Anna vähintään max_power tai calibrate",
+      "linear_min_higher_as_max": "Enimmäisteho ei voi olla pienempi kuin vähimmäisteho",
+      "linear_unsupported_domain": "Entiteetin toimialuetta ei tueta lineaarisessa tilassa. Sen on oltava fan, light tai media_player. Voit kuitenkin käyttää calibrate-asetusta",
+      "lut_unsupported_color_mode": "LUT-profiili ei tue yhtä valosi väritiloista. Katso lisätietoja lokista",
+      "lut_wrong_domain": "Vain light-entiteetit voivat käyttää LUT-tilaa",
+      "playbook_mandatory": "Määritä vähintään yksi playbook",
+      "unknown": "Tuntematon virhe. Katso lisätietoja lokista"
+    },
+    "flow_title": "{name} ({manufacturer} {model})",
+    "step": {
+      "assign_groups": {
+        "data": {
+          "group": "Valitse ryhmä(t)",
+          "new_group": "Uusi ryhmä"
+        },
+        "data_description": {
+          "new_group": "Luo uusi ryhmä kirjoittamalla mukautettu ryhmän nimi"
+        },
+        "title": "Liitä ryhmään"
+      },
+      "availability_entity": {
+        "data": {
+          "availability_entity": "Saatavuusentiteetti"
+        },
+        "data_description": {
+          "availability_entity": "Kun tämä entiteetti ei ole käytettävissä, myös Powercalc-anturi ei ole käytettävissä"
+        },
+        "title": "Saatavuusentiteetti",
+        "description": "Tämä profiili koskee laitetta. Valitse entiteetti, jonka avulla Powercalc-anturin saatavuus määritetään"
+      },
+      "daily_energy": {
+        "data": {
+          "create_utility_meters": "Luo kulutusmittarit",
+          "daily_energy_value": "Päivittäinen energia-arvo",
+          "name": "Nimi",
+          "on_time": "Päälläoloaika",
+          "start_time": "Aloitusaika",
+          "unit_of_measurement": "Mittayksikkö",
+          "update_frequency": "Päivitystaajuus",
+          "value": "Arvo",
+          "value_template": "Arvomalli"
+        },
+        "data_description": {
+          "on_time": "Tyhjänä oletus on yksi päivä eli aina päällä",
+          "update_frequency": "Aika sekunteina anturin tilapäivitysten välillä"
+        },
+        "title": "Luo päivittäinen kiinteä anturi"
+      },
+      "energy_options": {
+        "title": "Energia-asetukset",
+        "data": {
+          "energy_integration_method": "Integrointimenetelmä",
+          "energy_sensor_unit_prefix": "Yksikköetuliite",
+          "energy_filter_outlier_enabled": "Suodata poikkeamat",
+          "energy_filter_outlier_max_step": "Poikkeamasuodattimen enimmäisaskel"
+        },
+        "data_description": {
+          "energy_filter_outlier_enabled": "Ota energia-anturin poikkeavien arvojen suodatus käyttöön",
+          "energy_filter_outlier_max_step": "Poikkeamasuodattimen tehoarvoille (watteina) sallima enimmäisaskel"
+        }
+      },
+      "group_domain": {
+        "data": {
+          "name": "Nimi",
+          "create_energy_sensor": "Luo energia-anturi",
+          "create_cost_sensor": "Luo kustannusanturi",
+          "create_utility_meters": "Luo kulutusmittarit",
+          "domain": "Entiteetin toimialue",
+          "exclude_entities": "Ohita entiteetit"
+        },
+        "title": "Luo toimialueeseen perustuva ryhmäanturi"
+      },
+      "fixed": {
+        "data": {
+          "fixed_value": "Tehoarvo"
+        },
+        "data_description": {
+          "fixed_value": "Tehoarvo watteina, kun entiteetti on päällä"
+        },
+        "description": "Määritä entiteetin kiinteä tehoarvo. Katso lisätietoja [dokumentaatiosta]({docs_uri})",
+        "title": "Kiinteät asetukset"
+      },
+      "global_configuration": {
+        "title": "Yleiset asetukset",
+        "description": "Määritä Powercalcin yleiset asetukset. Katso lisätietoja [dokumentaatiosta]({docs_uri}). Energia-antureiden ja kulutusmittareiden lisäasetukset annetaan seuraavissa vaiheissa.",
+        "sections": {
+          "power_options": {
+            "name": "Tehoanturi",
+            "data": {
+              "power_sensor_naming": "Tehoanturin nimimalli",
+              "power_sensor_friendly_naming": "Tehoanturin näyttönimen malli",
+              "power_sensor_category": "Tehoanturin luokka",
+              "power_sensor_precision": "Tehoanturin tarkkuus"
+            }
+          },
+          "features": {
+            "name": "Luo anturit",
+            "data": {
+              "create_energy_sensors": "Luo energia-anturit",
+              "create_cost_sensors": "Luo kustannusanturit",
+              "create_standby_group": "Luo valmiustilaryhmä",
+              "create_utility_meters": "Luo kulutusmittarit"
+            },
+            "data_description": {
+              "create_energy_sensors": "Määrittää, luoko Powercalc kWh-antureita",
+              "create_cost_sensors": "Määrittää, luoko Powercalc kustannusantureita. Energian hinta on määritettävä seuraavissa vaiheissa",
+              "create_standby_group": "Luo ryhmä, joka laskee yhteen IoT-laitteiden valmiustilan virrankulutuksen ja itsekäytön",
+              "create_utility_meters": "Anna Powercalcin luoda kulutusmittarit, joiden jaksot ovat esimerkiksi päivä ja tunti"
+            }
+          },
+          "advanced": {
+            "name": "Edistynyt",
+            "data": {
+              "enable_analytics": "Ota anonyymi analytiikka käyttöön",
+              "ignore_unavailable_state": "Ohita ei-käytettävissä oleva tila",
+              "include_non_powercalc_sensors": "Sisällytä muut kuin Powercalc-anturit",
+              "disable_extended_attributes": "Poista laajennetut attribuutit käytöstä",
+              "disable_library_download": "Poista etäkirjaston lataus käytöstä"
+            },
+            "data_description": {
+              "enable_analytics": "Salli Powercalc lähettää nimettömiä, koostettuja käyttötilastoja integroinnin parantamiseksi",
+              "ignore_unavailable_state": "Pidä Powercalc-anturit saatavilla, vaikka lähde-entiteetti ei olisi käytettävissä",
+              "include_non_powercalc_sensors": "Valitse, haluatko sisällyttää ryhmiin muita kuin Powercalc-antureita",
+              "disable_extended_attributes": "Poista käytöstä kaikki ylimääräiset attribuutit, jotka Powercalc lisää teho-, energia- ja ryhmäentiteetteihin. Tämä auttaa pitämään tietokannan koon pienenä",
+              "disable_library_download": "Poista Powercalc-kirjaston latausominaisuus käytöstä"
+            }
+          }
+        }
+      },
+      "global_configuration_cost": {
+        "title": "Kustannusvaihtoehdot",
+        "description": "Määritä energian hinta, jota käytetään kustannusanturien laskemiseen. Anna joko kiinteä hinta tai anturi, joka tarjoaa nykyisen hinnan kWh:tä kohti. Katso [dokumentaatio]({docs_uri}) saadaksesi lisätietoja",
+        "sections": {
+          "cost_pricing": {
+            "name": "Hinnoittelu",
+            "data": {
+              "energy_price": "Kiinteä energian hinta",
+              "energy_price_multiplier": "Energian hinnan kerroin",
+              "energy_price_sensor": "Energian hinta-anturi",
+              "energy_price_surcharge": "Energian hintalisä"
+            },
+            "data_description": {
+              "energy_price": "Kiinteä kilowattituntihinta paikallisessa valuutassasi",
+              "energy_price_multiplier": "Lisämaksun jälkeen käytetty kerroin. Käytä tätä prosenttiperusteisiin veroihin tai maksuihin, esimerkiksi 1,21 21 %:lle",
+              "energy_price_sensor": "Anturi, joka tarjoaa nykyisen energiahinnan per kWh (esim. dynaamisesta tariffiintegraatiosta). Jätä kiinteä hinta tyhjäksi käyttääksesi tätä anturia",
+              "energy_price_surcharge": "Kiinteä lisämäärä per kWh lisätään kiinteään hintaan tai hinta-anturin arvoon"
+            }
+          },
+          "cost_naming": {
+            "name": "Nimeäminen",
+            "data": {
+              "cost_sensor_friendly_naming": "Kustannusanturin näyttönimen malli",
+              "cost_sensor_naming": "Kustannusanturin nimimalli"
+            },
+            "data_description": {
+              "cost_sensor_friendly_naming": "Malli kustannusanturin näyttönimelle. Lähteen nimi lisätään paikkamerkkikohtaan",
+              "cost_sensor_naming": "Kustannusanturin nimen ja entiteettitunnuksen muodostamiseen käytetty malli. Lähteen nimi lisätään paikkamerkkikohtaan"
+            }
+          }
+        }
+      },
+      "global_configuration_cost_apply": {
+        "title": "Käytä kustannusantureita",
+        "description": "Muutit yleiskustannusanturien asetusta. Haluatko soveltaa tätä muutosta kaikkiin olemassa oleviin Powercalc-antureihin, jotka on luotu käyttöliittymässä?",
+        "data": {
+          "apply_to_all": "Käytä olemassa oleviin antureihin"
+        },
+        "data_description": {
+          "apply_to_all": "Päivitä jokainen olemassa oleva käyttöliittymässä luotu Powercalc-anturi vastaamaan uusia kustannusanturien asetuksia"
+        }
+      },
+      "global_configuration_discovery": {
+        "title": "Löytämisasetukset",
+        "description": "Powercalc voi skannata järjestelmästäsi laitteita ja entiteettejä, joilla on tehoprofiilit sisäänrakennetussa kirjastossa. Alla olevien vaihtoehtojen avulla voit hienosäätää tätä toimintaa.",
+        "data": {
+          "enabled": "Ota löytäminen käyttöön",
+          "exclude_device_types": "Poissuljetut laitetyypit",
+          "exclude_self_usage": "Sulje pois omakäyttö"
+        },
+        "data_description": {
+          "exclude_device_types": "Sulje yksi tai useampi tietty laitetyyppi löytämisestä.",
+          "exclude_self_usage": "Sulje pois älykytkimien itsekäyttöprofiilit."
+        }
+      },
+      "global_configuration_energy": {
+        "title": "Energiavaihtoehdot",
+        "data": {
+          "energy_integration_method": "Energian integrointimenetelmä",
+          "energy_sensor_category": "Energia-anturiluokka",
+          "energy_sensor_friendly_naming": "Energia-anturin näyttönimen malli",
+          "energy_sensor_naming": "Energia-anturin nimimalli",
+          "energy_sensor_precision": "Energia-anturin tarkkuus",
+          "energy_sensor_unit_prefix": "Energia-anturiyksikön etuliite"
+        }
+      },
+      "global_configuration_throttling": {
+        "title": "Päivitysväliasetukset",
+        "description": "Aseta päivitysvälit eri anturityypeille. Katso [dokumentaatio]({docs_uri}) saadaksesi lisätietoja",
+        "data": {
+          "group_energy_update_interval": "Ryhmän energian päivitysväli",
+          "group_power_update_interval": "Ryhmän tehon päivitysväli",
+          "energy_update_interval": "Energian päivitysväli",
+          "power_update_interval": "Virran päivitysväli"
+        },
+        "data_description": {
+          "group_energy_update_interval": "Aikaväli, jolloin ryhmän energia-anturit päivitetään. Sekunneissa. Aseta arvoksi 0 poistaaksesi käytöstä",
+          "group_power_update_interval": "Aikaväli, jolloin ryhmän tehoanturit päivitetään. Sekunneissa. Aseta arvoksi 0 poistaaksesi käytöstä",
+          "energy_update_interval": "Aikaväli, jolla energia-anturit päivitetään. Sekunneissa. Aseta arvoksi 0 poistaaksesi käytöstä",
+          "power_update_interval": "Aikaväli, jolla energia-anturit pakotetaan päivittämään. Sekunneissa. Aseta arvoksi 0 poistaaksesi käytöstä"
+        }
+      },
+      "global_configuration_utility_meter": {
+        "title": "Kulutusmittarin asetukset",
+        "data": {
+          "utility_meter_net_consumption": "Kulutusmittarin nettokulutus",
+          "utility_meter_tariffs": "Kulutusmittarin tariffit",
+          "utility_meter_types": "Kulutusmittarityypit"
+        }
+      },
+      "group_custom": {
+        "data": {
+          "name": "Nimi"
+        },
+        "sections": {
+          "members": {
+            "name": "Jäsenet",
+            "data": {
+              "group_member_sensors": "Jäseninä olevat Powercalc-anturit",
+              "group_member_devices": "Jäsenlaitteet",
+              "group_power_entities": "Muut tehoentiteetit",
+              "group_energy_entities": "Muut energiaentiteetit",
+              "sub_groups": "Alaryhmät",
+              "area": "Alue",
+              "floor": "Kerros"
+            },
+            "data_description": {
+              "group_member_sensors": "Ryhmään sisällytettävät Powercalc-anturit",
+              "group_member_devices": "Lisää teho- ja energiaentiteetit valituista laitteista ryhmään",
+              "group_power_entities": "Mukana lisätehoanturit (W) HA-asennuksestasi",
+              "group_energy_entities": "Lisäenergia-anturit (kWh) HA-asennuksestasi",
+              "sub_groups": "Myös kaikki valittujen alaryhmien anturit lisätään tähän ryhmään",
+              "area": "Lisää kaikki tehoanturit määritetyltä alueelta",
+              "floor": "Lisää kaikki tehoanturit määritetystä kerroksesta"
+            }
+          },
+          "options": {
+            "name": "Vaihtoehdot",
+            "data": {
+              "device": "Laite",
+              "hide_members": "Piilota jäsenet",
+              "include_non_powercalc_sensors": "Sisällytä muut kuin Powercalc-anturit",
+              "force_calculate_group_energy": "Pakota energian laskenta",
+              "group_energy_start_at_zero": "Aloita nollasta",
+              "create_energy_sensor": "Luo energia-anturi",
+              "create_utility_meters": "Luo kulutusmittarit"
+            },
+            "data_description": {
+              "device": "Lisää Powercalcin luomat ryhmäentiteetit olemassa olevaan laitteeseen",
+              "include_non_powercalc_sensors": "Määritä, sisällytetäänkö muut kuin Powercalc-anturit aluevaihtoehtoa käytettäessä",
+              "force_calculate_group_energy": "Oletuksena Powercalc summaa jäsenantureiden energia-anturit. Ota tämä asetus käyttöön, jos haluat pakottaa luomaan Riemannin summa-anturin",
+              "group_energy_start_at_zero": "Kun tämä on käytössä, energia-anturi käynnistyy nollasta, kun anturi luodaan. Muussa tapauksessa se summaa kaikki nykyiset jäsenten energia-anturin tilat",
+              "create_energy_sensor": "Määrittää, luoko Powercalc kWh-anturin"
+            }
+          }
+        },
+        "title": "Luo ryhmäanturi"
+      },
+      "group_subtract": {
+        "data": {
+          "create_energy_sensor": "Luo energia-anturi",
+          "create_cost_sensor": "Luo kustannusanturi",
+          "create_utility_meters": "Luo kulutusmittarit",
+          "entity_id": "Perusentiteetti",
+          "name": "Nimi",
+          "subtract_entities": "Vähennä entiteetit"
+        },
+        "data_description": {
+          "entity_id": "Perusentiteetti, josta teho vähennetään",
+          "subtract_entities": "Valitse kaikki entiteetit, jotka haluat vähentää perusentiteetistä"
+        },
+        "title": "Vähennä ryhmäanturi"
+      },
+      "group_tracked_untracked": {
+        "data": {
+          "main_power_sensor": "Sähköverkon tehoanturi",
+          "group_tracked_auto": "Entiteetit lisätty automaattisesti",
+          "create_energy_sensor": "Luo energia-anturi",
+          "create_cost_sensor": "Luo kustannusanturi",
+          "create_utility_meters": "Luo kulutusmittarit"
+        },
+        "data_description": {
+          "main_power_sensor": "Valitse tehoanturi, joka sisältää kokonaistehonkulutuksen. Jos kenttä jätetään tyhjäksi, luodaan vain seurattavan tehon anturi",
+          "group_tracked_auto": "Powercalc lisää automaattisesti kaikki tehoanturit seurattavaan ryhmään ohittaen Powercalc-ryhmät. Poista tämä käytöstä, kun haluat määrittää seurattavat entiteetit manuaalisesti",
+          "create_energy_sensor": "Määrittää, luoko Powercalc kWh-anturin",
+          "create_utility_meters": "Anna Powercalcin luoda kulutusmittarit, joiden jaksot ovat esimerkiksi päivä ja tunti"
+        },
+        "description": "Luo ryhmäanturi kaikelle seuratulle ja seuraamattomalle teholle",
+        "title": "Luo seurattava tehoanturi"
+      },
+      "group_tracked_untracked_manual": {
+        "data": {
+          "group_tracked_entities": "Seuratut entiteetit"
+        },
+        "description": "Valitse kaikki tehoanturit, jotka ovat osa seurattua kulutusta. Se on jo täytetty automaattisesti, mutta voit säätää sitä manuaalisesti",
+        "title": "Valitse tehoentiteetit"
+      },
+      "group_tracked_untracked_auto": {
+        "data": {
+          "exclude_entities": "Sulje pois entiteetit"
+        },
+        "description": "Sulje pois tietyt entiteetit automaattisesti seuratusta ryhmästä",
+        "title": "Automaattinen seurattu konfigurointi"
+      },
+      "library": {
+        "data": {
+          "confirm_autodisovered_model": "Vahvista malli"
+        },
+        "data_description": {
+          "confirm_autodisovered_model": "Jos et halua vahvistaa, voit syöttää valmistajan ja mallin itse"
+        },
+        "description": "{source}\n\nValmistaja \"{manufacturer}\" ja malli \"{model}\" tunnistettiin automaattisesti laitteellesi.{remarks}",
+        "title": "Kirjasto"
+      },
+      "library_custom_fields": {
+        "title": "Profiilin konfigurointi",
+        "data": {
+          "power_factor": "Tehotekijä"
+        },
+        "data_description": {
+          "power_factor": "Todellisen tehon suhde näennäiseen tehoon. Käytä arvoa 0,6 tietokoneille/elektroniikalle, 0,7 sekakuormille ja 1,0 resistiivisille kuormille, kuten lämmittimille."
+        }
+      },
+      "library_multi_profile": {
+        "data": {
+          "model": "Valitse malli"
+        },
+        "description": "Valmistaja \"{manufacturer}\" ja malli \"{model}\" tunnistettiin automaattisesti laitteellesi. Entiteetille on löydetty useita profiileja, joita voidaan mahdollisesti käyttää. Etsi laitteesi tarkka malli [Powercalc-kirjastosta]({library_link}) ja valitse oikea malli",
+        "title": "Kirjasto"
+      },
+      "linear": {
+        "data": {
+          "attribute": "Attribuutti",
+          "calibrate": "Kalibrointiarvot",
+          "gamma_curve": "Gammakäyrä",
+          "max_power": "Enimmäisteho",
+          "min_power": "Vähimmäisteho"
+        },
+        "data_description": {
+          "attribute": "Määritä attribuutti. Kun jätetään tyhjäksi, valojen kirkkaus, kaiuttimien äänenvoimakkuus ja tuulettimien prosenttiosuus",
+          "calibrate": "Laita kalibrointiarvo jokaiselle riville. Esimerkki\n\n1:20"
+        },
+        "description": "Määritä lineaarisen tehon laskentavaihtoehdot. Katso lisätietoja [dokumentaatiosta]({docs_uri}). Käytä joko min/maksimitehoa tai kalibrointiarvoja, jotka mahdollistavat enemmän ohjauspisteitä.",
+        "title": "Lineaarinen konfigurointi"
+      },
+      "manufacturer": {
+        "data": {
+          "manufacturer": "Valmistaja"
+        },
+        "description": "Valitse laitteen valmistaja",
+        "title": "Valmistajan määritys"
+      },
+      "model": {
+        "data": {
+          "model": "Mallin tunnus"
+        },
+        "description": "Valitse laitteen malli. Katso [luettelo]({supported_models_link}) tuetuista malleista saadaksesi lisätietoja",
+        "title": "Mallin määritys"
+      },
+      "select_device": {
+        "data": {
+          "device": "Laite"
+        },
+        "data_description": {
+          "device": "Laite, johon Powercalc-entiteetit liitetään"
+        },
+        "description": "Valitse laite, johon Powercalc-anturi liitetään.",
+        "title": "Valitse laite"
+      },
+      "menu_group": {
+        "menu_options": {
+          "group_custom": "Tavallinen",
+          "group_domain": "Toimialuepohjainen",
+          "group_subtract": "Vähennys",
+          "group_tracked_untracked": "Seurattu/seuraamaton teho"
+        },
+        "title": "Valitse ryhmän tyyppi",
+        "description": "Valitse luotavan ryhmäanturin tyyppi. Valitse toimialuepohjainen ryhmä, jos haluat ryhmitellä tietyn toimialueen kaikki entiteetit tai luoda kaikki energia-anturit summaavan anturin. Valitse muussa tapauksessa tavallinen ryhmä"
+      },
+      "multi_switch": {
+        "data": {
+          "entities": "Vaihda entiteettejä",
+          "power": "Teho päällä",
+          "power_off": "Teho pois päältä"
+        },
+        "data_description": {
+          "entities": "Valitse kaikki yksittäiset kytkimet, jotka ovat osa monikytkintä",
+          "power": "Yhden kytkimen teho, kun se on päällä",
+          "power_off": "Yhden kytkimen teho sammutettuna"
+        },
+        "description": "Määritä usean kytkimen teholaskentavaihtoehdot. Katso lisätietoja [dokumentaatiosta]({docs_uri}).",
+        "title": "Usean kytkimen määritys"
+      },
+      "playbook": {
+        "data": {
+          "autostart": "Automaattinen käynnistys",
+          "playbooks": "Playbookit",
+          "repeat": "Toista",
+          "states_trigger": "Tilalaukaisin"
+        },
+        "data_description": {
+          "autostart": "Määritä playbook, joka käynnistetään Home Assistantin käynnistyessä, esimerkiksi \"program1\"",
+          "repeat": "Ota käyttöön, jos haluat toistaa playbookin sen päätyttyä",
+          "states_trigger": "Käynnistä playbook tilanmuutoksen perusteella. Esimerkki\n\nplaying: program1"
+        },
+        "description": "Määritä playbookin asetukset. Katso lisätietoja [dokumentaatiosta]({docs_uri}).",
+        "title": "Playbookin määritys"
+      },
+      "power_advanced": {
+        "data": {
+          "calculation_enabled_condition": "Laskenta käytössä tila",
+          "energy_integration_method": "Energian integrointimenetelmä",
+          "energy_sensor_unit_prefix": "Energia-anturiyksikön etuliite",
+          "energy_filter_outlier_enabled": "Energiasuodattimen poikkeamat",
+          "energy_filter_outlier_max_step": "Poikkeamasuodattimen enimmäisaskel",
+          "ignore_unavailable_state": "Ohita ei-käytettävissä oleva tila",
+          "multiply_factor": "Kerroin",
+          "multiply_factor_standby": "Valmiustilan kerroin",
+          "unavailable_power": "Teho, kun tila ei ole käytettävissä"
+        },
+        "data_description": {
+          "calculation_enabled_condition": "Määritetty tehonlaskentastrategia suoritetaan vain, kun tämä malli antaa arvoksi tosi tai 1, muuten tehoanturi näyttää 0",
+          "energy_filter_outlier_enabled": "Ota käyttöön poikkeavien arvojen suodatus energia-anturissa",
+          "energy_filter_outlier_max_step": "Suurin odotettu askel tehoarvoissa (watteina) poikkeamasuodattimelle",
+          "ignore_unavailable_state": "Ota tämä asetus käyttöön, kun haluat tehoanturin pysyvän käytettävissä, vaikka lähde-entiteetti ei olisi käytettävissä",
+          "multiply_factor": "Kertoo lasketun tehon tällä suhteella. Voi olla hyödyllinen light-ryhmille",
+          "multiply_factor_standby": "Sovelletaanko myös kerrointa valmiustilan tehoon",
+          "unavailable_power": "Teho watteina, jota käytetään, kun lähde-entiteetin tila ei ole käytettävissä"
+        },
+        "description": "Alla olevat vaihtoehdot koskevat edistyneitä Powercalc-määritysja. Useimmat käyttäjät eivät käytä tätä, joten voit ohittaa nämä",
+        "title": "Lisäasetukset"
+      },
+      "real_power": {
+        "data": {
+          "create_utility_meters": "Luo kulutusmittarit",
+          "entity_id": "Tehoanturin tunnus",
+          "name": "Nimi",
+          "device": "Laite"
+        },
+        "data_description": {
+          "create_utility_meters": "Anna Powercalcin luoda kulutusmittarit, joiden jaksot ovat esimerkiksi päivä ja tunti",
+          "name": "Energia-anturin ja kulutusmittarin perusnimi. Entiteetin koko nimi määräytyy energy_sensor_naming-asetuksen mukaan",
+          "device": "Lisää luotu energia-anturi tiettyyn laitteeseen"
+        },
+        "description": "Tällä hetkellä tietyt asetukset voidaan määrittää vain yleisesti",
+        "title": "Luo energia-anturi olemassa olevaan tehoanturiin"
+      },
+      "cost": {
+        "data": {
+          "energy_sensor_id": "Energian anturi",
+          "name": "Nimi"
+        },
+        "data_description": {
+          "energy_sensor_id": "Olemassa oleva energia-anturi (kWh) kustannusten laskemiseksi. Tämä voi olla minkä tahansa integroinnin anturi, ei vain Powercalc",
+          "name": "Kustannusanturin perusnimi. Entiteetin koko nimi määräytyy cost_sensor_naming-asetuksen mukaan"
+        },
+        "description": "Luo kustannusanturi olemassa olevalle energia-anturille. Energian hinta haetaan Powercalcin yleisistä asetuksista, ellet korvaa sitä alla.",
+        "sections": {
+          "cost_pricing": {
+            "name": "Hinnan ohitus",
+            "data": {
+              "energy_price": "Kiinteä energian hinta",
+              "energy_price_multiplier": "Energian hinnan kerroin",
+              "energy_price_sensor": "Energian hinta-anturi",
+              "energy_price_surcharge": "Energian hintalisä"
+            },
+            "data_description": {
+              "energy_price": "Kiinteä kilowattituntihinta paikallisessa valuutassasi. Jätä tyhjäksi käyttääksesi yleistä energian hintaa",
+              "energy_price_multiplier": "Lisämaksun jälkeen käytettävä kerroin. Käytä tätä prosenttiperusteisiin veroihin tai maksuihin, esimerkiksi arvoa 1,21, kun osuus on 21 %. Jätä tyhjäksi käyttääksesi yleistä kerrointa",
+              "energy_price_sensor": "Anturi, joka tarjoaa nykyisen energiahinnan per kWh (esim. dynaamisesta tariffiintegraatiosta). Jätä kiinteä hinta tyhjäksi käyttääksesi tätä anturia",
+              "energy_price_surcharge": "Kiinteä lisämäärä per kWh lisätään kiinteään hintaan tai hinta-anturin arvoon. Jätä tyhjäksi, jos haluat käyttää yleistä lisämaksua"
+            }
+          }
+        },
+        "title": "Luo kustannusanturi"
+      },
+      "sub_profile": {
+        "data": {
+          "sub_profile": "Alaprofiili"
+        },
+        "description": "Tässä laitteessa on malli, jossa on useita aliprofiileja. Valitse yksi, joka vastaa seuraavaa tämän laitteen entiteettiä:\n\n\"{entity_id}\"{remarks}",
+        "title": "Aliprofiilin asetukset"
+      },
+      "sub_profile_per_device": {
+        "data": {
+          "sub_profile": "Alaprofiili"
+        },
+        "description": "Tässä laitteessa on malli, jossa on useita aliprofiileja. {remarks}",
+        "title": "Aliprofiilin asetukset"
+      },
+      "smart_switch": {
+        "data": {
+          "power": "Teho",
+          "self_usage_included": "Sisältää omakulutuksen"
+        },
+        "data_description": {
+          "power": "Kiinteä tehoarvo watteina kytketylle laitteelle",
+          "self_usage_included": "Sisältääkö tehoarvo älykytkimen itsensä kuluttaman virran. Kun jätät sen pois, Powercalc lisää älykytkimen itsekäytön tehoarvoon, joka on {self_usage_power}W"
+        },
+        "description": "Määritä liitetyn laitteen virrankulutus. Jos se ei käytä kiinteää määrää tehoa, voit ohittaa tämän vaiheen. Powercalc määrittää tehoanturin älykytkimen itsekäyttöä varten",
+        "title": "Älykytkimen määritys"
+      },
+      "user": {
+        "data": {
+          "sensor_type": "Anturin tyyppi"
+        },
+        "menu_options": {
+          "cost": "Kustannusanturi (nykyisestä energia-anturista)",
+          "daily_energy": "Päivittäistä energiaa",
+          "group": "Ryhmä",
+          "global_configuration": "Yleiset asetukset",
+          "menu_group": "Ryhmä",
+          "menu_library": "Virtuaalinen teho (kirjasto)",
+          "real_power": "Energia todellisesta tehoanturista",
+          "virtual_power": "Virtuaalinen teho (manuaalinen)"
+        },
+        "title": "Valitse anturin tyyppi"
+      },
+      "utility_meter_options": {
+        "title": "Kulutusmittarin asetukset",
+        "description": "Määritä kulutusmittarin luomisen asetukset tästä",
+        "data": {
+          "utility_meter_net_consumption": "Nettokulutus",
+          "utility_meter_types": "Jaksot",
+          "utility_meter_tariffs": "Tariffit"
+        },
+        "data_description": {
+          "utility_meter_net_consumption": "Ota tämä käyttöön, jos haluat käsitellä lähdettä nettomittarina. Tämä antaa laskurin mennä sekä positiiviseen että negatiiviseen.",
+          "utility_meter_types": "Luo kulutusmittarit tietyille jaksoille",
+          "utility_meter_tariffs": "Luettelo tuetuista tariffeista, jätä tyhjäksi, jos tarvitaan vain yksi tariffi."
+        }
+      },
+      "virtual_power": {
+        "data": {
+          "create_energy_sensor": "Luo energia-anturi",
+          "create_standby_energy_sensor": "Luo valmiustilan energia-anturi",
+          "create_cost_sensor": "Luo kustannusanturi",
+          "create_utility_meters": "Luo kulutusmittarit",
+          "entity_id": "Lähde-entiteetti",
+          "mode": "Laskentastrategia",
+          "name": "Nimi",
+          "standby_power": "Valmiustilan teho"
+        },
+        "data_description": {
+          "create_energy_sensor": "Määrittää, luoko Powercalc kWh-anturin",
+          "create_standby_energy_sensor": "Luodaanko Powercalcilla kWh-anturi, joka seuraa vain valmiustilan kulutusta",
+          "create_utility_meters": "Anna Powercalcin luoda kulutusmittarit, joiden jaksot ovat esimerkiksi päivä ja tunti",
+          "entity_id": "Entiteetti, johon virtuaalinen teho perustuu, tehoanturi kuuntelee tämän entiteetin tilamuutoksia päivitettäväksi",
+          "name": "Jos kenttä jätetään tyhjäksi, nimi otetaan lähde-entiteetistä",
+          "standby_power": "Määritä laitteen tehonkulutus, kun se on pois päältä"
+        },
+        "description": "Lue mahdollisista strategioista ja määritysvaihtoehdoista README-tiedostosta. Lähde-entiteetti, nimi tai molemmat vaaditaan.",
+        "title": "Luo virtuaalinen tehoanturi"
+      },
+      "wled": {
+        "data": {
+          "power_factor": "Tehokerroin",
+          "voltage": "Jännite"
+        },
+        "description": "Varmista, että kirkkauden rajoitin on käytössä WLED-ohjelmistossa. Katso myös {docs_uri}",
+        "title": "WLED määritys"
+      }
+    }
+  },
+  "exceptions": {
+    "invalid_integration_method": {
+      "message": "Virheellinen integrointimenetelmä \"{method}\". Täytyy olla jokin seuraavista: {allowed_methods}."
+    },
+    "no_sub_profile_support": {
+      "message": "{entity_id} ei tue aliprofiilien vaihtamista. Tämä toiminto on käytettävissä vain antureille, joilla on aliprofiilit eikä automaattista aliprofiilin valintaa."
+    },
+    "not_a_playbook_sensor": {
+      "message": "{entity_id} ei ole playbook-yhteensopiva anturi. Tämä toiminto on käytettävissä vain antureille, jotka käyttävät playbookin strategiaa."
+    },
+    "unknown_sub_profile": {
+      "message": "\"{profile}\" ei ole tunnettu aliprofiili. Saatavilla olevat aliprofiilit: {known_profiles}."
+    }
+  },
+  "issues": {
+    "composite_device_id": {
+      "fix_flow": {
+        "abort": {
+          "entry_removed": "Powercalc-määritysmerkintä on poistettu"
+        },
+        "error": {
+          "invalid_device": "Valitse olemassa oleva laite tai jätä kenttä tyhjäksi"
+        },
+        "step": {
+          "select_device": {
+            "data": {
+              "device": "Laite"
+            },
+            "data_description": {
+              "device": "Laite, johon tällä Powercalc-määrityslla luodut entiteetit on linkitettävä"
+            },
+            "description": "Powercalc-määritys {name} linkitettiin laitteeseen, jonka Home Assistant on jakanut useisiin laitteisiin. Sen entiteettejä ei voi linkittää vanhaan laitetunnukseen.\n\nValitse laite, johon nämä entiteetit tulee linkittää, tai jätä kenttä tyhjäksi, jos haluat jättää ne ilman laitetta.",
+            "title": "Valitse laite mallille {name}"
+          }
+        }
+      },
+      "title": "Powercalc-määrityksen {name} laite on valittava uudelleen"
+    },
+    "deprecated_platform_yaml": {
+      "description": "Anturien määrittäminen kohdassa \"sensor->platform\" on vanhentunut. Siirrä määritys kohtaan \"Powercalc->sensors\". Napsauta Lisätietoja nähdäksesi lisäohjeet.",
+      "title": "Powercalc YAML -määritys on siirtynyt"
+    },
+    "legacy_config": {
+      "title": "YAML-määritys muutettu",
+      "description": "Tyypin {type} YAML-määritys on päivitettävä uuteen rakenteeseen. Napsauta Lisätietoja nähdäksesi ohjeet."
+    },
+    "sub_profile": {
+      "fix_flow": {
+        "step": {
+          "sub_profile": {
+            "description": "Tässä laitteessa on malli, jossa on useita aliprofiileja. Valitse yksi, joka vastaa seuraavaa tämän laitteen entiteettiä:\n\n\"{entity_id}\"\n\nValmistaja: {manufacturer}\nMalli: {model}{remarks}",
+            "title": "Valitse oikea aliprofiili",
+            "data": {
+              "sub_profile": "Alaprofiili"
+            }
+          }
+        }
+      },
+      "title": "Alaprofiilin valinta vaaditaan mallille {entry}"
+    }
+  },
+  "options": {
+    "abort": {
+      "model_not_support": "Mallia ei tueta"
+    },
+    "error": {
+      "cost_price_mandatory": "Anna joko energian hinta tai energian hinta-anturi",
+      "fixed_mandatory": "Anna vähintään power-, power_template- tai states_power-arvo",
+      "fixed_states_power_only": "Tämä entiteetti voi toimia vain 'states_power', ei 'power':n kanssa",
+      "group_mandatory": "Sinun on määritettävä vähintään alaryhmät tai teho- ja energiaentiteetit",
+      "linear_mandatory": "Anna vähintään max_power tai calibrate",
+      "linear_min_higher_as_max": "Enimmäisteho ei voi olla pienempi kuin vähimmäisteho",
+      "linear_unsupported_domain": "Entiteetin toimialuetta ei tueta lineaarisessa tilassa. Sen on oltava fan, light tai media_player. Voit kuitenkin käyttää calibrate-asetusta",
+      "unknown": "Tapahtui tuntematon virhe, katso lisätietoja lokeista"
+    },
+    "step": {
+      "advanced_options": {
+        "title": "Lisäasetukset",
+        "data": {
+          "calculation_enabled_condition": "Laskenta käytössä tila",
+          "energy_integration_method": "Energian integrointimenetelmä",
+          "ignore_unavailable_state": "Ohita ei-käytettävissä oleva tila",
+          "multiply_factor": "Kerroin",
+          "multiply_factor_standby": "Valmiustilan kerroin",
+          "unavailable_power": "Teho, kun tila ei ole käytettävissä"
+        },
+        "data_description": {
+          "calculation_enabled_condition": "Määritetty tehonlaskentastrategia suoritetaan vain, kun tämä malli antaa arvoksi tosi tai 1, muuten tehoanturi näyttää 0",
+          "ignore_unavailable_state": "Ota tämä asetus käyttöön, kun haluat tehoanturin pysyvän käytettävissä, vaikka lähde-entiteetti ei olisi käytettävissä",
+          "multiply_factor": "Kertoo lasketun tehon tällä suhteella. Voi olla hyödyllinen light-ryhmille",
+          "multiply_factor_standby": "Sovelletaanko myös kerrointa valmiustilan tehoon",
+          "unavailable_power": "Teho watteina, jota käytetään, kun lähde-entiteetin tila ei ole käytettävissä"
+        }
+      },
+      "basic_options": {
+        "title": "Perusvaihtoehdot",
+        "data": {
+          "create_energy_sensor": "Luo energia-anturi",
+          "create_standby_energy_sensor": "Luo valmiustilan energia-anturi",
+          "create_cost_sensor": "Luo kustannusanturi",
+          "create_utility_meters": "Luo kulutusmittarit",
+          "entity_id": "Lähde-entiteetti",
+          "name": "Nimi",
+          "standby_power": "Valmiustilan teho"
+        },
+        "data_description": {
+          "create_energy_sensor": "Määrittää, luoko Powercalc kWh-anturin",
+          "create_standby_energy_sensor": "Luodaanko Powercalcilla kWh-anturi, joka seuraa vain valmiustilan kulutusta",
+          "create_utility_meters": "Anna Powercalcin luoda kulutusmittarit, joiden jaksot ovat esimerkiksi päivä ja tunti",
+          "entity_id": "Entiteetti, johon virtuaalinen teho perustuu, tehoanturi kuuntelee tämän entiteetin tilamuutoksia päivitettäväksi",
+          "name": "Jos kenttä jätetään tyhjäksi, nimi otetaan lähde-entiteetistä",
+          "standby_power": "Määritä laitteen tehonkulutus, kun se on pois päältä"
+        }
+      },
+      "daily_energy": {
+        "title": "Päivittäiset energiavaihtoehdot",
+        "data": {
+          "daily_energy_value": "Päivittäinen energia-arvo",
+          "name": "Nimi",
+          "on_time": "Päälläoloaika",
+          "start_time": "Aloitusaika",
+          "unit_of_measurement": "Mittayksikkö",
+          "update_frequency": "Päivitystaajuus",
+          "value": "Arvo",
+          "value_template": "Arvomalli"
+        },
+        "data_description": {
+          "on_time": "Kun jätetään tyhjäksi, oletusarvo on 1 päivä. aina päällä",
+          "update_frequency": "anturin tilapäivitysten välinen aika sekunteina"
+        }
+      },
+      "energy_options": {
+        "title": "Energiavaihtoehdot",
+        "data": {
+          "energy_integration_method": "Integrointimenetelmä",
+          "energy_sensor_unit_prefix": "Yksikön etuliite",
+          "energy_filter_outlier_enabled": "Suodata poikkeamat",
+          "energy_filter_outlier_max_step": "Poikkeamasuodattimen enimmäisaskel"
+        },
+        "data_description": {
+          "energy_filter_outlier_enabled": "Ota käyttöön poikkeavien arvojen suodatus energia-anturissa",
+          "energy_filter_outlier_max_step": "Suurin odotettu askel tehoarvoissa (watteina) poikkeamasuodattimelle"
+        }
+      },
+      "fixed": {
+        "title": "Kiinteät vaihtoehdot",
+        "data": {
+          "fixed_value": "Kiinteä arvo",
+          "self_usage_included": "Sisältää omakulutuksen"
+        },
+        "data_description": {
+          "self_usage_included": "Sisältääkö tehoarvo älykytkimen itsensä kuluttaman virran."
+        }
+      },
+      "global_configuration": {
+        "title": "Perusvaihtoehdot",
+        "sections": {
+          "power_options": {
+            "name": "Tehoanturi",
+            "data": {
+              "power_sensor_naming": "Tehoanturin nimimalli",
+              "power_sensor_friendly_naming": "Tehoanturin näyttönimen malli",
+              "power_sensor_category": "Tehoanturin luokka",
+              "power_sensor_precision": "Tehoanturin tarkkuus"
+            }
+          },
+          "features": {
+            "name": "Luo antureita",
+            "data": {
+              "create_energy_sensors": "Luo energia-antureita",
+              "create_cost_sensors": "Luo kustannusantureita",
+              "create_standby_group": "Luo valmiusryhmä",
+              "create_utility_meters": "Luo kulutusmittarit"
+            },
+            "data_description": {
+              "create_energy_sensors": "Määrittää, luoko Powercalc kWh-antureita",
+              "create_cost_sensors": "Määrittää, luoko Powercalc kustannusantureita. Energian hinta on määritettävä seuraavissa vaiheissa",
+              "create_standby_group": "Luo ryhmä, joka laskee yhteen IoT-laitteiden valmiustilan virrankulutuksen ja itsekäytön",
+              "create_utility_meters": "Anna Powercalcin luoda kulutusmittarit, joiden jaksot ovat esimerkiksi päivä ja tunti"
+            }
+          },
+          "advanced": {
+            "name": "Edistynyt",
+            "data": {
+              "enable_analytics": "Ota anonyymi analytiikka käyttöön",
+              "ignore_unavailable_state": "Ohita ei-käytettävissä oleva tila",
+              "include_non_powercalc_sensors": "Sisällytä muut kuin Powercalc-anturit",
+              "disable_extended_attributes": "Poista laajennetut attribuutit käytöstä",
+              "disable_library_download": "Poista etäkirjaston lataus käytöstä"
+            },
+            "data_description": {
+              "enable_analytics": "Salli Powercalc lähettää nimettömiä, koostettuja käyttötilastoja integroinnin parantamiseksi",
+              "ignore_unavailable_state": "Pidä Powercalc-anturit saatavilla, vaikka lähde-entiteetti ei olisi käytettävissä",
+              "include_non_powercalc_sensors": "Valitse, haluatko sisällyttää ryhmiin muita kuin Powercalc-antureita",
+              "disable_extended_attributes": "Poista käytöstä kaikki ylimääräiset attribuutit, jotka Powercalc lisää teho-, energia- ja ryhmäentiteetteihin. Tämä auttaa pitämään tietokannan koon pienenä",
+              "disable_library_download": "Poista Powercalc-kirjaston latausominaisuus käytöstä"
+            }
+          }
+        }
+      },
+      "global_configuration_cost": {
+        "title": "Kustannusvaihtoehdot",
+        "description": "Määritä energian hinta, jota käytetään kustannusanturien laskemiseen. Anna joko kiinteä hinta tai anturi, joka tarjoaa nykyisen hinnan kWh:tä kohti. Katso [dokumentaatio]({docs_uri}) saadaksesi lisätietoja",
+        "sections": {
+          "cost_pricing": {
+            "name": "Hinnoittelu",
+            "data": {
+              "energy_price": "Kiinteä energian hinta",
+              "energy_price_multiplier": "Energian hinnan kerroin",
+              "energy_price_sensor": "Energian hinta-anturi",
+              "energy_price_surcharge": "Energian hintalisä"
+            },
+            "data_description": {
+              "energy_price": "Kiinteä kilowattituntihinta paikallisessa valuutassasi",
+              "energy_price_multiplier": "Lisämaksun jälkeen käytetty kerroin. Käytä tätä prosenttiperusteisiin veroihin tai maksuihin, esimerkiksi 1,21 21 %:lle",
+              "energy_price_sensor": "Anturi, joka tarjoaa nykyisen energiahinnan per kWh (esim. dynaamisesta tariffiintegraatiosta). Jätä kiinteä hinta tyhjäksi käyttääksesi tätä anturia",
+              "energy_price_surcharge": "Kiinteä lisämäärä per kWh lisätään kiinteään hintaan tai hinta-anturin arvoon"
+            }
+          },
+          "cost_naming": {
+            "name": "Nimeäminen",
+            "data": {
+              "cost_sensor_friendly_naming": "Kustannusanturin näyttönimen malli",
+              "cost_sensor_naming": "Kustannusanturin nimimalli"
+            },
+            "data_description": {
+              "cost_sensor_friendly_naming": "Malli kustannusanturin näyttönimelle. Lähteen nimi lisätään paikkamerkkikohtaan",
+              "cost_sensor_naming": "Kustannusanturin nimen ja entiteettitunnuksen muodostamiseen käytetty malli. Lähteen nimi lisätään paikkamerkkikohtaan"
+            }
+          }
+        }
+      },
+      "global_configuration_cost_apply": {
+        "title": "Käytä kustannusantureita",
+        "description": "Muutit yleiskustannusanturien asetusta. Haluatko soveltaa tätä muutosta kaikkiin olemassa oleviin Powercalc-antureihin, jotka on luotu käyttöliittymässä?",
+        "data": {
+          "apply_to_all": "Käytä olemassa oleviin antureihin"
+        },
+        "data_description": {
+          "apply_to_all": "Päivitä jokainen olemassa oleva käyttöliittymässä luotu Powercalc-anturi vastaamaan uusia kustannusanturien asetuksia"
+        }
+      },
+      "global_configuration_discovery": {
+        "title": "Löytämisasetukset",
+        "description": "Hallinnoi löytämisasetuksia. Katso [dokumentaatio]({docs_uri}) saadaksesi lisätietoja",
+        "data": {
+          "enabled": "Ota löytäminen käyttöön",
+          "exclude_device_types": "Poissuljetut laitetyypit",
+          "exclude_self_usage": "Sulje pois omakäyttö"
+        },
+        "data_description": {
+          "exclude_device_types": "Sulje yksi tai useampi tietty laitetyyppi löytämisestä.",
+          "exclude_self_usage": "Sulje pois älykytkimien itsekäyttöprofiilit."
+        }
+      },
+      "global_configuration_energy": {
+        "title": "Energiavaihtoehdot",
+        "description": "Määritä energia-anturien oletusasetukset tästä. Katso [dokumentaatio]({docs_uri}) saadaksesi lisätietoja",
+        "data": {
+          "energy_integration_method": "Energian integrointimenetelmä",
+          "energy_sensor_category": "Energia-anturiluokka",
+          "energy_sensor_friendly_naming": "Energia-anturin näyttönimen malli",
+          "energy_sensor_naming": "Energia-anturin nimimalli",
+          "energy_sensor_precision": "Energia-anturin tarkkuus",
+          "energy_sensor_unit_prefix": "Energia-anturiyksikön etuliite"
+        }
+      },
+      "global_configuration_throttling": {
+        "title": "Päivitysväliasetukset",
+        "description": "Aseta päivitysvälit eri anturityypeille. Katso [dokumentaatio]({docs_uri}) saadaksesi lisätietoja",
+        "data": {
+          "group_energy_update_interval": "Ryhmän energian päivitysväli",
+          "group_power_update_interval": "Ryhmän tehon päivitysväli",
+          "energy_update_interval": "Energian päivitysväli",
+          "power_update_interval": "Virran päivitysväli"
+        },
+        "data_description": {
+          "group_energy_update_interval": "Aikaväli, jolloin ryhmän energia-anturit päivitetään. Sekunneissa. Aseta arvoksi 0 poistaaksesi käytöstä",
+          "group_power_update_interval": "Aikaväli, jolloin ryhmän tehoanturit päivitetään. Sekunneissa. Aseta arvoksi 0 poistaaksesi käytöstä",
+          "energy_update_interval": "Aikaväli, jolla energia-anturit päivitetään. Sekunneissa. Aseta arvoksi 0 poistaaksesi käytöstä",
+          "power_update_interval": "Aikaväli, jolla tehoanturit pakotetaan päivittämään. Sekunneissa. Aseta arvoksi 0 poistaaksesi käytöstä"
+        }
+      },
+      "global_configuration_utility_meter": {
+        "title": "Kulutusmittarin asetukset",
+        "description": "Määritä kulutusmittareiden oletusasetukset tästä. Katso [dokumentaatio]({docs_uri}) saadaksesi lisätietoja",
+        "data": {
+          "utility_meter_net_consumption": "Kulutusmittarin nettokulutus",
+          "utility_meter_tariffs": "Kulutusmittarin tariffit",
+          "utility_meter_types": "Kulutusmittarityypit"
+        }
+      },
+      "group_custom": {
+        "title": "Ryhmävaihtoehdot",
+        "sections": {
+          "members": {
+            "name": "Jäsenet",
+            "data": {
+              "group_member_sensors": "Jäseninä olevat Powercalc-anturit",
+              "group_member_devices": "Jäsenlaitteet",
+              "group_power_entities": "Muut tehoentiteetit",
+              "group_energy_entities": "Muut energiaentiteetit",
+              "sub_groups": "Alaryhmät",
+              "area": "Alue",
+              "floor": "Kerros"
+            },
+            "data_description": {
+              "group_member_sensors": "Ryhmään sisällytettävät Powercalc-anturit",
+              "group_member_devices": "Lisää teho- ja energiaentiteetit valituista laitteista ryhmään",
+              "group_power_entities": "Mukana lisätehoanturit (W) HA-asennuksestasi",
+              "group_energy_entities": "Lisäenergia-anturit (kWh) HA-asennuksestasi",
+              "sub_groups": "Myös kaikki valittujen alaryhmien anturit lisätään tähän ryhmään",
+              "area": "Lisää kaikki tehoanturit määritetyltä alueelta",
+              "floor": "Lisää kaikki tehoanturit määritetystä kerroksesta"
+            }
+          },
+          "options": {
+            "name": "Vaihtoehdot",
+            "data": {
+              "device": "Laite",
+              "hide_members": "Piilota jäsenet",
+              "include_non_powercalc_sensors": "Sisällytä muut kuin Powercalc-anturit",
+              "force_calculate_group_energy": "Pakota energian laskenta"
+            },
+            "data_description": {
+              "device": "Lisää Powercalcin luomat ryhmäentiteetit olemassa olevaan laitteeseen",
+              "include_non_powercalc_sensors": "Määritä, sisällytetäänkö muut kuin Powercalc-anturit aluevaihtoehtoa käytettäessä",
+              "force_calculate_group_energy": "Oletuksena Powercalc summaa jäsenantureiden energia-anturit. Ota tämä asetus käyttöön, jos haluat pakottaa luomaan Riemannin summa-anturin"
+            }
+          }
+        }
+      },
+      "group_subtract": {
+        "data": {
+          "entity_id": "Perusentiteetti",
+          "subtract_entities": "Vähennä entiteetit"
+        },
+        "data_description": {
+          "entity_id": "Perusentiteetti, josta teho vähennetään",
+          "subtract_entities": "Valitse kaikki entiteetit, jotka haluat vähentää perusentiteetistä"
+        },
+        "title": "Ryhmävaihtoehdot"
+      },
+      "group_tracked_untracked": {
+        "data": {
+          "main_power_sensor": "Sähköverkon tehoanturi",
+          "group_tracked_auto": "Entiteetit lisätty automaattisesti",
+          "create_energy_sensor": "Luo energia-anturi",
+          "create_cost_sensor": "Luo kustannusanturi",
+          "create_utility_meters": "Luo kulutusmittarit"
+        },
+        "data_description": {
+          "main_power_sensor": "Valitse tehoanturi, joka sisältää kokonaistehonkulutuksen. Jos kenttä jätetään tyhjäksi, luodaan vain seurattavan tehon anturi",
+          "group_tracked_auto": "Powercalc lisää automaattisesti kaikki tehoanturit seurattavaan ryhmään ohittaen Powercalc-ryhmät. Poista tämä käytöstä, kun haluat määrittää seurattavat entiteetit manuaalisesti",
+          "create_energy_sensor": "Määrittää, luoko Powercalc kWh-anturin",
+          "create_utility_meters": "Anna Powercalcin luoda kulutusmittarit, joiden jaksot ovat esimerkiksi päivä ja tunti"
+        },
+        "title": "Seuratut/seuraamattomat ryhmävaihtoehdot"
+      },
+      "group_tracked_untracked_manual": {
+        "data": {
+          "group_tracked_entities": "Seuratut entiteetit"
+        },
+        "title": "Valitse tehoentiteetit"
+      },
+      "init": {
+        "menu_options": {
+          "advanced_options": "Lisäasetukset",
+          "basic_options": "Perusvaihtoehdot",
+          "cost": "Kustannusvaihtoehdot",
+          "daily_energy": "Päivittäiset energiavaihtoehdot",
+          "energy_options": "Energiavaihtoehdot",
+          "fixed": "Kiinteät vaihtoehdot",
+          "group_custom": "Ryhmävaihtoehdot",
+          "group_subtract": "Ryhmävaihtoehdot",
+          "group_tracked_untracked": "Ryhmävaihtoehdot",
+          "group_tracked_untracked_manual": "Seuratut entiteetit",
+          "library_options": "Kirjaston vaihtoehdot",
+          "linear": "Lineaariset vaihtoehdot",
+          "playbook": "Playbookin vaihtoehdot",
+          "multi_switch": "Useita kytkinvaihtoehtoja",
+          "real_power": "Todelliset tehovaihtoehdot",
+          "select_device": "Laite",
+          "utility_meter_options": "Kulutusmittarin asetukset",
+          "wled": "WLED vaihtoehdot",
+          "cost_options": "Kustannusvaihtoehdot"
+        }
+      },
+      "library_options": {
+        "title": "Kirjaston vaihtoehdot",
+        "description": "Tällä hetkellä on valittuna seuraava kirjastoprofiili: \n valmistaja: {manufacturer}\n malli: {model}\n\nJos haluat vaihtaa profiilia, napsauta Seuraava."
+      },
+      "select_device": {
+        "data": {
+          "device": "Laite"
+        },
+        "data_description": {
+          "device": "Laite, johon Powercalc-entiteetit liitetään"
+        },
+        "description": "Valitse laite, johon Powercalc-anturi liitetään.",
+        "title": "Valitse laite"
+      },
+      "linear": {
+        "title": "Lineaariset vaihtoehdot",
+        "data": {
+          "attribute": "Attribuutti",
+          "calibrate": "Kalibrointiarvot",
+          "gamma_curve": "Gammakäyrä",
+          "max_power": "Enimmäisteho",
+          "min_power": "Vähimmäisteho"
+        },
+        "data_description": {
+          "attribute": "Määritä attribuutti. Kun jätetään tyhjäksi, valojen kirkkaus ja tuulettimien prosenttiosuus",
+          "calibrate": "Laita kalibrointiarvo jokaiselle riville. Esimerkki\n\n1:20"
+        }
+      },
+      "multi_switch": {
+        "title": "Useita kytkinvaihtoehtoja",
+        "data": {
+          "entities": "Vaihda entiteettejä",
+          "power": "Teho päällä",
+          "power_off": "Teho pois päältä"
+        },
+        "data_description": {
+          "entities": "Valitse kaikki yksittäiset kytkimet, jotka ovat osa monikytkintä",
+          "power": "Yhden kytkimen teho, kun se on päällä",
+          "power_off": "Yhden kytkimen teho sammutettuna"
+        }
+      },
+      "playbook": {
+        "title": "Playbookin vaihtoehdot",
+        "data": {
+          "autostart": "Automaattinen käynnistys",
+          "playbooks": "Playbookit",
+          "repeat": "Toista",
+          "states_trigger": "Tilalaukaisin"
+        },
+        "data_description": {
+          "autostart": "Määritä playbook, joka käynnistetään Home Assistantin käynnistyessä, esimerkiksi \"program1\"",
+          "repeat": "Ota käyttöön, jos haluat toistaa playbookin sen päätyttyä",
+          "states_trigger": "Käynnistä playbook tilanmuutoksen perusteella. Esimerkki\n\nplaying: program1"
+        }
+      },
+      "real_power": {
+        "title": "Todelliset tehovaihtoehdot",
+        "data": {
+          "device": "Laite"
+        },
+        "data_description": {
+          "device": "Lisää luotu energia-anturi tiettyyn laitteeseen"
+        }
+      },
+      "cost": {
+        "data": {
+          "energy_sensor_id": "Energian anturi"
+        },
+        "data_description": {
+          "energy_sensor_id": "Olemassa oleva energia-anturi (kWh) kustannusten laskemiseksi"
+        },
+        "sections": {
+          "cost_pricing": {
+            "name": "Hinnan ohitus",
+            "data": {
+              "energy_price": "Kiinteä energian hinta",
+              "energy_price_multiplier": "Energian hinnan kerroin",
+              "energy_price_sensor": "Energian hinta-anturi",
+              "energy_price_surcharge": "Energian hintalisä"
+            },
+            "data_description": {
+              "energy_price": "Kiinteä kilowattituntihinta paikallisessa valuutassasi. Jätä tyhjäksi käyttääksesi yleistä energian hintaa",
+              "energy_price_multiplier": "Lisämaksun jälkeen käytettävä kerroin. Käytä tätä prosenttiperusteisiin veroihin tai maksuihin, esimerkiksi arvoa 1,21, kun osuus on 21 %. Jätä tyhjäksi käyttääksesi yleistä kerrointa",
+              "energy_price_sensor": "Anturi, joka tarjoaa nykyisen energiahinnan per kWh (esim. dynaamisesta tariffiintegraatiosta). Jätä kiinteä hinta tyhjäksi käyttääksesi tätä anturia",
+              "energy_price_surcharge": "Kiinteä lisämäärä per kWh lisätään kiinteään hintaan tai hinta-anturin arvoon. Jätä tyhjäksi, jos haluat käyttää yleistä lisämaksua"
+            }
+          }
+        },
+        "title": "Kustannusvaihtoehdot"
+      },
+      "utility_meter_options": {
+        "title": "Kulutusmittarin asetukset",
+        "data": {
+          "utility_meter_net_consumption": "Nettokulutus",
+          "utility_meter_types": "Jaksot",
+          "utility_meter_tariffs": "Tariffit"
+        },
+        "data_description": {
+          "utility_meter_net_consumption": "Ota tämä käyttöön, jos haluat käsitellä lähdettä nettomittarina. Tämä antaa laskurin mennä sekä positiiviseen että negatiiviseen.",
+          "utility_meter_types": "Luo kulutusmittarit tietyille jaksoille",
+          "utility_meter_tariffs": "Luettelo tuetuista tariffeista, jätä tyhjäksi, jos tarvitaan vain yksi tariffi."
+        }
+      },
+      "wled": {
+        "title": "WLED vaihtoehdot",
+        "data": {
+          "power_factor": "Tehokerroin",
+          "voltage": "Jännite"
+        }
+      },
+      "cost_options": {
+        "data": {
+          "energy_price": "Kiinteä energian hinta",
+          "energy_price_multiplier": "Energian hinnan kerroin",
+          "energy_price_sensor": "Energian hinta-anturi",
+          "energy_price_surcharge": "Energian hintalisä"
+        },
+        "data_description": {
+          "energy_price": "Kiinteä kilowattituntihinta paikallisessa valuutassasi. Jätä tyhjäksi käyttääksesi yleistä energian hintaa",
+          "energy_price_multiplier": "Lisämaksun jälkeen käytettävä kerroin. Käytä tätä prosenttiperusteisiin veroihin tai maksuihin, esimerkiksi arvoa 1,21, kun osuus on 21 %. Jätä tyhjäksi käyttääksesi yleistä kerrointa",
+          "energy_price_sensor": "Anturi, joka tarjoaa nykyisen energiahinnan per kWh (esim. dynaamisesta tariffiintegraatiosta). Jätä kiinteä hinta tyhjäksi käyttääksesi tätä anturia",
+          "energy_price_surcharge": "Kiinteä lisämäärä per kWh lisätään kiinteään hintaan tai hinta-anturin arvoon. Jätä tyhjäksi, jos haluat käyttää yleistä lisämaksua"
+        },
+        "description": "Korvaa yleinen energian hinta vain tämän anturin osalta. Jätä kaikki kentät tyhjiksi käyttääksesi yleistä hintaa. Katso lisätietoja [dokumentaatiosta]({docs_uri})",
+        "title": "Kustannusvaihtoehdot"
+      }
+    }
+  },
+  "selector": {
+    "daily_energy_value": {
+      "choices": {
+        "value": "Kiinteä arvo",
+        "value_template": "Malli"
+      }
+    },
+    "fixed_value": {
+      "choices": {
+        "power": "Kiinteä arvo",
+        "power_template": "Malli",
+        "states_power": "Tilojen tehomääritys"
+      }
+    }
+  },
+  "services": {
+    "activate_playbook": {
+      "description": "Aloita playbookin toteuttaminen.",
+      "fields": {
+        "playbook_id": {
+          "description": "Playbookin tunniste.",
+          "name": "Playbook"
+        }
+      },
+      "name": "Aktivoi playbook"
+    },
+    "calibrate_energy": {
+      "description": "Asettaa energia-anturin tiettyyn kWh-arvoon.",
+      "fields": {
+        "value": {
+          "description": "Asetettava arvo.",
+          "name": "Arvo"
+        }
+      },
+      "name": "Kalibroi energia-anturi"
+    },
+    "calibrate_cost": {
+      "description": "Asettaa kustannusanturin määritettyyn rahalliseen arvoon.",
+      "fields": {
+        "value": {
+          "description": "Asetettava arvo.",
+          "name": "Arvo"
+        }
+      },
+      "name": "Kalibroi kustannusanturi"
+    },
+    "calibrate_utility_meter": {
+      "description": "Kalibroi kulutusmittarin.",
+      "fields": {
+        "value": {
+          "description": "Asetettava arvo.",
+          "name": "Arvo"
+        }
+      },
+      "name": "Kalibroi kulutusmittari"
+    },
+    "change_gui_config": {
+      "description": "Muuta kaikkien Powercalc-määritysten asetuksia kerralla",
+      "fields": {
+        "field": {
+          "description": "Muutettava kenttä",
+          "name": "Kenttä"
+        },
+        "value": {
+          "description": "Asetettava arvo.",
+          "name": "Arvo"
+        }
+      },
+      "name": "Muuta käyttöliittymämääritystä"
+    },
+    "debug_group": {
+      "description": "Näyttää ryhmän teho- tai energia-anturin virheenkorjaustiedot ja nykyiset jäsenarvot.",
+      "name": "Virheenkorjausryhmä"
+    },
+    "get_active_playbook": {
+      "description": "Hae parhaillaan suoritettava playbook",
+      "name": "Hae aktiivinen playbook"
+    },
+    "get_group_entities": {
+      "description": "Hae kaikki ryhmän energia- tai tehoanturin entiteettitunnukset",
+      "name": "Hae ryhmäentiteetit"
+    },
+    "increase_daily_energy": {
+      "description": "Lisää anturia tietyllä määrällä.",
+      "fields": {
+        "value": {
+          "description": "Anturiin lisättävä määrä.",
+          "name": "Arvo"
+        }
+      },
+      "name": "Lisää päivittäistä energia-anturia"
+    },
+    "reload": {
+      "description": "Lataa Powercalc-määritys ja entiteetit uudelleen",
+      "name": "Lataa uudelleen"
+    },
+    "reset_energy": {
+      "description": "Nollaa energia-anturin kWh-arvo.",
+      "name": "Nollaa energia-anturi"
+    },
+    "reset_cost": {
+      "description": "Nollaa kustannusanturi.",
+      "name": "Nollaa kustannusanturi"
+    },
+    "stop_playbook": {
+      "description": "Lopeta tällä hetkellä aktiivinen playbook.",
+      "name": "Lopeta playbook"
+    },
+    "switch_sub_profile": {
+      "description": "Joillakin kirjaston profiileilla on erilaisia ​​aliprofiileja. Tämän palvelun avulla voit vaihtaa toiseen.",
+      "fields": {
+        "profile": {
+          "name": "Alaprofiili",
+          "description": "Määritä yksi mahdollisista aliprofiileista"
+        }
+      },
+      "name": "Vaihda toiseen aliprofiiliin"
+    }
+  }
+}

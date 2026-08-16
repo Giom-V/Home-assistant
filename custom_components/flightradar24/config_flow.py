@@ -12,10 +12,8 @@ from .const import (
     DEFAULT_NAME,
     CONF_MIN_ALTITUDE,
     CONF_MAX_ALTITUDE,
-    CONF_MOST_TRACKED,
     CONF_ENABLE_TRACKER,
     CONF_AUTO_CLEANUP,
-    CONF_MOST_TRACKED_DEFAULT,
     CONF_ENABLE_TRACKER_DEFAULT,
     CONF_AUTO_CLEANUP_DEFAULT,
     MIN_ALTITUDE,
@@ -26,7 +24,7 @@ from .const import (
     TRACKER_NAME_CALLSIGN_ROUTE,
     TRACKER_NAME_REG_ROUTE,
 )
-from FlightRadar24 import FlightRadar24API
+from FlightRadarAPI import FlightRadar24API
 import homeassistant.helpers.config_validation as cv
 from homeassistant.data_entry_flow import FlowResult
 from homeassistant.core import callback
@@ -42,6 +40,29 @@ from homeassistant.const import (
 _LOGGER = getLogger(__name__)
 
 
+def _http_status_code(error: Exception) -> int | None:
+    code = getattr(error, "status_code", None)
+    if code is not None:
+        return int(code)
+    response = getattr(error, "response", None)
+    if response is not None:
+        code = getattr(response, "status_code", None)
+        if code is not None:
+            return int(code)
+    return None
+
+
+def _is_login_rate_limited(error: Exception) -> bool:
+    if _http_status_code(error) == 429:
+        return True
+    message = str(error)
+    return "429" in message
+
+
+def _is_login_auth_error(error: Exception) -> bool:
+    return _http_status_code(error) in (401, 403)
+
+
 class FlightRadarConfigFlow(ConfigFlow, domain=DOMAIN):
 
     async def async_step_user(self, user_input: dict[str, Any] | None = None) -> FlowResult:
@@ -54,7 +75,7 @@ class FlightRadarConfigFlow(ConfigFlow, domain=DOMAIN):
                     vol.Required(CONF_RADIUS, default=1000): vol.Coerce(float),
                     vol.Required(CONF_LATITUDE): cv.latitude,
                     vol.Required(CONF_LONGITUDE): cv.longitude,
-                    vol.Required(CONF_SCAN_INTERVAL, default=10): int,
+                    vol.Required(CONF_SCAN_INTERVAL, default=20): int,
                 }
             ),
             {
@@ -83,11 +104,21 @@ class FlightRadarOptionsFlow(OptionsFlowWithConfigEntry):
                 if username and password:
                     client = FlightRadar24API()
                     await self.hass.async_add_executor_job(client.login, username, password)
-                elif password and not username or username and not password:
-                    errors['base'] = 'You need to pass username and password'
+                elif (password and not username) or (username and not password):
+                    errors["base"] = "credentials_incomplete"
             except Exception as error:
-                _LOGGER.error('FlightRadar24 Integration Exception - {}'.format(error))
-                errors['base'] = str(error)
+                if _is_login_rate_limited(error):
+                    _LOGGER.warning(
+                        "FlightRadar24: login rate-limited while saving options (%s); "
+                        "credentials stored, integration will retry login on reload",
+                        error,
+                    )
+                elif _is_login_auth_error(error):
+                    _LOGGER.error("FlightRadar24: login rejected - %s", error)
+                    errors["base"] = "invalid_auth"
+                else:
+                    _LOGGER.error("FlightRadar24: login failed - %s", error)
+                    errors["base"] = "login_failed"
 
             if not errors:
                 self.hass.config_entries.async_update_entry(self.config_entry, data=user_input)
@@ -102,9 +133,6 @@ class FlightRadarOptionsFlow(OptionsFlowWithConfigEntry):
                          description={"suggested_value": data.get(CONF_MIN_ALTITUDE, MIN_ALTITUDE)}): int,
             vol.Optional(CONF_MAX_ALTITUDE,
                          description={"suggested_value": data.get(CONF_MAX_ALTITUDE, MAX_ALTITUDE)}): int,
-            vol.Optional(CONF_MOST_TRACKED,
-                         description={
-                             "suggested_value": data.get(CONF_MOST_TRACKED, CONF_MOST_TRACKED_DEFAULT)}): cv.boolean,
             vol.Optional(CONF_ENABLE_TRACKER,
                          description={
                              "suggested_value": data.get(CONF_ENABLE_TRACKER,

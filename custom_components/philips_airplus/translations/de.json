@@ -1,0 +1,67 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Philips Air+ — APK",
+        "description": "Dieser Lüfter funktioniert nur über Philips' clientseitig signierte Cloud-API, die einen kleinen Signierwert (`mSecret`) braucht, der ausschließlich in der Philips-Air+-App selbst steckt — Philips gibt ihn auf keinem anderen Weg heraus. Er wird lokal aus deiner eigenen APK extrahiert, verlässt diese Home-Assistant-Instanz nie und wird nirgendwo veröffentlicht.\n\nBesorge die APK für `com.philips.ph.homecare` (\"Philips Air+\") — sie vom eigenen Handy per `adb pull` zu ziehen ist die vertrauenswürdigste Quelle. Ein Direktlink zum Download steht im README des Repositories, falls du lieber einen Mirror nutzt. Dann die Datei unten hochladen.",
+        "data": {
+          "apk_file": "Philips-Air+-APK-Datei (.apk / .apkm / .xapk)"
+        }
+      },
+      "email": {
+        "title": "Philips Air+ — E-Mail",
+        "description": "APK akzeptiert. Gib deine Philips-Konto-E-Mail ein — du bekommst einen einmaligen Code zugeschickt.",
+        "data": {
+          "email": "E-Mail-Adresse"
+        }
+      },
+      "otp": {
+        "title": "Philips Air+ — Code",
+        "description": "Gib den 6-stelligen Code ein, der an {email} geschickt wurde.",
+        "data": {
+          "code": "Bestätigungscode"
+        }
+      }
+    },
+    "error": {
+      "extract_failed": "Der Signierwert wurde in der Datei nicht gefunden. Stelle sicher, dass es die Philips-Air+- / Philips-HomeCare-APK ist, oder probiere die Basis-APK vom eigenen Gerät statt eines Split-/Config-only-Downloads.",
+      "otp_request_failed": "Der Bestätigungscode konnte nicht gesendet werden. Prüfe die E-Mail-Adresse und versuche es erneut.",
+      "otp_verify_failed": "Code-Prüfung fehlgeschlagen. Prüfe den Code und versuche es erneut (Codes laufen schnell ab).",
+      "auth_failed": "Authentifizierung gegen die Philips-Cloud fehlgeschlagen. Die APK-Variante passt evtl. nicht zur Region deines Kontos — probiere eine andere APK.",
+      "no_devices": "Keine Philips-Air+-Geräte für dieses Konto gefunden.",
+      "unknown": "Unbekannter Fehler."
+    },
+    "abort": {
+      "already_configured": "Dieses Konto ist bereits konfiguriert.",
+      "reauth_successful": "Erneute Authentifizierung war erfolgreich.",
+      "reauth_missing": "Der Konfigurationseintrag konnte nicht gefunden werden."
+    }
+  },
+  "entity": {
+    "fan": {
+      "cx3550": {
+        "state_attributes": {
+          "preset_mode": {
+            "state": {
+              "sleep": "Schlafen",
+              "natural": "Natürliche Brise"
+            }
+          }
+        }
+      }
+    },
+    "switch": {
+      "beep": { "name": "Piepton" },
+      "timer": { "name": "Timer" }
+    },
+    "sensor": {
+      "timer_remaining": { "name": "Timer-Restzeit" },
+      "rssi": { "name": "Signalstärke" },
+      "runtime": { "name": "Laufzeit" },
+      "free_memory": { "name": "Freier Speicher" }
+    },
+    "number": {
+      "timer_hours": { "name": "Timer-Dauer" }
+    }
+  }
+}

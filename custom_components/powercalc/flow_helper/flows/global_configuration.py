@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 from datetime import timedelta
 from typing import TYPE_CHECKING, Any
 
@@ -11,7 +9,6 @@ from homeassistant.helpers.schema_config_entry_flow import SchemaFlowError
 from homeassistant.helpers.typing import ConfigType
 import voluptuous as vol
 
-from custom_components.powercalc import DeviceType
 from custom_components.powercalc.const import (
     CONF_APPLY_TO_ALL,
     CONF_CREATE_COST_SENSOR,
@@ -53,15 +50,17 @@ from custom_components.powercalc.const import (
 )
 from custom_components.powercalc.flow_helper.common import PowercalcFormStep, Step, flatten_sections
 from custom_components.powercalc.flow_helper.schema import (
+    COST_DOCS_URI,
     SCHEMA_COST_APPLY,
     SCHEMA_ENERGY_OPTIONS,
-    SCHEMA_GLOBAL_COST,
     SCHEMA_GLOBAL_COST_FLAT,
     SCHEMA_UTILITY_METER_OPTIONS,
     SCHEMA_UTILITY_METER_TOGGLE,
     SECTION_COST_NAMING,
     SECTION_COST_PRICING,
+    build_global_cost_schema,
 )
+from custom_components.powercalc.power_profile.power_profile import DeviceType
 from custom_components.powercalc.service.gui_configuration import apply_field_to_config_entries
 
 if TYPE_CHECKING:
@@ -324,10 +323,10 @@ class GlobalConfigurationFlow:
 
         form_step = PowercalcFormStep(
             step=Step.GLOBAL_CONFIGURATION_COST,
-            schema=SCHEMA_GLOBAL_COST,
+            schema=build_global_cost_schema(self.flow.hass, self.flow.global_config.get(CONF_ENERGY_PRICE_SENSOR)),
             form_kwarg={
                 "description_placeholders": {
-                    "docs_uri": "https://docs.powercalc.nl/sensor-types/cost-sensor/",
+                    "docs_uri": COST_DOCS_URI,
                 },
             },
         )
@@ -415,11 +414,10 @@ class GlobalConfigurationOptionsFlow(GlobalConfigurationFlow):
             Step.GLOBAL_CONFIGURATION: "Basic options",
             Step.GLOBAL_CONFIGURATION_DISCOVERY: "Discovery options",
             Step.GLOBAL_CONFIGURATION_THROTTLING: "Throttling options",
+            Step.GLOBAL_CONFIGURATION_COST: "Cost options",
         }
         if self.flow.global_config.get(CONF_CREATE_ENERGY_SENSORS):
             menu[Step.GLOBAL_CONFIGURATION_ENERGY] = "Energy options"
-        if self.flow.global_config.get(CONF_CREATE_COST_SENSORS):
-            menu[Step.GLOBAL_CONFIGURATION_COST] = "Cost options"
         if self.flow.global_config.get(CONF_CREATE_UTILITY_METERS):
             menu[Step.GLOBAL_CONFIGURATION_UTILITY_METER] = "Utility meter options"
         return menu

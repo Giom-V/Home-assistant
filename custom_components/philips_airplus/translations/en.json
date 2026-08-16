@@ -1,0 +1,67 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Philips Air+ — APK",
+        "description": "This fan only works via Philips' client-signed cloud API, which needs a small signing value (`mSecret`) that only lives inside the Philips Air+ app itself — Philips does not hand it out any other way. It is extracted locally from your own APK and never leaves this Home Assistant instance or gets published anywhere.\n\nGet the APK for `com.philips.ph.homecare` (\"Philips Air+\") — pulling it from your own phone with `adb pull` is the most trustworthy source. A direct download link is in the repository README if you'd rather use a mirror. Then upload the file below.",
+        "data": {
+          "apk_file": "Philips Air+ APK file (.apk / .apkm / .xapk)"
+        }
+      },
+      "email": {
+        "title": "Philips Air+ — Email",
+        "description": "APK accepted. Enter your Philips account email — you'll be sent a one-time code.",
+        "data": {
+          "email": "Email address"
+        }
+      },
+      "otp": {
+        "title": "Philips Air+ — Code",
+        "description": "Enter the 6-digit code emailed to {email}.",
+        "data": {
+          "code": "Verification code"
+        }
+      }
+    },
+    "error": {
+      "extract_failed": "Could not find the signing value in that file. Make sure it's the Philips Air+ / Philips HomeCare APK, or try the base APK from your own device instead of a split/config-only download.",
+      "otp_request_failed": "Could not send the verification code. Check the email address and try again.",
+      "otp_verify_failed": "Code verification failed. Check the code and try again (codes expire quickly).",
+      "auth_failed": "Authentication failed against the Philips cloud. The APK variant may not match your account's region — try a different APK.",
+      "no_devices": "No Philips Air+ devices found for this account.",
+      "unknown": "Unknown error occurred."
+    },
+    "abort": {
+      "already_configured": "This account is already configured.",
+      "reauth_successful": "Re-authentication was successful.",
+      "reauth_missing": "The config entry could not be found."
+    }
+  },
+  "entity": {
+    "fan": {
+      "cx3550": {
+        "state_attributes": {
+          "preset_mode": {
+            "state": {
+              "sleep": "Sleep",
+              "natural": "Natural breeze"
+            }
+          }
+        }
+      }
+    },
+    "switch": {
+      "beep": { "name": "Key beep" },
+      "timer": { "name": "Timer" }
+    },
+    "sensor": {
+      "timer_remaining": { "name": "Timer remaining" },
+      "rssi": { "name": "Signal strength" },
+      "runtime": { "name": "Uptime" },
+      "free_memory": { "name": "Free memory" }
+    },
+    "number": {
+      "timer_hours": { "name": "Timer duration" }
+    }
+  }
+}

@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 from asyncio import timeout
 from collections import Counter
 from collections.abc import Hashable
@@ -152,7 +150,7 @@ class Analytics:
     def install_id(self) -> str | None:
         return self._data.install_id
 
-    async def _prepare_payload(self) -> dict:
+    async def _prepare_payload(self) -> dict[str, Any]:
         powercalc_integration = await async_get_integration(self.hass, DOMAIN)
         runtime_data: RuntimeAnalyticsData = self.hass.data[DOMAIN][DATA_ANALYTICS]
         power_profiles: list[PowerProfile] = runtime_data.get(DATA_POWER_PROFILES, [])

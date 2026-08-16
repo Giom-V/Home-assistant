@@ -7,138 +7,138 @@
       {
         "aliases": [],
         "floor_id": null,
+        "humidity_entity_id": null,
         "icon": "mdi:home-group",
         "id": "alentours",
         "labels": [],
         "name": "Alentours",
         "picture": null,
+        "temperature_entity_id": null,
         "created_at": "1970-01-01T00:00:00+00:00",
-        "modified_at": "1970-01-01T00:00:00+00:00",
-        "humidity_entity_id": null,
-        "temperature_entity_id": null
+        "modified_at": "1970-01-01T00:00:00+00:00"
       },
       {
         "aliases": [
           "Arrière-cuisine "
         ],
         "floor_id": "rdc",
+        "humidity_entity_id": null,
         "icon": "mdi:washing-machine",
         "id": "back_kitchen",
         "labels": [],
         "name": "Arrière cuisine",
         "picture": "/api/image/serve/46f0064e148e8f363553903e1a860c39/512x512",
+        "temperature_entity_id": null,
         "created_at": "1970-01-01T00:00:00+00:00",
-        "modified_at": "2024-08-31T07:31:31.709081+00:00",
-        "humidity_entity_id": null,
-        "temperature_entity_id": null
+        "modified_at": "2024-08-31T07:31:31.709081+00:00"
       },
       {
         "aliases": [],
         "floor_id": "etage",
+        "humidity_entity_id": null,
         "icon": "mdi:chair-rolling",
         "id": "office",
         "labels": [],
         "name": "Bureau",
         "picture": "/api/image/serve/3bc0cc230621640400616eb6b46642c9/512x512",
+        "temperature_entity_id": null,
         "created_at": "1970-01-01T00:00:00+00:00",
-        "modified_at": "1970-01-01T00:00:00+00:00",
-        "humidity_entity_id": null,
-        "temperature_entity_id": null
+        "modified_at": "1970-01-01T00:00:00+00:00"
       },
       {
         "aliases": [],
         "floor_id": "appartements",
+        "humidity_entity_id": null,
         "icon": null,
         "id": "cannes",
         "labels": [],
         "name": "Cannes",
         "picture": null,
+        "temperature_entity_id": null,
         "created_at": "1970-01-01T00:00:00+00:00",
-        "modified_at": "1970-01-01T00:00:00+00:00",
-        "humidity_entity_id": null,
-        "temperature_entity_id": null
+        "modified_at": "1970-01-01T00:00:00+00:00"
       },
       {
         "aliases": [],
         "floor_id": "etage",
+        "humidity_entity_id": null,
         "icon": "mdi:star-face",
         "id": "aurore_s_bedroom",
         "labels": [],
         "name": "Chambre d'Aurore",
         "picture": null,
+        "temperature_entity_id": null,
         "created_at": "1970-01-01T00:00:00+00:00",
-        "modified_at": "1970-01-01T00:00:00+00:00",
-        "humidity_entity_id": null,
-        "temperature_entity_id": null
+        "modified_at": "1970-01-01T00:00:00+00:00"
       },
       {
         "aliases": [
           "Chambre"
         ],
         "floor_id": "etage",
+        "humidity_entity_id": null,
         "icon": "mdi:bed",
         "id": "bedroom",
         "labels": [],
         "name": "Chambre parentale",
         "picture": "/api/image/serve/c95bb4b5d6fdf6d0e76028887c4a1612/512x512",
+        "temperature_entity_id": null,
         "created_at": "1970-01-01T00:00:00+00:00",
-        "modified_at": "1970-01-01T00:00:00+00:00",
-        "humidity_entity_id": null,
-        "temperature_entity_id": null
+        "modified_at": "1970-01-01T00:00:00+00:00"
       },
       {
         "aliases": [],
         "floor_id": "toit",
+        "humidity_entity_id": null,
         "icon": "mdi:home-roof",
         "id": "attic",
         "labels": [],
         "name": "Combles",
         "picture": "/api/image/serve/d2cefbddc6a3e3c5a2e1e878a2f3027d/512x512",
+        "temperature_entity_id": null,
         "created_at": "1970-01-01T00:00:00+00:00",
-        "modified_at": "1970-01-01T00:00:00+00:00",
-        "humidity_entity_id": null,
-        "temperature_entity_id": null
+        "modified_at": "1970-01-01T00:00:00+00:00"
       },
       {
         "aliases": [],
         "floor_id": "coublevie",
+        "humidity_entity_id": null,
         "icon": "fas:house-medical",
         "id": "coublevie",
         "labels": [],
         "name": "Coublevie",
         "picture": null,
+        "temperature_entity_id": null,
         "created_at": "1970-01-01T00:00:00+00:00",
-        "modified_at": "1970-01-01T00:00:00+00:00",
-        "humidity_entity_id": null,
-        "temperature_entity_id": null
+        "modified_at": "1970-01-01T00:00:00+00:00"
       },
       {
         "aliases": [],
         "floor_id": "rdc",
+        "humidity_entity_id": null,
         "icon": "mdi:chef-hat",
         "id": "kitchen",
         "labels": [],
         "name": "Cuisine",
         "picture": "/api/image/serve/697c6f96a163b4e1a81c09346c5df57e/512x512",
+        "temperature_entity_id": null,
         "created_at": "1970-01-01T00:00:00+00:00",
-        "modified_at": "1970-01-01T00:00:00+00:00",
-        "humidity_entity_id": null,
-        "temperature_entity_id": null
+        "modified_at": "1970-01-01T00:00:00+00:00"
       },
       {
         "aliases": [
           ""
         ],
         "floor_id": "rdc",
+        "humidity_entity_id": null,
         "icon": "mdi:coat-rack",
         "id": "hallway",
         "labels": [],
         "name": "Entrée",
         "picture": "/api/image/serve/a344747454d6610c0c38e13690456755/512x512",
+        "temperature_entity_id": null,
         "created_at": "1970-01-01T00:00:00+00:00",
-        "modified_at": "2024-08-31T07:30:54.179562+00:00",
-        "humidity_entity_id": null,
-        "temperature_entity_id": null
+        "modified_at": "2024-08-31T07:30:54.179562+00:00"
       },
       {
         "aliases": [
@@ -146,6 +146,7 @@
           "Voiture"
         ],
         "floor_id": "sous_sol",
+        "humidity_entity_id": null,
         "icon": "mdi:car",
         "id": "ev6",
         "labels": [
@@ -153,198 +154,210 @@
         ],
         "name": "EV6",
         "picture": "/api/image/serve/fb4d7616cb5ab1d00c2fb15595b33b97/512x512",
+        "temperature_entity_id": null,
         "created_at": "1970-01-01T00:00:00+00:00",
-        "modified_at": "1970-01-01T00:00:00+00:00",
-        "humidity_entity_id": null,
-        "temperature_entity_id": null
+        "modified_at": "1970-01-01T00:00:00+00:00"
       },
       {
         "aliases": [],
         "floor_id": "personnes",
+        "humidity_entity_id": null,
         "icon": "mdi:face-man",
         "id": "giom",
         "labels": [],
         "name": "Giom",
         "picture": null,
+        "temperature_entity_id": null,
         "created_at": "1970-01-01T00:00:00+00:00",
-        "modified_at": "1970-01-01T00:00:00+00:00",
-        "humidity_entity_id": null,
-        "temperature_entity_id": null
+        "modified_at": "1970-01-01T00:00:00+00:00"
       },
       {
         "aliases": [],
         "floor_id": "etage",
+        "humidity_entity_id": null,
         "icon": "mdi:bed-outline",
         "id": "guest_s_room",
         "labels": [],
         "name": "Guest's room",
         "picture": "/api/image/serve/7937b0623dc17bc7277482892431781e/512x512",
+        "temperature_entity_id": null,
         "created_at": "1970-01-01T00:00:00+00:00",
-        "modified_at": "1970-01-01T00:00:00+00:00",
-        "humidity_entity_id": null,
-        "temperature_entity_id": null
+        "modified_at": "1970-01-01T00:00:00+00:00"
       },
       {
         "aliases": [],
         "floor_id": "jardin",
+        "humidity_entity_id": null,
         "icon": "mdi:tree",
         "id": "garden",
         "labels": [],
         "name": "Jardin",
         "picture": "/api/image/serve/ea290d04c9ebd4c50dafc5a63073f62c/512x512",
+        "temperature_entity_id": null,
         "created_at": "1970-01-01T00:00:00+00:00",
-        "modified_at": "1970-01-01T00:00:00+00:00",
-        "humidity_entity_id": null,
-        "temperature_entity_id": null
+        "modified_at": "1970-01-01T00:00:00+00:00"
       },
       {
         "aliases": [],
         "floor_id": "sous_sol",
+        "humidity_entity_id": null,
         "icon": "mdi:server",
         "id": "local_technique",
         "labels": [
           "energie",
-          "appareils",
-          "controle"
+          "controle",
+          "appareils"
         ],
         "name": "Local Technique",
         "picture": null,
+        "temperature_entity_id": null,
         "created_at": "1970-01-01T00:00:00+00:00",
-        "modified_at": "1970-01-01T00:00:00+00:00",
-        "humidity_entity_id": null,
-        "temperature_entity_id": null
+        "modified_at": "1970-01-01T00:00:00+00:00"
       },
       {
         "aliases": [],
         "floor_id": null,
+        "humidity_entity_id": null,
         "icon": null,
         "id": "mezza",
         "labels": [],
         "name": "Mezza",
         "picture": null,
+        "temperature_entity_id": null,
         "created_at": "2025-01-07T19:44:53.966300+00:00",
-        "modified_at": "2025-01-07T19:44:53.966306+00:00",
-        "humidity_entity_id": null,
-        "temperature_entity_id": null
+        "modified_at": "2025-01-07T19:44:53.966306+00:00"
       },
       {
         "aliases": [],
         "floor_id": "etage",
+        "humidity_entity_id": null,
         "icon": "mdi:bookshelf",
         "id": "mezzanine",
         "labels": [],
         "name": "Mezzanine",
         "picture": null,
+        "temperature_entity_id": null,
         "created_at": "1970-01-01T00:00:00+00:00",
-        "modified_at": "1970-01-01T00:00:00+00:00",
-        "humidity_entity_id": null,
-        "temperature_entity_id": null
+        "modified_at": "1970-01-01T00:00:00+00:00"
       },
       {
         "aliases": [],
         "floor_id": "etage",
+        "humidity_entity_id": null,
         "icon": "mdi:bathtub",
         "id": "bathroom",
         "labels": [],
         "name": "Salle de bain",
         "picture": "/api/image/serve/ea277f366bb29069febed6e09181b901/512x512",
+        "temperature_entity_id": null,
         "created_at": "1970-01-01T00:00:00+00:00",
-        "modified_at": "1970-01-01T00:00:00+00:00",
-        "humidity_entity_id": null,
-        "temperature_entity_id": null
+        "modified_at": "1970-01-01T00:00:00+00:00"
       },
       {
         "aliases": [
           "Douche"
         ],
         "floor_id": "etage",
+        "humidity_entity_id": null,
         "icon": "mdi:shower-head",
         "id": "shower_room",
         "labels": [],
         "name": "Salle de douche",
         "picture": null,
+        "temperature_entity_id": null,
         "created_at": "1970-01-01T00:00:00+00:00",
-        "modified_at": "1970-01-01T00:00:00+00:00",
-        "humidity_entity_id": null,
-        "temperature_entity_id": null
+        "modified_at": "1970-01-01T00:00:00+00:00"
       },
       {
         "aliases": [],
         "floor_id": "rdc",
+        "humidity_entity_id": null,
         "icon": "mdi:teddy-bear",
         "id": "kids_room",
         "labels": [],
         "name": "Salle de jeux",
         "picture": "/api/image/serve/7d494c47d7c10c81986e8f45fe0faf66/512x512",
+        "temperature_entity_id": null,
         "created_at": "1970-01-01T00:00:00+00:00",
-        "modified_at": "1970-01-01T00:00:00+00:00",
-        "humidity_entity_id": null,
-        "temperature_entity_id": null
+        "modified_at": "1970-01-01T00:00:00+00:00"
       },
       {
         "aliases": [],
         "floor_id": "rdc",
+        "humidity_entity_id": null,
         "icon": "mdi:table-furniture",
         "id": "dinning_room",
         "labels": [],
         "name": "Salle à manger",
         "picture": null,
+        "temperature_entity_id": null,
         "created_at": "1970-01-01T00:00:00+00:00",
-        "modified_at": "1970-01-01T00:00:00+00:00",
-        "humidity_entity_id": null,
-        "temperature_entity_id": null
+        "modified_at": "1970-01-01T00:00:00+00:00"
       },
       {
         "aliases": [],
         "floor_id": "rdc",
+        "humidity_entity_id": null,
         "icon": "mdi:sofa",
         "id": "living_room",
         "labels": [],
         "name": "Salon",
         "picture": "/api/image/serve/76bf87cb4e3e7ad45c87f0c6967d0ba1/512x512",
+        "temperature_entity_id": null,
         "created_at": "1970-01-01T00:00:00+00:00",
-        "modified_at": "1970-01-01T00:00:00+00:00",
-        "humidity_entity_id": null,
-        "temperature_entity_id": null
+        "modified_at": "1970-01-01T00:00:00+00:00"
       },
       {
         "aliases": [],
         "floor_id": "sous_sol",
+        "humidity_entity_id": null,
         "icon": "fas:boxes-stacked",
         "id": "basement",
         "labels": [],
         "name": "Sous-sol",
         "picture": "/api/image/serve/ba14fba854eba76cd141cb15d55340ff/512x512",
+        "temperature_entity_id": null,
         "created_at": "1970-01-01T00:00:00+00:00",
-        "modified_at": "1970-01-01T00:00:00+00:00",
-        "humidity_entity_id": null,
-        "temperature_entity_id": null
+        "modified_at": "1970-01-01T00:00:00+00:00"
       },
       {
         "aliases": [],
         "floor_id": "jardin",
+        "humidity_entity_id": null,
         "icon": "mdi:fountain",
         "id": "jardin_de_devant",
         "labels": [],
         "name": "Terrasse",
         "picture": "/api/image/serve/2b4b8714c4d116cac3d74d1356d67988/512x512",
+        "temperature_entity_id": null,
         "created_at": "1970-01-01T00:00:00+00:00",
-        "modified_at": "1970-01-01T00:00:00+00:00",
-        "humidity_entity_id": null,
-        "temperature_entity_id": null
+        "modified_at": "1970-01-01T00:00:00+00:00"
       },
       {
         "aliases": [],
         "floor_id": null,
+        "humidity_entity_id": null,
         "icon": "mdi:progress-wrench",
         "id": "tests",
         "labels": [],
         "name": "Tests",
         "picture": null,
+        "temperature_entity_id": null,
         "created_at": "1970-01-01T00:00:00+00:00",
-        "modified_at": "1970-01-01T00:00:00+00:00",
+        "modified_at": "1970-01-01T00:00:00+00:00"
+      },
+      {
+        "aliases": [],
+        "floor_id": "appartements",
         "humidity_entity_id": null,
-        "temperature_entity_id": null
+        "icon": "mdi:fish",
+        "id": "domerat",
+        "labels": [],
+        "name": "Domérat",
+        "picture": null,
+        "temperature_entity_id": null,
+        "created_at": "2026-08-16T12:23:00.763803+00:00",
+        "modified_at": "2026-08-16T12:23:00.763806+00:00"
       }
     ]
   }

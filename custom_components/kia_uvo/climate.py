@@ -4,9 +4,7 @@ from __future__ import annotations
 
 import logging
 from time import sleep
-
-from hyundai_kia_connect_api import ClimateRequestOptions, Vehicle, VehicleManager
-from hyundai_kia_connect_api.exceptions import UnsupportedControlError
+from typing import ClassVar
 
 from homeassistant.components.climate import ClimateEntity, ClimateEntityDescription
 from homeassistant.components.climate.const import (
@@ -14,12 +12,13 @@ from homeassistant.components.climate.const import (
     HVACAction,
     HVACMode,
 )
-
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import ATTR_TEMPERATURE, UnitOfTemperature
 from homeassistant.core import HomeAssistant
 from homeassistant.exceptions import HomeAssistantError
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
+from hyundai_kia_connect_api import ClimateRequestOptions, Vehicle, VehicleManager
+from hyundai_kia_connect_api.exceptions import UnsupportedControlError
 
 from .const import DOMAIN
 from .coordinator import HyundaiKiaConnectDataUpdateCoordinator
@@ -57,14 +56,16 @@ class HyundaiKiaCarClimateControlSwitch(HyundaiKiaConnectEntity, ClimateEntity):
 
     # TODO: if possible in Climate, add possibility to set those
     # as well. Are there maybe additional properties?
-    heat_status_int_to_str: dict[int | None, str | None] = {
+    heat_status_int_to_str: ClassVar[dict[int | None, str | None]] = {
         None: None,
         0: "Off",
         1: "Steering Wheel and Rear Window",
         2: "Rear Window",
         3: "Steering Wheel",
     }
-    heat_status_str_to_int = {v: k for [k, v] in heat_status_int_to_str.items()}
+    heat_status_str_to_int: ClassVar[dict[str | None, int | None]] = {
+        v: k for [k, v] in heat_status_int_to_str.items()
+    }
 
     def get_internal_heat_int_for_climate_request(self):
         if (
@@ -127,18 +128,22 @@ class HyundaiKiaCarClimateControlSwitch(HyundaiKiaConnectEntity, ClimateEntity):
         # TODO: get from lib
         return 0.5
 
-    # TODO: unknown
     @property
     def min_temp(self) -> float:
         """Get the minimum settable temperature."""
-        # TODO: get from lib
+        # TODO: get the exact per-region range from the lib
+        # USA/CA report Fahrenheit; the hardcoded 14-30 °C bounds made the
+        # climate slider unusable (14-30 °F) for those vehicles.
+        if self.temperature_unit == UnitOfTemperature.FAHRENHEIT:
+            return 62
         return 14
 
-    # TODO: unknown
     @property
     def max_temp(self) -> float:
         """Get the maximum settable temperature."""
-        # TODO: get from lib
+        # TODO: get the exact per-region range from the lib
+        if self.temperature_unit == UnitOfTemperature.FAHRENHEIT:
+            return 82
         return 30
 
     @property

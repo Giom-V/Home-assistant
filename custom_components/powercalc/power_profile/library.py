@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 import json
 import os
 import re
@@ -50,10 +48,14 @@ class ProfileLibrary:
         self._loader = loader
         self._profiles: dict[str, list[PowerProfile]] = {}
         self._manufacturer_models: dict[str, set[tuple[str, str]]] = {}
-        self._manufacturer_device_types: dict[str, list] = {}
 
     async def initialize(self) -> None:
         await self._loader.initialize()
+
+    @property
+    def discovery_ignored_domains(self) -> set[str]:
+        """Get integration domains globally excluded from discovery."""
+        return self._loader.get_discovery_ignored_domains()
 
     @staticmethod
     @singleton("powercalc_library")
@@ -301,7 +303,12 @@ class ProfileLibrary:
 
         return next(iter(matches))
 
-    async def _load_model_data(self, manufacturer: str, model: str, custom_directory: str | None) -> tuple[dict, str]:
+    async def _load_model_data(
+        self,
+        manufacturer: str,
+        model: str,
+        custom_directory: str | None,
+    ) -> tuple[dict[str, Any], str]:
         """Load the model data from the appropriate directory."""
         loader = (
             LocalLoader(self._hass, custom_directory, is_custom_directory=True) if custom_directory else self._loader
@@ -317,8 +324,8 @@ class ProfileLibrary:
         manufacturer: str,
         model: str,
         directory: str,
-        json_data: dict,
-        sub_profiles: list[tuple[str, dict]] | None = None,
+        json_data: dict[str, Any],
+        sub_profiles: list[tuple[str, dict[str, Any]]] | None = None,
     ) -> PowerProfile:
         """Create and initialize the PowerProfile object."""
         profile = PowerProfile(

@@ -2,30 +2,13 @@
 
 from __future__ import annotations
 
-from collections.abc import Callable
-from typing import Any
-import datetime as dt
-from datetime import timedelta
-import traceback
-import logging
 import asyncio
-
-from hyundai_kia_connect_api import (
-    Vehicle,
-    VehicleManager,
-    ClimateRequestOptions,
-    WindowRequestOptions,
-    ScheduleChargingClimateRequestOptions,
-    POIInfo,
-    Token,
-)
-from hyundai_kia_connect_api.const import WINDOW_STATE
-from hyundai_kia_connect_api.exceptions import (
-    AuthenticationError,
-    UnsupportedControlError,
-)
-
-from homeassistant.exceptions import ConfigEntryAuthFailed, HomeAssistantError
+import datetime as dt
+import logging
+import traceback
+from collections.abc import Callable
+from datetime import timedelta
+from typing import Any
 
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import (
@@ -36,24 +19,40 @@ from homeassistant.const import (
     CONF_USERNAME,
 )
 from homeassistant.core import HomeAssistant
+from homeassistant.exceptions import ConfigEntryAuthFailed, HomeAssistantError
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 from homeassistant.util import dt as dt_util
+from hyundai_kia_connect_api import (
+    ClimateRequestOptions,
+    POIInfo,
+    ScheduleChargingClimateRequestOptions,
+    Token,
+    Vehicle,
+    VehicleManager,
+    WindowRequestOptions,
+)
+from hyundai_kia_connect_api.const import WINDOW_STATE
+from hyundai_kia_connect_api.exceptions import (
+    AuthenticationError,
+    UnsupportedControlError,
+)
 
 from .const import (
     CONF_BRAND,
+    CONF_ENABLE_GEOLOCATION_ENTITY,
     CONF_FORCE_REFRESH_INTERVAL,
     CONF_NO_FORCE_REFRESH_HOUR_FINISH,
     CONF_NO_FORCE_REFRESH_HOUR_START,
+    CONF_TOKEN,
+    CONF_USE_EMAIL_WITH_GEOCODE_API,
+    DEFAULT_ENABLE_GEOLOCATION_ENTITY,
     DEFAULT_FORCE_REFRESH_INTERVAL,
     DEFAULT_NO_FORCE_REFRESH_HOUR_FINISH,
     DEFAULT_NO_FORCE_REFRESH_HOUR_START,
     DEFAULT_SCAN_INTERVAL,
-    DOMAIN,
-    DEFAULT_ENABLE_GEOLOCATION_ENTITY,
     DEFAULT_USE_EMAIL_WITH_GEOCODE_API,
-    CONF_USE_EMAIL_WITH_GEOCODE_API,
-    CONF_ENABLE_GEOLOCATION_ENTITY,
-    CONF_TOKEN,
+    DOMAIN,
+    OffPeakChargingMode,
 )
 
 _LOGGER = logging.getLogger(__name__)
@@ -446,6 +445,41 @@ class HyundaiKiaConnectDataUpdateCoordinator(DataUpdateCoordinator):
         vehicle = self.vehicle_manager.vehicles[vehicle_id]
         options = self._build_schedule_options_from_vehicle(vehicle)
         options.off_peak_charge_only_enabled = enabled
+        await self.async_schedule_charging_and_climate(vehicle_id, options)
+
+    async def async_set_off_peak_charging(
+        self,
+        vehicle_id: str,
+        *,
+        mode: OffPeakChargingMode | None = None,
+        start: dt.time | None = None,
+        end: dt.time | None = None,
+    ) -> None:
+        """Set the off-peak charging schedule mode and/or window.
+
+        ``mode`` maps to the (charging_enabled, off_peak_charge_only_enabled)
+        pair the API expects: ``OFF`` disables scheduled charging, ``TIME``
+        charges only during the off-peak window (time priority), ``TARGET``
+        prefers off-peak tariffs but continues past the window to reach the
+        target SoC (target priority). ``mode=None`` preserves the current mode
+        and only adjusts the window — used by the time entities. Other
+        schedule fields (departures) are preserved.
+        """
+        vehicle = self.vehicle_manager.vehicles[vehicle_id]
+        options = self._build_schedule_options_from_vehicle(vehicle)
+        if mode is not None:
+            if mode is OffPeakChargingMode.OFF:
+                options.charging_enabled = False
+            elif mode is OffPeakChargingMode.TIME:
+                options.charging_enabled = True
+                options.off_peak_charge_only_enabled = True
+            elif mode is OffPeakChargingMode.TARGET:
+                options.charging_enabled = True
+                options.off_peak_charge_only_enabled = False
+        if start is not None:
+            options.off_peak_start_time = start
+        if end is not None:
+            options.off_peak_end_time = end
         await self.async_schedule_charging_and_climate(vehicle_id, options)
 
     async def async_set_departure_enabled(

@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 import math
 import re
 from typing import NamedTuple
@@ -9,6 +7,7 @@ from homeassistant.const import CONF_ENTITY_ID, CONF_NAME, CONF_UNIQUE_ID
 from homeassistant.core import HomeAssistant, split_entity_id
 import homeassistant.helpers.device_registry as dr
 import homeassistant.helpers.entity_registry as er
+from homeassistant.helpers.typing import ConfigType
 import voluptuous as vol
 
 from .const import (
@@ -18,6 +17,8 @@ from .const import (
     CONF_CREATE_ENERGY_SENSORS,
     CONF_CREATE_GROUP,
     CONF_DAILY_FIXED_ENERGY,
+    CONF_ENERGY_PRICE,
+    CONF_ENERGY_PRICE_SENSOR,
     CONF_FORCE_ENERGY_SENSOR_CREATION,
     CONF_MULTI_SWITCH,
     CONF_POWER_SENSOR_ID,
@@ -37,6 +38,7 @@ class SourceEntity(NamedTuple):
     supported_color_modes: list[ColorMode] | None = None
     entity_entry: er.RegistryEntry | None = None
     device_entry: dr.DeviceEntry | None = None
+    config_entry_id: str | None = None
 
 
 EXCLUDE_FROM_PARENT_CONFIG = (
@@ -47,6 +49,11 @@ EXCLUDE_FROM_PARENT_CONFIG = (
     CONF_FORCE_ENERGY_SENSOR_CREATION,
 )
 ENTITY_ID_OPTIONAL_KEYS = (CONF_DAILY_FIXED_ENERGY, CONF_POWER_SENSOR_ID, CONF_MULTI_SWITCH)
+
+# Groups of keys where a deeper config level replaces the whole group, instead of merging
+# key by key. A sensor defining `energy_price` must fully override a global
+# `energy_price_sensor`, otherwise the merged config would contain both price sources.
+MUTUALLY_EXCLUSIVE_KEY_GROUPS = ((CONF_ENERGY_PRICE, CONF_ENERGY_PRICE_SENSOR),)
 
 
 def is_number(value: str) -> bool:
@@ -153,8 +160,8 @@ def _get_state_name(hass: HomeAssistant, entity_id: str) -> str | None:
     return str(entity_state.name) if entity_state else None
 
 
-def get_merged_sensor_configuration(*configs: dict, validate: bool = True) -> dict:
-    """Merges configuration from multiple levels (global, group, sensor) into a single dict."""
+def get_merged_sensor_configuration(*configs: ConfigType, validate: bool = True) -> ConfigType:
+    """Merges configuration from multiple levels (global, group, sensor) into a single ConfigType."""
     merged_config = _merge_config_levels(configs)
     _apply_sensor_creation_defaults(merged_config)
     _apply_dummy_entity_id_default(merged_config)
@@ -163,27 +170,38 @@ def get_merged_sensor_configuration(*configs: dict, validate: bool = True) -> di
     return merged_config
 
 
-def _merge_config_levels(configs: tuple[dict, ...]) -> dict:
+def _merge_config_levels(configs: tuple[ConfigType, ...]) -> ConfigType:
     """Merge config levels while keeping deepest-level-only fields local."""
     num_configs = len(configs)
 
-    merged_config = {}
+    merged_config: ConfigType = {}
     for i, config in enumerate(configs, 1):
         config_copy = config.copy()
         if i < num_configs:
             for key in EXCLUDE_FROM_PARENT_CONFIG:
                 config_copy.pop(key, None)
 
+        _drop_overridden_alternatives(merged_config, config_copy)
         merged_config.update(config_copy)
     return merged_config
 
 
-def _apply_sensor_creation_defaults(config: dict) -> None:
+def _drop_overridden_alternatives(merged_config: ConfigType, config: ConfigType) -> None:
+    """Drop the alternatives of a mutually exclusive key group set by a shallower config level."""
+    for group in MUTUALLY_EXCLUSIVE_KEY_GROUPS:
+        if not any(key in config for key in group):
+            continue
+        for key in group:
+            if key not in config:
+                merged_config.pop(key, None)
+
+
+def _apply_sensor_creation_defaults(config: ConfigType) -> None:
     config.setdefault(CONF_CREATE_ENERGY_SENSOR, config.get(CONF_CREATE_ENERGY_SENSORS))
     config.setdefault(CONF_CREATE_COST_SENSOR, config.get(CONF_CREATE_COST_SENSORS))
 
 
-def _apply_dummy_entity_id_default(config: dict) -> None:
+def _apply_dummy_entity_id_default(config: ConfigType) -> None:
     if CONF_ENTITY_ID in config:
         return
     # A standalone cost sensor has no source appliance entity, use the dummy placeholder.
@@ -191,18 +209,18 @@ def _apply_dummy_entity_id_default(config: dict) -> None:
         config[CONF_ENTITY_ID] = DUMMY_ENTITY_ID
 
 
-def _is_entity_id_required(config: dict) -> bool:
+def _is_entity_id_required(config: ConfigType) -> bool:
     return not any(key in config for key in ENTITY_ID_OPTIONAL_KEYS)
 
 
-def _validate_entity_id_config(config: dict, validate: bool) -> None:
+def _validate_entity_id_config(config: ConfigType, validate: bool) -> None:
     if _is_missing_required_entity_id(config, validate):
         raise SensorConfigurationError(
             "You must supply an entity_id in the configuration, see the README",
         )
 
 
-def _is_missing_required_entity_id(config: dict, validate: bool) -> bool:
+def _is_missing_required_entity_id(config: ConfigType, validate: bool) -> bool:
     sensor_type = config.get(CONF_SENSOR_TYPE)
     return (
         validate

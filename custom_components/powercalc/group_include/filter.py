@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 from collections.abc import Callable, Iterable, Sequence
 from enum import StrEnum
 import re
@@ -84,7 +82,7 @@ def create_composite_filter(
 
 def create_filter(
     filter_type: str,
-    filter_config: ConfigType | str | list | Template,
+    filter_config: ConfigType | str | list[str] | Template,
     hass: HomeAssistant,
 ) -> EntityFilter:
     filter_mapping: dict[str, Callable[[], EntityFilter]] = {

@@ -1,0 +1,2 @@
+# No custom services. Fan control (on/off, speed, presets, oscillate) is handled
+# by the built-in fan domain services. Beep and timer use the switch domain.

@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 import asyncio
 from collections.abc import Awaitable, Callable, Coroutine
 from copy import copy
@@ -31,7 +29,7 @@ from homeassistant.core import (
     State,
     callback,
 )
-from homeassistant.exceptions import HomeAssistantError
+from homeassistant.exceptions import ServiceValidationError
 from homeassistant.helpers import issue_registry as ir, start
 from homeassistant.helpers.dispatcher import async_dispatcher_send
 from homeassistant.helpers.entity import EntityCategory
@@ -118,7 +116,7 @@ _LOGGER = logging.getLogger(__name__)
 
 async def create_power_sensor(
     hass: HomeAssistant,
-    sensor_config: dict,
+    sensor_config: ConfigType,
     source_entity: SourceEntity,
     config_entry: ConfigEntry | None,
 ) -> PowerSensor:
@@ -298,35 +296,38 @@ def _resolve_standby_power_value(
     return Decimal(str(value))
 
 
+def _get_standby_power_from_profile(
+    hass: HomeAssistant,
+    power_profile: PowerProfile,
+) -> tuple[Template | Decimal, Decimal]:
+    """Return the standby power for the OFF and ON state as declared by a power profile."""
+    return (
+        _resolve_standby_power_value(hass, power_profile.json_data.get(CONF_STANDBY_POWER)),
+        Decimal(power_profile.standby_power_on),
+    )
+
+
 def _get_standby_power(
     hass: HomeAssistant,
     sensor_config: ConfigType,
     power_profile: PowerProfile | None,
 ) -> tuple[Template | Decimal, Decimal]:
     """Retrieve standby power settings from sensor config or power profile."""
-    standby_power: Template | Decimal = Decimal(0)
-    standby_power_on = Decimal(0)
     if sensor_config.get(CONF_SELF_USAGE_INCLUDED, False) or sensor_config.get(CONF_DISABLE_STANDBY_POWER):
-        return standby_power, standby_power_on
+        return Decimal(0), Decimal(0)
 
     if sensor_config.get(CONF_STANDBY_POWER) is not None:
-        standby_power = _resolve_standby_power_value(
-            hass,
-            sensor_config.get(CONF_STANDBY_POWER),
-        )
-    elif power_profile is not None:
-        standby_power = _resolve_standby_power_value(
-            hass,
-            power_profile.json_data.get(CONF_STANDBY_POWER),
-        )
-        standby_power_on = Decimal(power_profile.standby_power_on)
+        return _resolve_standby_power_value(hass, sensor_config.get(CONF_STANDBY_POWER)), Decimal(0)
 
-    return standby_power, standby_power_on
+    if power_profile is not None:
+        return _get_standby_power_from_profile(hass, power_profile)
+
+    return Decimal(0), Decimal(0)
 
 
 def create_real_power_sensor(
     hass: HomeAssistant,
-    sensor_config: dict,
+    sensor_config: ConfigType,
 ) -> RealPowerSensor:
     """Create reference to an existing power sensor."""
     power_sensor_id = sensor_config.get(CONF_POWER_SENSOR_ID)
@@ -389,7 +390,7 @@ class VirtualPowerSensor(PowerSensor, SensorEntity):
         unique_id: str | None,
         standby_power: Decimal | Template,
         standby_power_on: Decimal,
-        sensor_config: dict,
+        sensor_config: ConfigType,
         power_profile: PowerProfile | None,
         config_entry: ConfigEntry | None,
     ) -> None:
@@ -404,7 +405,8 @@ class VirtualPowerSensor(PowerSensor, SensorEntity):
         self._standby_power_on = standby_power_on
         self._attr_force_update = True
         self._attr_unique_id = unique_id
-        self._multiply_factor = sensor_config.get(CONF_MULTIPLY_FACTOR)
+        multiply_factor = sensor_config.get(CONF_MULTIPLY_FACTOR)
+        self._multiply_factor: Decimal | None = Decimal(multiply_factor) if multiply_factor else None
         self._multiply_factor_standby = bool(sensor_config.get(CONF_MULTIPLY_FACTOR_STANDBY, False))
         self._ignore_unavailable_state = bool(sensor_config.get(CONF_IGNORE_UNAVAILABLE_STATE, False))
         self._rounding_digits = int(sensor_config.get(CONF_POWER_SENSOR_PRECISION, DEFAULT_POWER_SENSOR_PRECISION))
@@ -426,7 +428,7 @@ class VirtualPowerSensor(PowerSensor, SensorEntity):
         self._sub_profile_selector: SubProfileSelector | None = None
         if not self._ignore_unavailable_state and self._sensor_config.get(CONF_UNAVAILABLE_POWER) is not None:
             self._ignore_unavailable_state = True
-        self._standby_sensors: dict = hass.data[DOMAIN][DATA_STANDBY_POWER_SENSORS]
+        self._standby_sensors: ConfigType = hass.data[DOMAIN][DATA_STANDBY_POWER_SENSORS]
         self.calculation_strategy_factory = calculation_strategy_factory
         self._strategy_instance: PowerCalculationStrategyInterface | None = None
         self._availability_entity: str | None = sensor_config.get(CONF_AVAILABILITY_ENTITY)
@@ -588,7 +590,7 @@ class VirtualPowerSensor(PowerSensor, SensorEntity):
         state: State | None,
     ) -> None:
         """Update power sensor based on new dependent entity state."""
-        self._standby_sensors.pop(self.entity_id, None)
+        self._clear_standby_power()
         if self._sleep_power_timer:
             self._sleep_power_timer()
             self._sleep_power_timer = None
@@ -640,9 +642,7 @@ class VirtualPowerSensor(PowerSensor, SensorEntity):
     @callback
     def _update_power_sensor(self, power: Decimal) -> None:
         """Update the power sensor with new power value from strategy and write HA state."""
-        if self._multiply_factor:
-            power *= Decimal(self._multiply_factor)
-        self._update_power_and_write_state(power)
+        self._update_power_and_write_state(self._apply_multiply_factor(power))
 
     def _has_valid_state(self, state: State) -> bool:
         """Check if the state is valid, we can use it for power calculation."""
@@ -664,6 +664,8 @@ class VirtualPowerSensor(PowerSensor, SensorEntity):
         if entity_state.state == STATE_UNAVAILABLE and unavailable_power is not None:
             return Decimal(unavailable_power)
 
+        # When the device is in standby the standby power is the total power, except for multi switch:
+        # the other switches may still be ON, so there the standby power is added to the calculated power.
         standby_power = await self._calculate_state_standby_power(entity_state)
         if standby_power is not None and (
             self._strategy_instance.can_calculate_standby()
@@ -676,7 +678,7 @@ class VirtualPowerSensor(PowerSensor, SensorEntity):
         if power is None:
             return None
 
-        return Decimal(self._apply_power_adjustments(power, standby_power))
+        return self._apply_power_adjustments(power, standby_power)
 
     def _resolve_calculation_state(self, state: State) -> State | None:
         if (
@@ -704,24 +706,30 @@ class VirtualPowerSensor(PowerSensor, SensorEntity):
             await self._strategy_instance.stop_playbook()
 
         standby_power = await self.calculate_standby_power(entity_state)
-        self._standby_sensors[self.entity_id] = standby_power
+        self._track_standby_power(standby_power)
         return standby_power
 
     def _apply_power_adjustments(self, power: Decimal, standby_power: Decimal | None) -> Decimal:
+        """Apply the multiply factor and add the standby power the device draws while ON."""
         if standby_power:
             power += standby_power
 
-        if self._multiply_factor:
-            power *= Decimal(self._multiply_factor)
+        power = self._apply_multiply_factor(power)
 
         if self._standby_power_on and not standby_power:
-            additional_standby_power = self._standby_power_on
-            self._standby_sensors[self.entity_id] = self._standby_power_on
-            if self._multiply_factor_standby and self._multiply_factor:
-                additional_standby_power *= Decimal(self._multiply_factor)
-            power += additional_standby_power
+            standby_power_on = self._apply_standby_multiply_factor(self._standby_power_on)
+            self._track_standby_power(standby_power_on)
+            power += standby_power_on
 
         return power
+
+    def _apply_multiply_factor(self, power: Decimal) -> Decimal:
+        """Apply the configured multiply factor to a power value."""
+        return power * self._multiply_factor if self._multiply_factor else power
+
+    def _apply_standby_multiply_factor(self, power: Decimal) -> Decimal:
+        """Apply the multiply factor to a standby power value, only when enabled for standby."""
+        return self._apply_multiply_factor(power) if self._multiply_factor_standby else power
 
     async def _switch_sub_profile_dynamically(self, state: State) -> None:
         """Dynamically select a different sub profile depending on the entity state or attributes
@@ -739,46 +747,50 @@ class VirtualPowerSensor(PowerSensor, SensorEntity):
             return
 
         await self._power_profile.select_sub_profile(profile)
-        self._standby_power = _resolve_standby_power_value(
-            self.hass,
-            self._power_profile.json_data.get(CONF_STANDBY_POWER),
-        )
-        self._standby_power_on = Decimal(self._power_profile.standby_power_on)
+        self._standby_power, self._standby_power_on = _get_standby_power_from_profile(self.hass, self._power_profile)
         await self.ensure_strategy_instance(True)
 
     async def calculate_standby_power(self, state: State) -> Decimal:
         """Calculate the power of the device in OFF state."""
         assert self._strategy_instance is not None
-        sleep_power: dict[str, float] = self._sensor_config.get(CONF_SLEEP_POWER)  # type: ignore
-        if sleep_power:
-            delay = sleep_power.get(CONF_DELAY) or 0
-
-            @callback
-            def _update_sleep_power(*_: object) -> None:
-                power = Decimal(sleep_power.get(CONF_POWER) or 0)
-                if self._multiply_factor_standby and self._multiply_factor:
-                    power *= Decimal(self._multiply_factor)
-                self._update_power_and_write_state(power)
-
-            self._sleep_power_timer = async_call_later(
-                self.hass,
-                delay,
-                HassJob(_update_sleep_power, name=f"{self.entity_id} sleep power", cancel_on_shutdown=True),
-            )
+        self._schedule_sleep_power()
 
         standby_power = self._standby_power
         if self._strategy_instance.can_calculate_standby():
             standby_power = await self._strategy_instance.calculate(state) or self._standby_power
 
-        evaluated = evaluate_to_decimal(standby_power)
-        if evaluated is None:
-            evaluated = Decimal(0)
-        standby_power = evaluated
+        return self._apply_standby_multiply_factor(evaluate_to_decimal(standby_power) or Decimal(0))
 
-        if self._multiply_factor_standby and self._multiply_factor:
-            standby_power *= Decimal(self._multiply_factor)
+    def _schedule_sleep_power(self) -> None:
+        """Switch the sensor over to the configured sleep power, after the device has been OFF for the delay."""
+        sleep_power: dict[str, float] | None = self._sensor_config.get(CONF_SLEEP_POWER)
+        if not sleep_power:
+            return
 
-        return standby_power
+        @callback
+        def _update_sleep_power(*_: object) -> None:
+            power = self._apply_standby_multiply_factor(Decimal(sleep_power.get(CONF_POWER) or 0))
+            self._track_standby_power(power)
+            self._update_power_and_write_state(power)
+
+        self._sleep_power_timer = async_call_later(
+            self.hass,
+            sleep_power.get(CONF_DELAY) or 0,
+            HassJob(_update_sleep_power, name=f"{self.entity_id} sleep power", cancel_on_shutdown=True),
+        )
+
+    @property
+    def current_standby_power(self) -> Decimal:
+        """Return the standby portion of the current power value."""
+        return cast(Decimal, self._standby_sensors.get(self.entity_id, Decimal(0)))
+
+    def _track_standby_power(self, power: Decimal) -> None:
+        """Record the standby portion of the current power, read by the standby group and energy sensors."""
+        self._standby_sensors[self.entity_id] = power
+
+    def _clear_standby_power(self) -> None:
+        """Forget the standby portion, the device is no longer known to be in standby."""
+        self._standby_sensors.pop(self.entity_id, None)
 
     async def is_calculation_enabled(self, entity_state: State) -> bool:
         """Check if calculation is enabled based on the condition template."""
@@ -828,7 +840,11 @@ class VirtualPowerSensor(PowerSensor, SensorEntity):
         """Ensure we are dealing with a playbook sensor."""
         assert self._strategy_instance is not None
         if not isinstance(self._strategy_instance, PlaybookStrategy):
-            raise HomeAssistantError("supported only playbook enabled sensors")
+            raise ServiceValidationError(
+                translation_domain=DOMAIN,
+                translation_key="not_a_playbook_sensor",
+                translation_placeholders={"entity_id": self.entity_id},
+            )
         return self._strategy_instance
 
     async def async_will_remove_from_hass(self) -> None:
@@ -847,13 +863,22 @@ class VirtualPowerSensor(PowerSensor, SensorEntity):
             or not await self._power_profile.has_sub_profiles
             or self._power_profile.sub_profile_select
         ):
-            raise HomeAssistantError(
-                "This is only supported for sensors having sub profiles, and no automatic profile selection",
+            raise ServiceValidationError(
+                translation_domain=DOMAIN,
+                translation_key="no_sub_profile_support",
+                translation_placeholders={"entity_id": self.entity_id},
             )
 
         known_profiles = [profile[0] for profile in await self._power_profile.get_sub_profiles()]
         if profile not in known_profiles:
-            raise HomeAssistantError(f"{profile} is not a possible sub profile")
+            raise ServiceValidationError(
+                translation_domain=DOMAIN,
+                translation_key="unknown_sub_profile",
+                translation_placeholders={
+                    "profile": profile,
+                    "known_profiles": ", ".join(known_profiles),
+                },
+            )
 
         await self._select_new_sub_profile(profile)
 

@@ -3,11 +3,8 @@
 from __future__ import annotations
 
 import logging
-from typing import Final
 from datetime import date
-
-from hyundai_kia_connect_api import Vehicle
-from hyundai_kia_connect_api.const import ENGINE_TYPES
+from typing import Final
 
 from homeassistant.components.sensor import (
     SensorDeviceClass,
@@ -15,18 +12,19 @@ from homeassistant.components.sensor import (
     SensorEntityDescription,
     SensorStateClass,
 )
+from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import (
     PERCENTAGE,
+    EntityCategory,
     UnitOfElectricPotential,
     UnitOfEnergy,
     UnitOfPower,
     UnitOfTime,
-    EntityCategory,
 )
-
-from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
+from hyundai_kia_connect_api import Vehicle
+from hyundai_kia_connect_api.const import ENGINE_TYPES
 
 from .const import CHARGING_CURRENTS, DOMAIN, DYNAMIC_UNIT
 from .entity import HyundaiKiaConnectEntity
@@ -449,10 +447,55 @@ async def async_setup_entry(
     """Set up sensor platform."""
     coordinator = hass.data[DOMAIN][config_entry.unique_id]
     entities = []
-    for vehicle_id in coordinator.vehicle_manager.vehicles.keys():
+    for vehicle_id in coordinator.vehicle_manager.vehicles:
         vehicle: Vehicle = coordinator.vehicle_manager.vehicles[vehicle_id]
         for description in SENSOR_DESCRIPTIONS:
-            if getattr(vehicle, description.key, None) is not None:
+            if description.key == "_air_temperature":
+                # The setpoint is transient — it is None while climate is off
+                # (USA returns airTemp.value "OFF"), so don't gate on it. Gate
+                # on climate presence (air_control_is_on, the same signal the
+                # climate entity uses) to avoid creating an unusable sensor on
+                # vehicles that report no climate. A None setpoint -> HA
+                # `unknown`; the real setpoint arrives on the next poll.
+                create = (
+                    vehicle.air_control_is_on is not None
+                    or vehicle._air_temperature is not None
+                )
+            elif description.key == "car_battery_percentage":
+                # The 12V SoC is transient — None while the telematics unit
+                # is asleep, after a 12V reset, or when the status payload
+                # omits it. Don't gate creation on it: a None at setup (e.g.
+                # a version-update reload) means the entity isn't yielded and
+                # HA marks it "no longer provided", with no return until the
+                # next reload. Always create; None -> HA `unknown`, the real
+                # SoC arrives on the next poll. See #1803.
+                create = True
+            elif description.key == "ev_charging_power":
+                # Charging power is transient and usually None at setup while
+                # the vehicle is unplugged. Create the sensor for electrified
+                # vehicles so a later coordinator poll can publish the value
+                # without requiring an integration reload.
+                create = (
+                    vehicle.engine_type in (ENGINE_TYPES.EV, ENGINE_TYPES.PHEV)
+                    or vehicle.ev_charging_power is not None
+                )
+            elif description.key.startswith("tire_pressure_"):
+                # Transient like _air_temperature above: some backends (AU/NZ)
+                # report the TPMS no-data sentinel whenever the car is parked
+                # — nearly always the case at setup — so don't gate on the
+                # value. The parsed unit is the capability signal: non-None
+                # exactly for direct-TPMS vehicles (known PressureUnit), None
+                # for indirect TPMS (PressureUnit 3, e.g. KONA — #1786) and
+                # old-protocol vehicles, which never report a numeric
+                # pressure. A None pressure -> HA `unknown` until a poll
+                # catches the car driving.
+                create = (
+                    getattr(vehicle, description.key, None) is not None
+                    or vehicle.tire_pressure_unit is not None
+                )
+            else:
+                create = getattr(vehicle, description.key, None) is not None
+            if create:
                 entities.append(
                     HyundaiKiaConnectSensor(coordinator, description, vehicle)
                 )
@@ -527,9 +570,9 @@ class HyundaiKiaConnectSensor(SensorEntity, HyundaiKiaConnectEntity):
     @property
     def state_attributes(self):
         if self.entity_description.key == "_geocode_name":
-            return {"address": getattr(self.vehicle, "_geocode_address")}
+            return {"address": self.vehicle._geocode_address}
         elif self.entity_description.key == "dtc_count":
-            return {"DTC Text": getattr(self.vehicle, "dtc_descriptions")}
+            return {"DTC Text": self.vehicle.dtc_descriptions}
 
 
 class VehicleEntity(SensorEntity, HyundaiKiaConnectEntity):

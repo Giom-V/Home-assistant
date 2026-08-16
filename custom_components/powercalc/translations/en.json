@@ -7,8 +7,7 @@
   },
   "config": {
     "abort": {
-      "already_configured": "Sensor is already configured, specify a unique_id",
-      "cost_no_global_price": "No energy price is configured yet. Set up an energy price in the Powercalc global configuration before creating a cost sensor. See [documentation]({url})."
+      "already_configured": "Sensor is already configured, specify a unique_id"
     },
     "error": {
       "cost_price_mandatory": "You must supply either an energy price or an energy price sensor",
@@ -385,6 +384,16 @@
         "description": "Select the device model. See the [list]({supported_models_link}) of supported models for more information",
         "title": "Model config"
       },
+      "select_device": {
+        "data": {
+          "device": "Device"
+        },
+        "data_description": {
+          "device": "The device the Powercalc entities should be linked to"
+        },
+        "description": "Select the device to which the Powercalc sensor should be linked.",
+        "title": "Select device"
+      },
       "menu_group": {
         "menu_options": {
           "group_custom": "Standard",
@@ -472,7 +481,24 @@
           "energy_sensor_id": "The existing energy sensor (kWh) to calculate the cost for. This can be a sensor from any integration, not only Powercalc",
           "name": "Base name for the cost sensor. The full entity name is set according to the cost_sensor_naming setting"
         },
-        "description": "Create a cost sensor for an existing energy sensor. The energy price is taken from the Powercalc global configuration.",
+        "description": "Create a cost sensor for an existing energy sensor. The energy price is taken from the Powercalc global configuration, unless you override it below.",
+        "sections": {
+          "cost_pricing": {
+            "name": "Price override",
+            "data": {
+              "energy_price": "Fixed energy price",
+              "energy_price_multiplier": "Energy price multiplier",
+              "energy_price_sensor": "Energy price sensor",
+              "energy_price_surcharge": "Energy price surcharge"
+            },
+            "data_description": {
+              "energy_price": "A fixed price per kWh in your local currency. Leave empty to use the global energy price",
+              "energy_price_multiplier": "Multiplier applied after the surcharge. Use this for percentage-based taxes or fees, for example 1.21 for 21%. Leave empty to use the global multiplier",
+              "energy_price_sensor": "A sensor which provides the current energy price per kWh (e.g. from a dynamic tariff integration). Leave the fixed price empty to use this sensor",
+              "energy_price_surcharge": "Additional fixed amount per kWh added to the fixed price or price sensor value. Leave empty to use the global surcharge"
+            }
+          }
+        },
         "title": "Create a cost sensor"
       },
       "sub_profile": {
@@ -534,6 +560,7 @@
       "virtual_power": {
         "data": {
           "create_energy_sensor": "Create energy sensor",
+          "create_standby_energy_sensor": "Create standby energy sensor",
           "create_cost_sensor": "Create cost sensor",
           "create_utility_meters": "Create utility meters",
           "entity_id": "Source entity",
@@ -543,6 +570,7 @@
         },
         "data_description": {
           "create_energy_sensor": "Whether powercalc needs to create a kWh sensor",
+          "create_standby_energy_sensor": "Whether Powercalc should create a kWh sensor that tracks only standby consumption",
           "create_utility_meters": "Let powercalc create utility meters, which cycle daily, hourly etc.",
           "entity_id": "Entity the virtual power is based on, the power sensor will listen to state changes of this entity to be updated",
           "name": "Leaving blank will take the name from the source entity",
@@ -561,7 +589,44 @@
       }
     }
   },
+  "exceptions": {
+    "invalid_integration_method": {
+      "message": "Invalid integration method \"{method}\". Must be one of: {allowed_methods}."
+    },
+    "no_sub_profile_support": {
+      "message": "{entity_id} does not support switching sub profiles. This action is only available for sensors which have sub profiles and no automatic sub profile selection."
+    },
+    "not_a_playbook_sensor": {
+      "message": "{entity_id} is not a playbook enabled sensor. This action is only available for sensors using the playbook strategy."
+    },
+    "unknown_sub_profile": {
+      "message": "\"{profile}\" is not a known sub profile. Available sub profiles: {known_profiles}."
+    }
+  },
   "issues": {
+    "composite_device_id": {
+      "fix_flow": {
+        "abort": {
+          "entry_removed": "The Powercalc configuration entry has been removed"
+        },
+        "error": {
+          "invalid_device": "Select an existing device or leave the field empty"
+        },
+        "step": {
+          "select_device": {
+            "data": {
+              "device": "Device"
+            },
+            "data_description": {
+              "device": "The device the entities created by this Powercalc configuration should be linked to"
+            },
+            "description": "The Powercalc configuration {name} was linked to a device that Home Assistant has split into multiple devices. Its entities cannot be linked to the old device ID.\n\nSelect the device these entities should be linked to, or leave the field empty to leave them without a device.",
+            "title": "Select device for {name}"
+          }
+        }
+      },
+      "title": "Device for Powercalc configuration {name} needs to be selected again"
+    },
     "deprecated_platform_yaml": {
       "description": "Configuring sensors using `sensor->platform` has been deprecated. You need to change your configuration to `powercalc->sensors`. Click on 'Learn more' for further instructions.",
       "title": "Powercalc YAML configuration has moved"
@@ -622,6 +687,7 @@
         "title": "Basic options",
         "data": {
           "create_energy_sensor": "Create energy sensor",
+          "create_standby_energy_sensor": "Create standby energy sensor",
           "create_cost_sensor": "Create cost sensor",
           "create_utility_meters": "Create utility meters",
           "entity_id": "Source entity",
@@ -630,6 +696,7 @@
         },
         "data_description": {
           "create_energy_sensor": "Whether powercalc needs to create a kWh sensor",
+          "create_standby_energy_sensor": "Whether Powercalc should create a kWh sensor that tracks only standby consumption",
           "create_utility_meters": "Let powercalc create utility meters, which cycle daily, hourly etc.",
           "entity_id": "Entity the virtual power is based on, the power sensor will listen to state changes of this entity to be updated",
           "name": "Leaving blank will take the name from the source entity",
@@ -904,13 +971,25 @@
           "playbook": "Playbook options",
           "multi_switch": "Multi switch options",
           "real_power": "Real power options",
+          "select_device": "Device",
           "utility_meter_options": "Utility meter options",
-          "wled": "WLED options"
+          "wled": "WLED options",
+          "cost_options": "Cost options"
         }
       },
       "library_options": {
         "title": "Library options",
         "description": "Currently the following library profile is selected: \n manufacturer: {manufacturer}\n model: {model}\n\nIf you want to change the profile, click next."
+      },
+      "select_device": {
+        "data": {
+          "device": "Device"
+        },
+        "data_description": {
+          "device": "The device the Powercalc entities should be linked to"
+        },
+        "description": "Select the device to which the Powercalc sensor should be linked.",
+        "title": "Select device"
       },
       "linear": {
         "title": "Linear options",
@@ -963,13 +1042,30 @@
         }
       },
       "cost": {
-        "title": "Cost options",
         "data": {
           "energy_sensor_id": "Energy sensor"
         },
         "data_description": {
           "energy_sensor_id": "The existing energy sensor (kWh) to calculate the cost for"
-        }
+        },
+        "sections": {
+          "cost_pricing": {
+            "name": "Price override",
+            "data": {
+              "energy_price": "Fixed energy price",
+              "energy_price_multiplier": "Energy price multiplier",
+              "energy_price_sensor": "Energy price sensor",
+              "energy_price_surcharge": "Energy price surcharge"
+            },
+            "data_description": {
+              "energy_price": "A fixed price per kWh in your local currency. Leave empty to use the global energy price",
+              "energy_price_multiplier": "Multiplier applied after the surcharge. Use this for percentage-based taxes or fees, for example 1.21 for 21%. Leave empty to use the global multiplier",
+              "energy_price_sensor": "A sensor which provides the current energy price per kWh (e.g. from a dynamic tariff integration). Leave the fixed price empty to use this sensor",
+              "energy_price_surcharge": "Additional fixed amount per kWh added to the fixed price or price sensor value. Leave empty to use the global surcharge"
+            }
+          }
+        },
+        "title": "Cost options"
       },
       "utility_meter_options": {
         "title": "Utility meter options",
@@ -990,6 +1086,22 @@
           "power_factor": "Power factor",
           "voltage": "Voltage"
         }
+      },
+      "cost_options": {
+        "data": {
+          "energy_price": "Fixed energy price",
+          "energy_price_multiplier": "Energy price multiplier",
+          "energy_price_sensor": "Energy price sensor",
+          "energy_price_surcharge": "Energy price surcharge"
+        },
+        "data_description": {
+          "energy_price": "A fixed price per kWh in your local currency. Leave empty to use the global energy price",
+          "energy_price_multiplier": "Multiplier applied after the surcharge. Use this for percentage-based taxes or fees, for example 1.21 for 21%. Leave empty to use the global multiplier",
+          "energy_price_sensor": "A sensor which provides the current energy price per kWh (e.g. from a dynamic tariff integration). Leave the fixed price empty to use this sensor",
+          "energy_price_surcharge": "Additional fixed amount per kWh added to the fixed price or price sensor value. Leave empty to use the global surcharge"
+        },
+        "description": "Override the globally configured energy price for this sensor only. Leave all fields empty to keep using the global price. See [documentation]({docs_uri}) for more info",
+        "title": "Cost options"
       }
     }
   },
