@@ -14,7 +14,6 @@
       "daily_energy_mandatory": "Anna vähintään value tai value_template",
       "entity_mandatory": "Entiteetti on valittava kaikille muille strategioille paitsi playbook-strategialle",
       "fixed_mandatory": "Anna vähintään power, power_template tai states_power",
-      "fixed_states_power_only": "Tämä entiteetti toimii vain states_power-asetuksella, ei power-asetuksella",
       "group_mandatory": "Määritä vähintään aliryhmät tai teho- ja energiaentiteetit",
       "linear_mandatory": "Anna vähintään max_power tai calibrate",
       "linear_min_higher_as_max": "Enimmäisteho ei voi olla pienempi kuin vähimmäisteho",
@@ -581,11 +580,15 @@
       },
       "wled": {
         "data": {
+          "current_entity": "Virtayksikkö",
           "power_factor": "Tehokerroin",
           "voltage": "Jännite"
         },
         "description": "Varmista, että kirkkauden rajoitin on käytössä WLED-ohjelmistossa. Katso myös {docs_uri}",
-        "title": "WLED määritys"
+        "title": "WLED määritys",
+        "data_description": {
+          "current_entity": "Valitse halutessasi anturi, joka ilmoittaa arvioidun virran mA:ina. Tarvitaan vain, jos Powercalc ei löydä WLED:n arvioidun virran anturia automaattisesti, esimerkiksi kun kirkkauden rajoitin on määritetty lähdöittäin."
+        }
       }
     }
   },
@@ -601,6 +604,25 @@
     },
     "unknown_sub_profile": {
       "message": "\"{profile}\" ei ole tunnettu aliprofiili. Saatavilla olevat aliprofiilit: {known_profiles}."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "measure_session_status": {
+        "name": "Measure session status",
+        "state": {
+          "idle": "Idle",
+          "validating": "Validating",
+          "ready": "Ready",
+          "awaiting_confirmation": "Awaiting confirmation",
+          "running": "Running",
+          "cancelling": "Cancelling",
+          "cancelled": "Cancelled",
+          "completed": "Completed",
+          "failed": "Failed",
+          "resumable": "Resumable"
+        }
+      }
     }
   },
   "issues": {
@@ -657,7 +679,6 @@
     "error": {
       "cost_price_mandatory": "Anna joko energian hinta tai energian hinta-anturi",
       "fixed_mandatory": "Anna vähintään power-, power_template- tai states_power-arvo",
-      "fixed_states_power_only": "Tämä entiteetti voi toimia vain 'states_power', ei 'power':n kanssa",
       "group_mandatory": "Sinun on määritettävä vähintään alaryhmät tai teho- ja energiaentiteetit",
       "linear_mandatory": "Anna vähintään max_power tai calibrate",
       "linear_min_higher_as_max": "Enimmäisteho ei voi olla pienempi kuin vähimmäisteho",
@@ -1083,8 +1104,12 @@
       "wled": {
         "title": "WLED vaihtoehdot",
         "data": {
+          "current_entity": "Virtayksikkö",
           "power_factor": "Tehokerroin",
           "voltage": "Jännite"
+        },
+        "data_description": {
+          "current_entity": "Valitse halutessasi anturi, joka ilmoittaa arvioidun virran mA:ina. Tarvitaan vain, jos Powercalc ei löydä WLED:n arvioidun virran anturia automaattisesti, esimerkiksi kun kirkkauden rajoitin on määritetty lähdöittäin."
         }
       },
       "cost_options": {

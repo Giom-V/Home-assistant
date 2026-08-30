@@ -14,7 +14,6 @@
       "daily_energy_mandatory": "Você deve fornecer pelo menos um modelo de Valor ou Valor",
       "entity_mandatory": "A seleção de uma entidade é necessária para qualquer estratégia que não seja roteiro",
       "fixed_mandatory": "Você deve fornecer pelo menos uma potência, um modelo de potência ou potências por estado",
-      "fixed_states_power_only": "Esta entidade só pode trabalhar com 'states_power' e não 'power'",
       "group_mandatory": "Você deve definir pelo menos subgrupos ou entidades de potência e consumo",
       "linear_mandatory": "Você deve fornecer pelo menos um de max_power ou calibrar",
       "linear_min_higher_as_max": "A potência máxima não pode ser inferior à potência mínima",
@@ -581,11 +580,15 @@
       },
       "wled": {
         "data": {
+          "current_entity": "Entidade de corrente",
           "power_factor": "Fator de potência",
           "voltage": "Voltagem"
         },
         "description": "Certifique-se de habilitar o limitador de brilho no software WLED. Veja também {docs_uri}",
-        "title": "Configuração WLED"
+        "title": "Configuração WLED",
+        "data_description": {
+          "current_entity": "Opcionalmente, selecione um sensor que forneça a corrente estimada em mA. Necessário apenas quando o Powercalc não consegue encontrar automaticamente o sensor de corrente estimada do WLED, por exemplo, quando o limitador de brilho está configurado por saída."
+        }
       }
     }
   },
@@ -601,6 +604,25 @@
     },
     "unknown_sub_profile": {
       "message": "\"{profile}\" não é um subperfil conhecido. Subperfis disponíveis: {known_profiles}."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "measure_session_status": {
+        "name": "Measure session status",
+        "state": {
+          "idle": "Idle",
+          "validating": "Validating",
+          "ready": "Ready",
+          "awaiting_confirmation": "Awaiting confirmation",
+          "running": "Running",
+          "cancelling": "Cancelling",
+          "cancelled": "Cancelled",
+          "completed": "Completed",
+          "failed": "Failed",
+          "resumable": "Resumable"
+        }
+      }
     }
   },
   "issues": {
@@ -657,7 +679,6 @@
     "error": {
       "cost_price_mandatory": "Você deve fornecer um preço de energia ou um sensor de preço de energia",
       "fixed_mandatory": "Você deve fornecer pelo menos uma potência, um modelo de potência ou potências por estado",
-      "fixed_states_power_only": "Esta entidade só pode trabalhar com 'states_power' e não 'power'",
       "group_mandatory": "Você deve definir pelo menos subgrupos ou entidades de potência e consumo",
       "linear_mandatory": "Você deve fornecer pelo menos um de max_power ou calibrar",
       "linear_min_higher_as_max": "A potência máxima não pode ser inferior à potência mínima",
@@ -1083,8 +1104,12 @@
       "wled": {
         "title": "Opções de WLED",
         "data": {
+          "current_entity": "Entidade de corrente",
           "power_factor": "Fator de potência",
           "voltage": "Voltagem"
+        },
+        "data_description": {
+          "current_entity": "Opcionalmente, selecione um sensor que forneça a corrente estimada em mA. Necessário apenas quando o Powercalc não consegue encontrar automaticamente o sensor de corrente estimada do WLED, por exemplo, quando o limitador de brilho está configurado por saída."
         }
       },
       "cost_options": {

@@ -14,7 +14,6 @@
       "daily_energy_mandatory": "You must supply at least one of Value or Value template",
       "entity_mandatory": "Selecting an entity is required for any strategy other than playbook",
       "fixed_mandatory": "You must supply at least one of Power, Power template or States power",
-      "fixed_states_power_only": "This entity can only work with 'states_power' not 'power'",
       "group_mandatory": "You must define at least subgroups or power and energy-entities",
       "linear_mandatory": "You must supply at least one of max_power or calibrate",
       "linear_min_higher_as_max": "Max power cannot be lower than min power",
@@ -581,11 +580,15 @@
       },
       "wled": {
         "data": {
+          "current_entity": "Current entity",
           "power_factor": "Power factor",
           "voltage": "Voltage"
         },
         "description": "Make sure to enable brightness limiter in WLED software. Also see {docs_uri}",
-        "title": "WLED config"
+        "title": "WLED config",
+        "data_description": {
+          "current_entity": "Optionally select a sensor providing the estimated current in mA. Only needed when Powercalc cannot find the WLED estimated current sensor automatically, for example when the brightness limiter is configured per output."
+        }
       }
     }
   },
@@ -601,6 +604,25 @@
     },
     "unknown_sub_profile": {
       "message": "\"{profile}\" is not a known sub profile. Available sub profiles: {known_profiles}."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "measure_session_status": {
+        "name": "Measure session status",
+        "state": {
+          "idle": "Idle",
+          "validating": "Validating",
+          "ready": "Ready",
+          "awaiting_confirmation": "Awaiting confirmation",
+          "running": "Running",
+          "cancelling": "Cancelling",
+          "cancelled": "Cancelled",
+          "completed": "Completed",
+          "failed": "Failed",
+          "resumable": "Resumable"
+        }
+      }
     }
   },
   "issues": {
@@ -657,7 +679,6 @@
     "error": {
       "cost_price_mandatory": "You must supply either an energy price or an energy price sensor",
       "fixed_mandatory": "You must supply at least one of Power, Power template or States power",
-      "fixed_states_power_only": "This entity can only work with 'states_power' not 'power'",
       "group_mandatory": "You must define at least subgroups or power and energy-entities",
       "linear_mandatory": "You must supply at least one of max_power or calibrate",
       "linear_min_higher_as_max": "Max power cannot be lower than min power",
@@ -1083,8 +1104,12 @@
       "wled": {
         "title": "WLED options",
         "data": {
+          "current_entity": "Current entity",
           "power_factor": "Power factor",
           "voltage": "Voltage"
+        },
+        "data_description": {
+          "current_entity": "Optionally select a sensor providing the estimated current in mA. Only needed when Powercalc cannot find the WLED estimated current sensor automatically, for example when the brightness limiter is configured per output."
         }
       },
       "cost_options": {

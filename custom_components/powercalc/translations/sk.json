@@ -14,7 +14,6 @@
       "daily_energy_mandatory": "Musíte dodať aspoň jednu šablónu hodnoty alebo hodnoty",
       "entity_mandatory": "Výber subjektu je potrebný pre akúkoľvek inú stratégiu, než je stratégia playbook",
       "fixed_mandatory": "Musíte zadať aspoň jednu z možností: fixnú hodnotu, šablónu alebo mapovanie stavov",
-      "fixed_states_power_only": "Táto entita môže pracovať iba s 'states_power', nie 'power'",
       "group_mandatory": "Musíte definovať aspoň podskupiny alebo silové a energetické entity",
       "linear_mandatory": "Musíte dodať aspoň jeden z max_power alebo calibrate",
       "linear_min_higher_as_max": "Maximálny výkon nemôže byť nižší ako minimálny výkon",
@@ -581,11 +580,15 @@
       },
       "wled": {
         "data": {
+          "current_entity": "Entita prúdu",
           "power_factor": "Účinník",
           "voltage": "Napätie"
         },
         "description": "Uistite sa, že ste povolili obmedzovač jasu v softvéri WLED. Pozri tiež {docs_uri}",
-        "title": "WLED konfigurácia"
+        "title": "WLED konfigurácia",
+        "data_description": {
+          "current_entity": "Voliteľne vyberte snímač poskytujúci odhadovaný prúd v mA. Potrebné len vtedy, keď Powercalc nedokáže automaticky nájsť snímač odhadovaného prúdu WLED, napríklad keď je obmedzovač jasu nastavený pre jednotlivé výstupy."
+        }
       }
     }
   },
@@ -601,6 +604,25 @@
     },
     "unknown_sub_profile": {
       "message": "\"{profile}\" nie je známy podprofil. Dostupné podprofily: {known_profiles}."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "measure_session_status": {
+        "name": "Measure session status",
+        "state": {
+          "idle": "Idle",
+          "validating": "Validating",
+          "ready": "Ready",
+          "awaiting_confirmation": "Awaiting confirmation",
+          "running": "Running",
+          "cancelling": "Cancelling",
+          "cancelled": "Cancelled",
+          "completed": "Completed",
+          "failed": "Failed",
+          "resumable": "Resumable"
+        }
+      }
     }
   },
   "issues": {
@@ -657,7 +679,6 @@
     "error": {
       "cost_price_mandatory": "Musíte dodať buď cenu energie, alebo snímač ceny energie",
       "fixed_mandatory": "Musíte zadať aspoň jednu z možností: fixnú hodnotu, šablónu alebo mapovanie stavov",
-      "fixed_states_power_only": "Táto entita môže pracovať iba s 'states_power', nie 'power'",
       "group_mandatory": "Musíte definovať aspoň podskupiny alebo výkonové a energetické entity",
       "linear_mandatory": "Musíte dodať aspoň jeden z max_power alebo calibrate",
       "linear_min_higher_as_max": "Maximálny výkon nemôže byť nižší ako minimálny výkon",
@@ -1083,8 +1104,12 @@
       "wled": {
         "title": "WLED možnosti",
         "data": {
+          "current_entity": "Entita prúdu",
           "power_factor": "Účiník",
           "voltage": "Napätie"
+        },
+        "data_description": {
+          "current_entity": "Voliteľne vyberte snímač poskytujúci odhadovaný prúd v mA. Potrebné len vtedy, keď Powercalc nedokáže automaticky nájsť snímač odhadovaného prúdu WLED, napríklad keď je obmedzovač jasu nastavený pre jednotlivé výstupy."
         }
       },
       "cost_options": {

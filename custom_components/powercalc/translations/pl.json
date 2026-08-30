@@ -14,7 +14,6 @@
       "daily_energy_mandatory": "Musisz podać co najmniej jedną Wartość lub Szablon wartości",
       "entity_mandatory": "Wybranie encji jest wymagane w przypadku każdej strategii innej niż playbook",
       "fixed_mandatory": "Musisz podać co najmniej jedno z: Moc, Szablon mocy lub Moce stanów",
-      "fixed_states_power_only": "Ta encja może działać tylko ze 'states_power', a nie z 'power'",
       "group_mandatory": "Musisz zdefiniować przynajmniej podgrupy lub encje mocy i energii",
       "linear_mandatory": "Musisz dostarczyć co najmniej jedno z: Maksymalna moc lub Kalibracja",
       "linear_min_higher_as_max": "Maksymalna moc nie może być mniejsza niż Minimalna moc",
@@ -581,11 +580,15 @@
       },
       "wled": {
         "data": {
+          "current_entity": "Encja prądu",
           "power_factor": "Współczynnik mocy (cos φ)",
           "voltage": "Napięcie"
         },
         "description": "Upewnij się, że włączono ogranicznik jasności w oprogramowaniu WLED. Zobacz również {docs_uri}",
-        "title": "Konfiguracja WLED"
+        "title": "Konfiguracja WLED",
+        "data_description": {
+          "current_entity": "Opcjonalnie wybierz sensor udostępniający szacowany prąd w mA. Jest to potrzebne tylko wtedy, gdy Powercalc nie może automatycznie znaleźć sensora szacowanego prądu WLED, na przykład gdy ogranicznik jasności jest skonfigurowany dla każdego wyjścia."
+        }
       }
     }
   },
@@ -601,6 +604,25 @@
     },
     "unknown_sub_profile": {
       "message": "\"{profile}\" nie jest znanym podprofilem. Dostępne podprofile: {known_profiles}."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "measure_session_status": {
+        "name": "Measure session status",
+        "state": {
+          "idle": "Idle",
+          "validating": "Validating",
+          "ready": "Ready",
+          "awaiting_confirmation": "Awaiting confirmation",
+          "running": "Running",
+          "cancelling": "Cancelling",
+          "cancelled": "Cancelled",
+          "completed": "Completed",
+          "failed": "Failed",
+          "resumable": "Resumable"
+        }
+      }
     }
   },
   "issues": {
@@ -657,7 +679,6 @@
     "error": {
       "cost_price_mandatory": "Należy podać cenę energii lub czujnik ceny energii",
       "fixed_mandatory": "Musisz podać co najmniej jedno z: Moc, Szablon mocy lub Moce stanów",
-      "fixed_states_power_only": "Ta encja może działać tylko ze 'states_power', a nie z 'power'",
       "group_mandatory": "Musisz zdefiniować przynajmniej podgrupy lub encje mocy i energii",
       "linear_mandatory": "Musisz dostarczyć co najmniej jedno z: Maksymalna moc lub Kalibracja",
       "linear_min_higher_as_max": "Maksymalna moc nie może być mniejsza niż Minimalna moc",
@@ -1083,8 +1104,12 @@
       "wled": {
         "title": "Opcje WLED",
         "data": {
+          "current_entity": "Encja prądu",
           "power_factor": "Współczynnik mocy (cos φ)",
           "voltage": "Napięcie"
+        },
+        "data_description": {
+          "current_entity": "Opcjonalnie wybierz sensor udostępniający szacowany prąd w mA. Jest to potrzebne tylko wtedy, gdy Powercalc nie może automatycznie znaleźć sensora szacowanego prądu WLED, na przykład gdy ogranicznik jasności jest skonfigurowany dla każdego wyjścia."
         }
       },
       "cost_options": {

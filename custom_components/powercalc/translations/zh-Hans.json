@@ -14,7 +14,6 @@
       "daily_energy_mandatory": "必须至少提供“值”或“值模板”中的一项",
       "entity_mandatory": "除运行方案 (playbook) 外，所有策略都必须选择实体",
       "fixed_mandatory": "必须至少提供“功率”“功率模板”或“状态功率”中的一项",
-      "fixed_states_power_only": "此实体只能使用 'states_power'，不能使用 'power'",
       "group_mandatory": "必须定义至少一个子组，或功率和能源实体",
       "linear_mandatory": "必须至少提供 max_power 或 calibrate 其中一项",
       "linear_min_higher_as_max": "最大功率不能低于最小功率",
@@ -581,11 +580,15 @@
       },
       "wled": {
         "data": {
+          "current_entity": "电流实体",
           "power_factor": "功率因数",
           "voltage": "电压"
         },
         "description": "请确保在 WLED 软件中启用亮度限制器。另请参阅 {docs_uri}",
-        "title": "WLED 配置"
+        "title": "WLED 配置",
+        "data_description": {
+          "current_entity": "可选取一个提供估算电流（mA）的传感器。仅当 Powercalc 无法自动找到 WLED 估算电流传感器时才需要，例如亮度限制器按输出进行配置时。"
+        }
       }
     }
   },
@@ -601,6 +604,25 @@
     },
     "unknown_sub_profile": {
       "message": "“{profile}”不是已知的子配置文件。可用的子配置文件：{known_profiles}。"
+    }
+  },
+  "entity": {
+    "sensor": {
+      "measure_session_status": {
+        "name": "Measure session status",
+        "state": {
+          "idle": "Idle",
+          "validating": "Validating",
+          "ready": "Ready",
+          "awaiting_confirmation": "Awaiting confirmation",
+          "running": "Running",
+          "cancelling": "Cancelling",
+          "cancelled": "Cancelled",
+          "completed": "Completed",
+          "failed": "Failed",
+          "resumable": "Resumable"
+        }
+      }
     }
   },
   "issues": {
@@ -657,7 +679,6 @@
     "error": {
       "cost_price_mandatory": "必须提供能源价格或能源价格传感器",
       "fixed_mandatory": "必须至少提供功率、功率模板或状态功率中的一项",
-      "fixed_states_power_only": "此实体只能使用 'states_power'，不能使用 'power'",
       "group_mandatory": "必须至少定义一个子组，或定义功率和能源实体",
       "linear_mandatory": "必须至少提供 max_power 或 calibrate 中的一项",
       "linear_min_higher_as_max": "最大功率不能低于最小功率",
@@ -1083,8 +1104,12 @@
       "wled": {
         "title": "WLED 选项",
         "data": {
+          "current_entity": "电流实体",
           "power_factor": "功率因数",
           "voltage": "电压"
+        },
+        "data_description": {
+          "current_entity": "可选取一个提供估算电流（mA）的传感器。仅当 Powercalc 无法自动找到 WLED 估算电流传感器时才需要，例如亮度限制器按输出进行配置时。"
         }
       },
       "cost_options": {

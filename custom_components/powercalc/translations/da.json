@@ -14,7 +14,6 @@
       "daily_energy_mandatory": "Du skal angive mindst én af Værdi eller Værdiskabelon",
       "entity_mandatory": "Der skal vælges en entitet for alle andre strategier end playbook",
       "fixed_mandatory": "Du skal angive mindst én af Effekt, Effektskabelon eller Effekt efter tilstand",
-      "fixed_states_power_only": "Denne entitet kan kun bruges med 'states_power', ikke 'power'",
       "group_mandatory": "Du skal som minimum definere undergrupper eller effekt- og energientiteter",
       "linear_mandatory": "Du skal angive mindst én af max_power eller calibrate",
       "linear_min_higher_as_max": "Maksimal effekt kan ikke være lavere end minimal effekt",
@@ -581,11 +580,15 @@
       },
       "wled": {
         "data": {
+          "current_entity": "Strømenhed",
           "power_factor": "Effektfaktor",
           "voltage": "Spænding"
         },
         "description": "Sørg for at aktivere lysstyrkebegrænser i WLED-software. Se også {docs_uri}",
-        "title": "WLED-konfiguration"
+        "title": "WLED-konfiguration",
+        "data_description": {
+          "current_entity": "Vælg eventuelt en sensor, der leverer den estimerede strøm i mA. Kun nødvendigt når Powercalc ikke automatisk kan finde WLED-sensoren for estimeret strøm, f.eks. når lysstyrkebegrænseren er konfigureret pr. output."
+        }
       }
     }
   },
@@ -601,6 +604,25 @@
     },
     "unknown_sub_profile": {
       "message": "\"{profile}\" er ikke en kendt underprofil. Tilgængelige underprofiler: {known_profiles}."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "measure_session_status": {
+        "name": "Measure session status",
+        "state": {
+          "idle": "Idle",
+          "validating": "Validating",
+          "ready": "Ready",
+          "awaiting_confirmation": "Awaiting confirmation",
+          "running": "Running",
+          "cancelling": "Cancelling",
+          "cancelled": "Cancelled",
+          "completed": "Completed",
+          "failed": "Failed",
+          "resumable": "Resumable"
+        }
+      }
     }
   },
   "issues": {
@@ -657,7 +679,6 @@
     "error": {
       "cost_price_mandatory": "Du skal angive enten en energipris eller en energiprissensor",
       "fixed_mandatory": "Du skal angive mindst én af Effekt, Effektskabelon eller Effekt efter tilstand",
-      "fixed_states_power_only": "Denne entitet kan kun bruges med 'states_power', ikke 'power'",
       "group_mandatory": "Du skal som minimum definere undergrupper eller effekt- og energientiteter",
       "linear_mandatory": "Du skal angive mindst én af max_power eller calibrate",
       "linear_min_higher_as_max": "Maksimal effekt kan ikke være lavere end minimal effekt",
@@ -1083,8 +1104,12 @@
       "wled": {
         "title": "WLED-indstillinger",
         "data": {
+          "current_entity": "Strømenhed",
           "power_factor": "Effektfaktor",
           "voltage": "Spænding"
+        },
+        "data_description": {
+          "current_entity": "Vælg eventuelt en sensor, der leverer den estimerede strøm i mA. Kun nødvendigt når Powercalc ikke automatisk kan finde WLED-sensoren for estimeret strøm, f.eks. når lysstyrkebegrænseren er konfigureret pr. output."
         }
       },
       "cost_options": {

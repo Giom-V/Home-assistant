@@ -45,7 +45,7 @@ from homeassistant.core import (
 from homeassistant.exceptions import ConfigEntryNotReady, ServiceValidationError
 from homeassistant.helpers import device_registry as dr, entity_registry as er, llm
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
-from homeassistant.helpers.entity import Entity
+from homeassistant.helpers.entity import DeviceInfo, Entity
 from homeassistant.helpers.typing import ConfigType
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 from homeassistant.loader import async_get_integration
@@ -63,6 +63,7 @@ from .const import (
     ATTR_WS_REVIEW_PROXY,
     CONF_CAMERA_STATIC_IMAGE_HEIGHT,
     CONF_RTMP_URL_TEMPLATE,
+    CONF_VALIDATE_SSL,
     DOMAIN,
     FRIGATE_RELEASES_URL,
     FRIGATE_VERSION_ERROR_CUTOFF,
@@ -104,6 +105,19 @@ def get_frigate_device_identifier(
     if camera_name:
         return (DOMAIN, f"{entry.entry_id}:{slugify(camera_name)}")
     return (DOMAIN, entry.entry_id)
+
+
+def get_frigate_via_device(hass: HomeAssistant, entry: ConfigEntry) -> DeviceInfo:
+    """Get the parent Frigate device link for this Home Assistant version."""
+    identifier = get_frigate_device_identifier(entry)
+    if "via_device_id" in DeviceInfo.__annotations__:
+        device = dr.async_get(hass).async_get_device({identifier})
+        if not device:
+            return {}
+        device_info: DeviceInfo = {}
+        device_info["via_device_id"] = device.id  # type: ignore[typeddict-unknown-key]
+        return device_info
+    return {"via_device": identifier}
 
 
 def get_frigate_entity_unique_id(
@@ -264,9 +278,9 @@ def get_zones(config: dict[str, Any]) -> set[str]:
     return cameras_zones
 
 
-def decode_if_necessary(data: str | bytes) -> str:
+def decode_if_necessary(data: str | bytes | bytearray) -> str:
     """Decode a string if necessary."""
-    return data.decode("utf-8") if isinstance(data, bytes) else data
+    return data.decode("utf-8") if isinstance(data, (bytes, bytearray)) else data
 
 
 async def async_setup(hass: HomeAssistant, config: ConfigType) -> bool:
@@ -292,7 +306,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         async_get_clientsession(hass),
         entry.data.get(CONF_USERNAME),
         entry.data.get(CONF_PASSWORD),
-        bool(entry.data.get("validate_ssl")),
+        entry.data.get(CONF_VALIDATE_SSL, True),
     )
     coordinator = FrigateDataUpdateCoordinator(hass, client=client)
     await coordinator.async_config_entry_first_refresh()
@@ -416,7 +430,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
             and valid_entity_id(new_id)
             and not entity_registry.async_get(new_id)
         ):
-            new_name = f"{get_friendly_name(cam_name)} {obj_name} Count".title()
+            new_name = titlecase(f"{get_friendly_name(cam_name)} {obj_name} Count")
             entity_registry.async_update_entity(
                 entity_id=entity_id,
                 new_entity_id=new_id,

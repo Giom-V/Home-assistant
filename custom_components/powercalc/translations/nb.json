@@ -14,7 +14,6 @@
       "daily_energy_mandatory": "Du må oppgi minst én av value eller value_template",
       "entity_mandatory": "Du må velge en entitet for alle strategier unntatt playbook",
       "fixed_mandatory": "Du må oppgi minst én av power, power_template eller states_power",
-      "fixed_states_power_only": "Denne entiteten kan bare bruke «states_power», ikke «power»",
       "group_mandatory": "Du må definere minst undergrupper eller effekt- og energientiteter",
       "linear_mandatory": "Du må oppgi minst én av max_power eller calibrate",
       "linear_min_higher_as_max": "Maksimal effekt kan ikke være lavere enn minimal effekt",
@@ -581,11 +580,15 @@
       },
       "wled": {
         "data": {
+          "current_entity": "Strømenhet",
           "power_factor": "Effektfaktor",
           "voltage": "Spenning"
         },
         "description": "Sørg for å aktivere lysstyrkebegrenser i WLED-programvaren. Se også {docs_uri}",
-        "title": "WLED-konfigurasjon"
+        "title": "WLED-konfigurasjon",
+        "data_description": {
+          "current_entity": "Velg eventuelt en sensor som oppgir beregnet strøm i mA. Bare nødvendig når Powercalc ikke finner WLED-sensoren for beregnet strøm automatisk, for eksempel når lysstyrkebegrenseren er konfigurert per utgang."
+        }
       }
     }
   },
@@ -601,6 +604,25 @@
     },
     "unknown_sub_profile": {
       "message": "\"{profile}\" er ikke en kjent underprofil. Tilgjengelige underprofiler: {known_profiles}."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "measure_session_status": {
+        "name": "Measure session status",
+        "state": {
+          "idle": "Idle",
+          "validating": "Validating",
+          "ready": "Ready",
+          "awaiting_confirmation": "Awaiting confirmation",
+          "running": "Running",
+          "cancelling": "Cancelling",
+          "cancelled": "Cancelled",
+          "completed": "Completed",
+          "failed": "Failed",
+          "resumable": "Resumable"
+        }
+      }
     }
   },
   "issues": {
@@ -657,7 +679,6 @@
     "error": {
       "cost_price_mandatory": "Du må oppgi enten en energipris eller en energiprissensor",
       "fixed_mandatory": "Du må oppgi minst én av power, power_template eller states_power",
-      "fixed_states_power_only": "Denne entiteten kan bare bruke 'states_power', ikke 'power'",
       "group_mandatory": "Du må definere minst undergrupper eller effekt- og energientiteter",
       "linear_mandatory": "Du må oppgi minst én av max_power eller calibrate",
       "linear_min_higher_as_max": "Maks effekt kan ikke være lavere enn min effekt",
@@ -1083,8 +1104,12 @@
       "wled": {
         "title": "WLED-innstillinger",
         "data": {
+          "current_entity": "Strømenhet",
           "power_factor": "Effektfaktor",
           "voltage": "Spenning"
+        },
+        "data_description": {
+          "current_entity": "Velg eventuelt en sensor som oppgir beregnet strøm i mA. Bare nødvendig når Powercalc ikke finner WLED-sensoren for beregnet strøm automatisk, for eksempel når lysstyrkebegrenseren er konfigurert per utgang."
         }
       },
       "cost_options": {

@@ -90,6 +90,7 @@ from .const import (
     DATA_DOMAIN_ENTITIES,
     DATA_ENTITIES,
     DATA_GROUP_ENTITIES,
+    DATA_MEASURE_APP_COORDINATOR,
     DATA_STANDBY_POWER_SENSORS,
     DATA_USED_UNIQUE_IDS,
     DISCOVERY_TYPE,
@@ -109,6 +110,7 @@ from .const import (
 )
 from .device_binding import is_composite_device_id
 from .discovery import DiscoveryManager, DiscoveryStatus, get_discovery_manager
+from .measure import MeasureAppCoordinator
 from .migrate import async_fix_legacy_profile_config_entry, async_migrate_config_entry
 from .power_profile.power_profile import DeviceType
 from .sensors.group.config_entry_utils import (
@@ -213,8 +215,10 @@ async def async_setup(hass: HomeAssistant, config: ConfigType) -> bool:
     global_config = get_global_configuration(hass, config)
 
     discovery_manager = create_discovery_manager_instance(hass, config, global_config)
+    measure_app_coordinator = MeasureAppCoordinator(hass, config)
     hass.data[DOMAIN] = {
         DATA_DISCOVERY_MANAGER: discovery_manager,
+        DATA_MEASURE_APP_COORDINATOR: measure_app_coordinator,
         DOMAIN_CONFIG: global_config,
         DATA_CONFIGURED_ENTITIES: {},
         DATA_DOMAIN_ENTITIES: {},
@@ -225,7 +229,8 @@ async def async_setup(hass: HomeAssistant, config: ConfigType) -> bool:
         DATA_ANALYTICS: {},
     }
 
-    await discovery_manager.setup()
+    discovery_manager.setup()
+    measure_app_coordinator.async_setup()
 
     register_services(hass)
 
@@ -463,7 +468,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         if discovery_enabled and discovery_manager.status == DiscoveryStatus.DISABLED:
             _LOGGER.debug("Enabling discovery manager based on global configuration")
             discovery_manager.enable()
-            await discovery_manager.setup()
+            discovery_manager.setup()
         if not discovery_enabled and discovery_manager.status != DiscoveryStatus.DISABLED:
             _LOGGER.debug("Disabling discovery manager based on global configuration")
             await discovery_manager.disable()

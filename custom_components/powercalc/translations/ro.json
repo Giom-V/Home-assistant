@@ -14,7 +14,6 @@
       "daily_energy_mandatory": "Trebuie să furnizați cel puțin o Valoare sau șablonul Valoare",
       "entity_mandatory": "Selectarea unei entități este necesară pentru orice altă strategie decât playbook",
       "fixed_mandatory": "Trebuie să furnizați cel puțin o putere, șablon putere sau State power",
-      "fixed_states_power_only": "Această entitate poate funcționa numai cu 'states_power' nu cu 'power'",
       "group_mandatory": "Trebuie să definiți cel puțin subgrupuri sau entități de putere și energie",
       "linear_mandatory": "Trebuie să furnizați cel puțin unul dintre max_power sau să calibrați",
       "linear_min_higher_as_max": "Puterea maximă nu poate fi mai mică decât puterea minimă",
@@ -581,11 +580,15 @@
       },
       "wled": {
         "data": {
+          "current_entity": "Entitate de curent",
           "power_factor": "Factor de putere",
           "voltage": "Voltaj"
         },
         "description": "Asigurați-vă că activați limitatorul de luminozitate în software-ul WLED. Vedeți și {docs_uri}",
-        "title": "Configurare WLED"
+        "title": "Configurare WLED",
+        "data_description": {
+          "current_entity": "Selectați opțional un senzor care furnizează curentul estimat în mA. Necesar doar atunci când Powercalc nu poate găsi automat senzorul WLED pentru curentul estimat, de exemplu atunci când limitatorul de luminozitate este configurat pentru fiecare ieșire."
+        }
       }
     }
   },
@@ -601,6 +604,25 @@
     },
     "unknown_sub_profile": {
       "message": "\"{profile}\" nu este un subprofil cunoscut. Subprofiluri disponibile: {known_profiles}."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "measure_session_status": {
+        "name": "Measure session status",
+        "state": {
+          "idle": "Idle",
+          "validating": "Validating",
+          "ready": "Ready",
+          "awaiting_confirmation": "Awaiting confirmation",
+          "running": "Running",
+          "cancelling": "Cancelling",
+          "cancelled": "Cancelled",
+          "completed": "Completed",
+          "failed": "Failed",
+          "resumable": "Resumable"
+        }
+      }
     }
   },
   "issues": {
@@ -657,7 +679,6 @@
     "error": {
       "cost_price_mandatory": "Trebuie să furnizați fie un preț al energiei, fie un senzor al prețului energiei",
       "fixed_mandatory": "Trebuie să furnizați cel puțin o putere, șablon putere sau State power",
-      "fixed_states_power_only": "Această entitate poate funcționa numai cu 'states_power' nu cu 'power'",
       "group_mandatory": "Trebuie să definiți cel puțin subgrupuri sau entități de putere și energie",
       "linear_mandatory": "Trebuie să furnizați cel puțin unul dintre max_power sau să calibrați",
       "linear_min_higher_as_max": "Puterea maximă nu poate fi mai mică decât puterea minimă",
@@ -1083,8 +1104,12 @@
       "wled": {
         "title": "Opțiuni WLED",
         "data": {
+          "current_entity": "Entitate de curent",
           "power_factor": "Factorul de putere",
           "voltage": "Voltaj"
+        },
+        "data_description": {
+          "current_entity": "Selectați opțional un senzor care furnizează curentul estimat în mA. Necesar doar atunci când Powercalc nu poate găsi automat senzorul WLED pentru curentul estimat, de exemplu atunci când limitatorul de luminozitate este configurat pentru fiecare ieșire."
         }
       },
       "cost_options": {
