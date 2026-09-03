@@ -615,21 +615,47 @@
       option: Solaire+PAC
   mode: single
 - id: '1782074535927'
-  alias: 'Water the vegetable garden '
-  description: ''
+  alias: 'Arrosage sécurisé du potager'
+  description: 'Sécurité fuite arrosage avec Master Vanne'
+  mode: single
   triggers:
-  - trigger: time
-    at: '19:00:00'
+    - trigger: time
+      at: input_datetime.arrosage_heure_debut
   conditions: []
   actions:
-  - action: switch.turn_on
-    metadata: {}
-    target:
-      entity_id:
-      - switch.arrosage
-      - switch.arrosage_potager
-    data: {}
-  mode: single
+    - action: switch.turn_off
+      target:
+        entity_id: 
+          - switch.arrosage_potager
+          - switch.remplissage_bassin
+    - action: switch.turn_on
+      target:
+        entity_id: switch.arrosage
+    - delay: "00:01:00"
+    - if:
+        - condition: numeric_state
+          entity_id: sensor.arrosage_flow
+          above: 0.05
+      then:
+        - action: switch.turn_off
+          target:
+            entity_id: switch.arrosage
+        - action: notify.notify
+          data:
+            title: "⚠️ Alerte fuite arrosage"
+            message: "Un débit anormal a été détecté à l'ouverture de la vanne générale. L'arrosage a été coupé."
+      else:
+        - action: switch.turn_on
+          target:
+            entity_id: switch.arrosage_potager
+        - wait_for_trigger:
+            - trigger: time
+              at: input_datetime.arrosage_heure_fin
+        - action: switch.turn_off
+          target:
+            entity_id:
+              - switch.arrosage
+              - switch.arrosage_potager
 - id: '1782074588419'
   alias: Add some water to the pond then stop watering the vegetable garden
   description: ''
