@@ -640,7 +640,7 @@
         - action: switch.turn_off
           target:
             entity_id: switch.arrosage
-        - action: notify.notify
+        - action: notify.mobile_app_pixel_9_pro_xl
           data:
             title: "⚠️ Alerte fuite arrosage"
             message: "Un débit anormal a été détecté à l'ouverture de la vanne générale. L'arrosage a été coupé."
