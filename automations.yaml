@@ -615,7 +615,7 @@
       option: Solaire+PAC
   mode: single
 - id: '1782074535927'
-  alias: 'Arrosage sécurisé du potager'
+  alias: 'Arrosage si pas de pluie'
   description: 'Sécurité fuite arrosage avec Master Vanne'
   mode: single
   triggers:
@@ -660,8 +660,8 @@
   alias: Add some water to the pond then stop watering the vegetable garden
   description: ''
   triggers:
-  - trigger: time
-    at: '23:55:00'
+  - trigger: template
+    value_template: "{{ now().strftime('%H:%M') == (today_at(states('input_datetime.arrosage_heure_fin')) - timedelta(minutes=5)).strftime('%H:%M') }}"
   conditions: []
   actions:
   - action: switch.turn_on
