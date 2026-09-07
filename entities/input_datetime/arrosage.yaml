@@ -1,0 +1,13 @@
+arrosage_heure_debut:
+  name: Heure de début d'arrosage potager
+  has_date: false
+  has_time: true
+  initial: "19:00:00"
+  icon: mdi:water-clock
+
+arrosage_heure_fin:
+  name: Heure de fin d'arrosage potager
+  has_date: false
+  has_time: true
+  initial: "21:00:00"
+  icon: mdi:water-clock-off

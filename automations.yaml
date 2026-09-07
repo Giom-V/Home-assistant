@@ -615,27 +615,53 @@
       option: Solaire+PAC
   mode: single
 - id: '1782074535927'
-  alias: 'Water the vegetable garden '
-  description: ''
+  alias: 'Arrosage si pas de pluie'
+  description: 'Sécurité fuite arrosage avec Master Vanne'
+  mode: single
   triggers:
-  - trigger: time
-    at: '19:00:00'
+    - trigger: time
+      at: input_datetime.arrosage_heure_debut
   conditions: []
   actions:
-  - action: switch.turn_on
-    metadata: {}
-    target:
-      entity_id:
-      - switch.arrosage
-      - switch.arrosage_potager
-    data: {}
-  mode: single
+    - action: switch.turn_off
+      target:
+        entity_id: 
+          - switch.arrosage_potager
+          - switch.remplissage_bassin
+    - action: switch.turn_on
+      target:
+        entity_id: switch.arrosage
+    - delay: "00:01:00"
+    - if:
+        - condition: numeric_state
+          entity_id: sensor.arrosage_flow
+          above: 0.05
+      then:
+        - action: switch.turn_off
+          target:
+            entity_id: switch.arrosage
+        - action: notify.mobile_app_pixel_9_pro_xl
+          data:
+            title: "⚠️ Alerte fuite arrosage"
+            message: "Un débit anormal a été détecté à l'ouverture de la vanne générale. L'arrosage a été coupé."
+      else:
+        - action: switch.turn_on
+          target:
+            entity_id: switch.arrosage_potager
+        - wait_for_trigger:
+            - trigger: time
+              at: input_datetime.arrosage_heure_fin
+        - action: switch.turn_off
+          target:
+            entity_id:
+              - switch.arrosage
+              - switch.arrosage_potager
 - id: '1782074588419'
   alias: Add some water to the pond then stop watering the vegetable garden
   description: ''
   triggers:
-  - trigger: time
-    at: '23:55:00'
+  - trigger: template
+    value_template: "{{ now().strftime('%H:%M') == (today_at(states('input_datetime.arrosage_heure_fin')) - timedelta(minutes=states('input_number.arrosage_bassin_duree') | int(5))).strftime('%H:%M') }}"
   conditions: []
   actions:
   - action: switch.turn_on
