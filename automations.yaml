@@ -548,7 +548,7 @@
   mode: single
 - id: '1767646575900'
   alias: 'Tempo Rouge: Everything only sun during red days'
-  description: ''
+  description: 'Coupe la PAC pendant les heures pleines des jours rouges Tempo'
   triggers:
   - trigger: state
     entity_id:
@@ -565,6 +565,10 @@
     entity_id: sensor.rte_tempo_couleur_actuelle
     state:
     - Rouge
+  - condition: state
+    entity_id: binary_sensor.heure_creuse
+    state:
+    - 'off'
   actions:
   - action: select.select_option
     metadata: {}
@@ -578,18 +582,20 @@
   mode: single
 - id: '1767646748330'
   alias: 'Tempo Rouge: Reactivate heat pump during off-peak hours'
-  description: ''
+  description: 'Réactive la PAC en heures creuses lors des jours rouges Tempo ou à la sortie d''un jour rouge'
   triggers:
   - trigger: state
     entity_id:
     - sensor.rte_tempo_couleur_actuelle
     from:
     - Rouge
+    id: exit_red
   - trigger: state
     entity_id:
     - binary_sensor.heure_creuse
     to:
     - 'on'
+    id: hc_start
   conditions:
   - condition: not
     conditions:
@@ -603,6 +609,18 @@
       entity_id: input_boolean.away_mode
       state:
       - 'on'
+  - condition: or
+    conditions:
+    - condition: trigger
+      id: exit_red
+    - condition: and
+      conditions:
+      - condition: trigger
+        id: hc_start
+      - condition: state
+        entity_id: sensor.rte_tempo_couleur_actuelle
+        state:
+        - Rouge
   actions:
   - action: select.select_option
     metadata: {}
