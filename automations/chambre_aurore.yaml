@@ -237,29 +237,60 @@
         entity_id: cover.velux_external_cover_roller_shutter
   mode: single
 - id: "1769000000001"
-  alias: "Aurore - Meditation aléatoire du soir"
-  description: "Joue une meditation aléatoire choisie par Aurore sur son enceinte à 22h00"
+  alias: Aurore - Meditation aléatoire du soir
+  description: Joue une meditation aléatoire choisie par Aurore sur son enceinte à 22h00
   mode: single
-  trigger:
+  triggers:
     - device_id: e059cad12f0a2c750a56719a911dc8e6
       domain: zha
-      platform: device
       type: remote_button_short_press
       subtype: right
-  action:
-    - action: media_player.volume_set
-      target:
-        entity_id: media_player.enceinte_aurore_2
-      data:
-        volume_level: 0.2
+      trigger: device
+  actions:
+    - choose:
+        - conditions:
+            - condition: time
+              before: '08:00:00'
+              after: '00:00:00'
+          sequence:
+            - action: media_player.volume_set
+              target:
+                entity_id: media_player.enceinte_aurore_2
+              data:
+                volume_level: 0.1
+        - conditions:
+            - condition: time
+              after: '23:00:00'
+              before: '23:59:59'
+          sequence:
+            - action: media_player.volume_set
+              target:
+                entity_id: media_player.enceinte_aurore_2
+              data:
+                volume_level: 0.15
+        - conditions:
+            - condition: time
+              before: '23:00:00'
+              after: '21:30:00'
+          sequence:
+            - action: media_player.volume_set
+              target:
+                entity_id: media_player.enceinte_aurore_2
+              data:
+                volume_level: 0.2
+      default:
+        - action: media_player.volume_set
+          target:
+            entity_id: media_player.enceinte_aurore_2
+          data:
+            volume_level: 0.25
     - action: music_assistant.play_media
       target:
         entity_id: media_player.enceinte_aurore_2
       data:
         media_type: track
         enqueue: replace
-        radio_mode: false
-        media_id: >
+        media_id: |
           {{ [
             "Imagine que tu es un super héro - Quand on a besoin de courage",
             "Imagine que tu es un super héro - Quand on a besoin de courage",
@@ -292,6 +323,7 @@
             "Imagine que tu passes près d'un trou noir - Quand on a besoin de force",
             "Imagine que tu te transforme en Pluton - Quand on a besoin de se retrouver"
           ] | random }}
+        radio_mode: false
 - id: "1769000000002"
   alias: "Stop Aurore music"
   description: "Arrête la musique d'Aurore"
