@@ -10,6 +10,9 @@ from homeassistant.config_entries import (
 from .const import (
     DOMAIN,
     DEFAULT_NAME,
+    DEFAULT_SCAN_INTERVAL,
+    MIN_SCAN_INTERVAL,
+    scan_interval_form_default,
     CONF_MIN_ALTITUDE,
     CONF_MAX_ALTITUDE,
     CONF_ENABLE_TRACKER,
@@ -75,7 +78,9 @@ class FlightRadarConfigFlow(ConfigFlow, domain=DOMAIN):
                     vol.Required(CONF_RADIUS, default=1000): vol.Coerce(float),
                     vol.Required(CONF_LATITUDE): cv.latitude,
                     vol.Required(CONF_LONGITUDE): cv.longitude,
-                    vol.Required(CONF_SCAN_INTERVAL, default=20): int,
+                    vol.Required(CONF_SCAN_INTERVAL, default=DEFAULT_SCAN_INTERVAL): vol.All(
+                        int, vol.Range(min=MIN_SCAN_INTERVAL)
+                    ),
                 }
             ),
             {
@@ -128,7 +133,10 @@ class FlightRadarOptionsFlow(OptionsFlowWithConfigEntry):
             vol.Required(CONF_RADIUS, default=data.get(CONF_RADIUS)): vol.Coerce(float),
             vol.Required(CONF_LATITUDE, default=data.get(CONF_LATITUDE)): cv.latitude,
             vol.Required(CONF_LONGITUDE, default=data.get(CONF_LONGITUDE)): cv.longitude,
-            vol.Required(CONF_SCAN_INTERVAL, default=data.get(CONF_SCAN_INTERVAL)): int,
+            vol.Required(
+                CONF_SCAN_INTERVAL,
+                default=scan_interval_form_default(data.get(CONF_SCAN_INTERVAL)),
+            ): vol.All(int, vol.Range(min=MIN_SCAN_INTERVAL)),
             vol.Optional(CONF_MIN_ALTITUDE,
                          description={"suggested_value": data.get(CONF_MIN_ALTITUDE, MIN_ALTITUDE)}): int,
             vol.Optional(CONF_MAX_ALTITUDE,

@@ -11,10 +11,12 @@
                     "battery_type": "Tipo de bateria",
                     "battery_quantity": "Quantidade de baterias",
                     "note": "Note",
-                    "battery_low_threshold": "Nivel de bateria baixa"
+                    "battery_low_threshold": "Nivel de bateria baixa",
+                    "battery_increase_threshold": "Battery increase threshold"
                 },
                 "data_description": {
-                    "battery_low_threshold": "0 irá ser usado como valor por defeito para definir o descarregada"
+                    "battery_low_threshold": "0 irá ser usado como valor por defeito para definir o descarregada.",
+                    "battery_increase_threshold": "The threshold is the difference in increase between previous and current battery level\n0 will use the global default threshold."
                 },
                 "sections": {
                     "advanced_settings": {
@@ -22,12 +24,14 @@
                         "data": {
                             "battery_percentage_template": "Battery percentage template",
                             "battery_low_template": "Template de bateria baixa",
+                            "retain_state": "Retain state",
                             "filter_outliers": "Filter outliers"
                         },
                         "data_description": {
-                            "battery_percentage_template": "Template to create a battery percentage\nOnly needed for devices that do not have a standard battery percentage",
-                            "battery_low_template": "Template para determinar que a bateria está baixa, deve devolver true se estiver baixa\nÉ somente necessário para níveis de bateria non-standard",
-                            "filter_outliers": "Filter out large battery level drops, reducing falsely firing events on devices that erroneously report levels occasionally"
+                            "battery_percentage_template": "Template to create a battery percentage.\nOnly needed for devices that do not have a standard battery percentage.",
+                            "battery_low_template": "Template para determinar que a bateria está baixa, deve devolver true se estiver baixa.\nÉ somente necessário para níveis de bateria non-standard.",
+                            "retain_state": "Retain the last battery state when the source entity is unavailable.\nUseful for devices that sleep and become unavailable.",
+                            "filter_outliers": "Filter out large battery level drops, reducing falsely firing events on devices that erroneously report levels occasionally."
                         }
                     }
                 }
@@ -75,7 +79,7 @@
                         "name": "Nome"
                     },
                     "data_description": {
-                        "name": "Deixar em branco fará com que tenha mesmo nome que a entidade de origem"
+                        "name": "Deixar em branco fará com que tenha mesmo nome que a entidade de origem."
                     }
                 },
                 "battery": {
@@ -84,10 +88,12 @@
                         "battery_type": "Tipo de bateria",
                         "battery_quantity": "Quantidades de baterias",
                         "note": "Note",
-                        "battery_low_threshold": "Nivel de bateria baixa"
+                        "battery_low_threshold": "Nivel de bateria baixa",
+                        "battery_increase_threshold": "Battery increase threshold"
                     },
                     "data_description": {
-                        "battery_low_threshold": "0 irá ser usado como valor por defeito para definir o descarregada"
+                        "battery_low_threshold": "0 irá ser usado como valor por defeito para definir o descarregada",
+                        "battery_increase_threshold": "The threshold is the difference in increase between previous and current battery level\n0 will use the global default threshold"
                     },
                     "sections": {
                         "advanced_settings": {
@@ -95,12 +101,14 @@
                             "data": {
                                 "battery_percentage_template": "Battery percentage template",
                                 "battery_low_template": "Template de bateria baixa",
+                                "retain_state": "Retain state",
                                 "filter_outliers": "Filter outliers"
                             },
                             "data_description": {
-                                "battery_percentage_template": "Template to create a battery percentage\nOnly needed for devices that do not have a standard battery percentage",
-                                "battery_low_template": "Template para determinar que a bateria está baixa, deve devolver true se estiver baixa\nÉ somente necessário para níveis de bateria non-standard",
-                                "filter_outliers": "Filter out large battery level drops, reducing falsely firing events on devices that erroneously report levels occasionally"
+                                "battery_percentage_template": "Template to create a battery percentage.\nOnly needed for devices that do not have a standard battery percentage.",
+                                "battery_low_template": "Template para determinar que a bateria está baixa, deve devolver true se estiver baixa.\nÉ somente necessário para níveis de bateria non-standard.",
+                                "retain_state": "Retain the last battery state when the source entity is unavailable.\nUseful for devices that sleep and become unavailable.",
+                                "filter_outliers": "Filter out large battery level drops, reducing falsely firing events on devices that erroneously report levels occasionally."
                             }
                         }
                     }
@@ -116,11 +124,13 @@
                         "battery_type": "Tipo de bateria",
                         "battery_quantity": "Quantidades de baterias",
                         "note": "Note",
-                        "battery_low_threshold": "Nivel de bateria baixa"
+                        "battery_low_threshold": "Nivel de bateria baixa",
+                        "battery_increase_threshold": "Battery increase threshold"
                     },
                     "data_description": {
-                        "name": "Deixar em branco fará com que tenha mesmo o nome que o dispositivo de origem",
-                        "battery_low_threshold": "0 irá ser usado como valor por defeito para definir o descarregada"
+                        "name": "Deixar em branco fará com que tenha mesmo o nome que o dispositivo de origem.",
+                        "battery_low_threshold": "0 irá ser usado como valor por defeito para definir o descarregada.",
+                        "battery_increase_threshold": "The threshold is the difference in increase between previous and current battery level.\n0 will use the global default threshold."
                     },
                     "sections": {
                         "advanced_settings": {
@@ -128,12 +138,14 @@
                             "data": {
                                 "battery_percentage_template": "Battery percentage template",
                                 "battery_low_template": "Template de bateria baixa",
+                                "retain_state": "Retain state",
                                 "filter_outliers": "Filter outliers"
                             },
                             "data_description": {
-                                "battery_percentage_template": "Template to create a battery percentage\nOnly needed for devices that do not have a standard battery percentage",
-                                "battery_low_template": "Template para determinar que a bateria está baixa, deve devolver true se estiver baixa\nÉ somente necessário para níveis de bateria non-standard",
-                                "filter_outliers": "Filter out large battery level drops, reducing falsely firing events on devices that erroneously report levels occasionally"
+                                "battery_percentage_template": "Template to create a battery percentage.\nOnly needed for devices that do not have a standard battery percentage.",
+                                "battery_low_template": "Template para determinar que a bateria está baixa, deve devolver true se estiver baixa.\nÉ somente necessário para níveis de bateria non-standard.",
+                                "retain_state": "Retain the last battery state when the source entity is unavailable.\nUseful for devices that sleep and become unavailable.",
+                                "filter_outliers": "Filter out large battery level drops, reducing falsely firing events on devices that erroneously report levels occasionally."
                             }
                         }
                     }
@@ -165,7 +177,7 @@
                     "hide_battery": "Hide the standard battery when adding Battery+.",
                     "round_battery": "Round Battery+ to whole percentages.",
                     "default_battery_low_threshold": "The default threshold where a devices battery_low entity is set to true and the battery_notes_battery_threshold event is fired if the battery is below this threshold, can be overriden per device in device configuration.",
-                    "battery_increase_threshold": "The threshold where the battery_notes_battery_increased event is fired, use this event for battery replaced automations. The threshold is the difference in increase between previous and current battery level."
+                    "battery_increase_threshold": "The default threshold where the battery_notes_battery_increased event is fired, use this event for battery replaced automations. The threshold is the difference in increase between previous and current battery level, can be overriden per device in device configuration."
                 },
                 "sections": {
                     "advanced_settings": {
@@ -195,6 +207,9 @@
             "battery_low": {
                 "name": "{device_name}Bateria baixa",
                 "state_attributes": {
+                    "battery_increase_threshold": {
+                        "name": "Battery increase threshold"
+                    },
                     "battery_low_threshold": {
                         "name": "Nivel de bateria baixa"
                     }
@@ -224,6 +239,9 @@
                     },
                     "battery_last_replaced": {
                         "name": "Bateria substituida a"
+                    },
+                    "battery_increase_threshold": {
+                        "name": "Battery increase threshold"
                     },
                     "battery_low": {
                         "name": "Bateria baixa"

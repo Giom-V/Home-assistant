@@ -55,6 +55,7 @@ from homeassistant.util import dt as dt_util
 
 from .common import validate_is_float
 from .const import (
+    ATTR_BATTERY_INCREASE_THRESHOLD,
     ATTR_BATTERY_LAST_REPLACED,
     ATTR_BATTERY_LAST_REPORTED,
     ATTR_BATTERY_LOW_THRESHOLD,
@@ -193,7 +194,9 @@ async def async_setup_entry(
             )
 
 
-class BatteryNotesBatteryLowBaseSensor(BatteryNotesEntity, BinarySensorEntity):
+class BatteryNotesBatteryLowBaseSensor(
+    BatteryNotesEntity, BinarySensorEntity, RestoreEntity
+):
     """Low battery binary sensor base."""
 
     entity_description: BatteryNotesBinarySensorEntityDescription
@@ -214,6 +217,7 @@ class BatteryNotesBatteryLowBaseSensor(BatteryNotesEntity, BinarySensorEntity):
 
     _unrecorded_attributes = frozenset(
         {
+            ATTR_BATTERY_INCREASE_THRESHOLD,
             ATTR_BATTERY_LOW_THRESHOLD,
             ATTR_BATTERY_QUANTITY,
             ATTR_BATTERY_TYPE,
@@ -233,6 +237,7 @@ class BatteryNotesBatteryLowBaseSensor(BatteryNotesEntity, BinarySensorEntity):
 
         # Battery related attributes
         attrs = {
+            ATTR_BATTERY_INCREASE_THRESHOLD: self.coordinator.battery_increased_threshold,
             ATTR_BATTERY_LOW_THRESHOLD: self.coordinator.battery_low_threshold,
             ATTR_BATTERY_QUANTITY: self.coordinator.battery_quantity,
             ATTR_BATTERY_TYPE: self.coordinator.battery_type,
@@ -292,13 +297,12 @@ class BatteryNotesNonTemplateBatteryLowSensor(BatteryNotesBatteryLowBaseSensor):
                 self.entity_id,
                 hidden_by=er.RegistryEntryHider.INTEGRATION
                 if self.hass.data[MY_KEY].hide_battery_low
+                and self.coordinator.wrapped_battery is not None
                 else None,
             )
 
 
-class BatteryNotesBatteryLowBinaryTemplateSensor(
-    BatteryNotesBatteryLowBaseSensor, RestoreEntity
-):
+class BatteryNotesBatteryLowBinaryTemplateSensor(BatteryNotesBatteryLowBaseSensor):
     """Represents a low battery threshold binary sensor from a template."""
 
     _attr_should_poll = False
@@ -459,6 +463,16 @@ class BatteryNotesBatteryLowBinaryTemplateSensor(
             else template.result_as_boolean(result)
         )
 
+        if state not in [
+            STATE_UNAVAILABLE,
+            STATE_UNKNOWN,
+        ]:
+            self.coordinator.last_reported = dt_util.utcnow()
+            _LOGGER.debug(
+                "Entity id %s has been reported via template.",
+                self.entity_id,
+            )
+
         if state == self._state:
             return
 
@@ -573,9 +587,10 @@ class BatteryNotesBatteryWrappedLowSensor(BatteryNotesNonTemplateBatteryLowSenso
             ]
             or not validate_is_float(wrapped_battery_state.state)
         ):
-            self._attr_is_on = None
-            self._attr_available = False
-            self.async_write_ha_state()
+            if not self.coordinator.retain_state:
+                self._attr_is_on = None
+                self._attr_available = False
+                self.async_write_ha_state()
             return
 
         self._attr_is_on = self.coordinator.battery_low
@@ -583,7 +598,7 @@ class BatteryNotesBatteryWrappedLowSensor(BatteryNotesNonTemplateBatteryLowSenso
         self.async_write_ha_state()
 
         _LOGGER.debug(
-            "%s binary sensor battery_low set to: %s",
+            "%s binary sensor battery_low set to: %s via wrapped low sensor",
             self.coordinator.wrapped_battery.entity_id,
             self.coordinator.battery_low,
         )
@@ -636,9 +651,10 @@ class BatteryNotesBatteryBinaryLowSensor(BatteryNotesNonTemplateBatteryLowSensor
             ]
             or wrapped_battery_low_state.state not in ["on", "off"]
         ):
-            self._attr_is_on = None
-            self._attr_available = False
-            self.async_write_ha_state()
+            if not self.coordinator.retain_state:
+                self._attr_is_on = None
+                self._attr_available = False
+                self.async_write_ha_state()
             return
 
         self.coordinator.last_reported = dt_util.utcnow()
@@ -717,6 +733,8 @@ class BatteryNotesBatteryBinaryLowSensor(BatteryNotesNonTemplateBatteryLowSensor
 
     async def async_added_to_hass(self) -> None:
         """Handle added to Hass."""
+
+        await super().async_added_to_hass()
 
         @callback
         async def _async_state_changed_listener(
@@ -802,17 +820,18 @@ class BatteryNotesBatteryBinaryLowSensor(BatteryNotesNonTemplateBatteryLowSensor
             ]
             or wrapped_battery_low_state.state not in ["on", "off"]
         ):
-            self._attr_is_on = None
-            self._attr_available = False
-            self.async_write_ha_state()
+            if not self.coordinator.retain_state:
+                self._attr_is_on = None
+                self._attr_available = False
+                self.async_write_ha_state()
             return
 
-        self._attr_is_on = self.coordinator.battery_low_binary_state == "on"
+        self._attr_is_on = self.coordinator.battery_low_binary_state
 
         self.async_write_ha_state()
 
         _LOGGER.debug(
-            "%s binary sensor battery_low set to: %s",
+            "%s binary sensor battery_low set to: %s via binary low sensor",
             self.coordinator.wrapped_battery_low.entity_id,
             self.coordinator.battery_low,
         )

@@ -3,7 +3,8 @@
     "source_entity": "Zdrojová entita",
     "source_device": "Zdrojové zařízení",
     "remarks_smart_switch": "Tento profil poskytuje pouze hodnoty napájení v pohotovostním režimu. \n Pokud máte spotřebič, který zapnutí spotřebovává pevně dané množství energie, můžete zadat tuto hodnotu v dalším kroku v nastavení",
-    "remarks_smart_dimmer": "Tento profil poskytuje pouze hodnoty spotřeby energie v pohotovostním režimu. \n V dalším kroku můžete volitelně zadat hodnoty připojeného světla"
+    "remarks_smart_dimmer": "Tento profil poskytuje pouze hodnoty spotřeby energie v pohotovostním režimu. \n V dalším kroku můžete volitelně zadat hodnoty připojeného světla",
+    "view_measurement_details": "Zobrazit podrobnosti měření"
   },
   "config": {
     "abort": {
@@ -107,7 +108,11 @@
               "power_sensor_naming": "Vzor názvu senzoru výkonu",
               "power_sensor_friendly_naming": "Vzor přívětivého názvu senzoru výkonu",
               "power_sensor_category": "Kategorie senzoru výkonu",
-              "power_sensor_precision": "Přesnost senzoru výkonu"
+              "power_sensor_precision": "Přesnost senzoru výkonu",
+              "follow_device_name": "Používat název zařízení"
+            },
+            "data_description": {
+              "follow_device_name": "Použít název přiřazeného zařízení pro generované entity podporovaných virtuálních senzorů výkonu nakonfigurovaných v uživatelském rozhraní. ID entit a vlastní názvy entit se nezmění. Vypnutím se obnoví nakonfigurované názvy. Vlastní vzory zobrazovaných názvů, včetně globálních vzorů, mají přednost: dotčené položky si ponechají nakonfigurované názvy."
             }
           },
           "features": {
@@ -335,7 +340,7 @@
         "data_description": {
           "confirm_autodisovered_model": "Pokud se rozhodnete nepotvrzovat, pak můžete zadat výrobce a model manuálně"
         },
-        "description": "{source}\n\nVýrobce \"{manufacturer}\" a model \"{model}\" byl automaticky detekován pro vaše zařízení.{remarks}",
+        "description": "{source}\n\nVýrobce \"{manufacturer}\" a model \"{model}\" byl automaticky detekován pro vaše zařízení.{remarks}{profile_details}",
         "title": "Knihovna"
       },
       "library_custom_fields": {
@@ -622,6 +627,35 @@
           "failed": "Failed",
           "resumable": "Resumable"
         }
+      },
+      "power": {
+        "name": "Výkon"
+      },
+      "energy": {
+        "name": "Energie"
+      },
+      "standby_energy": {
+        "name": "Energie v pohotovostním režimu"
+      },
+      "cost": {
+        "name": "Náklady"
+      },
+      "utility_meter_cycle": {
+        "name": "Energie {period}"
+      },
+      "utility_meter_tariff": {
+        "name": "Energie {period} {tariff}"
+      },
+      "utility_meter_cycle_cost": {
+        "name": "Energie {period} náklady"
+      },
+      "utility_meter_tariff_cost": {
+        "name": "Energie {period} {tariff} náklady"
+      }
+    },
+    "select": {
+      "utility_meter_cycle": {
+        "name": "Energie {period}"
       }
     }
   },
@@ -773,7 +807,11 @@
               "power_sensor_naming": "Vzor názvu senzoru výkonu",
               "power_sensor_friendly_naming": "Vzor přívětivého názvu senzoru výkonu",
               "power_sensor_category": "Kategorie senzoru výkonu",
-              "power_sensor_precision": "Přesnost senzoru výkonu"
+              "power_sensor_precision": "Přesnost senzoru výkonu",
+              "follow_device_name": "Používat název zařízení"
+            },
+            "data_description": {
+              "follow_device_name": "Použít název přiřazeného zařízení pro generované entity podporovaných virtuálních senzorů výkonu nakonfigurovaných v uživatelském rozhraní. ID entit a vlastní názvy entit se nezmění. Vypnutím se obnoví nakonfigurované názvy. Vlastní vzory zobrazovaných názvů, včetně globálních vzorů, mají přednost: dotčené položky si ponechají nakonfigurované názvy."
             }
           },
           "features": {
@@ -1000,7 +1038,7 @@
       },
       "library_options": {
         "title": "Možnosti knihovny",
-        "description": "Aktuálně je vybrán následující profil knihovny: \n výrobce: {manufacturer}\n model: {model}\n\nPokud chcete profil změnit, klikněte na Další."
+        "description": "Aktuálně je vybrán následující profil knihovny: \n výrobce: {manufacturer}\n model: {model}\n\nPokud chcete profil změnit, klikněte na Další.{profile_details}"
       },
       "select_device": {
         "data": {

@@ -3,7 +3,8 @@
     "source_entity": "Entidade de origem",
     "source_device": "Dispositivo de origem",
     "remarks_smart_switch": "Este perfil fornece apenas valores de potência em standby. \n Quando tiver um aparelho que consome uma quantidade fixa de potência quando ligado, pode fornecer esse valor no próximo passo do fluxo de configuração",
-    "remarks_smart_dimmer": "Este perfil fornece apenas valores de potência em standby. \n No próximo passo pode fornecer opcionalmente os valores da luz ligada"
+    "remarks_smart_dimmer": "Este perfil fornece apenas valores de potência em standby. \n No próximo passo pode fornecer opcionalmente os valores da luz ligada",
+    "view_measurement_details": "Ver detalhes da medição"
   },
   "config": {
     "abort": {
@@ -107,7 +108,11 @@
               "power_sensor_naming": "Padrão de nome do sensor de potência",
               "power_sensor_friendly_naming": "Padrão de nome amigável do sensor de potência",
               "power_sensor_category": "Categoria do sensor de potência",
-              "power_sensor_precision": "Precisão do sensor de potência"
+              "power_sensor_precision": "Precisão do sensor de potência",
+              "follow_device_name": "Usar o nome do dispositivo"
+            },
+            "data_description": {
+              "follow_device_name": "Usar o nome do dispositivo atribuído para as entidades geradas dos sensores virtuais de potência suportados configurados na interface. Os IDs das entidades e os nomes personalizados permanecem inalterados. Desativar esta opção repõe os nomes configurados. Os padrões personalizados de nomes de apresentação, incluindo os globais, têm prioridade: as entradas afetadas mantêm os nomes configurados."
             }
           },
           "features": {
@@ -335,7 +340,7 @@
         "data_description": {
           "confirm_autodisovered_model": "Se decidir não confirmar, poderá inserir manualmente o fabricante e o modelo"
         },
-        "description": "{source}\n\nO fabricante '({manufacturer})' e o modelo '({model})' foram detectados automaticamente para sua luz.{remarks}",
+        "description": "{source}\n\nO fabricante '({manufacturer})' e o modelo '({model})' foram detectados automaticamente para sua luz.{remarks}{profile_details}",
         "title": "Biblioteca"
       },
       "library_custom_fields": {
@@ -622,6 +627,35 @@
           "failed": "Failed",
           "resumable": "Resumable"
         }
+      },
+      "power": {
+        "name": "Potência"
+      },
+      "energy": {
+        "name": "Energia"
+      },
+      "standby_energy": {
+        "name": "Energia em espera"
+      },
+      "cost": {
+        "name": "Custo"
+      },
+      "utility_meter_cycle": {
+        "name": "Energia {period}"
+      },
+      "utility_meter_tariff": {
+        "name": "Energia {period} {tariff}"
+      },
+      "utility_meter_cycle_cost": {
+        "name": "Energia {period} custo"
+      },
+      "utility_meter_tariff_cost": {
+        "name": "Energia {period} {tariff} custo"
+      }
+    },
+    "select": {
+      "utility_meter_cycle": {
+        "name": "Energia {period}"
       }
     }
   },
@@ -773,7 +807,11 @@
               "power_sensor_naming": "Padrão de nome do sensor de potência",
               "power_sensor_friendly_naming": "Padrão de nome amigável do sensor de potência",
               "power_sensor_category": "Categoria do sensor de potência",
-              "power_sensor_precision": "Precisão do sensor de potência"
+              "power_sensor_precision": "Precisão do sensor de potência",
+              "follow_device_name": "Usar o nome do dispositivo"
+            },
+            "data_description": {
+              "follow_device_name": "Usar o nome do dispositivo atribuído para as entidades geradas dos sensores virtuais de potência suportados configurados na interface. Os IDs das entidades e os nomes personalizados permanecem inalterados. Desativar esta opção repõe os nomes configurados. Os padrões personalizados de nomes de apresentação, incluindo os globais, têm prioridade: as entradas afetadas mantêm os nomes configurados."
             }
           },
           "features": {
@@ -1000,7 +1038,7 @@
       },
       "library_options": {
         "title": "Opções da biblioteca",
-        "description": "Atualmente está selecionado o seguinte perfil da biblioteca: \n fabricante: {manufacturer}\n modelo: {model}\n\nSe quiser alterar o perfil, clique em seguinte."
+        "description": "Atualmente está selecionado o seguinte perfil da biblioteca: \n fabricante: {manufacturer}\n modelo: {model}\n\nSe quiser alterar o perfil, clique em seguinte.{profile_details}"
       },
       "select_device": {
         "data": {

@@ -3,7 +3,8 @@
     "source_entity": "Entitatea sursă",
     "source_device": "Dispozitiv sursă",
     "remarks_smart_switch": "Acest profil furnizează doar valorile puterii de așteptare. \n Când aveți un aparat care consumă o cantitate fixă ​​de energie atunci când este pornit, puteți furniza acea valoare în următorul pas al fluxului de configurare",
-    "remarks_smart_dimmer": "Acest profil furnizează doar valorile puterii de așteptare. \n În pasul următor puteți furniza opțional valorile luminii conectate"
+    "remarks_smart_dimmer": "Acest profil furnizează doar valorile puterii de așteptare. \n În pasul următor puteți furniza opțional valorile luminii conectate",
+    "view_measurement_details": "Vedeți detaliile măsurătorii"
   },
   "config": {
     "abort": {
@@ -107,7 +108,11 @@
               "power_sensor_naming": "Modelul numelui senzorului de putere",
               "power_sensor_friendly_naming": "Model de nume prietenos pentru senzorul de putere",
               "power_sensor_category": "Categoria senzorului de putere",
-              "power_sensor_precision": "Precizia senzorului de putere"
+              "power_sensor_precision": "Precizia senzorului de putere",
+              "follow_device_name": "Folosește numele dispozitivului"
+            },
+            "data_description": {
+              "follow_device_name": "Folosește numele dispozitivului asociat pentru entitățile generate ale senzorilor virtuali de putere acceptați, configurați în interfață. ID-urile entităților și numele personalizate rămân neschimbate. Dezactivarea restabilește numele configurate. Modelele personalizate pentru numele afișate, inclusiv cele globale, au prioritate: intrările afectate își păstrează numele configurate."
             }
           },
           "features": {
@@ -335,7 +340,7 @@
         "data_description": {
           "confirm_autodisovered_model": "Dacă alegeți să nu confirmați, puteți introduce singur producătorul și modelul"
         },
-        "description": "{source}\n\nProducătorul \"{manufacturer}\" și modelul \"{model}\" au fost detectate automat pentru dispozitivul dvs.{remarks}",
+        "description": "{source}\n\nProducătorul \"{manufacturer}\" și modelul \"{model}\" au fost detectate automat pentru dispozitivul dvs.{remarks}{profile_details}",
         "title": "Bibliotecă"
       },
       "library_custom_fields": {
@@ -622,6 +627,35 @@
           "failed": "Failed",
           "resumable": "Resumable"
         }
+      },
+      "power": {
+        "name": "Putere"
+      },
+      "energy": {
+        "name": "Energie"
+      },
+      "standby_energy": {
+        "name": "Energie în standby"
+      },
+      "cost": {
+        "name": "Cost"
+      },
+      "utility_meter_cycle": {
+        "name": "Energie {period}"
+      },
+      "utility_meter_tariff": {
+        "name": "Energie {period} {tariff}"
+      },
+      "utility_meter_cycle_cost": {
+        "name": "Energie {period} cost"
+      },
+      "utility_meter_tariff_cost": {
+        "name": "Energie {period} {tariff} cost"
+      }
+    },
+    "select": {
+      "utility_meter_cycle": {
+        "name": "Energie {period}"
       }
     }
   },
@@ -773,7 +807,11 @@
               "power_sensor_naming": "Modelul numelui senzorului de putere",
               "power_sensor_friendly_naming": "Model de nume prietenos pentru senzorul de putere",
               "power_sensor_category": "Categoria senzorului de putere",
-              "power_sensor_precision": "Precizia senzorului de putere"
+              "power_sensor_precision": "Precizia senzorului de putere",
+              "follow_device_name": "Folosește numele dispozitivului"
+            },
+            "data_description": {
+              "follow_device_name": "Folosește numele dispozitivului asociat pentru entitățile generate ale senzorilor virtuali de putere acceptați, configurați în interfață. ID-urile entităților și numele personalizate rămân neschimbate. Dezactivarea restabilește numele configurate. Modelele personalizate pentru numele afișate, inclusiv cele globale, au prioritate: intrările afectate își păstrează numele configurate."
             }
           },
           "features": {
@@ -1000,7 +1038,7 @@
       },
       "library_options": {
         "title": "Opțiuni de bibliotecă",
-        "description": "În prezent este selectat următorul profil de bibliotecă: \n producator: {manufacturer}\n model: {model}\n\nDacă doriți să schimbați profilul, faceți clic pe următorul."
+        "description": "În prezent este selectat următorul profil de bibliotecă: \n producator: {manufacturer}\n model: {model}\n\nDacă doriți să schimbați profilul, faceți clic pe următorul.{profile_details}"
       },
       "select_device": {
         "data": {

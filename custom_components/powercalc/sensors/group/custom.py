@@ -24,6 +24,7 @@ from homeassistant.const import (
     EVENT_HOMEASSISTANT_STOP,
     STATE_UNAVAILABLE,
     STATE_UNKNOWN,
+    EntityCategory,
     UnitOfEnergy,
     UnitOfPower,
 )
@@ -59,6 +60,7 @@ from custom_components.powercalc.const import (
     CONF_CREATE_ENERGY_SENSOR,
     CONF_CREATE_GROUP,
     CONF_DISABLE_EXTENDED_ATTRIBUTES,
+    CONF_ENERGY_SENSOR_CATEGORY,
     CONF_ENERGY_SENSOR_PRECISION,
     CONF_ENERGY_SENSOR_UNIT_PREFIX,
     CONF_EXCLUDE_ENTITIES,
@@ -75,6 +77,7 @@ from custom_components.powercalc.const import (
     CONF_HIDE_MEMBERS,
     CONF_IGNORE_UNAVAILABLE_STATE,
     CONF_INCLUDE_NON_POWERCALC_SENSORS,
+    CONF_POWER_SENSOR_CATEGORY,
     CONF_POWER_SENSOR_PRECISION,
     CONF_SENSOR_TYPE,
     CONF_SUB_GROUPS,
@@ -264,15 +267,28 @@ async def resolve_entity_ids_recursively(
     entry: ConfigEntry,
     device_class: SensorDeviceClass,
     resolved_ids: set[str] | None = None,
+    seen_entry_ids: set[str] | None = None,
 ) -> set[str]:
-    """Get all the entity IDs for the current group and all the subgroups."""
+    """Get all the entity IDs for the current group and all the subgroups.
+
+    Groups can reference each other as a subgroup, either in a cycle or as two groups sharing
+    the same subgroup. `seen_entry_ids` makes sure every group is only visited once, so a cycle
+    does not recurse until the stack runs out.
+    """
     if resolved_ids is None:
         resolved_ids = set()
+    if seen_entry_ids is None:
+        seen_entry_ids = set()
+
+    if entry.entry_id in seen_entry_ids:
+        _LOGGER.debug("Group config entry %s already resolved, skipping", entry.entry_id)
+        return resolved_ids
+    seen_entry_ids.add(entry.entry_id)
 
     _add_member_entry_ids(hass, entry, device_class, resolved_ids)
     _add_specified_sensors(entry, device_class, resolved_ids)
     await _add_include_based_sensors(hass, entry, device_class, resolved_ids)
-    await _add_subgroup_entities(hass, entry, device_class, resolved_ids)
+    await _add_subgroup_entities(hass, entry, device_class, resolved_ids, seen_entry_ids)
 
     return resolved_ids
 
@@ -331,6 +347,7 @@ async def _add_subgroup_entities(
     entry: ConfigEntry,
     device_class: SensorDeviceClass,
     resolved_ids: set[str],
+    seen_entry_ids: set[str],
 ) -> None:
     """Recursively add entities from subgroups."""
     subgroups = entry.data.get(CONF_SUB_GROUPS)
@@ -343,7 +360,7 @@ async def _add_subgroup_entities(
             _LOGGER.error("Subgroup config entry not found: %s", subgroup_entry_id)
             continue
 
-        await resolve_entity_ids_recursively(hass, subgroup_entry, device_class, resolved_ids)
+        await resolve_entity_ids_recursively(hass, subgroup_entry, device_class, resolved_ids, seen_entry_ids)
 
 
 @callback
@@ -414,6 +431,7 @@ def create_grouped_energy_sensor(
             name=name,
             unique_id=energy_unique_id,
             sensor_config=sensor_config,
+            entity_category=sensor_config.get(CONF_ENERGY_SENSOR_CATEGORY),
             unit_prefix=sensor_config.get(CONF_ENERGY_SENSOR_UNIT_PREFIX, UnitPrefix.NONE),
         )
 
@@ -470,6 +488,10 @@ class GroupedSensor(BaseEntity, SensorEntity):
                 sensor_config.get(CONF_GROUP_POWER_UPDATE_INTERVAL, DEFAULT_GROUP_POWER_UPDATE_INTERVAL),
             )
         self._attr_suggested_display_precision = self._rounding_digits
+        category_key = CONF_ENERGY_SENSOR_CATEGORY if self._is_energy_sensor else CONF_POWER_SENSOR_CATEGORY
+        entity_category = sensor_config.get(category_key)
+        if entity_category:
+            self._attr_entity_category = EntityCategory(entity_category)
         if unique_id:
             self._attr_unique_id = unique_id
         self._native_value_exact = Decimal(0)

@@ -3,7 +3,23 @@
 from datetime import timedelta
 from typing import Any
 
+from homeassistant.core import HomeAssistant
 from homeassistant.helpers.json import JSONEncoder
+
+from .const import CONF_CONTRIB_VERSION, DOMAIN
+
+
+def contrib_announced_version(hass: HomeAssistant) -> bool:
+    """Return True when contrib has stored a package version on the config entry."""
+    return any(
+        entry.data.get(CONF_CONTRIB_VERSION)
+        for entry in hass.config_entries.async_entries(DOMAIN)
+    )
+
+
+def contrib_supports_presence_available(hass: HomeAssistant) -> bool:
+    """Whether presence-available entity semantics apply."""
+    return contrib_announced_version(hass)
 
 
 class NodeRedJSONEncoder(JSONEncoder):

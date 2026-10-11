@@ -9,6 +9,8 @@ from .const import (
     DOMAIN,
     URL,
     DEFAULT_NAME,
+    DEFAULT_SCAN_INTERVAL,
+    MIN_SCAN_INTERVAL,
     CANARY_BOUNDS,
     SESSION_GUARD_EMPTY_SECONDS,
     SESSION_GUARD_CHECK_THROTTLE,
@@ -75,6 +77,17 @@ class FlightRadar24Coordinator(DataUpdateCoordinator[int]):
             name=DEFAULT_NAME,
         )
 
+        if (
+            not isinstance(update_interval, int)
+            or isinstance(update_interval, bool)
+            or update_interval < MIN_SCAN_INTERVAL
+        ):
+            logger.warning(
+                "FlightRadar24: scan interval %s must be at least %s; using %s seconds",
+                update_interval, MIN_SCAN_INTERVAL, DEFAULT_SCAN_INTERVAL,
+            )
+            update_interval = DEFAULT_SCAN_INTERVAL
+
         super().__init__(
             hass,
             logger,
@@ -90,6 +103,8 @@ class FlightRadar24Coordinator(DataUpdateCoordinator[int]):
             found = await self.hass.async_add_executor_job(self.flight.add_track, number)
             if not found:
                 self.logger.error('FlightRadar24: Add Track - No flight found by - {}'.format(number))
+            else:
+                self.async_update_listeners()
         except Exception as e:
             self.logger.error("FlightRadar24: %s", e)
 
@@ -101,6 +116,8 @@ class FlightRadar24Coordinator(DataUpdateCoordinator[int]):
         remove = await self.hass.async_add_executor_job(self.flight.remove_track, number)
         if not remove:
             self.logger.error('FlightRadar24: Remove Track - No flight found by - {}'.format(number))
+        else:
+            self.async_update_listeners()
 
     async def update_airport_track(self, code: str) -> None:
         if not self.scanning:

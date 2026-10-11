@@ -23,6 +23,7 @@ from .const import (
     NODERED_DISCOVERY_NEW,
 )
 from .entity import NodeRedEntity
+from .utils import contrib_supports_presence_available
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -71,6 +72,9 @@ class NodeRedSensor(NodeRedEntity, SensorEntity):
             self._attr_native_value = self.convert_state(config.get(CONF_STATE))
         else:
             self._attr_native_value = None
+            # No reading yet: unavailable once presence-available applies
+            if contrib_supports_presence_available(hass):
+                self._attr_available = False
         self._attr_native_unit_of_measurement = self._config.get(
             CONF_UNIT_OF_MEASUREMENT
         )
@@ -116,7 +120,7 @@ class NodeRedSensor(NodeRedEntity, SensorEntity):
                 try:
                     parsed = datetime.fromtimestamp(seconds, tz=timezone.utc)
                 except (OverflowError, OSError, ValueError):
-                    _LOGGER.exception(
+                    _LOGGER.error(
                         "Invalid timestamp (%s): %s has a timestamp device class",
                         state,
                         self.entity_id,
@@ -129,7 +133,7 @@ class NodeRedSensor(NodeRedEntity, SensorEntity):
 
             # Fallback to ISO parsing for string states
             if not isinstance(state, str):
-                _LOGGER.exception(
+                _LOGGER.error(
                     "Invalid ISO date string (%s): %s has a timestamp device class",
                     state,
                     self.entity_id,
@@ -138,7 +142,7 @@ class NodeRedSensor(NodeRedEntity, SensorEntity):
             try:
                 parsed = parser.parse(state)
             except (ValueError, TypeError):
-                _LOGGER.exception(
+                _LOGGER.error(
                     "Invalid ISO date string (%s): %s has a timestamp device class",
                     state,
                     self.entity_id,
@@ -202,7 +206,7 @@ class NodeRedSensor(NodeRedEntity, SensorEntity):
         try:
             parsed = parser.parse(last)
         except (ValueError, TypeError):
-            _LOGGER.exception(
+            _LOGGER.error(
                 "Invalid ISO date string (%s): %s requires last_reset to be "
                 "an iso date formatted string",
                 last,

@@ -10,12 +10,17 @@ from homeassistant.helpers.template import Template
 from homeassistant.helpers.typing import ConfigType
 import voluptuous as vol
 
-from custom_components.powercalc.common import SourceEntity
+from custom_components.powercalc.common import SourceEntity, create_source_entity
 from custom_components.powercalc.const import (
+    CONF_CALIBRATE,
     CONF_COMPOSITE,
+    CONF_GAMMA_CURVE,
+    CONF_MAX_POWER,
+    CONF_MIN_POWER,
     CONF_MODE,
     CONF_MULTI_SWITCH,
     CONF_POWER,
+    CONF_POWER_CURVE,
     CONF_POWER_OFF,
     CONF_POWER_TEMPLATE,
     CONF_STANDBY_POWER,
@@ -118,7 +123,7 @@ class PowerCalculatorStrategyFactory:
         power_profile: PowerProfile | None,
     ) -> LinearStrategy:
         """Create the linear strategy."""
-        linear_config = self._get_strategy_config(CalculationStrategy.LINEAR, config, power_profile)
+        linear_config = self._get_linear_config(config, power_profile)
 
         return LinearStrategy(
             linear_config,
@@ -126,6 +131,55 @@ class PowerCalculatorStrategyFactory:
             source_entity,
             config.get(CONF_STANDBY_POWER),
         )
+
+    @staticmethod
+    def _get_linear_config(config: ConfigType, power_profile: PowerProfile | None) -> ConfigType:
+        """Combine an incomplete profile configuration with user supplied power values."""
+        user_config = cast(ConfigType | None, config.get(CalculationStrategy.LINEAR))
+
+        if power_profile is None or not power_profile.is_strategy_supported(CalculationStrategy.LINEAR):
+            if user_config is not None:
+                return user_config
+            raise StrategyConfigurationError("No linear configuration supplied")
+
+        profile_config = dict(power_profile.linear_config or {})
+
+        # Preserve the existing behavior for complete profiles: an explicitly supplied
+        # user configuration replaces the profile configuration entirely.
+        if not power_profile.needs_linear_config:
+            return user_config if user_config is not None else profile_config
+
+        # Smart dimmer profiles without load values can be used from YAML to measure
+        # only the dimmer's own consumption. Keep that behavior when the profile adds
+        # defaults such as gamma_curve but the user omits the linear configuration.
+        if not user_config:
+            return {
+                CONF_MIN_POWER: 0,
+                CONF_MAX_POWER: 0,
+                **profile_config,
+            }
+
+        linear_config = {
+            **profile_config,
+            **user_config,
+        }
+
+        PowerCalculatorStrategyFactory._remove_overridden_profile_curves(linear_config, user_config)
+
+        return linear_config
+
+    @staticmethod
+    def _remove_overridden_profile_curves(linear_config: ConfigType, user_config: ConfigType) -> None:
+        """Remove profile curve options superseded by explicit user configuration."""
+        if CONF_CALIBRATE in user_config:
+            if CONF_GAMMA_CURVE not in user_config:
+                linear_config.pop(CONF_GAMMA_CURVE, None)
+            if CONF_POWER_CURVE not in user_config:
+                linear_config.pop(CONF_POWER_CURVE, None)
+        elif CONF_GAMMA_CURVE in user_config:
+            linear_config.pop(CONF_POWER_CURVE, None)
+        elif CONF_POWER_CURVE in user_config:
+            linear_config.pop(CONF_GAMMA_CURVE, None)
 
     def _create_fixed(
         self,
@@ -204,10 +258,12 @@ class PowerCalculatorStrategyFactory:
             sub_strategies = composite_config
 
         async def _create_sub_strategy(strategy_config: ConfigType) -> SubStrategy:
+            entity_id = strategy_config.get(CONF_ENTITY_ID)
+            sub_source_entity = create_source_entity(entity_id, self._hass) if entity_id is not None else source_entity
             condition_instance = None
             condition_config = strategy_config.get(CONF_CONDITION)
             if condition_config:
-                condition_config = resolve_condition_entity_ids(condition_config, source_entity)
+                condition_config = resolve_condition_entity_ids(condition_config, sub_source_entity)
                 condition_config = await condition.async_validate_condition_config(self._hass, condition_config)
                 condition_instance = await condition.async_from_config(
                     self._hass,
@@ -219,9 +275,9 @@ class PowerCalculatorStrategyFactory:
                 strategy_config,
                 strategy,
                 power_profile,
-                source_entity,
+                sub_source_entity,
             )
-            return SubStrategy(condition_config, condition_instance, strategy_instance)  # type: ignore
+            return SubStrategy(condition_config, condition_instance, strategy_instance, entity_id)  # type: ignore
 
         if not sub_strategies:
             raise StrategyConfigurationError("No strategies configured for composite strategy")
@@ -244,7 +300,11 @@ class PowerCalculatorStrategyFactory:
     def _create_multi_switch(self, config: ConfigType, power_profile: PowerProfile | None) -> MultiSwitchStrategy:
         """Create instance of multi switch strategy."""
         multi_switch_config: ConfigType = {}
-        if power_profile and power_profile.multi_switch_config:
+        if (
+            power_profile
+            and power_profile.is_strategy_supported(CalculationStrategy.MULTI_SWITCH)
+            and power_profile.multi_switch_config
+        ):
             # Copy to avoid mutating the (potentially cached) profile config with the user's config below.
             multi_switch_config = dict(power_profile.multi_switch_config)
         multi_switch_config.update(config.get(CONF_MULTI_SWITCH, {}))
@@ -263,7 +323,7 @@ class PowerCalculatorStrategyFactory:
             self._hass,
             entities,
             on_power=Decimal(on_power),
-            off_power=Decimal(off_power) if off_power else None,
+            off_power=Decimal(off_power) if off_power is not None else None,
         )
 
     def _resolve_template(self, value: Any) -> Any:  # noqa: ANN401

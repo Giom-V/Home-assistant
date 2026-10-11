@@ -3,7 +3,8 @@
     "source_entity": "Encja źródłowa",
     "source_device": "Urządzenie źródłowe",
     "remarks_smart_switch": "Ten profil dostarcza tylko wartości poboru mocy w trybie czuwania. \n Gdy masz urządzenie, które zużywa stałą ilość energii po włączeniu, możesz podać tę wartość w następnym kroku przepływu konfiguracji",
-    "remarks_smart_dimmer": "Ten profil dostarcza tylko wartości poboru mocy w trybie czuwania. \n W następnym kroku możesz opcjonalnie podać wartości dla podłączonego światła"
+    "remarks_smart_dimmer": "Ten profil dostarcza tylko wartości poboru mocy w trybie czuwania. \n W następnym kroku możesz opcjonalnie podać wartości dla podłączonego światła",
+    "view_measurement_details": "Zobacz szczegóły pomiaru"
   },
   "config": {
     "abort": {
@@ -107,7 +108,11 @@
               "power_sensor_naming": "Wzorzec nazwy sensora mocy",
               "power_sensor_friendly_naming": "Wzorzec przyjaznej nazwy sensora mocy",
               "power_sensor_category": "Kategoria sensorów mocy",
-              "power_sensor_precision": "Dokładność czujnika mocy"
+              "power_sensor_precision": "Dokładność czujnika mocy",
+              "follow_device_name": "Używaj nazwy urządzenia"
+            },
+            "data_description": {
+              "follow_device_name": "Używaj nazwy przypisanego urządzenia dla generowanych encji obsługiwanych wirtualnych czujników mocy skonfigurowanych w interfejsie. Identyfikatory encji i własne nazwy encji pozostają bez zmian. Wyłączenie przywraca skonfigurowane nazwy. Własne wzorce nazw wyświetlanych, w tym wzorce globalne, mają pierwszeństwo: wpisy, których to dotyczy, zachowują skonfigurowane nazwy."
             }
           },
           "features": {
@@ -335,7 +340,7 @@
         "data_description": {
           "confirm_autodisovered_model": "Jeśli zdecydujesz się nie potwierdzać, możesz samodzielnie wprowadzić producenta i model"
         },
-        "description": "{source}\n\nProducent \"{manufacturer}\" i model \"{model}\" zostały automatycznie wykryte dla twojego urządzenia.{remarks}",
+        "description": "{source}\n\nProducent \"{manufacturer}\" i model \"{model}\" zostały automatycznie wykryte dla twojego urządzenia.{remarks}{profile_details}",
         "title": "Biblioteka"
       },
       "library_custom_fields": {
@@ -622,6 +627,35 @@
           "failed": "Failed",
           "resumable": "Resumable"
         }
+      },
+      "power": {
+        "name": "Moc"
+      },
+      "energy": {
+        "name": "Energia"
+      },
+      "standby_energy": {
+        "name": "Energia w trybie czuwania"
+      },
+      "cost": {
+        "name": "Koszt"
+      },
+      "utility_meter_cycle": {
+        "name": "Energia {period}"
+      },
+      "utility_meter_tariff": {
+        "name": "Energia {period} {tariff}"
+      },
+      "utility_meter_cycle_cost": {
+        "name": "Energia {period} koszt"
+      },
+      "utility_meter_tariff_cost": {
+        "name": "Energia {period} {tariff} koszt"
+      }
+    },
+    "select": {
+      "utility_meter_cycle": {
+        "name": "Energia {period}"
       }
     }
   },
@@ -773,7 +807,11 @@
               "power_sensor_naming": "Wzorzec nazwy sensora mocy",
               "power_sensor_friendly_naming": "Wzorzec przyjaznej nazwy sensora mocy",
               "power_sensor_category": "Kategoria czujników mocy",
-              "power_sensor_precision": "Dokładność czujnika mocy"
+              "power_sensor_precision": "Dokładność czujnika mocy",
+              "follow_device_name": "Używaj nazwy urządzenia"
+            },
+            "data_description": {
+              "follow_device_name": "Używaj nazwy przypisanego urządzenia dla generowanych encji obsługiwanych wirtualnych czujników mocy skonfigurowanych w interfejsie. Identyfikatory encji i własne nazwy encji pozostają bez zmian. Wyłączenie przywraca skonfigurowane nazwy. Własne wzorce nazw wyświetlanych, w tym wzorce globalne, mają pierwszeństwo: wpisy, których to dotyczy, zachowują skonfigurowane nazwy."
             }
           },
           "features": {
@@ -1000,7 +1038,7 @@
       },
       "library_options": {
         "title": "Opcje biblioteki",
-        "description": "Obecnie wybrany jest następujący profil biblioteki: \n producent: {manufacturer}\n model: {model}\n\nJeśli chcesz zmienić profil, kliknij dalej."
+        "description": "Obecnie wybrany jest następujący profil biblioteki: \n producent: {manufacturer}\n model: {model}\n\nJeśli chcesz zmienić profil, kliknij dalej.{profile_details}"
       },
       "select_device": {
         "data": {

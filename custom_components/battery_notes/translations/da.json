@@ -11,10 +11,12 @@
                     "battery_type": "Batteritype",
                     "battery_quantity": "Antal batterier",
                     "note": "Note",
-                    "battery_low_threshold": "Tærskel for lavt batteriniveau"
+                    "battery_low_threshold": "Tærskel for lavt batteriniveau",
+                    "battery_increase_threshold": "Tærskel for batteriladestigning"
                 },
                 "data_description": {
-                    "battery_low_threshold": "0 vil bruge den globale standardtærskel"
+                    "battery_low_threshold": "0 vil bruge den globale standardtærskel",
+                    "battery_increase_threshold": "Tærsklen er forskellen i stigning mellem tidligere og aktuelt batteriniveau.\n0 vil bruge den globale standardtærskel"
                 },
                 "sections": {
                     "advanced_settings": {
@@ -22,11 +24,13 @@
                         "data": {
                             "battery_percentage_template": "Batteriprocentskabelon",
                             "battery_low_template": "Lavt batteri-skabelon",
+                            "retain_state": "Behold tilstand",
                             "filter_outliers": "Filtrer afvigere"
                         },
                         "data_description": {
-                            "battery_percentage_template": "Skabelon til at oprette en batteriprocent\nKun nødvendigt for enheder, der ikke har en standard batteriprocent",
-                            "battery_low_template": "Skabelon til at afgøre om batteriet er lavt, skal returnere ‘true’, hvis det er lavt.\nKun nødvendig for ikke-standard batteriniveauer.",
+                            "battery_percentage_template": "Skabelon til at oprette en batteriprocent.\nKun nødvendigt for enheder, der ikke har en standard batteriprocent.",
+                            "battery_low_template": "Skabelon til at afgøre om batteriet er lavt, skal returnere 'true', hvis det er lavt.\nKun nødvendig for ikke-standard batteriniveauer.",
+                            "retain_state": "Behold tilstanden fra det sidste batteriniveau, når kildeenheden er utilgængelig.\nNyttigt for enheder, der hviler og bliver utilgængelige.",
                             "filter_outliers": "Filtrer store fald i batteriniveau fra, så falske hændelser reduceres på enheder, der af og til rapporterer forkerte niveauer."
                         }
                     }
@@ -66,7 +70,7 @@
                         "name": "Navn"
                     },
                     "data_description": {
-                        "name": "Hvis du lader dette felt være tomt, hentes navnet fra kildeenheden"
+                        "name": "Hvis du lader dette felt være tomt, hentes navnet fra kildeenheden."
                     }
                 },
                 "entity": {
@@ -75,7 +79,7 @@
                         "name": "Navn"
                     },
                     "data_description": {
-                        "name": "Hvis du lader stå tomt, tages navnet fra kildeenheden"
+                        "name": "Hvis du lader stå tomt, tages navnet fra kildeenheden."
                     }
                 },
                 "battery": {
@@ -84,10 +88,12 @@
                         "battery_type": "Batteritype",
                         "battery_quantity": "Antal batterier",
                         "note": "Note",
-                        "battery_low_threshold": "Lavt batteriniveau"
+                        "battery_low_threshold": "Lavt batteriniveau",
+                        "battery_increase_threshold": "Tærskel for batteriladestigning"
                     },
                     "data_description": {
-                        "battery_low_threshold": "0 vil bruge den globale standardtærskel"
+                        "battery_low_threshold": "0 vil bruge den globale standardtærskel.",
+                        "battery_increase_threshold": "Tærsklen er forskellen i stigning mellem tidligere og aktuelt batteriniveau.\n0 vil bruge den globale standardtærskel."
                     },
                     "sections": {
                         "advanced_settings": {
@@ -95,11 +101,13 @@
                             "data": {
                                 "battery_percentage_template": "Batteriprocentskabelon",
                                 "battery_low_template": "Lavt batteri-skabelon",
+                                "retain_state": "Behold tilstand",
                                 "filter_outliers": "Filtrer afvigere"
                             },
                             "data_description": {
-                                "battery_percentage_template": "Skabelon til at oprette en batteriprocent\nKun nødvendigt for enheder, der ikke har en standard batteriprocent",
-                                "battery_low_template": "Skabelon til at afgøre om batteriet er lavt, skal returnere ‘true’, hvis det er lavt.\nKun nødvendig for ikke-standard batteriniveauer.",
+                                "battery_percentage_template": "Skabelon til at oprette en batteriprocent.\nKun nødvendigt for enheder, der ikke har en standard batteriprocent.",
+                                "battery_low_template": "Skabelon til at afgøre om batteriet er lavt, skal returnere 'true', hvis det er lavt.\nKun nødvendig for ikke-standard batteriniveauer.",
+                                "retain_state": "Behold tilstanden fra det sidste batteriniveau, når kildeenheden er utilgængelig.\nNyttigt for enheder, der hviler og bliver utilgængelige.",
                                 "filter_outliers": "Filtrer store fald i batteriniveau fra, så falske hændelser reduceres på enheder, der af og til rapporterer forkerte niveauer."
                             }
                         }
@@ -116,11 +124,13 @@
                         "battery_type": "Batteritype",
                         "battery_quantity": "Antal batterier",
                         "note": "Note",
-                        "battery_low_threshold": "Lavt batteriniveau"
+                        "battery_low_threshold": "Lavt batteriniveau",
+                        "battery_increase_threshold": "Tærskel for batteriladestigning"
                     },
                     "data_description": {
-                        "name": "Hvis du lader dette felt være tomt, hentes navnet fra kildeenheden",
-                        "battery_low_threshold": "0 vil bruge den globale standardtærskel"
+                        "name": "Hvis du lader dette felt være tomt, hentes navnet fra kildeenheden.",
+                        "battery_low_threshold": "0 vil bruge den globale standardtærskel.",
+                        "battery_increase_threshold": "Tærsklen er forskellen i stigning mellem tidligere og aktuelt batteriniveau.\n0 vil bruge den globale standardtærskel."
                     },
                     "sections": {
                         "advanced_settings": {
@@ -128,11 +138,13 @@
                             "data": {
                                 "battery_percentage_template": "Batteriprocentskabelon",
                                 "battery_low_template": "Lavt batteri-skabelon",
+                                "retain_state": "Behold tilstand",
                                 "filter_outliers": "Filtrer afvigere"
                             },
                             "data_description": {
-                                "battery_percentage_template": "Skabelon til at oprette en batteriprocent\nKun nødvendigt for enheder, der ikke har en standard batteriprocent",
+                                "battery_percentage_template": "Skabelon til at oprette en batteriprocent.\nKun nødvendigt for enheder, der ikke har en standard batteriprocent.",
                                 "battery_low_template": "Skabelon til at afgøre om batteriet er lavt, skal returnere ‘true’, hvis det er lavt.\nKun nødvendig for ikke-standard batteriniveauer.",
+                                "retain_state": "Behold tilstanden fra det sidste batteriniveau, når kildeenheden er utilgængelig.\nNyttigt for enheder, der hviler og bliver utilgængelige.",
                                 "filter_outliers": "Filtrer store fald i batteriniveau fra, så falske hændelser reduceres på enheder, der af og til rapporterer forkerte niveauer."
                             }
                         }
@@ -158,7 +170,7 @@
                     "hide_battery": "Skjul batteriet",
                     "round_battery": "Afrund batteri",
                     "default_battery_low_threshold": "Standardgrænse for lavt batteriniveau",
-                    "battery_increase_threshold": "Grænse for stigning i batteriniveau"
+                    "battery_increase_threshold": "Standard-tærskel for batteriladestigning"
                 },
                 "data_description": {
                     "show_all_devices": "Vis alle enheder i enhedens dropdown, ellers vises kun dem med batterier.",
@@ -195,6 +207,9 @@
             "battery_low": {
                 "name": "{device_name}Lavt batteri",
                 "state_attributes": {
+                    "battery_increase_threshold": {
+                        "name": "Tærskel for batteriladestigning"
+                    },
                     "battery_low_threshold": {
                         "name": "Lavt batteri-tærskel"
                     }
@@ -224,6 +239,9 @@
                     },
                     "battery_last_replaced": {
                         "name": "Batteri sidst udskiftet"
+                    },
+                    "battery_increase_threshold": {
+                        "name": "Tærskel for batteriladestigning"
                     },
                     "battery_low": {
                         "name": "Lavt batteri"

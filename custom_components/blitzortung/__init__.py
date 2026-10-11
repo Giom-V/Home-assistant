@@ -7,7 +7,7 @@ import time
 from collections.abc import Callable
 from typing import TYPE_CHECKING, Any
 
-import voluptuous as vol
+import probatio
 from homeassistant.components.persistent_notification import (
     async_create as async_create_notification,
 )
@@ -66,9 +66,9 @@ from .version import __version__
 
 _LOGGER = logging.getLogger(__name__)
 
-CONFIG_SCHEMA = vol.Schema(
-    {DOMAIN: vol.Schema({vol.Optional(SERVER_STATS, default=False): bool})},
-    extra=vol.ALLOW_EXTRA,
+CONFIG_SCHEMA = probatio.Schema(
+    {DOMAIN: probatio.Schema({probatio.Optional(SERVER_STATS, default=False): bool})},
+    extra=probatio.ALLOW_EXTRA,
 )
 
 BlitzortungConfigEntry = ConfigEntry["BlitzortungCoordinator"]
@@ -215,6 +215,9 @@ async def async_setup_entry(  # noqa: PLR0912
     try:
         await config_entry.runtime_data.connect()
     except (HomeAssistantError, OSError) as err:
+        # HA does not call async_unload_entry after a failed setup, so listeners
+        # registered in the constructor would leak on every retry.
+        await config_entry.runtime_data.disconnect()
         raise ConfigEntryNotReady(
             translation_domain=DOMAIN,
             translation_key="mqtt_connect_not_ready",
@@ -506,7 +509,7 @@ class BlitzortungCoordinator:
         for unsub in list(self._geohash_unsubscribers):
             try:
                 unsub()
-            except Exception:  # noqa: BLE001
+            except Exception:
                 _LOGGER.debug("Failed to remove geohash subscription", exc_info=True)
         self._geohash_unsubscribers.clear()
 

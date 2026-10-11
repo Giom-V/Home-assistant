@@ -51,8 +51,10 @@ from homeassistant.helpers.entity_registry import async_entries_for_device, asyn
 
 from .const import (
     CONF_ATTRIBUTES,
+    CONF_AVAILABLE,
     CONF_COMPONENT,
     CONF_CONFIG,
+    CONF_CONTRIB_VERSION,
     CONF_DEVICE_INFO,
     CONF_DEVICE_TRIGGER,
     CONF_NODE_ID,
@@ -192,6 +194,7 @@ async def websocket_device_remove(
         vol.Optional(CONF_CONFIG, default={}): dict,
         vol.Optional(CONF_STATE): vol.Any(bool, str, int, float, None),
         vol.Optional(CONF_ATTRIBUTES): dict,
+        vol.Optional(CONF_AVAILABLE): bool,
         vol.Optional(CONF_REMOVE): bool,
         vol.Optional(CONF_DEVICE_INFO): dict,
         vol.Optional(CONF_DEVICE_TRIGGER): TRIGGER_SCHEMA,
@@ -214,8 +217,9 @@ def websocket_discovery(
         vol.Required(CONF_TYPE): "nodered/entity",
         vol.Required(CONF_SERVER_ID): cv.string,
         vol.Required(CONF_NODE_ID): cv.string,
-        vol.Required(CONF_STATE): vol.Any(bool, str, int, float, None),
-        vol.Optional(CONF_ATTRIBUTES, default={}): dict,
+        vol.Optional(CONF_STATE): vol.Any(bool, str, int, float, None),
+        vol.Optional(CONF_ATTRIBUTES): dict,
+        vol.Optional(CONF_AVAILABLE): bool,
     }
 )
 def websocket_entity(
@@ -247,12 +251,48 @@ def websocket_config_update(
     connection.send_message(result_message(msg[CONF_ID]))
 
 
+def _store_contrib_version(hass: HomeAssistant, contrib_version: str | None) -> None:
+    """Persist or clear contrib package version on the Node-RED config entry."""
+    entries = hass.config_entries.async_entries(DOMAIN)
+    if not entries:
+        return
+    entry = entries[0]
+    new_data = dict(entry.data)
+    if contrib_version:
+        new_data[CONF_CONTRIB_VERSION] = contrib_version
+    else:
+        new_data.pop(CONF_CONTRIB_VERSION, None)
+    if new_data != entry.data:
+        hass.config_entries.async_update_entry(entry, data=new_data)
+
+
 @require_admin
-@websocket_command({vol.Required(CONF_TYPE): "nodered/version"})
+@websocket_command(
+    {
+        vol.Required(CONF_TYPE): "nodered/version",
+        vol.Optional(CONF_CONTRIB_VERSION): cv.string,
+    }
+)
 def websocket_version(
     hass: HomeAssistant, connection: ActiveConnection, msg: dict[str, Any]
 ) -> None:
-    """Version command."""
+    """Version command.
+
+    Optional ``contrib_version`` is stored on the config entry. Only update when
+    the key is present so a version probe without it does not clear a prior
+    announce. Empty string clears. On announce, register a disconnect callback
+    so reconnect from a contrib that does not announce clears the stored value.
+    """
+    if CONF_CONTRIB_VERSION in msg:
+
+        def clear_contrib_version() -> None:
+            _store_contrib_version(hass, None)
+
+        contrib_version = msg[CONF_CONTRIB_VERSION]
+        _store_contrib_version(hass, contrib_version or None)
+        if contrib_version:
+            connection.subscriptions[msg[CONF_ID]] = clear_contrib_version
+
     connection.send_message(result_message(msg[CONF_ID], VERSION))
 
 
