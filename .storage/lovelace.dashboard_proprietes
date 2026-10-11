@@ -6,9 +6,9 @@
     "config": {
       "wallpanel": {
         "enabled": true,
-        "hide_toolbar": true,
+        "hide_toolbar": false,
         "hide_sidebar": true,
-        "hide_toolbar_action_icons": false,
+        "hide_toolbar_action_icons": true,
         "idle_time": 0,
         "fullscreen": false,
         "profiles": {
@@ -16,7 +16,8 @@
             "enabled": true,
             "hide_toolbar": false,
             "hide_sidebar": false,
-            "fullscreen": false
+            "fullscreen": false,
+            "hide_toolbar_action_icons": false
           }
         }
       },
@@ -431,12 +432,232 @@
               "type": "grid",
               "cards": [
                 {
+                  "type": "custom:weather-card",
+                  "entity": "weather.meteo_france_forecast_for_city_saint_martinien_auvergne_03_fr_saint_martinien"
+                }
+              ]
+            },
+            {
+              "type": "grid",
+              "cards": [
+                {
                   "type": "heading",
-                  "heading": "New section"
+                  "heading": "Étage",
+                  "heading_style": "title",
+                  "icon": "mdi:home-floor-1",
+                  "grid_options": {
+                    "columns": "full",
+                    "rows": "auto"
+                  }
+                },
+                {
+                  "type": "custom:vertical-stack-in-card",
+                  "cards": [
+                    {
+                      "show_state": true,
+                      "show_name": true,
+                      "camera_view": "auto",
+                      "fit_mode": "cover",
+                      "type": "picture-entity",
+                      "entity": "camera.camera_etage_domerat",
+                      "camera_image": "camera.camera_etage_domerat"
+                    },
+                    {
+                      "type": "horizontal-stack",
+                      "cards": [
+                        {
+                          "type": "tile",
+                          "entity": "siren.camera_etage_domerat_siren",
+                          "name": {
+                            "type": "entity"
+                          },
+                          "show_entity_picture": false,
+                          "hide_state": true,
+                          "vertical": true,
+                          "features_position": "bottom"
+                        },
+                        {
+                          "type": "tile",
+                          "entity": "switch.camera_etage_domerat_privacy_mode",
+                          "name": {
+                            "type": "entity"
+                          },
+                          "show_entity_picture": false,
+                          "hide_state": true,
+                          "vertical": true,
+                          "features_position": "bottom"
+                        },
+                        {
+                          "type": "tile",
+                          "entity": "select.camera_etage_domerat_record_mode",
+                          "name": {
+                            "type": "entity"
+                          },
+                          "show_entity_picture": false,
+                          "hide_state": true,
+                          "vertical": true,
+                          "features_position": "bottom"
+                        }
+                      ]
+                    }
+                  ],
+                  "grid_options": {
+                    "columns": "full"
+                  }
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.thermometre_etage_domerat_humidity",
+                  "features": [
+                    {
+                      "type": "trend-graph"
+                    }
+                  ]
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.thermometre_etage_domerat_temperature",
+                  "features": [
+                    {
+                      "type": "trend-graph"
+                    }
+                  ]
+                },
+                {
+                  "type": "tile",
+                  "entity": "binary_sensor.porte_etage_domerat_door"
+                },
+                {
+                  "type": "tile",
+                  "entity": "binary_sensor.porte_escalier_domerat_door"
+                },
+                {
+                  "type": "tile",
+                  "entity": "binary_sensor.detecteur_incendie_etage_smoke"
+                },
+                {
+                  "type": "tile",
+                  "entity": "switch.prise_chauffage_etage_domerat_socket",
+                  "features": [
+                    {
+                      "type": "toggle"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "heading",
+                  "heading": "RDC",
+                  "heading_style": "title",
+                  "icon": "mdi:home-floor-0",
+                  "grid_options": {
+                    "columns": "full",
+                    "rows": "auto"
+                  }
+                },
+                {
+                  "type": "custom:vertical-stack-in-card",
+                  "cards": [
+                    {
+                      "type": "picture-entity",
+                      "entity": "camera.camera_rdc_domerat",
+                      "camera_image": "camera.camera_rdc_domerat"
+                    },
+                    {
+                      "type": "horizontal-stack",
+                      "cards": [
+                        {
+                          "type": "tile",
+                          "entity": "siren.camera_rdc_domerat_siren",
+                          "name": {
+                            "type": "entity"
+                          },
+                          "show_entity_picture": false,
+                          "hide_state": true,
+                          "vertical": true,
+                          "features_position": "bottom"
+                        },
+                        {
+                          "type": "tile",
+                          "entity": "switch.camera_rdc_domerat_privacy_mode",
+                          "name": {
+                            "type": "entity"
+                          },
+                          "show_entity_picture": false,
+                          "hide_state": true,
+                          "vertical": true,
+                          "features_position": "bottom"
+                        },
+                        {
+                          "type": "tile",
+                          "entity": "select.camera_rdc_domerat_record_mode",
+                          "name": {
+                            "type": "entity"
+                          },
+                          "show_entity_picture": false,
+                          "hide_state": true,
+                          "vertical": true,
+                          "features_position": "bottom"
+                        }
+                      ]
+                    }
+                  ],
+                  "grid_options": {
+                    "columns": "full"
+                  }
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.thermometre_salon_humidity",
+                  "features": [
+                    {
+                      "type": "trend-graph"
+                    }
+                  ]
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.thermometre_salon_temperature",
+                  "features": [
+                    {
+                      "type": "trend-graph"
+                    }
+                  ]
+                },
+                {
+                  "type": "tile",
+                  "entity": "binary_sensor.porte_arriere_domerat_door"
+                },
+                {
+                  "type": "tile",
+                  "entity": "binary_sensor.porte_garage_domerat_door"
+                },
+                {
+                  "type": "tile",
+                  "entity": "binary_sensor.detecteur_incendie_rdc_smoke"
+                },
+                {
+                  "type": "tile",
+                  "entity": "switch.prise_chauffage_rdc_domerat_socket",
+                  "features": [
+                    {
+                      "type": "toggle"
+                    }
+                  ]
                 }
               ]
             }
-          ]
+          ],
+          "header": {
+            "card": {
+              "type": "markdown",
+              "content": "# Domérat"
+            }
+          }
         }
       ]
     }
