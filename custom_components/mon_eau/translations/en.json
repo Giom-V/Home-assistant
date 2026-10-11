@@ -1,0 +1,198 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Mon Eau",
+        "description": "Choose what to monitor. Each platform creates its own sensors and Lovelace card.",
+        "data": { "features": "Platforms" }
+      },
+      "commune": {
+        "title": "Your municipality",
+        "description": "Municipality name or postal code.",
+        "data": { "recherche": "Municipality" }
+      },
+      "commune_choix": {
+        "title": "Confirm the municipality",
+        "data": { "commune": "Municipality" }
+      },
+      "reseau": {
+        "title": "Distribution networks",
+        "description": "A municipality can be served by several networks with different results — you can monitor several, each gets its own device. The (fresher) ARS bulletin requires a specific network.",
+        "data": { "reseau": "Networks" }
+      },
+      "hydro": {
+        "title": "Water level / flow stations",
+        "description": "Real-time hydrometric stations, sorted by distance. Each selected station gets its own device.",
+        "data": { "station": "Stations" }
+      },
+      "qualite": {
+        "title": "River health station",
+        "description": "Samples (temperature, oxygen, pH, nitrates) every 1-2 months, published with a delay of several months. Only stations with recent samples are listed.",
+        "data": { "station": "Station" }
+      },
+      "temperature": {
+        "title": "Continuous temperature station",
+        "description": "Rare: most stations of this network are discontinued. Only those with measurements in the last 30 days are listed.",
+        "data": { "station": "Station" }
+      },
+      "piezo": {
+        "title": "Piezometers (groundwater)",
+        "description": "Groundwater level, often hourly real-time. Only active piezometers are listed — one device per selected piezometer.",
+        "data": { "station": "Piezometers" }
+      },
+      "baignade": {
+        "title": "Bathing sites",
+        "description": "Sites monitored by the health agency in the department (lakes, rivers, sea). Seasonal data — one device per selected site.",
+        "data": { "site": "Sites" }
+      }
+    },
+    "error": {
+      "cannot_connect": "Unable to reach the service. Try again.",
+      "commune_introuvable": "No municipality found with this name."
+    },
+    "abort": {
+      "already_configured": "This municipality is already configured."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Edit Mon Eau",
+        "description": "Add or remove platforms; the following steps adjust networks and stations (current choices prefilled).",
+        "data": { "features": "Platforms" }
+      },
+      "reseau": {
+        "title": "Distribution networks",
+        "description": "Add or remove networks — each network gets its own device.",
+        "data": { "reseau": "Networks" }
+      },
+      "hydro": {
+        "title": "Water level / flow stations",
+        "description": "Real-time hydrometric stations, sorted by distance.",
+        "data": { "station": "Stations" }
+      },
+      "qualite": {
+        "title": "River health station",
+        "description": "Samples every 1-2 months, published with a delay.",
+        "data": { "station": "Station" }
+      },
+      "temperature": {
+        "title": "Continuous temperature station",
+        "description": "Only stations with recent measurements are listed.",
+        "data": { "station": "Station" }
+      },
+      "piezo": {
+        "title": "Piezometers (groundwater)",
+        "description": "One device per selected piezometer.",
+        "data": { "station": "Piezometers" }
+      },
+      "baignade": {
+        "title": "Bathing sites",
+        "description": "One device per selected site.",
+        "data": { "site": "Sites" }
+      }
+    },
+    "error": {
+      "cannot_connect": "Unable to reach the service. Try again."
+    }
+  },
+  "selector": {
+    "features": {
+      "options": {
+        "eau_potable": "Tap water (ARS sanitary control)",
+        "riviere": "River (level, flow, flood warning, health)",
+        "nappe": "Groundwater (piezometer)",
+        "secheresse": "Drought (VigiEau restrictions, dry streams)",
+        "baignade": "Bathing (health agency site quality, seasonal)"
+      }
+    }
+  },
+  "entity": {
+    "binary_sensor": {
+      "conformite": { "name": "Water compliant" },
+      "restrictions": { "name": "Water restrictions" },
+      "baignade": { "name": "Bathing water" }
+    },
+    "sensor": {
+      "dernier_prelevement": { "name": "Last sampling" },
+      "nitrates": { "name": "Nitrates" },
+      "pesticides": { "name": "Total pesticides" },
+      "e_coli": { "name": "E. coli" },
+      "enterocoques": { "name": "Enterococci" },
+      "hauteur": { "name": "Water level" },
+      "debit": { "name": "Flow" },
+      "tendance_hauteur": {
+        "name": "Level trend",
+        "state": {
+          "stable": "Stable",
+          "monte_lente": "Rising slowly",
+          "monte_rapide": "Rising fast",
+          "descend_lente": "Falling slowly",
+          "descend_rapide": "Falling fast"
+        }
+      },
+      "tendance_nappe": {
+        "name": "Groundwater trend",
+        "state": {
+          "stable": "Stable",
+          "monte_lente": "Rising slowly",
+          "monte_rapide": "Rising fast",
+          "descend_lente": "Falling slowly",
+          "descend_rapide": "Falling fast"
+        }
+      },
+      "remplissage_nappe": { "name": "Groundwater fill level" },
+      "situation_nappe": {
+        "name": "Groundwater situation",
+        "state": {
+          "tres_bas": "Very low",
+          "bas": "Low",
+          "normal": "Normal",
+          "haut": "High",
+          "tres_haut": "Very high"
+        }
+      },
+      "situation_hydrologique": {
+        "name": "Hydrological situation",
+        "state": {
+          "tres_bas": "Very low",
+          "bas": "Low",
+          "normal": "Normal",
+          "haut": "High",
+          "tres_haut": "Very high"
+        }
+      },
+      "vigilance_crues": {
+        "name": "Flood warning",
+        "state": {
+          "verte": "Green",
+          "jaune": "Yellow",
+          "orange": "Orange",
+          "rouge": "Red"
+        }
+      },
+      "temperature_eau": { "name": "Water temperature" },
+      "oxygene": { "name": "Dissolved oxygen" },
+      "ph": { "name": "pH" },
+      "nitrates_riviere": { "name": "River nitrates" },
+      "profondeur_nappe": { "name": "Groundwater depth" },
+      "niveau_ngf": { "name": "NGF level" },
+      "derniere_mesure_riviere": { "name": "Last real-time reading" },
+      "dernier_releve_sante": { "name": "Last health survey" },
+      "derniere_mesure_nappe": { "name": "Last measurement" },
+      "dernier_arrete": { "name": "Latest decree" },
+      "classement_baignade": { "name": "Bathing classification" },
+      "dernier_controle_baignade": { "name": "Last bathing control" },
+      "gravite_secheresse": {
+        "name": "Drought level",
+        "state": {
+          "aucune": "No restriction",
+          "vigilance": "Vigilance",
+          "alerte": "Alert",
+          "alerte_renforcee": "Reinforced alert",
+          "crise": "Crisis"
+        }
+      }
+    }
+  }
+}
