@@ -104,18 +104,31 @@
     - platform: state
       entity_id: binary_sensor.people_home
       to: "on"
+  condition:
+    - condition: state
+      entity_id: input_boolean.away_mode
+      state: "on"
   action:
     - service: input_boolean.turn_off
       data:
         entity_id: input_boolean.away_mode
     - service: media_player.volume_set
+      target:
+        entity_id:
+          - media_player.salle_de_bain
+          - media_player.mini_cuisine
+          - media_player.enceinte_aurore_2
+          - media_player.salle_de_jeux_2
+          - media_player.eilish_2
+          - media_player.salon_a_manger_2
+          - media_player.salle_de_bain_2
+          - media_player.autres_2
+          - media_player.enceinte_aurore
+          - media_player.salle_de_jeux
+          - media_player.eilish
+          - media_player.salon_a_manger
       data:
-        entity_id: "all"
         volume_level: 0.5
-    - service: media_player.volume_set
-      data:
-        entity_id: media_player.salon
-        volume_level: 0.2
 - id: motion_detected
   alias: Motion detected
   description: "M'alerte si un mouvement est détecté quand le mode absence est activé"
