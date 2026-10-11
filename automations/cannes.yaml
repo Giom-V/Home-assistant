@@ -54,7 +54,11 @@
   trigger:
     - platform: state
       entity_id:
-        - binary_sensor.placard_prive_door
+        - binary_sensor.placard_chambre_cannes_door
+      to: "on"
+    - platform: state
+      entity_id:
+        - binary_sensor.meuble_salon_cannes_door
       to: "on"
   conditions:
     - condition: not
