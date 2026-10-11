@@ -132,7 +132,9 @@
                 {
                   "condition": "user",
                   "users": [
-                    "2a54ceccc9d74a409021b53d9ff4a71a"
+                    "2a54ceccc9d74a409021b53d9ff4a71a",
+                    "2a54ceccc9d74a409021b53d9ff4a71a",
+                    "c8df84d1ca1e4988b84f25c91d70d56e"
                   ]
                 }
               ],
@@ -149,7 +151,7 @@
                   }
                 ],
                 "heading": "👼 Aurore",
-                "link": "/lovelace/people",
+                "link": "/lovelace/aurore",
                 "row_size": 2,
                 "type": "custom:banner-card"
               }
@@ -604,12 +606,19 @@
               "background": "#706F9B",
               "entities": [
                 {
-                  "entity": "sensor.aurore_bedroom_temperature",
-                  "name": "Temperature"
+                  "entity": "sensor.chambre_aurore_temperature",
+                  "name": "Temperature",
+                  "size": 2
                 },
                 {
-                  "entity": "sensor.aurore_bedroom_humidity",
-                  "name": "Humidity"
+                  "entity": "sensor.chambre_aurore_humidity",
+                  "name": "Humidity",
+                  "size": 2
+                },
+                {
+                  "entity": "sensor.chambre_aurore_carbon_dioxide",
+                  "name": "CO2",
+                  "size": 2
                 },
                 {
                   "action": {
@@ -620,7 +629,8 @@
                     "off": "mdi:lightbulb-off-outline",
                     "on": "mdi:lightbulb-on"
                   },
-                  "name": ""
+                  "name": "",
+                  "size": 3
                 },
                 {
                   "action": {
@@ -631,7 +641,8 @@
                     "off": "mdi:lightbulb-off-outline",
                     "on": "mdi:lightbulb-on"
                   },
-                  "name": ""
+                  "name": "",
+                  "size": 3
                 },
                 {
                   "action": {
@@ -639,7 +650,8 @@
                   },
                   "entity": "script.vacuum_aurore_bedroom",
                   "icon": "mdi:robot-vacuum",
-                  "name": "Aspi"
+                  "name": "Aspi",
+                  "size": 3
                 },
                 {
                   "action": {
@@ -652,11 +664,12 @@
                     "opening": "mdi:chevron-double-up",
                     "closing": "mdi:chevron-double-down"
                   },
-                  "name": "Velux"
+                  "name": "Velux",
+                  "size": 3
                 }
               ],
               "heading": "🛏 Chambre d'Aurore",
-              "row_size": 2,
+              "row_size": 6,
               "type": "custom:banner-card"
             },
             {
@@ -1446,7 +1459,7 @@
                       }
                     },
                     {
-                      "entity": "sensor.aurore_bedroom_temperature",
+                      "entity": "sensor.chambre_aurore_temperature",
                       "name": "Chambre d'Aurore",
                       "line": {
                         "color": "#C7F8F9"
@@ -1838,7 +1851,7 @@
                   "entity": "device_tracker.cellclaire"
                 },
                 {
-                  "entity": "device_tracker.pixel_3"
+                  "entity": "device_tracker.pixel_8_pro_claire"
                 }
               ],
               "title": "Claire",
@@ -1962,7 +1975,7 @@
                   }
                 },
                 {
-                  "entity": "sensor.aurore_bedroom_temperature",
+                  "entity": "sensor.chambre_aurore_temperature",
                   "name": "Chambre d'Aurore",
                   "line": {
                     "color": "#706F9B - entity: sensor.playroom_temperature name: Salle de jeux line: color: "
@@ -4537,6 +4550,298 @@
               "title": "Tempo - Cycle"
             }
           ]
+        },
+        {
+          "type": "sections",
+          "max_columns": 4,
+          "title": "Aurore",
+          "path": "aurore",
+          "icon": "mdi:aurora",
+          "sections": [
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "heading",
+                  "heading": "Emplois du temps",
+                  "heading_style": "title",
+                  "icon": "far:calendar-days"
+                },
+                {
+                  "type": "custom:ecole_directe-emploi_temps-card",
+                  "display_header": true,
+                  "display_lunch_break": true,
+                  "display_classroom": true,
+                  "display_teacher": true,
+                  "display_day_hours": true,
+                  "dim_ended_lessons": true,
+                  "enable_slider": false,
+                  "display_free_time_slots": true,
+                  "switch_to_next_day": false,
+                  "entity": "sensor.ed_aurore_vernade_emploi_du_temps_aujourd_hui"
+                },
+                {
+                  "type": "custom:ecole_directe-emploi_temps-card",
+                  "display_header": true,
+                  "display_lunch_break": true,
+                  "display_classroom": true,
+                  "display_teacher": true,
+                  "display_day_hours": true,
+                  "dim_ended_lessons": true,
+                  "enable_slider": false,
+                  "display_free_time_slots": true,
+                  "switch_to_next_day": false,
+                  "entity": "sensor.ed_aurore_vernade_emploi_du_temps_demain"
+                }
+              ]
+            },
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "heading",
+                  "heading": "Devoirs",
+                  "heading_style": "title",
+                  "icon": "mdi:draw-pen"
+                },
+                {
+                  "type": "custom:ecole_directe-evaluations-card",
+                  "display_header": true,
+                  "display_description": true,
+                  "display_teacher": true,
+                  "display_date": true,
+                  "display_comment": true,
+                  "max_evaluations": null,
+                  "mapping_evaluations": {},
+                  "entity": "sensor.ed_aurore_vernade_evaluations"
+                },
+                {
+                  "type": "custom:ecole_directe-devoirs-card",
+                  "display_header": true,
+                  "reduce_done_devoir": true,
+                  "display_done_devoir": true,
+                  "enable_slider": false,
+                  "entity": "sensor.ed_aurore_vernade_devoirs_semaine_en_cours"
+                },
+                {
+                  "type": "custom:ecole_directe-devoirs-card",
+                  "display_header": true,
+                  "reduce_done_devoir": true,
+                  "display_done_devoir": true,
+                  "enable_slider": false,
+                  "entity": "sensor.ed_aurore_vernade_devoirs_semaine_suivante"
+                },
+                {
+                  "type": "custom:ecole_directe-devoirs-card",
+                  "display_header": true,
+                  "reduce_done_devoir": true,
+                  "display_done_devoir": true,
+                  "enable_slider": false,
+                  "entity": "sensor.ed_aurore_vernade_devoirs_semaine_suivante"
+                }
+              ]
+            },
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "heading",
+                  "heading": "Absences/Retards",
+                  "heading_style": "title",
+                  "icon": "mdi:emoticon-sick-outline"
+                },
+                {
+                  "type": "custom:ecole_directe-absences-retards-card",
+                  "display_header": true,
+                  "max": null,
+                  "entity": "sensor.ed_aurore_vernade_retards"
+                },
+                {
+                  "type": "custom:ecole_directe-absences-retards-card",
+                  "display_header": true,
+                  "max": null,
+                  "entity": "sensor.ed_aurore_vernade_absences"
+                }
+              ]
+            },
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "heading",
+                  "heading": "Notes",
+                  "heading_style": "title",
+                  "icon": "mdi:star"
+                },
+                {
+                  "type": "custom:ecole_directe-moyennes-card",
+                  "display_header": true,
+                  "display_class_average": true,
+                  "compare_with_class_average": true,
+                  "compare_with_ratio": null,
+                  "display_class_min": true,
+                  "display_class_max": true,
+                  "entity": "sensor.ed_aurore_vernade_moyenne_generale"
+                },
+                {
+                  "type": "custom:ecole_directe-notes-card",
+                  "grade_format": "full",
+                  "display_header": true,
+                  "display_date": true,
+                  "display_comment": true,
+                  "display_class_average": true,
+                  "compare_with_class_average": true,
+                  "compare_with_ratio": null,
+                  "display_coefficient": true,
+                  "display_class_min": true,
+                  "display_class_max": true,
+                  "display_new_grade_notice": true,
+                  "max_grades": null,
+                  "entity": "sensor.ed_aurore_vernade_notes"
+                }
+              ]
+            }
+          ],
+          "header": {
+            "card": {
+              "type": "markdown",
+              "text_only": true,
+              "content": "# Aurore"
+            }
+          },
+          "badges": [
+            {
+              "type": "entity",
+              "show_name": true,
+              "show_state": true,
+              "show_icon": true,
+              "entity": "sensor.ed_aurore_vernade_moyenne_generale",
+              "name": {
+                "type": "entity"
+              },
+              "state_content": "Appréciations"
+            },
+            {
+              "type": "entity",
+              "show_name": true,
+              "show_state": true,
+              "show_icon": true,
+              "entity": "sensor.ed_aurore_vernade_francais",
+              "name": {
+                "type": "entity"
+              },
+              "state_content": "Appréciations"
+            },
+            {
+              "type": "entity",
+              "show_name": true,
+              "show_state": true,
+              "show_icon": true,
+              "entity": "sensor.ed_aurore_vernade_mathematiques",
+              "name": {
+                "type": "entity"
+              },
+              "state_content": "Appréciations",
+              "icon": "mdi:calculator-variant-outline"
+            },
+            {
+              "type": "entity",
+              "show_name": true,
+              "show_state": true,
+              "show_icon": true,
+              "entity": "sensor.ed_aurore_vernade_histoire_geographie",
+              "name": {
+                "type": "entity"
+              },
+              "state_content": "Appréciations",
+              "icon": "mdi:earth"
+            },
+            {
+              "type": "entity",
+              "show_name": true,
+              "show_state": true,
+              "show_icon": true,
+              "entity": "sensor.ed_aurore_vernade_svt",
+              "name": {
+                "type": "entity"
+              },
+              "state_content": "Appréciations",
+              "icon": "mdi:microscope"
+            },
+            {
+              "type": "entity",
+              "show_name": true,
+              "show_state": true,
+              "show_icon": true,
+              "entity": "sensor.ed_aurore_vernade_physique_chimie",
+              "name": {
+                "type": "entity"
+              },
+              "state_content": "Appréciations",
+              "icon": "mdi:atom"
+            },
+            {
+              "type": "entity",
+              "show_name": true,
+              "show_state": true,
+              "show_icon": true,
+              "entity": "sensor.ed_aurore_vernade_anglais",
+              "name": {
+                "type": "entity"
+              },
+              "state_content": "Appréciations",
+              "icon": "fas:language"
+            },
+            {
+              "type": "entity",
+              "show_name": true,
+              "show_state": true,
+              "show_icon": true,
+              "entity": "sensor.ed_aurore_vernade_arts_plastiques",
+              "name": {
+                "type": "entity"
+              },
+              "state_content": "Appréciations",
+              "icon": "mdi:palette"
+            },
+            {
+              "type": "entity",
+              "show_name": true,
+              "show_state": true,
+              "show_icon": true,
+              "entity": "sensor.ed_aurore_vernade_education_musicale",
+              "name": {
+                "type": "entity"
+              },
+              "state_content": "Appréciations",
+              "icon": "fas:music"
+            },
+            {
+              "type": "entity",
+              "show_name": true,
+              "show_state": true,
+              "show_icon": true,
+              "entity": "sensor.ed_aurore_vernade_eps",
+              "name": {
+                "type": "entity"
+              },
+              "state_content": "Appréciations",
+              "icon": "mdi:karate"
+            },
+            {
+              "type": "entity",
+              "show_name": true,
+              "show_state": true,
+              "show_icon": true,
+              "entity": "sensor.ed_aurore_vernade_as",
+              "name": {
+                "type": "entity"
+              },
+              "state_content": "Appréciations",
+              "icon": "mdi:human-female-dance"
+            }
+          ],
+          "cards": []
         }
       ],
       "title": "21 Bretonnière"
