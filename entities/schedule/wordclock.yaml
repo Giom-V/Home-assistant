@@ -1,0 +1,43 @@
+wordclock_normal:
+  name: "Wordclock - Normal"
+  icon: "mdi:calendar-clock"
+  monday:
+    - from: "07:00:00"
+      to: "22:00:00"
+  tuesday:
+    - from: "07:00:00"
+      to: "22:00:00"
+  wednesday:
+    - from: "07:00:00"
+      to: "22:00:00"
+  thursday:
+    - from: "07:00:00"
+      to: "22:00:00"
+  friday:
+    - from: "07:00:00"
+      to: "22:00:00"
+
+wordclock_holidays:
+  name: "Wordclock - Holidays"
+  icon: "mdi:calendar-clock"
+  monday:
+    - from: "08:00:00"
+      to: "23:00:00"
+  tuesday:
+    - from: "08:00:00"
+      to: "23:00:00"
+  wednesday:
+    - from: "08:00:00"
+      to: "23:00:00"
+  thursday:
+    - from: "08:00:00"
+      to: "23:00:00"
+  friday:
+    - from: "08:00:00"
+      to: "23:00:00"
+  saturday:
+    - from: "08:00:00"
+      to: "23:00:00"
+  sunday:
+    - from: "08:00:00"
+      to: "23:00:00"

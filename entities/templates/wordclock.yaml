@@ -1,0 +1,19 @@
+- binary_sensor:
+    - name: "Wordclock Schedule Active"
+      unique_id: "wordclock_schedule_active"
+      icon: mdi:calendar-clock
+      state: >-
+        {% set is_weekend = now().weekday() >= 5 %}
+        {% set is_holiday = is_state('binary_sensor.workday_sensor', 'off') and not is_weekend %}
+        {% set is_vacation = is_state('sensor.vacances_scolaires_aujourd_hui_rennes', 'En vacances')
+           or is_state('sensor.vacances_scolaires_aujourd_hui', 'En vacances')
+           or is_state('sensor.vacances_scolaires_aujourd_hui_zone_b', 'En vacances')
+           or is_state('binary_sensor.vacances_scolaires', 'on')
+           or is_state('calendar.vacances_scolaires', 'on') %}
+        {% set use_holidays = is_weekend or is_holiday or is_vacation %}
+
+        {% if use_holidays %}
+          {{ is_state('schedule.wordclock_holidays', 'on') }}
+        {% else %}
+          {{ is_state('schedule.wordclock_normal', 'on') }}
+        {% endif %}
