@@ -1,11 +1,17 @@
 - id: wordclock_schedule_on
   alias: "Wordclock - Allumage selon planning"
-  description: "Allume l'horloge lorsque le planning s'active"
+  description: "Allume l'horloge lorsque le planning s'active (semaine ou week-end/férié/vacances)"
   mode: single
   trigger:
     - platform: state
-      entity_id: schedule.wordclock
+      entity_id: binary_sensor.wordclock_schedule_active
       to: "on"
+    - platform: homeassistant
+      event: start
+  condition:
+    - condition: state
+      entity_id: binary_sensor.wordclock_schedule_active
+      state: "on"
   action:
     - service: light.turn_on
       target:
@@ -17,7 +23,7 @@
   mode: single
   trigger:
     - platform: state
-      entity_id: schedule.wordclock
+      entity_id: binary_sensor.wordclock_schedule_active
       to: "off"
   action:
     - service: light.turn_off
