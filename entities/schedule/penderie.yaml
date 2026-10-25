@@ -1,0 +1,43 @@
+penderie_normal:
+  name: "Penderie - Normal"
+  icon: "mdi:wardrobe-outline"
+  monday:
+    - from: "09:00:00"
+      to: "22:00:00"
+  tuesday:
+    - from: "09:00:00"
+      to: "22:00:00"
+  wednesday:
+    - from: "09:00:00"
+      to: "22:00:00"
+  thursday:
+    - from: "09:00:00"
+      to: "22:00:00"
+  friday:
+    - from: "09:00:00"
+      to: "22:00:00"
+
+penderie_holidays:
+  name: "Penderie - Holidays"
+  icon: "mdi:wardrobe-outline"
+  monday:
+    - from: "12:00:00"
+      to: "23:00:00"
+  tuesday:
+    - from: "12:00:00"
+      to: "23:00:00"
+  wednesday:
+    - from: "12:00:00"
+      to: "23:00:00"
+  thursday:
+    - from: "12:00:00"
+      to: "23:00:00"
+  friday:
+    - from: "12:00:00"
+      to: "23:00:00"
+  saturday:
+    - from: "12:00:00"
+      to: "23:00:00"
+  sunday:
+    - from: "12:00:00"
+      to: "23:00:00"
