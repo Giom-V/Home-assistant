@@ -10,18 +10,33 @@
   alias: Press office button (switch on/off screens)
   description: "Bascule l'alimentation des écrans en appuyant sur le bouton du bureau"
   triggers:
-    - domain: mqtt
-      device_id: 09d4ba3dded13922cf5b606b4bfd261b
-      type: action
-      subtype: single
-      trigger: device
+    - trigger: mqtt
+      topic: "zigbee2mqtt/Office button/action"
+      payload: "single"
   conditions: []
   actions:
-    - service: switch.toggle
-      target:
-        entity_id:
-          - switch.multiprise_bureau_l2
-          - switch.multiprise_bureau_l1
+    - choose:
+        - conditions:
+            - condition: or
+              conditions:
+                - condition: state
+                  entity_id: switch.multiprise_bureau_l1
+                  state: "on"
+                - condition: state
+                  entity_id: switch.multiprise_bureau_l2
+                  state: "on"
+          sequence:
+            - service: switch.turn_off
+              target:
+                entity_id:
+                  - switch.multiprise_bureau_l1
+                  - switch.multiprise_bureau_l2
+      default:
+        - service: switch.turn_on
+          target:
+            entity_id:
+              - switch.multiprise_bureau_l1
+              - switch.multiprise_bureau_l2
   mode: single
 
 - id: "office_window_rain_notification"
