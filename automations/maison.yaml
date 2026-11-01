@@ -6,15 +6,12 @@
       at: "23:00:00"
   condition: []
   action:
-    - type: turn_off
-      entity_id: light.lumiere_exterieure_1_forceonlight
-      domain: light
-    - type: turn_off
-      entity_id: light.lampe_exterieure_2
-      domain: light
-    - type: turn_off
-      entity_id: light.lampe_exterieure_3
-      domain: light
+    - action: light.turn_off
+      target:
+        entity_id:
+          - light.lumiere_exterieure_1_forceonlight
+          - light.lampe_exterieure_2
+          - light.lampe_exterieure_3
     - service: select.select_option
       data:
         option: "Off"

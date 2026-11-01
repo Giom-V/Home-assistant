@@ -133,19 +133,15 @@
   alias: Motion detected
   description: "M'alerte si un mouvement est détecté quand le mode absence est activé"
   trigger:
-    - type: motion
-      platform: device
-      device_id: f3d362f3864cea27ab830b74d5a53160
-      entity_id: 022eee26a289f45cc2f63291d0672e08
-      domain: binary_sensor
+    - platform: state
+      entity_id: binary_sensor.sous_sol_motion
+      to: "on"
       id: motion_detected_in_basement
       for:
         minutes: 2
-    - type: motion
-      platform: device
-      device_id: 503cfe5383b425946724e6829258c82c
-      entity_id: 5ea98d95b2bee9ed8e7d62822437373e
-      domain: binary_sensor
+    - platform: state
+      entity_id: binary_sensor.salle_a_manger_motion
+      to: "on"
       id: motion_detected_in_kitchen
       for:
         minutes: 2
@@ -355,7 +351,7 @@
               id:
                 - motion_detected_in_stairs
           sequence:
-            - service: rest_command.gchatalert
+            - action: rest_command.gchatalert
               data:
                 text: Mouvement dans l'escalier!
         - conditions:
@@ -363,7 +359,7 @@
               id:
                 - motion_detected_in_living_room
           sequence:
-            - service: rest_command.gchatalert
+            - action: rest_command.gchatalert
               data:
                 text: Présence dans le salon!
     - service: media_player.volume_set
@@ -640,12 +636,10 @@
         - condition: numeric_state
           entity_id: sensor.home_guillaume_distance
           above: 2
-          for: "00:05:00"
         - condition: numeric_state
           entity_id: sensor.home_claire_distance
           above: 2
-          for: "00:05:00"
   action:
-    - service: switch.turn_off
+    - action: switch.turn_off
       target:
         entity_id: switch.porte_garage

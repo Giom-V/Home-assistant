@@ -59,10 +59,10 @@
   description: "Éteint toutes les lumières quand personne n'est à la maison depuis 30 minutes"
   trigger:
     - entity_id: binary_sensor.people_home
-      for: 30m
+      for: "00:30:00"
       from: "on"
       platform: state
       to: "off"
   action:
     - entity_id: scene.lightsoff
-      service: scene.turn_on
+      action: scene.turn_on
