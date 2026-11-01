@@ -145,6 +145,10 @@
         "stat_consumption": "sensor.lave_linge_energy",
         "stat_rate": "sensor.lave_linge_power",
         "name": "Lave-linge"
+      },
+      {
+        "stat_consumption": "sensor.aeration_sous_sol_energy",
+        "name": "Aération sous-sol "
       }
     ],
     "device_consumption_water": [
