@@ -13,7 +13,6 @@ import homeassistant.helpers.config_validation as cv
 from homeassistant.helpers.event import TrackTemplate
 from homeassistant.helpers.template import Template
 from homeassistant.helpers.typing import ConfigType
-import voluptuous as vol
 
 from custom_components.powercalc.const import (
     CONF_FIXED,
@@ -32,6 +31,7 @@ from custom_components.powercalc.strategy.multi_switch import CONFIG_SCHEMA as M
 from custom_components.powercalc.strategy.playbook import CONFIG_SCHEMA as PLAYBOOK_SCHEMA, PlaybookStrategy
 from custom_components.powercalc.strategy.strategy_interface import PowerCalculationStrategyInterface
 from custom_components.powercalc.strategy.wled import CONFIG_SCHEMA as WLED_SCHEMA
+from custom_components.powercalc.validation import vol
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -192,9 +192,10 @@ class CompositeStrategy(PowerCalculationStrategyInterface):
         for sub_strategy in self.strategies:
             sub_state = entity_state
             if sub_strategy.entity_id is not None:
-                sub_state = self.hass.states.get(sub_strategy.entity_id)
-                if sub_state is None or sub_state.state in UNAVAILABLE_STATES:
+                fetched_state = self.hass.states.get(sub_strategy.entity_id)
+                if fetched_state is None or fetched_state.state in UNAVAILABLE_STATES:
                     return None
+                sub_state = fetched_state
             value = await self._calculate_sub_strategy(sub_strategy, sub_state)
             if value is None:
                 continue

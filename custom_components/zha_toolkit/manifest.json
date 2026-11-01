@@ -11,8 +11,8 @@
     "issue_tracker": "https://github.com/mdeweerd/zha-toolkit/issues",
     "name": "ZHA \ud83e\uddf0 Toolkit",
     "requirements": [
-        "aiofiles>=0.4.0,<25",
+        "aiofiles>=0.4.0",
         "pytz>=2016.10"
     ],
-    "version": "v1.2.2"
+    "version": "v1.2.5"
 }

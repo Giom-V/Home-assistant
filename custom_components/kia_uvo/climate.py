@@ -65,6 +65,7 @@ class HyundaiKiaCarClimateControlSwitch(HyundaiKiaConnectEntity, ClimateEntity):
     }
 
     def get_internal_heat_int_for_climate_request(self) -> int:
+        """Map the current rear window / steering wheel heater state to the API heating code."""
         if (
             self.vehicle.steering_wheel_heater_is_on
             and self.vehicle.back_window_heater_is_on
@@ -112,6 +113,10 @@ class HyundaiKiaCarClimateControlSwitch(HyundaiKiaConnectEntity, ClimateEntity):
         """Get the Cars Climate Control Temperature Unit."""
         if self.vehicle._air_temperature_unit:
             return UnitOfTemperature(self.vehicle._air_temperature_unit)
+        # The library has no unit until the car reports a setpoint (e.g.
+        # airTemp "OFF" at startup), so fall back to HA's unit system.
+        if self.hass is not None:
+            return self.hass.config.units.temperature_unit
         return UnitOfTemperature.CELSIUS
 
     @property
@@ -132,7 +137,9 @@ class HyundaiKiaCarClimateControlSwitch(HyundaiKiaConnectEntity, ClimateEntity):
     @property
     def target_temperature_step(self) -> float | None:
         """Get the step size for adjusting the in-car target temperature."""
-        # TODO: get from lib
+        # Fahrenheit setpoints are whole degrees; Celsius ones take halves.
+        if self.temperature_unit == UnitOfTemperature.FAHRENHEIT:
+            return 1
         return 0.5
 
     @property
@@ -156,7 +163,6 @@ class HyundaiKiaCarClimateControlSwitch(HyundaiKiaConnectEntity, ClimateEntity):
     @property
     def hvac_mode(self) -> HVACMode | None:
         """Get the configured climate control operation mode."""
-
         if not self.vehicle.air_control_is_on:
             return HVACMode.OFF
 
@@ -203,7 +209,6 @@ class HyundaiKiaCarClimateControlSwitch(HyundaiKiaConnectEntity, ClimateEntity):
 
     async def async_set_hvac_mode(self, hvac_mode: HVACMode) -> None:
         """Set the operation mode of the in-car climate control."""
-
         if hvac_mode == HVACMode.OFF:
             await self.coordinator.async_stop_climate(self.vehicle.id)
         else:

@@ -33,6 +33,60 @@ const MAP_STYLES = {
 };
 const DEFAULT_MAP_STYLE = "osm";
 
+const DISPLAY_UNITS = {
+  altitude_unit: {
+    label: "Altitude units",
+    default: "both",
+    options: { both: "Meters and feet", m: "Meters", ft: "Feet" },
+  },
+  distance_unit: {
+    label: "Distance units",
+    default: "m",
+    options: { m: "Meters", km: "Kilometers", mi: "Miles", nmi: "Nautical miles" },
+  },
+  speed_unit: {
+    label: "Speed units",
+    default: "both",
+    options: { both: "km/h and knots", "km/h": "km/h", mph: "mph", kts: "Knots" },
+  },
+};
+const DEFAULT_DISPLAY_UNITS = Object.fromEntries(
+  Object.entries(DISPLAY_UNITS).map(([key, units]) => [key, units.default])
+);
+
+const DISPLAY_UNIT_ALIASES = {
+  altitude_unit: { meters: "m", metre: "m", metres: "m", feet: "ft", foot: "ft" },
+  distance_unit: {
+    meters: "m",
+    metre: "m",
+    metres: "m",
+    kilometers: "km",
+    kilometres: "km",
+    kilometer: "km",
+    kilometre: "km",
+    miles: "mi",
+    mile: "mi",
+    nm: "nmi",
+    nautical: "nmi",
+  },
+  speed_unit: {
+    kmh: "km/h",
+    kmph: "km/h",
+    kph: "km/h",
+    knots: "kts",
+    knot: "kts",
+    kt: "kts",
+  },
+};
+
+function resolveDisplayUnit(key, value) {
+  const raw = typeof value === "string" ? value.trim().toLowerCase() : "";
+  const unit = DISPLAY_UNIT_ALIASES[key]?.[raw] || raw;
+  return Object.keys(DISPLAY_UNITS[key].options).includes(unit)
+    ? unit
+    : DISPLAY_UNITS[key].default;
+}
+
 function resolveMapStyle(value) {
   const key = typeof value === "string" ? value.trim().toLowerCase() : "";
   return MAP_STYLES[key] ? key : DEFAULT_MAP_STYLE;
@@ -95,8 +149,10 @@ class Flightradar24Card extends HTMLElement {
       show_flights: true,
       show_tracks: true,
       show_area_center: true,
+      show_area: true,
       interactive_map: false,
       map_style: DEFAULT_MAP_STYLE,
+      ...DEFAULT_DISPLAY_UNITS,
     };
   }
 
@@ -108,6 +164,7 @@ class Flightradar24Card extends HTMLElement {
     super();
     this._map = null;
     this._mapInitPromise = null;
+    this._resizeObserver = null;
     this._tileLayer = null;
     this._markers = null;
     this._tracks = null;
@@ -139,11 +196,19 @@ class Flightradar24Card extends HTMLElement {
       show_flights: true,
       show_tracks: true,
       show_area_center: true,
+      show_area: true,
       interactive_map: false,
       map_style: DEFAULT_MAP_STYLE,
+      ...DEFAULT_DISPLAY_UNITS,
       ...config,
     };
     next.map_style = resolveMapStyle(next.map_style);
+    for (const key of Object.keys(DISPLAY_UNITS)) {
+      next[key] = resolveDisplayUnit(key, next[key]);
+    }
+    const unitsChanged = prev && Object.keys(DISPLAY_UNITS).some(
+      (key) => prev[key] !== next[key]
+    );
     if (next.zoom != null && next.zoom !== "") {
       const zoom = Number(next.zoom);
       if (Number.isNaN(zoom)) {
@@ -193,10 +258,12 @@ class Flightradar24Card extends HTMLElement {
         prev.show_header !== this._config.show_header ||
         prev.show_flights !== this._config.show_flights ||
         prev.show_area_center !== this._config.show_area_center ||
+        prev.show_area !== this._config.show_area ||
         prev.show_tracks !== this._config.show_tracks ||
         prev.zoom !== this._config.zoom ||
         prev.icon_size !== this._config.icon_size ||
-        prev.map_style !== this._config.map_style)
+        prev.map_style !== this._config.map_style ||
+        unitsChanged)
     ) {
       if (prev.map_style !== this._config.map_style) {
         this._syncTileLayer();
@@ -237,6 +304,8 @@ class Flightradar24Card extends HTMLElement {
   }
 
   _destroyMap() {
+    this._resizeObserver?.disconnect();
+    this._resizeObserver = null;
     if (this._map) {
       try {
         this._map.remove();
@@ -315,10 +384,20 @@ class Flightradar24Card extends HTMLElement {
   }
 
   /**
-   * Icon by flight phase: on ground, climbing, descending, or level.
+   * Backend sets aircraft_category via is_helicopter() (callsign / model / ICAO).
+   */
+  _isHelicopter(flight) {
+    return String(flight?.aircraft_category || "").toLowerCase() === "helicopter";
+  }
+
+  /**
+   * List icon: helicopters use mdi:helicopter; airplanes use flight phase.
    * on_ground: 0 in air, 1 on ground. vertical_speed in ft/min.
    */
   _flightIcon(flight) {
+    if (this._isHelicopter(flight)) {
+      return "mdi:helicopter";
+    }
     if (Number(flight.on_ground) === 1 || flight.on_ground === true) {
       return "mdi:airplane-check";
     }
@@ -345,42 +424,67 @@ class Flightradar24Card extends HTMLElement {
     return number.toFixed(digits);
   }
 
-  /** Ground speed: km/h with knots in parentheses. Source unit is knots. */
+  /** Ground speed. Source unit is knots. */
   _formatSpeed(knots) {
     if (knots == null || knots === "") {
       return null;
     }
     const kts = Number(knots);
-    if (Number.isNaN(kts)) {
+    if (!Number.isFinite(kts)) {
       return null;
     }
     const kmh = Math.round(kts * 1.852);
-    return `${kmh} km/h (${Math.round(kts)} kts)`;
+    switch (this._config?.speed_unit) {
+      case "km/h":
+        return `${kmh} km/h`;
+      case "mph":
+        return `${Math.round(kts * 1.852 / 1.609344)} mph`;
+      case "kts":
+        return `${Math.round(kts)} kts`;
+      default:
+        return `${kmh} km/h (${Math.round(kts)} kts)`;
+    }
   }
 
-  /** Altitude: meters with feet in parentheses. Source unit is feet. */
+  /** Altitude. Source unit is feet. */
   _formatAltitude(feet) {
     if (feet == null || feet === "") {
       return null;
     }
     const ft = Number(feet);
-    if (Number.isNaN(ft)) {
+    if (!Number.isFinite(ft)) {
       return null;
     }
     const meters = Math.round(ft * 0.3048);
-    return `${meters} m (${Math.round(ft)} ft)`;
+    switch (this._config?.altitude_unit) {
+      case "m":
+        return `${meters} m`;
+      case "ft":
+        return `${Math.round(ft)} ft`;
+      default:
+        return `${meters} m (${Math.round(ft)} ft)`;
+    }
   }
 
-  /** Distance: meters. Source unit is kilometers. */
+  /** Distance. Source unit is kilometers. */
   _formatDistance(kilometers) {
     if (kilometers == null || kilometers === "") {
       return null;
     }
     const km = Number(kilometers);
-    if (Number.isNaN(km)) {
+    if (!Number.isFinite(km)) {
       return null;
     }
-    return `${Math.round(km * 1000)} m`;
+    switch (this._config?.distance_unit) {
+      case "km":
+        return `${km.toFixed(2)} km`;
+      case "mi":
+        return `${(km / 1.609344).toFixed(2)} mi`;
+      case "nmi":
+        return `${(km / 1.852).toFixed(2)} nmi`;
+      default:
+        return `${Math.round(km * 1000)} m`;
+    }
   }
 
   /** Display snapshot used to patch flight rows without rebuilding the list. */
@@ -1373,6 +1477,13 @@ class Flightradar24Card extends HTMLElement {
     this._markers = L.layerGroup().addTo(this._map);
     this._tracks = L.layerGroup().addTo(this._map);
     this._markerById = new Map();
+    // Observe #map (fills .map-wrap): section layout and aspect-ratio changes
+    // resize the map node itself, so wrap-level observation is unnecessary.
+    this._resizeObserver?.disconnect();
+    this._resizeObserver = new ResizeObserver(() => {
+      this._map?.invalidateSize({ debounceMoveend: true });
+    });
+    this._resizeObserver.observe(mapEl);
     // Leaflet needs a tick after being inserted into shadow DOM.
     requestAnimationFrame(() => this._map?.invalidateSize());
     return this._map;
@@ -1407,12 +1518,25 @@ class Flightradar24Card extends HTMLElement {
     this._tileLayer = L.tileLayer(style.url, options).addTo(this._map);
   }
 
-  _planeIcon(L, heading) {
-    const rotation =
+  /**
+   * Map marker SVG. Airplane art points up (north); MDI helicopter points
+   * right (east), so helicopters get a -90° bias to match heading.
+   */
+  _planeIcon(L, flight) {
+    const heading = flight?.heading;
+    const helicopter = this._isHelicopter(flight);
+    let rotation =
       heading == null || Number.isNaN(Number(heading)) ? 0 : Number(heading);
+    if (helicopter) {
+      rotation -= 90;
+    }
     const size = this._configuredIconSize();
     const svgSize = Math.max(8, size - 2);
     const anchor = size / 2;
+    // Airplane: Material airplane. Helicopter: mdi-helicopter path.
+    const path = helicopter
+      ? "M3,3H17V5H3V3M23,6V10.5L14.75,12.2C14.91,12.6 15,13.04 15,13.5C15,14.9 14.18,16.1 13,16.66V17L13,19H16V21H4A3,3 0 0,1 1,18V17H3V18A1,1 0 0,0 4,19H5V16.74C3.25,16.13 2,14.46 2,12.5C2,10 4,8 6.5,8H9V6H11V8H21V6H23M11,19V17H7V19H11M7.5,10C6.12,10 5,10.9 5,12C5,13.1 6.12,14 7.5,14C8.88,14 10,13.1 10,12C10,10.9 8.88,10 7.5,10Z"
+      : "M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z";
     return L.divIcon({
       className: "ac-icon",
       iconSize: [size, size],
@@ -1420,11 +1544,16 @@ class Flightradar24Card extends HTMLElement {
       html: `
         <div class="ac-marker" style="width:${size}px;height:${size}px;transform: rotate(${rotation}deg)">
           <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="width:${svgSize}px;height:${svgSize}px">
-            <path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/>
+            <path d="${path}"/>
           </svg>
         </div>
       `,
     });
+  }
+
+  _markerIconKey(flight) {
+    const heli = this._isHelicopter(flight) ? "1" : "0";
+    return `${heli}:${String(flight?.heading ?? "")}`;
   }
 
   _removeAreaCenterMarker(map = this._map) {
@@ -1433,6 +1562,13 @@ class Flightradar24Card extends HTMLElement {
     }
     this._areaCenterMarker = null;
     this._areaCenterMarkerPos = null;
+  }
+
+  _removeAreaRect(map = this._map) {
+    if (this._areaRect && map) {
+      map.removeLayer(this._areaRect);
+    }
+    this._areaRect = null;
   }
 
   _areaCenterIcon(L) {
@@ -1479,6 +1615,26 @@ class Flightradar24Card extends HTMLElement {
       zIndexOffset: 1000,
     }).addTo(map);
     this._areaCenterMarkerPos = posKey;
+  }
+
+  /**
+   * Optional blue outline/tint for the monitored area. Geographic bounds and
+   * the viewport still update when this overlay is hidden.
+   */
+  _syncAreaOverlay(L, map, areaBounds, boundsKey) {
+    if (this._config.show_area === false) {
+      this._removeAreaRect(map);
+      return;
+    }
+    if (this._areaRect && boundsKey === this._lastBoundsKey) {
+      return;
+    }
+    this._removeAreaRect(map);
+    this._areaRect = L.rectangle(areaBounds, {
+      color: "#03a9f4",
+      weight: 2,
+      fillOpacity: 0.06,
+    }).addTo(map);
   }
 
   _flightId(flight) {
@@ -1755,6 +1911,8 @@ class Flightradar24Card extends HTMLElement {
     this._syncAreaCenterMarker(L, map, parsed);
 
     const boundsKey = `${parsed.south},${parsed.west},${parsed.north},${parsed.east}`;
+    this._syncAreaOverlay(L, map, areaBounds, boundsKey);
+
     const configuredZoom = this._configuredZoom();
     const viewportKey = `${boundsKey}|zoom:${configuredZoom ?? "auto"}`;
     if (viewportKey !== this._lastViewportKey) {
@@ -1771,15 +1929,6 @@ class Flightradar24Card extends HTMLElement {
           const widthFactor = lonSpan * Math.cos((parsed.lat * Math.PI) / 180);
           mapWrap.style.aspectRatio = `${widthFactor} / ${latSpan}`;
         }
-
-        if (this._areaRect) {
-          map.removeLayer(this._areaRect);
-        }
-        this._areaRect = L.rectangle(areaBounds, {
-          color: "#03a9f4",
-          weight: 2,
-          fillOpacity: 0.06,
-        }).addTo(map);
 
         this._areaBounds = areaBounds;
         this._areaMaxBounds = areaBounds.pad(0.02);
@@ -1813,12 +1962,14 @@ class Flightradar24Card extends HTMLElement {
     const flightsKey = [
       this._config.show_tracks !== false ? "tracks:1" : "tracks:0",
       `icon:${this._configuredIconSize()}`,
+      `units:${this._config.altitude_unit}|${this._config.distance_unit}|${this._config.speed_unit}`,
       `selected:${this._selectedFlightId || ""}`,
       ...positioned.map((flight) => {
         const trackLen = Array.isArray(flight.coordinates)
           ? flight.coordinates.length
           : 0;
-        return `${this._flightId(flight)}:${flight.latitude}:${flight.longitude}:${flight.heading ?? ""}:${trackLen}`;
+        const heli = this._isHelicopter(flight) ? "1" : "0";
+        return `${this._flightId(flight)}:${flight.latitude}:${flight.longitude}:${flight.heading ?? ""}:${trackLen}:heli:${heli}`;
       }),
     ].join("|");
     if (flightsKey === this._lastFlightsKey) {
@@ -1867,7 +2018,7 @@ class Flightradar24Card extends HTMLElement {
 
       if (!marker) {
         marker = L.marker(latLng, {
-          icon: this._planeIcon(L, flight.heading),
+          icon: this._planeIcon(L, flight),
           title: this._flightLabel(flight),
         });
         marker.bindPopup(popupHtml, {
@@ -1903,16 +2054,16 @@ class Flightradar24Card extends HTMLElement {
             scrollList: this._config?.interactive_map !== true,
           });
         });
-        marker._frHeading = String(flight.heading ?? "");
+        marker._frIconKey = this._markerIconKey(flight);
         marker._frPopupHtml = popupHtml;
         this._markers.addLayer(marker);
         this._markerById.set(flightId, marker);
       } else {
         marker.setLatLng(latLng);
-        const headingKey = String(flight.heading ?? "");
-        if (marker._frHeading !== headingKey) {
-          marker._frHeading = headingKey;
-          marker.setIcon(this._planeIcon(L, flight.heading));
+        const iconKey = this._markerIconKey(flight);
+        if (marker._frIconKey !== iconKey) {
+          marker._frIconKey = iconKey;
+          marker.setIcon(this._planeIcon(L, flight));
         }
         // Update content without tearing down an open popup.
         if (marker._frPopupHtml !== popupHtml) {
@@ -2103,6 +2254,10 @@ class Flightradar24CardEditor extends HTMLElement {
         <span>Show flight tracks</span>
       </div>
       <div class="row check">
+        <input type="checkbox" id="show_area" ${this._config.show_area !== false ? "checked" : ""} />
+        <span>Show monitored area outline</span>
+      </div>
+      <div class="row check">
         <input type="checkbox" id="show_area_center" ${this._config.show_area_center !== false ? "checked" : ""} />
         <span>Show area centre marker</span>
       </div>
@@ -2146,6 +2301,21 @@ class Flightradar24CardEditor extends HTMLElement {
           value="${this._config.icon_size != null ? this._escape(String(this._config.icon_size)) : ""}"
         />
       </div>
+      ${Object.entries(DISPLAY_UNITS)
+        .map(([key, units]) => `
+          <div class="row">
+            <label for="${key}">${units.label}</label>
+            <select id="${key}">
+              ${Object.entries(units.options)
+                .map(([unit, label]) => {
+                  const selected = resolveDisplayUnit(key, this._config[key]) === unit ? "selected" : "";
+                  return `<option value="${unit}" ${selected}>${label}</option>`;
+                })
+                .join("")}
+            </select>
+          </div>
+        `)
+        .join("")}
     `;
 
     const mount = this.shadowRoot.getElementById("entity-picker");
@@ -2196,6 +2366,10 @@ class Flightradar24CardEditor extends HTMLElement {
       });
     });
 
+    this.shadowRoot.getElementById("show_area").addEventListener("change", (event) => {
+      this._fireConfigChanged({ ...this._config, show_area: event.target.checked });
+    });
+
     this.shadowRoot.getElementById("show_area_center").addEventListener("change", (event) => {
       this._fireConfigChanged({
         ...this._config,
@@ -2213,6 +2387,15 @@ class Flightradar24CardEditor extends HTMLElement {
         map_style: resolveMapStyle(event.target.value),
       });
     });
+
+    for (const key of Object.keys(DISPLAY_UNITS)) {
+      this.shadowRoot.getElementById(key).addEventListener("change", (event) => {
+        this._fireConfigChanged({
+          ...this._config,
+          [key]: resolveDisplayUnit(key, event.target.value),
+        });
+      });
+    }
 
     this.shadowRoot.getElementById("zoom").addEventListener("change", (event) => {
       const newConfig = { ...this._config };

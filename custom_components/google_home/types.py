@@ -1,7 +1,5 @@
 """Various types used in type hints."""
 
-from __future__ import annotations
-
 from collections.abc import Mapping
 from typing import TypedDict
 
@@ -24,6 +22,7 @@ class TimerJsonDict(TypedDict, total=False):
     id: str
     fire_time: int
     original_duration: int
+    remaining_duration: int
     status: int
     label: str | None
 
@@ -48,6 +47,7 @@ class GoogleHomeTimerDict(TypedDict):
     local_time: str | None
     local_time_iso: str | None
     duration: str
+    remaining: str | None
     status: str
     label: str | None
 
@@ -77,18 +77,11 @@ class TimersAttributes(TypedDict):
     timers: list[GoogleHomeTimerDict]
 
 
-class ConfigFlowDict(TypedDict):
-    """Typed dict for config flow handler."""
-
-    username: str
-    password: str
-    master_token: str
-
-
-class OptionsFlowDict(TypedDict):
+class OptionsFlowDict(TypedDict, total=False):
     """Typed dict for options flow handler."""
 
     update_interval: int
+    known_hosts: list[str]
 
 
 type JsonDict = Mapping[

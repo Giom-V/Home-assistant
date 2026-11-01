@@ -1,6 +1,7 @@
 from decimal import Decimal
 import inspect
 import logging
+from typing import cast
 
 from homeassistant.components.sensor import DOMAIN as SENSOR_DOMAIN
 from homeassistant.components.utility_meter import DEFAULT_OFFSET
@@ -117,7 +118,7 @@ def create_meters_for_type(
     name = f"{energy_sensor.name} {meter_type}"
     entity_id = f"{energy_sensor.entity_id}_{slugify(meter_type)}"
 
-    tariff_sensors = []
+    tariff_sensors: list[UtilityMeterSensor] = []
     utility_meters = []
 
     # Create generic utility meter
@@ -182,7 +183,7 @@ def create_tariff_meters(
         meter_type=meter_type,
     )
 
-    tariff_sensors = []
+    tariff_sensors: list[VirtualUtilityMeter] = []
     for tariff in filtered_tariffs:
         utility_meter = create_utility_meter(
             hass,
@@ -229,6 +230,7 @@ def create_tariff_select(
     # Platform entities (YAML and group selects) cannot attach a device directly.
     if config_entry:
         tariff_select.device_entry = device_entry
+    setattr(tariff_select, "_powercalc_device_entry", device_entry)  # noqa: B010
     if follow_device_name:
         tariff_select.device_name = DeviceName("utility_meter_cycle", {"period": meter_type})
         tariff_select.enable_device_naming()
@@ -301,32 +303,31 @@ def create_utility_meter(
     return utility_meter
 
 
+# Home Assistant allows live properties to override its writable cached properties.
 class VirtualTariffSelect(BaseEntity, TariffSelect):
     """Tariff selector supporting opt-in device naming."""
 
 
 class VirtualUtilityMeter(BaseEntity, UtilityMeterSensor):
-    device_name = DeviceName("utility_meter_cycle")
+    device_name: DeviceName | None = DeviceName("utility_meter_cycle")
     rounding_digits: int = DEFAULT_ENERGY_SENSOR_PRECISION
     _sensor_config: ConfigType
 
     @property
-    def unique_id(self) -> str | None:
+    def unique_id(self) -> str | None:  # ty: ignore[invalid-property-type-override]
         """Return the unique id."""
         return self._attr_unique_id
 
     @property
-    def suggested_display_precision(self) -> int | None:
+    def suggested_display_precision(self) -> int | None:  # ty: ignore[invalid-property-type-override]
         """Return the suggested number of decimal digits for display."""
         return self.rounding_digits
 
     @property
-    def native_value(self) -> StateType | Decimal:
+    def native_value(self) -> StateType | Decimal:  # ty: ignore[invalid-property-type-override]
         """Return the state of the sensor."""
-        value = (
-            self._state if hasattr(self, "_state") else self._attr_native_value
-        )  # pre HA 2024.12 value was stored in _state
+        value = cast(Decimal | int | None, self._attr_native_value)
         if self.rounding_digits and value is not None:
-            return Decimal(round(value, self.rounding_digits))  # type: ignore[arg-type]
+            return round(Decimal(value), self.rounding_digits)
 
-        return value  # type: ignore[return-value]
+        return value

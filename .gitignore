@@ -95,7 +95,10 @@ zigbee2mqtt/configuration.yaml
 zigbee2mqtt/state.json
 zigbee2mqtt/database.db.*
 zigbee2mqtt/configuration_backup_v*.yaml
+zigbee2mqtt/configuration.yaml.bak_ota
 zigbee2mqtt/coordinator_backup.json
+zigbee2mqtt/ota/*.zigbee
+zigbee2mqtt/local_ota.json
 
 # Watchman
 watchman_report.txt

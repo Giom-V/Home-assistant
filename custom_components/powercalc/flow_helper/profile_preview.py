@@ -2,13 +2,16 @@ from decimal import Decimal
 from typing import Any, Protocol, cast
 
 from homeassistant.components import websocket_api
+from homeassistant.components.websocket_api.connection import ActiveConnection
+from homeassistant.components.websocket_api.const import TYPE_RESULT
+from homeassistant.components.websocket_api.decorators import async_response, require_admin, websocket_command
+from homeassistant.components.websocket_api.messages import event_message
 from homeassistant.const import ATTR_FRIENDLY_NAME, ATTR_ICON
 from homeassistant.core import HomeAssistant
 from homeassistant.data_entry_flow import UnknownFlow
 from homeassistant.exceptions import HomeAssistantError
 import homeassistant.helpers.config_validation as cv
 from homeassistant.helpers.typing import ConfigType
-import voluptuous as vol
 
 from custom_components.powercalc.common import SourceEntity
 from custom_components.powercalc.const import CalculationStrategy
@@ -17,6 +20,7 @@ from custom_components.powercalc.flow_helper.strategy_form import unwrap_strateg
 from custom_components.powercalc.power_profile.power_profile import PowerProfile
 from custom_components.powercalc.strategy.factory import PowerCalculatorStrategyFactory
 from custom_components.powercalc.strategy.selector import detect_calculation_strategy
+from custom_components.powercalc.validation import vol
 
 PREVIEW_NAME = "powercalc"
 PREVIEW_FRIENDLY_NAME = "Preview power"
@@ -34,8 +38,8 @@ async def async_setup_preview(hass: HomeAssistant) -> None:
     websocket_api.async_register_command(hass, ws_start_preview)
 
 
-@websocket_api.require_admin
-@websocket_api.websocket_command(
+@require_admin
+@websocket_command(
     {
         vol.Required("type"): f"{PREVIEW_NAME}/start_preview",
         vol.Required("flow_id"): str,
@@ -43,10 +47,10 @@ async def async_setup_preview(hass: HomeAssistant) -> None:
         vol.Required("user_input"): dict,
     },
 )
-@websocket_api.async_response
+@async_response
 async def ws_start_preview(
     hass: HomeAssistant,
-    connection: websocket_api.ActiveConnection,
+    connection: ActiveConnection,
     msg: dict[str, Any],
 ) -> None:
     """Generate a live Powercalc strategy preview."""
@@ -57,7 +61,7 @@ async def ws_start_preview(
         connection.send_message(
             {
                 "id": msg["id"],
-                "type": websocket_api.TYPE_RESULT,
+                "type": TYPE_RESULT,
                 "success": False,
                 "error": {"code": "invalid_user_input", "message": errors},
             },
@@ -77,7 +81,7 @@ async def ws_start_preview(
 
     connection.send_result(msg["id"])
     connection.send_message(
-        websocket_api.event_message(
+        event_message(
             msg["id"],
             {
                 "attributes": preview["attributes"],

@@ -6,9 +6,8 @@ from homeassistant.const import CONF_CONDITION, CONF_CONDITIONS, CONF_ENTITIES, 
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers import condition
 from homeassistant.helpers.singleton import singleton
-from homeassistant.helpers.template import Template
+from homeassistant.helpers.template import Template, is_template_string
 from homeassistant.helpers.typing import ConfigType
-import voluptuous as vol
 
 from custom_components.powercalc.common import SourceEntity, create_source_entity
 from custom_components.powercalc.const import (
@@ -34,6 +33,7 @@ from custom_components.powercalc.errors import (
     UnsupportedStrategyError,
 )
 from custom_components.powercalc.power_profile.power_profile import PowerProfile
+from custom_components.powercalc.validation import vol
 
 from .composite import (
     COMPOUND_CONDITIONS,
@@ -331,7 +331,7 @@ class PowerCalculatorStrategyFactory:
         Process the input to ensure it is a Template if applicable.
         Otherwise, return the original value.
         """
-        if isinstance(value, str) and value.startswith("{{"):
+        if isinstance(value, str) and is_template_string(value):
             return Template(value, self._hass)
         if isinstance(value, Template):
             value.hass = self._hass

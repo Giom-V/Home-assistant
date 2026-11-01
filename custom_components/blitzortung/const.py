@@ -1,6 +1,6 @@
 """Constants for the Blitzortung integration."""
 
-import datetime
+import datetime as dt
 from dataclasses import dataclass
 from typing import Any
 
@@ -42,17 +42,16 @@ DEFAULT_IDLE_RESET_TIMEOUT = 120
 DEFAULT_RADIUS = 100
 DEFAULT_MAX_TRACKED_LIGHTNINGS = 100
 DEFAULT_TIME_WINDOW = 120
-DEFAULT_UPDATE_INTERVAL = datetime.timedelta(seconds=60)
+DEFAULT_UPDATE_INTERVAL = dt.timedelta(seconds=60)
 
 # Options bounds. Enforced by the options-flow schema so users can't accidentally
 # enter values that would explode memory, evict every strike on the next tick,
 # or otherwise put the integration in a degenerate state.
 RADIUS_MIN = 1
-# 4000 covers the actual usable upper bound regardless of unit. For metric
-# users that's 4000 km; for imperial that's 4000 mi = 6437 km. Both stay
-# under the geohash_overlap() empty-set cliff at most latitudes: above
-# ~6700 km the bounding box exceeds precision-1 tile coverage and the
-# function silently returns no subscriptions, so no strikes ever arrive.
+# 4000 in either unit: 4000 km, or 4000 mi = 6437 km. A large radius can need
+# more than 9 precision-1 tiles (4000 km at 70°N, 5000 km at 38°N), and
+# geohash_overlap() then subscribes to all of them (10-16), so this bounds the
+# proxy traffic of one entry.
 RADIUS_MAX = 4000
 TIME_WINDOW_MIN = 1  # minutes
 TIME_WINDOW_MAX = 1440  # 24 hours; longer than this churns the recorder hard.

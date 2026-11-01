@@ -19,6 +19,7 @@ from homeassistant.const import (
     STATE_ON,
     STATE_UNAVAILABLE,
     STATE_UNKNOWN,
+    EntityCategory,
     UnitOfPower,
 )
 from homeassistant.core import (
@@ -32,7 +33,6 @@ from homeassistant.core import (
 from homeassistant.exceptions import ServiceValidationError
 from homeassistant.helpers import issue_registry as ir, start
 from homeassistant.helpers.dispatcher import async_dispatcher_send
-from homeassistant.helpers.entity import EntityCategory
 import homeassistant.helpers.entity_registry as er
 from homeassistant.helpers.event import (
     EventStateChangedData,
@@ -366,6 +366,7 @@ def is_fully_configured(config: ConfigType) -> bool:
     return any(key in config for key in CALCULATION_STRATEGY_CONF_KEYS)
 
 
+# Home Assistant allows live properties to override its writable cached properties.
 class PowerSensor(BaseEntity):
     """Class which all power sensors should extend from."""
 
@@ -697,7 +698,7 @@ class VirtualPowerSensor(PowerSensor, SensorEntity):
         ):
             return state
 
-        return cast(State | None, self.hass.states.get(self._source_entity.entity_id))
+        return self.hass.states.get(self._source_entity.entity_id)
 
     async def _calculate_state_standby_power(self, entity_state: State) -> Decimal | None:
         if entity_state.state not in self._off_states and await self.is_calculation_enabled(entity_state):
@@ -808,7 +809,7 @@ class VirtualPowerSensor(PowerSensor, SensorEntity):
         return self._source_entity.entity_id
 
     @property
-    def native_value(self) -> StateType:
+    def native_value(self) -> StateType:  # ty: ignore[invalid-property-type-override]
         """Return the state of the sensor."""
         return cast(StateType, self._power)
 
@@ -919,6 +920,6 @@ class RealPowerSensor(PowerSensor):
         return self._device_id
 
     @property
-    def unique_id(self) -> str | None:
+    def unique_id(self) -> str | None:  # ty: ignore[invalid-property-type-override]
         """Return the unique_id of the sensor."""
         return self._unique_id

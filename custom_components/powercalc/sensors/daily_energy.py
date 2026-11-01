@@ -26,7 +26,6 @@ from homeassistant.helpers.template import Template
 from homeassistant.helpers.typing import ConfigType
 import homeassistant.util.dt as dt_util
 from homeassistant.util.unit_conversion import EnergyConverter
-import voluptuous as vol
 
 from custom_components.powercalc.common import SourceEntity
 from custom_components.powercalc.const import (
@@ -44,6 +43,7 @@ from custom_components.powercalc.const import (
     UnitPrefix,
 )
 from custom_components.powercalc.unit import ENERGY_UNIT_PREFIX_MAPPING, evaluate_to_decimal, parse_decimal
+from custom_components.powercalc.validation import vol
 
 from .abstract import generate_energy_sensor_entity_id, generate_energy_sensor_name
 from .energy import EnergySensor
@@ -132,7 +132,7 @@ async def create_daily_fixed_energy_power_sensor(
     if mode_config.get(CONF_ON_TIME) != timedelta(days=1):
         return None
 
-    power_value: float = mode_config.get(CONF_VALUE)  # type: ignore
+    power_value: float | Template = mode_config.get(CONF_VALUE)  # type: ignore
     if mode_config.get(CONF_UNIT_OF_MEASUREMENT) == UnitOfEnergy.KILO_WATT_HOUR and not isinstance(
         power_value,
         Template,
@@ -160,6 +160,7 @@ async def create_daily_fixed_energy_power_sensor(
     )
 
 
+# Home Assistant allows live properties to override its writable cached properties.
 class DailyEnergySensor(EnergySensor, RestoreEntity, SensorEntity):
     _attr_device_class = SensorDeviceClass.ENERGY
     _attr_state_class = SensorStateClass.TOTAL
@@ -283,7 +284,7 @@ class DailyEnergySensor(EnergySensor, RestoreEntity, SensorEntity):
         return Decimal((energy_per_day / 86400) * elapsed_seconds)
 
     @property
-    def native_value(self) -> Decimal:
+    def native_value(self) -> Decimal:  # ty: ignore[invalid-property-type-override]
         """Return the state of the sensor."""
         return Decimal(round(self._state, self._rounding_digits))
 

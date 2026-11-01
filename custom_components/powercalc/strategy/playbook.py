@@ -8,12 +8,11 @@ import logging
 import os
 
 from homeassistant.const import EVENT_HOMEASSISTANT_STOP, STATE_OFF
-from homeassistant.core import CALLBACK_TYPE, HassJob, HomeAssistant, State, callback
+from homeassistant.core import CALLBACK_TYPE, Event, HassJob, HomeAssistant, State, callback
 import homeassistant.helpers.config_validation as cv
 from homeassistant.helpers.event import async_track_point_in_time
 from homeassistant.helpers.typing import ConfigType
 from homeassistant.util import dt
-import voluptuous as vol
 
 from custom_components.powercalc.const import (
     CONF_AUTOSTART,
@@ -23,6 +22,7 @@ from custom_components.powercalc.const import (
     CONF_STATES_TRIGGER,
 )
 from custom_components.powercalc.errors import StrategyConfigurationError
+from custom_components.powercalc.validation import vol
 
 from .profile_data import open_profile_csv
 from .strategy_interface import PowerCalculationStrategyInterface
@@ -177,7 +177,7 @@ class PlaybookStrategy(PowerCalculationStrategyInterface):
             self._execute_playbook_entry()
 
         @callback
-        def _cancel_pending_updates_on_stop(_: datetime) -> None:
+        def _cancel_pending_updates_on_stop(_: Event) -> None:
             self._cancel_pending_timer()
             if self._cancel_stop_listener is not None:
                 self._cancel_stop_listener()

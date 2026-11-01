@@ -75,7 +75,7 @@
         "id": "4d8157ab9ecf48ef9c386323825634fd"
       },
       {
-        "url": "/hacsfiles/lovelace-plotly-graph-card/plotly-graph-card.js?hacstag=413812496401",
+        "url": "/hacsfiles/lovelace-plotly-graph-card/plotly-graph-card.js?hacstag=413812496402",
         "type": "module",
         "id": "d5d47edb7b82471a89d2f2146bfa9a4d"
       },
@@ -131,7 +131,7 @@
       },
       {
         "id": "7fedf22f26b54ca9844c5a4306baf370",
-        "url": "/hacsfiles/lovelace-wallpanel/wallpanel.js?hacstag=3095064164672",
+        "url": "/hacsfiles/lovelace-wallpanel/wallpanel.js?hacstag=3095064164680",
         "type": "module"
       },
       {
@@ -156,7 +156,7 @@
       },
       {
         "id": "2208036dcfe54f4da3bc115c4dee4a00",
-        "url": "/ecole_directe/EcoleDirecteHACards.js?v=v1.2.2",
+        "url": "/ecole_directe/EcoleDirecteHACards.js?v=v1.2.6",
         "type": "module"
       }
     ]

@@ -9,12 +9,12 @@ from homeassistant.components.sensor import DOMAIN as SENSOR_DOMAIN, SensorDevic
 from homeassistant.const import (
     ATTR_UNIT_OF_MEASUREMENT,
     CONF_NAME,
+    EntityCategory,
     UnitOfEnergy,
     UnitOfPower,
     UnitOfTime,
 )
 from homeassistant.core import HomeAssistant, State, callback
-from homeassistant.helpers.entity import EntityCategory
 import homeassistant.helpers.entity_registry as er
 from homeassistant.helpers.typing import ConfigType
 
@@ -279,6 +279,7 @@ def _find_related_real_energy_sensor(
     return RealEnergySensor.from_registry_entry(energy_sensors[0])
 
 
+# Home Assistant allows live properties to override its writable cached properties.
 class EnergySensor(BaseEntity):
     """Class which all energy sensors should extend from."""
 
@@ -325,6 +326,7 @@ class VirtualEnergySensor(IntegrationSensor, EnergySensor):
             "unit_time": UnitOfTime.HOURS,
             "integration_method": integration_method,
             "unique_id": unique_id,
+            "device_class": SensorDeviceClass.ENERGY,
             "max_sub_interval": timedelta(
                 seconds=sensor_config.get(CONF_ENERGY_UPDATE_INTERVAL, DEFAULT_ENERGY_UPDATE_INTERVAL),
             ),
@@ -460,7 +462,7 @@ class VirtualEnergySensor(IntegrationSensor, EnergySensor):
         )
 
     @property
-    def icon(self) -> str:
+    def icon(self) -> str:  # ty: ignore[invalid-property-type-override]
         return ENERGY_ICON
 
     @callback
@@ -570,11 +572,11 @@ class RealEnergySensor(EnergySensor):
         return cls(entry.entity_id, entry.name or entry.original_name, entry.unique_id)
 
     @property
-    def name(self) -> str | None:
+    def name(self) -> str | None:  # ty: ignore[invalid-property-type-override]
         """Return the name of the sensor."""
         return self._name
 
     @property
-    def unique_id(self) -> str | None:
+    def unique_id(self) -> str | None:  # ty: ignore[invalid-property-type-override]
         """Return the unique_id of the sensor."""
         return self._unique_id

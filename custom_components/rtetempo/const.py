@@ -9,6 +9,9 @@ DOMAIN = "rtetempo"
 CONFIG_CLIENT_ID = "client_id"
 CONFIG_CLIEND_SECRET = "client_secret"
 OPTION_ADJUSTED_DAYS = "adjusted_days"
+# Injected into config flow descriptions as a placeholder because hassfest
+# forbids raw URLs in translation strings
+RTE_APPS_URL = "https://data.rte-france.com/group/guest/apps"
 
 
 # Service Device
@@ -52,7 +55,7 @@ API_VALUE_RED = "RED"
 API_VALUE_WHITE = "WHITE"
 API_VALUE_BLUE = "BLUE"
 API_ATTRIBUTION = "Données fournies par data.rte-france.com"
-USER_AGENT = "github.com/hekmon/rtetempo v1.3.2"
+USER_AGENT = "github.com/hekmon/rtetempo v1.4.0-rc1"
 
 
 # Tempo def

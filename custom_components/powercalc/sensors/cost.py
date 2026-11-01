@@ -106,6 +106,7 @@ def _currency_from_price_unit(unit: str | None) -> str | None:
 
 
 @dataclass(frozen=True, slots=True)
+# Home Assistant allows live properties to override its writable cached properties.
 class PriceConfig:
     """The resolved energy price configuration for a single cost sensor."""
 
@@ -210,7 +211,7 @@ def create_cost_sensor(
         price_config=price_config,
         reset_on_source_reset=reset_on_source_reset,
     )
-    if isinstance(energy_sensor, VirtualUtilityMeter):
+    if isinstance(energy_sensor, VirtualUtilityMeter) and energy_sensor.device_name is not None:
         meter_name = energy_sensor.device_name
         cost_sensor.device_name = DeviceName(f"{meter_name.translation_key}_cost", meter_name.placeholders)
     return cost_sensor
@@ -393,12 +394,12 @@ class CostSensor(BaseEntity, RestoreEntity, SensorEntity):
             self._last_energy = current_energy
 
     @property
-    def native_value(self) -> Decimal:
+    def native_value(self) -> Decimal:  # ty: ignore[invalid-property-type-override]
         """Return the accumulated cost."""
         return Decimal(round(self._state, self._rounding_digits))
 
     @property
-    def extra_state_attributes(self) -> dict[str, str] | None:
+    def extra_state_attributes(self) -> dict[str, str] | None:  # ty: ignore[invalid-property-type-override]
         """Return the state attributes of the cost sensor."""
         if self._last_energy is None:
             return None

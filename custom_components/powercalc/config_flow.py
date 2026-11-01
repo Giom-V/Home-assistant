@@ -25,7 +25,8 @@ from homeassistant.data_entry_flow import section
 from homeassistant.helpers import entity_registry as er, selector
 from homeassistant.helpers.schema_config_entry_flow import SchemaFlowError
 from homeassistant.helpers.typing import ConfigType, DiscoveryInfoType
-import voluptuous as vol
+
+from custom_components.powercalc.validation import vol
 
 from .common import SourceEntity, create_source_entity
 from .const import (
@@ -200,10 +201,15 @@ class PowercalcCommonFlow(ABC, ConfigEntryBaseFlow):
                 return await getattr(handler, step_method)(user_input)  # type: ignore[no-any-return]
         raise SchemaFlowError("No handler defined")  # pragma: nocover
 
-    async def validate_strategy_config(self, user_input: dict[str, Any] | None = None) -> None:
+    async def validate_strategy_config(
+        self,
+        user_input: dict[str, Any] | None = None,
+        power_profile: PowerProfile | None = None,
+    ) -> None:
         """Validate the strategy config."""
+        profile = power_profile or self.selected_profile
         strategy_name = CalculationStrategy(
-            self.sensor_config.get(CONF_MODE) or self.selected_profile.calculation_strategy,  # type: ignore
+            self.sensor_config.get(CONF_MODE) or profile.calculation_strategy,  # type: ignore
         )
         factory = PowerCalculatorStrategyFactory(self.hass)
         assert self.source_entity is not None
@@ -211,7 +217,7 @@ class PowercalcCommonFlow(ABC, ConfigEntryBaseFlow):
             await factory.create(
                 user_input or self.sensor_config,
                 strategy_name,
-                self.selected_profile,
+                profile,
                 self.source_entity,
             )
         except StrategyConfigurationError as error:
@@ -220,7 +226,7 @@ class PowercalcCommonFlow(ABC, ConfigEntryBaseFlow):
 
     def create_source_entity_selector(
         self,
-    ) -> selector.EntitySelector:
+    ) -> selector.Selector[selector.EntitySelectorConfig]:
         """Create the entity selector for the source entity."""
         if self.is_library_flow:
             return selector.EntitySelector(
@@ -228,7 +234,9 @@ class PowercalcCommonFlow(ABC, ConfigEntryBaseFlow):
             )
         return selector.EntitySelector()
 
-    def create_device_entity_selector(self, domains: list[str], multiple: bool = False) -> selector.EntitySelector:
+    def create_device_entity_selector(
+        self, domains: list[str], multiple: bool = False
+    ) -> selector.Selector[selector.EntitySelectorConfig]:
         entity_registry = er.async_get(self.hass)
         if self.source_entity and self.source_entity.device_entry:
             entities = [
@@ -756,7 +764,7 @@ class PowercalcOptionsFlow(PowercalcCommonFlow, OptionsFlow):
                 {vol.Optional(CONF_STANDBY_POWER): vol.Coerce(float)},
             )
 
-        return schema.extend(  # type: ignore[no-any-return]
+        return schema.extend(
             {
                 **SCHEMA_ENERGY_SENSOR_TOGGLE.schema,
                 **SCHEMA_STANDBY_ENERGY_SENSOR_TOGGLE.schema,
