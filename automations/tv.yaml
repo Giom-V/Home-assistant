@@ -21,9 +21,9 @@
           entity_id: sensor.rte_tempo_couleur_actuelle
           state: Rouge
   actions:
-    - type: turn_on
-      entity_id: light.govee_tv
-      domain: light
+    - action: light.turn_on
+      target:
+        entity_id: light.govee_tv
   mode: single
 - id: "1687101610893"
   alias: Turn off Govee LED strip when we switch off the TV
@@ -35,9 +35,9 @@
       to: "off"
   condition: []
   action:
-    - type: turn_off
-      entity_id: light.govee_tv
-      domain: light
+    - action: light.turn_off
+      target:
+        entity_id: light.govee_tv
   mode: single
 - id: "1718127656389"
   alias: Gemini vision

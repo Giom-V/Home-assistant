@@ -209,11 +209,8 @@
   alias: Switch off bike's chargeur after some time to save the battery
   description: "Éteint le chargeur du vélo après un certain temps pour économiser la batterie"
   trigger:
-    - type: power
-      platform: device
-      device_id: f88fc7c7685911a6f527510503647b60
-      entity_id: sensor.chargeur_velo_active_power
-      domain: sensor
+    - platform: numeric_state
+      entity_id: sensor.chargeur_velo_power
       above: 100
       for:
         hours: 6
@@ -221,10 +218,9 @@
         seconds: 0
   condition: []
   action:
-    - type: turn_off
-      device_id: f88fc7c7685911a6f527510503647b60
-      entity_id: switch.chargeur_velo_switch
-      domain: switch
+    - action: switch.turn_off
+      target:
+        entity_id: switch.chargeur_velo_switch
   mode: single
 - id: "SaveCarBatteryLevelAtNozayFailsafe"
   alias: Save car's battery Level when at Nozay (Failsafe)

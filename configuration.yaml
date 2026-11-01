@@ -314,16 +314,6 @@ device_tracker:
 #     device_trackers:
 #       - device_tracker.google_maps_116551309970452496819
 
-notify:
-  - platform: slack
-    name: Slack
-    api_key: !secret slack_APIKey
-    default_channel: "#hass"
-  - name: SMS
-    platform: free_mobile
-    username: !secret freeMobileUsername
-    access_token: !secret freeMobileToken
-
 # panel_iframe:
 #   slack:
 #     title: "Slack"
