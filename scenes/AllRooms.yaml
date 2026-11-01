@@ -1,21 +1,7 @@
 - id: LightsOff
   name: LightsOff
   entities:
-    light.canape_gauche:
-      state: off
-    light.canape_droite:
-      state: off
     light.cuisine:
       state: off
     light.salle_a_manger:
-      state: off
-    light.solarium:
-      state: off
-    light.freezer:
-      state: off
-    switch.bureau:
-      state: off
-    light.office_light:
-      state: off
-    light.office_light_2:
       state: off
