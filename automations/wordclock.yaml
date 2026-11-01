@@ -1,0 +1,91 @@
+- id: wordclock_schedule_on
+  alias: "Wordclock - Allumage selon planning"
+  description: "Allume l'horloge lorsque le planning s'active (semaine ou week-end/férié/vacances)"
+  mode: single
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.wordclock_schedule_active
+      to: "on"
+    - platform: homeassistant
+      event: start
+  condition:
+    - condition: state
+      entity_id: binary_sensor.wordclock_schedule_active
+      state: "on"
+  action:
+    - service: light.turn_on
+      target:
+        entity_id: light.wordclock_wordclock
+
+- id: wordclock_schedule_off
+  alias: "Wordclock - Extinction selon planning"
+  description: "Éteint l'horloge lorsque le planning se désactive"
+  mode: single
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.wordclock_schedule_active
+      to: "off"
+  action:
+    - service: light.turn_off
+      target:
+        entity_id: light.wordclock_wordclock
+
+- id: wordclock_color_weather
+  alias: "Wordclock - Couleur selon météo et pluie"
+  description: "Met à jour la couleur de l'horloge en fonction de la météo actuelle et de la pluie dans l'heure"
+  mode: restart
+  trigger:
+    # Changement d'état de la météo
+    - platform: state
+      entity_id: weather.cesson_sevigne
+    # Changement du capteur de pluie dans l'heure
+    - platform: state
+      entity_id: sensor.cesson_sevigne_next_rain
+    # Changement du soleil (jour / nuit)
+    - platform: state
+      entity_id: sun.sun
+    # Vérification périodique toutes les 10 minutes
+    - platform: time_pattern
+      minutes: "/10"
+    # À l'allumage de l'horloge
+    - platform: state
+      entity_id: light.wordclock_wordclock
+      to: "on"
+  condition:
+    # On n'applique que si l'horloge est allumée
+    - condition: state
+      entity_id: light.wordclock_wordclock
+      state: "on"
+  action:
+    - variables:
+        # Analyse de la prévision de pluie dans l'heure (Météo-France)
+        rain_attrs: "{{ state_attr('sensor.cesson_sevigne_next_rain', '1_hour_forecast') or {} }}"
+        rain_values: "{{ rain_attrs.values() | list }}"
+        rain_in_hour: >-
+          {{ rain_values | select('search', 'Pluie') | list | length > 0 }}
+        weather_state: "{{ states('weather.cesson_sevigne') }}"
+        target_color: >-
+          {% if rain_in_hour or 'rain' in weather_state or 'pour' in weather_state %}
+            [0, 120, 255]
+          {% elif 'snow' in weather_state %}
+            [0, 255, 255]
+          {% elif 'thunder' in weather_state or 'lightning' in weather_state %}
+            [160, 32, 240]
+          {% elif 'fog' in weather_state or 'mist' in weather_state %}
+            [180, 180, 180]
+          {% elif 'cloud' in weather_state %}
+            [100, 160, 220]
+          {% elif 'clear' in weather_state or 'sunny' in weather_state %}
+            {% if is_state('sun.sun', 'above_horizon') %}
+              [255, 200, 40]
+            {% else %}
+              [255, 255, 255]
+            {% endif %}
+          {% else %}
+            [255, 255, 255]
+          {% endif %}
+    - service: light.turn_on
+      target:
+        entity_id: light.wordclock_wordclock
+      data:
+        rgb_color: "{{ target_color }}"
