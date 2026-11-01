@@ -44,15 +44,15 @@
     # Changement du soleil (jour / nuit)
     - platform: state
       entity_id: sun.sun
-    # Vérification périodique toutes les 10 minutes
-    - platform: time_pattern
-      minutes: "/10"
     # À l'allumage de l'horloge
     - platform: state
       entity_id: light.wordclock_wordclock
       to: "on"
   condition:
-    # On n'applique que si l'horloge est allumée
+    # On n'applique que si le planning est actif et l'horloge allumée
+    - condition: state
+      entity_id: binary_sensor.wordclock_schedule_active
+      state: "on"
     - condition: state
       entity_id: light.wordclock_wordclock
       state: "on"
