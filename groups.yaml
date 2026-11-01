@@ -1,31 +1,8 @@
 media_players:
   name: Media Players
   entities:
-    - media_player.gogol_home
-    - media_player.gogol_mini
     - media_player.partout
-    - media_player.kodi
-travel_time:
-  name: Travel times
-  entities:
-    - sensor.travel_time_to_work_gmap
-    - sensor.travel_time_to_work_waze
-    - sensor.travel_time_to_work_claire
-ebox:
-  name: Ebox
-  entities:
-    - sensor.ebox_balance
-    - sensor.ebox_data_limit
-    - sensor.ebox_download
-    - sensor.ebox_download_before_offpeak
-    - sensor.ebox_offpeak_download
-    - sensor.ebox_offpeak_total
-    - sensor.ebox_offpeak_upload
-    - sensor.ebox_total
-    - sensor.ebox_total_before_offpeak
-    - sensor.ebox_upload
-    - sensor.ebox_upload_before_offpeak
-    - sensor.ebox_usage
+
 bus:
   name: Bus de Claire
   entities:
@@ -33,64 +10,18 @@ bus:
     - automation.bus_de_7h50_10mn
     - automation.bus_de_7h50_2mn
     - automation.bus_de_7h50_5mn
-sonar:
-  name: Sonar
-  entities:
-    - sensor.sonarr_commands
-    - sensor.sonarr_queue
-    - sensor.sonarr_series
-    - sensor.sonarr_upcoming
-    - sensor.sonarr_wanted
+
 speedtestdotnet:
   name: Speed test
   entities:
     - sensor.speedtest_download
     - sensor.speedtest_ping
     - sensor.speedtest_upload
-weather:
-  name: Open Weather Map
-  entities:
-    - sensor.owm_cloud_coverage
-    - sensor.owm_condition
-    - sensor.owm_humidity
-    - sensor.owm_pressure
-    - sensor.owm_rain
-    - sensor.owm_snow
-    - sensor.owm_temperature
-    - sensor.owm_weather_code
-    - sensor.owm_wind_bearing
-    - sensor.owm_wind_speed
-xiaomi:
-  name: Xiaomi
-  entities:
-    - binary_sensor.door_window_sensor_158d00030318fd
-    - binary_sensor.cube_158d00029a9528
-living_room_lights:
-  name: Lumière Salon
-  entities:
-    - light.Color
-    - light.canape_gauche
-    - light.canape_droite
-
-SchoolAtHome:
-  name: School at home time keeper
-  entities:
-    - script.SchoolAtHome830
-    - script.SchoolAtHome930
-    - script.SchoolAtHome10
-    - script.SchoolAtHome11
-    - script.SchoolAtHome12
-    - script.SchoolAtHome13
-    - script.SchoolAtHome14
-    - script.SchoolAtHome15
-    - script.SchoolAtHome1530
-    - script.SchoolAtHome1630
-    - script.SchoolAtHome1730
 
 OutsideLamps:
   name: Lampe extérieures
   entities:
-    - light.lumiere_exterieure_1_forceonlight
+    - light.lampe_exterieure_1
     - light.lampe_exterieure_2
     - light.lampe_exterieure_3
 
@@ -98,8 +29,6 @@ LampesEvier:
   name: Lumières évier
   entities:
     - light.lampe_evier_gauche
-    - light.lampe_evier_centre
-    - light.lampe_evier_droite
 
 LampesCiel:
   name: Lumières ciel
