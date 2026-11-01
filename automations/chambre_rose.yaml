@@ -68,19 +68,44 @@
           entity_id: 3c329cfad3629946c940a2f6999b69ab
           type: open
   mode: single
-- id: "1736757328634"
-  alias: Turn on wardrobe light at 10
-  description: "Allume la lumière de l'armoire à 10h"
-  triggers:
-    - trigger: time_pattern
-      hours: "10"
-  conditions: []
-  actions:
-    - type: turn_on
-      device_id: 666e5e5e5b375483d4ec9748bbbd0119
-      entity_id: 7c13b027a97873a0b48a21d06ae2d630
-      domain: light
+- id: penderie_schedule_on
+  alias: "Penderie - Activation selon planning"
+  description: "Active la lumière de la penderie lorsque le planning s'active (9h en semaine, 12h le week-end/vacances)"
   mode: single
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.penderie_schedule_active
+      to: "on"
+    - platform: homeassistant
+      event: start
+  condition:
+    - condition: state
+      entity_id: binary_sensor.penderie_schedule_active
+      state: "on"
+  action:
+    - service: light.turn_on
+      target:
+        entity_id: light.lumiere_penderie
+
+- id: penderie_schedule_off
+  alias: "Penderie - Extinction selon planning"
+  description: "Éteint la lumière de la penderie lorsque le planning se désactive (22h en semaine, 23h le week-end/vacances)"
+  mode: single
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.penderie_schedule_active
+      to: "off"
+    - platform: homeassistant
+      event: start
+  condition:
+    - condition: state
+      entity_id: binary_sensor.penderie_schedule_active
+      state: "off"
+  action:
+    - service: light.turn_off
+      target:
+        entity_id: light.lumiere_penderie
+
 - id: "1736757407681"
   alias: "Bedroom remote: wardrobe"
   description: "Télécommande de la chambre : armoire"
@@ -92,8 +117,7 @@
       trigger: device
   conditions: []
   actions:
-    - type: toggle
-      device_id: 666e5e5e5b375483d4ec9748bbbd0119
-      entity_id: 7c13b027a97873a0b48a21d06ae2d630
-      domain: light
+    - service: light.toggle
+      target:
+        entity_id: light.lumiere_penderie
   mode: single

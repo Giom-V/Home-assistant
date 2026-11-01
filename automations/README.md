@@ -247,6 +247,10 @@ Automations related to Aurore's bedroom.
 
 Automations related to the pink bedroom.
 
+- `Penderie - Activation / Extinction selon planning`: Controls the wardrobe
+  light based on schedule (active 09:00-22:00 on weekdays, 12:00-23:00 on
+  weekends and holidays).
+
 ### [Chauffage](chauffage.yaml)
 
 Automations related to heating.
