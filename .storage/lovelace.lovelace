@@ -4605,17 +4605,6 @@
                   "icon": "mdi:draw-pen"
                 },
                 {
-                  "type": "custom:ecole_directe-evaluations-card",
-                  "display_header": true,
-                  "display_description": true,
-                  "display_teacher": true,
-                  "display_date": true,
-                  "display_comment": true,
-                  "max_evaluations": null,
-                  "mapping_evaluations": {},
-                  "entity": "sensor.ed_aurore_vernade_evaluations"
-                },
-                {
                   "type": "custom:ecole_directe-devoirs-card",
                   "display_header": true,
                   "reduce_done_devoir": true,
@@ -4637,7 +4626,7 @@
                   "reduce_done_devoir": true,
                   "display_done_devoir": true,
                   "enable_slider": false,
-                  "entity": "sensor.ed_aurore_vernade_devoirs_semaine_suivante"
+                  "entity": "sensor.ed_aurore_vernade_devoirs_semaine_apres_suivante"
                 }
               ]
             },
@@ -4761,7 +4750,7 @@
               "show_name": true,
               "show_state": true,
               "show_icon": true,
-              "entity": "sensor.ed_aurore_vernade_svt",
+              "entity": "sensor.ed_aurore_vernade_sciences_vie_terre",
               "name": {
                 "type": "entity"
               },
