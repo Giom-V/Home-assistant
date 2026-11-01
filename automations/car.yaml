@@ -195,17 +195,15 @@
   alias: Long-press office button (preheat car)
   description: "Préchauffe la voiture avec un appui long sur le bouton du bureau"
   triggers:
-  - domain: mqtt
-    device_id: 09d4ba3dded13922cf5b606b4bfd261b
-    type: action
-    subtype: hold
-    trigger: device
+    - trigger: mqtt
+      topic: "zigbee2mqtt/Office button/action"
+      payload: "hold"
   conditions: []
   actions:
-  - data: {}
-    target:
-      entity_id: script.preheat_car
-    action: script.turn_on
+    - data: {}
+      target:
+        entity_id: script.preheat_car
+      action: script.turn_on
   mode: single
 - id: "1683644818608"
   alias: Switch off bike's chargeur after some time to save the battery
