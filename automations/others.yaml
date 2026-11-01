@@ -18,11 +18,11 @@
   description: "Éteint les lumières 30 minutes après le lever du soleil"
   trigger:
     - event: sunrise
-      offset: 00:30
+      offset: "+00:30:00"
       platform: sun
   condition:
     - condition: state
-      entity_id: season.season
+      entity_id: sensor.season
       state:
         - summer
         - spring
@@ -37,7 +37,7 @@
       platform: time
   condition:
     - condition: state
-      entity_id: season.season
+      entity_id: sensor.season
       state:
         - winter
         - autumn
