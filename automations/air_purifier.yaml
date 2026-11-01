@@ -3,40 +3,34 @@
 # indicates if I'm working in my office or not. That value is managed in
 # [`working.yaml`](#working), documented below.
 #
-# There are 3 automations:
+# There are 4 automations:
 # * `Turn on Air Purifier when I start working`: As its name implies starts the
 #   air purifier when I start working.
-# * `Turn off Air Purifier when I'm off`: Turns it off when I stop working
+# * `Turn off Air Purifier when I'm off`: Turns it off when I leave the office.
+# * `Turn off Air purifier when I stop working`: Turns it off when I stop working.
 # * `Turn off Air purifier for a while if the air quality is good`: In case the
-#   air quality is good enough (PM5 under 2 for 5mn), I then turn off the air
-#   purifier until it becomes bad (PM5 over 5) for at least 15mn. This is meant
-#   to save energy and extend filters life.
+#   air quality is good enough (PM2.5 under 2 for 5mn), I then turn off the air
+#   purifier for 30mn. This is meant to save energy and extend filter life.
 
 - id: "1667896446367"
   alias: Turn off Air purifier for a while if the air quality is good
   description: "Éteint le purificateur d'air si la qualité de l'air est bonne"
   trigger:
-    - type: pm25
-      platform: device
-      device_id: d289257ebfadb61abab25485734acc18
-      entity_id: sensor.mi_air_purifier_3c_pm2_5
-      domain: sensor
+    - platform: numeric_state
+      entity_id: sensor.zhimi_airpurifier_mb4_pm2_5
       below: 2
       for:
         hours: 0
         minutes: 5
         seconds: 0
   condition:
-    - condition: device
-      device_id: d289257ebfadb61abab25485734acc18
-      domain: fan
-      entity_id: fan.mi_air_purifier_3c
-      type: is_on
+    - condition: state
+      entity_id: fan.unnamed_device
+      state: "on"
   action:
-    - type: turn_off
-      device_id: d289257ebfadb61abab25485734acc18
-      entity_id: fan.mi_air_purifier_3c
-      domain: fan
+    - service: fan.turn_off
+      target:
+        entity_id: fan.unnamed_device
     - delay:
         hours: 0
         minutes: 30
@@ -47,11 +41,11 @@
           entity_id: input_boolean.working
           state: "on"
       then:
-        - type: turn_on
-          device_id: d289257ebfadb61abab25485734acc18
-          entity_id: fan.mi_air_purifier_3c
-          domain: fan
+        - service: fan.turn_on
+          target:
+            entity_id: fan.unnamed_device
   mode: single
+
 - id: "1669377084491"
   alias: Turn off Air Purifier when I'm off
   description: "Éteint le purificateur d'air quand je ne suis plus au bureau"
@@ -60,22 +54,16 @@
       entity_id:
         - person.guillaume
       to: not_home
-      for:
-        hours: 0
-        minutes: 0
-        seconds: 0
   condition:
-    - condition: device
-      device_id: d289257ebfadb61abab25485734acc18
-      domain: fan
-      entity_id: fan.mi_air_purifier_3c
-      type: is_on
+    - condition: state
+      entity_id: fan.unnamed_device
+      state: "on"
   action:
-    - type: turn_off
-      device_id: d289257ebfadb61abab25485734acc18
-      entity_id: fan.mi_air_purifier_3c
-      domain: fan
+    - service: fan.turn_off
+      target:
+        entity_id: fan.unnamed_device
   mode: single
+
 - id: "1669377272682"
   alias: Turn on Air Purifier when I start working
   description: "Allume le purificateur d'air quand je commence à travailler"
@@ -91,11 +79,11 @@
           entity_id: sensor.rte_tempo_couleur_actuelle_visuel
           state: rouge
   action:
-    - type: turn_on
-      device_id: d289257ebfadb61abab25485734acc18
-      entity_id: fan.mi_air_purifier_3c
-      domain: fan
+    - service: fan.turn_on
+      target:
+        entity_id: fan.unnamed_device
   mode: single
+
 - id: "1669378742486"
   alias: Turn off Air purifier when I stop working
   description: "Éteint le purificateur d'air quand je finis de travailler"
@@ -106,8 +94,7 @@
       to: "off"
   condition: []
   action:
-    - type: turn_off
-      device_id: d289257ebfadb61abab25485734acc18
-      entity_id: fan.mi_air_purifier_3c
-      domain: fan
+    - service: fan.turn_off
+      target:
+        entity_id: fan.unnamed_device
   mode: single

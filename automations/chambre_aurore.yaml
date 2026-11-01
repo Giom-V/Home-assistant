@@ -39,9 +39,6 @@
   actions:
     - service: light.toggle
       target:
-        entity_id: light.aurores_light_bulb
-    - service: light.toggle
-      target:
         entity_id: light.lumiere_chambre_aurore
   mode: single
 - id: "1679085142205"
@@ -54,9 +51,9 @@
   action:
     - service: select.select_option
       data:
-        option: "On"
+        option: "on"
       target:
-        entity_id: select.aurores_light_bulb_start_up_behavior
+        entity_id: select.lumiere_chambre_aurore_power_on_behavior
   mode: single
 - id: "1719993857867"
   alias: Dim up Aurore's light

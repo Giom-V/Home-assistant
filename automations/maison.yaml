@@ -17,9 +17,9 @@
       domain: light
     - service: select.select_option
       data:
-        option: "Off"
+        option: "off"
       target:
-        entity_id: select.aurores_light_bulb_start_up_behavior
+        entity_id: select.lumiere_chambre_aurore_power_on_behavior
     - type: turn_off
       device_id: cef49caed9c762db670b6d2a85a15832
       entity_id: switch.aurore_bed_light_switch
