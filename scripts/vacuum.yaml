@@ -427,7 +427,7 @@ mop_bathroom:
     - service: script.vacuum_bathroom
       data_template:
         times: "{{ times }}"
-    - service: script.turm_on
+    - service: script.turn_on
       data:
         entity_id: script.vacuum_reset_fan_speed_after_mopping
 mop_kitchen:
@@ -443,7 +443,7 @@ mop_kitchen:
     - service: script.vacuum_kitchen
       data_template:
         times: "{{ times }}"
-    - service: script.turm_on
+    - service: script.turn_on
       data:
         entity_id: script.vacuum_reset_fan_speed_after_mopping
 mop_diningroom:
@@ -459,7 +459,7 @@ mop_diningroom:
     - service: script.vacuum_diningroom
       data_template:
         times: "{{ times }}"
-    - service: script.turm_on
+    - service: script.turn_on
       data:
         entity_id: script.vacuum_reset_fan_speed_after_mopping
 mop_kitchen_and_dining_room:
@@ -475,6 +475,6 @@ mop_kitchen_and_dining_room:
     - service: script.vacuum_kitchen_and_diningroom
       data_template:
         times: "{{ times }}"
-    - service: script.turm_on
+    - service: script.turn_on
       data:
         entity_id: script.vacuum_reset_fan_speed_after_mopping

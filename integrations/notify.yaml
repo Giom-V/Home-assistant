@@ -3,3 +3,7 @@ notify:
     platform: file
     filename: nouvelles_entites.log
     timestamp: true # Cela ajoutera automatiquement la date et l'heure devant chaque ligne
+  - name: SMS
+    platform: free_mobile
+    username: !secret freeMobileUsername
+    access_token: !secret freeMobileToken
