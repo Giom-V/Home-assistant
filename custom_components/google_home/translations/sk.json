@@ -2,70 +2,197 @@
   "config": {
     "step": {
       "user": {
-        "title": "Google Home autentifikácia",
-        "description": "Ak potrebujete pomoc s konfiguráciou, pozrite sa sem: https://github.com/leikoilja/ha-google-home. Použite svoje používateľské meno účtu Google a heslo aplikácie. Je bezpečnejšie/jednoduchšie vygenerovať heslo aplikácie a použiť ho namiesto skutočného hesla. Stále má rovnaký prístup ako bežné heslo, ale stále lepšie ako pri skriptovaní používať skutočné heslo. (https://myaccount.google.com/apppasswords). Ak nie, bežné heslo účtu Google by malo fungovať.",
+        "title": "Prihlásenie do Google",
+        "description": "Táto integrácia funguje s reproduktormi a displejmi Google, napríklad Nest Mini, Nest Audio a Nest Hub. Nepridáva ostatné zariadenia z aplikácie Google Home.\n\nVyberte, ako sa prihlásiť do účtu Google, ktorý je členom vašej domácnosti. Pokyny nájdete tu: {docs_url}.",
+        "menu_options": {
+          "browser": "Prihlásenie v prehliadači (odporúčané)",
+          "master_token": "Hlavný token"
+        },
+        "menu_option_descriptions": {
+          "browser": "Prihláste sa do Google v prehliadači na počítači a potom vložte súbor cookie. Funguje pre väčšinu účtov.",
+          "master_token": "Vložte hlavný token, ktorý už máte."
+        }
+      },
+      "browser": {
+        "title": "Prihlásenie v prehliadači",
+        "description": "1. Na počítači otvorte {embedded_setup_url} v súkromnom okne prehliadača a prihláste sa. Po potvrdení sa stránka môže naďalej načítavať; je to očakávané.\n2. Otvorte nástroje pre vývojárov v prehliadači a nájdite súbory cookie pre `accounts.google.com`.\n3. Skopírujte hodnotu súboru cookie `oauth_token` a hneď ju vložte nižšie. Jeho platnosť vyprší o niekoľko minút a funguje len raz.\n\nPodrobný návod: {browser_docs_url}\n\nAk chcete zvoliť iný spôsob prihlásenia, zatvorte toto okno a pridajte integráciu znova.",
         "data": {
-          "username": "Google používateľské meno účtu",
-          "password": "Google heslo aplikácie účtu",
-          "master_token": "Google hlavný token účtu"
+          "oauth_token": "Súbor cookie oauth_token"
+        },
+        "data_description": {
+          "oauth_token": "Začína sa oauth2_4/"
+        }
+      },
+      "master_token": {
+        "title": "Hlavný token",
+        "description": "Vložte hlavný token, ktorý ste získali skôr, napríklad iným nástrojom.\n\nAk chcete zvoliť iný spôsob prihlásenia, zatvorte toto okno a pridajte integráciu znova.",
+        "data": {
+          "master_token": "Hlavný token účtu Google"
+        },
+        "data_description": {
+          "master_token": "Začína sa aas_et/"
+        }
+      },
+      "reauth": {
+        "title": "Opätovné prihlásenie",
+        "description": "Google už neprijíma prihlasovacie údaje uložené pre {name}. Znova sa prihláste do toho istého účtu Google: vaše zariadenia, entity a automatizácie zostanú bez zmeny. Kým to neurobíte, entity vašich zariadení môžu zobrazovať neaktuálne hodnoty alebo byť nedostupné.",
+        "menu_options": {
+          "browser": "Prihlásenie v prehliadači (odporúčané)",
+          "master_token": "Hlavný token"
+        },
+        "menu_option_descriptions": {
+          "browser": "Prihláste sa do Google v prehliadači na počítači a potom vložte súbor cookie. Funguje pre väčšinu účtov.",
+          "master_token": "Vložte hlavný token, ktorý už máte."
+        }
+      },
+      "reauth_browser": {
+        "title": "Prihlásenie v prehliadači",
+        "description": "1. Na počítači otvorte {embedded_setup_url} v súkromnom okne prehliadača a prihláste sa do toho istého účtu Google. Po potvrdení sa stránka môže naďalej načítavať; je to očakávané.\n2. Otvorte nástroje pre vývojárov v prehliadači a nájdite súbory cookie pre `accounts.google.com`.\n3. Skopírujte hodnotu súboru cookie `oauth_token` a hneď ju vložte nižšie. Jeho platnosť vyprší o niekoľko minút a funguje len raz.\n\nPodrobný návod: {browser_docs_url}",
+        "data": {
+          "oauth_token": "Súbor cookie oauth_token"
+        },
+        "data_description": {
+          "oauth_token": "Začína sa oauth2_4/"
+        }
+      },
+      "reauth_master_token": {
+        "title": "Hlavný token",
+        "description": "Vložte hlavný token pre ten istý účet Google, napríklad token, ktorý ste získali iným nástrojom.",
+        "data": {
+          "master_token": "Hlavný token účtu Google"
+        },
+        "data_description": {
+          "master_token": "Začína sa aas_et/"
         }
       }
     },
     "error": {
-      "auth": "Používateľské meno/heslo je nesprávne. Ak má váš účet Google povolenú 2FA, vygenerujte si heslo aplikácie (https://myaccount.google.com/apppasswords). Ak autentifikácia stále zlyhá, pozrite si https://github.com/leikoilja/ha-google-home#troubleshooting",
-      "pass-len": "Dĺžka hesla je podľa pravidiel Google obmedzená na 100 znakov (https://support.google.com/a/answer/139399). Zmeňte si heslo alebo použite heslo aplikácie (https://myaccount.google.com/apppasswords).",
-      "missing-inputs": "Zadajte používateľské meno a heslo alebo hlavný token",
-      "master-token-invalid": "Hlavný token je neplatný. Uistite sa, že bol zadaný celý token (vrátane 'aas_et/')"
+      "oauth-token-invalid": "Google súbor cookie neprijal. Získajte nový a hneď ho vložte: jeho platnosť vyprší o niekoľko minút a funguje len raz. Skopírujte celú hodnotu, ktorá sa začína oauth2_4/.",
+      "master-token-invalid": "Google hlavný token neprijal. Skontrolujte, či ste ho skopírovali správne. Ak predtým fungoval, napríklad kým ste nezmenili heslo k účtu Google, Google ho už neprijíma: namiesto toho použite prihlásenie v prehliadači.",
+      "google-rejected": "Google prihlásenie neprijal. Podrobnosti nájdete v protokoloch Home Assistant.",
+      "google-unreachable": "Nepodarilo sa pripojiť ku Googlu. Skontrolujte, či je Home Assistant pripojený k internetu, a skúste to znova.",
+      "google-busy": "Google je preťažený alebo obmedzuje prihlasovanie. Počkajte niekoľko minút a potom sa znova prihláste.",
+      "oauth-token-format": "Toto nie je súbor cookie oauth_token. Jeho hodnota sa začína oauth2_4/.",
+      "master-token-format": "Hlavný token sa začína aas_et/ a má 223 znakov. Skopírujte celý token.",
+      "other-account": "Prihlásili ste sa do iného účtu Google, preto sa nič nezmenilo. Prihláste sa do účtu, ktorý táto integrácia používa. Ak chcete namiesto toho používať ten druhý účet, integráciu odstráňte a pridajte ju znova."
+    }
+  },
+  "exceptions": {
+    "alarms_and_timers_not_fetched": {
+      "message": "Nepodarilo sa načítať aktuálne budíky a časovače zo zariadenia {device}, preto sa z neho nič neodstránilo. Skontrolujte, či je zariadenie online, a skúste to znova neskôr."
     },
-    "abort": {
-      "single_instance_allowed": "Povolený je len jedna inštancia."
+    "alarms_and_timers_not_fetched_from_devices": {
+      "message": "Nepodarilo sa načítať aktuálne budíky a časovače z nasledujúcich zariadení, preto sa z nich nič neodstránilo: {devices}. Skontrolujte, či sú zariadenia online, a skúste to znova neskôr."
+    },
+    "alarms_and_timers_not_deleted": {
+      "message": "Zariadenie {device} nepotvrdilo odstránenie budíkov alebo časovačov, takže môžu byť stále nastavené. Skontrolujte, či je zariadenie online, a skúste to znova neskôr."
+    },
+    "alarms_and_timers_not_deleted_from_devices": {
+      "message": "Nepodarilo sa odstrániť budíky alebo časovače z nasledujúcich zariadení alebo potvrdiť ich odstránenie: {devices}. Skontrolujte, či sú zariadenia online, a skúste to znova neskôr."
+    },
+    "invalid_alarm_id": {
+      "message": "„{alarm_id}“ nie je ID budíka. Skopírujte ID začínajúce na alarm/ z atribútu alarms senzora budíkov daného zariadenia."
+    },
+    "invalid_timer_id": {
+      "message": "„{timer_id}“ nie je ID časovača. Skopírujte ID začínajúce na timer/ z atribútu timers senzora časovačov daného zariadenia."
+    },
+    "alarm_not_found": {
+      "message": "Na vybraných zariadeniach sa nepodarilo nájsť budík {alarm_id}. Možno už zazvonil alebo bol odstránený."
+    },
+    "timer_not_found": {
+      "message": "Na vybraných zariadeniach sa nepodarilo nájsť časovač {timer_id}. Možno už dokončil odpočítavanie alebo bol odstránený."
+    },
+    "device_offline": {
+      "message": "Nepodarilo sa pripojiť k zariadeniu {device}. Skontrolujte, či je zapnuté a pripojené k sieti, a skúste to znova."
+    },
+    "device_no_reply": {
+      "message": "Zariadenie {device} nepotvrdilo, že akciu vykonalo: neodpovedalo včas alebo sa jeho odpoveď prerušila. Skontrolujte, či je zariadenie online, a skúste to znova."
+    },
+    "device_token_rejected": {
+      "message": "Zariadenie {device} odmietlo svoj token a získanie nového od Googlu nepomohlo. Integrácia bude naďalej žiadať Google o nový, takže to skúste znova neskôr."
+    },
+    "device_not_ready": {
+      "message": "Zariadenie {device} odpovedalo „nenájdené“. Možno sa ešte spúšťa, takže to skúste znova neskôr, alebo to možno nepodporuje."
+    },
+    "device_request_failed": {
+      "message": "Na zariadení {device} sa to nepodarilo vykonať. Podrobnosti nájdete v protokoloch Home Assistant."
+    },
+    "devices_not_rebooted": {
+      "message": "Nasledujúce zariadenia nepotvrdili, že sa reštartujú: {devices}. Skontrolujte, či sú zariadenia online, a skúste to znova neskôr."
     }
   },
   "options": {
     "step": {
       "init": {
         "data": {
-          "update_interval": "Zmeniť interval aktualizácie. Zvýšte túto hodnotu, ak vám uplynie časový limit zariadení. Predvolená hodnota: 180 (sekúnd)"
+          "update_interval": "Zmeniť interval aktualizácie. Zvýšte túto hodnotu, ak zariadeniam často vyprší časový limit. Predvolená hodnota: {default_interval} (sekúnd)",
+          "known_hosts": "Známi hostitelia"
+        },
+        "data_description": {
+          "known_hosts": "IP adresy reproduktorov a displejov, ktoré integrácia nedokáže nájsť sama, napríklad preto, že sú v inej sieti alebo VLAN."
         }
       }
+    },
+    "error": {
+      "known-host-not-ip": "Zadajte iba IP adresy, napríklad 192.168.1.20."
     }
   },
   "services": {
     "delete_alarm": {
-      "description": "Odstrániť budík z zariadenia Google Home.",
+      "description": "Odstrániť budík zo zariadenia Google Home.",
       "fields": {
         "alarm_id": {
           "description": "ID budíka (alarm/xxx).",
           "name": "ID budíka"
         },
         "skip_refresh": {
-          "description": "Vynechanie obnovenia zariadení Google Home po vymazaní budíka.",
+          "description": "Preskočiť obnovenie stavu zariadení Google Home po odstránení budíka.",
           "name": "Preskočiť obnovenie"
         },
         "entity_id": {
-          "description": "Reprezentuje zariadenie Google Home (sensor.xxxx_alarms).",
+          "description": "Zodpovedá zariadeniu Google Home (sensor.xxxx_alarms).",
           "name": "Entita"
         }
       },
       "name": "Odstrániť budík"
     },
     "delete_timer": {
-      "description": "Odstrániť časovač z zariadenia Google Home.",
+      "description": "Odstrániť časovač zo zariadenia Google Home.",
       "fields": {
         "timer_id": {
           "description": "ID časovača (timer/xxx).",
           "name": "ID časovača"
         },
         "skip_refresh": {
-          "description": "Vynechanie obnovenia zariadení Google Home po vymazaní časovača.",
+          "description": "Preskočiť obnovenie stavu zariadení Google Home po odstránení časovača.",
           "name": "Preskočiť obnovenie"
         },
         "entity_id": {
-          "description": "Reprezentuje zariadenie Google Home (sensor.xxxx_alarms).",
+          "description": "Zodpovedá zariadeniu Google Home (sensor.xxxx_timers).",
           "name": "Entita"
         }
       },
       "name": "Odstrániť časovač"
+    },
+    "delete_all_alarms": {
+      "description": "Odstrániť všetky budíky zo zariadení Google Home.",
+      "fields": {
+        "skip_refresh": {
+          "description": "Preskočiť obnovenie stavu zariadení Google Home po odstránení budíkov.",
+          "name": "Preskočiť obnovenie"
+        }
+      },
+      "name": "Odstrániť všetky budíky"
+    },
+    "delete_all_timers": {
+      "description": "Odstrániť všetky časovače zo zariadení Google Home.",
+      "fields": {
+        "skip_refresh": {
+          "description": "Preskočiť obnovenie stavu zariadení Google Home po odstránení časovačov.",
+          "name": "Preskočiť obnovenie"
+        }
+      },
+      "name": "Odstrániť všetky časovače"
     },
     "reboot_device": {
       "description": "Reštartovať zariadenie Google Home.",

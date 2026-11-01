@@ -1,0 +1,206 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Logga in på Google",
+        "description": "Den här integrationen fungerar med dina högtalare och skärmar från Google, till exempel Nest Mini, Nest Audio och Nest Hub. Den lägger inte till de andra enheterna i Google Home-appen.\n\nVälj hur du vill logga in på ett Google-konto som är medlem i ditt hem. Hjälp finns på {docs_url}.",
+        "menu_options": {
+          "browser": "Inloggning via webbläsare (rekommenderas)",
+          "master_token": "Master token"
+        },
+        "menu_option_descriptions": {
+          "browser": "Logga in på Google i en webbläsare på en dator och klistra sedan in en cookie. Fungerar för de flesta konton.",
+          "master_token": "Klistra in en master token som du redan har."
+        }
+      },
+      "browser": {
+        "title": "Inloggning via webbläsare",
+        "description": "1. Öppna {embedded_setup_url} i ett privat webbläsarfönster på en dator och logga in. När du har godkänt kan sidan fortsätta att laddas. Det är normalt.\n2. Öppna webbläsarens utvecklarverktyg och leta upp cookies för `accounts.google.com`.\n3. Kopiera värdet för cookien `oauth_token` och klistra in det nedan direkt. Det upphör att gälla inom några minuter och kan bara användas en gång.\n\nStegvisa instruktioner: {browser_docs_url}\n\nStäng det här fönstret och lägg till integrationen igen om du vill välja ett annat sätt att logga in.",
+        "data": {
+          "oauth_token": "Cookien oauth_token"
+        },
+        "data_description": {
+          "oauth_token": "Börjar med oauth2_4/"
+        }
+      },
+      "master_token": {
+        "title": "Master token",
+        "description": "Klistra in en master token som du har fått tidigare, till exempel med ett annat verktyg.\n\nStäng det här fönstret och lägg till integrationen igen om du vill välja ett annat sätt att logga in.",
+        "data": {
+          "master_token": "Master token för Google-kontot"
+        },
+        "data_description": {
+          "master_token": "Börjar med aas_et/"
+        }
+      },
+      "reauth": {
+        "title": "Logga in igen",
+        "description": "Google godkänner inte längre den sparade inloggningen för {name}. Logga in på samma Google-konto igen: dina enheter, entiteter och automatiseringar förblir som de är. Tills dess kan entiteterna för dina enheter visa inaktuella värden eller vara otillgängliga.",
+        "menu_options": {
+          "browser": "Inloggning via webbläsare (rekommenderas)",
+          "master_token": "Master token"
+        },
+        "menu_option_descriptions": {
+          "browser": "Logga in på Google i en webbläsare på en dator och klistra sedan in en cookie. Fungerar för de flesta konton.",
+          "master_token": "Klistra in en master token som du redan har."
+        }
+      },
+      "reauth_browser": {
+        "title": "Inloggning via webbläsare",
+        "description": "1. Öppna {embedded_setup_url} i ett privat webbläsarfönster på en dator och logga in på samma Google-konto. När du har godkänt kan sidan fortsätta att laddas. Det är normalt.\n2. Öppna webbläsarens utvecklarverktyg och leta upp cookies för `accounts.google.com`.\n3. Kopiera värdet för cookien `oauth_token` och klistra in det nedan direkt. Det upphör att gälla inom några minuter och kan bara användas en gång.\n\nStegvisa instruktioner: {browser_docs_url}",
+        "data": {
+          "oauth_token": "Cookien oauth_token"
+        },
+        "data_description": {
+          "oauth_token": "Börjar med oauth2_4/"
+        }
+      },
+      "reauth_master_token": {
+        "title": "Master token",
+        "description": "Klistra in en master token för samma Google-konto, till exempel en som du har fått med ett annat verktyg.",
+        "data": {
+          "master_token": "Master token för Google-kontot"
+        },
+        "data_description": {
+          "master_token": "Börjar med aas_et/"
+        }
+      }
+    },
+    "error": {
+      "oauth-token-invalid": "Google godkände inte cookien. Hämta en ny och klistra in den direkt. Den upphör att gälla inom några minuter och kan bara användas en gång. Kopiera hela värdet, som börjar med oauth2_4/.",
+      "master-token-invalid": "Google godkände inte din master token. Kontrollera att du har kopierat den korrekt. Om den fungerade tidigare, till exempel tills du bytte ditt Google-lösenord, godkänner Google den inte längre: använd inloggning via webbläsare i stället.",
+      "google-rejected": "Google godkände inte inloggningen. Mer information finns i Home Assistants loggar.",
+      "google-unreachable": "Det gick inte att nå Google. Kontrollera att Home Assistant har internetanslutning och försök sedan igen.",
+      "google-busy": "Google har hög belastning eller begränsar inloggningar. Vänta några minuter och logga sedan in igen.",
+      "oauth-token-format": "Det här är inte cookien oauth_token. Dess värde börjar med oauth2_4/.",
+      "master-token-format": "En master token börjar med aas_et/ och är 223 tecken lång. Kopiera hela värdet.",
+      "other-account": "Du loggade in på ett annat Google-konto, så inget ändrades. Logga in med kontot som den här integrationen använder. Om du i stället vill använda det andra kontot raderar du integrationen och lägger till den igen."
+    }
+  },
+  "exceptions": {
+    "alarms_and_timers_not_fetched": {
+      "message": "Det gick inte att hämta aktuella alarm och timers från {device}, så inget raderades från den enheten. Kontrollera att enheten är online och försök igen senare."
+    },
+    "alarms_and_timers_not_fetched_from_devices": {
+      "message": "Det gick inte att hämta aktuella alarm och timers från följande enheter, så inget raderades från dem: {devices}. Kontrollera att enheterna är online och försök igen senare."
+    },
+    "alarms_and_timers_not_deleted": {
+      "message": "{device} bekräftade inte att alarm eller timers raderades, så de kan fortfarande vara inställda. Kontrollera att enheten är online och försök igen senare."
+    },
+    "alarms_and_timers_not_deleted_from_devices": {
+      "message": "Det gick inte att radera alarm eller timers från följande enheter eller bekräfta att de raderades: {devices}. Kontrollera att enheterna är online och försök igen senare."
+    },
+    "invalid_alarm_id": {
+      "message": "”{alarm_id}” är inte ett alarm-ID. Kopiera ID:t, som börjar med alarm/, från attributet alarms på enhetens alarmsensor."
+    },
+    "invalid_timer_id": {
+      "message": "”{timer_id}” är inte ett timer-ID. Kopiera ID:t, som börjar med timer/, från attributet timers på enhetens timersensor."
+    },
+    "alarm_not_found": {
+      "message": "Det gick inte att hitta alarmet {alarm_id} på de valda enheterna. Det kan redan ha ringt eller raderats."
+    },
+    "timer_not_found": {
+      "message": "Det gick inte att hitta timern {timer_id} på de valda enheterna. Den kan redan ha löpt ut eller raderats."
+    },
+    "device_offline": {
+      "message": "Det gick inte att nå {device}. Kontrollera att enheten är påslagen och ansluten till ditt nätverk, och försök sedan igen."
+    },
+    "device_no_reply": {
+      "message": "{device} bekräftade inte att den utförde åtgärden: den svarade inte i tid, eller så avbröts svaret. Kontrollera att enheten är online och försök igen."
+    },
+    "device_token_rejected": {
+      "message": "{device} avvisade sin token, och det hjälpte inte att hämta en ny från Google. Integrationen fortsätter att be Google om en ny, så försök igen senare."
+    },
+    "device_not_ready": {
+      "message": "{device} svarade ”hittades inte”. Den håller kanske fortfarande på att starta, så försök igen senare, eller så stöder den inte detta."
+    },
+    "device_request_failed": {
+      "message": "Det gick inte att utföra åtgärden på {device}. Mer information finns i Home Assistants loggar."
+    },
+    "devices_not_rebooted": {
+      "message": "Följande enheter bekräftade inte att de kommer att starta om: {devices}. Kontrollera att enheterna är online och försök igen senare."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "data": {
+          "update_interval": "Ändra uppdateringsintervallet. Öka det om enheterna inte svarar i tid. Standard: {default_interval} sekunder.",
+          "known_hosts": "Kända värdar"
+        },
+        "data_description": {
+          "known_hosts": "IP-adresser till högtalare och skärmar som integrationen inte kan hitta på egen hand, till exempel för att de finns i ett annat nätverk eller VLAN."
+        }
+      }
+    },
+    "error": {
+      "known-host-not-ip": "Ange endast IP-adresser, till exempel 192.168.1.20."
+    }
+  },
+  "services": {
+    "delete_alarm": {
+      "description": "Radera ett alarm från en Google Home-enhet.",
+      "fields": {
+        "alarm_id": {
+          "description": "ID för ett alarm (alarm/xxx).",
+          "name": "Alarm-ID"
+        },
+        "skip_refresh": {
+          "description": "Hoppa över uppdateringen av Google Home-enheternas status efter att ett alarm har raderats.",
+          "name": "Hoppa över uppdatering"
+        },
+        "entity_id": {
+          "description": "Motsvarar en Google Home-enhet (sensor.xxxx_alarms).",
+          "name": "Entitet"
+        }
+      },
+      "name": "Radera alarm"
+    },
+    "delete_timer": {
+      "description": "Radera en timer från en Google Home-enhet.",
+      "fields": {
+        "timer_id": {
+          "description": "ID för en timer (timer/xxx).",
+          "name": "Timer-ID"
+        },
+        "skip_refresh": {
+          "description": "Hoppa över uppdateringen av Google Home-enheternas status efter att en timer har raderats.",
+          "name": "Hoppa över uppdatering"
+        },
+        "entity_id": {
+          "description": "Motsvarar en Google Home-enhet (sensor.xxxx_timers).",
+          "name": "Entitet"
+        }
+      },
+      "name": "Radera timer"
+    },
+    "delete_all_alarms": {
+      "description": "Radera alla alarm från Google Home-enheter.",
+      "fields": {
+        "skip_refresh": {
+          "description": "Hoppa över uppdateringen av Google Home-enheternas status efter att alarmen har raderats.",
+          "name": "Hoppa över uppdatering"
+        }
+      },
+      "name": "Radera alla alarm"
+    },
+    "delete_all_timers": {
+      "description": "Radera alla timers från Google Home-enheter.",
+      "fields": {
+        "skip_refresh": {
+          "description": "Hoppa över uppdateringen av Google Home-enheternas status efter att alla timers har raderats.",
+          "name": "Hoppa över uppdatering"
+        }
+      },
+      "name": "Radera alla timers"
+    },
+    "reboot_device": {
+      "description": "Starta om en Google Home-enhet.",
+      "name": "Starta om enhet"
+    },
+    "refresh_devices": {
+      "description": "Uppdatera statusen för alla Google Home-enheter.",
+      "name": "Uppdatera enheter"
+    }
+  }
+}

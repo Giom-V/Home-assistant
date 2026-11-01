@@ -1,3 +1,5 @@
+"""The Hyundai / Kia Connect integration."""
+
 import hashlib
 import logging
 
@@ -12,6 +14,7 @@ from homeassistant.const import (
 )
 from homeassistant.core import HomeAssistant
 from homeassistant.exceptions import ConfigEntryAuthFailed, ConfigEntryNotReady
+from homeassistant.helpers import entity_registry as er
 from homeassistant.helpers.device_registry import DeviceEntry
 
 from .const import (
@@ -41,11 +44,13 @@ PLATFORMS: list[str] = [
     Platform.NUMBER,
     Platform.SWITCH,
     Platform.CLIMATE,
+    Platform.IMAGE,
     Platform.TIME,
 ]
 
 
-async def async_setup(hass: HomeAssistant, config_entry: ConfigEntry):
+async def async_setup(hass: HomeAssistant, config_entry: ConfigEntry) -> bool:
+    """Set up the integration (config entries only, no YAML)."""
     return True
 
 
@@ -77,7 +82,8 @@ async def async_unload_entry(hass: HomeAssistant, config_entry: ConfigEntry) -> 
     return unload_ok
 
 
-async def async_migrate_entry(hass, config_entry: ConfigEntry):
+async def async_migrate_entry(hass: HomeAssistant, config_entry: ConfigEntry) -> bool:
+    """Migrate an old config entry to the current version."""
     if config_entry.version == 1:
         _LOGGER.debug(f"{DOMAIN} - config data- {config_entry}")
         username = config_entry.data.get(CONF_USERNAME)
@@ -112,10 +118,8 @@ async def async_migrate_entry(hass, config_entry: ConfigEntry):
             CONF_FORCE_REFRESH_INTERVAL: force_refresh_interval,
             CONF_SCAN_INTERVAL: scan_interval,
         }
-        registry = hass.helpers.entity_registry.async_get(hass)
-        entities = hass.helpers.entity_registry.async_entries_for_config_entry(
-            registry, config_entry.entry_id
-        )
+        registry = er.async_get(hass)
+        entities = er.async_entries_for_config_entry(registry, config_entry.entry_id)
         for entity in entities:
             registry.async_remove(entity.entity_id)
 

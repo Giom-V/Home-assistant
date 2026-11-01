@@ -7,6 +7,7 @@ VERSION = __version__
 # Base component constants
 DOMAIN = "nodered"
 DOMAIN_DATA = f"{DOMAIN}_data"
+CONTRIB_VERSION_DATA = f"{DOMAIN}_contrib_version"
 WEBHOOKS = "webhooks"
 
 ISSUE_URL = "https://github.com/zachowj/hass-node-red/issues"
@@ -16,11 +17,13 @@ HA_MAX_STATE_LENGTH = 255
 
 # Configuration
 CONF_ATTRIBUTES = "attributes"
+CONF_AVAILABLE = "available"
 CONF_BINARY_SENSOR = "binary_sensor"
 CONF_BUTTON = "button"
 CONF_COMPONENT = "component"
 CONF_CONFIG = "config"
 CONF_CONNECTION = "connection"
+CONF_CONTRIB_VERSION = "contrib_version"
 CONF_DATA = "data"
 CONF_DEVICE_INFO = "device_info"
 CONF_DEVICE_TRIGGER = "device_trigger"

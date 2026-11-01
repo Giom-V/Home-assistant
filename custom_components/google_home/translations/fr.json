@@ -2,47 +2,155 @@
   "config": {
     "step": {
       "user": {
-        "title": "Google Home authentification",
-        "description": "Si vous avez besoin d'aide pour la configuration, regardez ici: https://github.com/leikoilja/ha-google-home. Utilisez votre compte Google et un mot de passe d'application. C'est facile/sécuritaire de générer un mot de passe d'application et de l'utiliser à la place de votre mot de passe Google. Il aura les mêmes accès que votre mot de passe régulier, mais cela est bien mieux que d'utiliser votre mot de passe Google pour du développement. (https://myaccount.google.com/apppasswords). Au cas où, votre mot de passe Google régulier devrait fonctionner.",
+        "title": "Se connecter à Google",
+        "description": "Cette intégration fonctionne avec vos enceintes et écrans Google, comme Nest Mini, Nest Audio et Nest Hub. Elle n'ajoute pas les autres appareils de votre application Google Home.\n\nChoisissez comment vous connecter à un compte Google membre de votre maison. Pour obtenir de l'aide, consultez {docs_url}.",
+        "menu_options": {
+          "browser": "Connexion via le navigateur (recommandée)",
+          "master_token": "Jeton maître"
+        },
+        "menu_option_descriptions": {
+          "browser": "Connectez-vous à Google dans un navigateur sur ordinateur, puis collez un cookie. Fonctionne pour la plupart des comptes.",
+          "master_token": "Collez un jeton maître que vous avez déjà."
+        }
+      },
+      "browser": {
+        "title": "Connexion via le navigateur",
+        "description": "1. Sur un ordinateur, ouvrez {embedded_setup_url} dans une fenêtre de navigation privée et connectez-vous. Une fois que vous avez accepté, la page peut continuer à charger ; c'est normal.\n2. Ouvrez les outils de développement du navigateur et trouvez les cookies de `accounts.google.com`.\n3. Copiez la valeur du cookie `oauth_token` et collez-la ci-dessous immédiatement. Il expire en quelques minutes et ne fonctionne qu'une seule fois.\n\nInstructions détaillées : {browser_docs_url}\n\nPour choisir une autre méthode de connexion, fermez cette fenêtre et ajoutez à nouveau l'intégration.",
         "data": {
-          "username": "Nom d'utilisateur Google ",
-          "password": "Mot de passe d'application"
+          "oauth_token": "Cookie oauth_token"
+        },
+        "data_description": {
+          "oauth_token": "Commence par oauth2_4/"
+        }
+      },
+      "master_token": {
+        "title": "Jeton maître",
+        "description": "Collez un jeton maître obtenu précédemment, par exemple avec un autre outil.\n\nPour choisir une autre méthode de connexion, fermez cette fenêtre et ajoutez à nouveau l'intégration.",
+        "data": {
+          "master_token": "Jeton maître du compte Google"
+        },
+        "data_description": {
+          "master_token": "Commence par aas_et/"
+        }
+      },
+      "reauth": {
+        "title": "Se reconnecter",
+        "description": "Google n'accepte plus les identifiants de connexion enregistrés pour {name}. Reconnectez-vous au même compte Google : vos appareils, entités et automatisations restent tels quels. D'ici là, les entités de vos appareils peuvent afficher des valeurs obsolètes ou être indisponibles.",
+        "menu_options": {
+          "browser": "Connexion via le navigateur (recommandée)",
+          "master_token": "Jeton maître"
+        },
+        "menu_option_descriptions": {
+          "browser": "Connectez-vous à Google dans un navigateur sur ordinateur, puis collez un cookie. Fonctionne pour la plupart des comptes.",
+          "master_token": "Collez un jeton maître que vous avez déjà."
+        }
+      },
+      "reauth_browser": {
+        "title": "Connexion via le navigateur",
+        "description": "1. Sur un ordinateur, ouvrez {embedded_setup_url} dans une fenêtre de navigation privée et connectez-vous au même compte Google. Une fois que vous avez accepté, la page peut continuer à charger ; c'est normal.\n2. Ouvrez les outils de développement du navigateur et trouvez les cookies de `accounts.google.com`.\n3. Copiez la valeur du cookie `oauth_token` et collez-la ci-dessous immédiatement. Il expire en quelques minutes et ne fonctionne qu'une seule fois.\n\nInstructions détaillées : {browser_docs_url}",
+        "data": {
+          "oauth_token": "Cookie oauth_token"
+        },
+        "data_description": {
+          "oauth_token": "Commence par oauth2_4/"
+        }
+      },
+      "reauth_master_token": {
+        "title": "Jeton maître",
+        "description": "Collez un jeton maître du même compte Google, par exemple un jeton obtenu avec un autre outil.",
+        "data": {
+          "master_token": "Jeton maître du compte Google"
+        },
+        "data_description": {
+          "master_token": "Commence par aas_et/"
         }
       }
     },
     "error": {
-      "auth": "Utilisateur/Mot de passe incorrect. Si votre compte Google utilise la double authentification, veuillez utiliser un mot de passe d'application (https://myaccount.google.com/apppasswords). Si l'authentification ne fonctionne toujours pas, veuillez vous référer à https://github.com/leikoilja/ha-google-home#troubleshooting",
-      "pass-len": "La longueur du mot de passe est limitée à 100 caractères par Google (https://support.google.com/a/answer/139399). Veuillez changer votre mot de passe ou utiliser un mot de passe d'application (https://myaccount.google.com/apppasswords).",
-      "missing-inputs": "Veuillez indiquer soit votre nom d'utilisateur et votre mot de passe, soit votre jeton principal",
-      "master-token-invalid": "Jeton maître non valide. Assurez-vous que le jeton complet a été fourni (y compris 'aas_et/')"
+      "oauth-token-invalid": "Google n'a pas accepté le cookie. Récupérez-en un nouveau et collez-le immédiatement : il expire en quelques minutes et ne fonctionne qu'une seule fois. Copiez la valeur complète, qui commence par oauth2_4/.",
+      "master-token-invalid": "Google n'a pas accepté le jeton maître. Vérifiez que vous l'avez copié correctement. S'il fonctionnait auparavant, par exemple jusqu'à ce que vous changiez votre mot de passe Google, Google ne l'accepte plus : utilisez plutôt la connexion via le navigateur.",
+      "google-rejected": "Google n'a pas accepté la connexion. Pour en savoir plus, consultez les journaux de Home Assistant.",
+      "google-unreachable": "Impossible de joindre Google. Vérifiez que Home Assistant est connecté à Internet, puis réessayez.",
+      "google-busy": "Google est occupé ou limite les connexions. Patientez quelques minutes, puis reconnectez-vous.",
+      "oauth-token-format": "Ce n'est pas le cookie oauth_token. Sa valeur commence par oauth2_4/.",
+      "master-token-format": "Un jeton maître commence par aas_et/ et comporte 223 caractères. Copiez le jeton complet.",
+      "other-account": "Vous avez utilisé un autre compte Google pour vous connecter, rien n'a donc été modifié. Connectez-vous avec le compte qu'utilise cette intégration. Pour utiliser plutôt cet autre compte, supprimez l'intégration et ajoutez-la à nouveau."
+    }
+  },
+  "exceptions": {
+    "alarms_and_timers_not_fetched": {
+      "message": "Impossible de récupérer les alarmes et les minuteurs actuels de l'appareil {device}. Rien n'a donc été supprimé de cet appareil. Vérifiez qu'il est en ligne et réessayez plus tard."
     },
-    "abort": {
-      "single_instance_allowed": "Une seule installation est autorisée."
+    "alarms_and_timers_not_fetched_from_devices": {
+      "message": "Impossible de récupérer les alarmes et les minuteurs actuels des appareils suivants : {devices}. Rien n'a donc été supprimé de ces appareils. Vérifiez qu'ils sont en ligne et réessayez plus tard."
+    },
+    "alarms_and_timers_not_deleted": {
+      "message": "L'appareil {device} n'a pas confirmé la suppression des alarmes ou des minuteurs ; ils sont donc peut-être encore programmés. Vérifiez qu'il est en ligne et réessayez plus tard."
+    },
+    "alarms_and_timers_not_deleted_from_devices": {
+      "message": "Impossible de supprimer les alarmes ou les minuteurs des appareils suivants, ou de confirmer leur suppression : {devices}. Vérifiez qu'ils sont en ligne et réessayez plus tard."
+    },
+    "invalid_alarm_id": {
+      "message": "« {alarm_id} » n'est pas un ID d'alarme. Copiez l'ID, qui commence par alarm/, depuis l'attribut alarms du capteur d'alarmes de l'appareil."
+    },
+    "invalid_timer_id": {
+      "message": "« {timer_id} » n'est pas un ID de minuteur. Copiez l'ID, qui commence par timer/, depuis l'attribut timers du capteur de minuteurs de l'appareil."
+    },
+    "alarm_not_found": {
+      "message": "Impossible de trouver l'alarme {alarm_id} sur les appareils sélectionnés. Elle a peut-être déjà sonné ou été supprimée."
+    },
+    "timer_not_found": {
+      "message": "Impossible de trouver le minuteur {timer_id} sur les appareils sélectionnés. Il est peut-être déjà arrivé à son terme ou a été supprimé."
+    },
+    "device_offline": {
+      "message": "Impossible de joindre l'appareil {device}. Vérifiez qu'il est allumé et connecté à votre réseau, puis réessayez."
+    },
+    "device_no_reply": {
+      "message": "L'appareil {device} n'a pas confirmé avoir effectué l'action : il n'a pas répondu à temps ou sa réponse a été interrompue. Vérifiez qu'il est en ligne et réessayez."
+    },
+    "device_token_rejected": {
+      "message": "L'appareil {device} a refusé son jeton, et en obtenir un nouveau auprès de Google n'a rien changé. L'intégration continue d'en demander un nouveau à Google ; réessayez plus tard."
+    },
+    "device_not_ready": {
+      "message": "L'appareil {device} a répondu « introuvable ». Il est peut-être encore en cours de démarrage, auquel cas réessayez plus tard, ou il ne prend peut-être pas en charge cette action."
+    },
+    "device_request_failed": {
+      "message": "Impossible d'effectuer cette action sur l'appareil {device}. Pour en savoir plus, consultez les journaux de Home Assistant."
+    },
+    "devices_not_rebooted": {
+      "message": "Les appareils suivants n'ont pas confirmé qu'ils vont redémarrer : {devices}. Vérifiez qu'ils sont en ligne et réessayez plus tard."
     }
   },
   "options": {
     "step": {
       "init": {
         "data": {
-          "update_interval": "Modifier la fréquence de mise à jour. Augmentez ce paramètre si vous subissez des problèmes de timeout. Défaut: 180 (Secondes)"
+          "update_interval": "Modifier l'intervalle de mise à jour. Augmentez cette valeur si vos appareils dépassent souvent le délai d'attente. Par défaut : {default_interval} (secondes)",
+          "known_hosts": "Hôtes connus"
+        },
+        "data_description": {
+          "known_hosts": "Adresses IP des enceintes et écrans que l'intégration ne trouve pas d'elle-même, par exemple parce qu'ils sont sur un autre réseau ou VLAN."
         }
       }
+    },
+    "error": {
+      "known-host-not-ip": "Saisissez uniquement des adresses IP, comme 192.168.1.20."
     }
   },
   "services": {
     "delete_alarm": {
-      "description": "Supprimer un réveil d'un appareil Google Home.",
+      "description": "Supprimer une alarme d'un appareil Google Home.",
       "fields": {
         "alarm_id": {
-          "description": "ID d'un réveil (alarm/xxx).",
+          "description": "ID d'une alarme (alarm/xxx).",
           "name": "ID de l'alarme"
         },
         "skip_refresh": {
-          "description": "Ignorez l'actualisation des appareils Google Home après la suppression d'une alarme.",
+          "description": "Ignorer l'actualisation des appareils Google Home après la suppression d'une alarme.",
           "name": "Ignorer l'actualisation"
         },
         "entity_id": {
-          "description": "Représente un appareil Google Home (sensor.xxxx_alarms).",
+          "description": "Correspond à un appareil Google Home (sensor.xxxx_alarms).",
           "name": "Entité"
         }
       },
@@ -56,22 +164,42 @@
           "name": "ID du minuteur"
         },
         "skip_refresh": {
-          "description": "Ignorez l'actualisation des appareils Google Home après la suppression d'une minuterie.",
+          "description": "Ignorer l'actualisation des appareils Google Home après la suppression d'un minuteur.",
           "name": "Ignorer l'actualisation"
         },
         "entity_id": {
-          "description": "Représente un appareil Google Home (sensor.xxxx_alarms).",
+          "description": "Correspond à un appareil Google Home (sensor.xxxx_timers).",
           "name": "Entité"
         }
       },
       "name": "Supprimer le minuteur"
+    },
+    "delete_all_alarms": {
+      "description": "Supprimer toutes les alarmes des appareils Google Home.",
+      "fields": {
+        "skip_refresh": {
+          "description": "Ignorer l'actualisation des appareils Google Home après la suppression des alarmes.",
+          "name": "Ignorer l'actualisation"
+        }
+      },
+      "name": "Supprimer toutes les alarmes"
+    },
+    "delete_all_timers": {
+      "description": "Supprimer tous les minuteurs des appareils Google Home.",
+      "fields": {
+        "skip_refresh": {
+          "description": "Ignorer l'actualisation des appareils Google Home après la suppression des minuteurs.",
+          "name": "Ignorer l'actualisation"
+        }
+      },
+      "name": "Supprimer tous les minuteurs"
     },
     "reboot_device": {
       "description": "Redémarrer un appareil Google Home.",
       "name": "Redémarrer l'appareil"
     },
     "refresh_devices": {
-      "description": "Actualisez l'état de tous les appareils Google Home.",
+      "description": "Actualiser l'état de tous les appareils Google Home.",
       "name": "Actualiser les appareils"
     }
   }

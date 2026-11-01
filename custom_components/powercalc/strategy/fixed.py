@@ -1,16 +1,16 @@
 from decimal import Decimal
 
-from homeassistant.components import lawn_mower, vacuum
+from homeassistant.const import STATE_OFF
 from homeassistant.core import State
 import homeassistant.helpers.config_validation as cv
 from homeassistant.helpers.event import TrackTemplate
 from homeassistant.helpers.template import Template
-import voluptuous as vol
 
 from custom_components.powercalc.common import SourceEntity
 from custom_components.powercalc.const import CONF_POWER, CONF_STATES_POWER
 from custom_components.powercalc.errors import StrategyConfigurationError
 from custom_components.powercalc.unit import evaluate_to_decimal
+from custom_components.powercalc.validation import vol
 
 from .strategy_interface import PowerCalculationStrategyInterface
 
@@ -22,11 +22,6 @@ CONFIG_SCHEMA = vol.Schema(
         ),
     },
 )
-
-STATE_BASED_ENTITY_DOMAINS = [
-    vacuum.DOMAIN,
-    lawn_mower.DOMAIN,
-]
 
 
 class FixedStrategy(PowerCalculationStrategyInterface):
@@ -68,12 +63,6 @@ class FixedStrategy(PowerCalculationStrategyInterface):
                 "fixed_mandatory",
             )
 
-        if self._source_entity.domain in STATE_BASED_ENTITY_DOMAINS and self._per_state_power is None:
-            raise StrategyConfigurationError(
-                "This entity can only work with 'states_power' not 'power'",
-                "fixed_states_power_only",
-            )
-
     def get_entities_to_track(self) -> list[str | TrackTemplate]:
         """Return entities that should be tracked."""
         track_templates: list[str | TrackTemplate] = []
@@ -89,3 +78,7 @@ class FixedStrategy(PowerCalculationStrategyInterface):
             )
 
         return track_templates
+
+    def can_calculate_standby(self) -> bool:
+        """Return whether an explicit off-state power value is configured."""
+        return self._per_state_power is not None and STATE_OFF in self._per_state_power

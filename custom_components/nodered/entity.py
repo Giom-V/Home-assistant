@@ -2,13 +2,13 @@
 
 from __future__ import annotations
 
-from contextlib import suppress
 from typing import TYPE_CHECKING, Any, ClassVar
 
 from homeassistant.const import (
     CONF_DEVICE_CLASS,
     CONF_ENTITY_CATEGORY,
     CONF_ICON,
+    CONF_STATE,
     CONF_UNIT_OF_MEASUREMENT,
     EntityCategory,
 )
@@ -27,6 +27,7 @@ if TYPE_CHECKING:
 
 from .const import (
     CONF_ATTRIBUTES,
+    CONF_AVAILABLE,
     CONF_COMPONENT,
     CONF_CONFIG,
     CONF_DEVICE_INFO,
@@ -44,6 +45,7 @@ from .const import (
     NODERED_ENTITY,
 )
 from .discovery import ALREADY_DISCOVERED, CHANGE_ENTITY_TYPE
+from .utils import contrib_supports_presence_available
 
 
 class MissingConfigError(TypeError):
@@ -100,14 +102,43 @@ class NodeRedEntity(Entity):
         self.async_write_ha_state()
 
     def update_entity_state_attributes(self, msg: dict[str, Any]) -> None:
-        """Set extra state attributes from incoming message."""
-        self._attr_extra_state_attributes = msg.get(CONF_ATTRIBUTES, {})
+        """Apply attributes and availability from an incoming message.
+
+        When presence-available is not supported, inject ``available: true`` if
+        ``state`` is present without ``available``, and clear attributes to ``{}``
+        when the attributes key is omitted.
+        """
+        if (
+            not contrib_supports_presence_available(self.hass)
+            and CONF_STATE in msg
+            and CONF_AVAILABLE not in msg
+        ):
+            msg[CONF_AVAILABLE] = True
+            if CONF_ATTRIBUTES not in msg:
+                self._attr_extra_state_attributes = {}
+        if CONF_ATTRIBUTES in msg:
+            self._attr_extra_state_attributes = msg[CONF_ATTRIBUTES]
+        if CONF_AVAILABLE in msg:
+            self._attr_available = msg[CONF_AVAILABLE]
 
     @callback
     def handle_lost_connection(self) -> None:
         """Mark entity unavailable after losing connection."""
         self._attr_available = False
         self.async_write_ha_state()
+
+    async def _async_remove_from_hass(self) -> None:
+        """Remove entity state and registry entry.
+
+        Plain async_remove() leaves a restored unavailable entity when the
+        entity is registered. Follow MQTT: drop the registry entry when
+        present, otherwise force-remove state.
+        """
+        entity_registry = async_get(self.hass)
+        if entity_registry.async_get(self.entity_id):
+            entity_registry.async_remove(self.entity_id)
+        else:
+            await self.async_remove(force_remove=True)
 
     @callback
     def handle_discovery_update(
@@ -130,18 +161,20 @@ class NodeRedEntity(Entity):
                 self.async_on_remove(recreate_entity)
                 # Schedule entity removal; recreation will happen when the on_remove
                 # callback runs and re-dispatches discovery for the new entity
-                self.hass.async_create_task(self.async_remove())
+                self.hass.async_create_task(self._async_remove_from_hass())
             else:
 
                 @callback
                 def cleanup_discovery() -> None:
                     """Remove discovery tracking for this entity, if present."""
-                    with suppress(KeyError):
-                        del self.hass.data[DOMAIN_DATA][ALREADY_DISCOVERED][
-                            self.unique_id
-                        ]
+                    discovered = self.hass.data[DOMAIN_DATA].get(ALREADY_DISCOVERED)
+                    if discovered is None or self.unique_id is None:
+                        return
+                    # discovery.py stores a set of discovery hashes
+                    discovered.discard(self.unique_id)
 
                 self.async_on_remove(cleanup_discovery)
+                self.hass.async_create_task(self._async_remove_from_hass())
 
             return
 

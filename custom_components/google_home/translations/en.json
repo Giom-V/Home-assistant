@@ -2,32 +2,139 @@
   "config": {
     "step": {
       "user": {
-        "title": "Google Home authentication",
-        "description": "If you need help with the configuration have a look here: https://github.com/leikoilja/ha-google-home. Use your google account username and app password. It's safer/easier to generate an app password and use it instead of the actual password. It still has the same access as the regular password, but still better than using the real password while scripting. (https://myaccount.google.com/apppasswords). If not, regular google account password should work.",
+        "title": "Sign in to Google",
+        "description": "This integration works with your Google speakers and displays, such as Nest Mini, Nest Audio and Nest Hub. It doesn't add the other devices in your Google Home app.\n\nChoose how to sign in to a Google account that is a member of your home. For help, see {docs_url}.",
+        "menu_options": {
+          "browser": "Browser sign-in (recommended)",
+          "master_token": "Master token"
+        },
+        "menu_option_descriptions": {
+          "browser": "Sign in to Google in a desktop browser, then paste a cookie. Works for most accounts.",
+          "master_token": "Paste a master token you already have."
+        }
+      },
+      "browser": {
+        "title": "Browser sign-in",
+        "description": "1. On a computer, open {embedded_setup_url} in a private browser window and sign in. After you accept, the page may keep loading; that is expected.\n2. Open the browser's developer tools and find the cookies for `accounts.google.com`.\n3. Copy the value of the `oauth_token` cookie and paste it below straight away. It expires within minutes and works only once.\n\nStep-by-step instructions: {browser_docs_url}\n\nTo choose another way to sign in, close this window and add the integration again.",
         "data": {
-          "username": "Google account username",
-          "password": "Google account app password",
+          "oauth_token": "oauth_token cookie"
+        },
+        "data_description": {
+          "oauth_token": "Starts with oauth2_4/"
+        }
+      },
+      "master_token": {
+        "title": "Master token",
+        "description": "Paste a master token that you got earlier, for example with another tool.\n\nTo choose another way to sign in, close this window and add the integration again.",
+        "data": {
           "master_token": "Google account master token"
+        },
+        "data_description": {
+          "master_token": "Starts with aas_et/"
+        }
+      },
+      "reauth": {
+        "title": "Sign in again",
+        "description": "Google no longer accepts the sign-in saved for {name}. Sign in to the same Google account again: your devices, entities and automations stay as they are. Until you do, your devices' entities can show out-of-date values or be unavailable.",
+        "menu_options": {
+          "browser": "Browser sign-in (recommended)",
+          "master_token": "Master token"
+        },
+        "menu_option_descriptions": {
+          "browser": "Sign in to Google in a desktop browser, then paste a cookie. Works for most accounts.",
+          "master_token": "Paste a master token you already have."
+        }
+      },
+      "reauth_browser": {
+        "title": "Browser sign-in",
+        "description": "1. On a computer, open {embedded_setup_url} in a private browser window and sign in to the same Google account. After you accept, the page may keep loading; that is expected.\n2. Open the browser's developer tools and find the cookies for `accounts.google.com`.\n3. Copy the value of the `oauth_token` cookie and paste it below straight away. It expires within minutes and works only once.\n\nStep-by-step instructions: {browser_docs_url}",
+        "data": {
+          "oauth_token": "oauth_token cookie"
+        },
+        "data_description": {
+          "oauth_token": "Starts with oauth2_4/"
+        }
+      },
+      "reauth_master_token": {
+        "title": "Master token",
+        "description": "Paste a master token for the same Google account, for example one that you got with another tool.",
+        "data": {
+          "master_token": "Google account master token"
+        },
+        "data_description": {
+          "master_token": "Starts with aas_et/"
         }
       }
     },
     "error": {
-      "auth": "Username/Password is incorrect. If your google account has 2FA enabled please generate app password (https://myaccount.google.com/apppasswords). If authentication still fails refer to https://github.com/leikoilja/ha-google-home#troubleshooting",
-      "pass-len": "Password length is limited to 100 characters by Google Policy (https://support.google.com/a/answer/139399). Please, change your password or use an app password (https://myaccount.google.com/apppasswords).",
-      "missing-inputs": "Please provide either username and password or master token",
-      "master-token-invalid": "Master token invalid. Make sure that the full token has been specified (including 'aas_et/')"
+      "oauth-token-invalid": "Google didn't accept the cookie. Get a new one and paste it straight away: it expires within minutes and works only once. Copy the whole value, starting with oauth2_4/.",
+      "master-token-invalid": "Google didn't accept the master token. Check that you copied it correctly. If it worked before, for example until you changed your Google password, Google no longer accepts it: use browser sign-in instead.",
+      "google-rejected": "Google didn't accept the sign-in. For details, see the Home Assistant log.",
+      "google-unreachable": "Couldn't reach Google. Check that Home Assistant is connected to the internet, then try again.",
+      "google-busy": "Google is busy or is limiting sign-ins. Wait a few minutes, then sign in again.",
+      "oauth-token-format": "This isn't the oauth_token cookie. Its value starts with oauth2_4/.",
+      "master-token-format": "A master token starts with aas_et/ and is 223 characters long. Copy the whole token.",
+      "other-account": "You signed in to a different Google account, so nothing was changed. Sign in with the account this integration uses. To use the other account instead, delete the integration and add it again."
+    }
+  },
+  "exceptions": {
+    "alarms_and_timers_not_fetched": {
+      "message": "Couldn't get the current alarms and timers from {device}, so nothing was deleted from it. Check that it's online and try again later."
     },
-    "abort": {
-      "single_instance_allowed": "Only a single instance is allowed."
+    "alarms_and_timers_not_fetched_from_devices": {
+      "message": "Couldn't get the current alarms and timers from these devices, so nothing was deleted from them: {devices}. Check that they're online and try again later."
+    },
+    "alarms_and_timers_not_deleted": {
+      "message": "{device} didn't confirm deleting the alarms or timers, so they may still be set. Check that it's online and try again later."
+    },
+    "alarms_and_timers_not_deleted_from_devices": {
+      "message": "Couldn't delete alarms or timers from these devices, or confirm that they were deleted: {devices}. Check that they're online and try again later."
+    },
+    "invalid_alarm_id": {
+      "message": "“{alarm_id}” isn't an alarm ID. Copy the ID, which starts with alarm/, from the alarms attribute of the device's alarms sensor."
+    },
+    "invalid_timer_id": {
+      "message": "“{timer_id}” isn't a timer ID. Copy the ID, which starts with timer/, from the timers attribute of the device's timers sensor."
+    },
+    "alarm_not_found": {
+      "message": "Couldn't find the alarm {alarm_id} on the devices you targeted. It may already have gone off or been deleted."
+    },
+    "timer_not_found": {
+      "message": "Couldn't find the timer {timer_id} on the devices you targeted. It may already have gone off or been deleted."
+    },
+    "device_offline": {
+      "message": "Couldn't reach {device}. Check that it's on and connected to your network, then try again."
+    },
+    "device_no_reply": {
+      "message": "{device} didn't confirm that it did this: it didn't answer in time, or its answer was cut off. Check that it's online and try again."
+    },
+    "device_token_rejected": {
+      "message": "{device} rejected its token, and getting a new one from Google didn't help. The integration keeps asking Google for one, so try again later."
+    },
+    "device_not_ready": {
+      "message": "{device} answered “not found”. It may still be starting up, so try again later, or it may not support this."
+    },
+    "device_request_failed": {
+      "message": "Couldn't do this on {device}. For details, see the Home Assistant log."
+    },
+    "devices_not_rebooted": {
+      "message": "These devices didn't confirm that they'll reboot: {devices}. Check that they're online and try again later."
     }
   },
   "options": {
     "step": {
       "init": {
         "data": {
-          "update_interval": "Change update interval. Increase this if you are suffering from devices timing out. Default: 180 (Seconds)"
+          "update_interval": "Change the update interval. Increase this if your devices do not respond in time. Default: {default_interval} (seconds)",
+          "known_hosts": "Known hosts"
+        },
+        "data_description": {
+          "known_hosts": "IP addresses of speakers and displays that the integration can't find on its own, for example because they're on another network or VLAN."
         }
       }
+    },
+    "error": {
+      "known-host-not-ip": "Enter IP addresses only, such as 192.168.1.20."
     }
   },
   "services": {
@@ -61,11 +168,31 @@
           "name": "Skip refresh"
         },
         "entity_id": {
-          "description": "Represents a Google Home device (sensor.xxxx_alarms).",
+          "description": "Represents a Google Home device (sensor.xxxx_timers).",
           "name": "Entity"
         }
       },
       "name": "Delete timer"
+    },
+    "delete_all_alarms": {
+      "description": "Delete all alarms from Google Home devices.",
+      "fields": {
+        "skip_refresh": {
+          "description": "Skip refreshing Google Home devices after deleting the alarms.",
+          "name": "Skip refresh"
+        }
+      },
+      "name": "Delete all alarms"
+    },
+    "delete_all_timers": {
+      "description": "Delete all timers from Google Home devices.",
+      "fields": {
+        "skip_refresh": {
+          "description": "Skip refreshing Google Home devices after deleting the timers.",
+          "name": "Skip refresh"
+        }
+      },
+      "name": "Delete all timers"
     },
     "reboot_device": {
       "description": "Reboot a Google Home device.",

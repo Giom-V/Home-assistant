@@ -7,7 +7,8 @@ import json
 import logging
 import os
 from dataclasses import dataclass
-from typing import Any, Final, NamedTuple, cast
+from pathlib import Path
+from typing import Any, Final, NamedTuple
 
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.storage import STORAGE_DIR
@@ -45,7 +46,24 @@ class LibraryDevice:
 
     @classmethod
     def from_json(cls, data: dict[str, Any]) -> LibraryDevice:
-        """Create LibraryDevice instance from JSON data."""
+        """Create LibraryDevice instance from JSON data.
+
+        Raises ValueError for entries without the required fields or with wrong types.
+        """
+        if not isinstance(data, dict):
+            raise ValueError(f"Device entry is not an object: {data!r}")
+
+        for key in (LIBRARY_MANUFACTURER, LIBRARY_MODEL, LIBRARY_BATTERY_TYPE):
+            if not isinstance(data.get(key), str) or not data[key]:
+                raise ValueError(f"Device entry has no {key}: {data!r}")
+        for key in (LIBRARY_MODEL_MATCH_METHOD, LIBRARY_MODEL_ID, LIBRARY_HW_VERSION):
+            if data.get(key) is not None and not isinstance(data[key], str):
+                raise ValueError(f"Device entry has an invalid {key}: {data!r}")
+
+        battery_quantity = data.get(LIBRARY_BATTERY_QUANTITY, 1)
+        if isinstance(battery_quantity, bool) or not isinstance(battery_quantity, int):
+            raise ValueError(f"Device entry has an invalid battery quantity: {data!r}")
+
         return cls(
             manufacturer=data[LIBRARY_MANUFACTURER],
             model=data[LIBRARY_MODEL],
@@ -53,159 +71,128 @@ class LibraryDevice:
             model_id=data.get(LIBRARY_MODEL_ID),
             hw_version=data.get(LIBRARY_HW_VERSION),
             battery_type=data[LIBRARY_BATTERY_TYPE],
-            battery_quantity=data.get(LIBRARY_BATTERY_QUANTITY, 1),
+            battery_quantity=battery_quantity,
         )
+
+
+def _parse_library(
+    json_data: Any, library_file: str
+) -> tuple[list[LibraryDevice], set[str]]:
+    """Return the valid devices and the ignored domains of a library.
+
+    Invalid device entries are skipped so one bad entry doesn't discard the library.
+    """
+    if not isinstance(json_data, dict) or not isinstance(
+        json_data.get(LIBRARY_DEVICES), list
+    ):
+        raise ValueError("no devices list")
+
+    devices: list[LibraryDevice] = []
+    for json_device in json_data[LIBRARY_DEVICES]:
+        try:
+            devices.append(LibraryDevice.from_json(json_device))
+        except ValueError as err:
+            _LOGGER.warning("Skipping invalid device in %s: %s", library_file, err)
+    _LOGGER.info("Loaded %s devices from %s", len(devices), library_file)
+
+    ignored_domains: set[str] = set()
+    if isinstance(json_data.get("ignored_domains"), list):
+        ignored_domains = {
+            str(domain).casefold() for domain in json_data["ignored_domains"]
+        }
+        _LOGGER.info(
+            "Loaded %s ignored domains from %s", len(ignored_domains), library_file
+        )
+
+    return devices, ignored_domains
 
 
 class Library:  # pylint: disable=too-few-public-methods
     """Hold all known battery types."""
 
-    _manufacturer_devices: dict[str, list[LibraryDevice]] = {}
-    _ignored_domains: list[str] = []
-
     def __init__(self, hass: HomeAssistant) -> None:
         """Init."""
         self.hass = hass
+        self._manufacturer_devices: dict[str, list[LibraryDevice]] = {}
+        self._ignored_domains: set[str] = set()
         self._load_lock = asyncio.Lock()
-        self._is_loading = False
 
     async def load_libraries(self):
         """Load the user and default libraries."""
         async with self._load_lock:
-            if self._is_loading:
-                _LOGGER.debug("Library already loading, skipping duplicate load")
-                return
+            await self._do_load_libraries()
 
-            self._is_loading = True
-            try:
-                await self._do_load_libraries()
-            finally:
-                self._is_loading = False
-
-    async def _do_load_libraries(self):  # noqa: PLR0912, PLR0915
+    async def _do_load_libraries(self) -> None:
         """Load libraries internally (must be called with lock held)."""
 
-        def _load_library_json(library_file: str) -> dict[str, Any]:
-            """Load library json file."""
+        def _load_library_json(
+            library_file: str, legacy_library_file: str | None = None
+        ) -> Any:
+            """Load a library json file, moving it from the legacy location if needed."""
+            if (
+                legacy_library_file
+                and not Path(library_file).exists()
+                and Path(legacy_library_file).exists()
+            ):
+                os.makedirs(os.path.dirname(library_file), exist_ok=True)
+                os.rename(legacy_library_file, library_file)
+                _LOGGER.debug("User library moved to %s", library_file)
+
             with open(library_file, encoding="utf-8") as file:
-                return cast(dict[str, Any], json.load(file))
+                return json.load(file)
 
         new_manufacturer_devices: dict[str, list[LibraryDevice]] = {}
+        new_ignored_domains: set[str] = set()
+        library_files: list[tuple[str, str | None]] = []
 
-        # User Library
+        # User Library, searched before the default library
         domain_config = self.hass.data.get(MY_KEY)
         if domain_config and domain_config.user_library != "":
-            json_user_path = self.hass.config.path(
-                STORAGE_DIR, "battery_notes", domain_config.user_library
+            library_files.append(
+                (
+                    self.hass.config.path(
+                        STORAGE_DIR, "battery_notes", domain_config.user_library
+                    ),
+                    os.path.join(
+                        os.path.dirname(__file__), "data", domain_config.user_library
+                    ),
+                )
             )
-
-            try:
-                user_json_data = await self.hass.async_add_executor_job(
-                    _load_library_json, json_user_path
-                )
-
-                for json_device in user_json_data["devices"]:
-                    library_device = LibraryDevice.from_json(json_device)
-                    manufacturer = library_device.manufacturer.casefold()
-                    if manufacturer not in new_manufacturer_devices:
-                        new_manufacturer_devices[manufacturer] = []
-                    new_manufacturer_devices[manufacturer].append(library_device)
-                _LOGGER.info(
-                    "Loaded %s user devices from %s",
-                    len(user_json_data["devices"]),
-                    json_user_path,
-                )
-
-                if "ignored_domains" in user_json_data:
-                    ignored_domains = user_json_data["ignored_domains"]
-                    if isinstance(ignored_domains, list):
-                        for domain in ignored_domains:
-                            self._ignored_domains.append(str(domain).casefold())
-                        _LOGGER.info(
-                            "Loaded %s ignored domains from %s",
-                            len(ignored_domains),
-                            json_user_path,
-                        )
-
-            except FileNotFoundError:
-                # Try to move the user library to new location
-                try:
-                    legacy_data_directory = os.path.join(
-                        os.path.dirname(__file__), "data"
-                    )
-                    legacy_json_user_path = os.path.join(
-                        legacy_data_directory, domain_config.user_library
-                    )
-                    os.makedirs(os.path.dirname(json_user_path), exist_ok=True)
-                    os.rename(legacy_json_user_path, json_user_path)
-
-                    _LOGGER.debug(
-                        "User library moved to %s",
-                        json_user_path,
-                    )
-                except FileNotFoundError:
-                    _LOGGER.error(
-                        "User library file not found at %s",
-                        json_user_path,
-                    )
-            except (json.JSONDecodeError, KeyError, ValueError) as err:
-                _LOGGER.error(
-                    "Failed to parse user library file at %s: %s",
-                    json_user_path,
-                    err,
-                )
 
         # Default Library
-        json_default_path = self.hass.config.path(
-            STORAGE_DIR, "battery_notes", "library.json"
+        library_files.append(
+            (self.hass.config.path(STORAGE_DIR, "battery_notes", "library.json"), None)
         )
 
-        try:
-            default_json_data = await self.hass.async_add_executor_job(
-                _load_library_json, json_default_path
-            )
-            for json_device in default_json_data["devices"]:
-                library_device = LibraryDevice.from_json(json_device)
-                manufacturer = library_device.manufacturer.casefold()
-                if manufacturer not in new_manufacturer_devices:
-                    new_manufacturer_devices[manufacturer] = []
-                new_manufacturer_devices[manufacturer].append(library_device)
-            _LOGGER.info(
-                "Loaded %s default devices from %s",
-                len(default_json_data[LIBRARY_DEVICES]),
-                json_default_path,
-            )
+        for library_file, legacy_library_file in library_files:
+            try:
+                json_data = await self.hass.async_add_executor_job(
+                    _load_library_json, library_file, legacy_library_file
+                )
+                devices, ignored_domains = _parse_library(json_data, library_file)
+            except FileNotFoundError:
+                _LOGGER.error("Library file not found at %s", library_file)
+                continue
+            except (OSError, ValueError) as err:
+                _LOGGER.error("Failed to load library file %s: %s", library_file, err)
+                continue
 
+            for library_device in devices:
+                new_manufacturer_devices.setdefault(
+                    library_device.manufacturer.casefold(), []
+                ).append(library_device)
+            new_ignored_domains.update(ignored_domains)
+
+        # Keep the previously loaded library if nothing could be loaded this time
+        if new_manufacturer_devices:
             self._manufacturer_devices = new_manufacturer_devices
-
-            if "ignored_domains" in default_json_data:
-                ignored_domains = default_json_data["ignored_domains"]
-                if isinstance(ignored_domains, list):
-                    for domain in ignored_domains:
-                        self._ignored_domains.append(str(domain).casefold())
-                    _LOGGER.info(
-                        "Loaded %s ignored domains from %s",
-                        len(ignored_domains),
-                        json_default_path,
-                    )
-
-        except FileNotFoundError:
-            _LOGGER.error(
-                "library.json file not found at %s",
-                json_default_path,
-            )
-        except (json.JSONDecodeError, KeyError, ValueError) as err:
-            _LOGGER.error(
-                "Failed to parse library file at %s: %s",
-                json_default_path,
-                err,
-            )
+            self._ignored_domains = new_ignored_domains
 
     def is_domain_ignored(self, domain: str) -> bool:
         """Check if an integration domain is ignored."""
         return domain.casefold() in self._ignored_domains
 
-    async def get_device_battery_details(
+    async def get_device_battery_details(  # noqa: PLR0911, PLR0912
         self,
         device_to_find: ModelInfo,
     ) -> DeviceBatteryDetails | None:
@@ -231,6 +218,46 @@ class Library:  # pylint: disable=too-few-public-methods
             if self.device_basic_match(x, device_to_find)
         ]
 
+        if not matching_devices:
+            return None
+
+        # If search doesn't specify model_id/hw_version, filter to entries without them
+        if device_to_find.model_id is None and device_to_find.hw_version is None:
+            generic_matches = [
+                x
+                for x in matching_devices
+                if x.model_id is None and x.hw_version is None
+            ]
+            if generic_matches:
+                matching_devices = generic_matches
+            else:
+                # No generic version found when searching without specifics
+                return None
+
+        # If a search contains specific identifiers, reject entries that are
+        # incompatible with those constraints. Generic entries (without
+        # identifiers) can still be used as fallback matches.
+        if device_to_find.model_id is not None or device_to_find.hw_version is not None:
+            matching_devices = [
+                x
+                for x in matching_devices
+                if not (device_to_find.model_id is None and x.model_id is not None)
+                and not (device_to_find.hw_version is None and x.hw_version is not None)
+                and not (
+                    device_to_find.model_id is not None
+                    and x.model_id is not None
+                    and x.model_id.casefold() != device_to_find.model_id.casefold()
+                )
+                and not (
+                    device_to_find.hw_version is not None
+                    and x.hw_version is not None
+                    and x.hw_version.casefold() != device_to_find.hw_version.casefold()
+                )
+            ]
+            if not matching_devices:
+                return None
+
+        # Narrow down from multiple matches
         if matching_devices and len(matching_devices) > 1:
             partial_matching_devices = [
                 x
@@ -238,14 +265,18 @@ class Library:  # pylint: disable=too-few-public-methods
                 if self.device_partial_match(x, device_to_find)
             ]
 
-        if partial_matching_devices and len(partial_matching_devices) > 0:
-            matching_devices = partial_matching_devices
+            if partial_matching_devices:
+                matching_devices = partial_matching_devices
 
-        if matching_devices:
-            fully_matching_devices = [
-                x for x in matching_devices if self.device_full_match(x, device_to_find)
-            ]
-            matching_devices = fully_matching_devices
+                # Only try full match if we still have multiple matches
+                if len(matching_devices) > 1:
+                    fully_matching_devices = [
+                        x
+                        for x in matching_devices
+                        if self.device_full_match(x, device_to_find)
+                    ]
+                    if fully_matching_devices:
+                        matching_devices = fully_matching_devices
 
         if not matching_devices:
             return None
@@ -280,7 +311,7 @@ class Library:  # pylint: disable=too-few-public-methods
     def is_loaded(self) -> bool:
         """Library loaded successfully."""
 
-        return bool(self._manufacturer_devices) and not self._is_loading
+        return bool(self._manufacturer_devices)
 
     def device_basic_match(
         self, library_device: LibraryDevice, device_to_find: ModelInfo
@@ -308,8 +339,8 @@ class Library:  # pylint: disable=too-few-public-methods
                 ):
                     return True
             if library_device.model_match_method == "contains":
-                if str(device_to_find.model or "").casefold() in (
-                    library_device.model.casefold()
+                if library_device.model.casefold() in (
+                    str(device_to_find.model or "").casefold()
                 ):
                     return True
         elif (

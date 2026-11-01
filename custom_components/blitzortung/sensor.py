@@ -92,6 +92,9 @@ class BlitzortungSensor(BlitzortungEntity, SensorEntity):
 class LightningSensor(BlitzortungSensor):
     """Define a Blitzortung lightning sensor."""
 
+    # Per-strike coordinates would create a new recorder attributes row on every strike.
+    _unrecorded_attributes = frozenset({ATTR_LAT, ATTR_LON})
+
     INITIAL_STATE: int | None = None
 
     def __init__(self, *args: Any, **kwargs: Any) -> None:
@@ -238,7 +241,9 @@ async def async_setup_entry(
     # Migrate old service identifiers to new identifiers
     device_registry = dr.async_get(hass)
     old_ids = (DOMAIN, config_entry.title)
-    if device_entry := device_registry.async_get_device(identifiers={old_ids}):
+    if device_entry := device_registry.async_get_device_by_identifier(
+        old_ids, config_entry.entry_id
+    ):
         new_ids = (DOMAIN, unique_prefix)
         _LOGGER.debug(
             "Migrating service %s from old IDs '%s' to new IDs '%s'",

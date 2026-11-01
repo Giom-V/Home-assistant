@@ -48,7 +48,7 @@ def get_options_schema(defaults: Mapping[str, Any] | None = None) -> vol.Schema:
                 default=defaults.get("refresh_interval", DEFAULT_REFRESH_INTERVAL),
             ): selector.NumberSelector(
                 selector.NumberSelectorConfig(
-                    min=5,
+                    min=1,
                     max=1440,
                     step=1,
                     unit_of_measurement="minutes",
@@ -67,6 +67,10 @@ def get_options_schema(defaults: Mapping[str, Any] | None = None) -> vol.Schema:
                 "notes_affichees",
                 default=defaults.get("notes_affichees", GRADES_TO_DISPLAY),
             ): int,
+            vol.Optional(
+                "forcer_modules",
+                default=defaults.get("forcer_modules", False),
+            ): selector.BooleanSelector(),
             vol.Optional(
                 "enable_debugging",
                 default=defaults.get("enable_debugging", DEFAULT_ENABLE_DEBUGGING),

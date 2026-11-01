@@ -30,6 +30,7 @@ from custom_components.powercalc.const import (
     DOMAIN,
     DOMAIN_CONFIG,
 )
+from custom_components.powercalc.device_naming import DeviceName
 from custom_components.powercalc.unit import convert_to_decimal, parse_decimal
 
 from .abstract import (
@@ -105,6 +106,7 @@ def _currency_from_price_unit(unit: str | None) -> str | None:
 
 
 @dataclass(frozen=True, slots=True)
+# Home Assistant allows live properties to override its writable cached properties.
 class PriceConfig:
     """The resolved energy price configuration for a single cost sensor."""
 
@@ -199,7 +201,7 @@ def create_cost_sensor(
         price_config,
     )
 
-    return CostSensor(
+    cost_sensor = CostSensor(
         hass=hass,
         source_energy_entity=energy_sensor.entity_id,
         entity_id=entity_id,
@@ -209,6 +211,10 @@ def create_cost_sensor(
         price_config=price_config,
         reset_on_source_reset=reset_on_source_reset,
     )
+    if isinstance(energy_sensor, VirtualUtilityMeter) and energy_sensor.device_name is not None:
+        meter_name = energy_sensor.device_name
+        cost_sensor.device_name = DeviceName(f"{meter_name.translation_key}_cost", meter_name.placeholders)
+    return cost_sensor
 
 
 def create_cost_sensor_for_energy_entity(hass: HomeAssistant, sensor_config: ConfigType) -> CostSensor | None:
@@ -234,6 +240,7 @@ def create_cost_sensor_for_energy_entity(hass: HomeAssistant, sensor_config: Con
 class CostSensor(BaseEntity, RestoreEntity, SensorEntity):
     """Cost sensor, accumulating the cost of the energy consumed at price-at-consumption."""
 
+    device_name = DeviceName("cost")
     _attr_device_class = SensorDeviceClass.MONETARY
     _attr_state_class = SensorStateClass.TOTAL
     _attr_should_poll = False
@@ -387,12 +394,12 @@ class CostSensor(BaseEntity, RestoreEntity, SensorEntity):
             self._last_energy = current_energy
 
     @property
-    def native_value(self) -> Decimal:
+    def native_value(self) -> Decimal:  # ty: ignore[invalid-property-type-override]
         """Return the accumulated cost."""
         return Decimal(round(self._state, self._rounding_digits))
 
     @property
-    def extra_state_attributes(self) -> dict[str, str] | None:
+    def extra_state_attributes(self) -> dict[str, str] | None:  # ty: ignore[invalid-property-type-override]
         """Return the state attributes of the cost sensor."""
         if self._last_energy is None:
             return None

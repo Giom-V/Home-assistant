@@ -3,8 +3,8 @@ from enum import StrEnum
 import re
 from typing import Protocol, cast
 
-from homeassistant.components.group import DOMAIN as GROUP_DOMAIN
-from homeassistant.components.light import DOMAIN as LIGHT_DOMAIN
+from homeassistant.components.group.const import DOMAIN as GROUP_DOMAIN
+from homeassistant.components.light.const import DOMAIN as LIGHT_DOMAIN
 from homeassistant.const import ATTR_ENTITY_ID, CONF_DOMAIN, EntityCategory
 from homeassistant.core import HomeAssistant, split_entity_id
 from homeassistant.helpers import area_registry, device_registry, entity_registry, floor_registry, label_registry
@@ -14,7 +14,6 @@ from homeassistant.helpers.entity_component import EntityComponent
 from homeassistant.helpers.entity_registry import RegistryEntry
 from homeassistant.helpers.template import Template
 from homeassistant.helpers.typing import ConfigType
-import voluptuous as vol
 
 from custom_components.powercalc.const import (
     CONF_ALL,
@@ -31,6 +30,7 @@ from custom_components.powercalc.const import (
     CONF_WILDCARD,
 )
 from custom_components.powercalc.errors import SensorConfigurationError
+from custom_components.powercalc.validation import vol
 
 
 class FilterOperator(StrEnum):
@@ -170,13 +170,7 @@ class LightGroupFilter(EntityFilter):
     @staticmethod
     def _find_light_group(hass: HomeAssistant, group_entity_id: str) -> Entity | None:
         light_component = cast(EntityComponent, hass.data.get(LIGHT_DOMAIN))
-        return next(
-            filter(
-                lambda entity: entity.entity_id == group_entity_id,
-                light_component.entities,
-            ),
-            None,
-        )
+        return light_component.get_entity(group_entity_id)
 
     def find_all_entity_ids_recursively(
         self,

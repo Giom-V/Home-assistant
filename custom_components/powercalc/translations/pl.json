@@ -3,7 +3,8 @@
     "source_entity": "Encja źródłowa",
     "source_device": "Urządzenie źródłowe",
     "remarks_smart_switch": "Ten profil dostarcza tylko wartości poboru mocy w trybie czuwania. \n Gdy masz urządzenie, które zużywa stałą ilość energii po włączeniu, możesz podać tę wartość w następnym kroku przepływu konfiguracji",
-    "remarks_smart_dimmer": "Ten profil dostarcza tylko wartości poboru mocy w trybie czuwania. \n W następnym kroku możesz opcjonalnie podać wartości dla podłączonego światła"
+    "remarks_smart_dimmer": "Ten profil dostarcza tylko wartości poboru mocy w trybie czuwania. \n W następnym kroku możesz opcjonalnie podać wartości dla podłączonego światła",
+    "view_measurement_details": "Zobacz szczegóły pomiaru"
   },
   "config": {
     "abort": {
@@ -14,7 +15,6 @@
       "daily_energy_mandatory": "Musisz podać co najmniej jedną Wartość lub Szablon wartości",
       "entity_mandatory": "Wybranie encji jest wymagane w przypadku każdej strategii innej niż playbook",
       "fixed_mandatory": "Musisz podać co najmniej jedno z: Moc, Szablon mocy lub Moce stanów",
-      "fixed_states_power_only": "Ta encja może działać tylko ze 'states_power', a nie z 'power'",
       "group_mandatory": "Musisz zdefiniować przynajmniej podgrupy lub encje mocy i energii",
       "linear_mandatory": "Musisz dostarczyć co najmniej jedno z: Maksymalna moc lub Kalibracja",
       "linear_min_higher_as_max": "Maksymalna moc nie może być mniejsza niż Minimalna moc",
@@ -108,7 +108,11 @@
               "power_sensor_naming": "Wzorzec nazwy sensora mocy",
               "power_sensor_friendly_naming": "Wzorzec przyjaznej nazwy sensora mocy",
               "power_sensor_category": "Kategoria sensorów mocy",
-              "power_sensor_precision": "Dokładność czujnika mocy"
+              "power_sensor_precision": "Dokładność czujnika mocy",
+              "follow_device_name": "Używaj nazwy urządzenia"
+            },
+            "data_description": {
+              "follow_device_name": "Używaj nazwy przypisanego urządzenia dla generowanych encji obsługiwanych wirtualnych czujników mocy skonfigurowanych w interfejsie. Identyfikatory encji i własne nazwy encji pozostają bez zmian. Wyłączenie przywraca skonfigurowane nazwy. Własne wzorce nazw wyświetlanych, w tym wzorce globalne, mają pierwszeństwo: wpisy, których to dotyczy, zachowują skonfigurowane nazwy."
             }
           },
           "features": {
@@ -336,7 +340,7 @@
         "data_description": {
           "confirm_autodisovered_model": "Jeśli zdecydujesz się nie potwierdzać, możesz samodzielnie wprowadzić producenta i model"
         },
-        "description": "{source}\n\nProducent \"{manufacturer}\" i model \"{model}\" zostały automatycznie wykryte dla twojego urządzenia.{remarks}",
+        "description": "{source}\n\nProducent \"{manufacturer}\" i model \"{model}\" zostały automatycznie wykryte dla twojego urządzenia.{remarks}{profile_details}",
         "title": "Biblioteka"
       },
       "library_custom_fields": {
@@ -581,11 +585,15 @@
       },
       "wled": {
         "data": {
+          "current_entity": "Encja prądu",
           "power_factor": "Współczynnik mocy (cos φ)",
           "voltage": "Napięcie"
         },
         "description": "Upewnij się, że włączono ogranicznik jasności w oprogramowaniu WLED. Zobacz również {docs_uri}",
-        "title": "Konfiguracja WLED"
+        "title": "Konfiguracja WLED",
+        "data_description": {
+          "current_entity": "Opcjonalnie wybierz sensor udostępniający szacowany prąd w mA. Jest to potrzebne tylko wtedy, gdy Powercalc nie może automatycznie znaleźć sensora szacowanego prądu WLED, na przykład gdy ogranicznik jasności jest skonfigurowany dla każdego wyjścia."
+        }
       }
     }
   },
@@ -601,6 +609,54 @@
     },
     "unknown_sub_profile": {
       "message": "\"{profile}\" nie jest znanym podprofilem. Dostępne podprofile: {known_profiles}."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "measure_session_status": {
+        "name": "Measure session status",
+        "state": {
+          "idle": "Idle",
+          "validating": "Validating",
+          "ready": "Ready",
+          "awaiting_confirmation": "Awaiting confirmation",
+          "running": "Running",
+          "cancelling": "Cancelling",
+          "cancelled": "Cancelled",
+          "completed": "Completed",
+          "failed": "Failed",
+          "resumable": "Resumable"
+        }
+      },
+      "power": {
+        "name": "Moc"
+      },
+      "energy": {
+        "name": "Energia"
+      },
+      "standby_energy": {
+        "name": "Energia w trybie czuwania"
+      },
+      "cost": {
+        "name": "Koszt"
+      },
+      "utility_meter_cycle": {
+        "name": "Energia {period}"
+      },
+      "utility_meter_tariff": {
+        "name": "Energia {period} {tariff}"
+      },
+      "utility_meter_cycle_cost": {
+        "name": "Energia {period} koszt"
+      },
+      "utility_meter_tariff_cost": {
+        "name": "Energia {period} {tariff} koszt"
+      }
+    },
+    "select": {
+      "utility_meter_cycle": {
+        "name": "Energia {period}"
+      }
     }
   },
   "issues": {
@@ -657,7 +713,6 @@
     "error": {
       "cost_price_mandatory": "Należy podać cenę energii lub czujnik ceny energii",
       "fixed_mandatory": "Musisz podać co najmniej jedno z: Moc, Szablon mocy lub Moce stanów",
-      "fixed_states_power_only": "Ta encja może działać tylko ze 'states_power', a nie z 'power'",
       "group_mandatory": "Musisz zdefiniować przynajmniej podgrupy lub encje mocy i energii",
       "linear_mandatory": "Musisz dostarczyć co najmniej jedno z: Maksymalna moc lub Kalibracja",
       "linear_min_higher_as_max": "Maksymalna moc nie może być mniejsza niż Minimalna moc",
@@ -752,7 +807,11 @@
               "power_sensor_naming": "Wzorzec nazwy sensora mocy",
               "power_sensor_friendly_naming": "Wzorzec przyjaznej nazwy sensora mocy",
               "power_sensor_category": "Kategoria czujników mocy",
-              "power_sensor_precision": "Dokładność czujnika mocy"
+              "power_sensor_precision": "Dokładność czujnika mocy",
+              "follow_device_name": "Używaj nazwy urządzenia"
+            },
+            "data_description": {
+              "follow_device_name": "Używaj nazwy przypisanego urządzenia dla generowanych encji obsługiwanych wirtualnych czujników mocy skonfigurowanych w interfejsie. Identyfikatory encji i własne nazwy encji pozostają bez zmian. Wyłączenie przywraca skonfigurowane nazwy. Własne wzorce nazw wyświetlanych, w tym wzorce globalne, mają pierwszeństwo: wpisy, których to dotyczy, zachowują skonfigurowane nazwy."
             }
           },
           "features": {
@@ -979,7 +1038,7 @@
       },
       "library_options": {
         "title": "Opcje biblioteki",
-        "description": "Obecnie wybrany jest następujący profil biblioteki: \n producent: {manufacturer}\n model: {model}\n\nJeśli chcesz zmienić profil, kliknij dalej."
+        "description": "Obecnie wybrany jest następujący profil biblioteki: \n producent: {manufacturer}\n model: {model}\n\nJeśli chcesz zmienić profil, kliknij dalej.{profile_details}"
       },
       "select_device": {
         "data": {
@@ -1083,8 +1142,12 @@
       "wled": {
         "title": "Opcje WLED",
         "data": {
+          "current_entity": "Encja prądu",
           "power_factor": "Współczynnik mocy (cos φ)",
           "voltage": "Napięcie"
+        },
+        "data_description": {
+          "current_entity": "Opcjonalnie wybierz sensor udostępniający szacowany prąd w mA. Jest to potrzebne tylko wtedy, gdy Powercalc nie może automatycznie znaleźć sensora szacowanego prądu WLED, na przykład gdy ogranicznik jasności jest skonfigurowany dla każdego wyjścia."
         }
       },
       "cost_options": {

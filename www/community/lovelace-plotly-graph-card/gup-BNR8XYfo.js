@@ -1,0 +1,1 @@
+import{t as e}from"./rolldown-runtime-B0Z9INg1.js";import{Yt as t}from"./plotly-CSFulSqY.js";var n=/* @__PURE__ */ e(((e,n)=>{var r=t();function i(e){return[e]}n.exports={keyFun:function(e){return e.key},repeat:i,descend:r,wrap:i,unwrap:function(e){return e[0]}}}));export{n as t};

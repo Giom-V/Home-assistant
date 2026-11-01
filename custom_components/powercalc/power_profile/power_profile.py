@@ -2,22 +2,23 @@ from collections import defaultdict
 from collections.abc import Mapping
 from copy import deepcopy
 from dataclasses import dataclass
+from decimal import Decimal, InvalidOperation
 from enum import StrEnum
 import logging
 import os
-from typing import Any, cast
+from typing import TYPE_CHECKING, Any, TypedDict, cast
 
-from homeassistant.components.binary_sensor import DOMAIN as BINARY_SENSOR_DOMAIN
-from homeassistant.components.camera import DOMAIN as CAMERA_DOMAIN
-from homeassistant.components.climate import DOMAIN as CLIMATE_DOMAIN
+from homeassistant.components.camera.const import DOMAIN as CAMERA_DOMAIN
+from homeassistant.components.climate.const import DOMAIN as CLIMATE_DOMAIN
 from homeassistant.components.cover import DOMAIN as COVER_DOMAIN
-from homeassistant.components.fan import DOMAIN as FAN_DOMAIN
-from homeassistant.components.lawn_mower import DOMAIN as LAWN_MOWER_DOMAIN
-from homeassistant.components.light import DOMAIN as LIGHT_DOMAIN
-from homeassistant.components.media_player import DOMAIN as MEDIA_PLAYER_DOMAIN
+from homeassistant.components.humidifier.const import DOMAIN as HUMIDIFIER_DOMAIN
+from homeassistant.components.lawn_mower.const import DOMAIN as LAWN_MOWER_DOMAIN
+from homeassistant.components.light.const import DOMAIN as LIGHT_DOMAIN
+from homeassistant.components.media_player.const import DOMAIN as MEDIA_PLAYER_DOMAIN
 from homeassistant.components.sensor import DOMAIN as SENSOR_DOMAIN
-from homeassistant.components.switch import DOMAIN as SWITCH_DOMAIN
-from homeassistant.components.vacuum import DOMAIN as VACUUM_DOMAIN
+from homeassistant.components.switch.const import DOMAIN as SWITCH_DOMAIN
+from homeassistant.components.vacuum.const import DOMAIN as VACUUM_DOMAIN
+from homeassistant.components.water_heater.const import DOMAIN as WATER_HEATER_DOMAIN
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers import translation
 from homeassistant.helpers.entity_registry import RegistryEntry
@@ -26,9 +27,11 @@ from homeassistant.helpers.typing import ConfigType
 
 from custom_components.powercalc.const import (
     BUILT_IN_LIBRARY_DIR,
+    CONF_CALIBRATE,
     CONF_ENERGY_SENSOR_NAMING,
     CONF_MAX_POWER,
     CONF_MIN_POWER,
+    CONF_MULTIPLY_FACTOR,
     CONF_POWER,
     CONF_POWER_SENSOR_NAMING,
     DEFAULT_SELF_USAGE_ENERGY_NAME_PATTERN,
@@ -39,14 +42,25 @@ from custom_components.powercalc.const import (
 )
 from custom_components.powercalc.errors import (
     ModelNotSupportedError,
+    StrategyConfigurationError,
     UnsupportedStrategyError,
 )
 from custom_components.powercalc.power_profile.sub_profile_selector import SubProfileSelectConfig
+
+# Older supported HA releases define these domains in the component modules.
+if TYPE_CHECKING:
+    from homeassistant.components.binary_sensor.const import DOMAIN as BINARY_SENSOR_DOMAIN
+    from homeassistant.components.fan.const import DOMAIN as FAN_DOMAIN
+else:
+    from homeassistant.components.binary_sensor import DOMAIN as BINARY_SENSOR_DOMAIN
+    from homeassistant.components.fan import DOMAIN as FAN_DOMAIN
 
 _LOGGER = logging.getLogger(__name__)
 
 
 class DeviceType(StrEnum):
+    AIR_CONDITIONER = "air_conditioner"
+    AIR_PURIFIER = "air_purifier"
     CAMERA = "camera"
     COVER = "cover"
     FAN = "fan"
@@ -54,6 +68,7 @@ class DeviceType(StrEnum):
     LIGHT = "light"
     POWER_METER = "power_meter"
     PRINTER = "printer"
+    SET_TOP_BOX = "set_top_box"
     SMART_DIMMER = "smart_dimmer"
     SMART_SWITCH = "smart_switch"
     SMART_SPEAKER = "smart_speaker"
@@ -62,13 +77,22 @@ class DeviceType(StrEnum):
     VACUUM_ROBOT = "vacuum_robot"
     LAWN_MOWER_ROBOT = "lawn_mower_robot"
     HEATING = "heating"
+    HUMIDIFIER = "humidifier"
     UPS = "ups"
+    WATER_HEATER = "water_heater"
 
 
 class DiscoveryBy(StrEnum):
     CONFIG_ENTRY = "config_entry"
     DEVICE = "device"
     ENTITY = "entity"
+    MANUAL = "manual"
+
+
+class EntityAutoSelectConfig(TypedDict, total=False):
+    integration: str
+    translation_key: str
+    unique_id_pattern: str
 
 
 @dataclass(frozen=True)
@@ -78,15 +102,25 @@ class CustomField:
     selector: dict[str, Any]
     description: str | None = None
     default: Any = None
+    auto_select: EntityAutoSelectConfig | None = None
+    translation_key: str | None = None
+
+    @property
+    def form_key(self) -> str:
+        """Name used by Home Assistant to look up the field's label and description."""
+        return self.translation_key or self.key
 
 
 DEVICE_TYPE_DOMAIN: dict[DeviceType, str | set[str]] = {
+    DeviceType.AIR_CONDITIONER: CLIMATE_DOMAIN,
+    DeviceType.AIR_PURIFIER: FAN_DOMAIN,
     DeviceType.CAMERA: CAMERA_DOMAIN,
     DeviceType.COVER: COVER_DOMAIN,
     DeviceType.FAN: FAN_DOMAIN,
     DeviceType.GENERIC_IOT: {SENSOR_DOMAIN, MEDIA_PLAYER_DOMAIN},
     DeviceType.LIGHT: LIGHT_DOMAIN,
     DeviceType.POWER_METER: SENSOR_DOMAIN,
+    DeviceType.SET_TOP_BOX: MEDIA_PLAYER_DOMAIN,
     DeviceType.SMART_DIMMER: LIGHT_DOMAIN,
     DeviceType.SMART_SWITCH: {SWITCH_DOMAIN, LIGHT_DOMAIN},
     DeviceType.SMART_SPEAKER: MEDIA_PLAYER_DOMAIN,
@@ -96,7 +130,9 @@ DEVICE_TYPE_DOMAIN: dict[DeviceType, str | set[str]] = {
     DeviceType.VACUUM_ROBOT: VACUUM_DOMAIN,
     DeviceType.LAWN_MOWER_ROBOT: LAWN_MOWER_DOMAIN,
     DeviceType.HEATING: CLIMATE_DOMAIN,
+    DeviceType.HUMIDIFIER: HUMIDIFIER_DOMAIN,
     DeviceType.UPS: SENSOR_DOMAIN,
+    DeviceType.WATER_HEATER: WATER_HEATER_DOMAIN,
 }
 
 SUPPORTED_DOMAINS: set[str] = {
@@ -115,6 +151,22 @@ def _build_domain_device_type_mapping() -> Mapping[str, set[DeviceType]]:
 
 
 DOMAIN_DEVICE_TYPE_MAPPING: Mapping[str, set[DeviceType]] = _build_domain_device_type_mapping()
+
+
+def is_device_type_supported_for_entity(device_type: DeviceType | None, entity_entry: RegistryEntry) -> bool:
+    """Check whether a device type can be applied to a given entity.
+
+    Kept module level so discovery can apply it to the device type from the library index,
+    without having to build the full power profile first.
+    """
+    if device_type is None:
+        return False
+
+    # see https://github.com/bramstroker/homeassistant-powercalc/issues/2529
+    if device_type == DeviceType.PRINTER and entity_entry.unit_of_measurement:
+        return False
+
+    return device_type in DOMAIN_DEVICE_TYPE_MAPPING[entity_entry.domain]
 
 
 class PowerProfile:
@@ -181,6 +233,21 @@ class PowerProfile:
         if standby_power_on is None and self.only_self_usage:
             return self.standby_power
         return standby_power_on or 0
+
+    @property
+    def multiply_factor(self) -> Decimal | None:
+        """Get the default multiplier after profile variables have been substituted."""
+        value = self._json_data.get(CONF_MULTIPLY_FACTOR)
+        if value is None:
+            return None
+        message = f"Invalid multiply_factor {value!r} for {self.manufacturer}/{self.model}: expected a finite number"
+        try:
+            factor = Decimal(str(value))
+        except InvalidOperation as err:
+            raise StrategyConfigurationError(message) from err
+        if not factor.is_finite():
+            raise StrategyConfigurationError(message)
+        return factor
 
     @property
     def calculation_strategy(self) -> CalculationStrategy:
@@ -280,9 +347,11 @@ class PowerProfile:
         if self.only_self_usage:
             return False
 
-        return self.is_strategy_supported(
-            CalculationStrategy.LINEAR,
-        ) and not self._json_data.get("linear_config")
+        if not self.is_strategy_supported(CalculationStrategy.LINEAR):
+            return False
+
+        linear_config = self._json_data.get("linear_config") or {}
+        return CONF_MAX_POWER not in linear_config and not linear_config.get(CONF_CALIBRATE)
 
     @property
     def device_type(self) -> DeviceType | None:
@@ -433,16 +502,7 @@ class PowerProfile:
 
     def is_entity_domain_supported(self, entity_entry: RegistryEntry) -> bool:
         """Check whether this power profile supports a given entity domain."""
-        if self.device_type is None:
-            return False
-
-        domain = entity_entry.domain
-
-        # see https://github.com/bramstroker/homeassistant-powercalc/issues/2529
-        if self.device_type == DeviceType.PRINTER and entity_entry.unit_of_measurement:
-            return False
-
-        return self.device_type in DOMAIN_DEVICE_TYPE_MAPPING[domain]
+        return is_device_type_supported_for_entity(self.device_type, entity_entry)
 
     @property
     def is_custom_profile(self) -> bool:

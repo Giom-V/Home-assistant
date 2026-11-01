@@ -3,7 +3,8 @@
     "source_entity": "Source entity",
     "source_device": "Source device",
     "remarks_smart_switch": "This profile only provides standby power values. \n When you have an appliance which consumes a fixed amount of power when turned on, you can provide that value in next step of the config flow",
-    "remarks_smart_dimmer": "This profile only provides standby power values. \n In the next step you can optionally provide the values of the connected light"
+    "remarks_smart_dimmer": "This profile only provides standby power values. \n In the next step you can optionally provide the values of the connected light",
+    "view_measurement_details": "View measurement details"
   },
   "config": {
     "abort": {
@@ -14,7 +15,6 @@
       "daily_energy_mandatory": "You must supply at least one of Value or Value template",
       "entity_mandatory": "Selecting an entity is required for any strategy other than playbook",
       "fixed_mandatory": "You must supply at least one of Power, Power template or States power",
-      "fixed_states_power_only": "This entity can only work with 'states_power' not 'power'",
       "group_mandatory": "You must define at least subgroups or power and energy-entities",
       "linear_mandatory": "You must supply at least one of max_power or calibrate",
       "linear_min_higher_as_max": "Max power cannot be lower than min power",
@@ -108,7 +108,11 @@
               "power_sensor_naming": "Power sensor name pattern",
               "power_sensor_friendly_naming": "Power sensor friendly name pattern",
               "power_sensor_category": "Power sensor category",
-              "power_sensor_precision": "Power sensor precision"
+              "power_sensor_precision": "Power sensor precision",
+              "follow_device_name": "Follow device name"
+            },
+            "data_description": {
+              "follow_device_name": "Use the assigned device name for generated entities of supported virtual power sensors configured in the UI. Entity IDs and custom entity names stay unchanged. Turning this off restores the configured names. Custom display-name patterns, including global patterns, take precedence: affected entries keep their configured names."
             }
           },
           "features": {
@@ -336,7 +340,7 @@
         "data_description": {
           "confirm_autodisovered_model": "If you choose not to confirm, you can input the manufacturer and model yourself"
         },
-        "description": "{source}\n\nManufacturer \"{manufacturer}\" and model \"{model}\" were automatically detected for your device.{remarks}",
+        "description": "{source}\n\nManufacturer \"{manufacturer}\" and model \"{model}\" were automatically detected for your device.{remarks}{profile_details}",
         "title": "Library"
       },
       "library_custom_fields": {
@@ -581,11 +585,15 @@
       },
       "wled": {
         "data": {
+          "current_entity": "Current entity",
           "power_factor": "Power factor",
           "voltage": "Voltage"
         },
         "description": "Make sure to enable brightness limiter in WLED software. Also see {docs_uri}",
-        "title": "WLED config"
+        "title": "WLED config",
+        "data_description": {
+          "current_entity": "Optionally select a sensor providing the estimated current in mA. Only needed when Powercalc cannot find the WLED estimated current sensor automatically, for example when the brightness limiter is configured per output."
+        }
       }
     }
   },
@@ -601,6 +609,54 @@
     },
     "unknown_sub_profile": {
       "message": "\"{profile}\" is not a known sub profile. Available sub profiles: {known_profiles}."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "measure_session_status": {
+        "name": "Measure session status",
+        "state": {
+          "idle": "Idle",
+          "validating": "Validating",
+          "ready": "Ready",
+          "awaiting_confirmation": "Awaiting confirmation",
+          "running": "Running",
+          "cancelling": "Cancelling",
+          "cancelled": "Cancelled",
+          "completed": "Completed",
+          "failed": "Failed",
+          "resumable": "Resumable"
+        }
+      },
+      "power": {
+        "name": "Power"
+      },
+      "energy": {
+        "name": "Energy"
+      },
+      "standby_energy": {
+        "name": "Standby energy"
+      },
+      "cost": {
+        "name": "Cost"
+      },
+      "utility_meter_cycle": {
+        "name": "Energy {period}"
+      },
+      "utility_meter_tariff": {
+        "name": "Energy {period} {tariff}"
+      },
+      "utility_meter_cycle_cost": {
+        "name": "Energy {period} cost"
+      },
+      "utility_meter_tariff_cost": {
+        "name": "Energy {period} {tariff} cost"
+      }
+    },
+    "select": {
+      "utility_meter_cycle": {
+        "name": "Energy {period}"
+      }
     }
   },
   "issues": {
@@ -657,7 +713,6 @@
     "error": {
       "cost_price_mandatory": "You must supply either an energy price or an energy price sensor",
       "fixed_mandatory": "You must supply at least one of Power, Power template or States power",
-      "fixed_states_power_only": "This entity can only work with 'states_power' not 'power'",
       "group_mandatory": "You must define at least subgroups or power and energy-entities",
       "linear_mandatory": "You must supply at least one of max_power or calibrate",
       "linear_min_higher_as_max": "Max power cannot be lower than min power",
@@ -752,7 +807,11 @@
               "power_sensor_naming": "Power sensor name pattern",
               "power_sensor_friendly_naming": "Power sensor friendly name pattern",
               "power_sensor_category": "Power sensor category",
-              "power_sensor_precision": "Power sensor precision"
+              "power_sensor_precision": "Power sensor precision",
+              "follow_device_name": "Follow device name"
+            },
+            "data_description": {
+              "follow_device_name": "Use the assigned device name for generated entities of supported virtual power sensors configured in the UI. Entity IDs and custom entity names stay unchanged. Turning this off restores the configured names. Custom display-name patterns, including global patterns, take precedence: affected entries keep their configured names."
             }
           },
           "features": {
@@ -979,7 +1038,7 @@
       },
       "library_options": {
         "title": "Library options",
-        "description": "Currently the following library profile is selected: \n manufacturer: {manufacturer}\n model: {model}\n\nIf you want to change the profile, click next."
+        "description": "Currently the following library profile is selected: \n manufacturer: {manufacturer}\n model: {model}\n\nIf you want to change the profile, click next.{profile_details}"
       },
       "select_device": {
         "data": {
@@ -1083,8 +1142,12 @@
       "wled": {
         "title": "WLED options",
         "data": {
+          "current_entity": "Current entity",
           "power_factor": "Power factor",
           "voltage": "Voltage"
+        },
+        "data_description": {
+          "current_entity": "Optionally select a sensor providing the estimated current in mA. Only needed when Powercalc cannot find the WLED estimated current sensor automatically, for example when the brightness limiter is configured per output."
         }
       },
       "cost_options": {

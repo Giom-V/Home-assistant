@@ -3,7 +3,8 @@
 from enum import StrEnum
 from typing import Literal
 
-from homeassistant.components import cover, device_tracker
+from homeassistant.components import cover
+from homeassistant.components.device_tracker.const import DOMAIN as DEVICE_TRACKER_DOMAIN
 from homeassistant.components.utility_meter.const import DAILY, MONTHLY, WEEKLY
 from homeassistant.const import (
     STATE_CLOSED,
@@ -30,6 +31,7 @@ DATA_DISCOVERY_MANAGER = "discovery_manager"
 DATA_DOMAIN_ENTITIES = "domain_entities"
 DATA_ENTITIES = "entities"
 DATA_GROUP_ENTITIES = "group_entities"
+DATA_MEASURE_APP_COORDINATOR = "measure_app_coordinator"
 DATA_USED_UNIQUE_IDS = "used_unique_ids"
 DATA_STANDBY_POWER_SENSORS = "standby_power_sensors"
 DATA_ANALYTICS = "analytics"
@@ -51,6 +53,7 @@ ENTRY_GLOBAL_CONFIG_UNIQUE_ID = "powercalc_global_configuration"
 
 PLACEHOLDER_ENTITY_BY_DEVICE_CLASS = "entity_by_device_class:"
 PLACEHOLDER_ENTITY_BY_TRANSLATION_KEY = "entity_by_translation_key:"
+PLACEHOLDER_ENTITY_BY_UNIQUE_ID_SUFFIX = "entity_by_unique_id_suffix:"
 
 DUMMY_ENTITY_ID = "sensor.dummy"
 
@@ -78,6 +81,7 @@ CONF_CREATE_GROUP = "create_group"
 CONF_CREATE_STANDBY_GROUP = "create_standby_group"
 CONF_CREATE_STANDBY_ENERGY_SENSOR = "create_standby_energy_sensor"
 CONF_CREATE_UTILITY_METERS = "create_utility_meters"
+CONF_CURRENT_ENTITY = "current_entity"
 CONF_CUSTOM_MODEL_DIRECTORY = "custom_model_directory"
 CONF_DAILY_FIXED_ENERGY = "daily_fixed_energy"
 CONF_DELAY = "delay"
@@ -115,6 +119,7 @@ CONF_FIXED = "fixed"
 CONF_FLOOR = "floor"
 CONF_FORCE_CALCULATE_GROUP_ENERGY = "force_calculate_group_energy"
 CONF_FORCE_ENERGY_SENSOR_CREATION = "force_energy_sensor_creation"
+CONF_FOLLOW_DEVICE_NAME = "follow_device_name"
 CONF_GAMMA_CURVE = "gamma_curve"
 CONF_GROUP = "group"
 CONF_GROUP_ENERGY_ENTITIES = "group_energy_entities"
@@ -150,6 +155,7 @@ CONF_OR = "or"
 CONF_PLAYBOOK = "playbook"
 CONF_PLAYBOOKS = "playbooks"
 CONF_POWER = "power"
+CONF_POWER_CURVE = "power_curve"
 CONF_POWER_FACTOR = "power_factor"
 CONF_POWER_OFF = "power_off"
 CONF_POWER_SENSOR_CATEGORY = "power_sensor_category"
@@ -242,7 +248,7 @@ DISCOVERY_SOURCE_ENTITY = "source_entity"
 DISCOVERY_POWER_PROFILES = "power_profiles"
 DISCOVERY_INTEGRATION_NAME = "integration_name"
 DISCOVERY_TYPE = "discovery_type"
-LIBRARY_DISCOVERY_IGNORED_DOMAINS = "discovery_ignored_domains"
+LIBRARY_DISCOVERY_LOW_PRIORITY_DOMAINS = "discovery_low_priority_domains"
 
 LIBRARY_URL = "https://library.powercalc.nl"
 API_URL = "https://api.powercalc.nl"
@@ -281,7 +287,7 @@ OFF_STATES = {STATE_OFF, STATE_STANDBY, STATE_UNAVAILABLE}
 UNAVAILABLE_STATES = frozenset({STATE_UNAVAILABLE, STATE_UNKNOWN})
 OFF_STATES_BY_DOMAIN: dict[str, set[str]] = {
     cover.DOMAIN: {STATE_CLOSED, STATE_OPEN},
-    device_tracker.DOMAIN: {STATE_NOT_HOME},
+    DEVICE_TRACKER_DOMAIN: {STATE_NOT_HOME},
 }
 
 DOCS_URI = "https://docs.powercalc.nl/configuration/global-configuration/"
@@ -316,6 +322,7 @@ class PowercalcDiscoveryType(StrEnum):
     DOMAIN_GROUP = "domain_group"
     STANDBY_GROUP = "standby_group"
     LIBRARY = "library"
+    MEASURE_APP = "measure_app"
     USER_YAML = "user_yaml"
 
 

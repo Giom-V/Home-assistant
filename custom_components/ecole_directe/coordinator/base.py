@@ -11,11 +11,19 @@ https://developers.home-assistant.io/docs/integration_fetching_data#coordinated-
 
 from __future__ import annotations
 
+import asyncio
+import functools
+import json
+from contextlib import asynccontextmanager
 from datetime import date, datetime, timedelta, tzinfo
+from pathlib import Path
 from typing import TYPE_CHECKING, Any
 
+import anyio
 from ecoledirecte_api.client import QCMException
+from homeassistant.core import Event, callback
 from homeassistant.exceptions import ConfigEntryAuthFailed
+from homeassistant.helpers.storage import Store
 from homeassistant.helpers.update_coordinator import (
     TimestampDataUpdateCoordinator,
     UpdateFailed,
@@ -26,18 +34,27 @@ from custom_components.ecole_directe.api import (
     EDApiClientAuthenticationError,
     EDApiClientError,
 )
-from custom_components.ecole_directe.api.client import EDApiClient
+from custom_components.ecole_directe.api.client import (
+    EDApiClient,
+)
 from custom_components.ecole_directe.const import (
     AUGUST,
     DEFAULT_LUNCH_BREAK_TIME,
+    DOMAIN,
     EVENT_TYPE,
     FAKE_ON,
+    FILENAME_QCM,
+    FORCED_MODULES,
     GRADES_TO_DISPLAY,
+    INTEGRATION_PATH,
     LOGGER,
+    MAX_DOCUMENT_CACHE_BYTES,
+    MAX_QUESTIONS,
 )
 from custom_components.ecole_directe.helpers import get_unique_id
 
 if TYPE_CHECKING:
+    from collections.abc import AsyncIterator
     from logging import Logger
 
     from homeassistant.core import HomeAssistant
@@ -88,6 +105,22 @@ class EDDataUpdateCoordinator(TimestampDataUpdateCoordinator):
         )
         self.timezone = dt_util.get_default_time_zone()
         LOGGER.debug("timezone: %s", self.timezone)
+        # Initialize QCM data store for persistence
+        self._qcm_store = Store(hass, 1, f"ecole_directe_qcm_{entry.entry_id}")
+        # Initialize attributes store for oversized attributes persistence
+        self._attributes_store = Store(hass, 1, f"ed_attributes_{entry.entry_id}")
+        self._stored_attributes: dict[str, Any] = {}
+        # Trusted device (cn/cv) returned by Ecole Directe after the QCM,
+        # persisted with the QCM data so that the next logins skip the QCM.
+        self._trusted_device: dict[str, str] | None = None
+        # Local cache of downloaded homework documents: Ecole Directe has no
+        # server-side Range support, so without a cache every seek/replay in
+        # the devoirs card would re-download the whole file. Stored next to
+        # logs/test fixtures (see EDApiClient), lost (harmlessly) on update.
+        self._document_cache_dir = Path(
+            hass.config.config_dir + INTEGRATION_PATH + "documents/"
+        )
+        self._document_download_locks: dict[str, asyncio.Lock] = {}
 
     async def _async_setup(self) -> None:
         """
@@ -106,7 +139,402 @@ class EDDataUpdateCoordinator(TimestampDataUpdateCoordinator):
         device_info = await self.config_entry.runtime_data.client.get_device_info()
         self._device_id = device_info["id"]
         """
+        self.data = {
+            "qcm_questions": {},
+            "qcm_selected_options": {},
+        }
+
+        # Load saved QCM data from disk
+        saved_qcm = await self._qcm_store.async_load()
+        if isinstance(saved_qcm, dict):
+            self.data["qcm_questions"] = saved_qcm.get("qcm_questions", {})
+            self.data["qcm_selected_options"] = saved_qcm.get(
+                "qcm_selected_options", {}
+            )
+            trusted_device = saved_qcm.get("trusted_device")
+            if (
+                isinstance(trusted_device, dict)
+                and trusted_device.get("cn")
+                and trusted_device.get("cv")
+            ):
+                self._trusted_device = trusted_device
+            LOGGER.debug("Loaded saved QCM data: %s", saved_qcm)
+
+        # Load saved attributes data from disk
+        saved_attributes = await self._attributes_store.async_load()
+        if isinstance(saved_attributes, dict):
+            self._stored_attributes = saved_attributes
+            LOGGER.debug(
+                "Loaded saved attributes data for %s keys", len(self._stored_attributes)
+            )
+
+        # Check for legacy ecoledirecte_qcm.json file, migrate and delete it
+        await self.async_migrate_legacy_qcm_file()
+
+        # Create the document cache dir and clear any unfinished downloads
+        # left over from a crash/restart. Filesystem access, so off the loop.
+        await self.hass.async_add_executor_job(self._init_document_cache_dir)
+
         LOGGER.debug("Coordinator setup complete for %s", self.config_entry.entry_id)
+
+        @callback
+        def _handle_new_qcm_event(event: Event) -> None:
+            if event.data.get("type") != "new_qcm":
+                return
+
+            qcm_json = event.data.get("qcm_json", {})
+            self.hass.async_create_task(self._async_handle_new_qcm_event(qcm_json))
+
+        self.config_entry.async_on_unload(
+            self.hass.bus.async_listen(EVENT_TYPE, _handle_new_qcm_event)
+        )
+
+    async def _async_handle_new_qcm_event(self, qcm_json: dict[str, list[str]]) -> None:
+        """Handle incoming QCM events and update stored questions."""
+        LOGGER.debug("Handling new QCM event with data: %s", qcm_json)
+        self._update_qcm_data(qcm_json)
+        self.async_set_updated_data(self.data)
+
+    def _update_qcm_data(self, qcm_json: dict[str, list[str]]) -> None:
+        """Update coordinator data from the latest QCM challenge."""
+        LOGGER.debug("Updating QCM data with new challenge: %s", qcm_json)
+        questions: dict[str, list[str]] = {}
+        for question, propositions in qcm_json.items():
+            if not isinstance(question, str) or not isinstance(propositions, list):
+                continue
+            if len(propositions) < MAX_QUESTIONS:
+                continue
+
+            questions[question] = [str(option) for option in propositions]
+
+        if questions:
+            # Merge new questions with existing ones instead of replacing
+            self.data["qcm_questions"].update(questions)
+            # Preserve all selected options (both old and new)
+            # Only remove answers for questions that no longer exist
+            self.data["qcm_selected_options"] = {
+                question: answer
+                for question, answer in self.data.get(
+                    "qcm_selected_options", {}
+                ).items()
+                if question in self.data["qcm_questions"]
+            }
+        else:
+            self.data["qcm_questions"] = {}
+            self.data["qcm_selected_options"] = {}
+
+        LOGGER.debug("Updated QCM data questions: %s", self.data["qcm_questions"])
+        LOGGER.debug(
+            "Updated QCM data selected options: %s", self.data["qcm_selected_options"]
+        )
+
+        # Persist updated QCM data to disk
+        self.hass.async_create_task(self._async_save_qcm_data())
+
+    def set_qcm_answer(self, question: str, option: str) -> None:
+        """Store the selected QCM answer for the next login attempt."""
+        LOGGER.debug(
+            "Setting QCM answer for question '%s' to option '%s'", question, option
+        )
+        if self.data is None:
+            return
+
+        if question not in self.data.get("qcm_questions", {}):
+            return
+
+        self.data.setdefault("qcm_selected_options", {})[question] = option
+        # Persist QCM data to disk
+        self.hass.async_create_task(self._async_save_qcm_data())
+
+    def _prepare_client(self, client: EDApiClient) -> None:
+        """Give a new client the selected QCM answers and the trusted device."""
+        if self.data is not None:
+            for question, selected_option in self.data.get(
+                "qcm_selected_options", {}
+            ).items():
+                if selected_option is None:
+                    continue
+                client.qcm_json[question] = [selected_option]
+
+        if self._trusted_device is not None:
+            client.cn = self._trusted_device["cn"]
+            client.cv = self._trusted_device["cv"]
+
+    def find_homework_document(self, document_id: str) -> tuple[str, dict] | None:
+        """Find a homework document by id, return the student key and the document."""
+        if not self.data:
+            return None
+        for key, homeworks in self.data.items():
+            if not key.endswith("_homeworks") or not isinstance(homeworks, list):
+                continue
+            for homework in homeworks:
+                for document in homework.get("documents") or []:
+                    if str(document.get("id")) == document_id:
+                        return key.removesuffix("_homeworks"), document
+        return None
+
+    @asynccontextmanager
+    async def async_logged_in_client(self) -> AsyncIterator[EDApiClient]:
+        """
+        Log in a fresh, short-lived client for an on-demand API call.
+
+        The client stored in self.data["session"] is closed at the end of each
+        refresh: reusing it would silently log in again behind EDApiClient's
+        back (no QCM handling, renewed trusted device lost, stale account
+        switch, session never closed). The client is closed when the caller
+        leaves the context.
+        """
+        async with EDApiClient(
+            self.config_entry.data["username"],
+            self.config_entry.data["password"],
+            self.hass,
+        ) as client:
+            self._prepare_client(client)
+            await client.login()
+            await self._async_remember_trusted_device(client)
+            yield client
+
+    @asynccontextmanager
+    async def async_open_document(
+        self, eleve_key: str, document: dict
+    ) -> AsyncIterator[AsyncIterator[bytes]]:
+        """
+        Log in and open a homework document for streaming.
+
+        The Ecole Directe session stays open until the caller leaves the context,
+        i.e. until the whole document has been streamed.
+        """
+        async with self.async_logged_in_client() as client:
+            eleve = next(
+                (e for e in client.eleves if e.get_fullname_lower() == eleve_key),
+                None,
+            )
+            if eleve is not None and eleve.account_id_login is not None:
+                await client.switch_account(eleve.account_id_login)
+
+            yield client.iter_document(
+                document["id"], document.get("type") or "FICHIER_CDT"
+            )
+
+    def _document_cache_path(self, document_id: Any) -> Path:
+        """Local cache path for a homework document, namespaced per config entry."""
+        return (
+            self._document_cache_dir / f"{self.config_entry.entry_id}_{document_id}.bin"
+        )
+
+    def _init_document_cache_dir(self) -> None:
+        """Create the document cache dir and clear any unfinished downloads."""
+        self._document_cache_dir.mkdir(parents=True, exist_ok=True)
+        for leftover in self._document_cache_dir.glob("*.part"):
+            # Crash/restart recovery: a previous download never finished.
+            leftover.unlink(missing_ok=True)
+
+    def _cached_document_if_valid(self, cache_path: Path, taille: Any) -> Path | None:
+        """Return cache_path if a valid cached copy is already on disk."""
+        if not cache_path.exists():
+            return None
+        if not isinstance(taille, int) or cache_path.stat().st_size == taille:
+            cache_path.touch()  # bump mtime for the LRU eviction below
+            return cache_path
+        LOGGER.warning(
+            "Cached document %s has the wrong size, redownloading", cache_path.name
+        )
+        cache_path.unlink(missing_ok=True)
+        return None
+
+    async def async_get_document_path(self, eleve_key: str, document: dict) -> Path:
+        """
+        Return a local file holding this document's full content.
+
+        Downloads and caches it from Ecole Directe first if it isn't already
+        on disk, so repeated requests (Safari alone issues several Range
+        requests just to start playback) don't each redownload the whole
+        file: Ecole Directe has no server-side Range support of its own.
+        """
+        document_id = document["id"]
+        cache_path = self._document_cache_path(document_id)
+        taille = document.get("taille")
+
+        cached = await self.hass.async_add_executor_job(
+            self._cached_document_if_valid, cache_path, taille
+        )
+        if cached is not None:
+            return cached
+
+        lock = self._document_download_locks.setdefault(
+            str(document_id), asyncio.Lock()
+        )
+        async with lock:
+            try:
+                if await self.hass.async_add_executor_job(cache_path.exists):
+                    # Another request finished downloading while we waited for the lock.
+                    return cache_path
+
+                tmp_path = cache_path.with_suffix(".part")
+                try:
+                    async with (
+                        self.async_open_document(eleve_key, document) as chunks,
+                        await anyio.open_file(tmp_path, "wb") as file,
+                    ):
+                        async for chunk in chunks:
+                            await file.write(chunk)
+                    await self.hass.async_add_executor_job(tmp_path.rename, cache_path)
+                except Exception:
+                    await self.hass.async_add_executor_job(
+                        functools.partial(tmp_path.unlink, missing_ok=True)
+                    )
+                    raise
+
+                await self.hass.async_add_executor_job(
+                    self._evict_document_cache, cache_path
+                )
+                return cache_path
+            finally:
+                self._document_download_locks.pop(str(document_id), None)
+
+    def _evict_document_cache(self, keep: Path) -> None:
+        """Delete the oldest cached documents once the cache exceeds its budget."""
+        try:
+            others = sorted(
+                (p for p in self._document_cache_dir.glob("*.bin") if p != keep),
+                key=lambda p: p.stat().st_mtime,
+            )
+            total = keep.stat().st_size + sum(p.stat().st_size for p in others)
+            for stale in others:
+                if total <= MAX_DOCUMENT_CACHE_BYTES:
+                    break
+                total -= stale.stat().st_size
+                stale.unlink(missing_ok=True)
+        except OSError:
+            LOGGER.exception("Error evicting the document cache")
+
+    async def _async_remember_trusted_device(self, client: EDApiClient) -> None:
+        """Persist the trusted device (cn/cv) when Ecole Directe issued a new one."""
+        if not client.cn or not client.cv:
+            return
+        current = self._trusted_device or {}
+        if current.get("cn") == client.cn and current.get("cv") == client.cv:
+            return
+        self._trusted_device = {
+            "cn": client.cn,
+            "cv": client.cv,
+            "saved_at": datetime.now(self.timezone).isoformat(timespec="seconds"),
+        }
+        await self._async_save_qcm_data()
+        LOGGER.info("Ecole Directe trusted device saved: next logins will skip the QCM")
+
+    async def _async_save_qcm_data(self) -> None:
+        """Save QCM data to disk for persistence."""
+        if self.data is None:
+            return
+
+        qcm_data = {
+            "qcm_questions": self.data.get("qcm_questions", {}),
+            "qcm_selected_options": self.data.get("qcm_selected_options", {}),
+            "trusted_device": self._trusted_device,
+        }
+        await self._qcm_store.async_save(qcm_data)
+        LOGGER.debug("Saved QCM data to store: %s", qcm_data)
+
+    @callback
+    def async_save_attributes(self, key: str, attributes: Any) -> None:
+        """Save oversized attributes to store."""
+        self._stored_attributes[key] = attributes
+        self._attributes_store.async_delay_save(
+            lambda: self._stored_attributes,
+            delay=5,
+        )
+
+    def get_stored_attributes(self, key: str) -> Any | None:
+        """Get stored attributes from store."""
+        return self._stored_attributes.get(key)
+
+    async def async_migrate_legacy_qcm_file(self) -> None:
+        """Check if legacy QCM file exists, read it, convert it to current usage and delete it."""
+        filename = self.config_entry.data.get("qcm_filename", FILENAME_QCM)
+        candidate_paths = [self.hass.config.path(filename)]
+        if filename != FILENAME_QCM:
+            candidate_paths.append(self.hass.config.path(FILENAME_QCM))
+
+        for file_path_str in candidate_paths:
+            file_path = anyio.Path(file_path_str)
+            try:
+                if not await file_path.is_file():
+                    continue
+
+                LOGGER.debug("Found legacy QCM file at %s, migrating", file_path_str)
+                content = await file_path.read_text(encoding="utf-8")
+                legacy_data: Any = json.loads(content)
+
+                if isinstance(legacy_data, dict):
+                    if self.data is None:
+                        self.data = {
+                            "qcm_questions": {},
+                            "qcm_selected_options": {},
+                        }
+
+                    migrated = False
+                    for question, propositions in legacy_data.items():
+                        if not isinstance(question, str):
+                            continue
+                        if isinstance(propositions, list):
+                            options = [str(opt) for opt in propositions]
+                        elif isinstance(propositions, str):
+                            options = [propositions]
+                        else:
+                            continue
+
+                        if not options:
+                            continue
+
+                        if question not in self.data["qcm_questions"]:
+                            self.data["qcm_questions"][question] = options
+                            migrated = True
+                        else:
+                            for opt in options:
+                                if opt not in self.data["qcm_questions"][question]:
+                                    self.data["qcm_questions"][question].append(opt)
+                                    migrated = True
+
+                        if question not in self.data["qcm_selected_options"]:
+                            self.data["qcm_selected_options"][question] = options[0]
+                            migrated = True
+
+                    if migrated:
+                        await self._async_save_qcm_data()
+                        LOGGER.debug(
+                            "Migrated QCM data from %s into coordinator data",
+                            file_path_str,
+                        )
+
+                        # Sync migrated data to any other ecole_directe config entries without QCM data
+                        for entry in self.hass.config_entries.async_entries(DOMAIN):
+                            if entry.entry_id != self.config_entry.entry_id:
+                                other_store = Store(
+                                    self.hass, 1, f"ecole_directe_qcm_{entry.entry_id}"
+                                )
+                                other_data = await other_store.async_load()
+                                if not other_data:
+                                    await other_store.async_save(
+                                        {
+                                            "qcm_questions": dict(
+                                                self.data["qcm_questions"]
+                                            ),
+                                            "qcm_selected_options": dict(
+                                                self.data["qcm_selected_options"]
+                                            ),
+                                        }
+                                    )
+
+                await file_path.unlink(missing_ok=True)
+                LOGGER.info(
+                    "Legacy QCM file '%s' migrated and deleted successfully",
+                    file_path_str,
+                )
+            except Exception as err:
+                LOGGER.warning(
+                    "Error while migrating legacy QCM file '%s': %s", file_path_str, err
+                )
 
     async def _async_update_data(self) -> Any:
         """
@@ -153,22 +581,40 @@ class EDDataUpdateCoordinator(TimestampDataUpdateCoordinator):
             async with EDApiClient(
                 self.config_entry.data["username"],
                 self.config_entry.data["password"],
-                self.hass.config.config_dir
-                + "/"
-                + self.config_entry.data["qcm_filename"],
                 self.hass,
             ) as client:
+                self._prepare_client(client)
+
                 try:
                     await client.login()
                 except QCMException:
-                    LOGGER.exception("Unable to init ecole directe client")
-                    return None
+                    LOGGER.warning("QCM verification pending for ecole directe client")
+                    return self.data
                 except Exception:
-                    LOGGER.critical("Unknow error on login")
-                    return None
+                    LOGGER.critical("Unknown error on login")
+                    return self.data
 
-                self.data = {}
-                self.data["session"] = client
+                await self._async_remember_trusted_device(client)
+
+                # Some schools stop declaring a module for a pupil (enable=false)
+                # while the API still answers: optionally fetch them anyway.
+                if self.config_entry.options.get("forcer_modules", False):
+                    for eleve in client.eleves:
+                        for code in FORCED_MODULES:
+                            if code not in eleve.modules:
+                                eleve.modules.append(code)
+
+                # Preserve QCM data across updates so saved questions persist
+                previous_qcm_questions = (self.data or {}).get("qcm_questions", {})
+                previous_qcm_selected_options = (self.data or {}).get(
+                    "qcm_selected_options", {}
+                )
+
+                self.data = {
+                    "session": client,
+                    "qcm_questions": previous_qcm_questions,
+                    "qcm_selected_options": previous_qcm_selected_options,
+                }
 
                 current_year = datetime.now(self.timezone).year
                 if datetime.now(self.timezone).month >= AUGUST:
@@ -413,6 +859,10 @@ class EDDataUpdateCoordinator(TimestampDataUpdateCoordinator):
                                 "new_evaluation",
                                 eleve,
                             )
+
+                            self.data[
+                                f"{eleve.get_fullname_lower()}_periodes_moyennes"
+                            ] = grades_evaluations.get("periodes", [])
                         except Exception:
                             LOGGER.exception("Error getting grades from ecole directe")
 

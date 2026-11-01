@@ -1,0 +1,13 @@
+{
+  "domain": "mon_eau",
+  "name": "Mon Eau",
+  "codeowners": ["@steph9742"],
+  "config_flow": true,
+  "dependencies": ["frontend", "http"],
+  "documentation": "https://github.com/steph9742/ha-mon-eau",
+  "integration_type": "hub",
+  "iot_class": "cloud_polling",
+  "issue_tracker": "https://github.com/steph9742/ha-mon-eau/issues",
+  "requirements": [],
+  "version": "1.0.1"
+}

@@ -2,6 +2,7 @@ from __future__ import annotations
 from typing import Any
 
 from homeassistant.components.switch import (
+    ENTITY_ID_FORMAT,
     SwitchEntity,
     SwitchEntityDescription,
 )
@@ -12,8 +13,8 @@ from homeassistant.core import HomeAssistant, callback
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 from .const import DOMAIN
-from homeassistant.util import dt as dt_util
 from .coordinator import FlightRadar24Coordinator
+from .entity_ids import suggest_entity_id
 
 
 async def async_setup_entry(
@@ -58,6 +59,9 @@ class FlightRadar24ScanEntity(
         self._attr_unique_id = (
             f"{entry_id}_{DOMAIN}_{self.entity_description.key}"
         )
+        self.entity_id = suggest_entity_id(
+            coordinator.hass, ENTITY_ID_FORMAT, self.entity_description.key
+        )
 
     async def async_added_to_hass(self) -> None:
         """Run when entity about to be added to hass."""
@@ -88,7 +92,7 @@ class FlightRadar24ScanEntity(
     def _disable(self) -> None:
         self.coordinator.flight.clear_live_data()
         self.coordinator.airport.clear_live_data()
-        self.coordinator.async_set_updated_data(None)
+        self.coordinator.async_update_listeners()
 
 
 class FlightRadar24MostTrackedEntity(
@@ -119,6 +123,9 @@ class FlightRadar24MostTrackedEntity(
         self._attr_unique_id = (
             f"{entry_id}_{DOMAIN}_{self.entity_description.key}"
         )
+        self.entity_id = suggest_entity_id(
+            coordinator.hass, ENTITY_ID_FORMAT, self.entity_description.key
+        )
 
     async def async_added_to_hass(self) -> None:
         await super().async_added_to_hass()
@@ -143,9 +150,11 @@ class FlightRadar24MostTrackedEntity(
 
     @callback
     def _handle_coordinator_update(self) -> None:
-        if self.coordinator.flight.most_tracked_enabled:
-            self._attr_extra_state_attributes = {
-                "flights": [dict(flight) for flight in self.coordinator.flight.most_tracked_list],
-                "last_updated": dt_util.now().isoformat()
-            }
-            self.async_write_ha_state()
+        if not self.coordinator.flight.most_tracked_enabled:
+            return
+        new_flights = [dict(flight) for flight in self.coordinator.flight.most_tracked_list]
+        previous = (getattr(self, "_attr_extra_state_attributes", None) or {}).get("flights")
+        if previous == new_flights:
+            return
+        self._attr_extra_state_attributes = {"flights": new_flights}
+        self.async_write_ha_state()

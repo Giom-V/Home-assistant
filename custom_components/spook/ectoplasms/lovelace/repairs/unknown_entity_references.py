@@ -5,30 +5,100 @@ from __future__ import annotations
 from typing import TYPE_CHECKING, Any
 
 from homeassistant.components.lovelace import DOMAIN
-from homeassistant.components.lovelace.const import ConfigNotFound
 from homeassistant.const import (
     EVENT_COMPONENT_LOADED,
     EVENT_LOVELACE_UPDATED,
-    EVENT_STATE_CHANGED,
 )
-from homeassistant.core import Event, callback
+from homeassistant.core import callback
 from homeassistant.helpers import entity_registry as er
 
 from ....const import LOGGER
-from ....entity_filtering import (
-    async_filter_known_entity_ids,
-    async_get_all_entity_ids,
-    split_comma_separated_entity_ids,
+from ....dashboard_extraction import (
+    extract_entities_from_dashboard_node,
+    extract_not_entity_ids_from_dashboard_node,
 )
+from ....entity_filtering import async_filter_known_entity_ids, async_get_all_entity_ids
+from ....entity_suggestions import async_describe_unknown_entities
 from ....repairs import AbstractSpookRepair
+from ..dashboards import async_dashboard_configs
 
 if TYPE_CHECKING:
-    from collections.abc import Mapping
+    from collections.abc import Iterable
 
     from homeassistant.components.lovelace.dashboard import (
         LovelaceStorage,
         LovelaceYAML,
     )
+    from homeassistant.core import HomeAssistant
+
+
+@callback
+def _async_miscased_entity_ids(
+    hass: HomeAssistant, entity_ids: Iterable[str]
+) -> set[str]:
+    """Return the entity IDs written with capitals, exactly as written.
+
+    The frontend looks an entity up exactly as the card names it, and every
+    entity Home Assistant has is lower case. So `light.Kitchen` is never
+    found, not even when `light.kitchen` exists, and the card shows it as
+    unavailable. Reported as written, so the repair shows what was typed.
+
+    Only one that is an entity ID once lower cased counts, and it passes the
+    same checks as any other; anything else was never meant as one.
+    """
+    written_as: dict[str, set[str]] = {}
+    for entity_id in entity_ids:
+        if (lower_cased := entity_id.lower()) != entity_id:
+            written_as.setdefault(lower_cased, set()).add(entity_id)
+
+    # Nothing counts as known here: whether the lower case one exists or
+    # not, the card names something that does not.
+    return {
+        entity_id
+        for lower_cased in async_filter_known_entity_ids(
+            hass, entity_ids=written_as, known_entity_ids=set()
+        )
+        for entity_id in written_as[lower_cased]
+    }
+
+
+async def _async_describe(
+    hass: HomeAssistant, unknown_entities: set[str], not_entity_ids: set[str]
+) -> str:
+    """Return the issue's list of entities, saying which are no entity ID.
+
+    No guess at what one of those was meant to be. `cover.blind.position` may
+    have meant the cover, its position or something else entirely, and a
+    wrong suggestion is worse than none.
+    """
+    lines = [
+        await async_describe_unknown_entities(hass, sorted(unknown_entities)),
+        *(f"- `{value}` (not an entity ID)" for value in sorted(not_entity_ids)),
+    ]
+    return "\n".join(line for line in lines if line)
+
+
+def _first_view_with(
+    config: Any, unknown_entities: set[str], not_entity_ids: set[str]
+) -> int | str:
+    """Return the path of the first view holding something reported.
+
+    Each view is asked with the walk that reported it: the same malformed
+    value may sit on a custom card on an earlier view, which only the entity
+    walk reads, and that view would be the wrong one to open.
+    """
+    views = config.get("views") if isinstance(config, dict) else None
+    for view_index, view in enumerate(views if isinstance(views, list) else []):
+        if not isinstance(view, dict):
+            continue
+
+        if unknown_entities & extract_entities_from_dashboard_node(
+            view
+        ) or not_entity_ids & extract_not_entity_ids_from_dashboard_node(view):
+            return view.get("path") or view_index
+
+    # A strategy dashboard has no views stored; its views open from the first.
+    return 0
 
 
 class SpookRepair(AbstractSpookRepair):
@@ -43,35 +113,15 @@ class SpookRepair(AbstractSpookRepair):
     }
     inspect_config_entry_changed = True
     inspect_on_reload = True
+    inspect_on_entity_added_or_removed = True
     automatically_clean_up_issues = True
 
-    _dashboards: dict[str, LovelaceStorage | LovelaceYAML]
+    _dashboards: dict[str | None, LovelaceStorage | LovelaceYAML]
 
     async def async_activate(self) -> None:
         """Handle the activating a repair."""
         self._dashboards = self.hass.data["lovelace"].dashboards
         await super().async_activate()
-
-        @callback
-        def _state_entity_changed(event_data: Mapping[str, Any]) -> bool:
-            """Return if a state entity was added or removed."""
-            return (
-                event_data.get("old_state") is None
-                or event_data.get("new_state") is None
-            )
-
-        @callback
-        def _async_call_inspect_debouncer(_: Event) -> None:
-            """Trigger an inspection when a state entity is added or removed."""
-            self.inspect_debouncer.async_schedule_call()
-
-        self._event_subs.add(
-            self.hass.bus.async_listen(
-                EVENT_STATE_CHANGED,
-                _async_call_inspect_debouncer,
-                event_filter=_state_entity_changed,
-            ),
-        )
 
     async def async_inspect(self) -> None:
         """Trigger a inspection."""
@@ -81,35 +131,33 @@ class SpookRepair(AbstractSpookRepair):
 
         # Loop over all dashboards and check if there are unknown entities
         # referenced in the dashboards.
-        for dashboard in self._dashboards.values():
-            url_path = dashboard.url_path or "lovelace"
+        async for dashboard, url_path, config in async_dashboard_configs(
+            self._dashboards
+        ):
             self.possible_issue_ids.add(url_path)
-            try:
-                config = await dashboard.async_load(force=False)
-            except ConfigNotFound:
-                LOGGER.debug("Config for dashboard %s not found, skipping", url_path)
+            if config is None:
                 continue
 
             extracted_entities = self.__async_extract_entities(config)
-            if unknown_entities := async_filter_known_entity_ids(
+            not_entity_ids = extract_not_entity_ids_from_dashboard_node(config)
+            unknown_entities = async_filter_known_entity_ids(
                 self.hass,
                 entity_ids=set(extracted_entities.keys()),
                 known_entity_ids=known_entity_ids,
-            ):
-                # Get the view path of the first unknown entity (by view order)
-                first_view_path = next(
-                    path
-                    for entity_id, path in extracted_entities.items()
-                    if entity_id in unknown_entities
+            ) | _async_miscased_entity_ids(self.hass, extracted_entities)
+            if unknown_entities or not_entity_ids:
+                first_view_path = _first_view_with(
+                    config, unknown_entities, not_entity_ids
                 )
                 title = "Overview"
                 if dashboard.config:
                     title = dashboard.config.get("title", url_path)
                 self.async_create_issue(
                     issue_id=url_path,
+                    references=unknown_entities | not_entity_ids,
                     translation_placeholders={
-                        "entities": "\n".join(
-                            f"- `{entity_id}`" for entity_id in sorted(unknown_entities)
+                        "entities": await _async_describe(
+                            self.hass, unknown_entities, not_entity_ids
                         ),
                         "dashboard": title,
                         "edit": f"/{url_path}/{first_view_path}?edit=1",
@@ -121,253 +169,28 @@ class SpookRepair(AbstractSpookRepair):
                         "and created an issue for it; Entities: %s"
                     ),
                     title,
-                    ", ".join(unknown_entities),
+                    ", ".join(unknown_entities | not_entity_ids),
                 )
 
     @callback
     def __async_extract_entities(self, config: dict[str, Any]) -> dict[str, int | str]:
-        """Extract entities from a dashboard config."""
+        """Extract entities from a dashboard config, keyed by their view path."""
         entities: dict[str, int | str] = {}
         if isinstance(config, dict) and (views := config.get("views")):
             for view_index, view in enumerate(views):
                 if not isinstance(view, dict):
                     continue
                 view_path: int | str = view.get("path") or view_index
-                for entity_id_raw in self.__async_extract_entities_from_view(view):
-                    for entity_id in split_comma_separated_entity_ids(entity_id_raw):
-                        if entity_id not in entities:
-                            entities[entity_id] = view_path
-        return entities
+                for entity_id in extract_entities_from_dashboard_node(view):
+                    entities.setdefault(entity_id, view_path)
 
-    @callback
-    def __async_extract_entities_from_view(self, config: dict[Any]) -> set[str]:
-        """Extract entities from a view config."""
-        entities = set()
-        if badges := config.get("badges"):
-            for badge in badges:
-                entities.update(self.__async_extract_entities_from_badge(badge))
-        if cards := config.get("cards"):
-            for card in cards:
-                entities.update(self.__async_extract_entities_from_card(card))
-        if sections := config.get("sections"):
-            for section in sections:
-                entities.update(self.__async_extract_entities_from_section(section))
-        return entities
-
-    @callback
-    def __async_extract_entities_from_section(self, config: dict[Any]) -> set[str]:
-        """Extract entities from a section config."""
-        entities = set()
-        if cards := config.get("cards"):
-            for card in cards:
-                entities.update(self.__async_extract_entities_from_card(card))
-        return entities
-
-    @callback
-    def __async_extract_common(self, config: dict[str, Any] | str) -> set[str]:
-        """Extract entities from common dashboard config."""
-        entities: set[str] = set()
-
-        if not isinstance(config, dict):
-            return entities
-
-        for key in ("camera_image", "entity", "entities", "entity_id"):
-            if entity := config.get(key):
-                if isinstance(entity, str):
-                    entities.add(entity)
-                if isinstance(entity, list):
-                    for item in entity:
-                        if isinstance(item, str):
-                            entities.add(item)
-                        elif (
-                            isinstance(item, dict)
-                            and "entity" in item
-                            and isinstance(item["entity"], str)
-                        ):
-                            entities.add(item["entity"])
-                if (
-                    isinstance(entity, dict)
-                    and "entity" in entity
-                    and isinstance(entity["entity"], str)
-                ):
-                    entities.add(entity["entity"])
-        return entities
-
-    @callback
-    def __async_extract_entities_from_badge(
-        self,
-        config: dict[str, Any] | str,
-    ) -> set[str]:
-        """Extract entities from a dashboard badge config."""
-        if isinstance(config, str):
-            return {config}
-        if isinstance(config, dict):
-            if (entity_id := config.get("entity")) and isinstance(entity_id, str):
-                return {config["entity"]}
-            if (entities := config.get("entities")) and isinstance(entities, list):
-                extracted = []
-                for entity in entities:
-                    if isinstance(entity, str):
-                        extracted.append(entity)
-                    elif (
-                        isinstance(entity, dict)
-                        and "entity" in entity
-                        and isinstance(entity["entity"], str)
-                    ):
-                        extracted.append(entity["entity"])
-                return set(extracted)
-        return set()
-
-    @callback
-    # pylint: disable-next=too-many-branches
-    def __async_extract_entities_from_card(  # noqa: C901, PLR0912
-        self,
-        config: dict[str, Any],
-    ) -> set[str]:
-        """Extract entities from a dashboard card config."""
-        if not isinstance(config, dict):
-            return set()
-
-        entities = self.__async_extract_common(config)
-        entities.update(self.__async_extract_entities_from_actions(config))
-
-        if condition := config.get("condition"):
-            entities.update(
-                self.__async_extract_entities_from_condition(condition),
-            )
-
-        if card := config.get("card"):
-            entities.update(self.__async_extract_entities_from_card(card))
-
-        if cards := config.get("cards"):
-            for card in cards:
-                entities.update(self.__async_extract_entities_from_card(card))
-
-        for key in ("header", "footer"):
-            if header_footer := config.get(key):
-                entities.update(
-                    self.__async_extract_entities_from_header_footer(header_footer),
-                )
-
-        if elements := config.get("elements"):
-            for element in elements:
-                entities.update(self.__async_extract_entities_from_element(element))
-
-        # Mushroom
-        if chips := config.get("chips"):
-            for chip in chips:
-                entities.update(self.__async_extract_entities_from_mushroom_chip(chip))
-
-        # Heading card
-        if badges := config.get("badges"):
-            for badge in badges:
-                if isinstance(badge, dict):
-                    entities.update(self.__async_extract_common(badge))
-                    entities.update(self.__async_extract_entities_from_actions(badge))
-
-        visibility = config.get("visibility")
-        if isinstance(visibility, list):
-            for condition in visibility:
-                if isinstance(condition, dict):
-                    entities.update(
-                        self.__async_extract_entities_from_condition(condition)
-                    )
-
-        return entities
-
-    @callback
-    def __async_extract_entities_from_actions(self, config: dict[str, Any]) -> set[str]:
-        """Extract entities from a dashboard config containing actions."""
-        entities = set()
-        for key in (
-            "tap_action",
-            "hold_action",
-            "double_tap_action",
-            "subtitle_tap_action",
+        # A dashboard run by a strategy, like the areas dashboard, has no views
+        # stored at all: only the strategy and its options. The views it makes
+        # are opened from the first one.
+        if isinstance(config, dict) and isinstance(
+            strategy := config.get("strategy"), dict
         ):
-            if isinstance(config, dict) and (action := config.get(key)):
-                entities.update(self.__async_extract_entities_from_action(action))
-        return entities
+            for entity_id in extract_entities_from_dashboard_node(strategy):
+                entities.setdefault(entity_id, 0)
 
-    @callback
-    def __async_extract_entities_from_action(self, config: dict[str, Any]) -> set[str]:
-        """Extract entities from a dashboard action config."""
-        entities = set()
-        for key in ("service_data", "target"):
-            if (
-                isinstance(config, dict)
-                and (target := config.get(key))
-                and isinstance(target, dict)
-                and (entity_id := target.get("entity_id"))
-            ):
-                if isinstance(entity_id, str):
-                    entities.add(entity_id)
-                if isinstance(entity_id, list):
-                    entities.update(entity_id)
-        return entities
-
-    @callback
-    def __async_extract_entities_from_condition(
-        self,
-        config: dict[str, Any],
-    ) -> set[str]:
-        """Extract entities from a dashboard element config."""
-        if "entity" in config and isinstance(config["entity"], str):
-            return {config["entity"]}
-        return set()
-
-    @callback
-    def __async_extract_entities_from_element(self, config: dict[str, Any]) -> set[str]:
-        """Extract entities from a dashboard element config."""
-        if not isinstance(config, dict):
-            return set()
-
-        entities = self.__async_extract_common(config)
-        entities.update(self.__async_extract_entities_from_actions(config))
-        entities.update(self.__async_extract_entities_from_action(config))
-
-        if conditions := config.get("conditions"):
-            for condition in conditions:
-                entities.update(self.__async_extract_entities_from_condition(condition))
-
-        if elements := config.get("elements"):
-            for element in elements:
-                entities.update(self.__async_extract_entities_from_element(element))
-
-        visibility = config.get("visibility")
-        if isinstance(visibility, list):
-            for condition in visibility:
-                if isinstance(condition, dict):
-                    entities.update(
-                        self.__async_extract_entities_from_condition(condition)
-                    )
-
-        return entities
-
-    @callback
-    def __async_extract_entities_from_header_footer(
-        self,
-        config: dict[str, Any],
-    ) -> set[str]:
-        """Extract entities from a dashboard haeder footer config."""
-        entities = self.__async_extract_common(config)
-        entities.update(self.__async_extract_entities_from_actions(config))
-        return entities
-
-    @callback
-    def __async_extract_entities_from_mushroom_chip(
-        self,
-        config: dict[str, Any],
-    ) -> set[str]:
-        """Extract entities from mushroom chips."""
-        if not isinstance(config, dict):
-            return set()
-        entities = self.__async_extract_common(config)
-        if chip := config.get("chip"):
-            entities.update(
-                self.__async_extract_entities_from_mushroom_chip(chip),
-            )
-        if conditions := config.get("conditions"):
-            for condition in conditions:
-                entities.update(self.__async_extract_entities_from_condition(condition))
         return entities

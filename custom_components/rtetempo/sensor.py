@@ -327,13 +327,13 @@ class DaysLeft(SensorEntity):
         """Initialize the Days Left Sensor."""
         # Generic entity properties
         if color == API_VALUE_BLUE:
-            self._attr_name = f"Cycle Jours restants {SENSOR_COLOR_BLUE_NAME}"
+            self._attr_name = f"Cycle Jours restants (non planifiés) {SENSOR_COLOR_BLUE_NAME}"
             self._attr_unique_id = f"{DOMAIN}_{config_id}_days_left_blue"
         elif color == API_VALUE_WHITE:
-            self._attr_name = f"Cycle Jours restants {SENSOR_COLOR_WHITE_NAME}"
+            self._attr_name = f"Cycle Jours restants (non planifiés) {SENSOR_COLOR_WHITE_NAME}"
             self._attr_unique_id = f"{DOMAIN}_{config_id}_days_left_white"
         elif color == API_VALUE_RED:
-            self._attr_name = f"Cycle Jours restants {SENSOR_COLOR_RED_NAME}"
+            self._attr_name = f"Cycle Jours restants (non planifiés) {SENSOR_COLOR_RED_NAME}"
             self._attr_unique_id = f"{DOMAIN}_{config_id}_days_left_red"
         else:
             raise Exception(f"invalid color {color}")
@@ -386,8 +386,10 @@ class DaysLeft(SensorEntity):
         nb_white_days = 0
         nb_red_days = 0
         for tempo_day in self._api_worker.get_regular_days():
+            if tempo_day.Start >= cycle_end:
+                continue
             if tempo_day.Start < cycle_start:
-                break
+                continue
             if tempo_day.Value == API_VALUE_BLUE:
                 nb_blue_days += 1
             elif tempo_day.Value == API_VALUE_WHITE:
@@ -460,17 +462,27 @@ class DaysUsed(SensorEntity):
                 month=CYCLE_START_MONTH,
                 day=CYCLE_START_DAY,
             )
+            cycle_end = datetime.date(
+                year=localized_now.year, month=CYCLE_START_MONTH, day=CYCLE_START_DAY
+            )
         else:
             cycle_start = datetime.date(
                 year=localized_now.year, month=CYCLE_START_MONTH, day=CYCLE_START_DAY
+            )
+            cycle_end = datetime.date(
+                year=localized_now.year + 1,
+                month=CYCLE_START_MONTH,
+                day=CYCLE_START_DAY,
             )
         # Count already defined days since the beginning of the cycle
         nb_blue_days = 0
         nb_white_days = 0
         nb_red_days = 0
         for tempo_day in self._api_worker.get_regular_days():
+            if tempo_day.Start >= cycle_end:
+                continue
             if tempo_day.Start < cycle_start:
-                break
+                continue
             if tempo_day.Value == API_VALUE_BLUE:
                 nb_blue_days += 1
             elif tempo_day.Value == API_VALUE_WHITE:

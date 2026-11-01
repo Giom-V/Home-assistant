@@ -1,0 +1,198 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Mon Eau",
+        "description": "Choisissez les données à suivre. Chaque plateforme crée ses propres capteurs et sa carte Lovelace.",
+        "data": { "features": "Plateformes" }
+      },
+      "commune": {
+        "title": "Votre commune",
+        "description": "Nom de la commune ou code postal.",
+        "data": { "recherche": "Commune" }
+      },
+      "commune_choix": {
+        "title": "Confirmer la commune",
+        "data": { "commune": "Commune" }
+      },
+      "reseau": {
+        "title": "Réseaux de distribution",
+        "description": "Une commune peut être desservie par plusieurs réseaux aux résultats différents — vous pouvez en suivre plusieurs, chacun aura son appareil. Le bulletin ARS (plus frais) nécessite un réseau précis.",
+        "data": { "reseau": "Réseaux" }
+      },
+      "hydro": {
+        "title": "Stations hauteur / débit",
+        "description": "Stations hydrométriques temps réel, triées par distance. Chaque station sélectionnée aura son appareil.",
+        "data": { "station": "Stations" }
+      },
+      "qualite": {
+        "title": "Station santé de la rivière",
+        "description": "Analyses (température, oxygène, pH, nitrates) tous les 1 à 2 mois, publiées avec plusieurs mois de retard. Seules les stations avec des relevés récents sont proposées.",
+        "data": { "station": "Station" }
+      },
+      "temperature": {
+        "title": "Station température en continu",
+        "description": "Rare : la plupart des stations de ce réseau sont à l'arrêt. Seules celles avec des mesures de moins de 30 jours sont proposées.",
+        "data": { "station": "Station" }
+      },
+      "piezo": {
+        "title": "Piézomètres (nappe phréatique)",
+        "description": "Niveau de la nappe, souvent en temps réel horaire. Seuls les piézomètres actifs sont proposés — un appareil par piézomètre sélectionné.",
+        "data": { "station": "Piézomètres" }
+      },
+      "baignade": {
+        "title": "Sites de baignade",
+        "description": "Sites contrôlés par l'ARS dans le département (lacs, rivières, mer). Données saisonnières — un appareil par site sélectionné.",
+        "data": { "site": "Sites" }
+      }
+    },
+    "error": {
+      "cannot_connect": "Impossible de joindre le service. Réessayez.",
+      "commune_introuvable": "Aucune commune trouvée avec ce nom."
+    },
+    "abort": {
+      "already_configured": "Cette commune est déjà configurée."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Modifier Mon Eau",
+        "description": "Ajoutez ou retirez des plateformes ; les étapes suivantes permettent d'ajuster réseaux et stations (choix actuels pré-remplis).",
+        "data": { "features": "Plateformes" }
+      },
+      "reseau": {
+        "title": "Réseaux de distribution",
+        "description": "Ajoutez ou retirez des réseaux — chaque réseau a son appareil.",
+        "data": { "reseau": "Réseaux" }
+      },
+      "hydro": {
+        "title": "Stations hauteur / débit",
+        "description": "Stations hydrométriques temps réel, triées par distance.",
+        "data": { "station": "Stations" }
+      },
+      "qualite": {
+        "title": "Station santé de la rivière",
+        "description": "Analyses tous les 1 à 2 mois, publiées avec retard.",
+        "data": { "station": "Station" }
+      },
+      "temperature": {
+        "title": "Station température en continu",
+        "description": "Seules les stations avec des mesures récentes sont proposées.",
+        "data": { "station": "Station" }
+      },
+      "piezo": {
+        "title": "Piézomètres (nappe phréatique)",
+        "description": "Un appareil par piézomètre sélectionné.",
+        "data": { "station": "Piézomètres" }
+      },
+      "baignade": {
+        "title": "Sites de baignade",
+        "description": "Un appareil par site sélectionné.",
+        "data": { "site": "Sites" }
+      }
+    },
+    "error": {
+      "cannot_connect": "Impossible de joindre le service. Réessayez."
+    }
+  },
+  "selector": {
+    "features": {
+      "options": {
+        "eau_potable": "Eau du robinet (contrôle sanitaire ARS)",
+        "riviere": "Rivière (hauteur, débit, vigilance crues, santé)",
+        "nappe": "Nappe phréatique (piézomètre)",
+        "secheresse": "Sécheresse (restrictions VigiEau, assecs)",
+        "baignade": "Baignade (qualité des sites ARS, saisonnier)"
+      }
+    }
+  },
+  "entity": {
+    "binary_sensor": {
+      "conformite": { "name": "Eau conforme" },
+      "restrictions": { "name": "Restrictions d'eau" },
+      "baignade": { "name": "Eau de baignade" }
+    },
+    "sensor": {
+      "dernier_prelevement": { "name": "Dernier prélèvement" },
+      "nitrates": { "name": "Nitrates" },
+      "pesticides": { "name": "Pesticides totaux" },
+      "e_coli": { "name": "E. coli" },
+      "enterocoques": { "name": "Entérocoques" },
+      "hauteur": { "name": "Hauteur" },
+      "debit": { "name": "Débit" },
+      "tendance_hauteur": {
+        "name": "Tendance hauteur",
+        "state": {
+          "stable": "Stable",
+          "monte_lente": "Monte lentement",
+          "monte_rapide": "Monte rapidement",
+          "descend_lente": "Descend lentement",
+          "descend_rapide": "Descend rapidement"
+        }
+      },
+      "tendance_nappe": {
+        "name": "Tendance nappe",
+        "state": {
+          "stable": "Stable",
+          "monte_lente": "Monte lentement",
+          "monte_rapide": "Monte rapidement",
+          "descend_lente": "Descend lentement",
+          "descend_rapide": "Descend rapidement"
+        }
+      },
+      "remplissage_nappe": { "name": "Remplissage de la nappe" },
+      "situation_nappe": {
+        "name": "Situation de la nappe",
+        "state": {
+          "tres_bas": "Très bas",
+          "bas": "Bas",
+          "normal": "Normal",
+          "haut": "Haut",
+          "tres_haut": "Très haut"
+        }
+      },
+      "situation_hydrologique": {
+        "name": "Situation hydrologique",
+        "state": {
+          "tres_bas": "Très bas",
+          "bas": "Bas",
+          "normal": "Normal",
+          "haut": "Haut",
+          "tres_haut": "Très haut"
+        }
+      },
+      "vigilance_crues": {
+        "name": "Vigilance crues",
+        "state": {
+          "verte": "Verte",
+          "jaune": "Jaune",
+          "orange": "Orange",
+          "rouge": "Rouge"
+        }
+      },
+      "temperature_eau": { "name": "Température de l'eau" },
+      "oxygene": { "name": "Oxygène dissous" },
+      "ph": { "name": "pH" },
+      "nitrates_riviere": { "name": "Nitrates rivière" },
+      "profondeur_nappe": { "name": "Profondeur de la nappe" },
+      "niveau_ngf": { "name": "Niveau NGF" },
+      "derniere_mesure_riviere": { "name": "Dernière mesure temps réel" },
+      "dernier_releve_sante": { "name": "Dernier relevé santé" },
+      "derniere_mesure_nappe": { "name": "Dernière mesure" },
+      "dernier_arrete": { "name": "Dernier arrêté" },
+      "classement_baignade": { "name": "Classement baignade" },
+      "dernier_controle_baignade": { "name": "Dernier contrôle baignade" },
+      "gravite_secheresse": {
+        "name": "Niveau sécheresse",
+        "state": {
+          "aucune": "Aucune restriction",
+          "vigilance": "Vigilance",
+          "alerte": "Alerte",
+          "alerte_renforcee": "Alerte renforcée",
+          "crise": "Crise"
+        }
+      }
+    }
+  }
+}

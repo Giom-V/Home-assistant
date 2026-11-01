@@ -2,76 +2,204 @@
   "config": {
     "step": {
       "user": {
-        "title": "Google Home Authentifizierung",
-        "description": "Hilfe zur Konfiguration findest du unter https://github.com/leikoilja/ha-google-home. Benutze deinen Google Account und ein App-Passwort. Es ist einfacher und sicherer, ein App-Passwort zu generieren und zu nutzen als das eigentliche Passwort. Es hat weiterhin die selben Zugriffsrechte, ist aber einfacher in der Handhabung beim Skripten als das echte Passwort. (https://myaccount.google.com/apppasswords). Falls nicht, dein normales Google Account Passwort sollte funktionieren.",
+        "title": "Bei Google anmelden",
+        "description": "Diese Integration funktioniert mit deinen Google-Lautsprechern und -Displays, etwa Nest Mini, Nest Audio und Nest Hub. Andere Geräte aus deiner Google Home App fügt sie nicht hinzu.\n\nWähle, wie du dich bei einem Google-Konto anmeldest, das Mitglied deines Zuhauses ist. Hilfe findest du unter {docs_url}.",
+        "menu_options": {
+          "browser": "Anmeldung im Browser (empfohlen)",
+          "master_token": "Master-Token"
+        },
+        "menu_option_descriptions": {
+          "browser": "Melde dich in einem Desktop-Browser bei Google an und füge dann ein Cookie ein. Funktioniert bei den meisten Konten.",
+          "master_token": "Füge ein Master-Token ein, das du bereits hast."
+        }
+      },
+      "browser": {
+        "title": "Anmeldung im Browser",
+        "description": "1. Öffne auf einem Computer {embedded_setup_url} in einem privaten Browserfenster und melde dich an. Nachdem du zugestimmt hast, lädt die Seite eventuell weiter; das ist normal.\n2. Öffne die Entwicklertools des Browsers und suche die Cookies für `accounts.google.com`.\n3. Kopiere den Wert des Cookies `oauth_token` und füge ihn sofort unten ein. Er läuft nach wenigen Minuten ab und funktioniert nur einmal.\n\nSchritt-für-Schritt-Anleitung: {browser_docs_url}\n\nUm eine andere Anmeldeart zu wählen, schließe dieses Fenster und füge die Integration erneut hinzu.",
         "data": {
-          "username": "Google Account Nutzername",
-          "password": "Google Account App-Passwort",
-          "master_token": "Google Account Master Token"
+          "oauth_token": "Cookie oauth_token"
+        },
+        "data_description": {
+          "oauth_token": "Beginnt mit oauth2_4/"
+        }
+      },
+      "master_token": {
+        "title": "Master-Token",
+        "description": "Füge ein Master-Token ein, das du zuvor erhalten hast, zum Beispiel mit einem anderen Tool.\n\nUm eine andere Anmeldeart zu wählen, schließe dieses Fenster und füge die Integration erneut hinzu.",
+        "data": {
+          "master_token": "Master-Token des Google-Kontos"
+        },
+        "data_description": {
+          "master_token": "Beginnt mit aas_et/"
+        }
+      },
+      "reauth": {
+        "title": "Erneut anmelden",
+        "description": "Google akzeptiert die für {name} gespeicherte Anmeldung nicht mehr. Melde dich erneut beim selben Google-Konto an: Deine Geräte, Entitäten und Automationen bleiben unverändert. Bis dahin können die Entitäten deiner Geräte veraltete Werte anzeigen oder nicht verfügbar sein.",
+        "menu_options": {
+          "browser": "Anmeldung im Browser (empfohlen)",
+          "master_token": "Master-Token"
+        },
+        "menu_option_descriptions": {
+          "browser": "Melde dich in einem Desktop-Browser bei Google an und füge dann ein Cookie ein. Funktioniert bei den meisten Konten.",
+          "master_token": "Füge ein Master-Token ein, das du bereits hast."
+        }
+      },
+      "reauth_browser": {
+        "title": "Anmeldung im Browser",
+        "description": "1. Öffne auf einem Computer {embedded_setup_url} in einem privaten Browserfenster und melde dich beim selben Google-Konto an. Nachdem du zugestimmt hast, lädt die Seite eventuell weiter; das ist normal.\n2. Öffne die Entwicklertools des Browsers und suche die Cookies für `accounts.google.com`.\n3. Kopiere den Wert des Cookies `oauth_token` und füge ihn sofort unten ein. Er läuft nach wenigen Minuten ab und funktioniert nur einmal.\n\nSchritt-für-Schritt-Anleitung: {browser_docs_url}",
+        "data": {
+          "oauth_token": "Cookie oauth_token"
+        },
+        "data_description": {
+          "oauth_token": "Beginnt mit oauth2_4/"
+        }
+      },
+      "reauth_master_token": {
+        "title": "Master-Token",
+        "description": "Füge ein Master-Token für dasselbe Google-Konto ein, zum Beispiel eines, das du mit einem anderen Tool erhalten hast.",
+        "data": {
+          "master_token": "Master-Token des Google-Kontos"
+        },
+        "data_description": {
+          "master_token": "Beginnt mit aas_et/"
         }
       }
     },
     "error": {
-      "auth": "Nutzername/Passwort ist nicht korrekt. Falls dein Google Account die Zwei-Faktor-Autentifizierung aktiviert hat, generiere bitte ein App Passwort (https://myaccount.google.com/apppasswords). Sollte die Authentifizierung weiterhin fehlschlagen, findest du weitere Informationen unter https://github.com/leikoilja/ha-google-home#troubleshooting",
-      "missing-inputs": "Bitte entweder Nutzername und Passwort oder Master Token angeben",
-      "master-token-invalid": "Master Token ungültig. Stelle sicher, dass das vollständige Token angegeben wurde (inklusive 'aas_et/')"
+      "oauth-token-invalid": "Google hat das Cookie nicht akzeptiert. Hol dir ein neues und füge es sofort ein: Es läuft nach wenigen Minuten ab und funktioniert nur einmal. Kopiere den vollständigen Wert, der mit oauth2_4/ beginnt.",
+      "master-token-invalid": "Google hat das Master-Token nicht akzeptiert. Prüfe, ob du es richtig kopiert hast. Wenn es vorher funktioniert hat, zum Beispiel bis du dein Google-Passwort geändert hast, akzeptiert Google es nicht mehr: Verwende stattdessen die Anmeldung im Browser.",
+      "google-rejected": "Google hat die Anmeldung nicht akzeptiert. Details findest du in den Protokollen von Home Assistant.",
+      "google-unreachable": "Google konnte nicht erreicht werden. Prüfe, ob Home Assistant mit dem Internet verbunden ist, und versuche es dann erneut.",
+      "google-busy": "Google ist ausgelastet oder begrenzt Anmeldungen. Warte ein paar Minuten und melde dich dann erneut an.",
+      "oauth-token-format": "Das ist nicht das Cookie oauth_token. Sein Wert beginnt mit oauth2_4/.",
+      "master-token-format": "Ein Master-Token beginnt mit aas_et/ und ist 223 Zeichen lang. Kopiere das vollständige Token.",
+      "other-account": "Du hast dich bei einem anderen Google-Konto angemeldet, daher wurde nichts geändert. Melde dich mit dem Konto an, das diese Integration verwendet. Um stattdessen das andere Konto zu verwenden, lösche die Integration und füge sie erneut hinzu."
+    }
+  },
+  "exceptions": {
+    "alarms_and_timers_not_fetched": {
+      "message": "Die aktuellen Wecker und Timer konnten nicht von {device} abgerufen werden. Daher wurde auf diesem Gerät nichts gelöscht. Prüfe, ob es online ist, und versuche es später erneut."
     },
-    "abort": {
-      "single_instance_allowed": "Es ist nur eine Instanz erlaubt."
+    "alarms_and_timers_not_fetched_from_devices": {
+      "message": "Die aktuellen Wecker und Timer konnten von den folgenden Geräten nicht abgerufen werden: {devices}. Daher wurde auf diesen Geräten nichts gelöscht. Prüfe, ob sie online sind, und versuche es später erneut."
+    },
+    "alarms_and_timers_not_deleted": {
+      "message": "Das Gerät {device} hat das Löschen der Wecker oder Timer nicht bestätigt, daher sind sie möglicherweise noch eingestellt. Prüfe, ob es online ist, und versuche es später erneut."
+    },
+    "alarms_and_timers_not_deleted_from_devices": {
+      "message": "Wecker oder Timer konnten auf den folgenden Geräten nicht gelöscht werden, oder das Löschen konnte nicht bestätigt werden: {devices}. Prüfe, ob sie online sind, und versuche es später erneut."
+    },
+    "invalid_alarm_id": {
+      "message": "„{alarm_id}“ ist keine Wecker-ID. Kopiere die ID, die mit alarm/ beginnt, aus dem Attribut alarms des Weckersensors des Geräts."
+    },
+    "invalid_timer_id": {
+      "message": "„{timer_id}“ ist keine Timer-ID. Kopiere die ID, die mit timer/ beginnt, aus dem Attribut timers des Timersensors des Geräts."
+    },
+    "alarm_not_found": {
+      "message": "Der Wecker {alarm_id} konnte auf den ausgewählten Geräten nicht gefunden werden. Er hat möglicherweise bereits geklingelt oder wurde gelöscht."
+    },
+    "timer_not_found": {
+      "message": "Der Timer {timer_id} konnte auf den ausgewählten Geräten nicht gefunden werden. Er ist möglicherweise bereits abgelaufen oder wurde gelöscht."
+    },
+    "device_offline": {
+      "message": "Das Gerät {device} konnte nicht erreicht werden. Prüfe, ob es eingeschaltet und mit deinem Netzwerk verbunden ist, und versuche es dann erneut."
+    },
+    "device_no_reply": {
+      "message": "Das Gerät {device} hat nicht bestätigt, dass es die Aktion ausgeführt hat: Es hat nicht rechtzeitig geantwortet oder seine Antwort wurde unterbrochen. Prüfe, ob es online ist, und versuche es erneut."
+    },
+    "device_token_rejected": {
+      "message": "Das Gerät {device} hat sein Token abgelehnt, und das Anfordern eines neuen bei Google hat nicht geholfen. Die Integration fordert weiterhin ein neues bei Google an, versuche es also später erneut."
+    },
+    "device_not_ready": {
+      "message": "Das Gerät {device} hat „nicht gefunden“ geantwortet. Möglicherweise startet es noch, versuche es also später erneut, oder es unterstützt dies vielleicht nicht."
+    },
+    "device_request_failed": {
+      "message": "Die Aktion konnte auf dem Gerät {device} nicht ausgeführt werden. Details findest du in den Protokollen von Home Assistant."
+    },
+    "devices_not_rebooted": {
+      "message": "Die folgenden Geräte haben nicht bestätigt, dass sie neu starten: {devices}. Prüfe, ob sie online sind, und versuche es später erneut."
     }
   },
   "options": {
     "step": {
       "init": {
         "data": {
-          "update_interval": "Aktualisierungsintervall ändern. Erhöhen Sie diesen Wert, wenn Sie unter Zeitüberschreitungen der Geräte leiden. Standard: 180 (Sekunden)"
+          "update_interval": "Aktualisierungsintervall ändern. Erhöhe diesen Wert, wenn bei deinen Geräten Zeitüberschreitungen auftreten. Standard: {default_interval} (Sekunden)",
+          "known_hosts": "Bekannte Hosts"
+        },
+        "data_description": {
+          "known_hosts": "IP-Adressen von Lautsprechern und Displays, die die Integration nicht selbst findet, etwa weil sie in einem anderen Netzwerk oder VLAN sind."
         }
       }
+    },
+    "error": {
+      "known-host-not-ip": "Gib nur IP-Adressen ein, etwa 192.168.1.20."
     }
   },
   "services": {
     "delete_alarm": {
-      "description": "Einen Alarm von einem Google Home Gerät löschen.",
+      "description": "Einen Wecker von einem Google Home-Gerät löschen.",
       "fields": {
         "alarm_id": {
-          "description": "ID eines Alarms (alarm/xxx).",
-          "name": "Alarm-ID"
+          "description": "ID eines Weckers (alarm/xxx).",
+          "name": "Wecker-ID"
         },
         "skip_refresh": {
-          "description": "Überspringen Sie die Aktualisierung von Google Home-Geräten nach dem Löschen eines Alarms.",
+          "description": "Aktualisierung der Google Home-Geräte nach dem Löschen eines Weckers überspringen.",
           "name": "Aktualisierung überspringen"
         },
         "entity_id": {
-          "description": "Stellt ein Google Home Gerät dar (sensor.xxxx_alarms).",
+          "description": "Entspricht einem Google Home-Gerät (sensor.xxxx_alarms).",
           "name": "Entität"
         }
       },
-      "name": "Alarm löschen"
+      "name": "Wecker löschen"
     },
     "delete_timer": {
-      "description": "Einen Timer von einem Google Home Gerät löschen.",
+      "description": "Einen Timer von einem Google Home-Gerät löschen.",
       "fields": {
         "timer_id": {
           "description": "ID eines Timers (timer/xxx).",
           "name": "Timer-ID"
         },
         "skip_refresh": {
-          "description": "Überspringen Sie die Aktualisierung von Google Home-Geräten, nachdem Sie einen Timer gelöscht haben.",
+          "description": "Aktualisierung der Google Home-Geräte nach dem Löschen eines Timers überspringen.",
           "name": "Aktualisierung überspringen"
         },
         "entity_id": {
-          "description": "Stellt ein Google Home Gerät dar (sensor.xxxx_alarms).",
+          "description": "Entspricht einem Google Home-Gerät (sensor.xxxx_timers).",
           "name": "Entität"
         }
       },
       "name": "Timer löschen"
     },
+    "delete_all_alarms": {
+      "description": "Alle Wecker von Google Home-Geräten löschen.",
+      "fields": {
+        "skip_refresh": {
+          "description": "Aktualisierung der Google Home-Geräte nach dem Löschen der Wecker überspringen.",
+          "name": "Aktualisierung überspringen"
+        }
+      },
+      "name": "Alle Wecker löschen"
+    },
+    "delete_all_timers": {
+      "description": "Alle Timer von Google Home-Geräten löschen.",
+      "fields": {
+        "skip_refresh": {
+          "description": "Aktualisierung der Google Home-Geräte nach dem Löschen der Timer überspringen.",
+          "name": "Aktualisierung überspringen"
+        }
+      },
+      "name": "Alle Timer löschen"
+    },
     "reboot_device": {
-      "description": "Ein Google Home Gerät neu starten.",
+      "description": "Ein Google Home-Gerät neu starten.",
       "name": "Gerät neu starten"
     },
     "refresh_devices": {
-      "description": "Aktualisieren Sie den Status aller Google Home-Geräte.",
+      "description": "Den Status aller Google Home-Geräte aktualisieren.",
       "name": "Geräte aktualisieren"
     }
   }

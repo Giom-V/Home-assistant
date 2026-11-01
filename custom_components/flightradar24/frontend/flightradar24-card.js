@@ -1,10 +1,96 @@
 /**
  * Flightradar24 Lovelace card.
- * OpenStreetMap viewport from sensor `bounds`, with aircraft
- * markers from the `flights` attribute (latitude / longitude).
+ * Map viewport from sensor `bounds`, with aircraft markers from
+ * the `flights` attribute (latitude / longitude).
  */
 const LEAFLET_CSS = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css";
 const LEAFLET_JS = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.js";
+
+/** Basemap presets — all free, no API key required. */
+const MAP_STYLES = {
+  osm: {
+    label: "OpenStreetMap",
+    url: "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+    attribution:
+      '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    maxZoom: 19,
+  },
+  satellite: {
+    label: "Satellite (Esri)",
+    url: "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+    attribution:
+      "Tiles © Esri — Source: Esri, Maxar, Earthstar Geographics, and the GIS User Community",
+    maxZoom: 19,
+  },
+  topo: {
+    label: "Topographic",
+    url: "https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png",
+    attribution:
+      'Map data: © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: © <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)',
+    maxZoom: 17,
+    subdomains: "abc",
+  },
+};
+const DEFAULT_MAP_STYLE = "osm";
+
+const DISPLAY_UNITS = {
+  altitude_unit: {
+    label: "Altitude units",
+    default: "both",
+    options: { both: "Meters and feet", m: "Meters", ft: "Feet" },
+  },
+  distance_unit: {
+    label: "Distance units",
+    default: "m",
+    options: { m: "Meters", km: "Kilometers", mi: "Miles", nmi: "Nautical miles" },
+  },
+  speed_unit: {
+    label: "Speed units",
+    default: "both",
+    options: { both: "km/h and knots", "km/h": "km/h", mph: "mph", kts: "Knots" },
+  },
+};
+const DEFAULT_DISPLAY_UNITS = Object.fromEntries(
+  Object.entries(DISPLAY_UNITS).map(([key, units]) => [key, units.default])
+);
+
+const DISPLAY_UNIT_ALIASES = {
+  altitude_unit: { meters: "m", metre: "m", metres: "m", feet: "ft", foot: "ft" },
+  distance_unit: {
+    meters: "m",
+    metre: "m",
+    metres: "m",
+    kilometers: "km",
+    kilometres: "km",
+    kilometer: "km",
+    kilometre: "km",
+    miles: "mi",
+    mile: "mi",
+    nm: "nmi",
+    nautical: "nmi",
+  },
+  speed_unit: {
+    kmh: "km/h",
+    kmph: "km/h",
+    kph: "km/h",
+    knots: "kts",
+    knot: "kts",
+    kt: "kts",
+  },
+};
+
+function resolveDisplayUnit(key, value) {
+  const raw = typeof value === "string" ? value.trim().toLowerCase() : "";
+  const unit = DISPLAY_UNIT_ALIASES[key]?.[raw] || raw;
+  return Object.keys(DISPLAY_UNITS[key].options).includes(unit)
+    ? unit
+    : DISPLAY_UNITS[key].default;
+}
+
+function resolveMapStyle(value) {
+  const key = typeof value === "string" ? value.trim().toLowerCase() : "";
+  return MAP_STYLES[key] ? key : DEFAULT_MAP_STYLE;
+}
 
 let leafletLoader = null;
 
@@ -59,9 +145,14 @@ class Flightradar24Card extends HTMLElement {
       "";
     return {
       entity,
+      show_header: true,
       show_flights: true,
       show_tracks: true,
       show_area_center: true,
+      show_area: true,
+      interactive_map: false,
+      map_style: DEFAULT_MAP_STYLE,
+      ...DEFAULT_DISPLAY_UNITS,
     };
   }
 
@@ -73,6 +164,8 @@ class Flightradar24Card extends HTMLElement {
     super();
     this._map = null;
     this._mapInitPromise = null;
+    this._resizeObserver = null;
+    this._tileLayer = null;
     this._markers = null;
     this._tracks = null;
     this._areaRect = null;
@@ -88,6 +181,8 @@ class Flightradar24Card extends HTMLElement {
     this._lastBoundsKey = null;
     this._lastViewportKey = null;
     this._lastFlightsKey = null;
+    this._flightRowById = new Map();
+    this._flightSnapshotById = new Map();
     this._lastEntity = null;
   }
 
@@ -97,11 +192,23 @@ class Flightradar24Card extends HTMLElement {
     }
     const prev = this._config;
     const next = {
+      show_header: true,
       show_flights: true,
       show_tracks: true,
       show_area_center: true,
+      show_area: true,
+      interactive_map: false,
+      map_style: DEFAULT_MAP_STYLE,
+      ...DEFAULT_DISPLAY_UNITS,
       ...config,
     };
+    next.map_style = resolveMapStyle(next.map_style);
+    for (const key of Object.keys(DISPLAY_UNITS)) {
+      next[key] = resolveDisplayUnit(key, next[key]);
+    }
+    const unitsChanged = prev && Object.keys(DISPLAY_UNITS).some(
+      (key) => prev[key] !== next[key]
+    );
     if (next.zoom != null && next.zoom !== "") {
       const zoom = Number(next.zoom);
       if (Number.isNaN(zoom)) {
@@ -127,6 +234,7 @@ class Flightradar24Card extends HTMLElement {
       this._lastBoundsKey = null;
       this._lastViewportKey = null;
       this._lastFlightsKey = null;
+      this._clearFlightRows();
       this._lastEntity = null;
       this._openPopupFlightId = null;
       this._selectedFlightId = null;
@@ -141,13 +249,25 @@ class Flightradar24Card extends HTMLElement {
       this._lastFlightsKey = null;
     }
     this._renderShell();
+    if (prev && prev.interactive_map !== next.interactive_map) {
+      this._configureMapInteraction();
+    }
     if (
       prev &&
-      (prev.show_area_center !== this._config.show_area_center ||
+      (prev.interactive_map !== this._config.interactive_map ||
+        prev.show_header !== this._config.show_header ||
+        prev.show_flights !== this._config.show_flights ||
+        prev.show_area_center !== this._config.show_area_center ||
+        prev.show_area !== this._config.show_area ||
         prev.show_tracks !== this._config.show_tracks ||
         prev.zoom !== this._config.zoom ||
-        prev.icon_size !== this._config.icon_size)
+        prev.icon_size !== this._config.icon_size ||
+        prev.map_style !== this._config.map_style ||
+        unitsChanged)
     ) {
+      if (prev.map_style !== this._config.map_style) {
+        this._syncTileLayer();
+      }
       this._update();
     }
   }
@@ -158,8 +278,9 @@ class Flightradar24Card extends HTMLElement {
   }
 
   getCardSize() {
+    const header = this._config?.show_header !== false ? 1 : 0;
     const flights = this._config?.show_flights !== false ? 2 : 0;
-    return 4 + flights;
+    return 3 + header + flights;
   }
 
   getGridOptions() {
@@ -183,6 +304,8 @@ class Flightradar24Card extends HTMLElement {
   }
 
   _destroyMap() {
+    this._resizeObserver?.disconnect();
+    this._resizeObserver = null;
     if (this._map) {
       try {
         this._map.remove();
@@ -192,6 +315,7 @@ class Flightradar24Card extends HTMLElement {
       this._map = null;
     }
     this._mapInitPromise = null;
+    this._tileLayer = null;
     const mapEl = this.shadowRoot?.getElementById("map");
     if (mapEl) {
       // Leaflet leaves _leaflet_id on the node; clear so re-init works.
@@ -215,6 +339,12 @@ class Flightradar24Card extends HTMLElement {
     this._lastBoundsKey = null;
     this._lastViewportKey = null;
     this._lastFlightsKey = null;
+    this._clearFlightRows();
+  }
+
+  _clearFlightRows() {
+    this._flightRowById = new Map();
+    this._flightSnapshotById = new Map();
   }
 
   _parseBounds(bounds) {
@@ -254,10 +384,20 @@ class Flightradar24Card extends HTMLElement {
   }
 
   /**
-   * Icon by flight phase: on ground, climbing, descending, or level.
+   * Backend sets aircraft_category via is_helicopter() (callsign / model / ICAO).
+   */
+  _isHelicopter(flight) {
+    return String(flight?.aircraft_category || "").toLowerCase() === "helicopter";
+  }
+
+  /**
+   * List icon: helicopters use mdi:helicopter; airplanes use flight phase.
    * on_ground: 0 in air, 1 on ground. vertical_speed in ft/min.
    */
   _flightIcon(flight) {
+    if (this._isHelicopter(flight)) {
+      return "mdi:helicopter";
+    }
     if (Number(flight.on_ground) === 1 || flight.on_ground === true) {
       return "mdi:airplane-check";
     }
@@ -284,59 +424,98 @@ class Flightradar24Card extends HTMLElement {
     return number.toFixed(digits);
   }
 
-  /** Ground speed: km/h with knots in parentheses. Source unit is knots. */
+  /** Ground speed. Source unit is knots. */
   _formatSpeed(knots) {
     if (knots == null || knots === "") {
       return null;
     }
     const kts = Number(knots);
-    if (Number.isNaN(kts)) {
+    if (!Number.isFinite(kts)) {
       return null;
     }
     const kmh = Math.round(kts * 1.852);
-    return `${kmh} km/h (${Math.round(kts)} kts)`;
+    switch (this._config?.speed_unit) {
+      case "km/h":
+        return `${kmh} km/h`;
+      case "mph":
+        return `${Math.round(kts * 1.852 / 1.609344)} mph`;
+      case "kts":
+        return `${Math.round(kts)} kts`;
+      default:
+        return `${kmh} km/h (${Math.round(kts)} kts)`;
+    }
   }
 
-  /** Altitude: meters with feet in parentheses. Source unit is feet. */
+  /** Altitude. Source unit is feet. */
   _formatAltitude(feet) {
     if (feet == null || feet === "") {
       return null;
     }
     const ft = Number(feet);
-    if (Number.isNaN(ft)) {
+    if (!Number.isFinite(ft)) {
       return null;
     }
     const meters = Math.round(ft * 0.3048);
-    return `${meters} m (${Math.round(ft)} ft)`;
+    switch (this._config?.altitude_unit) {
+      case "m":
+        return `${meters} m`;
+      case "ft":
+        return `${Math.round(ft)} ft`;
+      default:
+        return `${meters} m (${Math.round(ft)} ft)`;
+    }
   }
 
-  /** Distance: meters. Source unit is kilometers. */
+  /** Distance. Source unit is kilometers. */
   _formatDistance(kilometers) {
     if (kilometers == null || kilometers === "") {
       return null;
     }
     const km = Number(kilometers);
-    if (Number.isNaN(km)) {
+    if (!Number.isFinite(km)) {
       return null;
     }
-    return `${Math.round(km * 1000)} m`;
+    switch (this._config?.distance_unit) {
+      case "km":
+        return `${km.toFixed(2)} km`;
+      case "mi":
+        return `${(km / 1.609344).toFixed(2)} mi`;
+      case "nmi":
+        return `${(km / 1.852).toFixed(2)} nmi`;
+      default:
+        return `${Math.round(km * 1000)} m`;
+    }
   }
 
-  _flagHtml(countryCode, title) {
-    if (!countryCode || String(countryCode).length !== 2) {
-      return "";
-    }
-    const code = String(countryCode).toUpperCase();
-    const lower = code.toLowerCase();
-    const label = title || code;
-    // Served from the integration static path — avoids CSP / theme issues
-    // with third-party flag CDNs (blank white squares).
-    return (
-      `<img class="flag" src="/flightradar24/flags/${this._escape(lower)}.svg" ` +
-      `width="16" height="12" alt="${this._escape(code)}" ` +
-      `title="${this._escape(label)}" loading="lazy" ` +
-      `onerror="this.style.display='none'" />`
-    );
+  /** Display snapshot used to patch flight rows without rebuilding the list. */
+  _flightRowSnapshot(flight) {
+    const originCode = flight.airport_origin_country_code || "";
+    const destCode = flight.airport_destination_country_code || "";
+    return {
+      id: this._flightId(flight),
+      label: this._flightLabel(flight),
+      fr24Url: this._flightFr24Url(flight) || "",
+      icon: this._flightIcon(flight),
+      aircraft: flight.aircraft_model || flight.aircraft_code || "",
+      airline: flight.airline_short || flight.airline || "",
+      originCity: flight.airport_origin_city || "",
+      originCode: String(originCode).length === 2 ? String(originCode).toUpperCase() : "",
+      originName:
+        flight.airport_origin_country_name || flight.airport_origin_country_code || "",
+      destCity: flight.airport_destination_city || "",
+      destCode: String(destCode).length === 2 ? String(destCode).toUpperCase() : "",
+      destName:
+        flight.airport_destination_country_name ||
+        flight.airport_destination_country_code ||
+        "",
+      depTime: this._flightLegTime(flight, "departure") || "",
+      arrTime: this._flightLegTime(flight, "arrival") || "",
+      distance: this._formatDistance(flight.distance),
+      closest: this._formatDistance(flight.closest_distance),
+      speed: this._formatSpeed(flight.ground_speed),
+      altitude: this._formatAltitude(flight.altitude),
+      selected: this._selectedFlightId === this._flightId(flight),
+    };
   }
 
   _formatTimestamp(value) {
@@ -399,17 +578,6 @@ class Flightradar24Card extends HTMLElement {
     return null;
   }
 
-  _flightFr24Link(label, url, className = "flight-link") {
-    if (!url) {
-      return `<strong>${this._escape(label)}</strong>`;
-    }
-    return (
-      `<a class="${className}" href="${this._escape(url)}" target="_blank" ` +
-      `rel="noopener noreferrer" title="Open on Flightradar24" ` +
-      `onclick="event.stopPropagation();">${this._escape(label)}</a>`
-    );
-  }
-
   _flightFr24IconLink(url) {
     if (!url) {
       return "";
@@ -421,80 +589,329 @@ class Flightradar24Card extends HTMLElement {
     );
   }
 
-  _routeEndpoint(city, time, flagHtml) {
+  _routeEndpointText(city, time) {
     const parts = [];
     if (city) {
-      parts.push(this._escape(city));
+      parts.push(city);
     }
     if (time) {
-      parts.push(this._escape(time));
+      parts.push(time);
     }
-    if (!parts.length) {
-      return "";
-    }
-    return `${flagHtml}<span>${parts.join(" ")}</span>`;
+    return parts.join(" ");
   }
 
-  _flightRow(flight) {
-    const number = this._flightLabel(flight);
-    const fr24Url = this._flightFr24Url(flight);
-    const aircraft = flight.aircraft_model || flight.aircraft_code || "";
-    const airline = flight.airline_short || flight.airline || "";
-    const originCity = flight.airport_origin_city || "";
-    const destCity = flight.airport_destination_city || "";
-    const originFlag = this._flagHtml(
-      flight.airport_origin_country_code,
-      flight.airport_origin_country_name || flight.airport_origin_country_code
-    );
-    const destFlag = this._flagHtml(
-      flight.airport_destination_country_code,
-      flight.airport_destination_country_name ||
-        flight.airport_destination_country_code
-    );
-    const depTime = this._flightLegTime(flight, "departure");
-    const arrTime = this._flightLegTime(flight, "arrival");
-    const origin = this._routeEndpoint(originCity, depTime, originFlag);
-    const destination = this._routeEndpoint(destCity, arrTime, destFlag);
-    const routeParts = [origin, destination].filter(Boolean);
-    const route = routeParts.length
-      ? routeParts.join('<span class="route-sep">→</span>')
-      : "";
+  _ensureFlagImg(container, countryCode, title) {
+    if (!countryCode || String(countryCode).length !== 2) {
+      const existing = container.querySelector(":scope > img.flag");
+      if (existing) {
+        existing.remove();
+      }
+      return;
+    }
+    const code = String(countryCode).toUpperCase();
+    const lower = code.toLowerCase();
+    const label = title || code;
+    const src = `/flightradar24/flags/${lower}.svg`;
+    let img = container.querySelector(":scope > img.flag");
+    if (!img) {
+      img = document.createElement("img");
+      img.className = "flag";
+      img.width = 16;
+      img.height = 12;
+      img.decoding = "sync";
+      img.onerror = () => {
+        img.style.display = "none";
+      };
+      container.insertBefore(img, container.firstChild);
+    }
+    if (img.getAttribute("src") !== src) {
+      img.style.display = "";
+      img.src = src;
+    }
+    if (img.alt !== code) {
+      img.alt = code;
+    }
+    if (img.title !== label) {
+      img.title = label;
+    }
+  }
 
-    const distance = this._formatDistance(flight.distance);
-    const closest = this._formatDistance(flight.closest_distance);
-    const speed = this._formatSpeed(flight.ground_speed);
-    const altitude = this._formatAltitude(flight.altitude);
+  _setOptionalText(parent, className, value) {
+    let el = parent.querySelector(`:scope > .${className}`);
+    if (!value) {
+      if (el) {
+        el.remove();
+      }
+      return;
+    }
+    if (!el) {
+      el = document.createElement("span");
+      el.className = className;
+      if (className === "flight-type") {
+        const airline = parent.querySelector(":scope > .muted");
+        if (airline) {
+          parent.insertBefore(el, airline);
+        } else {
+          parent.appendChild(el);
+        }
+      } else {
+        parent.appendChild(el);
+      }
+    }
+    if (el.textContent !== value) {
+      el.textContent = value;
+    }
+  }
 
+  _setFlightLabel(mainEl, label, fr24Url) {
+    let link = mainEl.querySelector(":scope > a.flight-link");
+    let strong = mainEl.querySelector(":scope > strong");
+    if (fr24Url) {
+      if (strong) {
+        strong.remove();
+        strong = null;
+      }
+      if (!link) {
+        link = document.createElement("a");
+        link.className = "flight-link";
+        link.target = "_blank";
+        link.rel = "noopener noreferrer";
+        link.title = "Open on Flightradar24";
+        link.addEventListener("click", (event) => event.stopPropagation());
+        const icon = mainEl.querySelector("ha-icon");
+        if (icon && icon.nextSibling) {
+          mainEl.insertBefore(link, icon.nextSibling);
+        } else if (icon) {
+          mainEl.appendChild(link);
+        } else {
+          mainEl.insertBefore(link, mainEl.firstChild);
+        }
+      }
+      if (link.href !== fr24Url) {
+        link.href = fr24Url;
+      }
+      if (link.textContent !== label) {
+        link.textContent = label;
+      }
+      return;
+    }
+    if (link) {
+      link.remove();
+      link = null;
+    }
+    if (!strong) {
+      strong = document.createElement("strong");
+      const icon = mainEl.querySelector("ha-icon");
+      if (icon && icon.nextSibling) {
+        mainEl.insertBefore(strong, icon.nextSibling);
+      } else if (icon) {
+        mainEl.appendChild(strong);
+      } else {
+        mainEl.insertBefore(strong, mainEl.firstChild);
+      }
+    }
+    if (strong.textContent !== label) {
+      strong.textContent = label;
+    }
+  }
+
+  _setRouteEndpoint(routeEl, side, snap) {
+    const isOrigin = side === "origin";
+    const city = isOrigin ? snap.originCity : snap.destCity;
+    const time = isOrigin ? snap.depTime : snap.arrTime;
+    const code = isOrigin ? snap.originCode : snap.destCode;
+    const name = isOrigin ? snap.originName : snap.destName;
+    const text = this._routeEndpointText(city, time);
+    const selector = `:scope > [data-endpoint="${side}"]`;
+    let endpoint = routeEl.querySelector(selector);
+
+    if (!text) {
+      if (endpoint) {
+        endpoint.remove();
+      }
+      return;
+    }
+
+    if (!endpoint) {
+      endpoint = document.createElement("span");
+      endpoint.dataset.endpoint = side;
+      endpoint.className = "route-endpoint";
+      const sep = routeEl.querySelector(":scope > .route-sep");
+      if (isOrigin) {
+        routeEl.insertBefore(endpoint, routeEl.firstChild);
+      } else if (sep && sep.nextSibling) {
+        routeEl.insertBefore(endpoint, sep.nextSibling);
+      } else {
+        routeEl.appendChild(endpoint);
+      }
+    }
+
+    this._ensureFlagImg(endpoint, code, name);
+
+    let textEl = endpoint.querySelector(":scope > span.endpoint-text");
+    if (!textEl) {
+      textEl = document.createElement("span");
+      textEl.className = "endpoint-text";
+      endpoint.appendChild(textEl);
+    }
+    if (textEl.textContent !== text) {
+      textEl.textContent = text;
+    }
+  }
+
+  _syncRouteSep(routeEl) {
+    const origin = routeEl.querySelector(':scope > [data-endpoint="origin"]');
+    const dest = routeEl.querySelector(':scope > [data-endpoint="dest"]');
+    let sep = routeEl.querySelector(":scope > .route-sep");
+    if (origin && dest) {
+      if (!sep) {
+        sep = document.createElement("span");
+        sep.className = "route-sep";
+        sep.textContent = "→";
+      }
+      if (origin.nextSibling !== sep) {
+        routeEl.insertBefore(sep, origin.nextSibling);
+      }
+    } else if (sep) {
+      sep.remove();
+    }
+  }
+
+  _setMeta(row, snap) {
     const stats = [
-      distance != null ? `Dist ${distance}` : "",
-      closest != null ? `Closest ${closest}` : "",
-      speed || "",
-      altitude || "",
-    ]
-      .filter(Boolean)
-      .map((item) => `<span>${this._escape(item)}</span>`)
-      .join("");
-
-    const mainParts = [
-      this._flightFr24Link(number, fr24Url),
-      aircraft ? `<span class="flight-type">${this._escape(aircraft)}</span>` : "",
-      airline ? `<span class="muted">${this._escape(airline)}</span>` : "",
+      snap.distance != null ? `Dist ${snap.distance}` : "",
+      snap.closest != null ? `Closest ${snap.closest}` : "",
+      snap.speed || "",
+      snap.altitude || "",
     ].filter(Boolean);
 
-    return `
-      <div class="flight${this._selectedFlightId === this._flightId(flight) ? " selected" : ""}" data-flight-id="${this._escape(this._flightId(flight))}">
-        <div class="flight-main">
-          <ha-icon icon="${this._flightIcon(flight)}"></ha-icon>
-          ${mainParts.join("")}
-        </div>
-        ${
-          route
-            ? `<div class="flight-route">${route}</div>`
-            : ""
+    let meta = row.querySelector(":scope > .flight-meta");
+    if (!stats.length) {
+      if (meta) {
+        meta.remove();
+      }
+      return;
+    }
+    if (!meta) {
+      meta = document.createElement("div");
+      meta.className = "flight-meta";
+      row.appendChild(meta);
+    }
+
+    const existing = [...meta.children];
+    stats.forEach((text, index) => {
+      let span = existing[index];
+      if (!span) {
+        span = document.createElement("span");
+        meta.appendChild(span);
+      }
+      if (span.textContent !== text) {
+        span.textContent = text;
+      }
+    });
+    for (let i = stats.length; i < existing.length; i++) {
+      existing[i].remove();
+    }
+  }
+
+  _createFlightRow(snap) {
+    const row = document.createElement("div");
+    row.className = `flight${snap.selected ? " selected" : ""}`;
+    row.dataset.flightId = snap.id;
+
+    const main = document.createElement("div");
+    main.className = "flight-main";
+
+    const icon = document.createElement("ha-icon");
+    icon.setAttribute("icon", snap.icon);
+    main.appendChild(icon);
+
+    row.appendChild(main);
+
+    const route = document.createElement("div");
+    route.className = "flight-route";
+    row.appendChild(route);
+
+    this._patchFlightRow(row, snap, null);
+    return row;
+  }
+
+  _patchFlightRow(row, snap, prev) {
+    row.classList.toggle("selected", !!snap.selected);
+
+    const main = row.querySelector(":scope > .flight-main");
+    if (!main) {
+      return;
+    }
+
+    const icon = main.querySelector("ha-icon");
+    if (icon && (!prev || prev.icon !== snap.icon)) {
+      icon.setAttribute("icon", snap.icon);
+    }
+
+    if (
+      !prev ||
+      prev.label !== snap.label ||
+      prev.fr24Url !== snap.fr24Url
+    ) {
+      this._setFlightLabel(main, snap.label, snap.fr24Url);
+    }
+
+    if (!prev || prev.aircraft !== snap.aircraft) {
+      this._setOptionalText(main, "flight-type", snap.aircraft);
+    }
+    if (!prev || prev.airline !== snap.airline) {
+      this._setOptionalText(main, "muted", snap.airline);
+    }
+
+    const hasRoute =
+      !!(snap.originCity || snap.depTime || snap.destCity || snap.arrTime);
+    let route = row.querySelector(":scope > .flight-route");
+    if (!hasRoute) {
+      if (route) {
+        route.remove();
+      }
+    } else {
+      if (!route) {
+        route = document.createElement("div");
+        route.className = "flight-route";
+        const meta = row.querySelector(":scope > .flight-meta");
+        if (meta) {
+          row.insertBefore(route, meta);
+        } else {
+          row.appendChild(route);
         }
-        ${stats ? `<div class="flight-meta">${stats}</div>` : ""}
-      </div>
-    `;
+      }
+      if (
+        !prev ||
+        prev.originCity !== snap.originCity ||
+        prev.depTime !== snap.depTime ||
+        prev.originCode !== snap.originCode ||
+        prev.originName !== snap.originName
+      ) {
+        this._setRouteEndpoint(route, "origin", snap);
+      }
+      if (
+        !prev ||
+        prev.destCity !== snap.destCity ||
+        prev.arrTime !== snap.arrTime ||
+        prev.destCode !== snap.destCode ||
+        prev.destName !== snap.destName
+      ) {
+        this._setRouteEndpoint(route, "dest", snap);
+      }
+      this._syncRouteSep(route);
+    }
+
+    if (
+      !prev ||
+      prev.distance !== snap.distance ||
+      prev.closest !== snap.closest ||
+      prev.speed !== snap.speed ||
+      prev.altitude !== snap.altitude
+    ) {
+      this._setMeta(row, snap);
+    }
   }
 
   _bindFlightsList(flightsEl) {
@@ -518,11 +935,26 @@ class Flightradar24Card extends HTMLElement {
     });
   }
 
+  _syncFlightListSelection({ scrollToSelected = false } = {}) {
+    for (const [id, row] of this._flightRowById) {
+      row.classList.toggle("selected", id === this._selectedFlightId);
+      const snap = this._flightSnapshotById.get(id);
+      if (snap) {
+        snap.selected = id === this._selectedFlightId;
+      }
+    }
+    if (!scrollToSelected || !this._selectedFlightId) {
+      return;
+    }
+    const selectedRow = this._flightRowById.get(this._selectedFlightId);
+    if (selectedRow) {
+      selectedRow.scrollIntoView({ block: "nearest", behavior: "smooth" });
+    }
+  }
+
   async _selectFlight(flightId, { scrollList = false, openPopup = false } = {}) {
     this._selectedFlightId = flightId;
-    this._renderFlightsList(this._positionedFlights || [], {
-      scrollToSelected: scrollList,
-    });
+    this._syncFlightListSelection({ scrollToSelected: scrollList });
 
     if (!this._map) {
       return;
@@ -545,6 +977,11 @@ class Flightradar24Card extends HTMLElement {
     }
   }
 
+  /**
+   * Reconcile the flights list in place: patch changed fields, append new
+   * rows, remove rows that left the sensor. Never replaces the whole list
+   * via innerHTML — that destroyed flag <img> nodes and caused #306 flicker.
+   */
   _renderFlightsList(flights, { scrollToSelected = false } = {}) {
     const flightsEl = this.shadowRoot?.getElementById("flights");
     if (!flightsEl || this._config?.show_flights === false) {
@@ -552,17 +989,82 @@ class Flightradar24Card extends HTMLElement {
     }
     this._bindFlightsList(flightsEl);
     flightsEl.style.display = "flex";
-    flightsEl.innerHTML = flights.length
-      ? flights.map((flight) => this._flightRow(flight)).join("")
-      : `<div class="empty">No flights in area</div>`;
 
-    if (!scrollToSelected || !this._selectedFlightId) {
+    // Shell rebuild leaves detached nodes in the maps — drop them.
+    if (this._flightRowById.size) {
+      const sample = this._flightRowById.values().next().value;
+      if (sample && sample.parentElement !== flightsEl) {
+        this._clearFlightRows();
+      }
+    }
+
+    const list = Array.isArray(flights) ? flights : [];
+
+    if (!list.length) {
+      for (const row of this._flightRowById.values()) {
+        row.remove();
+      }
+      this._clearFlightRows();
+      if (!flightsEl.querySelector(":scope > .empty")) {
+        flightsEl.replaceChildren();
+        const empty = document.createElement("div");
+        empty.className = "empty";
+        empty.textContent = "No flights in area";
+        flightsEl.appendChild(empty);
+      }
       return;
     }
-    for (const row of flightsEl.querySelectorAll(".flight")) {
-      if (row.dataset.flightId === this._selectedFlightId) {
-        row.scrollIntoView({ block: "nearest", behavior: "smooth" });
-        break;
+
+    const emptyEl = flightsEl.querySelector(":scope > .empty");
+    if (emptyEl) {
+      emptyEl.remove();
+    }
+
+    const nextIds = new Set();
+    const orderedRows = [];
+
+    for (const flight of list) {
+      const snap = this._flightRowSnapshot(flight);
+      const id = snap.id;
+      nextIds.add(id);
+
+      let row = this._flightRowById.get(id);
+      const prev = this._flightSnapshotById.get(id);
+      if (!row) {
+        row = this._createFlightRow(snap);
+        this._flightRowById.set(id, row);
+      } else {
+        this._patchFlightRow(row, snap, prev);
+      }
+      this._flightSnapshotById.set(id, snap);
+      orderedRows.push(row);
+    }
+
+    for (const [id, row] of [...this._flightRowById.entries()]) {
+      if (!nextIds.has(id)) {
+        row.remove();
+        this._flightRowById.delete(id);
+        this._flightSnapshotById.delete(id);
+      }
+    }
+
+    // Keep DOM order aligned with the sensor without recreating nodes.
+    let previous = null;
+    for (const row of orderedRows) {
+      if (previous === null) {
+        if (flightsEl.firstChild !== row) {
+          flightsEl.insertBefore(row, flightsEl.firstChild);
+        }
+      } else if (previous.nextSibling !== row) {
+        flightsEl.insertBefore(row, previous.nextSibling);
+      }
+      previous = row;
+    }
+
+    if (scrollToSelected && this._selectedFlightId) {
+      const selectedRow = this._flightRowById.get(this._selectedFlightId);
+      if (selectedRow) {
+        selectedRow.scrollIntoView({ block: "nearest", behavior: "smooth" });
       }
     }
   }
@@ -594,6 +1096,27 @@ class Flightradar24Card extends HTMLElement {
         aspect-ratio: 16 / 10;
         background: var(--divider-color);
         z-index: 0;
+      }
+      .map-actions {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        z-index: 1000;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        max-width: calc(100% - 64px);
+      }
+      .map-actions[hidden], .map-actions button[hidden] { display: none; }
+      .map-actions button {
+        min-height: 44px;
+        padding: 8px 12px;
+        border: 1px solid var(--divider-color);
+        border-radius: 4px;
+        background: var(--card-background-color, white);
+        color: var(--primary-text-color, black);
+        cursor: pointer;
+        font: inherit;
       }
       #map {
         width: 100%;
@@ -673,6 +1196,11 @@ class Flightradar24Card extends HTMLElement {
         color: var(--secondary-text-color);
         font-size: 0.85rem;
       }
+      .flight-route .route-endpoint {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
       .flight-route .flag {
         width: 16px;
         height: 12px;
@@ -725,6 +1253,16 @@ class Flightradar24Card extends HTMLElement {
         height: 22px;
         fill: currentColor;
       }
+      .leaflet-popup-content-wrapper,
+      .leaflet-popup-tip {
+        /* Leaflet's bubble is white; HA dark/glass themes still inject light
+           --*-text-color into the popup, so aircraft details vanished on
+           themes like Frosted glass dark lite (#310). Keep an opaque light
+           surface with dark type — same approach as the OSM attribution. */
+        background: #fff;
+        color: #212121;
+        box-shadow: 0 3px 14px rgba(0, 0, 0, 0.35);
+      }
       .leaflet-popup-content-wrapper {
         width: 200px;
         min-width: 200px;
@@ -744,6 +1282,7 @@ class Flightradar24Card extends HTMLElement {
         box-sizing: border-box;
         overflow: hidden;
         text-align: left;
+        color: #212121;
       }
       .leaflet-popup-content .popup-photo,
       .popup-photo {
@@ -758,7 +1297,7 @@ class Flightradar24Card extends HTMLElement {
         box-sizing: border-box;
       }
       .fr-popup {
-        color: var(--primary-text-color, #212121);
+        color: #212121;
         width: 100%;
         max-width: 100%;
         overflow: hidden;
@@ -776,6 +1315,7 @@ class Flightradar24Card extends HTMLElement {
         font-weight: 600;
         font-size: 0.85rem;
         line-height: 1.2;
+        color: #212121;
       }
       .popup-fr24-link {
         display: inline-flex;
@@ -784,7 +1324,7 @@ class Flightradar24Card extends HTMLElement {
         width: 18px;
         height: 18px;
         flex-shrink: 0;
-        color: var(--primary-color, #03a9f4);
+        color: var(--primary-color, #0277bd);
         text-decoration: none;
         font-size: 0.85rem;
         line-height: 1;
@@ -800,7 +1340,7 @@ class Flightradar24Card extends HTMLElement {
       .popup-meta,
       .popup-route,
       .popup-stats {
-        color: var(--secondary-text-color, #666);
+        color: #5c5c5c;
         font-size: 0.75rem;
       }
       .popup-stats span + span::before {
@@ -831,11 +1371,53 @@ class Flightradar24Card extends HTMLElement {
         </div>
         <div class="map-wrap">
           <div id="map"></div>
+          <div class="map-actions" id="map-actions" hidden>
+            <button id="close-details" type="button" hidden>Close details</button>
+            <button id="reset-view" type="button">Reset view</button>
+          </div>
         </div>
         <div class="warning" id="warning" style="display:none;"></div>
         <div class="flights" id="flights"></div>
       </ha-card>
     `;
+    this.shadowRoot.getElementById("close-details").addEventListener("click", () => {
+      this._map?.closePopup();
+    });
+    this.shadowRoot.getElementById("reset-view").addEventListener("click", () => {
+      this._resetMapView();
+    });
+    this._syncMapControls();
+  }
+
+  _syncMapControls() {
+    const actions = this.shadowRoot?.getElementById("map-actions");
+    const close = this.shadowRoot?.getElementById("close-details");
+    if (actions) actions.hidden = this._config?.interactive_map !== true;
+    if (close) close.hidden = !this._openPopupFlightId;
+  }
+
+  _configureMapInteraction() {
+    const map = this._map;
+    const interactive = this._config?.interactive_map === true;
+    if (map) {
+      for (const handler of [map.dragging, map.touchZoom]) {
+        if (interactive) handler.enable();
+        else handler.disable();
+      }
+      map.setMaxBounds(interactive ? null : this._areaMaxBounds);
+      if (!interactive) this._lockMapToArea(map);
+    }
+    this._syncMapControls();
+  }
+
+  _resetMapView() {
+    const map = this._map;
+    if (!map || !this._areaBounds) return;
+    map.closePopup();
+    map.invalidateSize();
+    const zoom = this._configuredZoom();
+    if (zoom != null) map.setView(this._areaBounds.getCenter(), zoom);
+    else map.fitBounds(this._areaBounds, { padding: [0, 0] });
   }
 
   async _ensureMap() {
@@ -877,42 +1459,84 @@ class Flightradar24Card extends HTMLElement {
     this._map = L.map(mapEl, {
       zoomControl: true,
       attributionControl: false,
-      dragging: false,
+      dragging: this._config?.interactive_map === true,
       scrollWheelZoom: true,
       doubleClickZoom: false,
       boxZoom: false,
       keyboard: false,
-      touchZoom: false,
+      touchZoom: this._config?.interactive_map === true,
     });
+    this._syncMapControls();
     L.control
       .attribution({
         prefix: false,
         position: "bottomright",
       })
       .addTo(this._map);
-    // OSM tile usage: https://wiki.openstreetmap.org/wiki/Referer
-    // HA often sets Referrer-Policy: no-referrer/same-origin, which OSM rejects.
-    // Leaflet < May 2026 needs an explicit tile referrerPolicy.
-    L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      maxZoom: 19,
-      attribution:
-        '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-      referrerPolicy: "strict-origin-when-cross-origin",
-    }).addTo(this._map);
+    this._syncTileLayer();
     this._markers = L.layerGroup().addTo(this._map);
     this._tracks = L.layerGroup().addTo(this._map);
     this._markerById = new Map();
+    // Observe #map (fills .map-wrap): section layout and aspect-ratio changes
+    // resize the map node itself, so wrap-level observation is unnecessary.
+    this._resizeObserver?.disconnect();
+    this._resizeObserver = new ResizeObserver(() => {
+      this._map?.invalidateSize({ debounceMoveend: true });
+    });
+    this._resizeObserver.observe(mapEl);
     // Leaflet needs a tick after being inserted into shadow DOM.
     requestAnimationFrame(() => this._map?.invalidateSize());
     return this._map;
   }
 
-  _planeIcon(L, heading) {
-    const rotation =
+  _syncTileLayer() {
+    if (!this._map || !window.L) {
+      return;
+    }
+    const L = window.L;
+    const styleKey = resolveMapStyle(this._config?.map_style);
+    const style = MAP_STYLES[styleKey];
+    if (this._tileLayer) {
+      try {
+        this._map.removeLayer(this._tileLayer);
+      } catch (_error) {
+        // ignore — layer may already be detached
+      }
+      this._tileLayer = null;
+    }
+    // OSM tile usage: https://wiki.openstreetmap.org/wiki/Referer
+    // HA often sets Referrer-Policy: no-referrer/same-origin, which OSM rejects.
+    // Leaflet < May 2026 needs an explicit tile referrerPolicy.
+    const options = {
+      maxZoom: style.maxZoom,
+      attribution: style.attribution,
+      referrerPolicy: "strict-origin-when-cross-origin",
+    };
+    if (style.subdomains) {
+      options.subdomains = style.subdomains;
+    }
+    this._tileLayer = L.tileLayer(style.url, options).addTo(this._map);
+  }
+
+  /**
+   * Map marker SVG. Airplane art points up (north); MDI helicopter points
+   * right (east), so helicopters get a -90° bias to match heading.
+   */
+  _planeIcon(L, flight) {
+    const heading = flight?.heading;
+    const helicopter = this._isHelicopter(flight);
+    let rotation =
       heading == null || Number.isNaN(Number(heading)) ? 0 : Number(heading);
+    if (helicopter) {
+      rotation -= 90;
+    }
     const size = this._configuredIconSize();
     const svgSize = Math.max(8, size - 2);
     const anchor = size / 2;
+    // Airplane: Material airplane. Helicopter: mdi-helicopter path.
+    const path = helicopter
+      ? "M3,3H17V5H3V3M23,6V10.5L14.75,12.2C14.91,12.6 15,13.04 15,13.5C15,14.9 14.18,16.1 13,16.66V17L13,19H16V21H4A3,3 0 0,1 1,18V17H3V18A1,1 0 0,0 4,19H5V16.74C3.25,16.13 2,14.46 2,12.5C2,10 4,8 6.5,8H9V6H11V8H21V6H23M11,19V17H7V19H11M7.5,10C6.12,10 5,10.9 5,12C5,13.1 6.12,14 7.5,14C8.88,14 10,13.1 10,12C10,10.9 8.88,10 7.5,10Z"
+      : "M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z";
     return L.divIcon({
       className: "ac-icon",
       iconSize: [size, size],
@@ -920,11 +1544,16 @@ class Flightradar24Card extends HTMLElement {
       html: `
         <div class="ac-marker" style="width:${size}px;height:${size}px;transform: rotate(${rotation}deg)">
           <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="width:${svgSize}px;height:${svgSize}px">
-            <path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/>
+            <path d="${path}"/>
           </svg>
         </div>
       `,
     });
+  }
+
+  _markerIconKey(flight) {
+    const heli = this._isHelicopter(flight) ? "1" : "0";
+    return `${heli}:${String(flight?.heading ?? "")}`;
   }
 
   _removeAreaCenterMarker(map = this._map) {
@@ -933,6 +1562,13 @@ class Flightradar24Card extends HTMLElement {
     }
     this._areaCenterMarker = null;
     this._areaCenterMarkerPos = null;
+  }
+
+  _removeAreaRect(map = this._map) {
+    if (this._areaRect && map) {
+      map.removeLayer(this._areaRect);
+    }
+    this._areaRect = null;
   }
 
   _areaCenterIcon(L) {
@@ -979,6 +1615,26 @@ class Flightradar24Card extends HTMLElement {
       zIndexOffset: 1000,
     }).addTo(map);
     this._areaCenterMarkerPos = posKey;
+  }
+
+  /**
+   * Optional blue outline/tint for the monitored area. Geographic bounds and
+   * the viewport still update when this overlay is hidden.
+   */
+  _syncAreaOverlay(L, map, areaBounds, boundsKey) {
+    if (this._config.show_area === false) {
+      this._removeAreaRect(map);
+      return;
+    }
+    if (this._areaRect && boundsKey === this._lastBoundsKey) {
+      return;
+    }
+    this._removeAreaRect(map);
+    this._areaRect = L.rectangle(areaBounds, {
+      color: "#03a9f4",
+      weight: 2,
+      fillOpacity: 0.06,
+    }).addTo(map);
   }
 
   _flightId(flight) {
@@ -1150,7 +1806,9 @@ class Flightradar24Card extends HTMLElement {
   }
 
   _lockMapToArea(map, { animate = false } = {}) {
-    if (!map) {
+    this._syncMapControls();
+    // Interactive navigation survives popup close and flight updates.
+    if (!map || this._config?.interactive_map === true) {
       return;
     }
     this._maxBoundsSuspended = false;
@@ -1171,6 +1829,10 @@ class Flightradar24Card extends HTMLElement {
 
   _keepPopupInView(map, marker, popup) {
     if (!map || !popup || !marker) {
+      return;
+    }
+    // Interactive mode keeps the user's camera; Close details / Reset view recover.
+    if (this._config?.interactive_map === true) {
       return;
     }
     const adjust = () => {
@@ -1249,6 +1911,8 @@ class Flightradar24Card extends HTMLElement {
     this._syncAreaCenterMarker(L, map, parsed);
 
     const boundsKey = `${parsed.south},${parsed.west},${parsed.north},${parsed.east}`;
+    this._syncAreaOverlay(L, map, areaBounds, boundsKey);
+
     const configuredZoom = this._configuredZoom();
     const viewportKey = `${boundsKey}|zoom:${configuredZoom ?? "auto"}`;
     if (viewportKey !== this._lastViewportKey) {
@@ -1266,18 +1930,9 @@ class Flightradar24Card extends HTMLElement {
           mapWrap.style.aspectRatio = `${widthFactor} / ${latSpan}`;
         }
 
-        if (this._areaRect) {
-          map.removeLayer(this._areaRect);
-        }
-        this._areaRect = L.rectangle(areaBounds, {
-          color: "#03a9f4",
-          weight: 2,
-          fillOpacity: 0.06,
-        }).addTo(map);
-
         this._areaBounds = areaBounds;
         this._areaMaxBounds = areaBounds.pad(0.02);
-        if (!this._openPopupFlightId) {
+        if (!this._openPopupFlightId && this._config?.interactive_map !== true) {
           map.setMaxBounds(this._areaMaxBounds);
           map.options.maxBoundsViscosity = 1.0;
         }
@@ -1307,12 +1962,14 @@ class Flightradar24Card extends HTMLElement {
     const flightsKey = [
       this._config.show_tracks !== false ? "tracks:1" : "tracks:0",
       `icon:${this._configuredIconSize()}`,
+      `units:${this._config.altitude_unit}|${this._config.distance_unit}|${this._config.speed_unit}`,
       `selected:${this._selectedFlightId || ""}`,
       ...positioned.map((flight) => {
         const trackLen = Array.isArray(flight.coordinates)
           ? flight.coordinates.length
           : 0;
-        return `${this._flightId(flight)}:${flight.latitude}:${flight.longitude}:${flight.heading ?? ""}:${trackLen}`;
+        const heli = this._isHelicopter(flight) ? "1" : "0";
+        return `${this._flightId(flight)}:${flight.latitude}:${flight.longitude}:${flight.heading ?? ""}:${trackLen}:heli:${heli}`;
       }),
     ].join("|");
     if (flightsKey === this._lastFlightsKey) {
@@ -1361,7 +2018,7 @@ class Flightradar24Card extends HTMLElement {
 
       if (!marker) {
         marker = L.marker(latLng, {
-          icon: this._planeIcon(L, flight.heading),
+          icon: this._planeIcon(L, flight),
           title: this._flightLabel(flight),
         });
         marker.bindPopup(popupHtml, {
@@ -1373,8 +2030,11 @@ class Flightradar24Card extends HTMLElement {
         });
         marker.on("popupopen", (event) => {
           this._openPopupFlightId = flightId;
+          this._syncMapControls();
           this._selectedFlightId = flightId;
-          this._renderFlightsList(this._positionedFlights || []);
+          this._syncFlightListSelection({
+            scrollToSelected: this._config?.interactive_map !== true,
+          });
           // Unlock immediately so Leaflet auto-pan is not clamped.
           this._unlockMapForPopup(map);
           this._keepPopupInView(map, marker, event.popup);
@@ -1390,18 +2050,20 @@ class Flightradar24Card extends HTMLElement {
         });
         marker.on("click", (event) => {
           L.DomEvent.stopPropagation(event);
-          this._selectFlight(flightId, { scrollList: true });
+          this._selectFlight(flightId, {
+            scrollList: this._config?.interactive_map !== true,
+          });
         });
-        marker._frHeading = String(flight.heading ?? "");
+        marker._frIconKey = this._markerIconKey(flight);
         marker._frPopupHtml = popupHtml;
         this._markers.addLayer(marker);
         this._markerById.set(flightId, marker);
       } else {
         marker.setLatLng(latLng);
-        const headingKey = String(flight.heading ?? "");
-        if (marker._frHeading !== headingKey) {
-          marker._frHeading = headingKey;
-          marker.setIcon(this._planeIcon(L, flight.heading));
+        const iconKey = this._markerIconKey(flight);
+        if (marker._frIconKey !== iconKey) {
+          marker._frIconKey = iconKey;
+          marker.setIcon(this._planeIcon(L, flight));
         }
         // Update content without tearing down an open popup.
         if (marker._frPopupHtml !== popupHtml) {
@@ -1424,11 +2086,17 @@ class Flightradar24Card extends HTMLElement {
       return;
     }
 
+    const headerEl = this.shadowRoot.querySelector(".header");
     const titleEl = this.shadowRoot.getElementById("title");
     const countEl = this.shadowRoot.getElementById("count");
     const warningEl = this.shadowRoot.getElementById("warning");
     const flightsEl = this.shadowRoot.getElementById("flights");
     const mapWrap = this.shadowRoot.querySelector(".map-wrap");
+
+    if (headerEl) {
+      headerEl.style.display =
+        this._config.show_header === false ? "none" : "flex";
+    }
 
     const state = this._hass.states[this._config.entity];
     if (this._lastEntity !== this._config.entity) {
@@ -1436,6 +2104,7 @@ class Flightradar24Card extends HTMLElement {
       this._lastBoundsKey = null;
       this._lastViewportKey = null;
       this._lastFlightsKey = null;
+      this._clearFlightRows();
       this._openPopupFlightId = null;
       this._selectedFlightId = null;
       this._markerById = new Map();
@@ -1493,7 +2162,8 @@ class Flightradar24Card extends HTMLElement {
     if (flightsEl) {
       if (this._config.show_flights === false) {
         flightsEl.style.display = "none";
-        flightsEl.innerHTML = "";
+        flightsEl.replaceChildren();
+        this._clearFlightRows();
       } else {
         this._renderFlightsList(flights);
       }
@@ -1550,6 +2220,15 @@ class Flightradar24CardEditor extends HTMLElement {
           background: var(--card-background-color);
           color: var(--primary-text-color);
         }
+        select {
+          width: 100%;
+          box-sizing: border-box;
+          padding: 8px;
+          border-radius: 4px;
+          border: 1px solid var(--divider-color);
+          background: var(--card-background-color);
+          color: var(--primary-text-color);
+        }
         .check { display: flex; align-items: center; gap: 8px; margin-top: 8px; }
         .check input { width: auto; }
         ha-entity-picker { display: block; width: 100%; }
@@ -1563,6 +2242,10 @@ class Flightradar24CardEditor extends HTMLElement {
         <input type="text" id="title" value="${this._escape(this._config.title || "")}" />
       </div>
       <div class="row check">
+        <input type="checkbox" id="show_header" ${this._config.show_header !== false ? "checked" : ""} />
+        <span>Show header</span>
+      </div>
+      <div class="row check">
         <input type="checkbox" id="show_flights" ${this._config.show_flights !== false ? "checked" : ""} />
         <span>Show flights list</span>
       </div>
@@ -1571,8 +2254,28 @@ class Flightradar24CardEditor extends HTMLElement {
         <span>Show flight tracks</span>
       </div>
       <div class="row check">
+        <input type="checkbox" id="show_area" ${this._config.show_area !== false ? "checked" : ""} />
+        <span>Show monitored area outline</span>
+      </div>
+      <div class="row check">
         <input type="checkbox" id="show_area_center" ${this._config.show_area_center !== false ? "checked" : ""} />
         <span>Show area centre marker</span>
+      </div>
+      <div class="row check">
+        <input type="checkbox" id="interactive_map" ${this._config.interactive_map === true ? "checked" : ""} />
+        <span>Enable map dragging and pinch zoom</span>
+      </div>
+      <div class="row">
+        <label>Map style</label>
+        <select id="map_style">
+          ${Object.entries(MAP_STYLES)
+            .map(([key, style]) => {
+              const selected =
+                resolveMapStyle(this._config.map_style) === key ? "selected" : "";
+              return `<option value="${key}" ${selected}>${style.label}</option>`;
+            })
+            .join("")}
+        </select>
       </div>
       <div class="row">
         <label>Zoom (optional, 1–19)</label>
@@ -1598,6 +2301,21 @@ class Flightradar24CardEditor extends HTMLElement {
           value="${this._config.icon_size != null ? this._escape(String(this._config.icon_size)) : ""}"
         />
       </div>
+      ${Object.entries(DISPLAY_UNITS)
+        .map(([key, units]) => `
+          <div class="row">
+            <label for="${key}">${units.label}</label>
+            <select id="${key}">
+              ${Object.entries(units.options)
+                .map(([unit, label]) => {
+                  const selected = resolveDisplayUnit(key, this._config[key]) === unit ? "selected" : "";
+                  return `<option value="${unit}" ${selected}>${label}</option>`;
+                })
+                .join("")}
+            </select>
+          </div>
+        `)
+        .join("")}
     `;
 
     const mount = this.shadowRoot.getElementById("entity-picker");
@@ -1627,6 +2345,13 @@ class Flightradar24CardEditor extends HTMLElement {
       this._fireConfigChanged(newConfig);
     });
 
+    this.shadowRoot.getElementById("show_header").addEventListener("change", (event) => {
+      this._fireConfigChanged({
+        ...this._config,
+        show_header: event.target.checked,
+      });
+    });
+
     this.shadowRoot.getElementById("show_flights").addEventListener("change", (event) => {
       this._fireConfigChanged({
         ...this._config,
@@ -1641,12 +2366,36 @@ class Flightradar24CardEditor extends HTMLElement {
       });
     });
 
+    this.shadowRoot.getElementById("show_area").addEventListener("change", (event) => {
+      this._fireConfigChanged({ ...this._config, show_area: event.target.checked });
+    });
+
     this.shadowRoot.getElementById("show_area_center").addEventListener("change", (event) => {
       this._fireConfigChanged({
         ...this._config,
         show_area_center: event.target.checked,
       });
     });
+
+    this.shadowRoot.getElementById("interactive_map").addEventListener("change", (event) => {
+      this._fireConfigChanged({ ...this._config, interactive_map: event.target.checked });
+    });
+
+    this.shadowRoot.getElementById("map_style").addEventListener("change", (event) => {
+      this._fireConfigChanged({
+        ...this._config,
+        map_style: resolveMapStyle(event.target.value),
+      });
+    });
+
+    for (const key of Object.keys(DISPLAY_UNITS)) {
+      this.shadowRoot.getElementById(key).addEventListener("change", (event) => {
+        this._fireConfigChanged({
+          ...this._config,
+          [key]: resolveDisplayUnit(key, event.target.value),
+        });
+      });
+    }
 
     this.shadowRoot.getElementById("zoom").addEventListener("change", (event) => {
       const newConfig = { ...this._config };
@@ -1692,7 +2441,7 @@ window.customCards.push({
   type: "flightradar24-card",
   name: "Flightradar24 Card",
   description:
-    "OpenStreetMap of the monitored area with aircraft markers, optional flight tracks, and an optional area centre marker",
+    "Map of the monitored area with aircraft markers, optional flight tracks, and an optional area centre marker",
   preview: true,
   documentationURL:
     "https://github.com/AlexandrErohin/home-assistant-flightradar24",

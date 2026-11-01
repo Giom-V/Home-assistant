@@ -2,30 +2,139 @@
   "config": {
     "step": {
       "user": {
-        "title": "Autenticazione Google Home",
-        "description": "Se hai bisogno di aiuto con la configurazione dai un'occhiata qui: https://github.com/leikoilja/ha-google-home. Usa l'utente e la password per le app del tuo account Google. È più sicuro/più facile generare una password per le app e usarla al posto della password effettiva. Ha ancora gli stessi privilegi di accesso della password normale, ma è comunque più sicura rispetto all'utilizzo della password reale durante lo scripting. (https://myaccount.google.com/apppasswords). In caso contrario, la normale password dell'account Google dovrebbe funzionare.",
+        "title": "Accedi a Google",
+        "description": "Questa integrazione funziona con i tuoi altoparlanti e display Google, come Nest Mini, Nest Audio e Nest Hub. Non aggiunge gli altri dispositivi della tua app Google Home.\n\nScegli come accedere a un account Google che fa parte della tua casa. Per assistenza, consulta {docs_url}.",
+        "menu_options": {
+          "browser": "Accesso dal browser (consigliato)",
+          "master_token": "Token master"
+        },
+        "menu_option_descriptions": {
+          "browser": "Accedi a Google in un browser desktop, poi incolla un cookie. Funziona con la maggior parte degli account.",
+          "master_token": "Incolla un token master che hai già."
+        }
+      },
+      "browser": {
+        "title": "Accesso dal browser",
+        "description": "1. Su un computer, apri {embedded_setup_url} in una finestra di navigazione privata e accedi. Dopo aver accettato, la pagina potrebbe continuare a caricare; è normale.\n2. Apri gli strumenti per sviluppatori del browser e trova i cookie di `accounts.google.com`.\n3. Copia il valore del cookie `oauth_token` e incollalo subito qui sotto. Scade dopo pochi minuti e funziona una sola volta.\n\nIstruzioni passo passo: {browser_docs_url}\n\nPer scegliere un altro modo di accedere, chiudi questa finestra e aggiungi di nuovo l'integrazione.",
         "data": {
-          "username": "Google account username",
-          "password": "Google account password per le app"
+          "oauth_token": "Cookie oauth_token"
+        },
+        "data_description": {
+          "oauth_token": "Inizia con oauth2_4/"
+        }
+      },
+      "master_token": {
+        "title": "Token master",
+        "description": "Incolla un token master ottenuto in precedenza, ad esempio con un altro strumento.\n\nPer scegliere un altro modo di accedere, chiudi questa finestra e aggiungi di nuovo l'integrazione.",
+        "data": {
+          "master_token": "Token master dell'account Google"
+        },
+        "data_description": {
+          "master_token": "Inizia con aas_et/"
+        }
+      },
+      "reauth": {
+        "title": "Accedi di nuovo",
+        "description": "Google non accetta più le credenziali di accesso salvate per {name}. Accedi di nuovo allo stesso account Google: i tuoi dispositivi, le entità e le automazioni restano invariati. Finché non lo fai, le entità dei tuoi dispositivi potrebbero mostrare valori non aggiornati o non essere disponibili.",
+        "menu_options": {
+          "browser": "Accesso dal browser (consigliato)",
+          "master_token": "Token master"
+        },
+        "menu_option_descriptions": {
+          "browser": "Accedi a Google in un browser desktop, poi incolla un cookie. Funziona con la maggior parte degli account.",
+          "master_token": "Incolla un token master che hai già."
+        }
+      },
+      "reauth_browser": {
+        "title": "Accesso dal browser",
+        "description": "1. Su un computer, apri {embedded_setup_url} in una finestra di navigazione privata e accedi allo stesso account Google. Dopo aver accettato, la pagina potrebbe continuare a caricare; è normale.\n2. Apri gli strumenti per sviluppatori del browser e trova i cookie di `accounts.google.com`.\n3. Copia il valore del cookie `oauth_token` e incollalo subito qui sotto. Scade dopo pochi minuti e funziona una sola volta.\n\nIstruzioni passo passo: {browser_docs_url}",
+        "data": {
+          "oauth_token": "Cookie oauth_token"
+        },
+        "data_description": {
+          "oauth_token": "Inizia con oauth2_4/"
+        }
+      },
+      "reauth_master_token": {
+        "title": "Token master",
+        "description": "Incolla un token master dello stesso account Google, ad esempio uno ottenuto con un altro strumento.",
+        "data": {
+          "master_token": "Token master dell'account Google"
+        },
+        "data_description": {
+          "master_token": "Inizia con aas_et/"
         }
       }
     },
     "error": {
-      "auth": "Username o password errati. Se il tuo account Google ha la 2FA abilitata genera una passoword per le app (https://myaccount.google.com/apppasswords). Se l'autenticazione continua a fallire, fai riferimento a https://github.com/leikoilja/ha-google-home#troubleshooting",
-      "missing-inputs": "Inserire nome utente e password o il Master Token",
-      "master-token-invalid": "Token master non valido. Assicurarsi che sia stato specificato il token completo (compreso 'aas_et/')"
+      "oauth-token-invalid": "Google non ha accettato il cookie. Ottienine uno nuovo e incollalo subito: scade dopo pochi minuti e funziona una sola volta. Copia il valore completo, che inizia con oauth2_4/.",
+      "master-token-invalid": "Google non ha accettato il token master. Verifica di averlo copiato correttamente. Se prima funzionava, ad esempio finché non hai cambiato la password di Google, Google non lo accetta più: usa invece l'accesso dal browser.",
+      "google-rejected": "Google non ha accettato l'accesso. Per i dettagli, consulta i registri di Home Assistant.",
+      "google-unreachable": "Impossibile raggiungere Google. Verifica che Home Assistant sia connesso a Internet, poi riprova.",
+      "google-busy": "Google è occupato o sta limitando gli accessi. Attendi qualche minuto, poi accedi di nuovo.",
+      "oauth-token-format": "Questo non è il cookie oauth_token. Il suo valore inizia con oauth2_4/.",
+      "master-token-format": "Un token master inizia con aas_et/ ed è lungo 223 caratteri. Copia il token completo.",
+      "other-account": "Hai effettuato l'accesso con un altro account Google, quindi non è stato modificato nulla. Accedi con l'account usato da questa integrazione. Per usare invece quell'altro account, elimina l'integrazione e aggiungila di nuovo."
+    }
+  },
+  "exceptions": {
+    "alarms_and_timers_not_fetched": {
+      "message": "Impossibile recuperare le sveglie e i timer attualmente impostati su {device}, quindi non è stato eliminato nulla da questo dispositivo. Verifica che sia online e riprova più tardi."
     },
-    "abort": {
-      "single_instance_allowed": "È consentita una sola istanza."
+    "alarms_and_timers_not_fetched_from_devices": {
+      "message": "Impossibile recuperare le sveglie e i timer attualmente impostati sui seguenti dispositivi: {devices}. Non è stato quindi eliminato nulla da questi dispositivi. Verifica che siano online e riprova più tardi."
+    },
+    "alarms_and_timers_not_deleted": {
+      "message": "{device} non ha confermato l'eliminazione delle sveglie o dei timer, quindi potrebbero essere ancora impostati. Verifica che sia online e riprova più tardi."
+    },
+    "alarms_and_timers_not_deleted_from_devices": {
+      "message": "Impossibile eliminare le sveglie o i timer dai seguenti dispositivi, o confermarne l'eliminazione: {devices}. Verifica che siano online e riprova più tardi."
+    },
+    "invalid_alarm_id": {
+      "message": "«{alarm_id}» non è un ID di sveglia. Copia l'ID, che inizia con alarm/, dall'attributo alarms del sensore delle sveglie del dispositivo."
+    },
+    "invalid_timer_id": {
+      "message": "«{timer_id}» non è un ID di timer. Copia l'ID, che inizia con timer/, dall'attributo timers del sensore dei timer del dispositivo."
+    },
+    "alarm_not_found": {
+      "message": "Impossibile trovare la sveglia {alarm_id} sui dispositivi selezionati. Potrebbe essere già suonata o essere stata eliminata."
+    },
+    "timer_not_found": {
+      "message": "Impossibile trovare il timer {timer_id} sui dispositivi selezionati. Potrebbe essere già scaduto o essere stato eliminato."
+    },
+    "device_offline": {
+      "message": "Impossibile raggiungere {device}. Verifica che sia acceso e connesso alla tua rete, poi riprova."
+    },
+    "device_no_reply": {
+      "message": "{device} non ha confermato di aver eseguito l'azione: non ha risposto in tempo o la sua risposta si è interrotta. Verifica che sia online e riprova."
+    },
+    "device_token_rejected": {
+      "message": "{device} ha rifiutato il suo token e ottenerne uno nuovo da Google non è servito. L'integrazione continua a chiederne uno nuovo a Google, quindi riprova più tardi."
+    },
+    "device_not_ready": {
+      "message": "{device} ha risposto «non trovato». Potrebbe essere ancora in fase di avvio, quindi riprova più tardi, oppure potrebbe non supportare questa azione."
+    },
+    "device_request_failed": {
+      "message": "Impossibile eseguire l'azione su {device}. Per i dettagli, consulta i registri di Home Assistant."
+    },
+    "devices_not_rebooted": {
+      "message": "Questi dispositivi non hanno confermato che si riavvieranno: {devices}. Verifica che siano online e riprova più tardi."
     }
   },
   "options": {
     "step": {
       "init": {
         "data": {
-          "update_interval": "Modifica l'intervallo di update. Aumenta l'intervallo se sperimenti un timeout dei dispositivi. Default: 180 (Secondi)"
+          "update_interval": "Modifica l'intervallo di aggiornamento. Aumentalo se i dispositivi vanno spesso in timeout. Predefinito: {default_interval} (secondi)",
+          "known_hosts": "Host noti"
+        },
+        "data_description": {
+          "known_hosts": "Indirizzi IP di altoparlanti e display che l'integrazione non riesce a trovare da sola, ad esempio perché si trovano su un'altra rete o VLAN."
         }
       }
+    },
+    "error": {
+      "known-host-not-ip": "Inserisci solo indirizzi IP, ad esempio 192.168.1.20."
     }
   },
   "services": {
@@ -34,14 +143,14 @@
       "fields": {
         "alarm_id": {
           "description": "ID di una sveglia (alarm/xxx).",
-          "name": "ID Sveglia"
+          "name": "ID sveglia"
         },
         "skip_refresh": {
           "description": "Salta l'aggiornamento dei dispositivi Google Home dopo aver eliminato una sveglia.",
           "name": "Salta aggiornamento"
         },
         "entity_id": {
-          "description": "Rappresenta un dispositivo Google Home (sensor.xxxx_alarms).",
+          "description": "Corrisponde a un dispositivo Google Home (sensor.xxxx_alarms).",
           "name": "Entità"
         }
       },
@@ -52,18 +161,38 @@
       "fields": {
         "timer_id": {
           "description": "ID di un timer (timer/xxx).",
-          "name": "ID Timer"
+          "name": "ID timer"
         },
         "skip_refresh": {
           "description": "Salta l'aggiornamento dei dispositivi Google Home dopo aver eliminato un timer.",
           "name": "Salta aggiornamento"
         },
         "entity_id": {
-          "description": "Rappresenta un dispositivo Google Home (sensor.xxxx_alarms).",
+          "description": "Corrisponde a un dispositivo Google Home (sensor.xxxx_timers).",
           "name": "Entità"
         }
       },
       "name": "Elimina timer"
+    },
+    "delete_all_alarms": {
+      "description": "Elimina tutte le sveglie dai dispositivi Google Home.",
+      "fields": {
+        "skip_refresh": {
+          "description": "Salta l'aggiornamento dei dispositivi Google Home dopo aver eliminato le sveglie.",
+          "name": "Salta aggiornamento"
+        }
+      },
+      "name": "Elimina tutte le sveglie"
+    },
+    "delete_all_timers": {
+      "description": "Elimina tutti i timer dai dispositivi Google Home.",
+      "fields": {
+        "skip_refresh": {
+          "description": "Salta l'aggiornamento dei dispositivi Google Home dopo aver eliminato i timer.",
+          "name": "Salta aggiornamento"
+        }
+      },
+      "name": "Elimina tutti i timer"
     },
     "reboot_device": {
       "description": "Riavvia un dispositivo Google Home.",

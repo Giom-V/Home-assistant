@@ -4,17 +4,17 @@ import inspect
 import logging
 from typing import Any
 
-from homeassistant.components.integration.sensor import IntegrationSensor
+from homeassistant.components.integration.sensor import IntegrationSensor, IntegrationSensorExtraStoredData
 from homeassistant.components.sensor import DOMAIN as SENSOR_DOMAIN, SensorDeviceClass, SensorStateClass
 from homeassistant.const import (
     ATTR_UNIT_OF_MEASUREMENT,
     CONF_NAME,
+    EntityCategory,
     UnitOfEnergy,
     UnitOfPower,
     UnitOfTime,
 )
 from homeassistant.core import HomeAssistant, State, callback
-from homeassistant.helpers.entity import EntityCategory
 import homeassistant.helpers.entity_registry as er
 from homeassistant.helpers.typing import ConfigType
 
@@ -39,6 +39,7 @@ from custom_components.powercalc.const import (
     UNAVAILABLE_STATES,
     UnitPrefix,
 )
+from custom_components.powercalc.device_naming import DeviceName
 from custom_components.powercalc.errors import SensorConfigurationError
 from custom_components.powercalc.filter.outlier import OutlierFilter
 
@@ -278,12 +279,24 @@ def _find_related_real_energy_sensor(
     return RealEnergySensor.from_registry_entry(energy_sensors[0])
 
 
+# Home Assistant allows live properties to override its writable cached properties.
 class EnergySensor(BaseEntity):
     """Class which all energy sensors should extend from."""
 
 
+class VirtualEnergyExtraStoredData(IntegrationSensorExtraStoredData):
+    """Preserve zero totals which HA's integration serializer treats as missing."""
+
+    def as_dict(self) -> dict[str, Any]:
+        data = super().as_dict()
+        data["last_valid_state"] = str(self.last_valid_state) if self.last_valid_state is not None else None
+        return data
+
+
 class VirtualEnergySensor(IntegrationSensor, EnergySensor):
     """Virtual energy sensor, totalling kWh."""
+
+    device_name = DeviceName("energy")
 
     _attr_state_class = SensorStateClass.TOTAL_INCREASING
     _unrecorded_attributes = frozenset({ATTR_SOURCE_DOMAIN, ATTR_SOURCE_ENTITY})
@@ -313,6 +326,7 @@ class VirtualEnergySensor(IntegrationSensor, EnergySensor):
             "unit_time": UnitOfTime.HOURS,
             "integration_method": integration_method,
             "unique_id": unique_id,
+            "device_class": SensorDeviceClass.ENERGY,
             "max_sub_interval": timedelta(
                 seconds=sensor_config.get(CONF_ENERGY_UPDATE_INTERVAL, DEFAULT_ENERGY_UPDATE_INTERVAL),
             ),
@@ -439,23 +453,36 @@ class VirtualEnergySensor(IntegrationSensor, EnergySensor):
         return attrs
 
     @property
-    def icon(self) -> str:
+    def extra_restore_state_data(self) -> VirtualEnergyExtraStoredData:
+        return VirtualEnergyExtraStoredData(
+            self.native_value,
+            self.native_unit_of_measurement,
+            self._source_entity,
+            self._last_valid_state,
+        )
+
+    @property
+    def icon(self) -> str:  # ty: ignore[invalid-property-type-override]
         return ENERGY_ICON
 
     @callback
     def async_reset(self) -> None:
         _LOGGER.debug("%s: Reset energy sensor", self.entity_id)
         self._state = Decimal(0)
+        self._last_valid_state = self._state
         self.async_write_ha_state()
 
     async def async_calibrate(self, value: str) -> None:
         _LOGGER.debug("%s: Calibrate energy sensor to: %s", self.entity_id, value)
         self._state = Decimal(value)
+        self._last_valid_state = self._state
         self.async_write_ha_state()
 
 
 class VirtualStandbyEnergySensor(VirtualEnergySensor):
     """Energy sensor integrating only the standby portion of a virtual power sensor."""
+
+    device_name = DeviceName("standby_energy")
 
     def __init__(
         self,
@@ -545,11 +572,11 @@ class RealEnergySensor(EnergySensor):
         return cls(entry.entity_id, entry.name or entry.original_name, entry.unique_id)
 
     @property
-    def name(self) -> str | None:
+    def name(self) -> str | None:  # ty: ignore[invalid-property-type-override]
         """Return the name of the sensor."""
         return self._name
 
     @property
-    def unique_id(self) -> str | None:
+    def unique_id(self) -> str | None:  # ty: ignore[invalid-property-type-override]
         """Return the unique_id of the sensor."""
         return self._unique_id

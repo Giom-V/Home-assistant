@@ -13,7 +13,6 @@ import homeassistant.helpers.config_validation as cv
 from homeassistant.helpers.event import TrackTemplate
 from homeassistant.helpers.template import Template
 from homeassistant.helpers.typing import ConfigType
-import voluptuous as vol
 
 from custom_components.powercalc.const import (
     CONF_FIXED,
@@ -24,6 +23,7 @@ from custom_components.powercalc.const import (
     CONF_PLAYBOOK,
     CONF_STRATEGIES,
     CONF_WLED,
+    UNAVAILABLE_STATES,
 )
 from custom_components.powercalc.strategy.fixed import CONFIG_SCHEMA as FIXED_SCHEMA
 from custom_components.powercalc.strategy.linear import CONFIG_SCHEMA as LINEAR_SCHEMA
@@ -31,6 +31,7 @@ from custom_components.powercalc.strategy.multi_switch import CONFIG_SCHEMA as M
 from custom_components.powercalc.strategy.playbook import CONFIG_SCHEMA as PLAYBOOK_SCHEMA, PlaybookStrategy
 from custom_components.powercalc.strategy.strategy_interface import PowerCalculationStrategyInterface
 from custom_components.powercalc.strategy.wled import CONFIG_SCHEMA as WLED_SCHEMA
+from custom_components.powercalc.validation import vol
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -142,6 +143,7 @@ LUT_SCHEMA = vol.Schema({})
 
 ITEM_SCHEMA = vol.Schema(
     {
+        vol.Optional(CONF_ENTITY_ID): cv.entity_id,
         vol.Optional(CONF_CONDITION): CONDITION_SCHEMA,
         vol.Optional(CONF_FIXED): FIXED_SCHEMA,
         vol.Optional(CONF_LINEAR): LINEAR_SCHEMA,
@@ -188,7 +190,13 @@ class CompositeStrategy(PowerCalculationStrategyInterface):
 
         total = Decimal(0)
         for sub_strategy in self.strategies:
-            value = await self._calculate_sub_strategy(sub_strategy, entity_state)
+            sub_state = entity_state
+            if sub_strategy.entity_id is not None:
+                fetched_state = self.hass.states.get(sub_strategy.entity_id)
+                if fetched_state is None or fetched_state.state in UNAVAILABLE_STATES:
+                    return None
+                sub_state = fetched_state
+            value = await self._calculate_sub_strategy(sub_strategy, sub_state)
             if value is None:
                 continue
             if self.mode == CompositeMode.STOP_AT_FIRST:
@@ -247,18 +255,14 @@ class CompositeStrategy(PowerCalculationStrategyInterface):
 
     def get_entities_to_track(self) -> list[str | TrackTemplate]:
         """Return entities that should be tracked."""
-        track_templates: list[str | TrackTemplate] = []
+        entities: list[str | TrackTemplate] = []
         for sub_strategy in self.strategies:
             if sub_strategy.condition_config:
-                self.resolve_track_templates_from_condition(
-                    sub_strategy.condition_config,
-                    track_templates,
-                )
-
-        track_entities = [
-            entity for sub_strategy in self.strategies for entity in sub_strategy.strategy.get_entities_to_track()
-        ]
-        return track_templates + track_entities
+                self.resolve_track_templates_from_condition(sub_strategy.condition_config, entities)
+            entities.extend(sub_strategy.strategy.get_entities_to_track())
+            if sub_strategy.entity_id is not None:
+                entities.append(sub_strategy.entity_id)
+        return entities
 
     def can_calculate_standby(self) -> bool:
         """Return if this strategy can calculate standby power."""
@@ -291,3 +295,4 @@ class SubStrategy:
     condition_config: ConfigType | None
     condition: ConditionCheckerType | None
     strategy: PowerCalculationStrategyInterface
+    entity_id: str | None = None

@@ -2,30 +2,139 @@
   "config": {
     "step": {
       "user": {
-        "title": "Autenticação Google Home",
-        "description": "Se precisar de ajuda com a configuração, consulte o site: https://github.com/leikoilja/ha-google-home. Use o nome de utilizador da sua conta google e a palavra-passe da app. É mais seguro/fácil gerar uma palavra-passe da app e utilizá-la em vez da palavra-passe original. Tem o mesmo acesso que a palavra-passe normal, porém é melhor do que usar a palavra-passe original durante a execução de scripts. (https://myaccount.google.com/apppasswords). Caso contrário, a palavra-passe normal da conta google funciona.",
+        "title": "Iniciar sessão na Google",
+        "description": "Esta integração funciona com os seus altifalantes e ecrãs Google, como Nest Mini, Nest Audio e Nest Hub. Não adiciona os outros dispositivos da sua aplicação Google Home.\n\nEscolha como iniciar sessão numa conta Google que seja membro da sua casa. Para obter ajuda, consulte {docs_url}.",
+        "menu_options": {
+          "browser": "Início de sessão no navegador (recomendado)",
+          "master_token": "Token principal"
+        },
+        "menu_option_descriptions": {
+          "browser": "Inicie sessão na Google num navegador de computador e, em seguida, cole um cookie. Funciona para a maioria das contas.",
+          "master_token": "Cole um token principal que já tenha."
+        }
+      },
+      "browser": {
+        "title": "Início de sessão no navegador",
+        "description": "1. Num computador, abra {embedded_setup_url} numa janela de navegação privada e inicie sessão. Depois de aceitar, a página pode continuar a carregar; isso é esperado.\n2. Abra as ferramentas de programador do navegador e procure os cookies de `accounts.google.com`.\n3. Copie o valor do cookie `oauth_token` e cole-o abaixo de imediato. Expira em poucos minutos e só funciona uma vez.\n\nInstruções passo a passo: {browser_docs_url}\n\nPara escolher outra forma de iniciar sessão, feche esta janela e adicione novamente a integração.",
         "data": {
-          "username": "Nome de utilizador da conta Google",
-          "password": "Palavra-passe da conta Google"
+          "oauth_token": "Cookie oauth_token"
+        },
+        "data_description": {
+          "oauth_token": "Começa por oauth2_4/"
+        }
+      },
+      "master_token": {
+        "title": "Token principal",
+        "description": "Cole um token principal que tenha obtido anteriormente, por exemplo com outra ferramenta.\n\nPara escolher outra forma de iniciar sessão, feche esta janela e adicione novamente a integração.",
+        "data": {
+          "master_token": "Token principal da conta Google"
+        },
+        "data_description": {
+          "master_token": "Começa por aas_et/"
+        }
+      },
+      "reauth": {
+        "title": "Iniciar sessão novamente",
+        "description": "A Google já não aceita os dados de início de sessão guardados para {name}. Inicie sessão novamente na mesma conta Google: os seus dispositivos, entidades e automatizações mantêm-se como estão. Até o fazer, as entidades dos seus dispositivos podem mostrar valores desatualizados ou ficar indisponíveis.",
+        "menu_options": {
+          "browser": "Início de sessão no navegador (recomendado)",
+          "master_token": "Token principal"
+        },
+        "menu_option_descriptions": {
+          "browser": "Inicie sessão na Google num navegador de computador e, em seguida, cole um cookie. Funciona para a maioria das contas.",
+          "master_token": "Cole um token principal que já tenha."
+        }
+      },
+      "reauth_browser": {
+        "title": "Início de sessão no navegador",
+        "description": "1. Num computador, abra {embedded_setup_url} numa janela de navegação privada e inicie sessão na mesma conta Google. Depois de aceitar, a página pode continuar a carregar; isso é esperado.\n2. Abra as ferramentas de programador do navegador e procure os cookies de `accounts.google.com`.\n3. Copie o valor do cookie `oauth_token` e cole-o abaixo de imediato. Expira em poucos minutos e só funciona uma vez.\n\nInstruções passo a passo: {browser_docs_url}",
+        "data": {
+          "oauth_token": "Cookie oauth_token"
+        },
+        "data_description": {
+          "oauth_token": "Começa por oauth2_4/"
+        }
+      },
+      "reauth_master_token": {
+        "title": "Token principal",
+        "description": "Cole um token principal da mesma conta Google, por exemplo um que tenha obtido com outra ferramenta.",
+        "data": {
+          "master_token": "Token principal da conta Google"
+        },
+        "data_description": {
+          "master_token": "Começa por aas_et/"
         }
       }
     },
     "error": {
-      "auth": "Nome de utilizador/palavra-passe incorretos. Se a sua conta google tem 2FA activada, por favor gere a palavra-passe da app (https://myaccount.google.com/apppasswords). Se a autenticação continuar a falhar, consulte https://github.com/leikoilja/ha-google-home#troubleshooting",
-      "missing-inputs": "Introduza o nome de utilizador e a palavra-passe ou o Master Token",
-      "master-token-invalid": "Token principal inválido. Certifique-se de que o token completo foi especificado (incluindo 'aas_et/')"
+      "oauth-token-invalid": "A Google não aceitou o cookie. Obtenha um novo e cole-o de imediato: expira em poucos minutos e só funciona uma vez. Copie o valor completo, que começa por oauth2_4/.",
+      "master-token-invalid": "A Google não aceitou o token principal. Verifique se o copiou corretamente. Se funcionava antes, por exemplo até ter alterado a sua palavra-passe Google, a Google já não o aceita: utilize antes o início de sessão no navegador.",
+      "google-rejected": "A Google não aceitou o início de sessão. Para ver os detalhes, consulte os logs do Home Assistant.",
+      "google-unreachable": "Não foi possível estabelecer ligação à Google. Verifique se o Home Assistant está ligado à Internet e tente novamente.",
+      "google-busy": "A Google está ocupada ou está a limitar os inícios de sessão. Aguarde alguns minutos e inicie sessão novamente.",
+      "oauth-token-format": "Este não é o cookie oauth_token. O seu valor começa por oauth2_4/.",
+      "master-token-format": "Um token principal começa por aas_et/ e tem 223 caracteres. Copie o token completo.",
+      "other-account": "Iniciou sessão numa conta Google diferente, pelo que nada foi alterado. Inicie sessão com a conta que esta integração utiliza. Para passar a utilizar essa outra conta, elimine a integração e adicione-a novamente."
+    }
+  },
+  "exceptions": {
+    "alarms_and_timers_not_fetched": {
+      "message": "Não foi possível obter os alarmes e temporizadores atuais do dispositivo {device}, pelo que nada foi eliminado desse dispositivo. Verifique se está online e tente novamente mais tarde."
     },
-    "abort": {
-      "single_instance_allowed": "Apenas é permitida uma única instância."
+    "alarms_and_timers_not_fetched_from_devices": {
+      "message": "Não foi possível obter os alarmes e temporizadores atuais dos seguintes dispositivos, pelo que nada foi eliminado desses dispositivos: {devices}. Verifique se estão online e tente novamente mais tarde."
+    },
+    "alarms_and_timers_not_deleted": {
+      "message": "O dispositivo {device} não confirmou a eliminação dos alarmes ou temporizadores, pelo que poderão continuar definidos. Verifique se está online e tente novamente mais tarde."
+    },
+    "alarms_and_timers_not_deleted_from_devices": {
+      "message": "Não foi possível eliminar os alarmes ou temporizadores dos seguintes dispositivos, ou confirmar a sua eliminação: {devices}. Verifique se estão online e tente novamente mais tarde."
+    },
+    "invalid_alarm_id": {
+      "message": "«{alarm_id}» não é um ID de alarme. Copie o ID, que começa por alarm/, do atributo alarms do sensor de alarmes do dispositivo."
+    },
+    "invalid_timer_id": {
+      "message": "«{timer_id}» não é um ID de temporizador. Copie o ID, que começa por timer/, do atributo timers do sensor de temporizadores do dispositivo."
+    },
+    "alarm_not_found": {
+      "message": "Não foi possível encontrar o alarme {alarm_id} nos dispositivos selecionados. Pode já ter tocado ou ter sido eliminado."
+    },
+    "timer_not_found": {
+      "message": "Não foi possível encontrar o temporizador {timer_id} nos dispositivos selecionados. Pode já ter terminado ou ter sido eliminado."
+    },
+    "device_offline": {
+      "message": "Não foi possível estabelecer ligação ao dispositivo {device}. Verifique se está ligado e se tem ligação à sua rede e, em seguida, tente novamente."
+    },
+    "device_no_reply": {
+      "message": "O dispositivo {device} não confirmou que executou a ação: não respondeu a tempo ou a resposta foi interrompida. Verifique se está online e tente novamente."
+    },
+    "device_token_rejected": {
+      "message": "O dispositivo {device} rejeitou o seu token, e obter um novo junto da Google não ajudou. A integração continua a pedir um novo à Google, por isso tente novamente mais tarde."
+    },
+    "device_not_ready": {
+      "message": "O dispositivo {device} respondeu «não encontrado». Pode ainda estar a iniciar, por isso tente novamente mais tarde, ou pode não suportar esta funcionalidade."
+    },
+    "device_request_failed": {
+      "message": "Não foi possível executar a ação no dispositivo {device}. Para ver os detalhes, consulte os logs do Home Assistant."
+    },
+    "devices_not_rebooted": {
+      "message": "Os seguintes dispositivos não confirmaram que vão reiniciar: {devices}. Verifique se estão online e tente novamente mais tarde."
     }
   },
   "options": {
     "step": {
       "init": {
         "data": {
-          "update_interval": "Altere o intervalo de atualização. Aumente isso se você estiver sofrendo de tempo limite dos dispositivos. Padrão: 180 (segundos)"
+          "update_interval": "Altere o intervalo de atualização. Aumente este valor se os dispositivos excederem frequentemente o tempo limite. Predefinição: {default_interval} (segundos)",
+          "known_hosts": "Anfitriões conhecidos"
+        },
+        "data_description": {
+          "known_hosts": "Endereços IP de altifalantes e ecrãs que a integração não consegue encontrar sozinha, por exemplo porque estão noutra rede ou VLAN."
         }
       }
+    },
+    "error": {
+      "known-host-not-ip": "Introduza apenas endereços IP, como 192.168.1.20."
     }
   },
   "services": {
@@ -41,7 +150,7 @@
           "name": "Ignorar atualização"
         },
         "entity_id": {
-          "description": "Representa um dispositivo Google Home (sensor.xxxx_alarms).",
+          "description": "Corresponde a um dispositivo Google Home (sensor.xxxx_alarms).",
           "name": "Entidade"
         }
       },
@@ -59,11 +168,31 @@
           "name": "Ignorar atualização"
         },
         "entity_id": {
-          "description": "Representa um dispositivo Google Home (sensor.xxxx_alarms).",
+          "description": "Corresponde a um dispositivo Google Home (sensor.xxxx_timers).",
           "name": "Entidade"
         }
       },
       "name": "Eliminar temporizador"
+    },
+    "delete_all_alarms": {
+      "description": "Eliminar todos os alarmes dos dispositivos Google Home.",
+      "fields": {
+        "skip_refresh": {
+          "description": "Ignorar a atualização dos dispositivos Google Home depois de eliminar os alarmes.",
+          "name": "Ignorar atualização"
+        }
+      },
+      "name": "Eliminar todos os alarmes"
+    },
+    "delete_all_timers": {
+      "description": "Eliminar todos os temporizadores dos dispositivos Google Home.",
+      "fields": {
+        "skip_refresh": {
+          "description": "Ignorar a atualização dos dispositivos Google Home depois de eliminar os temporizadores.",
+          "name": "Ignorar atualização"
+        }
+      },
+      "name": "Eliminar todos os temporizadores"
     },
     "reboot_device": {
       "description": "Reiniciar um dispositivo Google Home.",
