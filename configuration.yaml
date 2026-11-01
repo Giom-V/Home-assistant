@@ -16,8 +16,8 @@ homeassistant:
   time_zone: Europe/Paris
   # Country
   country: FR
-  # Customization file
-  customize: !include customize.yaml
+  # Customization file (deprecated / unused - entity customization is handled via HA UI)
+  # customize: !include customize.yaml
   allowlist_external_dirs:
     - "/config"
   external_url: !secret base_url
