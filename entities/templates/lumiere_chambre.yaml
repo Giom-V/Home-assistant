@@ -1,0 +1,48 @@
+- sensor:
+    - name: "Lumière chambre - Luminosité cible"
+      unique_id: "lumiere_chambre_target_brightness"
+      icon: mdi:brightness-auto
+      unit_of_measurement: "%"
+      state_class: measurement
+      state: >-
+        {% set now_m = now().hour * 60 + now().minute %}
+
+        {% set t_coucher_str = states('input_datetime.lumiere_chambre_debut_coucher') %}
+        {% set t_nuit_str = states('input_datetime.lumiere_chambre_debut_nuit') %}
+        {% set t_reveil_str = states('input_datetime.lumiere_chambre_debut_remontee') %}
+        {% set t_jour_str = states('input_datetime.lumiere_chambre_debut_jour') %}
+
+        {% set t_coucher = (t_coucher_str.split(':')[0] | int(21)) * 60 + (t_coucher_str.split(':')[1] | int(0)) if t_coucher_str else 1260 %}
+        {% set t_nuit = (t_nuit_str.split(':')[0] | int(0)) * 60 + (t_nuit_str.split(':')[1] | int(0)) if t_nuit_str else 0 %}
+        {% set t_reveil = (t_reveil_str.split(':')[0] | int(8)) * 60 + (t_reveil_str.split(':')[1] | int(0)) if t_reveil_str else 480 %}
+        {% set t_jour = (t_jour_str.split(':')[0] | int(10)) * 60 + (t_jour_str.split(':')[1] | int(0)) if t_jour_str else 600 %}
+
+        {% set b_jour = states('input_number.lumiere_chambre_luminosite_jour') | float(100) %}
+        {% set b_nuit = states('input_number.lumiere_chambre_luminosite_nuit') | float(50) %}
+
+        {# Evening transition #}
+        {% if t_nuit <= t_coucher %}
+          {% set dur_evening = (1440 - t_coucher) + t_nuit %}
+          {% set in_evening = (now_m >= t_coucher) or (now_m < t_nuit) %}
+          {% set elapsed = (now_m - t_coucher) if now_m >= t_coucher else ((1440 - t_coucher) + now_m) %}
+        {% else %}
+          {% set dur_evening = t_nuit - t_coucher %}
+          {% set in_evening = (t_coucher <= now_m < t_nuit) %}
+          {% set elapsed = now_m - t_coucher %}
+        {% endif %}
+
+        {% if in_evening and dur_evening > 0 %}
+          {% set progress = elapsed / dur_evening %}
+          {{ (b_jour - progress * (b_jour - b_nuit)) | round(0) | int }}
+        {% elif t_reveil <= now_m < t_jour and t_jour > t_reveil %}
+          {# Morning transition #}
+          {% set dur_morning = t_jour - t_reveil %}
+          {% set progress = (now_m - t_reveil) / dur_morning %}
+          {{ (b_nuit + progress * (b_jour - b_nuit)) | round(0) | int }}
+        {% elif t_jour <= now_m < t_coucher %}
+          {# Day #}
+          {{ b_jour | round(0) | int }}
+        {% else %}
+          {# Night #}
+          {{ b_nuit | round(0) | int }}
+        {% endif %}

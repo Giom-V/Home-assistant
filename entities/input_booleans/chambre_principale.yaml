@@ -1,0 +1,4 @@
+lumiere_chambre_variation_auto:
+  name: "Lumière chambre - Variation automatique"
+  icon: mdi:theme-light-dark
+  initial: true
