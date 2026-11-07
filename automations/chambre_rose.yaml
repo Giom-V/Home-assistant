@@ -121,3 +121,39 @@
       target:
         entity_id: light.lumiere_penderie
   mode: single
+
+- id: lumiere_chambre_variation_dynamique
+  alias: "Lumière chambre - Variation dynamique de luminosité"
+  description: "Ajuste l'intensité de la lumière de la chambre selon l'heure de la journée (à l'allumage et toutes les 5 minutes)"
+  mode: restart
+  triggers:
+    - trigger: state
+      entity_id: light.lumiere_chambre
+      from: "off"
+      to: "on"
+      id: "turn_on"
+    - trigger: time_pattern
+      minutes: "/5"
+      id: "periodic"
+  conditions:
+    - condition: state
+      entity_id: input_boolean.lumiere_chambre_variation_auto
+      state: "on"
+    - condition: state
+      entity_id: light.lumiere_chambre
+      state: "on"
+  actions:
+    - variables:
+        target_pct: "{{ states('sensor.lumiere_chambre_target_brightness') | int(50) }}"
+        current_pct: "{{ ((state_attr('light.lumiere_chambre', 'brightness') | default(0, true) | float) / 2.55) | round(0) | int }}"
+    - if:
+        - condition: template
+          value_template: "{{ trigger.id == 'turn_on' or (current_pct - target_pct) | abs >= 2 }}"
+      then:
+        - action: light.turn_on
+          target:
+            entity_id: light.lumiere_chambre
+          data:
+            brightness_pct: "{{ target_pct }}"
+            transition: "{{ 0 if trigger.id == 'turn_on' else 10 }}"
+

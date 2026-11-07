@@ -1,0 +1,27 @@
+lumiere_chambre_debut_coucher:
+  name: "Lumière chambre - Début diminution soirée"
+  has_date: false
+  has_time: true
+  initial: "21:00:00"
+  icon: mdi:weather-sunset-down
+
+lumiere_chambre_debut_nuit:
+  name: "Lumière chambre - Début palier nuit"
+  has_date: false
+  has_time: true
+  initial: "00:00:00"
+  icon: mdi:weather-night
+
+lumiere_chambre_fin_nuit:
+  name: "Lumière chambre - Fin palier nuit"
+  has_date: false
+  has_time: true
+  initial: "08:00:00"
+  icon: mdi:weather-sunset-up
+
+lumiere_chambre_debut_jour:
+  name: "Lumière chambre - Plein jour (100%)"
+  has_date: false
+  has_time: true
+  initial: "10:00:00"
+  icon: mdi:weather-sunny
