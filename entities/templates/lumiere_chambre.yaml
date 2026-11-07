@@ -9,7 +9,7 @@
 
         {% set t_coucher_str = states('input_datetime.lumiere_chambre_debut_coucher') %}
         {% set t_nuit_str = states('input_datetime.lumiere_chambre_debut_nuit') %}
-        {% set t_reveil_str = states('input_datetime.lumiere_chambre_fin_nuit') %}
+        {% set t_reveil_str = states('input_datetime.lumiere_chambre_debut_remontee') %}
         {% set t_jour_str = states('input_datetime.lumiere_chambre_debut_jour') %}
 
         {% set t_coucher = (t_coucher_str.split(':')[0] | int(21)) * 60 + (t_coucher_str.split(':')[1] | int(0)) if t_coucher_str else 1260 %}

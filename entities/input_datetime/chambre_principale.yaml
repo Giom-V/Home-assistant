@@ -12,8 +12,8 @@ lumiere_chambre_debut_nuit:
   initial: "00:00:00"
   icon: mdi:weather-night
 
-lumiere_chambre_fin_nuit:
-  name: "Lumière chambre - Fin palier nuit"
+lumiere_chambre_debut_remontee:
+  name: "Lumière chambre - Début remontée matin"
   has_date: false
   has_time: true
   initial: "08:00:00"
