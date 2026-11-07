@@ -13,11 +13,6 @@
       data:
         message: Problème d'alimentaiton de la RPi
         title: ⚠️Alim
-    - service: notify.slack
-      metadata: {}
-      data:
-        title: ⚠️Alim
-        message: Problème d'alimentaiton de la RPi
     - service: rest_command.gchatalert
       data:
         text: Problème d'alimentaiton de la RPi

@@ -35,11 +35,11 @@
     - service: rest_command.gchat
       data:
         text: "{{ message_text }}"
-    - service: notify.mobile_app_pixel_9_xl
+    - service: notify.mobile_app_pixel_9_pro_xl
       data:
         message: "{{ message_text }}"
         title: Cannes
-    - service: notify.mobile_app_pixel_7q_pascal
+    - service: notify.mobile_app_pixel_7a_pascal
       data:
         message: "{{ message_text }}"
         title: Cannes

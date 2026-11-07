@@ -20,7 +20,7 @@
   description: "Alerte si la température est trop basse"
   trigger:
     - platform: numeric_state
-      entity_id: sensor.backkitchen_temperature, sensor.flood_sensor_basement_temperature, sensor.flood_sensor_kitchen_temperature, sensor.office_button_temperature, sensor.temperature_sous_sol, sensor.aurore_bedroom_temperature, sensor.bathroom_temperature, sensor.shower_temperature, sensor.playroom_temperature, sensor.basement_temperature, sensor.valve_salon_current_temperature
+      entity_id: sensor.backkitchen_temperature, sensor.flood_sensor_basement_temperature, sensor.flood_sensor_kitchen_temperature, sensor.office_button_temperature, sensor.temperature_sous_sol, sensor.aurore_bedroom_temperature, sensor.bathroom_temperature, sensor.shower_temperature, sensor.playroom_temperature, sensor.basement_temperature, sensor.valve_bureau_current_temperature
       below: 10
   action:
     - service: rest_command.gchatalert
@@ -35,7 +35,7 @@
   description: "Alerte si la température est trop haute"
   trigger:
     - platform: numeric_state
-      entity_id: sensor.backkitchen_temperature, sensor.flood_sensor_basement_temperature, sensor.flood_sensor_kitchen_temperature, sensor.office_button_temperature, sensor.temperature_sous_sol, sensor.aurore_bedroom_temperature, sensor.bathroom_temperature, sensor.shower_temperature, sensor.playroom_temperature, sensor.basement_temperature, sensor.valve_salon_current_temperature
+      entity_id: sensor.backkitchen_temperature, sensor.flood_sensor_basement_temperature, sensor.flood_sensor_kitchen_temperature, sensor.office_button_temperature, sensor.temperature_sous_sol, sensor.aurore_bedroom_temperature, sensor.bathroom_temperature, sensor.shower_temperature, sensor.playroom_temperature, sensor.basement_temperature, sensor.valve_bureau_current_temperature
       above: 30
   action:
     - service: rest_command.gchatalert

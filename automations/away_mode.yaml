@@ -66,7 +66,7 @@
       for:
         minutes: 60
     - platform: state
-      entity_id: binary_sensor.visitors
+      entity_id: input_boolean.visitors
       to: "off"
       for:
         minutes: 60

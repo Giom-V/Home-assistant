@@ -139,17 +139,14 @@
   alias: Close water if a leak is detected
   description: "Coupe l'eau si une fuite est détectée"
   trigger:
-    - type: moist
-      platform: device
-      device_id: dd451c8daffe059f22ccc2209342cbc2
-      entity_id: binary_sensor.flood_detector_basement_flood
-      domain: binary_sensor
+    - platform: state
+      entity_id: binary_sensor.flood_sensor_basement_flood
+      to: "on"
   condition: []
   action:
-    - type: turn_off
-      device_id: 95c85383ea986cdfab0a3fe9c33f7a49
-      entity_id: light.vanne_light
-      domain: light
+    - service: light.turn_off
+      target:
+        entity_id: light.vanne_light
   mode: single
 - id: "1688126732710"
   alias: "Sécurité: couper l'eau si une fuite est détectée (pour l'instant dans

@@ -15,18 +15,18 @@
 #       target:
 #       - '#hass'
 #       title: Sunrise
-create_daily_gif:
-  alias: Create Daily Gif
-  sequence:
-#  - service: shell_command.set_date
-#  - service: shell_command.create_daily_gif
-  - service: notify.slack
-    data:
-      data:
-        file:
-          path: "/home/homeassistant/.homeassistant/Share/{{ today }}.gif"
-      message: Daily Gif!
-      target:
-      - '#hass'
-      title: "{{ today }}"
+# create_daily_gif:
+#   alias: Create Daily Gif
+#   sequence:
+# #  - service: shell_command.set_date
+# #  - service: shell_command.create_daily_gif
+#   - service: notify.slack
+#     data:
+#       data:
+#         file:
+#           path: "/home/homeassistant/.homeassistant/Share/{{ today }}.gif"
+#       message: Daily Gif!
+#       target:
+#       - '#hass'
+#       title: "{{ today }}"
       
